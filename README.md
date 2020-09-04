@@ -1,0 +1,1 @@
+# CoreProject-s-game
