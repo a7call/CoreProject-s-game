@@ -14,7 +14,21 @@ public class PlayerMouvement : MonoBehaviour
     public float StopSmoothTime;
     private Vector2 mouvementVector;
 
-   
+    public static PlayerMouvement instance;
+
+    // Singleton
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("+ d'une instance de PlayerMouvement dans la scene");
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+    }
     void Update()
     {
         CheckInputs();
