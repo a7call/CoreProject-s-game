@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMouvement : MonoBehaviour
 {
     public float mooveSpeed;
     public Rigidbody2D rb;
     private Vector2 mouvement;
-    
+    public float DashForce;
+    public int dashEnergyCost;
+
     private Vector3 velocity = Vector3.zero;
     public Animator animator;
     public float StartSmoothTime;
@@ -36,6 +36,11 @@ public class PlayerMouvement : MonoBehaviour
         ClampMouvement(mouvement);
         GetLastDirection();
         SetAnimationVariable();
+
+        if (Input.GetKeyDown(KeyCode.C) && PlayerEnergy.instance.currentEnergy >= dashEnergyCost)
+        {
+            Dash();
+        }
 
 
     }
@@ -98,6 +103,14 @@ public class PlayerMouvement : MonoBehaviour
         {
             rb.velocity = Vector3.SmoothDamp(rb.velocity, Vector2.zero, ref velocity, StopSmoothTime);
         }
+    }
+
+
+    void Dash()
+    {   
+        Vector2 dir = new Vector2(mouvement.x, mouvement.y);
+        PlayerEnergy.instance.SpendEnergy(dashEnergyCost);
+        rb.AddForce(dir * DashForce);
     }
 
 }
