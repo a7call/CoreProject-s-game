@@ -2,22 +2,28 @@
 
 public class EnemyMouvement : MonoBehaviour
 {
-    protected float moveSpeed;
-    protected Transform[] wayPoints;
-    protected Transform targetPoint;
-    protected Transform targetToFollow;
-    protected float aggroDistance;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected Transform[] wayPoints;
+     protected Transform targetPoint;
+    [SerializeField] protected Transform targetToFollow;
+    [SerializeField] protected float aggroDistance;
     private int index = 0;
-    private Rigidbody2D rb;
-    protected bool isPatroling;
+    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] private bool isPatroling;
 
     private void Start()
     {
         targetPoint = wayPoints[0];
     }
 
+    private void Update()
+    {
+        Patrol();
+        Aggro();
+    }
 
-    protected virtual void Patrol()
+    // Enemy patrol fonction
+    protected void Patrol()
     {
         Vector3 dir = (targetPoint.position - transform.position).normalized;
         rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
@@ -29,12 +35,13 @@ public class EnemyMouvement : MonoBehaviour
         }
     }
 
-    protected virtual void Aggro()
+    // Enemy take Player aggro 
+    protected  void Aggro()
     {
+        Vector3 dir = (targetToFollow.position - transform.position).normalized;
         if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
         {
             isPatroling = false;
-            Vector3 dir = (targetToFollow.position - transform.position).normalized;
             rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
         }
         else
