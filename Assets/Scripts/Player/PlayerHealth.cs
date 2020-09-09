@@ -3,34 +3,22 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public PlayerScriptableObjectScript playerData;
+
     public int currentHealth;
-    public int maxHealth;
     private bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
 
     public SpriteRenderer graphics;
-
-    public static PlayerHealth instance;
-
-    // Singleton
-    private void Awake()
+    public void Awake()
     {
         SetMaxHealth();
-        if (instance != null)
-        {
-            Debug.LogWarning("+ d'une instance de PlayerHealth dans la scene");
-            return;
-        }
-        else
-        {
-            instance = this;
-        }
     }
 
     public void SetMaxHealth()
     {
-        currentHealth = maxHealth;
+        currentHealth =  playerData.maxHealth;
     }
 
     public void TakeDamage(int damage)

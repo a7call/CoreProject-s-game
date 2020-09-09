@@ -2,32 +2,24 @@
 
 public class PlayerMouvement : MonoBehaviour
 {
-    public float mooveSpeed;
+
     public Rigidbody2D rb;
     private Vector2 mouvement;
-    public float DashForce;
-    public int dashEnergyCost;
 
     private Vector3 velocity = Vector3.zero;
     public Animator animator;
     public float StartSmoothTime;
     public float StopSmoothTime;
     private Vector2 mouvementVector;
+    private PlayerEnergy playerEnergy;
 
-    public static PlayerMouvement instance;
+    public PlayerScriptableObjectScript playerData;
 
+ 
     // Singleton
     private void Awake()
     {
-        if (instance != null)
-        {
-            Debug.LogWarning("+ d'une instance de PlayerMouvement dans la scene");
-            return;
-        }
-        else
-        {
-            instance = this;
-        }
+        playerEnergy = GetComponent<PlayerEnergy>();
     }
     void Update()
     {
@@ -37,7 +29,7 @@ public class PlayerMouvement : MonoBehaviour
         GetLastDirection();
         SetAnimationVariable();
 
-        if (Input.GetKeyDown(KeyCode.C) && PlayerEnergy.instance.currentEnergy >= dashEnergyCost)
+        if (Input.GetKeyDown(KeyCode.C) && playerEnergy.currentEnergy >= playerData.dashEnergyCost)
         {
             Dash();
         }
@@ -47,7 +39,7 @@ public class PlayerMouvement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer(mouvementVector * mooveSpeed * Time.fixedDeltaTime);
+        MovePlayer(mouvementVector * playerData.mooveSpeed * Time.fixedDeltaTime);
         
     }
 
@@ -109,8 +101,8 @@ public class PlayerMouvement : MonoBehaviour
     void Dash()
     {   
         Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-        PlayerEnergy.instance.SpendEnergy(dashEnergyCost);
-        rb.AddForce(dir * DashForce);
+        playerEnergy.SpendEnergy(playerData.dashEnergyCost);
+        rb.AddForce(dir * playerData.dashForce);
     }
 
 }

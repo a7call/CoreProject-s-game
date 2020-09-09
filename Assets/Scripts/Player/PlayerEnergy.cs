@@ -3,27 +3,17 @@ using UnityEngine;
 
 public class PlayerEnergy : MonoBehaviour
 {
-    public int maxEnergy;
+
+    public PlayerScriptableObjectScript playerData;
     public int currentEnergy;
-    public int energyReloadNumber;
     public bool energyIsReloading = false;
 
 
-    public static PlayerEnergy instance;
 
     // Singleton
     private void Awake()
     {
        
-        if (instance != null)
-        {
-            Debug.LogWarning("+ d'une instance de PlayerEnergy dans la scene");
-            return;
-        }
-        else
-        {
-            instance = this;
-        }
         SetMaxEnergy();
     }
     private void Update()
@@ -42,16 +32,16 @@ public class PlayerEnergy : MonoBehaviour
     // Set Max Energy à l'Initialisation
     void SetMaxEnergy()
     {
-        currentEnergy = maxEnergy;
+        currentEnergy = playerData.maxEnergy;
     }
 
     // Energie recupérée au cours du temps
     private IEnumerator EnergyReload()
     {   
-        if(currentEnergy < maxEnergy && !energyIsReloading)
+        if(currentEnergy < playerData.maxEnergy && !energyIsReloading)
         {
             energyIsReloading = true;
-            currentEnergy += energyReloadNumber;
+            currentEnergy += playerData.energyReloadNumber;
             yield return new WaitForSeconds(0.1f);
             energyIsReloading = false;
         }

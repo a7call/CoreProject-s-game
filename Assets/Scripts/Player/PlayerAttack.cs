@@ -2,29 +2,14 @@
 
 public class PlayerAttack : MonoBehaviour
 {
-
+    public PlayerScriptableObjectScript playerData;
     public Transform attackPoint;
     public Animator animator;
     public LayerMask enemyLayer;
     public float attackRadius;
-    public int damage;
 
-    public static PlayerAttack instance;
     public GameObject projectil;
 
-    // Singleton
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogWarning("+ d'une instance de PlayerAttack dans la scene");
-            return;
-        }
-        else
-        {
-            instance = this;
-        }
-    }
 
     // Update is called once per frame
     void Update()

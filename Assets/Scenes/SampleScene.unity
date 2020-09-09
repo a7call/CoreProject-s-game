@@ -242,13 +242,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20869189151c674ca6a7e93ec313747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mooveSpeed: 200
   rb: {fileID: 527537112}
-  DashForce: 200
-  dashEnergyCost: 20
   animator: {fileID: 527537117}
   StartSmoothTime: 0.2
   StopSmoothTime: 0.12
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
 --- !u!61 &527537111
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -374,8 +372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccfb8a40725aa8489bd8ac681bedbb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 4
-  maxHealth: 4
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentHealth: 0
   InvincibilityFlashDelay: 0.2
   InvincibleDelay: 3
   graphics: {fileID: 527537114}
@@ -391,9 +389,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65f8e8811ac9d49ad0c88e319721c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnergy: 100
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
   currentEnergy: 0
-  energyReloadNumber: 1
   energyIsReloading: 0
 --- !u!95 &527537117
 Animator:
@@ -426,13 +423,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46045b764b7fda0449f44f03a75baaef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
   attackPoint: {fileID: 1911214962}
   animator: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  attackRadius: 0.21
-  damage: 0
+  attackRadius: 0.24
   projectil: {fileID: 0}
 --- !u!1 &1911214961
 GameObject:
