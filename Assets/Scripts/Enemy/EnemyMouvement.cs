@@ -23,7 +23,7 @@ public class EnemyMouvement : MonoBehaviour
     }
 
     // Enemy patrol fonction
-    protected void Patrol()
+    protected virtual void Patrol()
     {
         Vector3 dir = (targetPoint.position - transform.position).normalized;
         rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
@@ -36,7 +36,7 @@ public class EnemyMouvement : MonoBehaviour
     }
 
     // Enemy take Player aggro 
-    protected  void Aggro()
+    protected virtual void Aggro()
     {
         Vector3 dir = (targetToFollow.position - transform.position).normalized;
         if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
