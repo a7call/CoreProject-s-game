@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    [SerializeField] protected EnemyScriptableObject EnemyData;
+
+
     [SerializeField] protected float attackRange;
     [SerializeField] protected Transform target;
     [SerializeField] protected Transform attackPoint;
     [SerializeField] protected float attackRadius;
     [SerializeField] protected LayerMask player;
     [SerializeField] protected LayerMask enemy;
- 
 
+    private void Start()
+    {
+        SetData();
+    }
     private void Update()
     {
         GetPlayerPos();
@@ -51,5 +57,13 @@ public class EnemyAttack : MonoBehaviour
     {
         Vector2 attackDir = target.position - transform.position;
         attackPoint.position = new Vector2(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
+    }
+
+    private void SetData()
+    {
+        attackRange = EnemyData.attackRange;
+        attackRadius = EnemyData.attackRadius;
+        player = EnemyData.player;
+        enemy = EnemyData.enemy;
     }
 }

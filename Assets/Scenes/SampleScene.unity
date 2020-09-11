@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 2044682622}
   - component: {fileID: 2044682621}
   - component: {fileID: 2044682620}
+  - component: {fileID: 2044682624}
   m_Layer: 0
   m_Name: TestEnemi1
   m_TagString: Enemy
@@ -603,10 +604,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f13842765552e4183f2053f49cdf60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
-  wayPoints: []
+  EnemyData: {fileID: 11400000, guid: 99b21c437dd8cb5409a63bfe2dc2d2d8, type: 2}
+  wayPoints:
+  - {fileID: 786901529}
+  - {fileID: 863871357}
   targetToFollow: {fileID: 527537113}
-  aggroDistance: 2
   rb: {fileID: 2044682622}
   isPatroling: 0
 --- !u!50 &2044682622
@@ -644,3 +646,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2044682624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044682619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b747a240779e75842ae42d18bebaf489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyData: {fileID: 11400000, guid: 99b21c437dd8cb5409a63bfe2dc2d2d8, type: 2}
+  attackRange: 0
+  target: {fileID: 527537113}
+  attackPoint: {fileID: 0}
+  attackRadius: 0
+  player:
+    serializedVersion: 2
+    m_Bits: 256
+  enemy:
+    serializedVersion: 2
+    m_Bits: 512
+  chargeSpeed: 300
+  loadDelay: 1
+  restTime: 1
+  chargeDelay: 1.5
+  readyToChargeTimer: 10
+  rb: {fileID: 2044682622}
+  isCharging: 0
+  readyToCharge: 0
+  isFinished: 1

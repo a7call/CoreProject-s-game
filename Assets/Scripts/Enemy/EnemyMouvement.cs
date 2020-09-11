@@ -1,23 +1,29 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyMouvement : MonoBehaviour
 {
-    [SerializeField] protected float moveSpeed;
+
+    [SerializeField] protected EnemyScriptableObject EnemyData;
+
+     protected float moveSpeed;
     [SerializeField] protected Transform[] wayPoints;
      protected Transform targetPoint;
     [SerializeField] protected Transform targetToFollow;
-    [SerializeField] protected float aggroDistance;
-    private int index = 0;
+     protected float aggroDistance;
+     private int index = 0;
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] private bool isPatroling;
 
-    private void Start()
+    protected void Awake()
     {
+        SetData();
         targetPoint = wayPoints[0];
     }
 
     private void Update()
     {
+        
         Patrol();
         Aggro();
     }
@@ -49,6 +55,13 @@ public class EnemyMouvement : MonoBehaviour
             isPatroling = true;
             return;
         }
+    }
+
+    protected void SetData()
+    {
+        moveSpeed = EnemyData.moveSpeed;
+        aggroDistance = EnemyData.aggroDistance;
+
     }
 
 }
