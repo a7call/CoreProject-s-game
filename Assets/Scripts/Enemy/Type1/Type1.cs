@@ -7,7 +7,7 @@ public class Type1 : EnemyMouvement
     private Type1Attack type1Attack;
     private void Start()
     {
-       
+     
         type1Attack = GetComponent<Type1Attack>();
     }
     protected override void Aggro()

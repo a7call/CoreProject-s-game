@@ -14,11 +14,11 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] protected LayerMask player;
     [SerializeField] protected LayerMask enemy;
 
-    private void Start()
+   protected virtual void Start()
     {
         SetData();
     }
-    private void Update()
+    protected virtual void Update()
     {
         GetPlayerPos();
     }

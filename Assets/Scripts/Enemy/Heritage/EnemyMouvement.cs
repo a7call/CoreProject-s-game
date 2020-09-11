@@ -13,7 +13,7 @@ public class EnemyMouvement : MonoBehaviour
      protected float aggroDistance;
      private int index = 0;
     [SerializeField] protected Rigidbody2D rb;
-    [SerializeField] private bool isPatroling;
+    [SerializeField] protected bool isPatroling;
 
     protected void Awake()
     {
@@ -21,7 +21,7 @@ public class EnemyMouvement : MonoBehaviour
         targetPoint = wayPoints[0];
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         
         Patrol();
