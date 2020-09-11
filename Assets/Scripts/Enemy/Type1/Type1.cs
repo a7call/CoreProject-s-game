@@ -7,9 +7,11 @@ public class Type1 : EnemyMouvement
     private Type1Attack type1Attack;
     private void Start()
     {
-     
+     // type1Attack Ref
         type1Attack = GetComponent<Type1Attack>();
     }
+
+    // Aggro si pas entrain de charger
     protected override void Aggro()
     {
         if (!type1Attack.isCharging)
