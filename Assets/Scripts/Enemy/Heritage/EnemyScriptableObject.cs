@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "new Enemy", menuName = "Enemy")]
-public class EnemyScriptableObject : ScriptableObject
+public abstract class EnemyScriptableObject : ScriptableObject
 {
     public float attackRange;
     public float attackRadius;
-    public LayerMask player;
-    public LayerMask enemy;
+    public LayerMask hitLayers;
 
 
     public int maxHealth;

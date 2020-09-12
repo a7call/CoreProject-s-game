@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Type2Mouvement : EnemyMouvement
 {
-
+    [SerializeField] protected Type2ScriptableObject Type2Data;
     public bool isShooting;
 
 
     // Aggro mais ne bouge pas et met à jour l'état de l'énemi
+
+    private void Start()
+    {
+        SetData();
+    }
     protected override void Aggro()
     {
         if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
@@ -24,5 +29,11 @@ public class Type2Mouvement : EnemyMouvement
             isShooting = false;
             return;
         }
+    }
+
+    protected void SetData()
+    {
+        moveSpeed = Type2Data.moveSpeed;
+        aggroDistance = Type2Data.aggroDistance;
     }
 }

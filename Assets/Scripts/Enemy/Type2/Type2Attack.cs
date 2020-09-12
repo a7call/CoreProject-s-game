@@ -7,15 +7,18 @@ using UnityEngine;
 
 public class Type2Attack : EnemyAttack
 {
+    [SerializeField] protected Type2ScriptableObject Type2Data;
+
     private Type2Mouvement type2Mouvement;
     private bool isReadytoShoot = true;
-    public float restTime;
-    public GameObject projetile;
+    private float restTime;
+    private GameObject projetile;
 
     // Ref to Type2Mouvement + base 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
+
+        SetData();
         type2Mouvement = GetComponent<Type2Mouvement>();
       
     }
@@ -51,5 +54,14 @@ public class Type2Attack : EnemyAttack
             StopCoroutine("CanShoot");
             isReadytoShoot = true;
         }
+    }
+
+    protected void SetData()
+    {
+        restTime = Type2Data.restTime;
+        projetile = Type2Data.projetile;
+        attackRange = Type2Data.attackRange;
+        attackRadius = Type2Data.attackRadius;
+        hitLayers = Type2Data.hitLayers;
     }
 }

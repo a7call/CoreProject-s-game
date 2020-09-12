@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Type1 : EnemyMouvement
 {
+
+    [SerializeField] protected Type1ScriptableObject Type1Data;
     private Type1Attack type1Attack;
     private void Start()
     {
-     // type1Attack Ref
+        // type1Attack Ref
+        SetData();
         type1Attack = GetComponent<Type1Attack>();
     }
 
@@ -32,4 +35,10 @@ public class Type1 : EnemyMouvement
        // DO nothing
     }
 
+
+    protected void SetData()
+    {
+        moveSpeed = Type1Data.moveSpeed;
+        aggroDistance = Type1Data.aggroDistance;
+    }
 }

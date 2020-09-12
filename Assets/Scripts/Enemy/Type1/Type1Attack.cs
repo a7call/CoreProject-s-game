@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class Type1Attack : EnemyAttack
 {
-    [SerializeField] private float chargeSpeed;
-    [SerializeField] private float loadDelay;
-    [SerializeField] private float restTime;
-    [SerializeField] private float chargeDelay;
-    [SerializeField] private float readyToChargeTimer;
+    [SerializeField] protected Type1ScriptableObject Type1Data;
+
+    private float chargeSpeed;
+    private float loadDelay;
+    private float restTime;
+    private float chargeDelay;
+    private float readyToChargeTimer;
     public Rigidbody2D rb;
     [SerializeField] public bool isCharging;
     [SerializeField] public bool readyToCharge = false;
     [SerializeField] public bool isFinished = true;
 
 
-
+    protected void Start()
+    {
+        SetData();
+    }
 
     private void FixedUpdate()
     {
         StartCoroutine(Charge());
     }
 
-    private void Update()
+    protected override void Update()
     {
         StartCoroutine(ChargeTimer());
     }
@@ -65,5 +70,16 @@ public class Type1Attack : EnemyAttack
            yield return null;
         }
 
+    }
+    protected void SetData()
+    {
+        chargeSpeed = Type1Data.chargeSpeed;
+        loadDelay = Type1Data.loadDelay;
+        restTime = Type1Data.restTime;
+        chargeDelay = Type1Data.chargeDelay;
+        readyToChargeTimer = Type1Data.readyToChargeTimer;
+        attackRange = Type1Data.attackRange;
+        attackRadius = Type1Data.attackRadius;
+        hitLayers = Type1Data.hitLayers;
     }
 }

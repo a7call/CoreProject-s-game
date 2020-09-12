@@ -4,8 +4,6 @@ using UnityEngine.UIElements;
 public class EnemyMouvement : MonoBehaviour
 {
 
-    [SerializeField] protected EnemyScriptableObject EnemyData;
-
      protected float moveSpeed;
     [SerializeField] protected Transform[] wayPoints;
      protected Transform targetPoint;
@@ -17,7 +15,6 @@ public class EnemyMouvement : MonoBehaviour
 
     protected void Awake()
     {
-        SetData();
         targetPoint = wayPoints[0];
     }
 
@@ -55,13 +52,6 @@ public class EnemyMouvement : MonoBehaviour
             isPatroling = true;
             return;
         }
-    }
-
-    protected void SetData()
-    {
-        moveSpeed = EnemyData.moveSpeed;
-        aggroDistance = EnemyData.aggroDistance;
-
     }
 
 }

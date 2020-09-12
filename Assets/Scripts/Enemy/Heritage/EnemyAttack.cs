@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] protected EnemyScriptableObject EnemyData;
 
 
-    [SerializeField] protected float attackRange;
+    protected float attackRange;
     [SerializeField] protected Transform target;
     [SerializeField] protected Transform attackPoint;
-    [SerializeField] protected float attackRadius;
-    [SerializeField] protected LayerMask player;
-    [SerializeField] protected LayerMask enemy;
+    protected float attackRadius;
+    protected LayerMask hitLayers;
 
-   protected virtual void Start()
-    {
-        SetData();
-    }
+
     protected virtual void Update()
     {
         GetPlayerPos();
@@ -38,12 +33,9 @@ public class EnemyAttack : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-    // CAC attack (TK enable)
+    // CAC attack (TK enable or disable)
     void BaseAttack()
     {
-        LayerMask hitLayers = player | enemy;
-       
-
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
 
         foreach (Collider2D h in hits)
@@ -59,11 +51,4 @@ public class EnemyAttack : MonoBehaviour
         attackPoint.position = new Vector2(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
     }
 
-    private void SetData()
-    {
-        attackRange = EnemyData.attackRange;
-        attackRadius = EnemyData.attackRadius;
-        player = EnemyData.player;
-        enemy = EnemyData.enemy;
-    }
 }

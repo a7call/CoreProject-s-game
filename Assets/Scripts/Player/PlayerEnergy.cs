@@ -8,9 +8,6 @@ public class PlayerEnergy : MonoBehaviour
     public int currentEnergy;
     public bool energyIsReloading = false;
 
-
-
-    // Singleton
     private void Awake()
     {
        
