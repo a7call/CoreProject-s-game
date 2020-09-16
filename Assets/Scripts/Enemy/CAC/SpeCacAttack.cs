@@ -2,38 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Type1Attack : EnemyAttack
+public class SpeCacAttack : Type1Attack
 {
-    [SerializeField] protected Type1ScriptableObject Type1Data;
 
-    private float chargeSpeed;
-    private float loadDelay;
-    private float restTime;
-    private float chargeDelay;
-    private float readyToChargeTimer;
-    public Rigidbody2D rb;
+    [SerializeField] public float chargeSpeed;
+    [SerializeField] public float loadDelay;
+    [SerializeField] public float restTime;
+    [SerializeField] public float chargeDelay;
+    [SerializeField] public float readyToChargeTimer;
     [SerializeField] public bool isCharging;
     [SerializeField] public bool readyToCharge = false;
     [SerializeField] public bool isFinished = true;
 
-
-    protected void Start()
-    {
-        SetData();
-    }
 
     private void FixedUpdate()
     {
         StartCoroutine(Charge());
     }
 
-    protected override void Update()
+    private void Update()
     {
         StartCoroutine(ChargeTimer());
+        GetPlayerPos();
+        isInRange();
     }
 
+    private void Start()
+    {
+        SetData();
+    }
 
-    // Couroutine de la récuperation de la charge
     private IEnumerator ChargeTimer()
     {
         if (isFinished)
@@ -46,7 +44,7 @@ public class Type1Attack : EnemyAttack
             isFinished = true;
 
         }
-       
+
     }
 
 
@@ -60,26 +58,37 @@ public class Type1Attack : EnemyAttack
             yield return new WaitForSeconds(loadDelay);
             Vector3 chargeTarget = target.position;
             Vector3 chargeDir = (chargeTarget - transform.position).normalized;
-            rb.velocity = chargeDir * chargeSpeed * Time.fixedDeltaTime; 
+            rb.velocity = chargeDir * chargeSpeed * Time.fixedDeltaTime;
             yield return new WaitForSeconds(restTime);
             isCharging = false;
 
         }
         else
         {
-           yield return null;
+            yield return null;
         }
 
     }
-    protected void SetData()
+
+    protected override void isInRange()
     {
-        chargeSpeed = Type1Data.chargeSpeed;
-        loadDelay = Type1Data.loadDelay;
-        restTime = Type1Data.restTime;
-        chargeDelay = Type1Data.chargeDelay;
-        readyToChargeTimer = Type1Data.readyToChargeTimer;
-        attackRange = Type1Data.attackRange;
-        attackRadius = Type1Data.attackRadius;
-        hitLayers = Type1Data.hitLayers;
+        base.isInRange();
     }
+
+    protected override void GetPlayerPos()
+    {
+        base.GetPlayerPos();
+    }
+
+    protected override void BaseAttack()
+    {
+        base.BaseAttack();
+    }
+
+    protected override void SetData()
+    {
+        base.SetData();
+    }
+
+   
 }

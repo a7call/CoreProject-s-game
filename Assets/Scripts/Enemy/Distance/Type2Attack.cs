@@ -23,7 +23,7 @@ public class Type2Attack : EnemyAttack
       
     }
 
-    protected override void Update()
+    protected void Update()
     {
 
         StartCoroutine("CanShoot");
@@ -60,8 +60,5 @@ public class Type2Attack : EnemyAttack
     {
         restTime = Type2Data.restTime;
         projetile = Type2Data.projetile;
-        attackRange = Type2Data.attackRange;
-        attackRadius = Type2Data.attackRadius;
-        hitLayers = Type2Data.hitLayers;
     }
 }

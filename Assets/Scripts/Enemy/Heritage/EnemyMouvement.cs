@@ -13,28 +13,23 @@ public class EnemyMouvement : MonoBehaviour
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected bool isPatroling;
 
-    protected void Awake()
-    {
-        targetPoint = wayPoints[0];
-    }
-
-    protected virtual void Update()
-    {
-        
-        Patrol();
-        Aggro();
-    }
+   
 
     // Enemy patrol fonction
     protected virtual void Patrol()
     {
-        Vector3 dir = (targetPoint.position - transform.position).normalized;
-        rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
-        if (Vector3.Distance(transform.position, targetPoint.position) < 1f && isPatroling )
+        if (isPatroling)
         {
-            index = (index + 1) % wayPoints.Length;
-            targetPoint = wayPoints[index];
+            Vector3 dir = (targetPoint.position - transform.position).normalized;
+            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
 
+
+            if (Vector3.Distance(transform.position, targetPoint.position) < 1f)
+            {
+                index = (index + 1) % wayPoints.Length;
+                targetPoint = wayPoints[index];
+
+            }
         }
     }
 
@@ -52,6 +47,11 @@ public class EnemyMouvement : MonoBehaviour
             isPatroling = true;
             return;
         }
+    }
+
+   protected virtual void SetFirstPatrolPoint()
+    {
+        targetPoint = wayPoints[0];
     }
 
 }

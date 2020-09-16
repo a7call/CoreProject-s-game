@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Type1 : EnemyMouvement
+public class SpeCacMouvement : Type1
 {
+    private SpeCacAttack SpeCacAttack;
 
-    [SerializeField] protected Type1ScriptableObject Type1Data;
-    private Type1Attack type1Attack;
+
+
     private void Start()
     {
-        // type1Attack Ref
+        SpeCacAttack = GetComponent<SpeCacAttack>();
         SetData();
-        type1Attack = GetComponent<Type1Attack>();
     }
+    private void Update()
+    {
+        Aggro();
+    }
+
 
     // Aggro si pas entrain de charger
     protected override void Aggro()
     {
-        if (!type1Attack.isCharging)
+        if (!SpeCacAttack.isCharging)
         {
             Vector3 dir = (targetToFollow.position - transform.position).normalized;
             rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
@@ -26,19 +31,17 @@ public class Type1 : EnemyMouvement
         {
             return;
         }
-        
-
-
     }
+
+
     protected override void Patrol()
     {
-       // DO nothing
+        
     }
-
-
-    protected void SetData()
+    protected override void SetData()
     {
-        moveSpeed = Type1Data.moveSpeed;
-        aggroDistance = Type1Data.aggroDistance;
+        base.SetData();
     }
+
+   
 }

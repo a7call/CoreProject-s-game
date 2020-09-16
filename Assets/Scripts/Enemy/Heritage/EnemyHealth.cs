@@ -16,26 +16,21 @@ public class EnemyHealth : MonoBehaviour
         SetMaxHealth();
     }
 
-    private void Update()
-    {
-      
-    }
-
     // Set health to maximum
-    private void SetMaxHealth()
+    protected virtual void SetMaxHealth()
     {
         currentHealth = maxHealth;
     }
 
     // prends les dammages
-    protected void TakeDamage(int _damage)
+    protected virtual void TakeDamage(int _damage)
     {
         currentHealth -= _damage;
         StartCoroutine(WhiteFlash());
     }
 
     // Couroutine white flash on hit
-    protected IEnumerator WhiteFlash()
+    protected virtual IEnumerator WhiteFlash()
     {
 
         spriteRenderer.material = whiteMat;
