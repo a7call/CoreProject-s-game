@@ -15,21 +15,12 @@ public class Type2Attack : EnemyAttack
     private GameObject projetile;
 
     // Ref to Type2Mouvement + base 
-    protected void Start()
+    protected void Awake()
     {
-
-        SetData();
-        type2Mouvement = GetComponent<Type2Mouvement>();
-      
+        type2Mouvement = GetComponent<Type2Mouvement>(); 
     }
 
-    protected void Update()
-    {
-
-        StartCoroutine("CanShoot");
-       // ResetAggro();
-    }
-    private IEnumerator CanShoot()
+    protected virtual IEnumerator CanShoot()
     {
         if (type2Mouvement.isShooting && isReadytoShoot)
         {
@@ -40,14 +31,14 @@ public class Type2Attack : EnemyAttack
         }
     }
     // Instansiate projectiles
-    private void Shoot()
+    protected virtual void Shoot()
     {
         GameObject.Instantiate(projetile, transform.position, Quaternion.identity);
     }
 
 
     // Reset la couroutine CanShoot
-    private void ResetAggro()
+    protected virtual void ResetAggro()
     {
         if (!type2Mouvement.isShooting)
         {
@@ -56,7 +47,7 @@ public class Type2Attack : EnemyAttack
         }
     }
 
-    protected void SetData()
+    protected virtual void SetData()
     {
         restTime = Type2Data.restTime;
         projetile = Type2Data.projetile;

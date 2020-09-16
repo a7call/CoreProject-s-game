@@ -9,11 +9,6 @@ public class Type2Mouvement : EnemyMouvement
 
 
     // Aggro mais ne bouge pas et met à jour l'état de l'énemi
-
-    private void Start()
-    {
-        SetData();
-    }
     protected override void Aggro()
     {
         if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
@@ -31,9 +26,14 @@ public class Type2Mouvement : EnemyMouvement
         }
     }
 
-    protected void SetData()
+    protected virtual void SetData()
     {
         moveSpeed = Type2Data.moveSpeed;
         aggroDistance = Type2Data.aggroDistance;
+    }
+
+    protected override void SetFirstPatrolPoint()
+    {
+        base.SetFirstPatrolPoint();
     }
 }
