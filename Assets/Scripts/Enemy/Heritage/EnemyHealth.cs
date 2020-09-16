@@ -11,10 +11,6 @@ public class EnemyHealth : MonoBehaviour
     protected Material defaultMat;
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
-    private void Start()
-    {
-        SetMaxHealth();
-    }
 
     // Set health to maximum
     protected virtual void SetMaxHealth()

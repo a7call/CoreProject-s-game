@@ -24,6 +24,10 @@ public class BaseCacMouvement : Type1
     {
         base.SetData();
     }
+    protected override void SetFirstPatrolPoint()
+    {
+        base.SetFirstPatrolPoint();
+    }
     private void Start()
     {
         SetFirstPatrolPoint();

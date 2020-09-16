@@ -27,5 +27,6 @@ public class SpeCacHealth : Type1Health
     private void Start()
     {
         SetData();
+        SetMaxHealth();
     }
 }

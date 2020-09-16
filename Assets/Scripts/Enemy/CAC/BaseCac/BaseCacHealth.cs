@@ -28,5 +28,6 @@ public class BaseCacHealth : Type1Health
     private void Start()
     {
         SetData();
+        SetMaxHealth();
     }
 }
