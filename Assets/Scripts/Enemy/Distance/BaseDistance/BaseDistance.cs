@@ -2,20 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeDistanceMouvement : Type2Mouvement
+public class BaseDistance : Distance
 {
 
     private Vector3 dir;
+
     void Start()
     {
         SetFirstPatrolPoint();
         SetData();
+        SetMaxHealth();
     }
     private void Update()
     {
         Aggro();
         Patrol();
+        StartCoroutine("CanShoot");
     }
+
+    protected override void SetData()
+    {
+        base.SetData();
+    }
+
+    // Mouvement
     protected override void Aggro()
     {
         dir = (targetToFollow.position - transform.position).normalized;
@@ -46,8 +56,43 @@ public class SpeDistanceMouvement : Type2Mouvement
         base.SetFirstPatrolPoint();
     }
 
-    protected override void SetData()
+ 
+
+    // Health
+
+    protected override void SetMaxHealth()
     {
-        base.SetData();
+        base.SetMaxHealth();
     }
+
+    protected override void TakeDamage(int _damage)
+    {
+        base.TakeDamage(_damage);
+
+    }
+
+    protected override IEnumerator WhiteFlash()
+    {
+        return base.WhiteFlash();
+    }
+
+
+    // Attack
+
+    protected override IEnumerator CanShoot()
+    {
+        return base.CanShoot();
+    }
+
+    protected override void ResetAggro()
+    {
+        base.ResetAggro();
+    }
+
+
+    protected override void Shoot()
+    {
+        base.Shoot();
+    }
+
 }

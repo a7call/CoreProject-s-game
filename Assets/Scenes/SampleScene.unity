@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &102468141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102468142}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &102468142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102468141}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1272034120}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &129758461
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,16 +502,14 @@ GameObject:
   - component: {fileID: 1272034120}
   - component: {fileID: 1272034119}
   - component: {fileID: 1272034118}
-  - component: {fileID: 1272034117}
-  - component: {fileID: 1272034116}
   - component: {fileID: 1272034115}
   m_Layer: 0
-  m_Name: BaseDistanceEnemy
+  m_Name: SpeCac Enemy
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1272034115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,36 +519,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1272034114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 922e811701449874a90b4a6ff1312f98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  spriteRenderer: {fileID: 1272034118}
-  Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
---- !u!114 &1272034116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1272034114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d0039545b8f62b4b9dc0b4086d7e254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 426600105}
-  Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
---- !u!114 &1272034117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1272034114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab3ad13195b3ae949afb2ee0df2c0367, type: 3}
+  m_Script: {fileID: 11500000, guid: af6e47f81d6a655439c2012c35f11be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wayPoints:
@@ -529,8 +528,20 @@ MonoBehaviour:
   targetToFollow: {fileID: 426600105}
   rb: {fileID: 1272034119}
   isPatroling: 1
-  Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
-  isShooting: 0
+  currentHealth: 0
+  spriteRenderer: {fileID: 1272034118}
+  target: {fileID: 426600105}
+  Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
+  attackPoint: {fileID: 102468142}
+  mobs: {fileID: 1318108716299000364, guid: 7c9e49ba952cc8c4a9c14655408703ff, type: 3}
+  chargeSpeed: 300
+  loadDelay: 1
+  restTime: 1
+  chargeDelay: 1.5
+  readyToChargeTimer: 7
+  isCharging: 0
+  readyToCharge: 0
+  isFinished: 1
 --- !u!212 &1272034118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -613,7 +624,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 102468142}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -628,8 +640,6 @@ GameObject:
   - component: {fileID: 1455258914}
   - component: {fileID: 1455258913}
   - component: {fileID: 1455258912}
-  - component: {fileID: 1455258911}
-  - component: {fileID: 1455258910}
   - component: {fileID: 1455258909}
   m_Layer: 0
   m_Name: SpeDistanceEnnemi
@@ -637,7 +647,7 @@ GameObject:
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1455258909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,7 +657,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1455258908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a21d418f1b25694fa7cec097a29fe74, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d20db9f78484f242bafd9063eacfc2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wayPoints:
@@ -656,37 +666,11 @@ MonoBehaviour:
   targetToFollow: {fileID: 426600105}
   rb: {fileID: 1455258913}
   isPatroling: 1
-  Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
-  isShooting: 0
---- !u!114 &1455258910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1455258908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4841465910abf6449e868be1def6020, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   currentHealth: 0
   spriteRenderer: {fileID: 1455258912}
-  Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
---- !u!114 &1455258911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1455258908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34e7b97c214740a41b02dc3388cbfb2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   target: {fileID: 426600105}
   Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
+  isShooting: 0
   EggsProjectiles: {fileID: 6706752734445780555, guid: ef1a65bc75c036645bc32d4b97d047ff, type: 3}
 --- !u!212 &1455258912
 SpriteRenderer:

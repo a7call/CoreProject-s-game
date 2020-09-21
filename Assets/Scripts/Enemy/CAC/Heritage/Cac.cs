@@ -2,26 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Type1Attack : EnemyAttack
+public class Cac : Enemy
 {
     [SerializeField] protected Type1ScriptableObject Type1Data;
-
-  
-    public Rigidbody2D rb;
-    protected float attackRange;
-    [SerializeField] protected Transform attackPoint;
-    protected float attackRadius;
-    protected LayerMask hitLayers;
-   
-
-    // Couroutine de la récuperation de la charge
-  
     protected virtual void SetData()
     {
         attackRange = Type1Data.attackRange;
         attackRadius = Type1Data.attackRadius;
         hitLayers = Type1Data.hitLayers;
+
+        moveSpeed = Type1Data.moveSpeed;
+        aggroDistance = Type1Data.aggroDistance;
+
+        maxHealth = Type1Data.maxHealth;
+        whiteMat = Type1Data.whiteMat;
+        defaultMat = Type1Data.defaultMat;
     }
+    
+
+    // Mouvement
+
+    protected override void Aggro()
+    {
+        base.Aggro();
+    }
+
+    protected override void SetFirstPatrolPoint()
+    {
+        base.SetFirstPatrolPoint();
+    }
+    protected override void Patrol()
+    {
+        base.Patrol();
+    }
+
+
+
+    // Health
+    protected override void SetMaxHealth()
+    {
+        base.SetMaxHealth();
+    }
+
+    protected override void TakeDamage(int _damage)
+    {
+        base.TakeDamage(_damage);
+    }
+
+    protected override IEnumerator WhiteFlash()
+    {
+        return base.WhiteFlash();
+    }
+
+    protected float attackRange;
+    [SerializeField] protected Transform attackPoint;
+    protected float attackRadius;
+    protected LayerMask hitLayers;
+
+
+
+    //Attack
 
     // Check if PLayer is in Range
     protected virtual void isInRange()
@@ -57,4 +97,7 @@ public class Type1Attack : EnemyAttack
         Vector2 attackDir = target.position - transform.position;
         attackPoint.position = new Vector2(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
     }
+
+
+    
 }

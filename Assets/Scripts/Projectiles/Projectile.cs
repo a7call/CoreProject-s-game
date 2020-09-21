@@ -15,16 +15,6 @@ public class Projectile : MonoBehaviour
         //Get player reference;
        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    private void Start()
-    {
-        GetDirection();
-    }
-
-    private void Update()
-    {
-        Lauch();
-    }
-
 
     // recupère la direction à prendre
     protected virtual void GetDirection()
@@ -38,10 +28,5 @@ public class Projectile : MonoBehaviour
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
-    }
 }
 
