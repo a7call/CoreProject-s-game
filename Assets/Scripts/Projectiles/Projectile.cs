@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
     private Vector3 dir;
     
     
-    private void Awake()
+    protected virtual void Awake()
     {
         //Get player reference;
        target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -27,19 +27,19 @@ public class Projectile : MonoBehaviour
 
 
     // recupère la direction à prendre
-    private void GetDirection()
+    protected virtual void GetDirection()
     {
         dir = (target.position - transform.position).normalized;
     }
 
     //envoie le projectile
-    private void Lauch()
+    protected virtual void Lauch()
     {
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);
     }

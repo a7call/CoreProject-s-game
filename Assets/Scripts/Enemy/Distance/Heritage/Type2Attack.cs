@@ -9,10 +9,10 @@ public class Type2Attack : EnemyAttack
 {
     [SerializeField] protected Type2ScriptableObject Type2Data;
 
-    private Type2Mouvement type2Mouvement;
-    private bool isReadytoShoot = true;
-    private float restTime;
-    private GameObject projetile;
+    protected Type2Mouvement type2Mouvement;
+    protected bool isReadytoShoot = true;
+    protected float restTime;
+    protected GameObject projetile;
 
     // Ref to Type2Mouvement + base 
     protected void Awake()
@@ -52,4 +52,6 @@ public class Type2Attack : EnemyAttack
         restTime = Type2Data.restTime;
         projetile = Type2Data.projetile;
     }
+
+   
 }

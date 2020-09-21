@@ -6,6 +6,7 @@ public class Type2Mouvement : EnemyMouvement
 {
     [SerializeField] protected Type2ScriptableObject Type2Data;
     public bool isShooting;
+   
 
 
     // Aggro mais ne bouge pas et met à jour l'état de l'énemi

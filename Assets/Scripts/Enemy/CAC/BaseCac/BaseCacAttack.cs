@@ -33,6 +33,13 @@ public class BaseCacAttack : Type1Attack
 
     private void Start()
     {
+        FindPlayer(); 
         SetData();
+    }
+
+    // Find player to follow
+    private void FindPlayer()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 }

@@ -6,7 +6,9 @@ public class BaseCacMouvement : Type1
 {
     protected override void Aggro()
     {
-        base.Aggro();
+        Vector3 dir = (targetToFollow.position - transform.position).normalized;
+            isPatroling = false;
+            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
     }
 
     protected override void Patrol()
@@ -17,20 +19,21 @@ public class BaseCacMouvement : Type1
     protected  void Update()
     {
         Aggro();
-        Patrol();
     }
 
     protected override void SetData()
     {
         base.SetData();
     }
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
+    
     private void Start()
     {
-        SetFirstPatrolPoint();
+        FindPlayer();
         SetData();
+    }
+    // Find player to follow
+    private void FindPlayer()
+    {
+        targetToFollow = GameObject.FindGameObjectWithTag("Player").transform;
     }
 }

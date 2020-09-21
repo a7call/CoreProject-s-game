@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpeDistanceMouvement : Type2Mouvement
 {
+
+    private Vector3 dir;
     void Start()
     {
         SetFirstPatrolPoint();
@@ -16,7 +18,21 @@ public class SpeDistanceMouvement : Type2Mouvement
     }
     protected override void Aggro()
     {
-        base.Aggro();
+        dir = (targetToFollow.position - transform.position).normalized;
+
+        if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
+        {
+            isPatroling = false;
+            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
+            rb.velocity = Vector2.zero;
+            isShooting = true;
+        }
+        else
+        {
+            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
+            isShooting = false;
+
+        }
     }
 
 
