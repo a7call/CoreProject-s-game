@@ -5,8 +5,6 @@ using UnityEngine;
 public class BaseDistance : Distance
 {
 
-    private Vector3 dir;
-
     void Start()
     {
         SetFirstPatrolPoint();
@@ -15,9 +13,15 @@ public class BaseDistance : Distance
     }
     private void Update()
     {
+        // récupération de l'aggro
         Aggro();
+        // script de patrol
         Patrol();
+        // suit le path créé et s'arrête pour tirer
+        if(!isShooting ) MoveToPath();
+        // Couroutine gérant les shoots (à modifier)
         StartCoroutine("CanShoot");
+
     }
 
     protected override void SetData()
@@ -28,18 +32,17 @@ public class BaseDistance : Distance
     // Mouvement
     protected override void Aggro()
     {
-        dir = (targetToFollow.position - transform.position).normalized;
 
-        if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
+
+        if (Vector3.Distance(transform.position, target.position) < inSight)
         {
             isPatroling = false;
-            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
+            targetPoint = target;
             rb.velocity = Vector2.zero;
             isShooting = true;
         }
         else
         {
-            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
             isShooting = false;
 
         }

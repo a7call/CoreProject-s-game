@@ -18,6 +18,7 @@ public class SpeCaC : Cac
     }
     private void Update()
     {
+        if(!isCharging && !isInAttackRange) MoveToPath();
         Patrol();
         Aggro();
         StartCoroutine(ChargeTimer());
@@ -39,9 +40,7 @@ public class SpeCaC : Cac
     protected override void Aggro()
     {
 
-        Vector3 dir = (targetToFollow.position - transform.position).normalized;
-
-        if (!isCharging && Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
+        if (!isCharging && Vector3.Distance(transform.position, target.position) < inSight)
         {
             if (!spawned)
             {
@@ -49,7 +48,8 @@ public class SpeCaC : Cac
                 GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
             }
             isPatroling = false;
-            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
+            targetPoint = target;
+
         }
     }
 
@@ -97,7 +97,7 @@ public class SpeCaC : Cac
 
     private IEnumerator ChargeTimer()
     {
-        if (isFinished)
+        if (isFinished && !isPatroling)
         {
             isFinished = false;
             readyToCharge = true;

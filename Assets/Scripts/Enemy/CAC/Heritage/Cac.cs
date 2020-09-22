@@ -5,6 +5,7 @@ using UnityEngine;
 public class Cac : Enemy
 {
     [SerializeField] protected Type1ScriptableObject Type1Data;
+    protected bool isInAttackRange;
     protected virtual void SetData()
     {
         attackRange = Type1Data.attackRange;
@@ -12,7 +13,7 @@ public class Cac : Enemy
         hitLayers = Type1Data.hitLayers;
 
         moveSpeed = Type1Data.moveSpeed;
-        aggroDistance = Type1Data.aggroDistance;
+        inSight = Type1Data.aggroDistance;
 
         maxHealth = Type1Data.maxHealth;
         whiteMat = Type1Data.whiteMat;
@@ -68,7 +69,12 @@ public class Cac : Enemy
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
-            //BaseAttack()
+            isInAttackRange = true;
+            rb.velocity = Vector2.zero;
+        }
+        else
+        {
+            isInAttackRange = false;
         }
     }
 

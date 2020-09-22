@@ -1,32 +1,87 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
-
+    
 
     //Mouvement
     protected float moveSpeed;
     [SerializeField] protected Transform[] wayPoints;
     protected Transform targetPoint;
-    [SerializeField] protected Transform targetToFollow;
-    protected float aggroDistance;
+    protected float inSight;
     private int index = 0;
-    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] protected Transform target;
+    protected Rigidbody2D rb;
     [SerializeField] protected bool isPatroling;
 
 
+    // PathFinding
+
+    public float nextWayPointDistance = 3f;
+
+    Path path;
+    int currentWayPoint;
+    bool reachedEndOfPath;
+    Seeker seeker;
+
+    private void Awake()
+    {
+        seeker = GetComponent<Seeker>();
+        rb = GetComponent<Rigidbody2D>();
+        InvokeRepeating("UpdatePath", 0f, 0.1f);
+    }
+
+    void UpdatePath()
+    {
+        if (seeker.IsDone())
+            seeker.StartPath(transform.position, targetPoint.position, OnPathComplete);
+    }
+
+    void OnPathComplete(Path p)
+    {
+        if (!p.error)
+        {
+            path = p;
+            currentWayPoint = 0;
+        }
+    }
+
+    protected virtual void MoveToPath()
+    {
+        if (path == null)
+        {
+            return;
+        }
+
+        if (currentWayPoint >= path.vectorPath.Count)
+        {
+            reachedEndOfPath = true;
+            return;
+        }
+        else
+        {
+            reachedEndOfPath = false;
+        }
+        Vector2 dir = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
+        Vector2 force = dir * moveSpeed * Time.fixedDeltaTime;
+        rb.velocity = force;
+
+        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);
+        if (distance < nextWayPointDistance)
+        {
+            currentWayPoint++;
+        }
+    }
 
     // Enemy patrol fonction
     protected virtual void Patrol()
     {
         if (isPatroling)
         {
-            Vector3 dir = (targetPoint.position - transform.position).normalized;
-            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
-
-
+            
             if (Vector3.Distance(transform.position, targetPoint.position) < 1f)
             {
                 index = (index + 1) % wayPoints.Length;
@@ -39,16 +94,12 @@ public class Enemy : MonoBehaviour
     // Enemy take Player aggro 
     protected virtual void Aggro()
     {
-        Vector3 dir = (targetToFollow.position - transform.position).normalized;
-        if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
+        if (Vector3.Distance(transform.position, target.position) < inSight)
         {
+
+            targetPoint = target;
             isPatroling = false;
-            rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
-        }
-        else
-        {
-            isPatroling = true;
-            return;
+
         }
     }
 
@@ -96,7 +147,7 @@ public class Enemy : MonoBehaviour
 
     //Attack
 
-    [SerializeField] protected Transform target;
+    
 
 
     void FacePlayer()

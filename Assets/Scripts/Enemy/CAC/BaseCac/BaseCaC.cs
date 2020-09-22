@@ -5,10 +5,12 @@ using UnityEngine;
 public class BaseCaC : Cac
 {
 
-
+    
     private void Start()
     {
+        
         FindPlayer();
+        targetPoint = target;
         SetData();
         SetMaxHealth();
     }
@@ -19,20 +21,19 @@ public class BaseCaC : Cac
         Aggro();
         isInRange();
         GetPlayerPos();
+        if(!isInAttackRange)MoveToPath();
     }
 
     // Find player to follow
     private void FindPlayer()
     {
-        targetToFollow = GameObject.FindGameObjectWithTag("Player").transform;
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
     //Mouvement
     protected override void Aggro()
     {
-        Vector3 dir = (targetToFollow.position - transform.position).normalized;
-        isPatroling = false;
-        rb.velocity = dir * moveSpeed * Time.fixedDeltaTime;
+            isPatroling = false;
+            targetPoint = target;
     }
 
     protected override void Patrol()

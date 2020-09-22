@@ -461,6 +461,92 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1102173626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1102173628}
+  - component: {fileID: 1102173627}
+  m_Layer: 0
+  m_Name: A*
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1102173627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102173626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  data:
+    dataString: UEsDBBQAAAgIAAAIIeyzjxJ1TwIAAPcEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMty2jAU/RVG65KxIQmku9YhpIs8JqSTjTdCvsYaZMmjR4Aw/Huv5Gfd6QpxzrlX5z7kM+HSVMCs0mvNsyeVAfk+If5Mvk168hGOdKfkhn9Bq/ngmS28iAbNG7VcIR77MKNKsJqzH3InvDhC0EmeK12ush0kyliDcE6FAaS0sj5aInSekCP+TO98yAlPs4U/feHpLppc8MhAWtC9tBW2slrlJBO0rCDzlnvxvFXHi6vbIJRYTqOJrq59fiUEN40bYk9VqDahlXFYCwoyTrG6YCG+miNQAN8V1nsdhr/kuQHbGNP0dM81tqnOS36qunclNfva3ScVDjr7dcqnf9hpHOhcq/KxvTWO/A224Gz/Rk+MGjto7RC+HxgPLTpQsadbAR8FyGe11srJDEmrnQ91Bmb3/d+usKQAtu/x2uoIdNX/B+RruITaj4ng5bbrPAIboUK/w/hB42x+oeGwHKZJgah38dvAO90Nt6ghHrg2FqmmSuntbZXTXkpWoWe+GmcTpSUEuDFdgaTCnl4xjR0PcMQNrh0xD9S/l+byhmufwSgkwL0+ikbUqzp0wzKFOjyBKV6cFVxCb9oTz9inRElZ79ewJ23YxumcskHYzvHs79Uit4sFu4Eoj9gy3sbzeLql1/kyossZm7Ob27sbEnaPS6yTitfaaNMenJrsk0vcs/YzMllrWoVdzzQ9rPlXqYYGuczVhmkA+VKn6JyDxlvwYWarjGOHNmAtl2Hg5JwSodgesrS7Mw2lro5W07TPkpKKfyrrkZQk4cORkgu5/AFQSwMEFAAACAgAAAgh7F5CIFhtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tJKZuXmyaapBmkGyhWGSobGhblKiSZqFQaKFUbJxsqmZpalSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAAgh7LOPEnVPAgAA9wQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7F5CIFhtAAAAeAAAAAkAJAAAAAAAAAAAAAAAnAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABUAwAAAAA=
+    upgradeData: 
+    file_cachedStartup: {fileID: 0}
+    data_cachedStartup: 
+    cacheStartup: 0
+  showNavGraphs: 1
+  showUnwalkableNodes: 1
+  debugMode: 0
+  debugFloor: 0
+  debugRoof: 1
+  manualDebugFloorRoof: 0
+  showSearchTree: 0
+  unwalkableNodeDebugSize: 0.3
+  logPathResults: 0
+  maxNearestNodeDistance: 100
+  scanOnStartup: 1
+  fullGetNearestSearch: 0
+  prioritizeGraphs: 0
+  prioritizeGraphsLimit: 1
+  colorSettings:
+    _SolidColor: {r: 0.11764706, g: 0.4, b: 0.7882353, a: 0.9}
+    _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0.5}
+    _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
+    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
+    _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
+    _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
+    _AreaColors:
+    - {r: 0, g: 0, b: 0, a: 0}
+  tagNames: []
+  heuristic: 2
+  heuristicScale: 1
+  threadCount: 1
+  maxFrameTime: 10
+  batchGraphUpdates: 0
+  graphUpdateBatchingInterval: 0.2
+  euclideanEmbedding:
+    mode: 0
+    seed: 0
+    pivotPointRoot: {fileID: 0}
+    spreadOutCount: 1
+  showGraphs: 1
+--- !u!4 &1102173628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102173626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.86600816, y: 0.63802063, z: -7.8921666}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1229324358
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,14 +588,15 @@ GameObject:
   - component: {fileID: 1272034120}
   - component: {fileID: 1272034119}
   - component: {fileID: 1272034118}
+  - component: {fileID: 1272034116}
   - component: {fileID: 1272034115}
   m_Layer: 0
-  m_Name: SpeCac Enemy
+  m_Name: BaseCac Enemy
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1272034115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,29 +606,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 1272034114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6e47f81d6a655439c2012c35f11be6, type: 3}
+  m_Script: {fileID: 11500000, guid: 914328e5cd73d7b41bfcb41e388228e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPoints:
-  - {fileID: 1946099678}
-  - {fileID: 2076886857}
-  targetToFollow: {fileID: 426600105}
-  rb: {fileID: 1272034119}
-  isPatroling: 1
+  wayPoints: []
+  target: {fileID: 426600105}
+  isPatroling: 0
+  nextWayPointDistance: 3
   currentHealth: 0
   spriteRenderer: {fileID: 1272034118}
-  target: {fileID: 426600105}
   Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
   attackPoint: {fileID: 102468142}
-  mobs: {fileID: 1318108716299000364, guid: 7c9e49ba952cc8c4a9c14655408703ff, type: 3}
-  chargeSpeed: 300
-  loadDelay: 1
-  restTime: 1
-  chargeDelay: 1.5
-  readyToChargeTimer: 7
-  isCharging: 0
-  readyToCharge: 0
-  isFinished: 1
+--- !u!114 &1272034116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272034114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!212 &1272034118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -640,14 +743,15 @@ GameObject:
   - component: {fileID: 1455258914}
   - component: {fileID: 1455258913}
   - component: {fileID: 1455258912}
+  - component: {fileID: 1455258910}
   - component: {fileID: 1455258909}
   m_Layer: 0
-  m_Name: SpeDistanceEnnemi
+  m_Name: BaseDistanceEnnemi
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1455258909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,21 +761,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 1455258908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d20db9f78484f242bafd9063eacfc2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0053cb8c988c3f2409689e9a52db3931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wayPoints:
   - {fileID: 1946099678}
   - {fileID: 2076886857}
-  targetToFollow: {fileID: 426600105}
-  rb: {fileID: 1455258913}
+  target: {fileID: 426600105}
   isPatroling: 1
+  nextWayPointDistance: 3
   currentHealth: 0
   spriteRenderer: {fileID: 1455258912}
-  target: {fileID: 426600105}
   Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
   isShooting: 0
-  EggsProjectiles: {fileID: 6706752734445780555, guid: ef1a65bc75c036645bc32d4b97d047ff, type: 3}
+--- !u!114 &1455258910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455258908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!212 &1455258912
 SpriteRenderer:
   m_ObjectHideFlags: 0

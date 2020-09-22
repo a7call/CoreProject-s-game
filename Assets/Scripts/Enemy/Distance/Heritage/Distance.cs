@@ -11,7 +11,7 @@ public class Distance : Enemy
     protected virtual void SetData()
     {
         moveSpeed = Type2Data.moveSpeed;
-        aggroDistance = Type2Data.aggroDistance;
+        inSight = Type2Data.aggroDistance;
 
 
         maxHealth = Type2Data.maxHealth;
@@ -27,14 +27,16 @@ public class Distance : Enemy
     //Mouvement
 
 
-    // Aggro mais ne bouge pas et met à jour l'état de l'énemi
+    // Aggro s'arrete pour tirer et suit le player si plus à porté (à modifier) retourne patrouiller si plus à distance
     protected override void Aggro()
     {
-        if (Vector3.Distance(transform.position, targetToFollow.position) < aggroDistance)
+        if (Vector3.Distance(transform.position, target.position) < inSight)
         {
-            isPatroling = false;
-            rb.velocity = Vector2.zero;
             isShooting = true;
+            isPatroling = false;
+            targetPoint = target;
+            rb.velocity = Vector2.zero;
+            
 
         }
         else
