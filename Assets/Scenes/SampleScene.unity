@@ -606,17 +606,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1272034114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 914328e5cd73d7b41bfcb41e388228e2, type: 3}
+  m_Script: {fileID: 11500000, guid: af6e47f81d6a655439c2012c35f11be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPoints: []
-  target: {fileID: 426600105}
-  isPatroling: 0
   nextWayPointDistance: 3
+  wayPoints:
+  - {fileID: 1946099678}
+  - {fileID: 2076886857}
+  target: {fileID: 426600105}
+  isPatroling: 1
   currentHealth: 0
   spriteRenderer: {fileID: 1272034118}
   Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
   attackPoint: {fileID: 102468142}
+  mobs: {fileID: 0}
+  chargeSpeed: 300
+  loadDelay: 1
+  restTime: 1
+  readyToChargeTimer: 6
+  isCharging: 0
+  readyToCharge: 1
+  isFinished: 1
 --- !u!114 &1272034116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,19 +771,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1455258908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0053cb8c988c3f2409689e9a52db3931, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d20db9f78484f242bafd9063eacfc2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextWayPointDistance: 3
   wayPoints:
   - {fileID: 1946099678}
   - {fileID: 2076886857}
   target: {fileID: 426600105}
   isPatroling: 1
-  nextWayPointDistance: 3
   currentHealth: 0
   spriteRenderer: {fileID: 1455258912}
   Type2Data: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
   isShooting: 0
+  EggsProjectiles: {fileID: 6706752734445780555, guid: ef1a65bc75c036645bc32d4b97d047ff, type: 3}
+  reloadSpe: 7
 --- !u!114 &1455258910
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,27 +5,14 @@ using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
-    
-
-    //Mouvement
-    protected float moveSpeed;
-    [SerializeField] protected Transform[] wayPoints;
-    protected Transform targetPoint;
-    protected float inSight;
-    private int index = 0;
-    [SerializeField] protected Transform target;
-    protected Rigidbody2D rb;
-    [SerializeField] protected bool isPatroling;
-
 
     // PathFinding
-
     public float nextWayPointDistance = 3f;
-
     Path path;
     int currentWayPoint;
     bool reachedEndOfPath;
     Seeker seeker;
+
 
     private void Awake()
     {
@@ -33,6 +20,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.1f);
     }
+
 
     void UpdatePath()
     {
@@ -76,12 +64,36 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+
+
+    //Mouvement
+    protected float moveSpeed;
+    // Array de point pour patrouille
+    [SerializeField] protected Transform[] wayPoints;
+    // Destination pour patrouille
+    protected Transform targetPoint;
+    // Index de l'array
+    private int index = 0;
+    // Distance ou l'ennemi repère le joueur
+    protected float inSight;
+    // Player
+    [SerializeField] protected Transform target;
+    
+    protected Rigidbody2D rb;
+    // boolean check if Patroling
+    [SerializeField] protected bool isPatroling;
+
+
+  
+
     // Enemy patrol fonction
     protected virtual void Patrol()
     {
+        // si en mode patrouille
         if (isPatroling)
         {
-            
+            // Check la distance en lui et le prochain point (puis change de point)
             if (Vector3.Distance(transform.position, targetPoint.position) < 1f)
             {
                 index = (index + 1) % wayPoints.Length;
@@ -94,15 +106,17 @@ public class Enemy : MonoBehaviour
     // Enemy take Player aggro 
     protected virtual void Aggro()
     {
+        // SUit le joueur si il est en vu
         if (Vector3.Distance(transform.position, target.position) < inSight)
         {
-
+            // Change de target 
             targetPoint = target;
+            // Desactive le mode patrouille
             isPatroling = false;
 
         }
     }
-
+    // Set le premier point de patrouille
     protected virtual void SetFirstPatrolPoint()
     {
         targetPoint = wayPoints[0];
@@ -112,11 +126,14 @@ public class Enemy : MonoBehaviour
 
     //Health
 
-
+    // Vie actuelle
     [SerializeField] protected int currentHealth;
+    // Vie initial
     protected int maxHealth;
+    // Material d'indication pour un ennemi touché
     protected Material whiteMat;
     protected Material defaultMat;
+    // sprite rendered de l'ennemi
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
 
@@ -149,7 +166,7 @@ public class Enemy : MonoBehaviour
 
     
 
-
+    // Face le player quand il le suit
     void FacePlayer()
     {
         //to do

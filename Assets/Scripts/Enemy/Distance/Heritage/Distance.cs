@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Distance : Enemy
 {
+    // Scriptable Object
     [SerializeField] protected Type2ScriptableObject Type2Data;
+    // Check si tire
     public bool isShooting;
 
 
@@ -27,28 +29,34 @@ public class Distance : Enemy
     //Mouvement
 
 
-    // Aggro s'arrete pour tirer et suit le player si plus à porté (à modifier) retourne patrouiller si plus à distance
+    // Aggro s'arrete pour tirer et ne bouge pas (à modifier) retourne patrouiller si plus à distance
     protected override void Aggro()
     {
         if (Vector3.Distance(transform.position, target.position) < inSight)
         {
+            // l'ennemi commence à tirer
             isShooting = true;
+            // l'ennemi ne patrouille plus 
             isPatroling = false;
+            // set the target to player
             targetPoint = target;
+            // ne bouge plus
             rb.velocity = Vector2.zero;
             
 
         }
         else
         {
+            // retourne patrouiller
             isPatroling = true;
+            // ne tire plus
             isShooting = false;
             return;
         }
     }
 
-   
 
+    // Voir Enemy.cs (héritage)
     protected override void SetFirstPatrolPoint()
     {
         base.SetFirstPatrolPoint();
@@ -58,17 +66,19 @@ public class Distance : Enemy
 
     // Health
 
-
+    // Voir Enemy.cs (héritage)
     protected override void SetMaxHealth()
     {
         base.SetMaxHealth();
     }
 
+    // Voir Enemy.cs (héritage)
     protected override void TakeDamage(int _damage)
     {
         base.TakeDamage(_damage);
     }
 
+    // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()
     {
         return base.WhiteFlash();
@@ -78,11 +88,14 @@ public class Distance : Enemy
 
     // Attack
 
+
+    // Check si prêt à tirer
     protected bool isReadytoShoot = true;
+    // Repos après tire
     protected float restTime;
+    // Projectile to instantiate
     protected GameObject projetile;
 
-    // Ref to Type2Mouvement + base 
 
     protected virtual IEnumerator CanShoot()
     {
@@ -101,7 +114,7 @@ public class Distance : Enemy
     }
 
 
-    // Reset la couroutine CanShoot
+    // Reset la couroutine CanShoot ( Non ultilisé)
     protected virtual void ResetAggro()
     {
         if (isShooting)

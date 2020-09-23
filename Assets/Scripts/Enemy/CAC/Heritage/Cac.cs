@@ -1,11 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cac : Enemy
 {
     [SerializeField] protected Type1ScriptableObject Type1Data;
-    protected bool isInAttackRange;
+   
+
+   // Set data du scriptable object Type1Data
     protected virtual void SetData()
     {
         attackRange = Type1Data.attackRange;
@@ -23,15 +24,18 @@ public class Cac : Enemy
 
     // Mouvement
 
+    // Voir Enemy.cs (héritage)
     protected override void Aggro()
     {
         base.Aggro();
     }
 
+    // Voir Enemy.cs (héritage)
     protected override void SetFirstPatrolPoint()
     {
         base.SetFirstPatrolPoint();
     }
+    // Voir Enemy.cs (héritage)
     protected override void Patrol()
     {
         base.Patrol();
@@ -40,29 +44,41 @@ public class Cac : Enemy
 
 
     // Health
+
+    // Voir Enemy.cs (héritage)
     protected override void SetMaxHealth()
     {
         base.SetMaxHealth();
     }
 
+
+    // Voir Enemy.cs (héritage)
     protected override void TakeDamage(int _damage)
     {
         base.TakeDamage(_damage);
     }
 
+
+    // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()
     {
         return base.WhiteFlash();
     }
 
-    protected float attackRange;
-    [SerializeField] protected Transform attackPoint;
-    protected float attackRadius;
-    protected LayerMask hitLayers;
-
-
-
     //Attack
+
+    // Distance d'où l'ennemi peu lancer une attaque
+    protected float attackRange;
+    // Centre du rayon de l'attaque de l'ennemi
+    [SerializeField] protected Transform attackPoint;
+    // Rayon d'attaque de l'ennemi
+    protected float attackRadius;
+    // Layers subissant l'attaque de l'ennemi
+    protected LayerMask hitLayers;
+    // Check si l'ennemi est en range d'attaque
+    protected bool isInAttackRange;
+
+
 
     // Check if PLayer is in Range
     protected virtual void isInRange()
