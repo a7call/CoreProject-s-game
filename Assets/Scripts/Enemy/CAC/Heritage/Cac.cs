@@ -41,6 +41,11 @@ public class Cac : Enemy
         base.Patrol();
     }
 
+    protected override void PlayerInSight()
+    {
+        base.PlayerInSight();
+    }
+
 
 
     // Health
@@ -85,12 +90,11 @@ public class Cac : Enemy
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
-            isInAttackRange = true;
-            rb.velocity = Vector2.zero;
+            currentState = State.Attacking;
         }
         else
         {
-            isInAttackRange = false;
+            currentState = State.Chasing;
         }
     }
 
@@ -98,6 +102,7 @@ public class Cac : Enemy
     // CAC attack (TK enable or disable)
     protected virtual void BaseAttack()
     {
+        rb.velocity = Vector2.zero;
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
 
         foreach (Collider2D h in hits)

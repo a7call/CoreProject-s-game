@@ -5,6 +5,13 @@ using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
+    protected State currentState;
+    protected enum State
+    {
+        Patrolling,
+        Chasing,
+        Attacking,
+    }
 
     // PathFinding
     public float nextWayPointDistance = 3f;
@@ -12,6 +19,7 @@ public class Enemy : MonoBehaviour
     int currentWayPoint;
     bool reachedEndOfPath;
     Seeker seeker;
+
 
 
     private void Awake()
@@ -90,9 +98,6 @@ public class Enemy : MonoBehaviour
     // Enemy patrol fonction
     protected virtual void Patrol()
     {
-        // si en mode patrouille
-        if (isPatroling)
-        {
             // Check la distance en lui et le prochain point (puis change de point)
             if (Vector3.Distance(transform.position, targetPoint.position) < 1f)
             {
@@ -100,21 +105,17 @@ public class Enemy : MonoBehaviour
                 targetPoint = wayPoints[index];
 
             }
-        }
     }
-
+    protected virtual void PlayerInSight()
+    {
+        if (Vector3.Distance(transform.position, target.position) < inSight) currentState = State.Chasing;
+    }
     // Enemy take Player aggro 
     protected virtual void Aggro()
     {
-        // SUit le joueur si il est en vu
-        if (Vector3.Distance(transform.position, target.position) < inSight)
-        {
+        if(currentState == State.Chasing)
             // Change de target 
             targetPoint = target;
-            // Desactive le mode patrouille
-            isPatroling = false;
-
-        }
     }
     // Set le premier point de patrouille
     protected virtual void SetFirstPatrolPoint()

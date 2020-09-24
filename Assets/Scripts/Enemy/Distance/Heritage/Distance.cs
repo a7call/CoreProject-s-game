@@ -23,6 +23,7 @@ public class Distance : Enemy
 
         restTime = Type2Data.restTime;
         projetile = Type2Data.projetile;
+        attackRange = Type2Data.attackRange;
     }
 
 
@@ -34,26 +35,37 @@ public class Distance : Enemy
     {
         if (Vector3.Distance(transform.position, target.position) < inSight)
         {
-            // l'ennemi commence à tirer
-            isShooting = true;
-            // l'ennemi ne patrouille plus 
-            isPatroling = false;
-            // set the target to player
             targetPoint = target;
-            // ne bouge plus
-            rb.velocity = Vector2.zero;
-            
-
         }
         else
         {
             // retourne patrouiller
-            isPatroling = true;
-            // ne tire plus
-            isShooting = false;
+            currentState = State.Patrolling;
             return;
         }
     }
+
+    protected override void PlayerInSight()
+    {
+        if (Vector3.Distance(transform.position, target.position) < inSight) 
+            currentState = State.Chasing;
+    }
+
+    protected virtual void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+            isShooting = true;
+            rb.velocity = Vector2.zero;
+        }
+        else
+        {
+            currentState = State.Chasing;
+            isShooting = false;
+        }
+    }
+
 
 
     // Voir Enemy.cs (héritage)
@@ -95,6 +107,7 @@ public class Distance : Enemy
     protected float restTime;
     // Projectile to instantiate
     protected GameObject projetile;
+    protected float attackRange;
 
 
     protected virtual IEnumerator CanShoot()

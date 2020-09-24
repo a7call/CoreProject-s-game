@@ -7,6 +7,7 @@ public class BaseDistance : Distance
 
     void Start()
     {
+        currentState = State.Patrolling;
         // Set premier targetPoint
         SetFirstPatrolPoint();
         // Set data
@@ -16,14 +17,27 @@ public class BaseDistance : Distance
     }
     private void Update()
     {
-        // récupération de l'aggro
-        Aggro();
-        // script de patrol
-        Patrol();
-        // suit le path créé et s'arrête pour tirer
-        if(!isShooting ) MoveToPath();
-        // Couroutine gérant les shoots 
-        StartCoroutine("CanShoot");
+        switch (currentState)
+        {
+            case State.Patrolling:
+                // script de patrol
+                Patrol();
+                PlayerInSight();
+                MoveToPath();
+                break;
+            case State.Chasing:
+                // récupération de l'aggro
+                Aggro();
+                isInRange();
+                // suit le path créé et s'arrête pour tirer
+                MoveToPath();
+                break;
+            case State.Attacking:
+                isInRange();
+                // Couroutine gérant les shoots 
+                StartCoroutine("CanShoot");
+                break;
+        }
 
     }
 
@@ -37,25 +51,17 @@ public class BaseDistance : Distance
     // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
     protected override void Aggro()
     {
-
-
-        if (Vector3.Distance(transform.position, target.position) < inSight)
-        {
-            // Stop patrouiller
-            isPatroling = false;
-            // Target = player
             targetPoint = target;
-            // Stop to shoot
-            rb.velocity = Vector2.zero;
-            // Entrain de shoot
-            isShooting = true;
-        }
-        else
-        {
-            // S'arrete de tirer popur suivre le joueur
-            isShooting = false;
+    }
 
-        }
+    protected override void PlayerInSight()
+    {
+        base.PlayerInSight();
+    }
+
+    protected override void isInRange()
+    {
+        base.isInRange();
     }
 
     // Voir Enemy.cs (héritage)

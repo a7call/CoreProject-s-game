@@ -7,6 +7,7 @@ public class BaseCaC : Cac
     
     private void Start()
     {
+        currentState = State.Chasing;
         // Get player référence
         FindPlayer();
         // Set target
@@ -20,14 +21,23 @@ public class BaseCaC : Cac
 
     protected void Update()
     {
-        // Check la distance et aggro si à distance
-        Aggro();
-        // Check la distance et attaque si à distance
-        isInRange();
-        // récupère la posotion de joueur
-        GetPlayerPos();
-        // Folllow player ou patrouille si n'attaque pas 
-        if(!isInAttackRange)MoveToPath();
+        switch (currentState) {
+        default: 
+        case State.Chasing:
+                Aggro();
+                isInRange();
+                MoveToPath();
+
+            break;
+
+        case State.Attacking:
+                GetPlayerPos();
+                BaseAttack();
+                isInRange();
+                break;
+           
+        }
+
     }
 
     // Find player to follow
@@ -40,7 +50,6 @@ public class BaseCaC : Cac
     // Override fonction Aggro ( Enemy.cs)  => aggro à l'initialisation
     protected override void Aggro()
     {
-            isPatroling = false;
             targetPoint = target;
     }
 

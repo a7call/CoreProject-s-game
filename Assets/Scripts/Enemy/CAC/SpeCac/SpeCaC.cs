@@ -14,6 +14,7 @@ public class SpeCaC : Cac
 
     private void Start()
     {
+        currentState = State.Patrolling;
         // Set data
         SetData();
         // Set initial targetPoint
@@ -23,18 +24,29 @@ public class SpeCaC : Cac
     }
     private void Update()
     {
-        // Suit player si n'attaque pas et ne charge pas 
-        if(!isCharging && !isInAttackRange) MoveToPath();
-        // Patrouille
-        Patrol();
-        // Voir fonction
-        Aggro();
-        // Voir fonction
-        StartCoroutine(Charge());
-        // Check player position 
-        GetPlayerPos();
-        // Check distance pour attaque
-        isInRange();
+        switch (currentState)
+        {
+            case State.Patrolling:
+                MoveToPath();
+                Patrol();
+                PlayerInSight();
+                break;
+
+            case State.Chasing:
+                Aggro();
+                if(!isCharging) MoveToPath();
+                StartCoroutine(Charge());
+                isInRange();
+                break;
+
+            case State.Attacking:
+                BaseAttack();
+                GetPlayerPos();
+                isInRange();
+                break;
+
+
+        }       
 
     }
 
@@ -49,24 +61,23 @@ public class SpeCaC : Cac
     // Aggro si pas entrain de charger + Intentiate trash (BaseCaC.cs) 
     protected override void Aggro()
     {
-
-        if (!isCharging && Vector3.Distance(transform.position, target.position) < inSight)
-        {
             if (!spawned)
             {
                 spawned = true;
                 GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
             }
-            isPatroling = false;
             targetPoint = target;
-
-        }
     }
 
     // Voir Enemy.cs (héritage)
     protected override void Patrol()
     {
         base.Patrol();
+    }
+
+    protected override void PlayerInSight()
+    {
+        base.PlayerInSight();
     }
 
     // Voir Enemy.cs (héritage)
@@ -105,14 +116,13 @@ public class SpeCaC : Cac
     [SerializeField] public float restTime;
     [SerializeField] public float readyToChargeTimer;
     [SerializeField] public bool isCharging;
-    [SerializeField] public bool readyToCharge = false;
-    [SerializeField] public bool isFinished = true;
+    [SerializeField] public bool readyToCharge = true;
 
 
     // Couroutine de la charge 
     private IEnumerator Charge()
     {
-        if (readyToCharge && !isCharging &&!isPatroling)
+        if (readyToCharge && !isCharging )
         {
             // Ne peut plus charger
             readyToCharge = false;

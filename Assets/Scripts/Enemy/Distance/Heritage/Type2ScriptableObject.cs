@@ -8,4 +8,5 @@ public class Type2ScriptableObject : EnemyScriptableObject
 {
     public float restTime;
     public GameObject projetile;
+    public float attackRange;
 }
