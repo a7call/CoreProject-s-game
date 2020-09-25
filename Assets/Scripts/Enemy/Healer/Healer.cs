@@ -72,11 +72,9 @@ public class Healer : Enemy
        
     }
 
-    // A revoir !
+    // A revoir ! si monstre detruit ? 
     private IEnumerator HealEnnemiCo(GameObject _ennemiToHeal, int _amountToHeal)
     {
-
-
         while (_ennemiToHeal.GetComponent<Enemy>().currentHealth < _ennemiToHeal.GetComponent<Enemy>().maxHealth)
         {
             _ennemiToHeal.GetComponent<Enemy>().currentHealth += _amountToHeal;
