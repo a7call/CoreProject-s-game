@@ -5,8 +5,8 @@ using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
-    protected State currentState;
-    protected enum State
+    public State currentState;
+    public enum State
     {
         Patrolling,
         Chasing,
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    void UpdatePath()
+   protected virtual void UpdatePath()
     {
         if (seeker.IsDone())
             seeker.StartPath(transform.position, targetPoint.position, OnPathComplete);
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
 
 
     //Mouvement
-    protected float moveSpeed;
+    public float moveSpeed;
     // Array de point pour patrouille
     [SerializeField] protected Transform[] wayPoints;
     // Destination pour patrouille
@@ -87,10 +87,8 @@ public class Enemy : MonoBehaviour
     protected float inSight;
     // Player
     [SerializeField] protected Transform target;
-    
     protected Rigidbody2D rb;
-    // boolean check if Patroling
-    [SerializeField] protected bool isPatroling;
+
 
 
   
@@ -128,9 +126,9 @@ public class Enemy : MonoBehaviour
     //Health
 
     // Vie actuelle
-    [SerializeField] protected int currentHealth;
+    public int currentHealth;
     // Vie initial
-    protected int maxHealth;
+    public int maxHealth;
     // Material d'indication pour un ennemi touché
     protected Material whiteMat;
     protected Material defaultMat;
