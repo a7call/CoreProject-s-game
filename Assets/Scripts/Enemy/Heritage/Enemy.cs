@@ -147,6 +147,10 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= _damage;
         StartCoroutine(WhiteFlash());
+        if (currentHealth < 1)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Couroutine white flash on hit
