@@ -8,7 +8,10 @@ public class Healer : Enemy
     protected int amountToheal;
     protected bool startHealing = false;
     protected bool hasFinished = true;
-    [SerializeField] protected float healCd;
+    GameObject nouveauCandidat;
+    GameObject EnnemiHealed;
+    Coroutine mycouroutine;
+   [SerializeField] protected float healCd;
 
     private void Start()
     {
@@ -19,6 +22,7 @@ public class Healer : Enemy
     private void Update()
     {
         GetEnnemiToHeal();
+        checkEnnemiDestroyed(EnnemiHealed);
     }
 
     protected override void UpdatePath()
@@ -35,7 +39,7 @@ public class Healer : Enemy
         GameObject[] ennemiArray = ennemies.ToArray();
             for (int i = 0; i < ennemiArray.Length; i++)
             {
-                GameObject nouveauCandidat = ennemiArray[i];
+                nouveauCandidat = ennemiArray[i];
                 hasFinished = false;
 
                 if(nouveauCandidat == null)
@@ -62,10 +66,12 @@ public class Healer : Enemy
                 
                 if (nouveauCandidat.GetComponent<Enemy>().currentHealth < lowerEnnemiHealth && startHealing)
                 {
-                    
+                    EnnemiHealed = nouveauCandidat;
                     lowerEnnemiHealth = nouveauCandidat.GetComponent<Enemy>().currentHealth;
-                     StartCoroutine(HealEnnemiCo(nouveauCandidat, 1));
-                    
+                    mycouroutine = StartCoroutine(HealEnnemiCo(EnnemiHealed, 1));
+                     
+
+
                 }
             }
         }
@@ -79,15 +85,20 @@ public class Healer : Enemy
         {
             _ennemiToHeal.GetComponent<Enemy>().currentHealth += _amountToHeal;
             yield return new WaitForSeconds(healCd);
-            if (_ennemiToHeal == null)
-            {
-                hasFinished = true;
-                yield break;
-            }
         }
-
         hasFinished = true;
         yield return null;
+    }
+
+
+    private void checkEnnemiDestroyed(GameObject _ennemiToHeal)
+    {
+        if (_ennemiToHeal == null && startHealing)
+        {
+            hasFinished = true;
+            StopCoroutine(mycouroutine);
+        }
+        else return;
     }
 
 }
