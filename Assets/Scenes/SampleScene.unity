@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   nextWayPointDistance: 3
-  moveSpeed: 0
+  moveSpeed: 250
   wayPoints:
   - {fileID: 1946099678}
   - {fileID: 2076886857}
@@ -1013,6 +1013,9 @@ MonoBehaviour:
   ennemies:
   - {fileID: 1455258908}
   - {fileID: 1272034114}
+  startHealing: 0
+  hasFinished: 1
+  healingDistance: 2
   healCd: 4
 --- !u!4 &1656415356
 Transform:
@@ -1022,7 +1025,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656415352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.60108376, y: 0.38497505, z: -12.342057}
+  m_LocalPosition: {x: 5.79, y: -1.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
