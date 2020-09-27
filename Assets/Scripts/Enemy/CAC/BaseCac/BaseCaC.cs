@@ -25,7 +25,7 @@ public class BaseCaC : Cac
         default: 
         case State.Chasing:
                 Aggro();
-                
+                isInRange();
                 MoveToPath();
 
             break;
