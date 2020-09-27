@@ -24,7 +24,7 @@ public class BaseCaC : Cac
         switch (currentState) {
         default: 
         case State.Chasing:
-                
+                Aggro();
                 isInRange();
                 MoveToPath();
 
