@@ -28,6 +28,7 @@ public class Projectile : MonoBehaviour
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
+    // Calcul la distance à laquelle se situe le projectile du joueur
     protected virtual void CalculDistance()
     {
         distance = Vector3.Distance(target.position, transform.position);

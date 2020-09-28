@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SpeedIncreaseProjectile : Projectile
 {
-    public float speedIncreasing;
+    private float speedIncreasing;
+    private float time = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,20 +19,19 @@ public class SpeedIncreaseProjectile : Projectile
         CalculDistance();
         IncreasingSpeed();
         Lauch();
-        print(distance + " et la vitesse " + speedIncreasing);
     }
 
-    // Calculer intelligement cette fonction
+    // Fonction qui augmente la vitesse du tir lorsque le projectile se rapproche du joueur toutes les times secondes
     private void IncreasingSpeed()
     {
-        if (distance < 2)
-        {
-            speedIncreasing = 25;
-        }
-        else
-        {
-            speedIncreasing = speed;
-        }
+        speedIncreasing = speed/distance;
+        StartCoroutine(WaitingTime());
+    }
+
+    // Coroutine pour espacer la durée d'accroissement de vitesse du tir
+    private IEnumerator WaitingTime()
+    {
+        yield return new WaitForSeconds(time);
     }
 
     protected override void Lauch()
