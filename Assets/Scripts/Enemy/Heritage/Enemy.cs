@@ -2,7 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-
+/// <summary>
+/// Classe mère des ennemis 
+/// Elle contient une enum permettant d'indiquer le Sate de l'ennemi
+/// Elle contient des fonctions permettant de gerer le pathfinding (UpdatePath() + MovetoPath() + OnPathComplete(Path p)). Pour avoir des détails se référer à Lopez
+/// Une fonction de patrouille
+/// Une fonction permettant de de suivre le joueur si il est en range d'aggro
+/// Une fonction permmettant de savoir si le joueur est en range d'aggro
+/// Une fonction permettant d'initialiser le premier point de patrouille
+/// Les fonction nécessaire à la gestion de la vie de l'ennemi ( se référer à Lopez ou au tuto FR)
+/// </summary>
 public class Enemy : MonoBehaviour
 {
     public State currentState;

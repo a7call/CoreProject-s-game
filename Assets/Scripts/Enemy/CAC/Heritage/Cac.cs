@@ -1,6 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
+
+/// <summary>
+/// Classe mère des Cac et fille de Enemy.cs
+/// Elle contient la methode SetData qui permet de recuperer les datas du scriptable object
+/// Une fontion permettant de savoir si l'ennemi est en range pour lancer une attaque
+/// Une fonction d'attaque de base 
+/// Une fonction récupérant la position du joueur
+/// </summary>
+
+
+
 public class Cac : Enemy
 {
     [SerializeField] protected Type1ScriptableObject Type1Data;

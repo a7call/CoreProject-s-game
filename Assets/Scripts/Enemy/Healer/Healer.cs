@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+///  Classe mère des Healers et héritière de Enemy.cs
+///  Elle contient  la liste des ennemis que le healer peut soigner
+///  Une fonction permettant de trouver un ennemi à heal 
+///  Une coroutine de heal 
+///  Une fonction permettant de repérer la destruction d'un ennemi
+///  Une fonction renvoyant un bool qui montre si le healer est à porté de heal 
+/// </summary>
 public class Healer : Enemy
 {
     // Liste des ennemies que le healer peut heal
@@ -35,6 +43,8 @@ public class Healer : Enemy
         targetPoint = transform;
 
     }
+
+    // à replacer au bon endroit 
     private void Update()
     {
         switch(currentState)
@@ -202,4 +212,47 @@ public class Healer : Enemy
         
     }
 
+
+
+
+    // Héritage 
+
+    protected override void Aggro()
+    {
+        base.Aggro();
+    }
+    protected override void MoveToPath()
+    {
+        base.MoveToPath();
+    }
+
+    protected override void Patrol()
+    {
+        base.Patrol();
+    }
+
+    protected override void SetFirstPatrolPoint()
+    {
+        base.SetFirstPatrolPoint();
+    }
+
+    protected override void SetMaxHealth()
+    {
+        base.SetMaxHealth();
+    }
+
+    protected override void TakeDamage(int _damage)
+    {
+        base.TakeDamage(_damage);
+    }
+
+    protected override void UpdatePath()
+    {
+        base.UpdatePath();
+    }
+
+    protected override IEnumerator WhiteFlash()
+    {
+        return base.WhiteFlash();
+    }
 }

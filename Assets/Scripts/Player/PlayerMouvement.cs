@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// Classe gérant les mouvements du joueur (se référer à Lopez)
+/// </summary>
 public class PlayerMouvement : MonoBehaviour
 {
 
@@ -14,9 +16,6 @@ public class PlayerMouvement : MonoBehaviour
     private PlayerEnergy playerEnergy;
 
     public PlayerScriptableObjectScript playerData;
-
- 
-    // Singleton
     private void Awake()
     {
         playerEnergy = GetComponent<PlayerEnergy>();

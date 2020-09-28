@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "new Type2", menuName = "Type2Enemy")]
+[CreateAssetMenu(fileName = "new Distance", menuName = "DistanceEnemy")]
 public class Type2ScriptableObject : EnemyScriptableObject
 {
     public float restTime;

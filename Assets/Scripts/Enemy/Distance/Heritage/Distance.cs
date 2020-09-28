@@ -1,7 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Classe mère des distances et héritière de Enemy.cs
+/// Elle contient une focntion setData permettant de récupérer les données du scriptable object 
+/// Une focntion aggro permettant de commencer à suivre l'ennemi si le joueur est à porté
+/// Une fonction permettant de savoir si le joueur est en range de shoot
+/// Une coroutine de shoot
+/// Une focntiond de shoot qui instansiate le projectile
+/// </summary>
 public class Distance : Enemy
 {
     // Scriptable Object

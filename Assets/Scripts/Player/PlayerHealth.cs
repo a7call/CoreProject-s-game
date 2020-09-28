@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
+/// <summary>
+/// Classe player health gérant la vie du joueur 
+/// </summary>
 
 public class PlayerHealth : MonoBehaviour
 {

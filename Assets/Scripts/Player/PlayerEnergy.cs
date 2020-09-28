@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// Classe gérant l'énergi du joueur
+/// </summary>
 public class PlayerEnergy : MonoBehaviour
 {
 

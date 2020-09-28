@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Classe héritière de distance 
+/// Contient en plus de classe distance une coroutine de projectile (spécial) => voir EggProjectile.cs
+/// </summary>
 public class SpeDistance : Distance
 {
 

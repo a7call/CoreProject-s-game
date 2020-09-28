@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Xavier
+/// <summary>
+///  Classe gérant le les attaques du joueur
+/// </summary>
 
 public class PlayerAttack : MonoBehaviour
 {

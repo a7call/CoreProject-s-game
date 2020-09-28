@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Classe héritière de Cac.cs
+/// Elle contient en plus de Cac une coroutine de charge
+/// </summary>
 public class SpeCaC : Cac
 {
     // mob to instentiate  sur l'aggro
