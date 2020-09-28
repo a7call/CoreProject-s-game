@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,9 +21,9 @@ public class Healer : Enemy
     //Distance à laquel le healer peut soigner;
     [SerializeField] float healingDistance;
     // couroutine déclaration
-    Coroutine mycouroutine;
+    IEnumerator mycouroutine;
     // Cd de heal 
-   [SerializeField] protected float healCd;
+    [SerializeField] protected float healCd;
 
     private void Start()
     {
@@ -36,7 +35,6 @@ public class Healer : Enemy
         targetPoint = transform;
 
     }
-
     private void Update()
     {
         switch(currentState)
@@ -60,6 +58,7 @@ public class Healer : Enemy
                 checkehealingDistance();
                 break;
             case State.Patrolling:
+                checkEnnemiDestroyed(EnnemiHealed);
                 // voir détails
                 GetEnnemiToHeal();
                 break;
@@ -75,9 +74,6 @@ public class Healer : Enemy
         if (hasFinished)
         {
         hasFinished = false;
-        
-        // à modifier, il faut prendre une valeur de base ...
-        int lowerEnnemiHealth = 4;
         // Cast List to Array pour manipulation
         GameObject[] ennemiArray = ennemies.ToArray();
 
@@ -94,15 +90,17 @@ public class Healer : Enemy
                     return;
                 }
 
-
-                // Récupère un ennemi à heal si il à perdu de la vie
-                CheckEnneiesHp(ennemiArray,  i);
-
-                // Verifie qu'un ennemi ait perdu des hp
-                if (ennemiArray[i].GetComponent<Enemy>().currentHealth < lowerEnnemiHealth && startHealing)
+                // Verifie qu'un ennemi ait perdu des hp, si c'est le cas lance l'action du heal
+                if (ennemiArray[i].GetComponent<Enemy>().currentHealth < ennemiArray[i].GetComponent<Enemy>().maxHealth)
                 {
+                    
+
+                    // réinitialise le count 
+                    count = 0;
+                    startHealing = true;
                     // Stock cette ennemi
                     EnnemiHealed = ennemiArray[i];
+                    mycouroutine = HealEnnemiCo(EnnemiHealed, 1);
 
                     // Si à porté..
                     if (isInSight)
@@ -111,11 +109,10 @@ public class Healer : Enemy
                         rb.velocity = Vector2.zero;
                         // Passe le state à attack
                         currentState = State.Attacking;
-                        // ??
-                        lowerEnnemiHealth = ennemiArray[i].GetComponent<Enemy>().currentHealth;
                         // lance la couroutine de heal
-                        mycouroutine = StartCoroutine(HealEnnemiCo(EnnemiHealed, 1));
+                        StartCoroutine(mycouroutine);
                     }
+                    // sinon reboucle et commence a suivre l'ennemi à heal
                     else
                     {
                         // reboucle 
@@ -126,6 +123,24 @@ public class Healer : Enemy
                         targetPoint = ennemiArray[i].GetComponent<Transform>().transform;
                     }
 
+
+
+
+                }
+                // Si l'ennemi n'a pas perdu des hps alors count ++
+                else
+                {
+                    count++;
+                    // Si tout les ennemis de la liste n'ont pas perdu des hps, relance la fonction 
+                    if (count == ennemiArray.Length)
+                    {
+
+                        count = 0;
+                        startHealing = false;
+                        // Passe la condition de relance à true
+                        hasFinished = true;
+                        return;
+                    }
                 }
             }
         }
@@ -133,33 +148,44 @@ public class Healer : Enemy
     }
 
 
-
+    // Couroutine de heal
     private IEnumerator HealEnnemiCo(GameObject _ennemiToHeal, int _amountToHeal)
     {
+        // Heal l'ennemi tant qu'il n'est pas full life et qu'il est à porté
         while (_ennemiToHeal.GetComponent<Enemy>().currentHealth < _ennemiToHeal.GetComponent<Enemy>().maxHealth && isInSight )
         {
+            // bloque la fonction
             hasFinished = false;
+            // heal l'ennemi
             _ennemiToHeal.GetComponent<Enemy>().currentHealth += _amountToHeal;
+            // cd du heal 
             yield return new WaitForSeconds(healCd);
         }
+        // relance la fontion 
         hasFinished = true;
+        // stop la couroutine
         yield break;
     }
 
-
+    
     private void checkEnnemiDestroyed(GameObject _ennemiToHeal)
     {
-        if (_ennemiToHeal == null && startHealing && isInSight)
+        if (_ennemiToHeal == null && startHealing)
         {
+            // repasse en state patrolling 
             currentState = State.Patrolling;
+            // reboucle
             hasFinished = true;
+            // arrete la coroutine si en cour d'excution 
             StopCoroutine(mycouroutine);
+            // s'arrete
+            rb.velocity = Vector2.zero;
             targetPoint = transform;
         }
         else return;
     }
 
-
+    // Check la distance entre le healer et l'ennemi à heal 
     private void  checkehealingDistance()
     {
        if(EnnemiHealed != null)
@@ -175,30 +201,5 @@ public class Healer : Enemy
         }
         
     }
-
-
-
-    private void CheckEnneiesHp(GameObject[] _ennemiArray, int i)
-    {
-        
-        if (_ennemiArray[i].GetComponent<Enemy>().currentHealth < _ennemiArray[i].GetComponent<Enemy>().maxHealth)
-        {
-            startHealing = true;
-            count = 0;
-        }
-        else
-        {
-
-            count++;
-
-            if (count == _ennemiArray.Length)
-            {
-                count = 0;
-                startHealing = false;
-                hasFinished = true;
-            }
-        }
-    }
-
 
 }
