@@ -7,8 +7,8 @@ public class Projectile : MonoBehaviour
 {
     public float speed;
     private Transform target;
-    private Vector3 dir;
-    
+    protected Vector3 dir;
+    protected float distance;
     
     protected virtual void Awake()
     {
@@ -26,6 +26,11 @@ public class Projectile : MonoBehaviour
     protected virtual void Lauch()
     {
         transform.Translate(dir * speed * Time.deltaTime);
+    }
+
+    protected virtual void CalculDistance()
+    {
+        distance = Vector3.Distance(target.position, transform.position);
     }
 
 }
