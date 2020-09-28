@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// Classe héritière de Cac.cs 
+/// Elle contient les même fonctions que Cac.cs
+/// </summary>
 public class BaseCaC : Cac
 {
 
