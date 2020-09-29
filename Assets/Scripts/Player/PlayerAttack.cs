@@ -16,11 +16,21 @@ public class PlayerAttack : MonoBehaviour
     Vector3 screenPlayerPos;
     public GameObject projectil;
 
-
+    private void Start()
+    {
+        Cleave();
+    }
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.T) && !isCleaving)
+        {
+            AngleCalcule();
+            isCleaving = true;
+        }
+        if(isCleaving) Cleave();
+        if (!isCleaving) GetAttackDirection();
+       
     }
 
     // récupère la direction de l'attaque lancé par le joueur
@@ -56,31 +66,50 @@ public class PlayerAttack : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, attackPoint.position);
+        Gizmos.DrawLine(transform.position,transform.forward);
     }
 
 
 
     [SerializeField]
-    float rotationRadius = 0.5f, angularSpeed = 2f;
+    float rotationRadius = 0.5f, angularSpeed = 2f, rotationTime;
     float posX, posY;
-    float angle = 0.3f;
+    float angle;
+    float startAngle;
+    bool isCleaving;
     // Update is called once per frame
     private void Cleave()
     {
-            posX = transform.position.x + (screenMousePos - screenPlayerPos).normalized.x * 0.3f + Mathf.Cos(angle) * rotationRadius;
-            posY = transform.position.y + (screenMousePos - screenPlayerPos).normalized.y * 0.3f + Mathf.Sin(angle) * rotationRadius;
-            attackPoint.position = new Vector2(posX, posY);
-            
-            angle = angle + Time.deltaTime * angularSpeed;
+        posX = transform.position.x + Mathf.Cos(angle) * rotationRadius;
+        posY = transform.position.y + Mathf.Sin(angle) * rotationRadius;
+        attackPoint.position = new Vector2(posX, posY);
 
-            if (angle >= 3f)
-            {
-            angle = 0.3f;
-            }
+        angle = angle + Time.deltaTime * angularSpeed;
+
+    }
+       
+
+    private void AngleCalcule()
+    {
+        Vector3 dir = (attackPoint.position - transform.position).normalized;
+        StartCoroutine(CleavingTime());
+        Vector3 faceVector = new Vector3(0, Mathf.Abs(transform.position.y + 1), 0);
+        angle =  Mathf.Deg2Rad *(Vector3.Angle( dir, faceVector));
+        startAngle = angle;
+        if (dir.x > 0)
+        {
+            angle = -angle;
         }
        
-           
-        
     }
+
+    private IEnumerator CleavingTime()
+    {
+        yield return new WaitForSeconds(rotationTime);
+        isCleaving = false;
+
+    }
+
+
+}
 
