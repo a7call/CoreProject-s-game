@@ -28,7 +28,11 @@ public class PlayerAttack : MonoBehaviour
             AngleCalcule();
             isCleaving = true;
         }
-        if(isCleaving) Cleave();
+        if (isCleaving)
+        {
+            Cleave();
+            AttackCleave();
+        }
         if (!isCleaving) GetAttackDirection();
        
     }
@@ -67,7 +71,7 @@ public class PlayerAttack : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position,transform.forward);
+        Gizmos.DrawLine(transform.position,attackPoint.position);
     }
 
 
@@ -121,10 +125,10 @@ public class PlayerAttack : MonoBehaviour
         {
             if (enemy.collider != null)
             {
-                print("test");
+                // Script de vie de l'enemi
             }
 
-            // Script de vie de l'enemi
+
         }
 
     }
