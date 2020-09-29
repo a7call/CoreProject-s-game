@@ -4,13 +4,13 @@ using UnityEngine;
 using Pathfinding;
 /// <summary>
 /// Classe mère des ennemis 
-/// Elle contient une enum permettant d'indiquer le Sate de l'ennemi
+/// Elle contient une enum permettant d'indiquer le State de l'ennemi
 /// Elle contient des fonctions permettant de gerer le pathfinding (UpdatePath() + MovetoPath() + OnPathComplete(Path p)). Pour avoir des détails se référer à Lopez
 /// Une fonction de patrouille
-/// Une fonction permettant de de suivre le joueur si il est en range d'aggro
+/// Une fonction permettant de suivre le joueur si il est en range d'aggro
 /// Une fonction permmettant de savoir si le joueur est en range d'aggro
 /// Une fonction permettant d'initialiser le premier point de patrouille
-/// Les fonction nécessaire à la gestion de la vie de l'ennemi ( se référer à Lopez ou au tuto FR)
+/// Les fonctions nécessaires à la gestion de la vie de l'ennemi (se référer à Lopez ou au tuto FR)
 /// </summary>
 public class Enemy : MonoBehaviour
 {
@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour
     }
 
 
+    //seeker.IsDone() vérifie si le path est calculé
+    //seeker.StartPath() est appellée pour commencer à calculer le chemin
    protected virtual void UpdatePath()
     {
         if (seeker.IsDone())
@@ -70,6 +72,7 @@ public class Enemy : MonoBehaviour
         {
             reachedEndOfPath = false;
         }
+
         Vector2 dir = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
         Vector2 force = dir * moveSpeed * Time.fixedDeltaTime;
         rb.velocity = force;
@@ -113,10 +116,13 @@ public class Enemy : MonoBehaviour
 
             }
     }
+
+    // Actualise le State en Chasing si le joueur est repéré
     protected virtual void PlayerInSight()
     {
         if (Vector3.Distance(transform.position, target.position) < inSight) currentState = State.Chasing;
     }
+
     // Enemy take Player aggro 
     protected virtual void Aggro()
     {
@@ -124,6 +130,7 @@ public class Enemy : MonoBehaviour
             // Change de target 
             targetPoint = target;
     }
+
     // Set le premier point de patrouille
     protected virtual void SetFirstPatrolPoint()
     {

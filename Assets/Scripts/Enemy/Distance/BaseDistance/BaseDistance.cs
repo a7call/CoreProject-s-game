@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// Classe héritière de Distance.cs
-/// Elle contient les fonction de la classe mère
+/// Elle contient les fonctions de la classe mère
 /// </summary>
 public class BaseDistance : Distance
 {
@@ -15,7 +15,7 @@ public class BaseDistance : Distance
         SetFirstPatrolPoint();
         // Set data
         SetData();
-        // Vie initial
+        // Vie initialz
         SetMaxHealth();
     }
     private void Update()

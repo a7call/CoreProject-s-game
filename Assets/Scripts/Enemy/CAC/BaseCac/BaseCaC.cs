@@ -17,7 +17,7 @@ public class BaseCaC : Cac
         targetPoint = target;
         // Set data
         SetData();
-        // Vie iniitial
+        // Vie initiale
         SetMaxHealth();
     }
 

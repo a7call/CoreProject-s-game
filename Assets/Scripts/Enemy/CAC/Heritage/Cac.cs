@@ -9,6 +9,7 @@ using UnityEngine;
 /// Une fontion permettant de savoir si l'ennemi est en range pour lancer une attaque
 /// Une fonction d'attaque de base 
 /// Une fonction récupérant la position du joueur
+/// On rappelle les fonctions issues de l'héritage
 /// </summary>
 
 
@@ -97,7 +98,7 @@ public class Cac : Enemy
 
 
 
-    // Check if PLayer is in Range
+    // Check if PLayer is in Range pour définir la State en Attacking ou Chasing (ici, pas de patrouille)
     protected virtual void isInRange()
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
