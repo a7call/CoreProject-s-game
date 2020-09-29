@@ -47,6 +47,7 @@ public class PlayerAttack : MonoBehaviour
     void AttackCAC()
     {
         Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
+        
 
         foreach(Collider2D enemy in enemyHit)
         {
@@ -70,12 +71,13 @@ public class PlayerAttack : MonoBehaviour
     }
 
 
+    // Script de l'attaque en arc de cercle
 
     [SerializeField]
     float rotationRadius = 0.5f, angularSpeed = 2f, rotationTime;
     float posX, posY;
     float angle;
-    float startAngle;
+
     bool isCleaving;
     // Update is called once per frame
     private void Cleave()
@@ -95,7 +97,6 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(CleavingTime());
         Vector3 faceVector = new Vector3(0, Mathf.Abs(transform.position.y + 1), 0);
         angle =  Mathf.Deg2Rad *(Vector3.Angle( dir, faceVector));
-        startAngle = angle;
         if (dir.x > 0)
         {
             angle = -angle;
@@ -107,6 +108,24 @@ public class PlayerAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(rotationTime);
         isCleaving = false;
+
+    }
+
+    void AttackCleave()
+    {
+        Vector3 dir = (attackPoint.position - transform.position).normalized;
+        float distance = (attackPoint.position - transform.position).sqrMagnitude;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position,dir , distance, enemyLayer);
+
+        foreach (RaycastHit2D enemy in hits)
+        {
+            if (enemy.collider != null)
+            {
+                print("test");
+            }
+
+            // Script de vie de l'enemi
+        }
 
     }
 
