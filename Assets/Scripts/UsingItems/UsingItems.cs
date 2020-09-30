@@ -2,36 +2,22 @@
 using System.Collections;
 
 /// <summary>
-/// Classe de l'inventaire
+/// 
 /// 
 /// </summary>
 
-public class UsingItems : ItemObjects
+public class UsingItems : ItemScriptableObject
 {
-    // Déclarations d'autres variables
+    // Déclarations des variables
     private PlayerHealth playerHealth;
     private PlayerMouvement playerMouvement;
     private PlayerAttack playerAttack;
 
-    // Déclarations des items
-    [SerializeField] protected ItemObjects ItemObjectsData;
 
-    //Méthode SetData()
-    protected virtual void SetData()
-    {
-        id = ItemObjectsData.id;
-        nameObject = ItemObjectsData.nameObject;
-        description = ItemObjectsData.description;
-        Image = ItemObjectsData.Image;
-        coastAtTrader = ItemObjectsData.coastAtTrader;
-        hpGiven = ItemObjectsData.hpGiven;
-        speed = ItemObjectsData.speed;
-        speedDuration = ItemObjectsData.speedDuration;
-        increasedDamages = ItemObjectsData.increasedDamages;
-        attackSpeed = ItemObjectsData.attackSpeed;
-        pointShield = ItemObjectsData.pointShield;
-    }
+    public PlayerScriptableObjectScript playerData;
+    public ItemScriptableObject ItemsData;
 
+    //Je crois que c'est pas opti de faire un FindObjectOfType<> dans le Start
     private void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -39,10 +25,37 @@ public class UsingItems : ItemObjects
         playerAttack = FindObjectOfType<PlayerAttack>();
     }
 
-    private void ConsumeHpPotion()
+    // Ajoute des Hp
+    public void AddHp()
     {
-        playerHealth.currentHealth += hpGiven;
+        if (playerData.maxHealth <= playerHealth.currentHealth + hpGiven)
+        {
+            playerHealth.currentHealth += hpGiven;
+        }
+        else
+        {
+            playerHealth.currentHealth = playerData.maxHealth;
+        }
     }
+
+    // Ajoute du Shield
+    private void AddShield()
+    {
+        pointShield = playerData.maxHealth / 2;
+        playerHealth.currentHealth += pointShield;
+    }
+
+    //// Ajoute de la MS
+    //private void AddMs()
+    //{
+    //    //playerMouvement.
+    //}
+
+    ////
+    //private void AddAs()
+    //{
+    //    playerAttack.
+    //}
 
     ////Coroutine
     //private void ConsumeMSPotion()
@@ -54,4 +67,10 @@ public class UsingItems : ItemObjects
     //{
 
     //}
+    
+    //A voir si on les place ici ou dans l'inventaire
+    //Fonction coroutine pendant laquelle les effets de la potion de MS/AS
+    //Fonction qui rend impossible de reconsommer une potion pendant X temps
+    //Fonction cliquer pour utiliser la potion (BUTTON)
+    //Jouer une animation de prendre la potion
 }

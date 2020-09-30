@@ -5,7 +5,7 @@
 /// </summary>
 /// 
 [CreateAssetMenu(fileName = "Item", menuName = "Iventory/Item")]
-public class ItemObjects : ScriptableObject
+public class ItemScriptableObject : ScriptableObject
 {
     //Général
     public int id;

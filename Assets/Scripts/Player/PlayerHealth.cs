@@ -19,6 +19,12 @@ public class PlayerHealth : MonoBehaviour
         SetMaxHealth();
     }
 
+    //Pour tester la fonction Take20Damage
+    private void Update()
+    {
+        Take20Damage();
+    }
+
     public void SetMaxHealth()
     {
         currentHealth =  playerData.maxHealth;
@@ -29,6 +35,15 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         StartCoroutine(InvincibilityDelay());
         StartCoroutine(InvincibilityFlash());
+    }
+
+    //Fonction test perd des hp
+    public void Take20Damage()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            currentHealth -= 20;
+        }
     }
 
     private IEnumerator InvincibilityFlash()
