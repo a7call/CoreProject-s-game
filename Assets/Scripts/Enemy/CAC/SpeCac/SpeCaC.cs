@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class SpeCaC : Cac
 {
-    // mob to instentiate  sur l'aggro
+    // mob to instantiate  sur l'aggro
     public GameObject mobs;
 
     // check si les mobs ont spawn 
@@ -61,7 +61,8 @@ public class SpeCaC : Cac
     // Mouvement
 
 
-    // Aggro si pas entrain de charger + Intentiate trash (BaseCaC.cs) 
+    // Aggro si pas entrain de charger + Instantiate trash (BaseCaC.cs) 
+    // Quaternion.identy = pas de rotation de l'objet instantié lors de sa création. L'objet est aligné avec le monde et ses parents
     protected override void Aggro()
     {
             if (!spawned)
@@ -138,13 +139,13 @@ public class SpeCaC : Cac
             // Lock la target + direction
             Vector3 chargeTarget = target.position;
             Vector3 chargeDir = (chargeTarget - transform.position).normalized;
-            // Active la charche 
+            // Active la charge 
             rb.velocity = chargeDir * chargeSpeed * Time.fixedDeltaTime;
             // Sécurité 
             yield return new WaitForSeconds(restTime);
             // Ne charge plus 
             isCharging = false;
-            // Prépare la prochiane charge
+            // Prépare la prochaine charge
             yield return new WaitForSeconds(readyToChargeTimer);
             readyToCharge = true;
 

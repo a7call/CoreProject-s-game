@@ -1,0 +1,76 @@
+﻿using UnityEngine;
+using System.Collections;
+
+/// <summary>
+/// 
+/// 
+/// </summary>
+
+public class UsingItems : ItemScriptableObject
+{
+    // Déclarations des variables
+    private PlayerHealth playerHealth;
+    private PlayerMouvement playerMouvement;
+    private PlayerAttack playerAttack;
+
+
+    public PlayerScriptableObjectScript playerData;
+    public ItemScriptableObject ItemsData;
+
+    //Je crois que c'est pas opti de faire un FindObjectOfType<> dans le Start
+    private void Start()
+    {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        playerAttack = FindObjectOfType<PlayerAttack>();
+    }
+
+    // Ajoute des Hp
+    public void AddHp()
+    {
+        if (playerData.maxHealth <= playerHealth.currentHealth + hpGiven)
+        {
+            playerHealth.currentHealth += hpGiven;
+        }
+        else
+        {
+            playerHealth.currentHealth = playerData.maxHealth;
+        }
+    }
+
+    // Ajoute du Shield
+    private void AddShield()
+    {
+        pointShield = playerData.maxHealth / 2;
+        playerHealth.currentHealth += pointShield;
+    }
+
+    //// Ajoute de la MS
+    //private void AddMs()
+    //{
+    //    //playerMouvement.
+    //}
+
+    ////
+    //private void AddAs()
+    //{
+    //    playerAttack.
+    //}
+
+    ////Coroutine
+    //private void ConsumeMSPotion()
+    //{
+    //    playerMouvement.speed 
+    //}
+
+    //private void ConsumeASPotion()
+    //{
+
+    //}
+    
+    //A voir si on les place ici ou dans l'inventaire
+    //Fonction coroutine pendant laquelle les effets de la potion de MS/AS
+    //Fonction qui rend impossible de reconsommer une potion pendant X temps
+    //Fonction cliquer pour utiliser la potion (BUTTON)
+    //Jouer une animation de prendre la potion
+}
