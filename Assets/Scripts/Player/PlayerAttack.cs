@@ -21,19 +21,7 @@ public class PlayerAttack : MonoBehaviour
        
     }
 
-
-    // récupere tous les enemis touchés par une attaque
-    void AttackCACZone()
-    {
-        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
-        
-
-        foreach(Collider2D enemy in enemyHit)
-        {
-            // Script de vie de l'enemi
-        }
-
-    }
+ 
 
     void AttackCACMono()
     {

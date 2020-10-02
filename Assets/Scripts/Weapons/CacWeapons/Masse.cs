@@ -10,6 +10,9 @@ public class Masse : CacWeapons
     {
         GetAttackDirection();
     }
+
+
+    // Dégats à tous les ennemis présents dans zone 
     void AttackCACZone()
     {
         Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
@@ -20,5 +23,14 @@ public class Masse : CacWeapons
             // Script de vie de l'enemi
         }
 
+    }
+
+
+
+
+    // héritage 
+    protected override void GetAttackDirection()
+    {
+        base.GetAttackDirection();
     }
 }
