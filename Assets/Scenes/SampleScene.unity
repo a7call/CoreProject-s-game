@@ -572,6 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content:
   - {fileID: 11400000, guid: 761eae6848cfe0f499c6e992ed4ecd8c, type: 2}
+  - {fileID: 11400000, guid: e1ad3861e51a02e4e976e9967272144e, type: 2}
 --- !u!4 &984053579
 Transform:
   m_ObjectHideFlags: 0
@@ -1851,13 +1852,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: d90db5ff9261e74469d885db80522098, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 984053578}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: ConsumePotion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

@@ -6,7 +6,7 @@ using System.Collections;
 /// 
 /// </summary>
 
-public class UsingItems : ItemScriptableObject
+public class UsingItems : MonoBehaviour
 {
     // Déclarations des variables
     private PlayerHealth playerHealth;
@@ -14,8 +14,8 @@ public class UsingItems : ItemScriptableObject
     private PlayerAttack playerAttack;
 
 
-    public PlayerScriptableObjectScript playerData;
-    public ItemScriptableObject ItemsData;
+    private PlayerScriptableObjectScript playerData;
+    private ItemScriptableObject ItemsData;
 
     //Je crois que c'est pas opti de faire un FindObjectOfType<> dans le Start
     private void Start()
@@ -28,21 +28,21 @@ public class UsingItems : ItemScriptableObject
     // Ajoute des Hp
     public void AddHp()
     {
-        if (playerData.maxHealth <= playerHealth.currentHealth + hpGiven)
-        {
-            playerHealth.currentHealth += hpGiven;
-        }
-        else
-        {
-            playerHealth.currentHealth = playerData.maxHealth;
-        }
+            if (playerData.maxHealth <= playerHealth.currentHealth + ItemsData.hpGiven)
+            {
+                playerHealth.currentHealth += ItemsData.hpGiven;
+            }
+            else
+            {
+                playerHealth.currentHealth = playerData.maxHealth;
+            }
     }
 
     // Ajoute du Shield
     private void AddShield()
     {
-        pointShield = playerData.maxHealth / 2;
-        playerHealth.currentHealth += pointShield;
+        ItemsData.pointShield = playerData.maxHealth / 2;
+        playerHealth.currentHealth += ItemsData.pointShield;
     }
 
     //// Ajoute de la MS
