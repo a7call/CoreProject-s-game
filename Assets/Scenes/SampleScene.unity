@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 426600104}
+  velocity: {x: 0, y: 0, z: 0}
   animator: {fileID: 426600098}
   StartSmoothTime: 0.2
   StopSmoothTime: 0.1
@@ -1269,8 +1270,11 @@ MonoBehaviour:
   Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
   attackPoint: {fileID: 1461302156}
   distanceWolfAggressive: 5
+  isPowerMode: 0
   decreaseSpeedPlayer: 20
   speedDuration: 2
+  firstAttack: 1
+  loadDelay: 2
 --- !u!1 &1647541349
 GameObject:
   m_ObjectHideFlags: 0
