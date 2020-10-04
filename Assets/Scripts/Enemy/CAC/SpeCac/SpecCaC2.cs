@@ -110,7 +110,6 @@ public class SpecCaC2 : Cac
         playerMouvement.mooveSpeed = 20;
         yield return new WaitForSeconds(speedDuration);
         playerMouvement.mooveSpeed = baseMouveSpeed;
-        print("test2");
 
     }
 
