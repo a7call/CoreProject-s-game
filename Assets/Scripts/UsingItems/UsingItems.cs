@@ -14,20 +14,24 @@ public class UsingItems : MonoBehaviour
     private PlayerAttack playerAttack;
 
 
-    private PlayerScriptableObjectScript playerData;
-    private ItemScriptableObject ItemsData;
+    public PlayerScriptableObjectScript playerData;
+    public ItemScriptableObject ItemsData;
 
     //Je crois que c'est pas opti de faire un FindObjectOfType<> dans le Start
     private void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
         playerAttack = FindObjectOfType<PlayerAttack>();
+
+        //playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+
     }
 
     // Ajoute des Hp
     public void AddHp()
     {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+            
             if (playerData.maxHealth <= playerHealth.currentHealth + ItemsData.hpGiven)
             {
                 playerHealth.currentHealth += ItemsData.hpGiven;

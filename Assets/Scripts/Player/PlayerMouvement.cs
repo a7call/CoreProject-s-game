@@ -8,7 +8,8 @@ public class PlayerMouvement : MonoBehaviour
     public Rigidbody2D rb;
     private Vector2 mouvement;
 
-    private Vector3 velocity = Vector3.zero;
+    //Changement de velocity de privée à public
+    public Vector3 velocity = Vector3.zero;
     public Animator animator;
     public float StartSmoothTime;
     public float StopSmoothTime;
