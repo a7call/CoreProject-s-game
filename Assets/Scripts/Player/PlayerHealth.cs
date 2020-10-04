@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     private bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
+    public HealthBar healthBar;
 
     public SpriteRenderer graphics;
     public void Awake()
@@ -23,11 +24,14 @@ public class PlayerHealth : MonoBehaviour
     private void Update()
     {
         Take20Damage();
+        healthBar.SetHealth(currentHealth);
     }
 
     public void SetMaxHealth()
     {
         currentHealth =  playerData.maxHealth;
+        healthBar.SetMaxHealth(playerData.maxHealth);
+        
     }
 
     public void TakeDamage(int damage)
