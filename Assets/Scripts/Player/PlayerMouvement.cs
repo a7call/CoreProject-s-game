@@ -15,11 +15,13 @@ public class PlayerMouvement : MonoBehaviour
     public float StopSmoothTime;
     private Vector2 mouvementVector;
     private PlayerEnergy playerEnergy;
+    public float mooveSpeed;
 
     public PlayerScriptableObjectScript playerData;
     private void Awake()
     {
         playerEnergy = GetComponent<PlayerEnergy>();
+        mooveSpeed = playerData.mooveSpeed;
     }
     void Update()
     {
@@ -39,7 +41,7 @@ public class PlayerMouvement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer(mouvementVector * playerData.mooveSpeed * Time.fixedDeltaTime);
+        MovePlayer(mouvementVector * mooveSpeed * Time.fixedDeltaTime);
         
     }
 

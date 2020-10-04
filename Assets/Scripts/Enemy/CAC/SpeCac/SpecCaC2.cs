@@ -27,6 +27,7 @@ public class SpecCaC2 : Cac
     private float distanceWolfPlayer;
     // Variable qui dit si le loup est en PowerMode ou non
     [SerializeField] private bool isPowerMode = false; // Déclarer en SerialeField pour voir l'état, à retirer après
+    [SerializeField] private bool isSlowCdEnd = true;
 
     // Valeur de la nouvelle vitesse du player
     [SerializeField] private float decreaseSpeedPlayer;
@@ -65,14 +66,14 @@ public class SpecCaC2 : Cac
             case State.Chasing:
                 Aggro();
                 MoveToPath();
-                PowerMode();
-                if(isPowerMode==true) StartCoroutine(DecreasePlayerSpeed());
-                isPowerMode = false;
+                StartCoroutine(PowerMode());
+                if(isPowerMode) StartCoroutine(DecreasePlayerSpeed());
                 isInRange();
                 break;
 
             case State.Attacking:
-                FearAttack();
+                // FearAttack();
+                BaseAttack();
                 GetPlayerPos();
                 isInRange();
                 break;
@@ -83,21 +84,34 @@ public class SpecCaC2 : Cac
     // Réduction de la MS du joueur pendant le State Chasing
 
     // Fonction qui permet de savoir si le PowerMode du mob s'active
-    private void PowerMode()
-    {
+    private IEnumerator PowerMode()
+    {  
+
         distanceWolfPlayer = Vector3.Distance(target.transform.position, transform.position);
-        if (distanceWolfPlayer <= distanceWolfAggressive) isPowerMode = true;
+        if (distanceWolfPlayer <= distanceWolfAggressive && isSlowCdEnd)
+        {
+            isSlowCdEnd = false;
+            isPowerMode = true;
+            yield return new WaitForSeconds(6f);
+            isSlowCdEnd = true;
+        }
+       
     }
+       
 
     // Coroutine qui permet de diminuer la vitesse du Joueur
     private IEnumerator DecreasePlayerSpeed()
     {
+        isPowerMode = false;
+        
         Vector3 speedDir = (target.transform.position - transform.position).normalized;
-        targetVelocity = decreaseSpeedPlayer * speedDir * Time.fixedDeltaTime;
-        playerMouvement.rb.velocity = Vector3.SmoothDamp(playerMouvement.rb.velocity, targetVelocity, ref playerMouvement.velocity, playerMouvement.StartSmoothTime);
+        // targetVelocity = decreaseSpeedPlayer * speedDir * Time.fixedDeltaTime;
+        float baseMouveSpeed = playerMouvement.mooveSpeed;
+        playerMouvement.mooveSpeed = 20;
         yield return new WaitForSeconds(speedDuration);
-        // Récupérer la vitesse initiale du joueur (Voir avec Val)
-        playerMouvement.rb.velocity = Vector3.zero;
+        playerMouvement.mooveSpeed = baseMouveSpeed;
+        print("test2");
+
     }
 
     // Première attaque du State Attacking qui Fear le joueur

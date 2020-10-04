@@ -25,12 +25,13 @@ public class BaseCaC : Cac
     protected void Update()
     {
         switch (currentState) {
-        default: 
+        default:
+                Debug.LogWarning("not implemented");
+                break;
         case State.Chasing:
                 Aggro();
                 isInRange();
                 MoveToPath();
-
             break;
 
         case State.Attacking:

@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 102468142}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: 'attackPoint '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,10 +147,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102468141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.48, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1272034120}
+  m_Father: {fileID: 1785070264}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &129758461
@@ -392,6 +392,7 @@ MonoBehaviour:
   currentHealth: 0
   InvincibilityFlashDelay: 0.1
   InvincibleDelay: 3
+  healthBar: {fileID: 0}
   graphics: {fileID: 426600103}
 --- !u!114 &426600101
 MonoBehaviour:
@@ -890,10 +891,39 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 102468142}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1272826641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272826642}
+  m_Layer: 0
+  m_Name: attackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272826642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272826641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.51, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1461302156}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1422811957
 GameObject:
@@ -1148,7 +1178,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1461302156}
   - component: {fileID: 1461302155}
-  - component: {fileID: 1461302154}
   - component: {fileID: 1461302153}
   - component: {fileID: 1461302157}
   m_Layer: 0
@@ -1186,32 +1215,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!61 &1461302154
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461302152}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.016010284, y: -0.00000047683716}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.6477728, y: 0.6156435}
-  m_EdgeRadius: 0
 --- !u!50 &1461302155
 Rigidbody2D:
   serializedVersion: 4
@@ -1243,7 +1246,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.38, y: 4.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1272826642}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1268,10 +1272,11 @@ MonoBehaviour:
   maxHealth: 0
   spriteRenderer: {fileID: 0}
   Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
-  attackPoint: {fileID: 1461302156}
+  attackPoint: {fileID: 1272826642}
   distanceWolfAggressive: 5
   isPowerMode: 0
-  decreaseSpeedPlayer: 20
+  isSlowCdEnd: 1
+  decreaseSpeedPlayer: 200
   speedDuration: 2
   firstAttack: 1
   loadDelay: 2
@@ -1618,42 +1623,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1785070264}
   - component: {fileID: 1785070263}
-  - component: {fileID: 1785070262}
   - component: {fileID: 1785070266}
   - component: {fileID: 1785070265}
   m_Layer: 0
-  m_Name: BaseCac Enemy
+  m_Name: BaseCacEnnemi
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!61 &1785070262
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1785070261}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.016010284, y: -0.00000047683716}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.6477728, y: 0.6156435}
-  m_EdgeRadius: 0
 --- !u!50 &1785070263
 Rigidbody2D:
   serializedVersion: 4
@@ -1682,10 +1660,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785070261}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.61, y: -2.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 102468142}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1712,7 +1691,7 @@ MonoBehaviour:
   maxHealth: 0
   spriteRenderer: {fileID: 0}
   Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
-  attackPoint: {fileID: 1785070264}
+  attackPoint: {fileID: 102468142}
 --- !u!114 &1785070266
 MonoBehaviour:
   m_ObjectHideFlags: 0
