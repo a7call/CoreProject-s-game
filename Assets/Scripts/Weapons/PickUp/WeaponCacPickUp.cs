@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponPickUp : MonoBehaviour
+public class WeaponCacPickUp : MonoBehaviour
 {
     // Liste des armes dans le weapon manager
     public List<Component> weapons;
