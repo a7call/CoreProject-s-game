@@ -68,7 +68,7 @@ public class SpeCaC : Cac
             if (!spawned)
             {
                 spawned = true;
-                GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
+                Instantiate(mobs, transform.position, Quaternion.identity);
             }
             targetPoint = target;
     }
