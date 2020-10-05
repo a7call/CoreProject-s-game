@@ -31,6 +31,11 @@ public class PlayerAttack : MonoBehaviour
         {
             GetAttackDirection();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            InstantiateProjectile();
+        }
     }
 
  
@@ -45,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
 
     void InstantiateProjectile()
     {
-        GameObject.Instantiate(projectil);
+        GameObject.Instantiate(projectil, attackPoint.position, Quaternion.identity);
     }
 
     // Gizmo de Test
@@ -74,7 +79,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     [SerializeField]
-    protected Transform attackPoint;
+    public Transform attackPoint;
     Vector3 screenMousePos;
     Vector3 screenPlayerPos;
 
