@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR.WSA;
 
@@ -11,8 +12,10 @@ using UnityEngine.XR.WSA;
 /// Lorsque le joueur est dans une zone dans laquelle le mob le détecte, le mob s'éneve
 /// C'est là que la ms du joueur diminue (faisable qu'une fois)
 /// Puis il continue de chase normalement si il a pas trouvé, sinon ca veut dire qu'il est à son cac
+/// 
+/// 
 /// Alors il attaque
-/// Sa première attaque infligement saignement pendant 5 secondes toutes les 1sec
+/// Sa première attaque infligement un fear toutes les X secondes
 /// Le cd de cette attaque est de 20sec
 /// Si l'attaque est en Cd, il attaque classique
 /// Sinon, il ré-utilise son power
@@ -20,28 +23,35 @@ using UnityEngine.XR.WSA;
 
 public class SpecCaC2 : Cac
 {
-
     // Distance à partir de laquelle le loup active le PowerMode, déclarer en public pour la changer rapidement
     public float distanceWolfAggressive;
     // Distance entre le joueur et le loup
     private float distanceWolfPlayer;
     // Variable qui dit si le loup est en PowerMode ou non
-    [SerializeField] private bool isPowerMode = false; // Déclarer en SerialeField pour voir l'état, à retirer après
-    [SerializeField] private bool isSlowCdEnd = true;
+    private bool isPowerMode = false;
+    private bool isSlowCdEnd = true;
+    // Variable de temps au bout du quel il peut relancer le PowerMode
+    private float powerModeTime = 10f;
 
     // Valeur de la nouvelle vitesse du player
-    [SerializeField] private float decreaseSpeedPlayer;
+    [SerializeField] private float newSpeedPlayer = 100f;
     // Temps pendant laquelle il garde cette vitesse
-    [SerializeField] private float speedDuration = 2f;
-
-    private Vector3 targetVelocity;
+    [SerializeField] private float speedDuration = 1.5f;
 
     //Récupérer la fonction de PlayerMovement
     private PlayerMouvement playerMouvement;
 
+
+
+    // Variable direction aléatoire du joueur
+    private Vector3 randomDirection;
+
     //Attack qui fear
-    [SerializeField] private bool firstAttack = true;
-    [SerializeField] private float loadDelay = 15f;
+    [SerializeField] private bool isFirstAttack = true;
+    [SerializeField] private bool isFearCdEnd = true;
+    [SerializeField] private float loadDelay = 20f;
+    [SerializeField] private float fearTime = 2f;
+    public Transform fearPointDirection;
 
     private void Start()
     {
@@ -66,13 +76,14 @@ public class SpecCaC2 : Cac
             case State.Chasing:
                 Aggro();
                 MoveToPath();
-                StartCoroutine(PowerMode());
-                if(isPowerMode) StartCoroutine(DecreasePlayerSpeed());
+                //StartCoroutine(PowerMode());
+                //if(isPowerMode) StartCoroutine(DecreasePlayerSpeed());
                 isInRange();
                 break;
 
             case State.Attacking:
-                // FearAttack();
+                StartCoroutine(FearMode());
+                if (isFirstAttack) StartCoroutine(FearAttack());
                 BaseAttack();
                 GetPlayerPos();
                 isInRange();
@@ -92,7 +103,7 @@ public class SpecCaC2 : Cac
         {
             isSlowCdEnd = false;
             isPowerMode = true;
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(powerModeTime);
             isSlowCdEnd = true;
         }
        
@@ -103,28 +114,34 @@ public class SpecCaC2 : Cac
     private IEnumerator DecreasePlayerSpeed()
     {
         isPowerMode = false;
-        
-        Vector3 speedDir = (target.transform.position - transform.position).normalized;
-        // targetVelocity = decreaseSpeedPlayer * speedDir * Time.fixedDeltaTime;
         float baseMouveSpeed = playerMouvement.mooveSpeed;
-        playerMouvement.mooveSpeed = 20;
+        playerMouvement.mooveSpeed = newSpeedPlayer;
         yield return new WaitForSeconds(speedDuration);
         playerMouvement.mooveSpeed = baseMouveSpeed;
 
     }
 
+
+    private IEnumerator FearMode()
+    {
+            isFearCdEnd = false;
+            yield return new WaitForSeconds(fearTime);
+            isFearCdEnd = true;
+
+    }
+
     // Première attaque du State Attacking qui Fear le joueur
 
-    private void FearAttack()
+    private IEnumerator FearAttack()
     {
-        if (firstAttack == true)
-        {
-            //faire le fear
-        }
-        else
-        {
-            BaseAttack();
-        }
+        isFirstAttack = false;
+
+        // randomDirection = (new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f), 0.0f)).normalized;
+        //Vector3 targetPosition = randomDirection;
+        Vector3 direction = (fearPointDirection.position - playerMouvement.transform.position).normalized;
+        playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
+        yield return new WaitForSeconds(loadDelay);
+        isFirstAttack = true;
     }
 
     // Find player to follow
