@@ -5,20 +5,24 @@ using UnityEngine;
 /// </summary>
 public class PlayerEnergy : MonoBehaviour
 {
-
+    public EnergyBar energyBar;
+    public GameObject energyBarGFX;
     public PlayerScriptableObjectScript playerData;
     public int currentEnergy;
     public bool energyIsReloading = false;
+    private bool isActive;
 
     private void Awake()
     {
-       
+        energyBarGFX = GameObject.FindGameObjectWithTag("EnergyBar");
+        energyBarGFX.SetActive(false);
         SetMaxEnergy();
     }
     private void Update()
     {
-      
-       StartCoroutine(EnergyReload());
+
+       if(!energyIsReloading) StartCoroutine(EnergyReload());
+       energyBar.SetEnergy(currentEnergy);
     }
     
     // Déduit l'energie dépensée
@@ -32,13 +36,21 @@ public class PlayerEnergy : MonoBehaviour
     void SetMaxEnergy()
     {
         currentEnergy = playerData.maxEnergy;
+        energyBar.SetMaxEnergy(playerData.maxEnergy);
     }
 
     // Energie recupérée au cours du temps
     private IEnumerator EnergyReload()
-    {   
-        if(currentEnergy < playerData.maxEnergy && !energyIsReloading)
+    {
+
+        if (currentEnergy < playerData.maxEnergy)
         {
+
+            if (!isActive)
+            {
+                energyBarGFX.SetActive(true);
+                isActive = true;
+            }
             energyIsReloading = true;
             currentEnergy += playerData.energyReloadNumber;
             yield return new WaitForSeconds(0.1f);
@@ -46,8 +58,14 @@ public class PlayerEnergy : MonoBehaviour
         }
         else
         {
-            yield return 0;
+            if (isActive)
+            {
+                energyBarGFX.SetActive(false);
+                isActive = false;
+            }
+            yield break;
         }
         
     }
+    
 }
