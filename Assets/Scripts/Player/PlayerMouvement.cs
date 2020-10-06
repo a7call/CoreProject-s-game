@@ -18,6 +18,15 @@ public class PlayerMouvement : MonoBehaviour
     public float mooveSpeed;
 
     public PlayerScriptableObjectScript playerData;
+
+    public EtatMouvementJoueur currentMouvementState = EtatMouvementJoueur.normal;
+
+    public enum EtatMouvementJoueur
+    {
+        normal,
+        fear,
+    }
+
     private void Awake()
     {
         playerEnergy = GetComponent<PlayerEnergy>();
@@ -25,23 +34,45 @@ public class PlayerMouvement : MonoBehaviour
     }
     void Update()
     {
-        CheckInputs();
-        GetInputAxis();
-        ClampMouvement(mouvement);
-        GetLastDirection();
-        SetAnimationVariable();
-
-        if (Input.GetKeyDown(KeyCode.C) && playerEnergy.currentEnergy >= playerData.dashEnergyCost)
+        switch (currentMouvementState)
         {
-            Dash();
-        }
+            default:
+                break;
 
+            case EtatMouvementJoueur.normal:
+                CheckInputs();
+                GetInputAxis();
+                ClampMouvement(mouvement);
+                GetLastDirection();
+                SetAnimationVariable();
+
+                if (Input.GetKeyDown(KeyCode.C) && playerEnergy.currentEnergy >= playerData.dashEnergyCost)
+                {
+                    Dash();
+                }
+
+                break;
+
+            case EtatMouvementJoueur.fear:
+                    break;
+        }
 
     }
 
     private void FixedUpdate()
     {
-        MovePlayer(mouvementVector * mooveSpeed * Time.fixedDeltaTime);
+        switch (currentMouvementState)
+        {
+            default:
+                break;
+
+            case EtatMouvementJoueur.normal:
+                MovePlayer(mouvementVector * mooveSpeed * Time.fixedDeltaTime);
+                break;
+
+            case EtatMouvementJoueur.fear:
+                break;
+        }
         
     }
 

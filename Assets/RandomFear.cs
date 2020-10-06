@@ -41,7 +41,7 @@ public class RandomFear : MonoBehaviour
 
         vecEnemyPlayer = new Vector3(coordonneesXEnemy - coordonneesXPlayer, coordonneesYEnemy - coordonneesYPlayer, 0);
 
-        pointPos = coordonneesPlayer - vecEnemyPlayer;
+        pointPos = coordonneesPlayer - 25*vecEnemyPlayer;
     }
 
     //Première méthode qui est je pense moins bonne
