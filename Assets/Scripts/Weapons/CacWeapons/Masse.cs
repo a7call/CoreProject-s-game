@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+///Script de l'attaque avec un zone d'impact (cercle)
+/// </summary>
 public class Masse : CacWeapons
 {
     [SerializeField]
