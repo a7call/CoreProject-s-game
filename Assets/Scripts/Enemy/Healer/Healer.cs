@@ -35,18 +35,21 @@ public class Healer : Enemy
 
     private void Start()
     {
+        SetMaxHealth();
         // Set the state to patrol
         currentState = State.Patrolling;
         // Initialise la liste
         List<GameObject> ennemies = new List<GameObject>();
         // Set point to lui même car pas de patrouille
         targetPoint = transform;
+        
 
     }
 
     // à replacer au bon endroit 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         switch(currentState)
         {
             case State.Attacking :

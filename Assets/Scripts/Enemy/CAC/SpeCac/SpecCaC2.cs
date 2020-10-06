@@ -65,11 +65,11 @@ public class SpecCaC2 : Cac
         targetPoint = target;
         // Set data
         SetData();
-        // Vie initiale
         SetMaxHealth();
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         switch (currentState)
         {
             default:

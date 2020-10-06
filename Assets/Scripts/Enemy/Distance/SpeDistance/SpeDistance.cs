@@ -16,12 +16,12 @@ public class SpeDistance : Distance
         SetFirstPatrolPoint();
         // Set data
         SetData();
-        // Vie initial
         SetMaxHealth();
+        
     }
-    private void Update()
+    protected override void Update()
     {
-
+        base.Update();
         switch (currentState)
         {
             case State.Patrolling:

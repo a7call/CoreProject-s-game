@@ -22,11 +22,11 @@ public class SpeCaC : Cac
         SetData();
         // Set initial targetPoint
         SetFirstPatrolPoint();
-        // Vie initial
         SetMaxHealth();
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         switch (currentState)
         {
             case State.Patrolling:

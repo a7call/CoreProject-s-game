@@ -33,11 +33,16 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.1f);
     }
 
+    protected virtual void Update()
+    {
+        healthBar.SetHealth(currentHealth);
+    }
 
     //seeker.IsDone() vérifie si le path est calculé
     //seeker.StartPath() est appellée pour commencer à calculer le chemin
@@ -148,6 +153,8 @@ public class Enemy : MonoBehaviour
     // Material d'indication pour un ennemi touché
     protected Material whiteMat;
     protected Material defaultMat;
+    [SerializeField]
+    protected HealthBar healthBar;
     // sprite rendered de l'ennemi
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
@@ -156,7 +163,9 @@ public class Enemy : MonoBehaviour
     protected virtual void SetMaxHealth()
     {
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
+    
 
     // prends les dammages
     protected virtual void TakeDamage(int _damage)

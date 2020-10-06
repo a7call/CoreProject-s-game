@@ -17,13 +17,13 @@ public class BaseCaC : Cac
         targetPoint = target;
         // Set data
         SetData();
-        // Vie initiale
         SetMaxHealth();
     }
 
 
-    protected void Update()
+    protected override void Update()
     {
+        base.Update();
         switch (currentState) {
         default:
                 Debug.LogWarning("not implemented");

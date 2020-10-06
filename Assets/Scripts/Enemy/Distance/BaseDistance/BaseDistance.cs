@@ -15,11 +15,11 @@ public class BaseDistance : Distance
         SetFirstPatrolPoint();
         // Set data
         SetData();
-        // Vie initialz
         SetMaxHealth();
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         switch (currentState)
         {
             case State.Patrolling:
