@@ -1716,7 +1716,6 @@ MonoBehaviour:
   isFearCdEnd: 1
   loadDelay: 20
   fearTime: 5
-  fearPointDirection: {fileID: 1575747194}
 --- !u!1 &1508162095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,7 +1861,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe39092e4dc68724498bf459de3f5abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  point: {fileID: 1575747193}
+  player: {fileID: 426600097}
+  enemy: {fileID: 1461302152}
+  pointPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1647541349
 GameObject:
   m_ObjectHideFlags: 0
