@@ -29,11 +29,11 @@ public class Enemy : MonoBehaviour
     bool reachedEndOfPath;
     Seeker seeker;
 
-
+   
 
     private void Awake()
     {
-
+        healthBarGFX.SetActive(false);
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.1f);
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Update()
     {
         healthBar.SetHealth(currentHealth);
+        DisplayBar();
     }
 
     //seeker.IsDone() vérifie si le path est calculé
@@ -158,6 +159,11 @@ public class Enemy : MonoBehaviour
     // sprite rendered de l'ennemi
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
+    //healthBar
+    public GameObject healthBarGFX;
+    protected bool isHealthBarActive;
+    [SerializeField]
+    protected float timeBeforeDesactive;
 
     // Set health to maximum
     protected virtual void SetMaxHealth()
@@ -187,6 +193,27 @@ public class Enemy : MonoBehaviour
         spriteRenderer.material = defaultMat;
 
     }
+
+    protected  void DisplayBar()
+    {
+        if(currentHealth >= maxHealth && isHealthBarActive)
+        {
+            StartCoroutine(WaitToDesactive());
+        }
+        else if (currentHealth < maxHealth && !isHealthBarActive)
+        { 
+            healthBarGFX.SetActive(true);
+            isHealthBarActive = true;
+        }
+    }
+
+    protected IEnumerator WaitToDesactive()
+    {
+        yield return new WaitForSeconds(timeBeforeDesactive);
+        healthBarGFX.SetActive(false);
+        isHealthBarActive = false;
+    }
+
 
 
 

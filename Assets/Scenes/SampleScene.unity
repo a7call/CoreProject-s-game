@@ -198,6 +198,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12634783}
   m_CullTransparentMesh: 0
+--- !u!1 &88492289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4997099163478743448, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
+  m_PrefabInstance: {fileID: 4997099162981160421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &129758461
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,6 +286,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &167722019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4570214436961896803, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
+  m_PrefabInstance: {fileID: 4570214436301506932}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &326722730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,6 +1367,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1166221344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5422495814350492867, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
+  m_PrefabInstance: {fileID: 5422495815618382195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1210273457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,7 +1676,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461302152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.21, y: -3.04, z: 0}
+  m_LocalPosition: {x: -8.38, y: 4.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1272826642}
@@ -1690,6 +1705,8 @@ MonoBehaviour:
   maxHealth: 4
   healthBar: {fileID: 1508162096}
   spriteRenderer: {fileID: 0}
+  healthBarGFX: {fileID: 1508162095}
+  timeBeforeDesactive: 0
   Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
   attackPoint: {fileID: 1272826642}
   distanceWolfAggressive: 5
@@ -1699,6 +1716,7 @@ MonoBehaviour:
   isFearCdEnd: 1
   loadDelay: 20
   fearTime: 5
+  fearPointDirection: {fileID: 1575747194}
 --- !u!1 &1508162095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,9 +1862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe39092e4dc68724498bf459de3f5abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 426600097}
-  enemy: {fileID: 1461302152}
-  pointPos: {x: 0, y: 0, z: 0}
+  point: {fileID: 1575747193}
 --- !u!1 &1647541349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2587,6 +2603,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
+      propertyPath: wayPoints.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
       propertyPath: wayPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1946099678}
@@ -2613,6 +2633,10 @@ PrefabInstance:
     - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
       propertyPath: maxHealth
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
+      propertyPath: timeBeforeDesactive
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4289371907443026751, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
       propertyPath: m_Name
@@ -2693,7 +2717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4570214434867278952, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4570214434867278953, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
       propertyPath: wayPoints.Array.data[0]
@@ -2707,9 +2731,17 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 426600105}
+    - target: {fileID: 4570214434867278953, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
+      propertyPath: healthBarGFX
+      value: 
+      objectReference: {fileID: 167722019}
+    - target: {fileID: 4570214434867278953, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
+      propertyPath: timeBeforeDesactive
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4570214434972349832, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
@@ -2726,7 +2758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4997099164753123152, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4997099164753123164, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
       propertyPath: wayPoints.Array.data[0]
@@ -2740,6 +2772,14 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 426600105}
+    - target: {fileID: 4997099164753123164, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
+      propertyPath: healthBarGFX
+      value: 
+      objectReference: {fileID: 88492289}
+    - target: {fileID: 4997099164753123164, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
+      propertyPath: timeBeforeDesactive
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4997099164753123165, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.61
@@ -2786,7 +2826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4997099164883282946, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
@@ -2799,7 +2839,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5422495814013134081, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5422495814681918000, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
       propertyPath: wayPoints.Array.data[0]
@@ -2817,13 +2857,21 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 1455258912}
+    - target: {fileID: 5422495814681918000, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
+      propertyPath: healthBarGFX
+      value: 
+      objectReference: {fileID: 1166221344}
+    - target: {fileID: 5422495814681918000, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
+      propertyPath: timeBeforeDesactive
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5422495814681918001, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
       propertyPath: m_Name
       value: BaseDistance Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5422495814681918001, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5422495814681918011, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
       propertyPath: m_LocalPosition.x
