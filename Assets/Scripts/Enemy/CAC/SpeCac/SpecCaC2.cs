@@ -41,22 +41,18 @@ public class SpecCaC2 : Cac
     //Récupérer la fonction de PlayerMovement
     private PlayerMouvement playerMouvement;
 
-
-
-    // Variable direction aléatoire du joueur
-    private Vector3 randomDirection;
-
     //Attack qui fear
     [SerializeField] private bool isFirstAttack = true;
     [SerializeField] private bool isFearCdEnd = true;
     [SerializeField] private float loadDelay = 20f;
     [SerializeField] private float fearTime = 2f;
-    public Transform fearPointDirection;
+    private RandomFear randomFear;
 
     private void Start()
     {
 
         playerMouvement = FindObjectOfType<PlayerMouvement>();
+        randomFear = FindObjectOfType<RandomFear>();
 
         currentState = State.Chasing;
         // Get Player Reference
@@ -135,11 +131,8 @@ public class SpecCaC2 : Cac
     private IEnumerator FearAttack()
     {
         isFirstAttack = false;
-
-        // randomDirection = (new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f), 0.0f)).normalized;
-        //Vector3 targetPosition = randomDirection;
-        Vector3 direction = (fearPointDirection.position - playerMouvement.transform.position).normalized;
-        playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
+        Vector3 pos = randomFear.pointPos;
+        playerMouvement.rb.velocity = pos * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
         yield return new WaitForSeconds(loadDelay);
         isFirstAttack = true;
     }
