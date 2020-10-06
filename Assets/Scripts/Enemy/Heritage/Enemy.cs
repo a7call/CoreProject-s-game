@@ -105,6 +105,7 @@ public class Enemy : MonoBehaviour
     protected float inSight;
     // Player
     [SerializeField] protected Transform target;
+
     protected Rigidbody2D rb;
 
 
@@ -192,6 +193,19 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.material = defaultMat;
 
+    }
+    // Distance d'où l'ennemi peu lancer une attaque
+    protected float attackRange;
+    protected virtual void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+        }
+        else
+        {
+            currentState = State.Chasing;
+        }
     }
 
     protected  void DisplayBar()

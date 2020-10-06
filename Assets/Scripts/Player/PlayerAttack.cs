@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     public Animator animator;
     public LayerMask enemyLayer;
     public float attackRadius;
-    public GameObject projectil;
+    public GameObject projectile;
     private GameObject cacWeapons;
     private bool isCaC = true;
 
@@ -50,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
 
     void InstantiateProjectile()
     {
-        GameObject.Instantiate(projectil, attackPoint.position, Quaternion.identity);
+        GameObject.Instantiate(projectile, attackPoint.position, Quaternion.identity);
     }
 
     // Gizmo de Test
