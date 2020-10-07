@@ -3,24 +3,24 @@ using UnityEngine;
 /// <summary>
 /// Classe gérant l'énergi du joueur
 /// </summary>
-public class PlayerEnergy : MonoBehaviour
+public class PlayerEnergy : Player
 {
+
+    public int currentEnergy;
     public EnergyBar energyBar;
     public GameObject energyBarGFX;
-    public PlayerScriptableObjectScript playerData;
-    public int currentEnergy;
     public bool energyIsReloading = false;
     private bool isActive;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         energyBarGFX = GameObject.FindGameObjectWithTag("EnergyBar");
         energyBarGFX.SetActive(false);
         SetMaxEnergy();
     }
     private void Update()
     {
-
        if(!energyIsReloading) StartCoroutine(EnergyReload());
        energyBar.SetEnergy(currentEnergy);
     }

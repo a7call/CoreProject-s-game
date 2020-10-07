@@ -135,9 +135,9 @@ public class SpecCaC2 : Cac
     {
         isFear = true;
         isFearCdEnd = false;
-        playerMouvement.currentMouvementState = PlayerMouvement.EtatMouvementJoueur.fear;
+        playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.fear;
         yield return new WaitForSeconds(fearTime);
-        playerMouvement.currentMouvementState = PlayerMouvement.EtatMouvementJoueur.normal;
+        playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.normal;
         isFear = false;
         isFearCdEnd = true;
 

@@ -520,13 +520,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 426600104}
-  velocity: {x: 0, y: 0, z: 0}
   animator: {fileID: 426600098}
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
+  velocity: {x: 0, y: 0, z: 0}
   StartSmoothTime: 0.2
   StopSmoothTime: 0.1
-  mooveSpeed: 0
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
-  currentMouvementState: 0
 --- !u!114 &426600100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,7 +545,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccfb8a40725aa8489bd8ac681bedbb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  animator: {fileID: 0}
   playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
   currentHealth: 0
   InvincibilityFlashDelay: 0.1
   InvincibleDelay: 3
@@ -557,10 +573,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65f8e8811ac9d49ad0c88e319721c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
+  currentEnergy: 0
   energyBar: {fileID: 1039771861}
   energyBarGFX: {fileID: 0}
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
-  currentEnergy: 0
   energyIsReloading: 0
 --- !u!114 &426600102
 MonoBehaviour:
@@ -574,8 +600,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46045b764b7fda0449f44f03a75baaef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  rb: {fileID: 0}
   animator: {fileID: 426600098}
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512

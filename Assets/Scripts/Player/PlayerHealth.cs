@@ -4,9 +4,8 @@ using UnityEngine;
 /// Classe player health gérant la vie du joueur 
 /// </summary>
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : Player
 {
-    public PlayerScriptableObjectScript playerData;
 
     public int currentHealth;
     private bool isInvincible;
@@ -15,8 +14,9 @@ public class PlayerHealth : MonoBehaviour
     public HealthBar healthBar;
 
     public SpriteRenderer graphics;
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         SetMaxHealth();
     }
 
@@ -29,8 +29,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void SetMaxHealth()
     {
-        currentHealth =  playerData.maxHealth;
-        healthBar.SetMaxHealth(playerData.maxHealth);
+        currentHealth =  maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         
     }
 
