@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Classe de pick up des armes distances.
+/// Lors du ramassage de l'arme l'attribut projectile du player est remplacé par le gameobject 
+/// </summary>
 public class WeaponDistancePickUp : MonoBehaviour
 {
     private PlayerAttack player;
@@ -10,7 +13,7 @@ public class WeaponDistancePickUp : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             player = FindObjectOfType<PlayerAttack>();
-            player.projectil = gameObject;
+            player.projectile = gameObject;
             Destroy(gameObject);
         } 
     }

@@ -2,46 +2,65 @@
 /// <summary>
 /// Classe gérant les mouvements du joueur (se référer à Lopez)
 /// </summary>
-public class PlayerMouvement : MonoBehaviour
+public class PlayerMouvement : Player
 {
 
-    public Rigidbody2D rb;
     private Vector2 mouvement;
 
     //Changement de velocity de privée à public
     public Vector3 velocity = Vector3.zero;
-    public Animator animator;
     public float StartSmoothTime;
     public float StopSmoothTime;
     private Vector2 mouvementVector;
     private PlayerEnergy playerEnergy;
-    public float mooveSpeed;
 
-    public PlayerScriptableObjectScript playerData;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerEnergy = GetComponent<PlayerEnergy>();
-        mooveSpeed = playerData.mooveSpeed;
     }
     void Update()
     {
-        CheckInputs();
-        GetInputAxis();
-        ClampMouvement(mouvement);
-        GetLastDirection();
-        SetAnimationVariable();
 
-        if (Input.GetKeyDown(KeyCode.C) && playerEnergy.currentEnergy >= playerData.dashEnergyCost)
+        switch (currentEtat)
         {
-            Dash();
-        }
+            default:
+                break;
 
+            case EtatJoueur.normal:
+                CheckInputs();
+                GetInputAxis();
+                ClampMouvement(mouvement);
+                GetLastDirection();
+                SetAnimationVariable();
+
+                if (Input.GetKeyDown(KeyCode.C) && playerEnergy.currentEnergy >= dashEnergyCost)
+                {
+                    Dash();
+                }
+
+                break;
+
+            case EtatJoueur.fear:
+                    break;
+        }
 
     }
 
     private void FixedUpdate()
     {
-        MovePlayer(mouvementVector * mooveSpeed * Time.fixedDeltaTime);
+        switch (currentEtat)
+        {
+            default:
+                break;
+
+            case EtatJoueur.normal:
+                MovePlayer(mouvementVector * mooveSpeed * Time.fixedDeltaTime);
+                break;
+
+            case EtatJoueur.fear:
+                break;
+        }
         
     }
 
@@ -103,8 +122,8 @@ public class PlayerMouvement : MonoBehaviour
     void Dash()
     {   
         Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-        playerEnergy.SpendEnergy(playerData.dashEnergyCost);
-        rb.AddForce(dir * playerData.dashForce);
+        playerEnergy.SpendEnergy(dashEnergyCost);
+        rb.AddForce(dir * dashForce);
     }
 
 }

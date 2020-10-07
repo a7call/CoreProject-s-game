@@ -12,25 +12,25 @@ using UnityEngine;
 public class Distance : Enemy
 {
     // Scriptable Object
-    [SerializeField] protected Type2ScriptableObject Type2Data;
+    [SerializeField] protected DistanceScriptableObject DistanceData;
     // Check si tire
     public bool isShooting;
 
 
     protected virtual void SetData()
     {
-        moveSpeed = Type2Data.moveSpeed;
-        inSight = Type2Data.aggroDistance;
+        moveSpeed = DistanceData.moveSpeed;
+        inSight = DistanceData.aggroDistance;
 
 
-        maxHealth = Type2Data.maxHealth;
-        whiteMat = Type2Data.whiteMat;
-        defaultMat = Type2Data.defaultMat;
+        maxHealth = DistanceData.maxHealth;
+        whiteMat = DistanceData.whiteMat;
+        defaultMat = DistanceData.defaultMat;
 
 
-        restTime = Type2Data.restTime;
-        projetile = Type2Data.projetile;
-        attackRange = Type2Data.attackRange;
+        restTime = DistanceData.restTime;
+        projetile = DistanceData.projetile;
+        attackRange = DistanceData.attackRange;
     }
 
 
@@ -54,11 +54,10 @@ public class Distance : Enemy
 
     protected override void PlayerInSight()
     {
-        if (Vector3.Distance(transform.position, target.position) < inSight) 
-            currentState = State.Chasing;
+        base.PlayerInSight();
     }
 
-    protected virtual void isInRange()
+    protected override void isInRange()
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
@@ -114,7 +113,6 @@ public class Distance : Enemy
     protected float restTime;
     // Projectile to instantiate
     protected GameObject projetile;
-    protected float attackRange;
 
 
     protected virtual IEnumerator CanShoot()

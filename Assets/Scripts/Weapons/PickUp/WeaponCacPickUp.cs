@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Classe de pick up des armes Cac.
+/// recupère la liste des armes, disable tout les scripts
+/// et active le bon ( celui de l'arme ramassé)
+/// </summary>
 public class WeaponCacPickUp : MonoBehaviour
 {
     // Liste des armes dans le weapon manager

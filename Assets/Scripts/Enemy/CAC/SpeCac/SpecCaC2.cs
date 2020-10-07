@@ -28,8 +28,8 @@ public class SpecCaC2 : Cac
     // Distance entre le joueur et le loup
     private float distanceWolfPlayer;
     // Variable qui dit si le loup est en PowerMode ou non
-    private bool isPowerMode = false;
-    private bool isSlowCdEnd = true;
+    [SerializeField] private bool isPowerMode = false;
+    [SerializeField] private bool isSlowCdEnd = true;
     // Variable de temps au bout du quel il peut relancer le PowerMode
     private float powerModeTime = 10f;
 
@@ -46,6 +46,7 @@ public class SpecCaC2 : Cac
     [SerializeField] private bool isFearCdEnd = true;
     [SerializeField] private float loadDelay = 20f;
     [SerializeField] private float fearTime = 2f;
+    [SerializeField] private bool isFear = false;
     private RandomFear randomFear;
 
     private void Start()
@@ -72,20 +73,32 @@ public class SpecCaC2 : Cac
             case State.Chasing:
                 Aggro();
                 MoveToPath();
-                //StartCoroutine(PowerMode());
-                //if(isPowerMode) StartCoroutine(DecreasePlayerSpeed());
+                StartCoroutine(PowerMode());
+                if(isPowerMode) StartCoroutine(DecreasePlayerSpeed());
                 isInRange();
+                if (isFear)
+                {
+                    DistancePlayerFearPoint();
+                }
                 break;
 
             case State.Attacking:
-                StartCoroutine(FearMode());
-                if (isFirstAttack) StartCoroutine(FearAttack());
+                if (isFear) 
+                {
+                    DistancePlayerFearPoint();
+                }
+                if (isFirstAttack) 
+                {
+                    StartCoroutine(FearMode());
+                    StartCoroutine(FearAttack());
+                }
                 BaseAttack();
                 GetPlayerPos();
                 isInRange();
                 break;
-        }
 
+            
+        }
     }
 
     // Réduction de la MS du joueur pendant le State Chasing
@@ -120,21 +133,34 @@ public class SpecCaC2 : Cac
 
     private IEnumerator FearMode()
     {
-            isFearCdEnd = false;
-            yield return new WaitForSeconds(fearTime);
-            isFearCdEnd = true;
+        isFear = true;
+        isFearCdEnd = false;
+        playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.fear;
+        yield return new WaitForSeconds(fearTime);
+        playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.normal;
+        isFear = false;
+        isFearCdEnd = true;
 
     }
 
     // Première attaque du State Attacking qui Fear le joueur
+    public Transform point;
 
     private IEnumerator FearAttack()
     {
         isFirstAttack = false;
-        Vector3 pos = randomFear.pointPos;
-        playerMouvement.rb.velocity = pos * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
+        Vector3 pos = point.position;
+        Vector3 targetPointPos = targetPoint.position;
+        Vector3 direction = (pos - targetPointPos).normalized;
+        playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
         yield return new WaitForSeconds(loadDelay);
         isFirstAttack = true;
+    }
+
+    private void DistancePlayerFearPoint()
+    {
+        float distance = Vector3.Distance(target.position, point.position);
+            if (distance <=0.2) playerMouvement.rb.velocity = Vector3.zero;
     }
 
     // Find player to follow

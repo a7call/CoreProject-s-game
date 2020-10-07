@@ -5,19 +5,18 @@ using UnityEngine;
 ///  Classe gérant les attaques du joueur
 /// </summary>
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : Player
 {
 
-    public PlayerScriptableObjectScript playerData;
-    public Animator animator;
     public LayerMask enemyLayer;
     public float attackRadius;
-    public GameObject projectil;
+    public GameObject projectile;
     private GameObject cacWeapons;
     private bool isCaC = true;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         cacWeapons = GameObject.FindGameObjectWithTag("WeaponManager");
     }
     // Update is called once per frame
@@ -50,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
 
     void InstantiateProjectile()
     {
-        GameObject.Instantiate(projectil, attackPoint.position, Quaternion.identity);
+        GameObject.Instantiate(projectile, attackPoint.position, Quaternion.identity);
     }
 
     // Gizmo de Test

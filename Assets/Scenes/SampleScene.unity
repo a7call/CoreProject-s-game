@@ -198,11 +198,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12634783}
   m_CullTransparentMesh: 0
---- !u!1 &88492289 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4997099163478743448, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
-  m_PrefabInstance: {fileID: 4997099162981160421}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &129758461
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,12 +520,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 426600104}
-  velocity: {x: 0, y: 0, z: 0}
   animator: {fileID: 426600098}
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
+  velocity: {x: 0, y: 0, z: 0}
   StartSmoothTime: 0.2
   StopSmoothTime: 0.1
-  mooveSpeed: 0
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
 --- !u!114 &426600100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,7 +545,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccfb8a40725aa8489bd8ac681bedbb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  animator: {fileID: 0}
   playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
   currentHealth: 0
   InvincibilityFlashDelay: 0.1
   InvincibleDelay: 3
@@ -561,10 +573,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65f8e8811ac9d49ad0c88e319721c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
+  currentEnergy: 0
   energyBar: {fileID: 1039771861}
   energyBarGFX: {fileID: 0}
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
-  currentEnergy: 0
   energyIsReloading: 0
 --- !u!114 &426600102
 MonoBehaviour:
@@ -578,13 +600,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46045b764b7fda0449f44f03a75baaef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  rb: {fileID: 0}
   animator: {fileID: 426600098}
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  currentEtat: 0
+  maxHealth: 0
+  maxEnergy: 0
+  mooveSpeed: 0
+  dashForce: 0
+  dashEnergyCost: 0
+  damage: 0
+  energyReloadNumber: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   attackRadius: 0.5
-  projectil: {fileID: 3965679626907364545, guid: 5e1eb3f765f9dba4a81a2776f16f784b, type: 3}
+  projectile: {fileID: 0}
   attackPoint: {fileID: 1229324359}
 --- !u!212 &426600103
 SpriteRenderer:
@@ -1367,11 +1398,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1166221344 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5422495814350492867, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
-  m_PrefabInstance: {fileID: 5422495815618382195}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1210273457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,7 +1479,7 @@ GameObject:
   - component: {fileID: 1229324359}
   m_Layer: 0
   m_Name: AttackPointPlayer
-  m_TagString: Untagged
+  m_TagString: AttackPoint
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1707,15 +1733,19 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   healthBarGFX: {fileID: 1508162095}
   timeBeforeDesactive: 0
-  Type1Data: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
+  CacDatas: {fileID: 11400000, guid: c4216e944493d7f41a55b47ce5bfaa1f, type: 2}
   attackPoint: {fileID: 1272826642}
   distanceWolfAggressive: 5
+  isPowerMode: 0
+  isSlowCdEnd: 1
   newSpeedPlayer: 100
   speedDuration: 1.5
   isFirstAttack: 1
   isFearCdEnd: 1
   loadDelay: 20
-  fearTime: 5
+  fearTime: 2
+  isFear: 0
+  point: {fileID: 1799004524}
 --- !u!1 &1508162095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,17 +2206,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1829497888 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4289371907551093607, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-  m_PrefabInstance: {fileID: 4289371909077110599}
+--- !u!1 &1799004523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7e3897bef343ea46ad0a0e6f2d9f863, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1799004524}
+  m_Layer: 0
+  m_Name: FearPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1799004524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799004523}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.22, y: -2.79, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1946099677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,22 +2653,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: wayPoints.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: wayPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 1946099678}
-    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: wayPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 2076886857}
-    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 1829497888}
-    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
       propertyPath: ennemies.Array.data[0]
       value: 
       objectReference: {fileID: 1455258908}
@@ -2631,33 +2664,21 @@ PrefabInstance:
       propertyPath: ennemies.Array.data[2]
       value: 
       objectReference: {fileID: 1461302152}
-    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: maxHealth
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4289371907443026748, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: timeBeforeDesactive
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4289371907443026751, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
       propertyPath: m_Name
       value: Healer
       objectReference: {fileID: 0}
-    - target: {fileID: 4289371907551093606, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: m_Value
-      value: 0.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 4289371908419167412, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: m_AnchorMax.y
+    - target: {fileID: 4289371907443026751, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4289371908419167412, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.34
       objectReference: {fileID: 0}
     - target: {fileID: 4289371908419167412, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.0012000203
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffe3bb0b53246304fbab7c250cd01810, type: 3}
@@ -2740,6 +2761,10 @@ PrefabInstance:
       propertyPath: timeBeforeDesactive
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4570214434867278953, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
+      propertyPath: DistanceData
+      value: 
+      objectReference: {fileID: 11400000, guid: 38e6710625b3ff54a911adbdb47b5321, type: 2}
     - target: {fileID: 4570214434972349832, guid: e6335e21e54c5e843b88bb30cc59791f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2773,14 +2798,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 426600105}
-    - target: {fileID: 4997099164753123164, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
-      propertyPath: healthBarGFX
-      value: 
-      objectReference: {fileID: 88492289}
-    - target: {fileID: 4997099164753123164, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
-      propertyPath: timeBeforeDesactive
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4997099164753123165, guid: 6db8e14a91860064ba70247ae3ea88f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.61
@@ -2858,14 +2875,6 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 1455258912}
-    - target: {fileID: 5422495814681918000, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
-      propertyPath: healthBarGFX
-      value: 
-      objectReference: {fileID: 1166221344}
-    - target: {fileID: 5422495814681918000, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
-      propertyPath: timeBeforeDesactive
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5422495814681918001, guid: 7645372dc1951034085c93b14aeceab3, type: 3}
       propertyPath: m_Name
       value: BaseDistance Enemy

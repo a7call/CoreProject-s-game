@@ -16,22 +16,22 @@ using UnityEngine;
 
 public class Cac : Enemy
 {
-    [SerializeField] protected Type1ScriptableObject Type1Data;
+    [SerializeField] protected CacScriptableObject CacDatas;
    
 
    // Set data du scriptable object Type1Data
     protected virtual void SetData()
     {
-        attackRange = Type1Data.attackRange;
-        attackRadius = Type1Data.attackRadius;
-        hitLayers = Type1Data.hitLayers;
+        attackRange = CacDatas.attackRange;
+        attackRadius = CacDatas.attackRadius;
+        hitLayers = CacDatas.hitLayers;
 
-        moveSpeed = Type1Data.moveSpeed;
-        inSight = Type1Data.aggroDistance;
+        moveSpeed = CacDatas.moveSpeed;
+        inSight = CacDatas.aggroDistance;
 
-        maxHealth = Type1Data.maxHealth;
-        whiteMat = Type1Data.whiteMat;
-        defaultMat = Type1Data.defaultMat;
+        maxHealth = CacDatas.maxHealth;
+        whiteMat = CacDatas.whiteMat;
+        defaultMat = CacDatas.defaultMat;
     }
     
 
@@ -83,10 +83,9 @@ public class Cac : Enemy
         return base.WhiteFlash();
     }
 
+
     //Attack
 
-    // Distance d'où l'ennemi peu lancer une attaque
-    protected float attackRange;
     // Centre du rayon de l'attaque de l'ennemi
     [SerializeField] protected Transform attackPoint;
     // Rayon d'attaque de l'ennemi
@@ -99,16 +98,9 @@ public class Cac : Enemy
 
 
     // Check if PLayer is in Range pour définir la State en Attacking ou Chasing (ici, pas de patrouille)
-    protected virtual void isInRange()
+    protected override void isInRange()
     {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-        }
-        else
-        {
-            currentState = State.Chasing;
-        }
+        base.isInRange();
     }
 
 
