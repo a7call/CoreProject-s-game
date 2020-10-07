@@ -23,37 +23,43 @@ using UnityEngine.XR.WSA;
 
 public class SpecCaC2 : Cac
 {
-    // Distance à partir de laquelle le loup active le PowerMode, déclarer en public pour la changer rapidement
-    public float distanceWolfAggressive;
+    // Distance à partir de laquelle le loup active le PowerMode, déclarer en [SerializeField] pour la changer rapidement
+    // A retirer du [SerializeField] par la suite
+    [SerializeField] private float distanceWolfAggressive = 5;
     // Distance entre le joueur et le loup
     private float distanceWolfPlayer;
     // Variable qui dit si le loup est en PowerMode ou non
-    [SerializeField] private bool isPowerMode = false;
-    [SerializeField] private bool isSlowCdEnd = true;
+    private bool isPowerMode = false;
+    private bool isSlowCdEnd = true;
     // Variable de temps au bout du quel il peut relancer le PowerMode
     private float powerModeTime = 10f;
 
     // Valeur de la nouvelle vitesse du player
-    [SerializeField] private float newSpeedPlayer = 100f;
+    [SerializeField] private float newSpeedPlayer = 75f;
     // Temps pendant laquelle il garde cette vitesse
-    [SerializeField] private float speedDuration = 1.5f;
+    [SerializeField] private float speedDuration = 2f;
 
     //Récupérer la fonction de PlayerMovement
     private PlayerMouvement playerMouvement;
 
-    //Attack qui fear
-    [SerializeField] private bool isFirstAttack = true;
-    [SerializeField] private bool isFearCdEnd = true;
+    // Variables liées à l'attaque qui fear
+    private bool isFirstAttack = true;
+    private bool isFearCdEnd = true;
+    private bool isFear = false;
     [SerializeField] private float loadDelay = 20f;
     [SerializeField] private float fearTime = 2f;
-    [SerializeField] private bool isFear = false;
-    private RandomFear randomFear;
+    [SerializeField] private float distanceFear = 4f;
+
+    private Transform playerTransform;
+    private Transform enemyTransform;
+
+    private Vector3 vecEnemyPlayer;
+    private Vector3 pointPos;
+
 
     private void Start()
     {
-
         playerMouvement = FindObjectOfType<PlayerMouvement>();
-        randomFear = FindObjectOfType<RandomFear>();
 
         currentState = State.Chasing;
         // Get Player Reference
@@ -64,6 +70,7 @@ public class SpecCaC2 : Cac
         SetData();
         SetMaxHealth();
     }
+
     protected override void Update()
     {
         base.Update();
@@ -91,14 +98,15 @@ public class SpecCaC2 : Cac
                 {
                     StartCoroutine(FearMode());
                     StartCoroutine(FearAttack());
+                    
                 }
                 BaseAttack();
                 GetPlayerPos();
                 isInRange();
                 break;
 
-            
         }
+
     }
 
     // Réduction de la MS du joueur pendant le State Chasing
@@ -106,16 +114,13 @@ public class SpecCaC2 : Cac
     // Fonction qui permet de savoir si le PowerMode du mob s'active
     private IEnumerator PowerMode()
     {  
-
         distanceWolfPlayer = Vector3.Distance(target.transform.position, transform.position);
         if (distanceWolfPlayer <= distanceWolfAggressive && isSlowCdEnd)
         {
             isSlowCdEnd = false;
             isPowerMode = true;
             yield return new WaitForSeconds(powerModeTime);
-            isSlowCdEnd = true;
         }
-       
     }
        
 
@@ -127,12 +132,12 @@ public class SpecCaC2 : Cac
         playerMouvement.mooveSpeed = newSpeedPlayer;
         yield return new WaitForSeconds(speedDuration);
         playerMouvement.mooveSpeed = baseMouveSpeed;
-
     }
 
 
     private IEnumerator FearMode()
     {
+        positionFearPoint();
         isFear = true;
         isFearCdEnd = false;
         playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.fear;
@@ -140,26 +145,34 @@ public class SpecCaC2 : Cac
         playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.normal;
         isFear = false;
         isFearCdEnd = true;
-
     }
 
     // Première attaque du State Attacking qui Fear le joueur
-    public Transform point;
 
     private IEnumerator FearAttack()
     {
         isFirstAttack = false;
-        Vector3 pos = point.position;
-        Vector3 targetPointPos = targetPoint.position;
-        Vector3 direction = (pos - targetPointPos).normalized;
+        Vector3 pos = pointPos;
+        Vector3 targetPos = targetPoint.position;
+        Vector3 direction = (pos - targetPos).normalized;
         playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
         yield return new WaitForSeconds(loadDelay);
         isFirstAttack = true;
     }
 
+    public void positionFearPoint()
+    {
+        playerTransform = playerMouvement.GetComponent<Transform>();
+        enemyTransform = gameObject.transform;
+
+        vecEnemyPlayer = (enemyTransform.position - playerTransform.position).normalized;
+
+        pointPos = playerTransform.position - distanceFear * vecEnemyPlayer;
+    }
+
     private void DistancePlayerFearPoint()
     {
-        float distance = Vector3.Distance(target.position, point.position);
+        float distance = Vector3.Distance(target.position, pointPos);
             if (distance <=0.2) playerMouvement.rb.velocity = Vector3.zero;
     }
 
@@ -170,7 +183,7 @@ public class SpecCaC2 : Cac
     }
     //Mouvement
 
-    // Override fonction Aggro ( Enemy.cs)  => aggro à l'initialisation
+    // Override fonction Aggro (Enemy.cs)  => aggro à l'initialisation
     protected override void Aggro()
     {
         targetPoint = target;
