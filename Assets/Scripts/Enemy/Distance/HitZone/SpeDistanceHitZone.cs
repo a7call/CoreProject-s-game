@@ -6,7 +6,7 @@ using UnityEngine;
 /// Classe héritière de distance 
 /// Contient en plus de classe distance une coroutine de projectile (spécial) => voir HitZoneProjectile.cs
 /// </summary>
-public class SpeDistanceVictorTest : Distance
+public class SpeDistanceHitZone : Distance
 {
 
     void Start()

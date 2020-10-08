@@ -11,6 +11,7 @@ public class HitZoneProjectile : Projectile
     [SerializeField] int nbHit; //durée d'activité de la zone
     [SerializeField] int timeIntervale; //intervalle entre les dégats de zone
     [SerializeField] int zoneRadius; //rayon de la zone de dégats
+    [SerializeField] protected GameObject HitZoneGO;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,8 @@ public class HitZoneProjectile : Projectile
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //TakeDamage();
-       StartCoroutine(HitZone());
+        GameObject.Instantiate(HitZoneGO, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     protected override void GetDirection()
@@ -40,35 +42,9 @@ public class HitZoneProjectile : Projectile
         base.Lauch();
     }
 
-    protected virtual IEnumerator HitZone()
-    {
-        base.speed = 0;
-        while (n <= (nbHit - 1))
-        {
-            yield return new WaitForSeconds(timeIntervale);
-            
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneRadius);
+    
 
-            foreach (Collider2D h in hits)
-            {
-                if (h.CompareTag("Player"))
-                {
-                    print("test");
-                }
-                // TakeDamage();
-               
-            }
-            n++;
-        }
-
-        Destroy(gameObject);
-        
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, zoneRadius);
-    }
+    
 
 }
 
