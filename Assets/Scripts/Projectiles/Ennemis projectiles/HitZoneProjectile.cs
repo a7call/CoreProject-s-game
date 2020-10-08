@@ -7,10 +7,10 @@ using UnityEngine;
 /// </summary>
 public class HitZoneProjectile : Projectile
 {
-     private int n = 0; //Compteur pour la durée des degats zone
-    [SerializeField] int hitTime = 3; //durée d'activité de la zone
-    [SerializeField] int timeIntervale = 1; //intervalle entre les degats de zone
-    [SerializeField] int zoneRadius = 10;
+     private int n = 0;
+    [SerializeField] int nbHit; //durée d'activité de la zone
+    [SerializeField] int timeIntervale; //intervalle entre les dégats de zone
+    [SerializeField] int zoneRadius; //rayon de la zone de dégats
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,7 @@ public class HitZoneProjectile : Projectile
 
     protected virtual void HitZone()
     {
-        while (n < (hitTime - 1))
+        while (n < (nbHit - 1))
         {
             StartCoroutine(WaitingTime());
             base.speed = 0;
