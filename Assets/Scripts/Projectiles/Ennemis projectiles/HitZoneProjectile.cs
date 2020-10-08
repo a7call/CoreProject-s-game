@@ -27,7 +27,7 @@ public class HitZoneProjectile : Projectile
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //TakeDamage();
-        HitZone();
+       StartCoroutine(HitZone());
     }
 
     protected override void GetDirection()
@@ -40,17 +40,23 @@ public class HitZoneProjectile : Projectile
         base.Lauch();
     }
 
-    protected virtual void HitZone()
+    protected virtual IEnumerator HitZone()
     {
-        while (n < (nbHit - 1))
+        base.speed = 0;
+        while (n <= (nbHit - 1))
         {
-            StartCoroutine(WaitingTime());
-            base.speed = 0;
+            yield return new WaitForSeconds(timeIntervale);
+            
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneRadius);
 
             foreach (Collider2D h in hits)
             {
+                if (h.CompareTag("Player"))
+                {
+                    print("test");
+                }
                 // TakeDamage();
+               
             }
             n++;
         }
@@ -58,11 +64,11 @@ public class HitZoneProjectile : Projectile
         Destroy(gameObject);
         
     }
-    private IEnumerator WaitingTime()
-    {
-        yield return new WaitForSeconds(timeIntervale);
-    }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, zoneRadius);
+    }
 
 }
 
