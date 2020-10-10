@@ -29,8 +29,9 @@ public class AngleProjectile : Projectile
     {
         GetDirection();
         distance = Vector3.Distance(target.position, transform.position);
-        DirTir();
-        
+        ConeShoot();
+
+
     }
 
     // Update is called once per frame
@@ -60,6 +61,15 @@ public class AngleProjectile : Projectile
         transform.Translate(directionTir * base.speed * Time.deltaTime);
     }
 
+    protected void ConeShoot()
+    {
+        directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
+    }
+
+
+
+
+
     protected void DirTir()
     {
         //target = GameObject.FindGameObjectWithTag("Player");
@@ -74,8 +84,8 @@ public class AngleProjectile : Projectile
         //decalageX =  decalageXl/ Mathf.Sin(angle1);
         //decalageY = Mathf.Cos(angle2) * decalageYl;
 
-        //angleDecalage = Mathf.Rad2Deg*angleDecalage;
-        //angle1 = Mathf.Rad2Deg * angle1;
+        angleDecalage = Mathf.Deg2Rad*angleDecalage;
+        angle1 = Mathf.Deg2Rad * angle1;
 
         X = distance * Mathf.Cos(angle1 - angleDecalage);
         Y = distance * Mathf.Sin(angle1 - angleDecalage);
@@ -94,7 +104,8 @@ public class AngleProjectile : Projectile
         //directionTir.x = X;
         //directionTir.y = Y;
 
-        directionTir = new Vector3(X,Y,0).normalized;
+        // directionTir = new Vector3(X,Y,0).normalized;
+        
 
         //print(Quaternion.AngleAxis(angleDecalage, dir));
 
@@ -105,4 +116,7 @@ public class AngleProjectile : Projectile
         //transform.rotation.ToAngleAxis(out angleDecalage, out directionTir);
         //print(directionTir);
     }
+
+
+   
 }
