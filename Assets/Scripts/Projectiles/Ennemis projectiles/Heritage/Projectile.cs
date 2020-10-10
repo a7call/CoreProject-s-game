@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
     // vitesse des projectiles
     public float speed;
     // cible des projectiles (Player)
-    private Transform target;
+    protected Transform target;
     // direction (en fonction de la place de la cible)
     protected Vector3 dir;
     // distance entre le player et le projectile
@@ -41,6 +41,7 @@ public class Projectile : MonoBehaviour
     protected virtual void CalculDistance()
     {
         distance = Vector3.Distance(target.position, transform.position);
+        
     }
 
 }
