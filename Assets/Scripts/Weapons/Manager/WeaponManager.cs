@@ -6,23 +6,45 @@ using UnityEngine;
 /// </summary>
 public class WeaponManager : MonoBehaviour
 {
-    // Quand une arme est ramassé récupere son tag et active le script en relation 
-    /* public void PickUpWeapon(GameObject obj)
-     {
-         switch (obj.tag)
-         {
-             default:
-                 Debug.LogWarning("tag not supported");
-                 break;
-             case WeaponTags.MASSE_TAG:
-                 GetComponent<Masse>().enabled = true;
-                 break;
-             case WeaponTags.FAUX_TAG:
-                 GetComponent<Faux>().enabled = true;
-                 break;
+    public int selectedWeapon = 0;
+    private void Start()
+    {
+        SelectWeapon();
+    }
 
-         }
-     }*/
+    private void Update()
+    {
+        int previousSelectedWeapon = selectedWeapon;
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            if (selectedWeapon >= transform.childCount - 1)
+            {
+                selectedWeapon = 0;
+            }
+            else
+            {
+                selectedWeapon++;
+            }
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            if (selectedWeapon <= 0)
+            {
+                selectedWeapon = transform.childCount -1 ;
+            }
+            else
+            {
+                selectedWeapon--;
+            }
+
+
+        }
+
+        if(previousSelectedWeapon != selectedWeapon)
+        {
+            SelectWeapon();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,7 +52,28 @@ public class WeaponManager : MonoBehaviour
         {
             collision.transform.parent = gameObject.transform;
             collision.transform.position = gameObject.transform.position;
+            collision.transform.gameObject.SetActive(false);
         }
+    }
+    
+
+    private void SelectWeapon()
+    {
+        int i = 0;
+        foreach (Transform weapon in transform)
+        {
+            if (i == selectedWeapon)
+            {
+                weapon.gameObject.SetActive(true);
+            }
+            else
+            {
+                weapon.gameObject.SetActive(false); 
+            }
+            i++;
+
+        }
+
     }
 
 }
