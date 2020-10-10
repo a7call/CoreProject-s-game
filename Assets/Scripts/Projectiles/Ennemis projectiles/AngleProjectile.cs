@@ -37,7 +37,7 @@ public class AngleProjectile : Projectile
     void Update()
     {
         Lauch();
-       
+        
 
     }
 
@@ -57,14 +57,14 @@ public class AngleProjectile : Projectile
 
     protected override void Lauch()
     {
-        transform.Translate(directionTir.normalized * base.speed * Time.deltaTime);
+        transform.Translate(directionTir * base.speed * Time.deltaTime);
     }
 
     protected void DirTir()
     {
         //target = GameObject.FindGameObjectWithTag("Player");
-        angle1 = Vector3.Angle(base.dir,Vector3.right);
-        angle2 = Vector3.Angle(base.dir, Vector3.up);
+        angle1 = Vector3.Angle(Vector3.right, base.dir);
+       // angle2 = Vector3.Angle(base.dir, Vector3.up);
 
         //dist = Vector3.Distance(transform.position, target.transform.position);
 
@@ -73,23 +73,32 @@ public class AngleProjectile : Projectile
 
         //decalageX =  decalageXl/ Mathf.Sin(angle1);
         //decalageY = Mathf.Cos(angle2) * decalageYl;
-        angleDecalage = Mathf.Rad2Deg*angleDecalage;
 
-        X = distance * Mathf.Cos(angle1 + angleDecalage);
-        Y = distance * Mathf.Sin(angle1 + angleDecalage);
+        //angleDecalage = Mathf.Rad2Deg*angleDecalage;
+        //angle1 = Mathf.Rad2Deg * angle1;
 
-        //print(distance);
-        print(dir.x);
-        print(dir.y);
+        X = distance * Mathf.Cos(angle1 - angleDecalage);
+        Y = distance * Mathf.Sin(angle1 - angleDecalage);
+
+
+        print(distance);
+        print(angle1);
+        print(angleDecalage);
+        //print(dir.x);
+        //print(dir.y);
         print(X);
         print(Y);
 
-        directionTir.x = X;
-        directionTir.y = Y;
+        print(Mathf.Cos(angle1 - angleDecalage));
+
+        //directionTir.x = X;
+        //directionTir.y = Y;
+
+        directionTir = new Vector3(X,Y,0).normalized;
 
         //print(Quaternion.AngleAxis(angleDecalage, dir));
 
-        
+
 
         //print(directionTir);
         //print(base.dir);
