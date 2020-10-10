@@ -17,7 +17,7 @@ public class Projectiles : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerAttack = player.GetComponent<PlayerAttack>();
         playerTransform = player.GetComponent<Transform>();
-        dir = (playerAttack.attackPoint.position - playerTransform.position).normalized;
+       // dir = (playerAttack.attackPoint.position - playerTransform.position).normalized;
 
     }
 }

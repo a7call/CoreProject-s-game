@@ -11,10 +11,6 @@ using UnityEngine;
 
 public class Faux : CacWeapons
 {
-    private void Start()
-    {
-        attackPoint = GameObject.FindGameObjectWithTag("AttackPoint").transform;
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T) && !isCleaving)

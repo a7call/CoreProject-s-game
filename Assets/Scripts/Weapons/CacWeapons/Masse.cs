@@ -7,7 +7,6 @@ using UnityEngine;
 public class Masse : CacWeapons
 {
     [SerializeField]
-    protected float attackRadius;
     private void Update()
     {
         GetAttackDirection();
@@ -27,12 +26,16 @@ public class Masse : CacWeapons
 
     }
 
-
-
-
-    // héritage 
     protected override void GetAttackDirection()
     {
         base.GetAttackDirection();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, attackPoint.position);
     }
 }

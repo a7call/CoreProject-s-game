@@ -22,14 +22,6 @@ public class PlayerAttack : Player
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            SwitchAttackMode();
-        }
-        if (!isCaC)
-        {
-            GetAttackDirection();
-        }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -49,50 +41,11 @@ public class PlayerAttack : Player
 
     void InstantiateProjectile()
     {
-        GameObject.Instantiate(projectile, attackPoint.position, Quaternion.identity);
+        GameObject.Instantiate(projectile, transform.position, Quaternion.identity);
     }
 
     // Gizmo de Test
-    private void OnDrawGizmosSelected()
-    {
-
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position,attackPoint.position);
-    }
-
-
-    private void SwitchAttackMode()
-    {
-        if (isCaC)
-        {
-            cacWeapons.SetActive(false);
-            isCaC = false;
-        }
-        else
-        {
-            cacWeapons.SetActive(true);
-            isCaC = true;
-        }
-        
-    }
-
-    [SerializeField]
-    public Transform attackPoint;
-    Vector3 screenMousePos;
-    Vector3 screenPlayerPos;
-
-    // recupère en temps réel la position de la souris et associe cette position au point d'attaque du Player
-    protected virtual void GetAttackDirection()
-    {
-
-        // position de la souris sur l'écran 
-        screenMousePos = Input.mousePosition;
-        // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
-        // position du point d'attaque 
-        attackPoint.position = new Vector2(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
-    }
+   
 
 
 

@@ -27,7 +27,7 @@ public class WeaponCacPickUp : MonoBehaviour
             }
             WeaponManager playerWeaponManager = collision.transform.GetChild(1).GetComponent<WeaponManager>();
             // active le bon script en fonction de l'arme ramassé
-            playerWeaponManager.PickUpWeapon(gameObject);
+          //  playerWeaponManager.PickUpWeapon(gameObject);
             
             Destroy(gameObject);
         }
