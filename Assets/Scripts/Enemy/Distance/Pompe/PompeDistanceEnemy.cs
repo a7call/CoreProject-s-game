@@ -10,6 +10,8 @@ public class PompeDistanceEnemy : Distance
 
     
     [SerializeField] GameObject[] projectiles;
+    [SerializeField] int angleTir;
+    public AngleProjectile angleProjectile ;
 
     void Start()
     {
@@ -124,12 +126,16 @@ public class PompeDistanceEnemy : Distance
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
+        float decalage = angleTir / (projectiles.Length - 1);
+        angleProjectile.angleDecalage = - decalage * (projectiles.Length + 1) / 2;
+
         //base.Shoot();
         for(int i=0; i <projectiles.Length; i++)
             {
+                angleProjectile.angleDecalage = angleProjectile.angleDecalage + decalage;
                 GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
             }
-        
+
     }
 
 }

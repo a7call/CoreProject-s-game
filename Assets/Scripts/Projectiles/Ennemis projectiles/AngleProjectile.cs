@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class AngleProjectile : Projectile
 {
-   [SerializeField] float angleDecalage;
+   public float angleDecalage;
     
     Vector3 directionTir;
     private float decalageXl;
@@ -28,7 +28,6 @@ public class AngleProjectile : Projectile
     void Start()
     {
         GetDirection();
-        distance = Vector3.Distance(target.position, transform.position);
         ConeShoot();
 
 
@@ -66,57 +65,4 @@ public class AngleProjectile : Projectile
         directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
     }
 
-
-
-
-
-    protected void DirTir()
-    {
-        //target = GameObject.FindGameObjectWithTag("Player");
-        angle1 = Vector3.Angle(Vector3.right, base.dir);
-       // angle2 = Vector3.Angle(base.dir, Vector3.up);
-
-        //dist = Vector3.Distance(transform.position, target.transform.position);
-
-        //decalageXl = Mathf.Sin(angleDecalage) * distance;
-        //decalageYl = Mathf.Cos(angleDecalage) * distance;
-
-        //decalageX =  decalageXl/ Mathf.Sin(angle1);
-        //decalageY = Mathf.Cos(angle2) * decalageYl;
-
-        angleDecalage = Mathf.Deg2Rad*angleDecalage;
-        angle1 = Mathf.Deg2Rad * angle1;
-
-        X = distance * Mathf.Cos(angle1 - angleDecalage);
-        Y = distance * Mathf.Sin(angle1 - angleDecalage);
-
-
-        print(distance);
-        print(angle1);
-        print(angleDecalage);
-        //print(dir.x);
-        //print(dir.y);
-        print(X);
-        print(Y);
-
-        print(Mathf.Cos(angle1 - angleDecalage));
-
-        //directionTir.x = X;
-        //directionTir.y = Y;
-
-        // directionTir = new Vector3(X,Y,0).normalized;
-        
-
-        //print(Quaternion.AngleAxis(angleDecalage, dir));
-
-
-
-        //print(directionTir);
-        //print(base.dir);
-        //transform.rotation.ToAngleAxis(out angleDecalage, out directionTir);
-        //print(directionTir);
-    }
-
-
-   
 }
