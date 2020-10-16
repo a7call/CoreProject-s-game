@@ -18,6 +18,8 @@ public class Projectile : MonoBehaviour
     protected Vector3 dir;
     // distance entre le player et le projectile
     protected float distance;
+
+    [SerializeField] protected float ActiveTime;
     
     protected virtual void Awake()
     {
