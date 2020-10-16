@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HelmetAstronautExplose : Cac
 {
-
-    [SerializeField] private float distanceToExplode = 0.2f;
-    [SerializeField] private bool firstAttack = true;
+    [SerializeField] private float distanceToExplode = 2f;
+    [SerializeField] private float timeToExplode = 1f;
+    private bool firstAttack = true;
 
     private PlayerHealth playerHealth;
 
@@ -26,6 +26,9 @@ public class HelmetAstronautExplose : Cac
 
     protected override void Update()
     {
+
+        AliveOrNot();
+
         base.Update();
         switch (currentState)
         {
@@ -34,15 +37,20 @@ public class HelmetAstronautExplose : Cac
                 Aggro();
                 isInRange();
                 MoveToPath();
-                print(Vector3.Distance(targetPoint.transform.position, transform.position));
                 break;
 
             case State.Attacking:
                 GetPlayerPos();
-                BaseAttack();
+                StartCoroutine(Attack());
                 break;
         }
 
+    }
+
+    private void AliveOrNot()
+    {
+        if (currentHealth <= 0) BaseAttack();
+    
     }
 
     // Find player to follow
@@ -126,6 +134,22 @@ public class HelmetAstronautExplose : Cac
         }
 
         Destroy(gameObject);
+        print("Destruction ennemy");
+    }
+
+    private IEnumerator Attack()
+    {
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(timeToExplode);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, hitLayers);
+
+        foreach (Collider2D h in hits)
+        {
+            playerHealth.TakeDamage(20);
+        }
+
+        Destroy(gameObject);
+        print("Destruction ennemy");
     }
 
 
