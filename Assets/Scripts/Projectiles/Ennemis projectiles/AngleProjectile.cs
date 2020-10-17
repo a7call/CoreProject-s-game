@@ -12,14 +12,7 @@ public class AngleProjectile : Projectile
    public float angleDecalage;
     
     Vector3 directionTir;
-    private float decalageXl;
-    private float decalageYl;
-    private float decalageX;
-    private float decalageY;
-    private float angle1;
-    private float angle2;
-    private float X;
-    private float Y;
+   
 
     // private float dist;
     //private GameObject target;

@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 7291090580177061503}
   - component: {fileID: 7291090580177061498}
   - component: {fileID: 7291090580177061501}
-  - component: {fileID: 7291090580177061499}
+  - component: {fileID: 8558823404436240972}
   m_Layer: 0
   m_Name: EyeTentacleAstronauteLaser
   m_TagString: Untagged
@@ -237,7 +237,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7291090580177061499
+--- !u!114 &8558823404436240972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,25 +246,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7291090580177061496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27d823b161cb94c57b00eb5c8bebfc5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d35f791e57864f0785bdd609ed02842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
   nextWayPointDistance: 3
   moveSpeed: 0
-  wayPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  wayPoints: []
   target: {fileID: 0}
   currentHealth: 0
   maxHealth: 0
-  healthBar: {fileID: 7291090579946456035}
-  spriteRenderer: {fileID: 7291090580177061501}
-  healthBarGFX: {fileID: 7291090579946456046}
+  healthBar: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  healthBarGFX: {fileID: 0}
   timeBeforeDesactive: 0
-  DistanceData: {fileID: 11400000, guid: 379a51e3df35247dbb1bb263b08a075c, type: 2}
+  DistanceData: {fileID: 0}
   isShooting: 0
-  delayBeforeShoot: 0.5
+  delayBeforeShoot: 0
 --- !u!1 &7291090580406216158
 GameObject:
   m_ObjectHideFlags: 0

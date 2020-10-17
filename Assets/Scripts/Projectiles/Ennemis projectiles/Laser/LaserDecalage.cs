@@ -5,41 +5,28 @@ using UnityEngine;
 /// Classe héritière de Projectile.cs
 /// Contient les fonctions de la classe mères
 /// </summary>
-public class Laser : Projectile
+public class LaserDecalage : Projectile
 {
     protected bool damageDone = false;
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
+    Vector3 directionTir;
+    public float angleDecalage;
 
     // Start is called before the first frame update
     void Start()
     {
         GetDirection();
+        ConeShoot();
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void ConeShoot()
     {
-        StartCoroutine(OkToShoot());
-
-        if (ReadyToShoot == true)
-        {
-
-            StartCoroutine(destroy());
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir);
-
-            Debug.DrawRay(transform.position, dir * 10, Color.red);
-
-            if (hit.collider.CompareTag("Player") && !damageDone)
-            {
-                //take Damage
-                Debug.Log("Damage");
-                damageDone = true;
-                
-            }
-            
-        }
+        directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
     }
+
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -67,6 +54,30 @@ public class Laser : Projectile
     {
         yield return new WaitForSeconds(ShootDelay);
         ReadyToShoot = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        StartCoroutine(OkToShoot());
+
+        if (ReadyToShoot == true)
+        {
+            
+            StartCoroutine(destroy());
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionTir);
+
+            Debug.DrawRay(transform.position, directionTir * 10, Color.red);
+
+            if (hit.collider.CompareTag("Player") && !damageDone)
+            {
+                //take Damage
+                Debug.Log("Damage");
+                damageDone = true;
+
+            }
+
+        }
     }
 }
 

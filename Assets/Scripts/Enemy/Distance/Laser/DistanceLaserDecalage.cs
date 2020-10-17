@@ -5,11 +5,13 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class DistanceLaser : Distance
+public class DistanceLaserDecalage : Distance
 {
     protected Vector3 dir;
     [SerializeField] protected float delayBeforeShoot;
-    
+    [SerializeField] GameObject[] projectiles;
+    [SerializeField] int angleTir;
+    public LaserDecalage LaserDecalage;
 
     void Start()
     {
@@ -134,7 +136,15 @@ public class DistanceLaser : Distance
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        base.Shoot();
+        float decalage = angleTir / (projectiles.Length - 1);
+        LaserDecalage.angleDecalage = -decalage * (projectiles.Length + 1) / 2;
+
+        //base.Shoot();
+        for (int i = 0; i < projectiles.Length; i++)
+        {
+            LaserDecalage.angleDecalage = LaserDecalage.angleDecalage + decalage;
+            GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
+        }
 
     }
 
