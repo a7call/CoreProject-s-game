@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Classe héritière de distance 
-/// Contient en plus de classe distance une coroutine de projectile (spécial) => voir EggProjectile.cs
-/// </summary>
-public class SpeDistance : Distance
+public class TentaculeAstronauteSpawner : Distance
 {
-
     void Start()
     {
         currentState = State.Patrolling;
@@ -17,7 +12,7 @@ public class SpeDistance : Distance
         // Set data
         SetData();
         SetMaxHealth();
-        
+
     }
     protected override void Update()
     {
@@ -95,13 +90,6 @@ public class SpeDistance : Distance
 
 
     // Voir Enemy.cs (héritage)
-    protected override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-
-    }
-
-    // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()
     {
         return base.WhiteFlash();
@@ -114,16 +102,16 @@ public class SpeDistance : Distance
 
 
     // Projectile spé
-   // [SerializeField] protected GameObject EggsProjectiles;
+     [SerializeField] protected GameObject EggsSpawner;
     // Check si attaque spé rdy
     private bool isSpeRdy = true;
     // Time entre deux attaque spé
-  //  [SerializeField] protected float reloadSpe;
- 
+     [SerializeField] protected float reloadSpe;
+
     // Couroutine du shoot
     protected override IEnumerator CanShoot()
     {
-        if (isShooting && isReadytoShoot)
+        if (isShooting && isReadytoShoot && !isSpeRdy)
         {
             // Ne peut plus tirer car déjà entrain de tirer
             isReadytoShoot = false;
@@ -135,23 +123,23 @@ public class SpeDistance : Distance
             isReadytoShoot = true;
         }
 
-      /*  else if (isSpeRdy && isShooting && isReadytoShoot)
-        {
-            // Ne peut plus tirer car déjà entrain de tirer spé + normal
-            isSpeRdy = false;
-            isReadytoShoot = false;
-            // Shoot spé
-            Eggs();
-            // Repos entre deux tire
-            yield return new WaitForSeconds(restTime);
-            // Peut tirer normalement
-            isReadytoShoot = true;
-            // Reload attaque spé
-            yield return new WaitForSeconds(reloadSpe);
-            // attaque spé rdy
-            isSpeRdy = true;
-        }
-      */
+          else if (isSpeRdy && isShooting && isReadytoShoot)
+          {
+              // Ne peut plus tirer car déjà entrain de tirer spé + normal
+              isSpeRdy = false;
+              isReadytoShoot = false;
+              // Shoot spé
+              Eggs();
+              // Repos entre deux tire
+              yield return new WaitForSeconds(restTime);
+              // Peut tirer normalement
+              isReadytoShoot = true;
+              // Reload attaque spé
+              yield return new WaitForSeconds(reloadSpe);
+              // attaque spé rdy
+              isSpeRdy = true;
+          }
+        
     }
 
 
@@ -161,13 +149,13 @@ public class SpeDistance : Distance
         base.Shoot();
     }
     // Instantiate projectile spé
-  
-    /*
+
+    
     protected void Eggs()
     {
-        GameObject.Instantiate(EggsProjectiles, transform.position, Quaternion.identity);
+        GameObject.Instantiate(EggsSpawner, transform.position, Quaternion.identity);
     }
-    */
+    
 
 
 }

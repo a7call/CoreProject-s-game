@@ -244,7 +244,7 @@ public class Healer : Enemy
         base.SetMaxHealth();
     }
 
-    protected override void TakeDamage(int _damage)
+    public override void TakeDamage(int _damage)
     {
         base.TakeDamage(_damage);
     }

@@ -100,7 +100,7 @@ public class SpeCaC : Cac
     }
 
     // Voir Enemy.cs (héritage)
-    protected override void TakeDamage(int _damage)
+    public override void TakeDamage(int _damage)
     {
         base.TakeDamage(_damage);
     }

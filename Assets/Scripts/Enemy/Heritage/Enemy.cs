@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
 
    
 
-    private void Awake()
+    protected virtual void Awake()
     {
         healthBarGFX.SetActive(false);
         seeker = GetComponent<Seeker>();
@@ -176,7 +176,7 @@ public class Enemy : MonoBehaviour
     
 
     // prends les dammages
-    protected virtual void TakeDamage(int _damage)
+    public virtual void TakeDamage(int _damage)
     {
         currentHealth -= _damage;
         StartCoroutine(WhiteFlash());

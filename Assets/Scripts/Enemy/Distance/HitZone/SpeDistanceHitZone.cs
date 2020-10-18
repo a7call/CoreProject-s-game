@@ -94,12 +94,7 @@ public class SpeDistanceHitZone : Distance
     }
 
 
-    // Voir Enemy.cs (héritage)
-    protected override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-
-    }
+   
 
     // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()

@@ -106,12 +106,7 @@ public class SpeDistance2 : Distance
     }
 
 
-    // Voir Enemy.cs (héritage)
-    protected override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-
-    }
+   
 
     // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()

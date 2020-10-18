@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Masse : CacWeapons
 {
-    [SerializeField]
+   
     private void Update()
     {
         GetAttackDirection();
@@ -21,7 +21,7 @@ public class Masse : CacWeapons
 
         foreach (Collider2D enemy in enemyHit)
         {
-            // Script de vie de l'enemi
+            enemy.GetComponent<Enemy>().TakeDamage(damage);
         }
 
     }
