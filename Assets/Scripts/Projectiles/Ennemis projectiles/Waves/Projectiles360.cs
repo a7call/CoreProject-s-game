@@ -28,7 +28,7 @@ public class Projectiles360 : Projectile
 
             StartCoroutine(destroy());
 
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position,UploadRadius(), dir) ;
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, UploadRadius(), dir) ;
 
             if (hit.collider.CompareTag("Player") && !damageDone)
             {
@@ -55,7 +55,7 @@ public class Projectiles360 : Projectile
 
     protected override void GetDirection()
     {
-        base.GetDirection();
+        dir = (target.position - transform.position).normalized;
     }
 
     protected override void Lauch()
