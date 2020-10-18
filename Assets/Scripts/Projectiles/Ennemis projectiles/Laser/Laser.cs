@@ -41,11 +41,11 @@ public class Laser : Projectile
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    Destroy(gameObject);
         // Damage
-    }
+    //}
 
     protected override void GetDirection()
     {
@@ -60,6 +60,7 @@ public class Laser : Projectile
     protected IEnumerator destroy()
     {
         yield return new WaitForSeconds(ActiveTime);
+            //DistanceLaser.State.Chasing;
         Destroy(gameObject);
     }
 

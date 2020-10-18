@@ -28,11 +28,11 @@ public class LaserDecalage : Projectile
 
     
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+     //   Destroy(gameObject);
         // Damage
-    }
+    //}
 
     protected override void GetDirection()
     {

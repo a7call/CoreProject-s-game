@@ -135,8 +135,10 @@ public class DistanceLaser : Distance
     protected override void Shoot()
     {
         base.Shoot();
+        rb.velocity = Vector2.zero;
 
     }
 
+  
 
 }

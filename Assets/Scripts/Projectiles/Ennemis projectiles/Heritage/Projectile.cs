@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
     // distance entre le player et le projectile
     protected float distance;
 
-    [SerializeField] protected float ActiveTime;
+    [SerializeField] public float ActiveTime;
     
     protected virtual void Awake()
     {
