@@ -9,19 +9,26 @@ public class Player : MonoBehaviour
     public PlayerScriptableObjectScript playerData;
     public EtatJoueur currentEtat = EtatJoueur.normal;
 
+    
     public enum EtatJoueur
     {
         normal,
         fear,
     }
 
-
+    [HideInInspector]
     public int maxHealth;
+    [HideInInspector]
     public int maxEnergy;
+    [HideInInspector]
     public float mooveSpeed;
+    [HideInInspector]
     public float dashForce;
+    [HideInInspector]
     public int dashEnergyCost;
+    [HideInInspector]
     public int damage;
+    [HideInInspector]
     public int energyReloadNumber;
 
     protected void SetData()

@@ -26,7 +26,7 @@ public class SpeDistance : Distance
         {
             case State.Patrolling:
                 // script de patrol
-                Patrol();
+                // Patrol();
                 PlayerInSight();
                 MoveToPath();
                 break;
@@ -114,16 +114,16 @@ public class SpeDistance : Distance
 
 
     // Projectile spé
-    [SerializeField] protected GameObject EggsProjectiles;
+   // [SerializeField] protected GameObject EggsProjectiles;
     // Check si attaque spé rdy
     private bool isSpeRdy = true;
     // Time entre deux attaque spé
-    [SerializeField] protected float reloadSpe;
+  //  [SerializeField] protected float reloadSpe;
  
     // Couroutine du shoot
     protected override IEnumerator CanShoot()
     {
-        if (isShooting && isReadytoShoot && !isSpeRdy)
+        if (isShooting && isReadytoShoot)
         {
             // Ne peut plus tirer car déjà entrain de tirer
             isReadytoShoot = false;
@@ -135,7 +135,7 @@ public class SpeDistance : Distance
             isReadytoShoot = true;
         }
 
-        else if (isSpeRdy && isShooting && isReadytoShoot)
+      /*  else if (isSpeRdy && isShooting && isReadytoShoot)
         {
             // Ne peut plus tirer car déjà entrain de tirer spé + normal
             isSpeRdy = false;
@@ -151,6 +151,7 @@ public class SpeDistance : Distance
             // attaque spé rdy
             isSpeRdy = true;
         }
+      */
     }
 
 
@@ -160,10 +161,13 @@ public class SpeDistance : Distance
         base.Shoot();
     }
     // Instantiate projectile spé
+  
+    /*
     protected void Eggs()
     {
         GameObject.Instantiate(EggsProjectiles, transform.position, Quaternion.identity);
     }
+    */
 
 
 }

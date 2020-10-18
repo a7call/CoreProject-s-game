@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.1f);
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     protected virtual void Update()
