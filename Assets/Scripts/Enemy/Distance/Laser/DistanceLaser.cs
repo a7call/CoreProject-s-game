@@ -8,8 +8,8 @@ using UnityEngine;
 public class DistanceLaser : Distance
 {
     protected Vector3 dir;
-    [SerializeField] protected float delayBeforeShoot;
-    
+    [SerializeField] protected float delayMovement;
+
 
     void Start()
     {
@@ -22,10 +22,7 @@ public class DistanceLaser : Distance
 
     }
 
-    protected virtual void GetDirection()
-    {
-        dir = (target.position - transform.position).normalized;
-    }
+   
     protected override void Update()
     {
         base.Update();
@@ -52,7 +49,7 @@ public class DistanceLaser : Distance
         }
 
 
-        Debug.DrawRay(transform.position, dir * 100, Color.red);
+       
 
     }
 
@@ -131,10 +128,15 @@ public class DistanceLaser : Distance
     protected override void Shoot()
     {
         base.Shoot();
-        rb.velocity = Vector2.zero;
+        StartCoroutine(MovementDelay());
 
     }
 
-  
+  protected IEnumerator MovementDelay()
+    {
+        
+        yield return new WaitForSeconds(delayMovement);
+
+    }
 
 }
