@@ -14,12 +14,14 @@ using Pathfinding;
 /// </summary>
 public class Enemy : MonoBehaviour
 {
-    public State currentState;
-    public enum State
+    protected State currentState;
+    protected enum State
     {
         Patrolling,
         Chasing,
         Attacking,
+        ShootingLaser,
+        
     }
 
     // PathFinding

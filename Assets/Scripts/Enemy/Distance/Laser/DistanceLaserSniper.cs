@@ -5,10 +5,24 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class DistanceLaser : Distance
+public class DistanceLaserSniper : Distance
 {
-    protected Vector3 dir;
+    [SerializeField] protected RafaleDistanceData RafaleDistanceData;
+
+    private float timeIntervale;
+    private int nbTir;
     [SerializeField] protected float delayMovement;
+
+    private int n = 0; //compteur pour le while
+
+    protected override void SetData()
+    {
+        base.SetData();
+        timeIntervale = RafaleDistanceData.timeIntervale;
+        nbTir = RafaleDistanceData.nbTir;
+    }
+
+
 
 
     void Start()
@@ -19,10 +33,7 @@ public class DistanceLaser : Distance
         // Set data
         SetData();
         SetMaxHealth();
-
     }
-
-   
     protected override void Update()
     {
         base.Update();
@@ -46,27 +57,18 @@ public class DistanceLaser : Distance
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
                 break;
-
-            case State.ShootingLaser:
-                break;
         }
 
-
-       
-
     }
 
-    protected override void SetData()
-    {
-        base.SetData();
-    }
+
 
     // Mouvement
 
     // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
     protected override void Aggro()
     {
-            targetPoint = target;
+        targetPoint = target;
     }
 
     protected override void PlayerInSight()
@@ -101,8 +103,6 @@ public class DistanceLaser : Distance
         base.SetMaxHealth();
     }
 
-    
-  
 
     // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()
@@ -112,8 +112,6 @@ public class DistanceLaser : Distance
 
 
     // Attack
-
-    
 
     // Voir Enemy.cs (héritage)
     protected override IEnumerator CanShoot()
@@ -127,15 +125,30 @@ public class DistanceLaser : Distance
         base.ResetAggro();
     }
 
+
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        base.Shoot();
-        StartCoroutine(MovementDelay());
-
+        StartCoroutine(intervalleTir());
     }
 
-  protected IEnumerator MovementDelay()
+    protected virtual IEnumerator intervalleTir()
+    {
+
+        while (n < nbTir)
+        {
+            base.Shoot();
+            rb.velocity = Vector2.zero;
+            currentState = State.ShootingLaser;
+            yield return new WaitForSeconds(timeIntervale);
+            currentState =State.Attacking;
+            n++;
+        }
+        n = 0;
+        StartCoroutine(MovementDelay());
+    }
+
+    protected IEnumerator MovementDelay()
     {
         rb.velocity = Vector2.zero;
         currentState = State.ShootingLaser;
@@ -143,5 +156,4 @@ public class DistanceLaser : Distance
         currentState = State.Chasing;
 
     }
-
 }

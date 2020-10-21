@@ -10,6 +10,7 @@ public class Laser : Projectile
     protected bool damageDone = false;
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
+    [SerializeField] protected LayerMask HitLayer;
     //[SerializeField] protected GameObject ennemy;
 
     // Start is called before the first frame update
@@ -25,20 +26,17 @@ public class Laser : Projectile
 
         if (ReadyToShoot == true)
         {
-            Debug.Log(transform.position);
+            
             StartCoroutine(destroy());
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, Mathf.Infinity, HitLayer);
 
             Debug.DrawRay(transform.position, dir * 10, Color.red);
-
-            if (hit.collider.CompareTag("Player") && !damageDone)
+            if (hit.collider != null)
             {
-                //take Damage
-                Debug.Log("Damage");
-                damageDone = true;
-                
+                print("test");
             }
-            
+           
+
         }
     }
 
