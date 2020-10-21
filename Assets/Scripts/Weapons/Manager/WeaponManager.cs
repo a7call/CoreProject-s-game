@@ -51,6 +51,7 @@ public class WeaponManager : MonoBehaviour
         if (collision.CompareTag("Weapon"))
         {
             collision.transform.parent = gameObject.transform;
+            collision.GetComponent<Weapons>().enabled = true;
             collision.transform.position = gameObject.transform.position;
             collision.transform.gameObject.SetActive(false);
         }

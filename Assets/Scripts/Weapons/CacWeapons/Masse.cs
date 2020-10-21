@@ -16,9 +16,9 @@ public class Masse : CacWeapons
     {
         base.GetAttackDirection();
     }
-    protected override void AttackCACZone()
+    protected override void AttackCAC()
     {
-        base.AttackCACZone();
+        base.AttackCAC();
     }
 
 }

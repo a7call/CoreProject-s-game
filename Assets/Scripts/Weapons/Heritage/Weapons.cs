@@ -18,6 +18,10 @@ public class Weapons : MonoBehaviour
     Vector3 screenMousePos;
     Vector3 screenPlayerPos;
 
+    private void Start()
+    {
+        this.enabled = false;
+    }
     // recupère en temps réel la position de la souris et associe cette position au point d'attaque du Player
     protected virtual void GetAttackDirection()
     {

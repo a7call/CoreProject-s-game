@@ -7,7 +7,12 @@ using UnityEngine;
 /// </summary>
 public class CacWeapons : Weapons
 {
-   protected virtual void AttackCACZone()
+   
+    private void Update()
+    {
+        GetAttackDirection();
+    }
+    protected virtual void AttackCAC()
     {
         Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
 
