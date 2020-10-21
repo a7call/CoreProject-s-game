@@ -12,6 +12,7 @@ public class LaserDecalage : Projectile
     [SerializeField] protected float ShootDelay;
     Vector3 directionTir;
     public float angleDecalage;
+    [SerializeField] protected LayerMask HitLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -65,16 +66,13 @@ public class LaserDecalage : Projectile
         {
             
             StartCoroutine(destroy());
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionTir);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionTir, Mathf.Infinity, HitLayer);
 
             Debug.DrawRay(transform.position, directionTir * 10, Color.red);
 
-            if (hit.collider.CompareTag("Player") && !damageDone)
+            if (hit.collider != null)
             {
-                //take Damage
-                Debug.Log("Damage");
-                damageDone = true;
-
+                print("test");
             }
 
         }

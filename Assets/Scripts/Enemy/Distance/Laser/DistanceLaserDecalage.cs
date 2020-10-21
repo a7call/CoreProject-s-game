@@ -12,6 +12,7 @@ public class DistanceLaserDecalage : Distance
     [SerializeField] GameObject[] projectiles;
     [SerializeField] int angleTir;
     public LaserDecalage LaserDecalage;
+    [SerializeField] protected float delayMovement;
 
     void Start()
     {
@@ -131,15 +132,22 @@ public class DistanceLaserDecalage : Distance
     {
         float decalage = angleTir / (projectiles.Length - 1);
         LaserDecalage.angleDecalage = -decalage * (projectiles.Length + 1) / 2;
-
+        
         //base.Shoot();
         for (int i = 0; i < projectiles.Length; i++)
         {
             LaserDecalage.angleDecalage = LaserDecalage.angleDecalage + decalage;
             GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
         }
-
+        StartCoroutine(MovementDelay());
     }
 
+    protected IEnumerator MovementDelay()
+    {
+        rb.velocity = Vector2.zero;
+        currentState = State.ShootingLaser;
+        yield return new WaitForSeconds(delayMovement);
+        currentState = State.Chasing;
 
+    }
 }

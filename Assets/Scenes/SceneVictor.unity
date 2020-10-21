@@ -223,6 +223,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1625931467738187672, guid: 383ad27ffd9a34b7cbc638749c9e0b0f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1625931468885860140, guid: 383ad27ffd9a34b7cbc638749c9e0b0f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -279,9 +283,17 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 449509827}
+    - target: {fileID: 1625931468885860144, guid: 383ad27ffd9a34b7cbc638749c9e0b0f, type: 3}
+      propertyPath: delayMovement
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1625931468885860147, guid: 383ad27ffd9a34b7cbc638749c9e0b0f, type: 3}
       propertyPath: m_Name
       value: EyeTentacleAstronaut360
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625931468885860147, guid: 383ad27ffd9a34b7cbc638749c9e0b0f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 383ad27ffd9a34b7cbc638749c9e0b0f, type: 3}
@@ -400,7 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d212b4b76998f4e4f95d8c17b9743a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
   nextWayPointDistance: 3
   moveSpeed: 0
   wayPoints:
@@ -915,6 +926,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2137125574524782860, guid: e422e8ccbb9fa4a359febeff5f540628, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2137125575470076324, guid: e422e8ccbb9fa4a359febeff5f540628, type: 3}
       propertyPath: wayPoints.Array.data[0]
       value: 
@@ -927,9 +942,17 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 449509827}
+    - target: {fileID: 2137125575470076324, guid: e422e8ccbb9fa4a359febeff5f540628, type: 3}
+      propertyPath: delayMovement
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2137125575470076327, guid: e422e8ccbb9fa4a359febeff5f540628, type: 3}
       propertyPath: m_Name
       value: EyeTentacleAstronautTripleAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137125575470076327, guid: e422e8ccbb9fa4a359febeff5f540628, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2137125575470076344, guid: e422e8ccbb9fa4a359febeff5f540628, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1142,10 +1165,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 449509827}
-    - target: {fileID: 5135944805478223389, guid: e7435c9e44c47437dae69b0a896fcda9, type: 3}
-      propertyPath: zoneRadius
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8632570932186613536, guid: e7435c9e44c47437dae69b0a896fcda9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1280,6 +1299,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5255198359605179338, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
+      propertyPath: wayPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1142428304}
+    - target: {fileID: -5255198359605179338, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
+      propertyPath: wayPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 492574245}
+    - target: {fileID: -5255198359605179338, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 449509827}
+    - target: {fileID: -5255198359605179338, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
+      propertyPath: delayMovement
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -5255198359605179338, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
+      propertyPath: timeIntervale
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798076889823824676, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4798076891483016962, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -1324,21 +1367,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4798076891483016974, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
-      propertyPath: wayPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 1142428304}
-    - target: {fileID: 4798076891483016974, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
-      propertyPath: wayPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 492574245}
-    - target: {fileID: 4798076891483016974, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 449509827}
     - target: {fileID: 4798076891483016975, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
       propertyPath: m_Name
       value: EyeTentacleAstonautSniper
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798076891483016975, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}

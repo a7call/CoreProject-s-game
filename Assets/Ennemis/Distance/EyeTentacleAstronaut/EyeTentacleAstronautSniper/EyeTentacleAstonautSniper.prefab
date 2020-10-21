@@ -33,7 +33,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.0011999905, y: -0.0012000017}
   m_SizeDelta: {x: -0.026428223, y: -0.026428223}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -363,14 +363,14 @@ GameObject:
   - component: {fileID: 4798076891483016963}
   - component: {fileID: 4798076891483016960}
   - component: {fileID: 4798076891483016961}
-  - component: {fileID: 4798076891483016974}
+  - component: {fileID: -5255198359605179338}
   m_Layer: 0
   m_Name: EyeTentacleAstonautSniper
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4798076891483016962
 Transform:
   m_ObjectHideFlags: 0
@@ -486,7 +486,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4798076891483016974
+--- !u!114 &-5255198359605179338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -495,10 +495,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4798076891483016975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aeb14dbad633470bbbcd2b4713badc5, type: 3}
+  m_Script: {fileID: 11500000, guid: e4e6c301f4fb64a058f5c4f316aa4a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
   nextWayPointDistance: 3
   moveSpeed: 0
   wayPoints:
@@ -514,3 +513,4 @@ MonoBehaviour:
   DistanceData: {fileID: 11400000, guid: dd5ee99a5e0fe465bbee216bbc78d688, type: 2}
   isShooting: 0
   RafaleDistanceData: {fileID: 11400000, guid: dd5ee99a5e0fe465bbee216bbc78d688, type: 2}
+  delayMovement: 0

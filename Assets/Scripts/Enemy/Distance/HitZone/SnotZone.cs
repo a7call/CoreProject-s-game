@@ -58,7 +58,7 @@ public class SnotZone : Distance
     protected override void Aggro()
     {
         targetPoint = target;
-        //GameObject.Instantiate(HitZoneGO, transform.position, Quaternion.identity);
+        GameObject.Instantiate(HitZoneGO, transform.position, Quaternion.identity);
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneRadius);
 
 
