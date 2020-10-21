@@ -6,10 +6,13 @@ public class DungeonGenerator : MonoBehaviour
 
 
     Vector2 worldSize = new Vector2(30, 30);
-    public GameObject roomWhiteObj;
     List<Vector2> takenPositions = new List<Vector2>();
     int gridSizeX, gridSizeY, numberOfRooms = 40;
     public Room[,] rooms;
+    public GameObject spU, spD, spR, spL,
+            spUD, spRL, spUR, spUL, spDR, spDL,
+            spULD, spRUL, spDRU, spLDR, spUDRL;
+    public GameObject specificRoom;
     public struct walker
     {
         public Vector2 pos;
@@ -18,7 +21,8 @@ public class DungeonGenerator : MonoBehaviour
     public List<walker> walkers = new List<walker>();
     float chanceWalkerChangeDir = 0.5f, chanceToSpawnWalker = 0.05f, chanceWalkersDestroy = 0.05f;
     int maxWalkers = 10;
-    public Transform mapRoot;
+    public float ChanceToSpawnBoss = 0.3f;
+    private bool BossAlreadySpawned;
 
 
     private void Start()
@@ -142,20 +146,18 @@ public class DungeonGenerator : MonoBehaviour
     {
         foreach (Room room in rooms)
         {
+            int index = 0;
             if (room == null)
             {
                 continue; //skip where there is no room
             }
             Vector2 drawPos = room.gridPos;
+            print(drawPos);
             drawPos.x *= 20;//aspect ratio of map sprite
             drawPos.y *= 12;
-            MapSelector mapper = Object.Instantiate(roomWhiteObj, drawPos, Quaternion.identity).GetComponent<MapSelector>();
-            mapper.type = room.type;
-            mapper.up = room.up;
-            mapper.down = room.down;
-            mapper.right = room.right;
-            mapper.left = room.left;
-            mapper.gameObject.transform.parent = mapRoot;
+            ChanceToSpawnBoss += 0.1f;
+            PickSprite(room, drawPos);
+            index++;
 
         }
     }
@@ -221,6 +223,148 @@ public class DungeonGenerator : MonoBehaviour
                     rooms[x, y].right = (rooms[x + 1, y] != null);
                 }
             }
+        }
+    }
+
+    void PickSprite(Room room, Vector2 _drawPos)
+    { //picks correct sprite based on the four door bools
+        if (room.up)
+        {
+            if (room.down)
+            {
+                if (room.right)
+                {
+                    if (room.left)
+                    {
+                        Instantiate(spUDRL, _drawPos, Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(spDRU, _drawPos, Quaternion.identity);
+                    }
+                }
+                else if (room.left)
+                {
+
+                    Instantiate(spULD, _drawPos, Quaternion.identity);
+
+                }
+                else
+                {
+                    Instantiate(spUD, _drawPos, Quaternion.identity);
+
+                }
+            }
+            else
+            {
+                if (room.right)
+                {
+                    if (room.left)
+                    {
+                        Instantiate(spRUL, _drawPos, Quaternion.identity);
+
+                    }
+                    else
+                    {
+                        Instantiate(spUR, _drawPos, Quaternion.identity);
+
+                    }
+                }
+                else if (room.left)
+                {
+                    Instantiate(spUL, _drawPos, Quaternion.identity);
+
+                }
+                else
+                {
+                    if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
+                    {
+                        BossAlreadySpawned = true;
+                        Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(spU, _drawPos, Quaternion.identity);
+
+                    }
+
+
+
+                }
+            }
+            return;
+        }
+        if (room.down)
+        {
+            if (room.right)
+            {
+                if (room.left)
+                {
+                    Instantiate(spLDR, _drawPos, Quaternion.identity);
+
+                }
+                else
+                {
+                    Instantiate(spDR, _drawPos, Quaternion.identity);
+
+                }
+            }
+            else if (room.left)
+            {
+                Instantiate(spDL, _drawPos, Quaternion.identity);
+
+            }
+            else
+            {
+                if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
+                {
+                    BossAlreadySpawned = true;
+                    Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(spD, _drawPos, Quaternion.identity);
+
+                }
+
+            }
+            return;
+        }
+        if (room.right)
+        {
+            if (room.left)
+            {
+                Instantiate(spRL, _drawPos, Quaternion.identity);
+
+            }
+            else
+            {
+                if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
+                {
+                    BossAlreadySpawned = true;
+                    Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(spR, _drawPos, Quaternion.identity);
+
+                }
+            }
+        }
+        else
+        {
+            if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
+            {
+                BossAlreadySpawned = true;
+                Instantiate(specificRoom, _drawPos, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(spL, _drawPos, Quaternion.identity);
+
+            }
+
+
         }
     }
 }
