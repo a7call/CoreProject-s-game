@@ -10,6 +10,7 @@ public class Laser : Projectile
     protected bool damageDone = false;
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
+    //[SerializeField] protected GameObject ennemy;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class Laser : Projectile
 
         if (ReadyToShoot == true)
         {
-
+            Debug.Log(transform.position);
             StartCoroutine(destroy());
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir);
 
@@ -41,11 +42,7 @@ public class Laser : Projectile
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    Destroy(gameObject);
-        // Damage
-    //}
+   
 
     protected override void GetDirection()
     {
@@ -60,7 +57,6 @@ public class Laser : Projectile
     protected IEnumerator destroy()
     {
         yield return new WaitForSeconds(ActiveTime);
-            //DistanceLaser.State.Chasing;
         Destroy(gameObject);
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HitZone : MonoBehaviour
 {
     [SerializeField] int nbHit;
-    [SerializeField] int timeIntervale;
+    [SerializeField] float timeIntervale;
     [SerializeField] float zoneRadius;
     private int n = 0;
 
@@ -19,12 +19,14 @@ public class HitZone : MonoBehaviour
 
     protected virtual IEnumerator hitZone()
     {
-
+        
         while (n < nbHit)
         {
+            //OnDrawGizmos();
             yield return new WaitForSeconds(timeIntervale);
 
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneRadius);
+           
 
             foreach (Collider2D h in hits)
             {
@@ -42,9 +44,9 @@ public class HitZone : MonoBehaviour
 
     }
 
-    private void OnDrawGizmosSelected()
+    
+    public void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, zoneRadius);
+        Gizmos.DrawWireSphere(transform.position,zoneRadius);
     }
-
 }

@@ -5,11 +5,10 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class DistanceLaser : Distance
+public class SnotBubble : Distance
 {
-    protected Vector3 dir;
-    [SerializeField] protected float delayMovement;
-
+    [SerializeField] protected GameObject HitZoneGO;
+    
 
     void Start()
     {
@@ -19,10 +18,7 @@ public class DistanceLaser : Distance
         // Set data
         SetData();
         SetMaxHealth();
-
     }
-
-   
     protected override void Update()
     {
         base.Update();
@@ -49,8 +45,6 @@ public class DistanceLaser : Distance
         }
 
 
-       
-
     }
 
     protected override void SetData()
@@ -63,7 +57,9 @@ public class DistanceLaser : Distance
     // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
     protected override void Aggro()
     {
-            targetPoint = target;
+        targetPoint = target;
+        GameObject.Instantiate(HitZoneGO, transform.position, Quaternion.identity);
+
     }
 
     protected override void PlayerInSight()
@@ -73,7 +69,8 @@ public class DistanceLaser : Distance
 
     protected override void isInRange()
     {
-        base.isInRange();
+
+        //base.isInRange();
     }
 
     // Voir Enemy.cs (héritage)
@@ -98,8 +95,6 @@ public class DistanceLaser : Distance
         base.SetMaxHealth();
     }
 
-    
-  
 
     // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()
@@ -109,8 +104,6 @@ public class DistanceLaser : Distance
 
 
     // Attack
-
-    
 
     // Voir Enemy.cs (héritage)
     protected override IEnumerator CanShoot()
@@ -124,19 +117,11 @@ public class DistanceLaser : Distance
         base.ResetAggro();
     }
 
+
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        base.Shoot();
-        StartCoroutine(MovementDelay());
-
-    }
-
-  protected IEnumerator MovementDelay()
-    {
-        
-        yield return new WaitForSeconds(delayMovement);
-
+        //base.Shoot();
     }
 
 }
