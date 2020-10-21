@@ -7,5 +7,22 @@ using UnityEngine;
 /// </summary>
 public class CacWeapons : Weapons
 {
-   
+   protected virtual void AttackCACZone()
+    {
+        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
+
+
+        foreach (Collider2D enemy in enemyHit)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(damage);
+        }
+
+    }
+    private void OnDrawGizmosSelected()
+    {
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, attackPoint.position);
+    }
 }

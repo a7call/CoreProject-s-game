@@ -11,31 +11,14 @@ public class Masse : CacWeapons
     {
         GetAttackDirection();
     }
-
-
-    // Dégats à tous les ennemis présents dans zone 
-    void AttackCACZone()
-    {
-        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
-
-
-        foreach (Collider2D enemy in enemyHit)
-        {
-            enemy.GetComponent<Enemy>().TakeDamage(damage);
-        }
-
-    }
-
+   
     protected override void GetAttackDirection()
     {
         base.GetAttackDirection();
     }
-
-    private void OnDrawGizmosSelected()
+    protected override void AttackCACZone()
     {
-
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, attackPoint.position);
+        base.AttackCACZone();
     }
+
 }
