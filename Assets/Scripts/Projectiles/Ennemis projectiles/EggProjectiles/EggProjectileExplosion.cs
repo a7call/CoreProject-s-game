@@ -14,18 +14,18 @@ public class EggProjectileExplosion : Projectile
         // Invoke("PopMobs", 3f);
     }
 
-    protected void Update()
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Lauch();
-    }
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-        Collider2D[] playerHit =  Physics2D.OverlapCircleAll(transform.position, explosionRadius, playerLayer);
-        foreach (Collider2D hit in playerHit)
+        
+        if (collision.CompareTag("Player"))
         {
-            hit.GetComponent<PlayerHealth>().TakeDamage(explosionDamage);
+            Collider2D[] playerHit = Physics2D.OverlapCircleAll(transform.position, explosionRadius, playerLayer);
+            foreach (Collider2D hit in playerHit)
+            {
+                hit.GetComponent<PlayerHealth>().TakeDamage(explosionDamage);
+            }
         }
-        Destroy(gameObject);
+        base.OnTriggerEnter2D(collision);
     }
 
     protected override void GetDirection()

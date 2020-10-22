@@ -6,19 +6,18 @@ using UnityEngine;
 /// </summary>
 public class Weapons : MonoBehaviour
 {
-    [SerializeField]
+
     protected int damage;
-    [SerializeField]
     protected LayerMask enemyLayer;
+    protected bool readyToAttack;
 
     [SerializeField]
     protected Transform attackPoint;
-    [SerializeField]
     protected float attackRadius;
     Vector3 screenMousePos;
     Vector3 screenPlayerPos;
 
-    private void Start()
+    protected virtual void Awake()
     {
         this.enabled = false;
     }

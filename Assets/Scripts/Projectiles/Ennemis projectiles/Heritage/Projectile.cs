@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour
     // cible des projectiles (Player)
     protected Transform target;
     // direction (en fonction de la place de la cible)
-    protected Vector3 dir;
+    public Vector3 dir;
     // distance entre le player et le projectile
     protected float distance;
 
@@ -26,13 +26,16 @@ public class Projectile : MonoBehaviour
         //Get player reference;
        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-
+    protected virtual void Update()
+    {
+        Lauch();
+    }
     // recupère la direction à prendre
     protected virtual void GetDirection()
     {
         dir = (target.position - transform.position).normalized;
     }
-
+    
     //envoie le projectile
     protected virtual void Lauch()
     {
@@ -45,6 +48,10 @@ public class Projectile : MonoBehaviour
         distance = Vector3.Distance(target.position, transform.position);
         
     }
-
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Weapon") || collision.CompareTag("Weapon")) return;
+        Destroy(gameObject);
+    }
 }
 

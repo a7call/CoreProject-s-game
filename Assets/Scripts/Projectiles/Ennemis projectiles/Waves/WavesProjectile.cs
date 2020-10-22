@@ -25,9 +25,10 @@ public class WavesProjectile : Projectile
 
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+
+        base.OnTriggerEnter2D(collision);
         // Damage
     }
 

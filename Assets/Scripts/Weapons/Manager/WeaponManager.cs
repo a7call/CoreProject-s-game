@@ -54,6 +54,11 @@ public class WeaponManager : MonoBehaviour
             collision.GetComponent<Weapons>().enabled = true;
             collision.transform.position = gameObject.transform.position;
             collision.transform.gameObject.SetActive(false);
+            collision.GetComponent<Collider2D>().enabled = false;
+            if (transform.childCount == 1)
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
     }
     

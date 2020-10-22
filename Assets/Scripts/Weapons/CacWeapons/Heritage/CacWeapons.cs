@@ -7,8 +7,14 @@ using UnityEngine;
 /// </summary>
 public class CacWeapons : Weapons
 {
-   
-    private void Update()
+    [SerializeField] protected WeaponScriptableObject WeaponData;
+    
+    protected override void Awake()
+    {
+        base.Awake();
+        SetData();
+    }
+    protected virtual void Update()
     {
         GetAttackDirection();
     }
@@ -29,5 +35,12 @@ public class CacWeapons : Weapons
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, attackPoint.position);
+    }
+
+   private void SetData()
+    {
+        attackRadius = WeaponData.attackRadius;
+        enemyLayer = WeaponData.enemyLayer;
+        damage = WeaponData.damage;
     }
 }

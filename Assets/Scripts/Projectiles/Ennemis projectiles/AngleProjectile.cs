@@ -12,7 +12,7 @@ public class AngleProjectile : Projectile
    public float angleDecalage;
     
     Vector3 directionTir;
-   
+
 
     // private float dist;
     //private GameObject target;
@@ -26,18 +26,14 @@ public class AngleProjectile : Projectile
 
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Lauch();
+        if (collision.CompareTag("Player"))
+        {
+            // Damage
+        }
+        base.OnTriggerEnter2D(collision);
         
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
-        // Damage
         
     }
 

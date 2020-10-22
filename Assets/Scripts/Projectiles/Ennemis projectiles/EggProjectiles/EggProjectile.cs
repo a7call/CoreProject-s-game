@@ -13,15 +13,16 @@ public class EggProjectile : Projectile
        // Invoke("PopMobs", 3f);
     }
 
-    protected void Update()
+  
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Lauch();
-    }
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-        GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-        // Damage
+        if (collision.CompareTag("Player"))
+        {
+            GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
+            // Damage
+        }
+        base.OnTriggerEnter2D(collision);
+
     }
 
     protected override void GetDirection()

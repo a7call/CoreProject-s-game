@@ -19,17 +19,12 @@ public class HitZoneProjectile : Projectile
         GetDirection();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Lauch();
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         //TakeDamage();
-        GameObject.Instantiate(HitZoneGO, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (collision.CompareTag("Player")) Instantiate(HitZoneGO, transform.position, Quaternion.identity);
+        base.OnTriggerEnter2D(collision);
     }
 
     protected override void GetDirection()

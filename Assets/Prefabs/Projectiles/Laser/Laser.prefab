@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4546720056206555000}
   m_Layer: 0
   m_Name: Laser
-  m_TagString: Untagged
+  m_TagString: EnemyProjectil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,4 +125,6 @@ MonoBehaviour:
   speed: 0
   ActiveTime: 1
   ShootDelay: 0.5
-  ennemy: {fileID: 0}
+  HitLayer:
+    serializedVersion: 2
+    m_Bits: 0

@@ -14,11 +14,11 @@ public class SpeedIncreaseProjectile : Projectile
     }
 
     // Update is called once per frame
-    void Update()
+   protected override void Update()
     {
         CalculDistance();
         IncreasingSpeed();
-        Lauch();
+        base.Update();
     }
 
     // Fonction qui augmente la vitesse du tir lorsque le projectile se rapproche du joueur toutes les times secondes

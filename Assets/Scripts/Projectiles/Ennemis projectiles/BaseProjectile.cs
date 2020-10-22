@@ -13,16 +13,15 @@ public class BaseProjectile : Projectile
         GetDirection();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Lauch();
-    }
+        if (collision.CompareTag("Player"))
+        {
+            // Damage
+        }
+        base.OnTriggerEnter2D(collision);
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
-        // Damage
+
     }
 
     protected override void GetDirection()
