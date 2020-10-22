@@ -9,4 +9,5 @@ public class WeaponScriptableObject : ScriptableObject
     public int damage;
     public LayerMask enemyLayer;
     public float attackRadius;
+    public float AttackDelay;
 }

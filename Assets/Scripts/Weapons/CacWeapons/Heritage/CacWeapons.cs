@@ -20,13 +20,13 @@ public class CacWeapons : Weapons
     }
     protected virtual void AttackCAC()
     {
-        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
+        //Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
+        StartCoroutine(Attack());
 
-
-        foreach (Collider2D enemy in enemyHit)
-        {
-            enemy.GetComponent<Enemy>().TakeDamage(damage);
-        }
+        //foreach (Collider2D enemy in enemyHit)
+        //{
+          //  enemy.GetComponent<Enemy>().TakeDamage(damage);
+        //}
 
     }
     private void OnDrawGizmosSelected()
@@ -42,5 +42,24 @@ public class CacWeapons : Weapons
         attackRadius = WeaponData.attackRadius;
         enemyLayer = WeaponData.enemyLayer;
         damage = WeaponData.damage;
+        attackDelay = WeaponData.AttackDelay;
+    }
+
+    protected IEnumerator Attack()
+    {
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
+
+            foreach (Collider2D enemy in enemyHit)
+            {
+                enemy.GetComponent<Enemy>().TakeDamage(damage);
+            }
+
+            yield return new WaitForSeconds(attackDelay);
+            isAttacking = false;
+        }
+        
     }
 }

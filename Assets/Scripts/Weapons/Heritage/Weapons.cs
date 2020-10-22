@@ -14,6 +14,8 @@ public class Weapons : MonoBehaviour
     [SerializeField]
     protected Transform attackPoint;
     protected float attackRadius;
+    protected float attackDelay;
+    protected bool isAttacking = false;
     Vector3 screenMousePos;
     Vector3 screenPlayerPos;
 
