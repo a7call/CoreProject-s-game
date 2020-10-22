@@ -14,8 +14,8 @@ using Pathfinding;
 /// </summary>
 public class Enemy : MonoBehaviour
 {
-    protected State currentState;
-    protected enum State
+    public State currentState;
+    public enum State
     {
         Patrolling,
         Chasing,
@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
         ShootingLaser,
         
     }
+    // pour l'épée electrique
+    public bool isAlreadyElectrified;
 
     // PathFinding
     public float nextWayPointDistance = 3f;

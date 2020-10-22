@@ -18,17 +18,6 @@ public class CacWeapons : Weapons
     {
         GetAttackDirection();
     }
-    protected virtual void AttackCAC()
-    {
-        //Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
-        StartCoroutine(Attack());
-
-        //foreach (Collider2D enemy in enemyHit)
-        //{
-          //  enemy.GetComponent<Enemy>().TakeDamage(damage);
-        //}
-
-    }
     private void OnDrawGizmosSelected()
     {
 
@@ -45,7 +34,7 @@ public class CacWeapons : Weapons
         attackDelay = WeaponData.AttackDelay;
     }
 
-    protected IEnumerator Attack()
+    protected virtual IEnumerator Attack()
     {
         if (!isAttacking)
         {

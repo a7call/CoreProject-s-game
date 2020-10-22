@@ -49,8 +49,8 @@ public class LaserSaber : CacWeapons
 
 
 
-    protected override void AttackCAC()
+    protected override IEnumerator Attack()
     {
-        base.AttackCAC();
+        return base.Attack();
     }
 }
