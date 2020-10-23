@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
         Chasing,
         Attacking,
         ShootingLaser,
+        Paralysed,
         
     }
     // pour l'épée electrique
@@ -46,6 +47,12 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
+        switch (currentState)
+        {
+            case State.Paralysed:
+                //animation;
+                break;
+        }
         healthBar.SetHealth(currentHealth);
         DisplayBar();
     }
