@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class CacWeapons : Weapons
 {
-    [SerializeField] protected WeaponScriptableObject WeaponData;
+    [SerializeField] protected CaCWeaponScriptableObject WeaponData;
     
     protected override void Awake()
     {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "new Weapon", menuName = "Weapon")]
-public class WeaponScriptableObject : ScriptableObject
+[CreateAssetMenu(fileName = "new Cac Weapon", menuName = "CacWeapon")]
+public class CaCWeaponScriptableObject : ScriptableObject
 {
     public int damage;
     public LayerMask enemyLayer;

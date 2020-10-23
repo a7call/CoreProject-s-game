@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
     // cible des projectiles (Player)
     protected Transform target;
     // direction (en fonction de la place de la cible)
+    [HideInInspector]
     public Vector3 dir;
     // distance entre le player et le projectile
     protected float distance;

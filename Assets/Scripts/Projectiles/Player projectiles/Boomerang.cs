@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boomerang : Projectiles
+public class Boomerang : PlayerProjectiles
 { 
     
     private float distance;
@@ -21,12 +21,10 @@ public class Boomerang : Projectiles
         isAlreadyFired = true;
     }
 
-    private void Launch()
+    
+    protected override void Update()
     {
-        transform.Translate(dir * speed * Time.deltaTime);
-    }
-    private void Update()
-    {
+        
        distance = Vector3.Distance(transform.position, playerTransform.position);
        Launch();
        if(distance > backDistance) isComingBack = true;
@@ -43,6 +41,11 @@ public class Boomerang : Projectiles
     {
         if (isAlreadyFired) Destroy(gameObject);
     }
-  
+
+
+    protected override void Launch()
+    {
+        base.Launch();
+    }
 
 }

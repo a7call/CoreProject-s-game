@@ -11,8 +11,7 @@ public class Weapons : MonoBehaviour
     protected LayerMask enemyLayer;
     protected bool readyToAttack;
 
-    [SerializeField]
-    protected Transform attackPoint;
+    public Transform attackPoint;
     protected float attackRadius;
     protected float attackDelay;
     protected bool isAttacking = false;
