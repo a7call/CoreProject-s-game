@@ -5,14 +5,16 @@ using UnityEditor;
 
 public class Bubble360 : Distance
 {
-    private float radius;
-    private float coeffDir = 1;
+    private float radius = 0.5f;
+    [SerializeField] private float coeffDir = 3f;
     protected bool damageDone = false;
     [SerializeField] protected LayerMask hitLayer;
-    [CustomEditor(typeof(Enemy))]
+    private PlayerHealth playerHealth;
 
     void Start()
     {
+
+        playerHealth = FindObjectOfType<PlayerHealth>();
         currentState = State.Chasing;
         // Set premier targetPoint
         SetFirstPatrolPoint();
@@ -35,7 +37,7 @@ public class Bubble360 : Distance
             case State.Attacking:
                 UploadRadius();
                 isInRange();
-                //StartCoroutine("CanShoot");
+                StartCoroutine("CanShoot");
                 break;
         }
 
@@ -43,7 +45,7 @@ public class Bubble360 : Distance
 
     private float UploadRadius()
     {
-        radius = coeffDir * Time.deltaTime;
+        radius += coeffDir * Time.deltaTime;
         return radius;
     }
 
@@ -104,16 +106,21 @@ public class Bubble360 : Distance
     // Attack
 
     // Voir Enemy.cs (héritage)
-    protected override IEnumerator CanShoot()
-    {
-        radius = 0f;
-        return base.CanShoot();
-    }
-
-    // Voir Enemy.cs (héritage)
     protected override void ResetAggro()
     {
         base.ResetAggro();
+    }
+
+    // Voir Enemy.cs (héritage)
+    protected override IEnumerator CanShoot()
+    {
+        if (isShooting && isReadytoShoot)
+        {
+            isReadytoShoot = false;
+            Shoot();
+            yield return new WaitForSeconds(restTime);
+            isReadytoShoot = true;
+        }
     }
 
 
@@ -121,16 +128,17 @@ public class Bubble360 : Distance
     protected override void Shoot()
     {
         rb.velocity = Vector2.zero;
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 2, Vector2.zero, Mathf.Infinity, hitLayer);
-        print(hit.transform.position);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 10, Vector2.zero, Mathf.Infinity, hitLayer);
         hit.transform.GetComponent<PlayerHealth>().TakeDamage(20);
-        //Handles.color = Color.red;
-        //Handles.DrawWireDisc(transform.position, new Vector3(0, 0, 1), UploadRadius());
+        print(playerHealth.currentHealth);
+        ////Handles.color = Color.red;
+        ////Handles.DrawWireDisc(transform.position, new Vector3(0, 0, 1), UploadRadius());
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, UploadRadius());
-    }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, UploadRadius());
+    //}
 
 }
