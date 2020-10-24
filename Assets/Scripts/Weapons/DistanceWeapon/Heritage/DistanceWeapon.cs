@@ -22,14 +22,21 @@ public class DistanceWeapon : Weapons
         GetAttackDirection();
         if (Input.GetKeyDown(KeyCode.L))
         {
-
+           StartCoroutine(Shoot());
         }
         
     }
 
-   protected void Shoot()
+   protected IEnumerator Shoot()
     {
-        Instantiate(projectile, attackPoint.position, Quaternion.identity);
+        if(!isAttacking)
+        {
+            isAttacking = true;
+            Instantiate(projectile, attackPoint.position, Quaternion.identity);
+            yield return new WaitForSeconds(attackDelay);
+            isAttacking = false;
+        }
+       
     }
 
     private void SetData()
@@ -42,7 +49,7 @@ public class DistanceWeapon : Weapons
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(attackPoint.position, 0);
+        Gizmos.DrawWireSphere(attackPoint.position, 0.4f);
         Gizmos.color = Color.red;
     }
 }

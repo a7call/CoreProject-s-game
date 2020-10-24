@@ -9,8 +9,8 @@ public class PlayerProjectiles : MonoBehaviour
     protected GameObject weapon;
     protected Vector3 dir;
     protected Transform playerTransform;
-    protected Transform weaponAttackP;
     protected float speed;
+    [SerializeField]
     protected PlayerProjectileScriptableObject PlayerProjectileData;
 
 
@@ -18,17 +18,17 @@ public class PlayerProjectiles : MonoBehaviour
     {
         SetData();
         player = GameObject.FindGameObjectWithTag("Player");
-        weapon = GameObject.FindGameObjectWithTag("Weapon");
-        weaponAttackP = weapon.GetComponent<Weapons>().attackPoint;
+        weapon = GameObject.FindGameObjectWithTag("WeaponManager");
+        Weapons weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
         playerTransform = player.GetComponent<Transform>();
-        dir = (weaponAttackP.position - playerTransform.position).normalized;
+        dir = (weaponAttackP.attackPoint.position - playerTransform.position).normalized;
 
     }
 
 
     protected virtual void Update()
     {
-
+        Launch();
     }
 
     protected virtual void Launch()
