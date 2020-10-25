@@ -5,16 +5,27 @@ using UnityEditor;
 
 public class Bubble360 : Distance
 {
-    private float radius = 0.5f;
-    [SerializeField] private float coeffDir = 3f;
-    protected bool damageDone = false;
-    [SerializeField] protected LayerMask hitLayer;
     private PlayerHealth playerHealth;
+    private RadiusGrowUp radiusGrowUp;
+
+    [SerializeField] private bool damageDone = false;
+    //isReadyToShoot initalisée à true
+    //isShooting non initialisé
+
+    [SerializeField] private int numberOfShoot;
+    public int currentIndex = 0;
+    private int longueurListe;
+    [SerializeField] private List<RadiusGrowUp> differentRadius = new List<RadiusGrowUp>();
+
+    private bool tryAugmenteListe = true;
 
     void Start()
     {
-
         playerHealth = FindObjectOfType<PlayerHealth>();
+        radiusGrowUp = FindObjectOfType<RadiusGrowUp>();
+
+        longueurListe = differentRadius.Count;
+
         currentState = State.Chasing;
         // Set premier targetPoint
         SetFirstPatrolPoint();
@@ -35,18 +46,12 @@ public class Bubble360 : Distance
                 MoveToPath();
                 break;
             case State.Attacking:
-                UploadRadius();
                 isInRange();
-                StartCoroutine("CanShoot");
+                //StartCoroutine("CanShoot()");
+                if(tryAugmenteListe == true) AddShoot();
                 break;
         }
 
-    }
-
-    private float UploadRadius()
-    {
-        radius += coeffDir * Time.deltaTime;
-        return radius;
     }
 
     protected override void SetData()
@@ -111,34 +116,65 @@ public class Bubble360 : Distance
         base.ResetAggro();
     }
 
-    // Voir Enemy.cs (héritage)
+    //Voir Enemy.cs(héritage)
     protected override IEnumerator CanShoot()
     {
         if (isShooting && isReadytoShoot)
         {
             isReadytoShoot = false;
+            rb.velocity = Vector2.zero;
             Shoot();
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
+            print(isReadytoShoot);
         }
     }
-
 
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        rb.velocity = Vector2.zero;
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 10, Vector2.zero, Mathf.Infinity, hitLayer);
-        hit.transform.GetComponent<PlayerHealth>().TakeDamage(20);
-        print(playerHealth.currentHealth);
-        ////Handles.color = Color.red;
-        ////Handles.DrawWireDisc(transform.position, new Vector3(0, 0, 1), UploadRadius());
+        if (currentState == State.Attacking)
+        {
+            // On instancie les variables
+            isShooting = true;
+            isReadytoShoot = false;
+            // On empêche l'ennemi de bouger car il tire
+            rb.velocity = Vector2.zero;
+            //print("L'ennemi s'arrete");
+            AddShoot();
+            //// On augemente la taille de la liste pour rajouter un tir
+
+            //for (int i = 1; i < longueurListe; i++)
+            //{
+            //longueurListe++;
+            //currentIndex++;
+            //print("On aggrandit la liste pour stocker le rayon, la taille de la liste est de     " +longueurListe);
+            //// On place le rayon dans la liste
+            //differentRadius[currentIndex] = gameObject.GetComponent<RadiusGrowUp>();
+            //differentRadius[currentIndex].ShootRadius();
+            //print("Le tir s'est effectué");
+
+            //}
+        }
     }
 
+    private void AddShoot()
+    {
+        tryAugmenteListe = false;
+        longueurListe++;
+        currentIndex++;
+        differentRadius[currentIndex] = radiusGrowUp;
+        //differentRadius[currentIndex].ShootRadius();
 
-    //private void OnDrawGizmos()
+    }
+
+    //private void RemoveShoot()
     //{
-    //    Gizmos.DrawWireSphere(transform.position, UploadRadius());
+    //    if(radiusGrowUp.hit[].transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+    //    {
+    //    longueurListe--;
+    //    currentIndex--;
+    //    Destroy(differentRadius[currentIndex]);
+    //    }
     //}
-
 }

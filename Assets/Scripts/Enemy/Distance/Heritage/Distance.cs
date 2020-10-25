@@ -14,7 +14,7 @@ public class Distance : Enemy
     // Scriptable Object
     [SerializeField] protected DistanceScriptableObject DistanceData;
     // Check si tire
-    public bool isShooting;
+    [SerializeField] public bool isShooting;
 
 
     protected virtual void SetData()
@@ -108,7 +108,7 @@ public class Distance : Enemy
 
 
     // Check si prêt à tirer
-    protected bool isReadytoShoot = true;
+    [SerializeField] protected bool isReadytoShoot = true;
     // Repos après tire
     protected float restTime;
     // Projectile to instantiate
