@@ -10,6 +10,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected Vector3 dir;
     protected Transform playerTransform;
     protected float speed;
+    protected Weapons weaponAttackP;
     protected LayerMask weaponLayer;
     protected int weaponDamage;
     [SerializeField]
@@ -21,7 +22,7 @@ public class PlayerProjectiles : MonoBehaviour
         SetData();
         player = GameObject.FindGameObjectWithTag("Player");
         weapon = GameObject.FindGameObjectWithTag("WeaponManager");
-        Weapons weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
+        weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
         weaponDamage = weaponAttackP.damage;
         weaponLayer = weaponAttackP.enemyLayer;
         playerTransform = player.GetComponent<Transform>();
