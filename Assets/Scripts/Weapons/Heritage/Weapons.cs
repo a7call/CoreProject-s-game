@@ -8,7 +8,8 @@ public class Weapons : MonoBehaviour
 {
     [HideInInspector]
     public int damage;
-    protected LayerMask enemyLayer;
+    [HideInInspector]
+    public LayerMask enemyLayer;
     protected bool readyToAttack;
 
     public Transform attackPoint;
