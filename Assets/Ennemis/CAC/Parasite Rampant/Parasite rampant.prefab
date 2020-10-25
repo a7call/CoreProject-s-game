@@ -318,6 +318,7 @@ GameObject:
   - component: {fileID: 3612759245202818940}
   - component: {fileID: 3612759245202818929}
   - component: {fileID: 3612759245202818930}
+  - component: {fileID: -1355802768155341345}
   m_Layer: 0
   m_Name: Parasite rampant
   m_TagString: Untagged
@@ -403,12 +404,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  isAlreadyElectrified: 0
   nextWayPointDistance: 3
   moveSpeed: 0
   wayPoints:
   - {fileID: 0}
   - {fileID: 0}
   target: {fileID: 0}
+  rb: {fileID: 0}
   currentHealth: 0
   maxHealth: 0
   healthBar: {fileID: 3612759243928439221}
@@ -417,6 +420,32 @@ MonoBehaviour:
   timeBeforeDesactive: 2
   CacDatas: {fileID: 11400000, guid: f6eefc7057f2fe245a62d819c9b6c619, type: 2}
   attackPoint: {fileID: 3612759243388555237}
+--- !u!61 &-1355802768155341345
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3612759245202818942}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &3612759245341375533
 GameObject:
   m_ObjectHideFlags: 0

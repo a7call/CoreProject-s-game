@@ -6,8 +6,8 @@ using UnityEngine;
 /// </summary>
 public class Weapons : MonoBehaviour
 {
-
-    protected int damage;
+    [HideInInspector]
+    public int damage;
     protected LayerMask enemyLayer;
     protected bool readyToAttack;
 

@@ -52,6 +52,7 @@ public class Projectile : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Weapon") || collision.CompareTag("Weapon")) return;
+        if (collision.CompareTag("Enemy")) return;
         Destroy(gameObject);
     }
 }

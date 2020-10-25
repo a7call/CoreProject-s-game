@@ -117,8 +117,8 @@ public class Enemy : MonoBehaviour
     protected float inSight;
     // Player
     [SerializeField] protected Transform target;
-
-    protected Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
 
 
 
