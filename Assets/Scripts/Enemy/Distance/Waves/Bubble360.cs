@@ -6,25 +6,13 @@ using UnityEditor;
 public class Bubble360 : Distance
 {
     private PlayerHealth playerHealth;
-    private RadiusGrowUp radiusGrowUp;
+    [SerializeField] protected GameObject rayon;
 
-    [SerializeField] private bool damageDone = false;
-    //isReadyToShoot initalisée à true
-    //isShooting non initialisé
-
-    [SerializeField] private int numberOfShoot;
-    public int currentIndex = 0;
-    private int longueurListe;
-    [SerializeField] private List<RadiusGrowUp> differentRadius = new List<RadiusGrowUp>();
-
-    private bool tryAugmenteListe = true;
+    [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();
 
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        radiusGrowUp = FindObjectOfType<RadiusGrowUp>();
-
-        longueurListe = differentRadius.Count;
 
         currentState = State.Chasing;
         // Set premier targetPoint
@@ -35,8 +23,6 @@ public class Bubble360 : Distance
     }
     protected override void Update()
     {
-
-
         base.Update();
         switch (currentState)
         {
@@ -47,11 +33,9 @@ public class Bubble360 : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                //StartCoroutine("CanShoot()");
-                if(tryAugmenteListe == true) AddShoot();
+                StartCoroutine(CanShoot());
                 break;
         }
-
     }
 
     protected override void SetData()
@@ -119,62 +103,25 @@ public class Bubble360 : Distance
     //Voir Enemy.cs(héritage)
     protected override IEnumerator CanShoot()
     {
-        if (isShooting && isReadytoShoot)
+        if (isReadytoShoot)
         {
             isReadytoShoot = false;
             rb.velocity = Vector2.zero;
             Shoot();
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
-            print(isReadytoShoot);
         }
     }
 
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        if (currentState == State.Attacking)
-        {
-            // On instancie les variables
-            isShooting = true;
-            isReadytoShoot = false;
-            // On empêche l'ennemi de bouger car il tire
-            rb.velocity = Vector2.zero;
-            //print("L'ennemi s'arrete");
-            AddShoot();
-            //// On augemente la taille de la liste pour rajouter un tir
-
-            //for (int i = 1; i < longueurListe; i++)
-            //{
-            //longueurListe++;
-            //currentIndex++;
-            //print("On aggrandit la liste pour stocker le rayon, la taille de la liste est de     " +longueurListe);
-            //// On place le rayon dans la liste
-            //differentRadius[currentIndex] = gameObject.GetComponent<RadiusGrowUp>();
-            //differentRadius[currentIndex].ShootRadius();
-            //print("Le tir s'est effectué");
-
-            //}
-        }
+        Instantiate(rayon, transform.position, Quaternion.identity);
+        AddShoot();
     }
 
-    private void AddShoot()
+    private void AddShoot()                     
     {
-        tryAugmenteListe = false;
-        longueurListe++;
-        currentIndex++;
-        differentRadius[currentIndex] = radiusGrowUp;
-        //differentRadius[currentIndex].ShootRadius();
-
+        differentRadius.Insert(0,rayon);
     }
-
-    //private void RemoveShoot()
-    //{
-    //    if(radiusGrowUp.hit[].transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
-    //    {
-    //    longueurListe--;
-    //    currentIndex--;
-    //    Destroy(differentRadius[currentIndex]);
-    //    }
-    //}
 }

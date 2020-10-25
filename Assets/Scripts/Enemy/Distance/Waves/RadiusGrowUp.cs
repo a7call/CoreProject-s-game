@@ -7,12 +7,12 @@ public class RadiusGrowUp : MonoBehaviour
 {
     private float radius;
     private float coeffDir = 1f;
-    private float initialRadius = 1f;
+    private float initialRadius = 0.2f;
     private float time;
 
     private PlayerHealth playerHealth;
 
-    public RaycastHit2D[] hit;
+    public RaycastHit2D[] hits;
 
     [SerializeField] protected LayerMask hitLayer;
 
@@ -25,6 +25,7 @@ public class RadiusGrowUp : MonoBehaviour
     void Update()
     {
         RadiusGrowByTime();
+        ShootRadius();
     }
 
     private float Timer()
@@ -38,35 +39,31 @@ public class RadiusGrowUp : MonoBehaviour
         radius = initialRadius + coeffDir * Timer();
         return radius;
     }
-    
+
     public void ShootRadius()
     {
-        hit = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
+        hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
 
-        for (int i = 1; i < hit.Length; i++)
+        foreach (RaycastHit2D hit in hits)
         {
-            // Si on touche le joueur
-            if (hit[i].transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                hit[i].transform.GetComponent<PlayerHealth>().TakeDamage(20);
-                print("Vie du joueur si y'a eu un touche " + playerHealth.currentHealth);
+                if (Vector3.Distance(transform.position, hit.transform.position) >= Mathf.Abs(RadiusGrowByTime() - 0.01f) && Vector3.Distance(transform.position, hit.transform.position) <= Mathf.Abs(RadiusGrowByTime() + 0.01f))
+                {
+                    hit.transform.GetComponent<PlayerHealth>().TakeDamage(20);
+                    print("Vie du joueur si y'a eu un touche " + playerHealth.currentHealth);
+                }
             }
-            // Si on touche des objets
-            else if(hit[i].transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+            else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
             {
                 Destroy(gameObject);
-                // On détruit le tir
             }
-            // Si on touche les murs => On destroy le tir et on le retire de la liste
-            else if (hit[i].transform.gameObject.layer == LayerMask.NameToLayer("DestroyableObstacle"))
-            {
-                // On détruit les obstacles
-            }
-            i++;
+
+            // Détruire les objets qui sont destructibles
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, RadiusGrowByTime());
     }

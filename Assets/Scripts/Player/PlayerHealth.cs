@@ -36,9 +36,12 @@ public class PlayerHealth : Player
 
     public void TakeDamage(int damage)
     {
+        if (!isInvincible)
+        {
         currentHealth -= damage;
         StartCoroutine(InvincibilityDelay());
         StartCoroutine(InvincibilityFlash());
+        }
     }
 
     //Fonction test perd des hp
