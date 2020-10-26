@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class BubbleOneWave : Distance
+public class BubbleMS : Distance
 {
+    private PlayerHealth playerHealth;
+    [SerializeField] protected GameObject rayon;
 
-
-    [SerializeField] int angleTir;
+    [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();
+    
+    private bool firstShoot = true;
 
     void Start()
     {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+
         currentState = State.Chasing;
         // Set premier targetPoint
         SetFirstPatrolPoint();
@@ -23,19 +29,15 @@ public class BubbleOneWave : Distance
         switch (currentState)
         {
             case State.Chasing:
-                // récupération de l'aggro
                 Aggro();
                 isInRange();
-                // suit le path créé et s'arrête pour tirer
                 MoveToPath();
                 break;
             case State.Attacking:
                 isInRange();
-                // Couroutine gérant les shoots 
-                StartCoroutine("CanShoot");
+                StartCoroutine(CanShoot());
                 break;
         }
-
     }
 
     protected override void SetData()
@@ -84,6 +86,7 @@ public class BubbleOneWave : Distance
     }
 
 
+
     // Voir Enemy.cs (héritage)
     protected override IEnumerator WhiteFlash()
     {
@@ -94,23 +97,33 @@ public class BubbleOneWave : Distance
     // Attack
 
     // Voir Enemy.cs (héritage)
-    protected override IEnumerator CanShoot()
-    {
-        return base.CanShoot();
-    }
-
-    // Voir Enemy.cs (héritage)
     protected override void ResetAggro()
     {
         base.ResetAggro();
     }
 
+    //Voir Enemy.cs(héritage)
+    protected override IEnumerator CanShoot()
+    {
+        if (isReadytoShoot && firstShoot)
+        {
+            isReadytoShoot = false;
+            firstShoot = false;
+            rb.velocity = Vector2.zero;
+            Shoot();
+            yield return new WaitForSeconds(restTime);
+        }
+    }
 
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-
+        Instantiate(rayon, transform.position, Quaternion.identity);
+        AddShoot();
     }
 
+    private void AddShoot()
+    {
+        differentRadius.Insert(0, rayon);
+    }
 }
-

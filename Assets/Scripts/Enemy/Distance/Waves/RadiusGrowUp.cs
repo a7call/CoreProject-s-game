@@ -5,42 +5,42 @@ using UnityEngine;
 
 public class RadiusGrowUp : MonoBehaviour
 {
-    private float radius;
-    private float coeffDir = 1f;
-    private float initialRadius = 0.2f;
-    private float time;
+    protected float radius;
+    protected float coeffDir = 1f;
+    protected float initialRadius = 0.2f;
+    protected float time;
 
     private PlayerHealth playerHealth;
 
-    public RaycastHit2D[] hits;
+    protected RaycastHit2D[] hits;
 
     [SerializeField] protected LayerMask hitLayer;
 
-    private void Start()
+    protected virtual void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         RadiusGrowByTime();
         ShootRadius();
     }
 
-    private float Timer()
+    protected virtual float Timer()
     {
         time += Time.deltaTime;
         return time;
     }
 
-    private float RadiusGrowByTime()
+    protected virtual float RadiusGrowByTime()
     {
         radius = initialRadius + coeffDir * Timer();
         return radius;
     }
 
-    public void ShootRadius()
+    protected virtual void ShootRadius()
     {
         hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
 
@@ -63,7 +63,7 @@ public class RadiusGrowUp : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, RadiusGrowByTime());
     }
