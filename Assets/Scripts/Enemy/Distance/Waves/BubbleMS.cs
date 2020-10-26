@@ -32,6 +32,7 @@ public class BubbleMS : Distance
                 Aggro();
                 isInRange();
                 MoveToPath();
+                if(!firstShoot) rb.velocity = Vector2.zero;
                 break;
             case State.Attacking:
                 isInRange();

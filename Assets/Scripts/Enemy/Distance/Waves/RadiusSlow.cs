@@ -7,13 +7,14 @@ using UnityEngine;
 public class RadiusSlow : RadiusGrowUp
 {
 
-    [SerializeField] private float maxRadius = 5;
-    private PlayerHealth playerHealth;
+    [SerializeField] private float maxRadius = 5f;
+    [SerializeField] private float newPlayerMoveSpeed = 100f;
     private PlayerMouvement playerMouvement;
 
     protected override void Start()
     {
         playerMouvement = FindObjectOfType<PlayerMouvement>();
+        float playerMoveSpeed = playerMouvement.mooveSpeed;
         base.Start();
     }
 
@@ -30,37 +31,39 @@ public class RadiusSlow : RadiusGrowUp
 
     protected override float RadiusGrowByTime()
     {
-        return base.RadiusGrowByTime();
+        if (radius < maxRadius)
+        {
+            radius = radius = initialRadius + coeffDir * Timer();
+            return radius;
+        }
+        else
+        {
+            return radius = maxRadius;
+        }
     }
 
     protected override void ShootRadius()
     {
-
-        if (radius < maxRadius)
-        {
-            hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
-        }
-        else
-        {
-            print("A");
-            hits = Physics2D.CircleCastAll(transform.position, maxRadius, Vector2.zero, Mathf.Infinity, hitLayer);
-        }
-
+        hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                changeSpeed();
+                if (Vector3.Distance(transform.position, hit.transform.position) <= RadiusGrowByTime())
+                {
+                    playerMouvement.mooveSpeed = newPlayerMoveSpeed;
+                }
+                else
+                {
+                    // Voir si on peut accéder aux données du scriptableObject
+                    playerMouvement.mooveSpeed = 200f;
+                }
             }
 
             // Détruire les objets qui sont destructibles
-        }
-    }
 
-    private void changeSpeed()
-    {
-        float newMoveSpeed = 100f;
-        playerMouvement.mooveSpeed = newMoveSpeed;
+            // Voir si on diminue la ms des ennemis ou non
+        }
     }
 
 }
