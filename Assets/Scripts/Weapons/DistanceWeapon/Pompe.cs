@@ -2,36 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pompe : Weapons
+public class Pompe : DistanceWeapon
 {
-    [SerializeField] protected DistanceWeaponScriptableObject DistanceWeaponData;
+   
     [SerializeField] GameObject[] projectiles;
     [SerializeField] int angleTir;
-    public AngleProjectile angleProjectile;
+    [SerializeField] PompeProjectiles angleProjectile;
 
-    protected override void Awake()
+   
+
+
+    protected override IEnumerator Shoot()
     {
-        base.Awake();
-        SetData();
-    }
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        GetAttackDirection();
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            StartCoroutine(Shoot());
-        }
-
-    }
-
-    protected IEnumerator Shoot()
-    {
+        
         if (!isAttacking)
         {
             isAttacking = true;
@@ -50,17 +33,5 @@ public class Pompe : Weapons
 
     }
 
-    private void SetData()
-    {
-        //projectile = DistanceWeaponData.projectile;
-        enemyLayer = DistanceWeaponData.enemyLayer;
-        damage = DistanceWeaponData.damage;
-        attackDelay = DistanceWeaponData.AttackDelay;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(attackPoint.position, 0.4f);
-        Gizmos.color = Color.red;
-    }
+  
 }

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8399999305006020208}
-  - component: {fileID: 447874545833512403}
   - component: {fileID: -1722993414655278476}
+  - component: {fileID: 6476964039208178378}
   m_Layer: 0
-  m_Name: Gros Pistolet Proj
+  m_Name: Pompe Proj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,19 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &447874545833512403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5004741095190017796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerProjectileData: {fileID: 11400000, guid: 758f1c3eea0734981832364d6d829b9a, type: 2}
 --- !u!212 &-1722993414655278476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -96,3 +83,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6476964039208178378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd451abdfd44341e8be866c962a1f5df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerProjectileData: {fileID: 11400000, guid: 53d495720fecb4831b7378a22541db48, type: 2}
+  angleDecalage: 0

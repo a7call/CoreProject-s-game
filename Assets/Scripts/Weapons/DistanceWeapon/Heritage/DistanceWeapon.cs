@@ -27,7 +27,7 @@ public class DistanceWeapon : Weapons
         
     }
 
-   protected IEnumerator Shoot()
+   protected virtual IEnumerator Shoot()
     {
         if(!isAttacking)
         {

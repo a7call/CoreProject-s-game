@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &441180908215731278
+--- !u!1 &3268745300092479952
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9003246489028487026}
-  - component: {fileID: 8210040702208242931}
-  - component: {fileID: 5557457044660018701}
+  - component: {fileID: 6319251499214703340}
+  - component: {fileID: 6533709034250410349}
+  - component: {fileID: 7377886326490444691}
   m_Layer: 0
-  m_Name: Pompe 3
+  m_Name: Pompe 5
   m_TagString: Weapon
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9003246489028487026
+--- !u!4 &6319251499214703340
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441180908215731278}
+  m_GameObject: {fileID: 3268745300092479952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.58, y: -1.95, z: -6.8075624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4051430145788030816}
+  - {fileID: 1403464446472241918}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8210040702208242931
+--- !u!61 &6533709034250410349
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441180908215731278}
+  m_GameObject: {fileID: 3268745300092479952}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -59,13 +59,13 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5557457044660018701
+--- !u!114 &7377886326490444691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441180908215731278}
+  m_GameObject: {fileID: 3268745300092479952}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22a91775603dc4345a1b3c0673b0b2a3, type: 3}
@@ -75,15 +75,17 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  attackPoint: {fileID: 4051430145788030816}
-  DistanceWeaponData: {fileID: 11400000, guid: 5d2d68dfbcb7e4fa882d16aac8cad260, type: 2}
+  attackPoint: {fileID: 1403464446472241918}
+  DistanceWeaponData: {fileID: 11400000, guid: 9145858597bdf4bf292ba99bebbb7a3e, type: 2}
   projectiles:
+  - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
+  - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   angleTir: 30
   angleProjectile: {fileID: 6476964039208178378, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
---- !u!1 &6322061853503427803
+--- !u!1 &9007182729464379717
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +93,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4051430145788030816}
+  - component: {fileID: 1403464446472241918}
   m_Layer: 0
   m_Name: attackPoint
   m_TagString: AttackPointPlayer
@@ -99,17 +101,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4051430145788030816
+--- !u!4 &1403464446472241918
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6322061853503427803}
+  m_GameObject: {fileID: 9007182729464379717}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 9003246489028487026}
+  m_Father: {fileID: 6319251499214703340}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
