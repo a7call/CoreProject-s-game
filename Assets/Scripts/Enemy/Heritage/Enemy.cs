@@ -53,6 +53,11 @@ public class Enemy : MonoBehaviour
                 //animation;
                 break;
         }
+        if (isSlowed && !alReadySlowed)
+        {
+
+            StartCoroutine(EnemySlowed());
+        }
         healthBar.SetHealth(currentHealth);
         DisplayBar();
     }
@@ -109,6 +114,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed;
     // Array de point pour patrouille
     [SerializeField] protected Transform[] wayPoints;
+    public bool isSlowed = false;
     // Destination pour patrouille
     protected Transform targetPoint;
     // Index de l'array
@@ -134,6 +140,19 @@ public class Enemy : MonoBehaviour
                 targetPoint = wayPoints[index];
 
             }
+    }
+    private float slowTime = 2f;
+    private bool alReadySlowed;
+    protected IEnumerator EnemySlowed()
+    {
+
+        alReadySlowed = true;
+        float realSpeed = moveSpeed;
+        moveSpeed *= 0.5f;
+        yield return new WaitForSeconds(slowTime);
+        moveSpeed = realSpeed;
+        isSlowed = false;
+        alReadySlowed = false;
     }
 
     // Actualise le State en Chasing si le joueur est repéré
@@ -228,9 +247,6 @@ public class Enemy : MonoBehaviour
         healthBarGFX.SetActive(false);
         isHealthBarActive = false;
     }
-
-
-
 
     //Attack
 
