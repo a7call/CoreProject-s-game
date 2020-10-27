@@ -20,7 +20,7 @@ public class DistanceWeapon : Weapons
     void Update()
     {
         GetAttackDirection();
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
            StartCoroutine(Shoot());
         }
