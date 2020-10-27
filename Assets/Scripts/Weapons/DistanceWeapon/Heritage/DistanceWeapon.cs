@@ -17,7 +17,7 @@ public class DistanceWeapon : Weapons
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         GetAttackDirection();
         if (Input.GetMouseButton(0))
@@ -39,7 +39,7 @@ public class DistanceWeapon : Weapons
        
     }
 
-    private void SetData()
+    protected virtual void SetData()
     {
         projectile = DistanceWeaponData.projectile;
         enemyLayer = DistanceWeaponData.enemyLayer;
