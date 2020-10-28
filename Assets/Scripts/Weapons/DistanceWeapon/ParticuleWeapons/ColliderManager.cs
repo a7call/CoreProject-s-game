@@ -7,6 +7,12 @@ public class ColliderManager : MonoBehaviour
     [SerializeField] protected float damageTimer;
     protected bool readyToHit = true;
     private List<GameObject> Targets = new List<GameObject>();
+    ParticleSystem particules;
+
+    private void Start()
+    {
+        particules = gameObject.GetComponentInChildren<ParticleSystem>();
+    }
     protected  void Update()
     {
         if (Input.GetMouseButton(0))
@@ -28,11 +34,17 @@ public class ColliderManager : MonoBehaviour
     protected void ActivateShoot()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        var emision = particules.emission;
+        emision.enabled = true;
         // Active le particuleSysteme;
     }
     protected void DesactivateShoot()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+        var emision = particules.emission;
+        emision.enabled = false;
+
         // Desactive le particuleSysteme;
     }
 
