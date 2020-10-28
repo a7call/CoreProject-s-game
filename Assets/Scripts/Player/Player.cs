@@ -9,11 +9,18 @@ public class Player : MonoBehaviour
     public PlayerScriptableObjectScript playerData;
     public EtatJoueur currentEtat = EtatJoueur.normal;
 
-    
+    public PlayerManager playerManager;
+
     public enum EtatJoueur
     {
         normal,
         fear,
+        shopping,
+    }
+
+    protected virtual void Update()
+    {
+        NormalMode();
     }
 
     [HideInInspector]
@@ -45,6 +52,14 @@ public class Player : MonoBehaviour
     protected virtual void Awake()
     {
         SetData();
+    }
+
+    protected virtual void NormalMode()
+    {
+        if(Input.GetKeyDown(KeyCode.M) == true)
+        {
+            currentEtat = EtatJoueur.normal;
+        }
     }
 
 }

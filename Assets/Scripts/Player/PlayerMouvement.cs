@@ -19,8 +19,10 @@ public class PlayerMouvement : Player
         base.Awake();
         playerEnergy = GetComponent<PlayerEnergy>();
     }
-    void Update()
+    protected override void Update()
     {
+
+        base.Update();
 
         switch (currentEtat)
         {
@@ -43,6 +45,10 @@ public class PlayerMouvement : Player
 
             case EtatJoueur.fear:
                     break;
+
+            case EtatJoueur.shopping:
+                //Definir tout ce qu'on veut faire dedans
+                break;
         }
 
     }
@@ -59,6 +65,10 @@ public class PlayerMouvement : Player
                 break;
 
             case EtatJoueur.fear:
+                break;
+
+            case EtatJoueur.shopping:
+                rb.velocity = Vector2.zero;
                 break;
         }
         
@@ -126,4 +136,8 @@ public class PlayerMouvement : Player
         rb.AddForce(dir * dashForce);
     }
 
+    protected override void NormalMode()
+    {
+        base.NormalMode();
+    }
 }
