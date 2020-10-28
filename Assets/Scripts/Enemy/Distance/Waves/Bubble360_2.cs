@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Bubble360_2 : Bubble360
+public class Bubble360_2 : Distance
 {
     private PlayerHealth playerHealth;
+    [SerializeField] protected GameObject rayon;
 
     [SerializeField] private float timeBetweenTwoShots = 0.5f;
 
     [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();
 
-    private bool isShooting = false;
+    //isShooting déclarée dans Distance
 
     void Start()
     {
