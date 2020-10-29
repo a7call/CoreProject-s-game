@@ -6,6 +6,8 @@ public class LaserWeapon : DistanceWeapon
 {
     [SerializeField] float LoadingDelay;
 
+
+
     protected override IEnumerator Shoot()
     {
         if (!isAttacking)
@@ -18,4 +20,6 @@ public class LaserWeapon : DistanceWeapon
         }
 
     }
+
+
 }

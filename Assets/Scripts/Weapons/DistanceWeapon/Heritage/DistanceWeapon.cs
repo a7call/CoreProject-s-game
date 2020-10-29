@@ -6,6 +6,9 @@ public class DistanceWeapon : Weapons
 {
     [SerializeField] protected DistanceWeaponScriptableObject DistanceWeaponData;
     protected GameObject projectile;
+    [SerializeField] protected PlayerProjectiles Proj;
+    [SerializeField] protected float Dispersion;
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,7 +34,9 @@ public class DistanceWeapon : Weapons
     {
         if(!isAttacking)
         {
+            float decalage = Random.Range(-Dispersion, Dispersion + 1);
             isAttacking = true;
+            Proj.Dispersion = decalage;
             Instantiate(projectile, attackPoint.position, Quaternion.identity);
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;

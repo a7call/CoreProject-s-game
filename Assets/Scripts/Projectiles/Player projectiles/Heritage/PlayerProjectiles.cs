@@ -15,7 +15,8 @@ public class PlayerProjectiles : MonoBehaviour
     protected int weaponDamage;
     [SerializeField]
     protected PlayerProjectileScriptableObject PlayerProjectileData;
-
+    protected Vector3 directionTir;
+    public float Dispersion;
 
     protected virtual void Awake()
     {
@@ -27,7 +28,7 @@ public class PlayerProjectiles : MonoBehaviour
         weaponLayer = weaponAttackP.enemyLayer;
         playerTransform = player.GetComponent<Transform>();
         dir = (weaponAttackP.attackPoint.position - playerTransform.position).normalized;
-
+        ConeShoot();
     }
 
 
@@ -38,7 +39,7 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void Launch()
     {
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(directionTir * speed * Time.deltaTime);
     }
     void SetData()
     {
@@ -53,5 +54,9 @@ public class PlayerProjectiles : MonoBehaviour
             Destroy(gameObject);
         }
  
+    }
+    protected void ConeShoot()
+    {
+        directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
     }
 }
