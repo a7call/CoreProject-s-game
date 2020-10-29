@@ -12,6 +12,9 @@ public class ShopManager : MonoBehaviour
     public GameObject consommablePanel;
     public GameObject weaponsPanel;
 
+    public GameObject[] shopItems;
+    private int cost;
+
     public Text goldPlayerShopView;
 
     // Pour récupérer le ShopPnj et le Player
@@ -35,6 +38,8 @@ public class ShopManager : MonoBehaviour
         // Par défaut, on active le Consommable Panel
         consommablePanel.SetActive(true);
         weaponsPanel.SetActive(false);
+
+        Test();
     }
 
     private void Update()
@@ -86,4 +91,18 @@ public class ShopManager : MonoBehaviour
         goldPlayerShopView.text = inventory.goldPlayer.ToString();
     }
 
+    private void Test()
+    {
+        foreach (GameObject item in shopItems)
+        {
+            print("Le nom de l'item" + item.name);
+            Text textContent = gameObject.GetComponent<Text>();
+            print(textContent);
+           
+
+        //string tempParse = item.
+        //cost = int.Parse(tempParse);
+        //print(cost + " de type " + cost.GetType());
+        }
+    }
 }

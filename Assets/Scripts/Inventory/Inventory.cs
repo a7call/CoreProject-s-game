@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     public int goldPlayer;
     private int amountToAdd = 20;
 
+
     private void Start()
     {
         goldPlayer = 0;
