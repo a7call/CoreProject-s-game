@@ -5,26 +5,27 @@ using UnityEngine.UIElements;
 
 public class Inventory : MonoBehaviour
 {
-    //Déclaration des variables permettant de créer une liste qui ressource les objets de l'inventaire
-    private int currentContentIndex=0;
-    public List<ItemScriptableObject> content = new List<ItemScriptableObject>();
-    private int lengthList;
 
-    private UsingItems usingItems;
+    public int goldPlayer;
+    private int amountToAdd = 20;
 
     private void Start()
     {
-        usingItems = FindObjectOfType<UsingItems>();
-        lengthList = content.Count;
+        goldPlayer = 0;
     }
 
-    public void ConsumePotion()
+    private void Update()
     {
-        usingItems.AddHp();
+        AddGold(amountToAdd);
     }
 
+    // Fonctionner de test pour ajouter des golds [A RETIRER PAR LA SUITE]
+    private void AddGold(int _amountToAdd)
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            goldPlayer += _amountToAdd;
+        }
+    }
 
-    //ItemScriptableObject currentItem = content[currentContentIndex];
-    //UsingItems.AddHp();
-    //    content.Remove(currentItem);
 }
