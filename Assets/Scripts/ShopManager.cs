@@ -96,8 +96,9 @@ public class ShopManager : MonoBehaviour
         foreach (GameObject item in shopItems)
         {
             print("Le nom de l'item" + item.name);
-            Text textContent = gameObject.GetComponent<Text>();
-            print(textContent);
+            
+            Text textContent = item.GetComponent<ShopItem>().textPrice.GetComponent<Text>();
+            print(textContent.text);
            
 
         //string tempParse = item.
