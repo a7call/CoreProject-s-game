@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8399999305006020208}
   - component: {fileID: -1722993414655278476}
   - component: {fileID: 6476964039208178378}
+  - component: {fileID: 4477942786587107695}
   m_Layer: 0
   m_Name: Pompe Proj
   m_TagString: Untagged
@@ -96,4 +97,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerProjectileData: {fileID: 11400000, guid: 53d495720fecb4831b7378a22541db48, type: 2}
-  angleDecalage: 0
+  Dispersion: 0
+  angleDecalage: 15
+--- !u!58 &4477942786587107695
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.001398705, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.08927668

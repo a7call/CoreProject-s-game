@@ -22,8 +22,7 @@ public class LaserProj : PlayerProjectiles
             Debug.DrawRay(weaponAttackP.attackPoint.position, dir * 10, Color.red);
             if (hit.collider != null)
             {
-                print("test");
-            //Damage
+            
             }
         
     }
