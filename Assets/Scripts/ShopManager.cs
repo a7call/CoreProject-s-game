@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,17 +10,21 @@ public class ShopManager : MonoBehaviour
     // Création d'un gameObject qui gère le shop
     public GameObject shopManagerUI;
 
-    public GameObject consommablePanel;
-    public GameObject weaponsPanel;
+    public GameObject shopPanel;
 
-    public GameObject[] shopItems;
+    [SerializeField] private List<ShopItemButton> shopList = new List<ShopItemButton>();
+    public ShopItemButton healthPotion;
+    private int shopListIndex = 0;
+    private int numberOfConsommable ;
+
     private int cost;
 
     public Text goldPlayerShopView;
 
-    // Pour récupérer le ShopPnj et le Player
-    private ShopPNJ shopPnj;
     private Player player;
+    private ShopPnj shopPnj;
+
+    private bool isPlayerShopping = false;
 
     // Pour récupérer l'inventory
     private Inventory inventory;
@@ -31,37 +36,53 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-        shopPnj = FindObjectOfType<ShopPNJ>();
         player = FindObjectOfType<Player>();
+        shopPnj = FindObjectOfType<ShopPnj>();
         inventory = FindObjectOfType<Inventory>();
-
-        // Par défaut, on active le Consommable Panel
-        consommablePanel.SetActive(true);
-        weaponsPanel.SetActive(false);
-
-        Test();
+        
+        GenerateRandomNumberOfConsommable();
     }
 
     private void Update()
     {
         CanShop();
         OnPlayerShop();
-        GoldViewOnShop();
+
+        switch (player.currentEtat)
+        {
+            default:
+                break;
+
+            case Player.EtatJoueur.shopping:
+                //Definir tout ce qu'on veut faire dedans
+                GenerateRandomObjectInShop();
+                GoldViewOnShop();
+                break;
+        }
     }
 
     private void CanShop()
     {
-        if (Vector3.Distance(shopPnj.transform.position, player.transform.position) <= distanceToShop) isInRange = true;
+        if (Vector3.Distance(shopPnj.shopPnjTransform.position, player.transform.position) <= distanceToShop) isInRange = true;
         else isInRange = false;
+
+        if (isInRange == true)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                isPlayerShopping = true;
+            }
+        }
     }
 
     // Méthode pour activer le shop
     private void OnPlayerShop()
     {
-        if (shopPnj.isPlayerShopping == true && isInRange)
+        if (isPlayerShopping == true)
         {
             shopManagerUI.SetActive(true);
             player.currentEtat = Player.EtatJoueur.shopping;
+            shopPanel.SetActive(true);
         }
     }
 
@@ -70,40 +91,55 @@ public class ShopManager : MonoBehaviour
     public void PlayerLeaveShop()
     {
         shopManagerUI.SetActive(false);
-        shopPnj.isPlayerShopping = false;
+        isPlayerShopping = false;
         player.currentEtat = Player.EtatJoueur.normal;
     }
-
-    public void ConsommablePanel()
-    {
-        consommablePanel.SetActive(true);
-        weaponsPanel.SetActive(false);
-    }
-
-    public void WeaponsPanel()
-    {
-        weaponsPanel.SetActive(true);
-        consommablePanel.SetActive(false);
-    }
-
     public void GoldViewOnShop()
     {
         goldPlayerShopView.text = inventory.goldPlayer.ToString();
     }
-
-    private void Test()
+    
+    private int GenerateRandomNumberOfConsommable()
     {
-        foreach (GameObject item in shopItems)
-        {
-            print("Le nom de l'item" + item.name);
-            
-            Text textContent = item.GetComponent<ShopItem>().textPrice.GetComponent<Text>();
-            print(textContent.text);
-           
+            numberOfConsommable = (int)Random.Range(2f, 10f);
+            print(numberOfConsommable);
+            return numberOfConsommable;
+    }
 
-        //string tempParse = item.
-        //cost = int.Parse(tempParse);
-        //print(cost + " de type " + cost.GetType());
+    private void GenerateRandomObjectInShop()
+    {
+        if (player.currentEtat == Player.EtatJoueur.shopping && shopList.Count<numberOfConsommable)
+        {
+            shopList.Insert(0, healthPotion);
         }
     }
+
+    // Fonction qui ajoute l'item de la liste à l'invitaire si il est présent dans la liste
+    //private void AddItemToInventory()
+    //{
+    //    foreach (ShopItemButton item in shopPanel)
+    //    {
+
+    //    }
+    //}
+
+    private void RemoveItemOfShopList()
+    {
+        // Fonction qui retire l'item de la liste si il n'est plus présent dans le panel
+    }
+
+    //private void Test()
+    //{
+    //    foreach (GameObject item in shopItems)
+    //    {
+    //        print("Le nom de l'item" + item.name);
+            
+    //        Text textContent = item.GetComponent<ShopItem>().textPrice.GetComponent<Text>();
+    //        print(textContent.text);
+
+    //    //string tempParse = item.
+    //    //cost = int.Parse(tempParse);
+    //    //print(cost + " de type " + cost.GetType());
+    //    }
+    //}
 }
