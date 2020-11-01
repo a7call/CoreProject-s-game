@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2623737201058003665
+--- !u!1 &4555938361381382239
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5470897830796558698}
+  - component: {fileID: 5817553745842131940}
   m_Layer: 0
   m_Name: attackPoint
   m_TagString: AttackPointPlayer
@@ -16,21 +16,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5470897830796558698
+--- !u!4 &5817553745842131940
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2623737201058003665}
+  m_GameObject: {fileID: 4555938361381382239}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1091258886180555128}
+  m_Father: {fileID: 1473940368448527350}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8487729922649270852
+--- !u!1 &7969941689199163594
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,38 +38,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1091258886180555128}
-  - component: {fileID: 160711572019895033}
-  - component: {fileID: -7950071761182630466}
+  - component: {fileID: 1473940368448527350}
+  - component: {fileID: 1831386745237014647}
+  - component: {fileID: 755900177613765140}
   m_Layer: 0
-  m_Name: Fusil Laser
+  m_Name: "Pistolet \xE0 eau"
   m_TagString: Weapon
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1091258886180555128
+--- !u!4 &1473940368448527350
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8487729922649270852}
+  m_GameObject: {fileID: 7969941689199163594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4168932, y: -2.479564, z: -6.8075624}
+  m_LocalPosition: {x: -0.58, y: -1.95, z: -6.8075624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5470897830796558698}
+  - {fileID: 5817553745842131940}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &160711572019895033
+--- !u!61 &1831386745237014647
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8487729922649270852}
+  m_GameObject: {fileID: 7969941689199163594}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -89,26 +89,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-7950071761182630466
+--- !u!114 &755900177613765140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8487729922649270852}
+  m_GameObject: {fileID: 7969941689199163594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951b2f94e81434cfa9f682bcf8f1540d, type: 3}
+  m_Script: {fileID: 11500000, guid: ef35ea606f1d3bd488f3585124cd6604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  attackPoint: {fileID: 5470897830796558698}
+  attackPoint: {fileID: 5817553745842131940}
   isAttacking: 0
-  DistanceWeaponData: {fileID: 11400000, guid: faf2b1e1b84a043a0866885c91e54d82, type: 2}
-  Proj: {fileID: 0}
-  coolingTime: 2
-  coolingDelay: 0.1
-  countMax: 50
+  DistanceWeaponData: {fileID: 11400000, guid: 28c6217ee2da54dab8d8b124b337b49a, type: 2}
+  Proj: {fileID: -7526685041804909393, guid: 8296461f0524448098bd5cf9224cfd28, type: 3}
