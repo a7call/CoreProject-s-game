@@ -7,7 +7,7 @@ public class DistanceWeapon : Weapons
     [SerializeField] protected DistanceWeaponScriptableObject DistanceWeaponData;
     protected GameObject projectile;
     [SerializeField] protected PlayerProjectiles Proj;
-    [SerializeField] protected float Dispersion;
+    protected float Dispersion;
 
     protected override void Awake()
     {
@@ -34,7 +34,7 @@ public class DistanceWeapon : Weapons
     {
         if(!isAttacking)
         {
-            float decalage = Random.Range(-Dispersion, Dispersion + 1);
+            float decalage = Random.Range(-Dispersion, Dispersion);
             isAttacking = true;
             Proj.Dispersion = decalage;
             Instantiate(projectile, attackPoint.position, Quaternion.identity);
@@ -50,6 +50,7 @@ public class DistanceWeapon : Weapons
         enemyLayer = DistanceWeaponData.enemyLayer;
         damage = DistanceWeaponData.damage;
         attackDelay = DistanceWeaponData.AttackDelay;
+        Dispersion = DistanceWeaponData.Dispersion;
     }
 
     private void OnDrawGizmosSelected()

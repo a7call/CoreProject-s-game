@@ -10,4 +10,5 @@ public class DistanceWeaponScriptableObject : ScriptableObject
     public LayerMask enemyLayer;
     public GameObject projectile;
     public float AttackDelay;
+    public float Dispersion;
 }
