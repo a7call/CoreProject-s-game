@@ -26,6 +26,7 @@ public class ColliderManagerLF : ColliderManager
         while (enemy.isTakingDot)
         {
             yield return new WaitForSeconds(timeBetweenTicks);
+            if (enemy == null) yield break;
             enemy.TakeDamage(1);
         }
     }
