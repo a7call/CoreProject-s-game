@@ -6,15 +6,20 @@ public class ColliderManager : MonoBehaviour
 {
     [SerializeField] protected float damageTimer;
     protected bool readyToHit = true;
-    private List<GameObject> Targets = new List<GameObject>();
+    protected List<GameObject> Targets = new List<GameObject>();
     ParticleSystem particules;
-
+    private void Awake()
+    {
+        
+    }
     private void Start()
     {
+        
         particules = gameObject.GetComponentInChildren<ParticleSystem>();
     }
     protected  void Update()
     {
+        if (GetComponentInParent<Weapons>().enabled == false) return;
         if (Input.GetMouseButton(0))
         {
             ActivateShoot();
@@ -63,7 +68,7 @@ public class ColliderManager : MonoBehaviour
             Targets.Remove(Col.gameObject);
         }
     }
-    private IEnumerator DamageCO()
+    protected virtual IEnumerator DamageCO()
     {
         readyToHit = false;
         

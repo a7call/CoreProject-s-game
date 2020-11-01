@@ -55,7 +55,6 @@ public class Enemy : MonoBehaviour
         }
         if (isSlowed && !alReadySlowed)
         {
-
             StartCoroutine(EnemySlowed());
         }
         healthBar.SetHealth(currentHealth);
@@ -182,6 +181,7 @@ public class Enemy : MonoBehaviour
     // Vie actuelle
     public int currentHealth;
     // Vie initial
+   
     public int maxHealth;
     // Material d'indication pour un ennemi touché
     protected Material whiteMat;
@@ -203,7 +203,15 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
-    
+
+    public bool isTakingDot;
+    protected float DotTime = 3f;
+    public IEnumerator DotOnEnemy()
+    {
+        isTakingDot = true;
+        yield return new WaitForSeconds(DotTime);
+        isTakingDot = false;
+    }
 
     // prends les dammages
     public virtual void TakeDamage(int _damage)

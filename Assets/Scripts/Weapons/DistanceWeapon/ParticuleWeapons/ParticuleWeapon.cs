@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LanceFlamme : DistanceWeapon
+public class ParticuleWeapon : DistanceWeapon
 {
     protected override void Update()
     {
