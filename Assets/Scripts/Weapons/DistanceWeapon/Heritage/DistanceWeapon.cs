@@ -13,16 +13,22 @@ public class DistanceWeapon : Weapons
     {
         base.Awake();
         SetData();
+       
         Proj = projectile.GetComponent<PlayerProjectiles>();
     }
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (isTotalDestructionModule && !damagealReadyMult)
+        {
+            damagealReadyMult = true;
+            damage *= damageMultiplier;
+        }
         GetAttackDirection();
         if (Input.GetMouseButton(0))
         {

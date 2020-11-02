@@ -13,9 +13,15 @@ public class CacWeapons : Weapons
     {
         base.Awake();
         SetData();
+       
     }
     protected virtual void Update()
     {
+        if (isTotalDestructionModule && !damagealReadyMult)
+        {
+            damagealReadyMult = true;
+            damage *= damageMultiplier;
+        }
         GetAttackDirection();
     }
     private void OnDrawGizmosSelected()

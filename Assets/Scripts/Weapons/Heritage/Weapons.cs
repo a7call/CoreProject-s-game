@@ -6,9 +6,15 @@ using UnityEngine;
 /// </summary>
 public class Weapons : MonoBehaviour
 {
+
     [HideInInspector]
     public int damage;
     [HideInInspector]
+    public static bool isTotalDestructionModule;
+    [HideInInspector]
+    public static int damageMultiplier;
+    [HideInInspector]
+    protected bool damagealReadyMult;
     public LayerMask enemyLayer;
     protected bool readyToAttack;
 
