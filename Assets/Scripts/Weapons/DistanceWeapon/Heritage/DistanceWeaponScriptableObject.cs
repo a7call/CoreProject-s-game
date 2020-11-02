@@ -11,4 +11,7 @@ public class DistanceWeaponScriptableObject : ScriptableObject
     public GameObject projectile;
     public float AttackDelay;
     public float Dispersion;
+    public int MagSize;
+    public float ReloadDelay;
+
 }

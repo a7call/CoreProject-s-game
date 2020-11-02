@@ -11,13 +11,19 @@ public class PaintBall : DistanceWeapon
 
     protected override IEnumerator Shoot()
     {
-        if (!isAttacking)
+        if (!isAttacking && !IsMagEmpty)
         {
             float decalage = Random.Range(-Dispersion, Dispersion + 1);
             i = Random.Range(0, projectiles.Length);
             ScriptProj[i].Dispersion = decalage;
             isAttacking = true;
             GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
+            BulletInMag--;
+            if (BulletInMag <= 0)
+            {
+                IsMagEmpty = true;
+                StartCoroutine(Reload());
+            }
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;
         }

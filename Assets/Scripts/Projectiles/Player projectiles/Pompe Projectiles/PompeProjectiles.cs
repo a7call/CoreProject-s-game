@@ -6,22 +6,22 @@ using UnityEngine.PlayerLoop;
 public class PompeProjectiles : PlayerProjectiles
 {
   
-    protected Vector3 directionTir;
+    protected Vector3 dirTir;
     public float angleDecalage;
 
     protected override void Awake()
     {
         base.Awake();
-        ConeShoot();
+        Cone();
     }
 
     protected override void Launch()
     {
-        transform.Translate(directionTir * speed * Time.deltaTime);
+        transform.Translate(dirTir * speed * Time.deltaTime);
+    }
+    protected void Cone()
+    {
+        dirTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
     }
 
-    protected void ConeShoot()
-    {
-        directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
-    }
 }
