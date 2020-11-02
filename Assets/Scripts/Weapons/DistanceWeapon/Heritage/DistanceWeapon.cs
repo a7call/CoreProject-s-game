@@ -91,4 +91,5 @@ public class DistanceWeapon : Weapons
         BulletInMag = MagSize;
         IsMagEmpty = false;
     }
+    
 }

@@ -82,4 +82,18 @@ public class PlayerProjectiles : MonoBehaviour
     {
         directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
     }
+
+    public static float dotTimeBetweenHits;
+    public static int dotDamage;
+
+    protected IEnumerator NuclearDotCo(Enemy enemy)
+    {
+        while (true)
+        {
+
+            yield return new WaitForSeconds(dotTimeBetweenHits);
+            if (enemy == null) yield break;
+            enemy.TakeDamage(dotDamage);
+        }
+    }
 }
