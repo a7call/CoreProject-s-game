@@ -6,13 +6,14 @@ public class DistanceWeapon : Weapons
 {
     [SerializeField] protected DistanceWeaponScriptableObject DistanceWeaponData;
     protected GameObject projectile;
-    [SerializeField] protected PlayerProjectiles Proj;
+    protected PlayerProjectiles Proj;
     protected float Dispersion;
 
     protected override void Awake()
     {
         base.Awake();
         SetData();
+        Proj = projectile.GetComponent<PlayerProjectiles>();
     }
     void Start()
     {

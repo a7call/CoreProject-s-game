@@ -5,6 +5,20 @@ using UnityEngine.PlayerLoop;
 
 public class PlayerProjectiles : MonoBehaviour
 {
+
+    // ExplosionModule
+    [HideInInspector]
+    public static bool isExplosiveAmo = false;
+    [HideInInspector]
+    public static float explosiveRadius;
+    [HideInInspector]
+    public static LayerMask hitLayer;
+    [HideInInspector]
+    public static int explosionDamage;
+
+
+
+
     protected GameObject player;
     protected GameObject weapon;
     protected Vector3 dir;
@@ -51,7 +65,16 @@ public class PlayerProjectiles : MonoBehaviour
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(weaponDamage);
+            if (isExplosiveAmo)
+            {
+                Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, hitLayer);
+                foreach (Collider2D hit in hits)
+                {
+                    hit.gameObject.GetComponent<Enemy>().TakeDamage(explosionDamage);
+                }
+            }
             Destroy(gameObject);
+           
         }
  
     }

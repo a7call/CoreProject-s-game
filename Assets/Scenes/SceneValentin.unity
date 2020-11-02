@@ -573,14 +573,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2119372095, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
-      propertyPath: m_TagString
-      value: WeaponManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 2119372095, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 101717229859328977, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.84
@@ -628,26 +620,6 @@ PrefabInstance:
     - target: {fileID: 101717229859328989, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 101717229859328991, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.019214392
-      objectReference: {fileID: 0}
-    - target: {fileID: 101717229859328991, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
-      propertyPath: m_Size.x
-      value: 0.5772815
-      objectReference: {fileID: 0}
-    - target: {fileID: 101717229859328991, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.012809277
-      objectReference: {fileID: 0}
-    - target: {fileID: 101717229859328991, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
-      propertyPath: m_Size.y
-      value: 0.71818733
-      objectReference: {fileID: 0}
-    - target: {fileID: 101717229859328991, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
@@ -1096,6 +1068,10 @@ PrefabInstance:
     - target: {fileID: 7862174263086004001, guid: e3522809079edc34b8e156404264fc46, type: 3}
       propertyPath: m_Name
       value: Extincteur
+      objectReference: {fileID: 0}
+    - target: {fileID: 7862174263086004001, guid: e3522809079edc34b8e156404264fc46, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7862174263086004012, guid: e3522809079edc34b8e156404264fc46, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1703,6 +1679,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LanceFlamme
       objectReference: {fileID: 0}
+    - target: {fileID: 6732017163860308935, guid: 72c8d18407805dd4bbca709c9e76dd16, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6732017163860308938, guid: 72c8d18407805dd4bbca709c9e76dd16, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.14
@@ -1856,6 +1836,10 @@ PrefabInstance:
     - target: {fileID: 2483530349302545666, guid: 6b0f919cc5803e945b8b748edeea9080, type: 3}
       propertyPath: m_Name
       value: Lacrimo
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483530349302545666, guid: 6b0f919cc5803e945b8b748edeea9080, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2483530349302545679, guid: 6b0f919cc5803e945b8b748edeea9080, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2094,6 +2078,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d571c2ef0189d61428ed9fbdf47619bc, type: 3}
+--- !u!1001 &9090335097499095513
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_RootOrder
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931339, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9090335097692931350, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
+      propertyPath: m_Name
+      value: ExplosiveAmoModule
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 975ce14d88b98d74a833d7fb999aff1e, type: 3}
 --- !u!1001 &9098999569827999944
 PrefabInstance:
   m_ObjectHideFlags: 0
