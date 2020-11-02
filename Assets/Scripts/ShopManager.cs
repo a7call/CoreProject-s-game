@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEditorInternal.VersionControl;
@@ -16,6 +17,12 @@ public class ShopManager : MonoBehaviour
     public ShopItemButton healthPotion;
     private int shopListIndex = 0;
     private int numberOfConsommable ;
+
+    private bool[,] tableau = new bool[3,3];
+    private int rowConsommable = 2;
+    private float initConsommablesChance = 50f;
+    private float consommablesChance;
+    private float weaponsChance = 50f;
 
     private int cost;
 
@@ -40,13 +47,19 @@ public class ShopManager : MonoBehaviour
         shopPnj = FindObjectOfType<ShopPnj>();
         inventory = FindObjectOfType<Inventory>();
         
-        GenerateRandomNumberOfConsommable();
+        //GenerateRandomNumberOfConsommable();
+
+        // On génére un tableau de false en début de jeu
+        GenerateFalseTable();
+        // On remplit un tableau aléatoirement
+        CompleteTable();
     }
 
     private void Update()
     {
         CanShop();
         OnPlayerShop();
+
 
         switch (player.currentEtat)
         {
@@ -99,18 +112,68 @@ public class ShopManager : MonoBehaviour
         goldPlayerShopView.text = inventory.goldPlayer.ToString();
     }
     
-    private int GenerateRandomNumberOfConsommable()
-    {
-            numberOfConsommable = (int)Random.Range(2f, 10f);
-            print(numberOfConsommable);
-            return numberOfConsommable;
-    }
+    //private int GenerateRandomNumberOfConsommable()
+    //{
+    //        numberOfConsommable = (int)Random.Range(1f, 3f);
+    //        print(numberOfConsommable);
+    //        return numberOfConsommable;
+    //}
 
     private void GenerateRandomObjectInShop()
     {
         if (player.currentEtat == Player.EtatJoueur.shopping && shopList.Count<numberOfConsommable)
         {
             shopList.Insert(0, healthPotion);
+        }
+    }
+
+    private void GenerateFalseTable()
+    {
+        for (int row = 0; row < tableau.GetLength(0); row++)
+        {
+            //print("Ligne " + (row+1) + " du tableau.");
+            for (int column = 0; column < tableau.GetLength(1); column++)
+            {
+                tableau[row, column] = false ;
+                //print(tableau[row, column] + ":");
+            }
+        }
+    }
+
+    private void CompleteTable()
+    {
+        for (int row = 0; row < rowConsommable ; row++)
+        {
+            print("Ligne " + (row + 1) + " du tableau.");
+            for (int column = 0; column < tableau.GetLength(1); column++)
+            {
+                tableau[row, column] = RandomBoolean.RandomBool(consommablesChance);
+
+                if (tableau[row, column] == false)
+                {
+                    consommablesChance = 1.5f * initConsommablesChance;
+                }
+                else
+                {
+                    consommablesChance = initConsommablesChance;
+                }
+
+                Debug.LogWarning(tableau[row, column] + ":");
+            }
+
+            consommablesChance = initConsommablesChance;
+  
+        }
+
+        // A moduler selon la rareté des armes
+        for (int row = rowConsommable ; row < tableau.GetLength(0); row++)
+        {
+            print("Ligne " + (row + 1) + " du tableau.");
+            for (int column = 0; column < tableau.GetLength(1); column++)
+            {
+                tableau[row, column] = RandomBoolean.RandomBool(weaponsChance);
+                Debug.Log(tableau[row, column] + ":");
+            }
         }
     }
 
