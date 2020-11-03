@@ -12,6 +12,10 @@ public class ShopManager : MonoBehaviour
     public GameObject shopManagerUI;
 
     public GameObject shopPanel;
+    public GameObject nothing;
+    public GameObject halfHp;
+    public GameObject oneHp;
+    public Transform sellButtonsParents;
 
     [SerializeField] private List<ShopItemButton> shopList = new List<ShopItemButton>();
     public ShopItemButton healthPotion;
@@ -50,7 +54,7 @@ public class ShopManager : MonoBehaviour
         //GenerateRandomNumberOfConsommable();
 
         // On génére un tableau de false en début de jeu
-        GenerateFalseTable();
+        //GenerateFalseTable();
         // On remplit un tableau aléatoirement
         CompleteTable();
     }
@@ -126,22 +130,29 @@ public class ShopManager : MonoBehaviour
             shopList.Insert(0, healthPotion);
         }
     }
-
-    private void GenerateFalseTable()
-    {
-        for (int row = 0; row < tableau.GetLength(0); row++)
-        {
-            //print("Ligne " + (row+1) + " du tableau.");
-            for (int column = 0; column < tableau.GetLength(1); column++)
-            {
-                tableau[row, column] = false ;
-                //print(tableau[row, column] + ":");
-            }
-        }
-    }
+    // Mis en commentaire car on ne l'utilise pas pour l'instant
+    //private void GenerateFalseTable()
+    //{
+    //    for (int row = 0; row < tableau.GetLength(0); row++)
+    //    {
+    //        //print("Ligne " + (row+1) + " du tableau.");
+    //        for (int column = 0; column < tableau.GetLength(1); column++)
+    //        {
+    //            tableau[row, column] = false ;
+    //            //print(tableau[row, column] + ":");
+    //        }
+    //    }
+    //}
 
     private void CompleteTable()
     {
+        // Supprime les éléments contenus par défaut
+        for (int i = 0; i < sellButtonsParents.childCount; i++)
+        {
+            Destroy(sellButtonsParents.GetChild(i).gameObject);
+        }
+
+        // Génère les consommables
         for (int row = 0; row < rowConsommable ; row++)
         {
             print("Ligne " + (row + 1) + " du tableau.");
@@ -151,10 +162,37 @@ public class ShopManager : MonoBehaviour
 
                 if (tableau[row, column] == false)
                 {
-                    consommablesChance = 1.5f * initConsommablesChance;
+                    Instantiate(nothing, sellButtonsParents);
+                    consommablesChance = 1.25f * initConsommablesChance;
                 }
                 else
                 {
+
+                    if(row==0 && column == 0)
+                    {
+                        Instantiate(halfHp, sellButtonsParents);
+                    }
+                    else if(row == 0 && column == 1)
+                    {
+                        Instantiate(halfHp, sellButtonsParents);
+                    }
+                    else if (row == 0 && column == 2)
+                    {
+                        Instantiate(oneHp, sellButtonsParents);
+                    }
+                    else if (row == 1 && column == 0)
+                    {
+                        Instantiate(halfHp, sellButtonsParents);
+                    }
+                    else if (row == 1 && column == 1)
+                    {
+                        Instantiate(halfHp, sellButtonsParents);
+                    }
+                    else if (row == 1 && column == 2)
+                    {
+                        Instantiate(oneHp, sellButtonsParents);
+                    }
+
                     consommablesChance = initConsommablesChance;
                 }
 

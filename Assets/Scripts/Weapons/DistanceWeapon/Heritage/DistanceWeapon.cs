@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DistanceWeapon : Weapons
 {
@@ -9,15 +10,19 @@ public class DistanceWeapon : Weapons
     protected PlayerProjectiles Proj;
     protected float Dispersion;
     protected bool IsMagEmpty;
-    public int BulletInMag;
+    protected int BulletInMag;
     protected float ReloadDelay;
     protected int MagSize;
+    [SerializeField] protected Text AmmoText;
+    [SerializeField] protected bool InfiniteAmmo;
 
     protected override void Awake()
     {
         base.Awake();
         SetData();
         Proj = projectile.GetComponent<PlayerProjectiles>();
+        AmmoText.gameObject.SetActive(true);
+        
     }
     void Start()
     {
@@ -27,6 +32,7 @@ public class DistanceWeapon : Weapons
     // Update is called once per frame
     protected virtual void Update()
     {
+
         if (isTotalDestructionModule && !damagealReadyMult)
         {
             damagealReadyMult = true;
@@ -42,7 +48,8 @@ public class DistanceWeapon : Weapons
         {
             StartCoroutine(Reload());
         }
-        
+
+        DisplayAmmo();
     }
 
    protected virtual IEnumerator Shoot()
@@ -58,7 +65,6 @@ public class DistanceWeapon : Weapons
             isAttacking = false;
             if (BulletInMag <= 0)
             {
-                IsMagEmpty = true;
                 StartCoroutine(Reload());
             }
         }
@@ -76,6 +82,7 @@ public class DistanceWeapon : Weapons
         ReloadDelay = DistanceWeaponData.ReloadDelay;
 
         BulletInMag = MagSize;
+        
     }
 
     private void OnDrawGizmosSelected()
@@ -86,10 +93,23 @@ public class DistanceWeapon : Weapons
 
     protected IEnumerator Reload()
     {
+        BulletInMag = 0;
         IsMagEmpty = true;
         yield return new WaitForSeconds(ReloadDelay);
         BulletInMag = MagSize;
         IsMagEmpty = false;
     }
-    
+
+    protected void DisplayAmmo()
+    {
+        if (!InfiniteAmmo)
+        {
+            AmmoText.text = BulletInMag.ToString();
+        }
+
+        else
+        {
+            AmmoText.text = "Infini";
+        }
+    }
 }
