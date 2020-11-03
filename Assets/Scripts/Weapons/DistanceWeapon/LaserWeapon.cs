@@ -11,8 +11,8 @@ public class LaserWeapon : DistanceWeapon
    [SerializeField] protected float coolingTime;
    [SerializeField] protected float coolingDelay;
    [SerializeField] protected int countMax;
+    
 
-   
 
     protected override void Update()
     {
@@ -21,6 +21,7 @@ public class LaserWeapon : DistanceWeapon
         {
             StartCoroutine(CoolDelay());
         }
+
     }
 
 
