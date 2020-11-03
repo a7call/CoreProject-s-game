@@ -4,14 +4,31 @@ using UnityEngine;
 public class NuclearExplosionModule : PassiveObjects
 {
     [SerializeField] private int explosionDamageMultiplier;
-    [SerializeField] private float nuclearDotTimer;
-    [SerializeField] private int nuclearDotDamage;
-   
+    [SerializeField] public static float nuclearDotTimer;
+    [SerializeField] public static int nuclearDotDamage;
+    [SerializeField] private int nuclearDotD;
+    [SerializeField] private float nuclearDotT;
+
+
+    private void Awake()
+    {
+        nuclearDotDamage = nuclearDotD;
+        nuclearDotTimer = nuclearDotT;
+    }
     private void Start()
     {
         ExplosionProjectile.isNuclearExplosionModule = true;
         ExplosionProjectile.explosionDamageMultiplier = explosionDamageMultiplier;
-        PlayerProjectiles.dotTimeBetweenHits = nuclearDotTimer;
-        PlayerProjectiles.dotDamage = nuclearDotDamage;
     }
+    public static IEnumerator NuclearDotCo(Enemy enemy)
+    {
+        while (true)
+        {
+            print("teest");
+            yield return new WaitForSeconds(nuclearDotTimer);
+            if (enemy == null) yield break;
+            enemy.TakeDamage(nuclearDotDamage);
+        }
+    }
+
 }

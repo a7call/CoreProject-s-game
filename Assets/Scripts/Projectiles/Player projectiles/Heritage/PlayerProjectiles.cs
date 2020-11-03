@@ -8,7 +8,9 @@ public class PlayerProjectiles : MonoBehaviour
 
     // ExplosionModule
     [HideInInspector]
-    public static bool isExplosiveAmo = false;
+    public static bool isExplosiveAmo = false; 
+    [HideInInspector]
+    public static bool isImolationModule = false;
     [HideInInspector]
     public static float explosiveRadius;
     [HideInInspector]
@@ -67,11 +69,11 @@ public class PlayerProjectiles : MonoBehaviour
             enemy.TakeDamage(weaponDamage);
             if (isExplosiveAmo)
             {
-                Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, hitLayer);
-                foreach (Collider2D hit in hits)
-                {
-                    hit.gameObject.GetComponent<Enemy>().TakeDamage(explosionDamage);
-                }
+                ExplosiveAmoModule.explosionFnc(this.gameObject);
+            }
+            if (isImolationModule)
+            {
+               CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemy));
             }
             Destroy(gameObject);
            
@@ -81,19 +83,5 @@ public class PlayerProjectiles : MonoBehaviour
     protected void ConeShoot()
     {
         directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
-    }
-
-    public static float dotTimeBetweenHits;
-    public static int dotDamage;
-
-    protected IEnumerator NuclearDotCo(Enemy enemy)
-    {
-        while (true)
-        {
-
-            yield return new WaitForSeconds(dotTimeBetweenHits);
-            if (enemy == null) yield break;
-            enemy.TakeDamage(dotDamage);
-        }
     }
 }
