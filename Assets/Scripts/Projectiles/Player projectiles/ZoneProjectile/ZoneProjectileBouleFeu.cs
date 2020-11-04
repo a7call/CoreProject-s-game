@@ -10,19 +10,14 @@ public class ZoneProjectileBouleFeu : PlayerProjectiles
     [SerializeField] protected float zoneTimer;
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+      
         if (collision.CompareTag("Enemy"))
         {
-
-            Enemy enemy = collision.GetComponent<Enemy>();
-            if (enemy == null) Destroy(gameObject);
-            enemy.TakeDamage(weaponDamage);
-            StartCoroutine(ActiveZone());
-            StartCoroutine(ZoneCo());
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            speed = 0;
-
+            CoroutineManager.Instance.StartCoroutine(ActiveZone());
+            CoroutineManager.Instance.StartCoroutine(ZoneCo());
+          
         }
+        base.OnTriggerEnter2D(collision);
 
     }
 

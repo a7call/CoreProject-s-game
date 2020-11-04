@@ -17,14 +17,13 @@ public class NuclearExplosionModule : PassiveObjects
     }
     private void Start()
     {
-        ExplosionProjectile.isNuclearExplosionModule = true;
-        ExplosionProjectile.explosionDamageMultiplier = explosionDamageMultiplier;
+        PlayerProjectiles.isNuclearExplosionModule = true;
+        PlayerProjectiles.explosionDamageMultiplier = explosionDamageMultiplier;
     }
     public static IEnumerator NuclearDotCo(Enemy enemy)
     {
         while (true)
         {
-            print("teest");
             yield return new WaitForSeconds(nuclearDotTimer);
             if (enemy == null) yield break;
             enemy.TakeDamage(nuclearDotDamage);

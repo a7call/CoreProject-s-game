@@ -11,10 +11,8 @@ public class KnockBackProjectile : PlayerProjectiles
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.rb.AddForce(dir * knockBackForce* Time.deltaTime);
-            enemy.TakeDamage(weaponDamage);
-            print("test");
-            Destroy(gameObject);
         }
+        base.OnTriggerEnter2D(collision);
 
     }
 }

@@ -5,10 +5,7 @@ using UnityEngine;
 public class ExplosionProjectile : PlayerProjectiles
 {
     [SerializeField] protected float explosionRadius;
-    public static bool isNuclearExplosionModule;
-    public static bool isAtomiqueExplosionModule;
-    public static int explosionDamageMultiplier;
-    
+
     private void Start()
     {
         if (isNuclearExplosionModule || isAtomiqueExplosionModule)
@@ -30,9 +27,7 @@ public class ExplosionProjectile : PlayerProjectiles
                 CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
             }
         }
-         
-        if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
-        Destroy(gameObject);
+        base.OnTriggerEnter2D(collision);
 
     }
 }

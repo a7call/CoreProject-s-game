@@ -5,18 +5,21 @@ using UnityEngine.PlayerLoop;
 
 public class PlayerProjectiles : MonoBehaviour
 {
+    public static bool isNuclearExplosionModule;
+    public static bool isAtomiqueExplosionModule;
+    public static int explosionDamageMultiplier;
 
     // ExplosionModule
-    [HideInInspector]
     public static bool isExplosiveAmo = false; 
-    [HideInInspector]
-    public static bool isImolationModule = false;
-    [HideInInspector]
     public static float explosiveRadius;
-    [HideInInspector]
     public static LayerMask hitLayer;
-    [HideInInspector]
     public static int explosionDamage;
+
+    //ImolationModule
+    public static bool isImolationModule = false;
+
+    //CryoModule
+    public static bool isCryoModule = false;
 
 
 
@@ -67,6 +70,10 @@ public class PlayerProjectiles : MonoBehaviour
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(weaponDamage);
+
+            
+
+            //Modules
             if (isExplosiveAmo)
             {
                 ExplosiveAmoModule.explosionFnc(this.gameObject);
@@ -75,7 +82,13 @@ public class PlayerProjectiles : MonoBehaviour
             {
                CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemy));
             }
-            Destroy(gameObject);
+            if (isCryoModule)
+            {
+                CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
+            }
+
+            if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
+            if(!gameObject.CompareTag("TraversProj")) Destroy(gameObject);
            
         }
  

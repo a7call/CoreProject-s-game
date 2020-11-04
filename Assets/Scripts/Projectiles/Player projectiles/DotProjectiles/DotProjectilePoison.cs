@@ -9,19 +9,15 @@ public class DotProjectilePoison : PlayerProjectiles
     [SerializeField] protected float poisonedTimer;
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+   
         if (collision.CompareTag("Enemy"))
         {
             
             Enemy enemy = collision.GetComponent<Enemy>();
-            if(enemy == null) Destroy(gameObject);
-            enemy.TakeDamage(weaponDamage);
-            StartCoroutine(DotTimer());
-            StartCoroutine(DotCo(enemy));
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            speed = 0;
-           
+            CoroutineManager.Instance.StartCoroutine(DotTimer());
+            CoroutineManager.Instance.StartCoroutine(DotCo(enemy));
         }
+        base.OnTriggerEnter2D(collision);
 
     }
 
@@ -33,13 +29,7 @@ public class DotProjectilePoison : PlayerProjectiles
             if (enemy != null)
             {
                 enemy.TakeDamage(weaponDamage);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
-              
+            }              
         }
       
         

@@ -7,8 +7,8 @@ public class AtomiqueExplosionModule : PassiveObjects
     [SerializeField] private int explosionDamageMultiplier;
     void Start()
     {
-        ExplosionProjectile.isAtomiqueExplosionModule = true;
-        ExplosionProjectile.explosionDamageMultiplier = explosionDamageMultiplier;
+        PlayerProjectiles.isAtomiqueExplosionModule = true;
+        PlayerProjectiles.explosionDamageMultiplier = explosionDamageMultiplier;
     }
 
 }

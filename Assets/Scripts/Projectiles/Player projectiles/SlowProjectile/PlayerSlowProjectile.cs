@@ -12,14 +12,13 @@ public class PlayerSlowProjectile : PlayerProjectiles
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(weaponDamage);
-
             if (!enemy.isSlowed)
             {
                 enemy.isSlowed = true;
                 
             }
-            Destroy(gameObject);
         }
+        base.OnTriggerEnter2D(collision);
 
     }
 }

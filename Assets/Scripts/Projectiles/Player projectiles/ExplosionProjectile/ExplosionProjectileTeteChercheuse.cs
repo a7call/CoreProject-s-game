@@ -31,9 +31,8 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
             Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
             enemyScript.TakeDamage(weaponDamage);
         }
+        base.OnTriggerEnter2D(collision);
 
-        if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
-        Destroy(gameObject);
 
     }
     private IEnumerator UpdateDirection()

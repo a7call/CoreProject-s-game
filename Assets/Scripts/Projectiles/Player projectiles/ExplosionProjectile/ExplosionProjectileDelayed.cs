@@ -9,17 +9,15 @@ public class ExplosionProjectileDelayed : PlayerProjectiles
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-
+        
         Collider2D[] ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
-        speed = 0;
-        transform.position = collision.transform.position;
         foreach (Collider2D enemy in ennemies)
         {
-            StartCoroutine(DelayedExplosion(enemy));
+            CoroutineManager.Instance.StartCoroutine(DelayedExplosion(enemy));
         }
 
         if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
-       
+        base.OnTriggerEnter2D(collision);
 
     }
 
@@ -28,6 +26,9 @@ public class ExplosionProjectileDelayed : PlayerProjectiles
         yield return new WaitForSeconds(explosionDelay);
         Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
         enemyScript.TakeDamage(weaponDamage);
-        Destroy(gameObject);
+        if (isNuclearExplosionModule)
+        {
+            CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
+        }
     }
 }
