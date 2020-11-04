@@ -42,6 +42,15 @@ public class Weapons : MonoBehaviour
         attackPoint.position = new Vector2(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
     }
 
+    protected virtual void Update()
+    {
+        if (isTotalDestructionModule && !damagealReadyMult)
+        {
+            damagealReadyMult = true;
+            damage *= damageMultiplier;
+        }
+    }
+
 
   
 

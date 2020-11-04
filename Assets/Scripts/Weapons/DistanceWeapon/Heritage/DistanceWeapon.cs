@@ -33,14 +33,10 @@ public class DistanceWeapon : Weapons
     }
 
     // Update is called once per frame
-    protected virtual void Update()
+    protected override void Update()
     {
 
-        if (isTotalDestructionModule && !damagealReadyMult)
-        {
-            damagealReadyMult = true;
-            damage *= damageMultiplier;
-        }
+        base.Update();
         GetAttackDirection();
         if (Input.GetMouseButton(0))
         {
