@@ -14,8 +14,8 @@ public class Pompe : DistanceWeapon
 
     protected override IEnumerator Shoot()
     {
-        
-        if (!isAttacking && !IsMagEmpty)
+
+        if (!isAttacking && BulletInMag > 0 && !IsReloading)
         {
             isAttacking = true;
             float decalage = angleTir / (projectiles.Length - 1);
@@ -30,7 +30,6 @@ public class Pompe : DistanceWeapon
             BulletInMag--;
             if (BulletInMag <= 0)
             {
-                IsMagEmpty = true;
                 StartCoroutine(Reload());
             }
             yield return new WaitForSeconds(attackDelay);
