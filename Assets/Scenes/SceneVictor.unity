@@ -1428,7 +1428,7 @@ GameObject:
   - component: {fileID: 1211704012}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: PlayerCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1606,11 +1606,11 @@ GameObject:
   - component: {fileID: 1582655905}
   m_Layer: 5
   m_Name: AmmoText
-  m_TagString: Untagged
+  m_TagString: AmmoText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1582655904
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1627,8 +1627,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 263, y: 149}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 788, y: -444}
+  m_SizeDelta: {x: 267.00195, y: 144.4476}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1582655905
 MonoBehaviour:
@@ -1652,12 +1652,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_MinSize: 6
+    m_MaxSize: 60
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

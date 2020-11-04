@@ -13,20 +13,23 @@ public class DistanceWeapon : Weapons
     protected int BulletInMag;
     protected float ReloadDelay;
     protected int MagSize;
-    [SerializeField] protected Text AmmoText;
+    protected Text AmmoText;
     [SerializeField] protected bool InfiniteAmmo;
+  
 
     protected override void Awake()
     {
         base.Awake();
         SetData();
+        AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
         Proj = projectile.GetComponent<PlayerProjectiles>();
-        AmmoText.gameObject.SetActive(true);
-        
+
+
+
     }
     void Start()
     {
-       
+        AmmoText.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
