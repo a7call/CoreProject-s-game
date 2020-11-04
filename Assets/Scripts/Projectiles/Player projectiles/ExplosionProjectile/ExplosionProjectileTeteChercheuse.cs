@@ -7,7 +7,7 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
     [SerializeField] protected float explosionRadius;
     [SerializeField] protected float directionUpdateTime;
     [SerializeField] protected float detectionRadius;
-    [SerializeField] protected GameObject lockedEnemy;
+    protected GameObject lockedEnemy;
 
 
     private bool isDirUpdate;
@@ -38,7 +38,7 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
     private IEnumerator UpdateDirection()
     {
         isDirUpdate = true;
-        dir = (lockedEnemy.transform.position - transform.position).normalized;
+        directionTir = (lockedEnemy.transform.position - transform.position).normalized;
         yield return new WaitForSeconds(directionUpdateTime);
 
     }
@@ -47,7 +47,7 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
     {
         Collider2D enemy = Physics2D.OverlapCircle(transform.position, detectionRadius, weaponLayer);
 
-        if (enemy.gameObject != null)
+        if (enemy != null)
         {
             isEnemyLocked = true;
             lockedEnemy = enemy.gameObject;

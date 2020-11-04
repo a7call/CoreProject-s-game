@@ -21,6 +21,10 @@ public class PlayerProjectiles : MonoBehaviour
     //CryoModule
     public static bool isCryoModule = false;
 
+    //InteligentAmoModule
+    public static bool isInteligentAmmoModule = false;
+
+
 
 
 
@@ -54,7 +58,12 @@ public class PlayerProjectiles : MonoBehaviour
     protected virtual void Update()
     {
         Launch();
+        if (isInteligentAmmoModule)
+        {
+           CoroutineManager.Instance.StartCoroutine(getNewDir(this.gameObject));
+        }
     }
+   
 
     protected virtual void Launch()
     {
@@ -96,5 +105,26 @@ public class PlayerProjectiles : MonoBehaviour
     protected void ConeShoot()
     {
         directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
+    }
+
+
+    //IntelligentAmoModule
+    public bool isDirUpdat;
+    public IEnumerator getNewDir(GameObject proj)
+    {
+        if (InteligentAmmoModule.LockEnemy(proj) != null && !isDirUpdat)
+        {
+
+            isDirUpdat = true;
+            directionTir = (InteligentAmmoModule.LockEnemy(proj).transform.position - proj.transform.position).normalized;
+            yield return new WaitForSeconds(0.5f);
+            isDirUpdat = false;
+        }
+        else
+        {
+            yield break;
+        }
+
+
     }
 }
