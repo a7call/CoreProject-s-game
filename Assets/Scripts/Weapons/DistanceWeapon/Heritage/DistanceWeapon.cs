@@ -9,19 +9,21 @@ public class DistanceWeapon : Weapons
     protected GameObject projectile;
     protected PlayerProjectiles Proj;
     protected float Dispersion;
-    protected bool IsMagEmpty;
+    protected bool IsReloading;
     protected int BulletInMag;
     protected float ReloadDelay;
     protected int MagSize;
     protected Text AmmoText;
+    protected Text AmmoStockText;
     [SerializeField] protected bool InfiniteAmmo;
-  
+    [SerializeField] int AmmoStock;
 
     protected override void Awake()
     {
         base.Awake();
         SetData();
         AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
+        AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
         Proj = projectile.GetComponent<PlayerProjectiles>();
 
 
@@ -29,7 +31,8 @@ public class DistanceWeapon : Weapons
     }
     void Start()
     {
-        AmmoText.gameObject.SetActive(true);
+        //AmmoText.gameObject.SetActive(true);
+        //AmmoStockText.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -53,7 +56,7 @@ public class DistanceWeapon : Weapons
 
    protected virtual IEnumerator Shoot()
     {
-        if(!isAttacking && !IsMagEmpty)
+        if(!isAttacking && BulletInMag > 0 && !IsReloading)
         {
             float decalage = Random.Range(-Dispersion, Dispersion);
             isAttacking = true;
@@ -92,11 +95,22 @@ public class DistanceWeapon : Weapons
 
     protected IEnumerator Reload()
     {
-        BulletInMag = 0;
-        IsMagEmpty = true;
+        IsReloading = true;
         yield return new WaitForSeconds(ReloadDelay);
-        BulletInMag = MagSize;
-        IsMagEmpty = false;
+        if (AmmoStock + BulletInMag >= MagSize)
+        {
+            AmmoStock = AmmoStock + BulletInMag;
+            AmmoStock = AmmoStock - MagSize;
+            BulletInMag = MagSize;   
+        }
+        else
+        {
+            AmmoStock = AmmoStock + BulletInMag;
+            BulletInMag = AmmoStock;
+            AmmoStock = AmmoStock - BulletInMag;
+        }
+
+        IsReloading = false;
     }
 
     protected void DisplayAmmo()
@@ -104,11 +118,13 @@ public class DistanceWeapon : Weapons
         if (!InfiniteAmmo)
         {
             AmmoText.text = BulletInMag.ToString();
+            AmmoStockText.text = AmmoStock.ToString();
         }
 
         else
         {
             AmmoText.text = "Infini";
+            AmmoStockText.text = "Infini";
         }
     }
 }
