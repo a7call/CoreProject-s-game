@@ -11,17 +11,13 @@ public class ShopManager : MonoBehaviour
     // Création d'un gameObject qui gère le shop
     public GameObject shopManagerUI;
 
-    public GameObject shopPanel;
+    // Déclaration de tous les objets potentiellement présents dans le shop
     public GameObject nothing;
     public GameObject halfHp;
     public GameObject oneHp;
     public Transform sellButtonsParents;
 
-    [SerializeField] private List<ShopItemButton> shopList = new List<ShopItemButton>();
-    public ShopItemButton healthPotion;
-    private int shopListIndex = 0;
-    private int numberOfConsommable ;
-
+    // Variables qui permettent de gérer le tableau du shop
     private bool[,] tableau = new bool[3,3];
     private int rowConsommable = 2;
     private float initConsommablesChance = 50f;
@@ -30,8 +26,10 @@ public class ShopManager : MonoBehaviour
 
     private int cost;
 
+    // Variable de type Text UI qui correspond à l'argent du joueur
     public Text goldPlayerShopView;
 
+    // Variable pour récuperer les données du joueur est du ShopPNJ
     private Player player;
     private ShopPnj shopPnj;
 
@@ -50,8 +48,6 @@ public class ShopManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         shopPnj = FindObjectOfType<ShopPnj>();
         inventory = FindObjectOfType<Inventory>();
-        
-        //GenerateRandomNumberOfConsommable();
 
         // On génére un tableau de false en début de jeu
         //GenerateFalseTable();
@@ -71,13 +67,12 @@ public class ShopManager : MonoBehaviour
                 break;
 
             case Player.EtatJoueur.shopping:
-                //Definir tout ce qu'on veut faire dedans
-                GenerateRandomObjectInShop();
                 GoldViewOnShop();
                 break;
         }
     }
 
+    // Méthode pour savoir si le joueur est en range d'ouvrir le shop
     private void CanShop()
     {
         if (Vector3.Distance(shopPnj.shopPnjTransform.position, player.transform.position) <= distanceToShop) isInRange = true;
@@ -99,37 +94,39 @@ public class ShopManager : MonoBehaviour
         {
             shopManagerUI.SetActive(true);
             player.currentEtat = Player.EtatJoueur.shopping;
-            shopPanel.SetActive(true);
         }
     }
 
     // Méthode pour désactiver le shop
-    // Déclarer en public car on l'associe au button
+    // Déclarer en public car on l'instancie à l'aide d'un OnClick sur le button (de ce fait, elle n'est pas appellée dans le Update)
     public void PlayerLeaveShop()
     {
         shopManagerUI.SetActive(false);
         isPlayerShopping = false;
         player.currentEtat = Player.EtatJoueur.normal;
     }
+
+    // Permet de montrer dans le shop l'argent que possède le jour
     public void GoldViewOnShop()
     {
         goldPlayerShopView.text = inventory.goldPlayer.ToString();
     }
-    
-    //private int GenerateRandomNumberOfConsommable()
+
+    // On appelle la fonction en appuyant sur le button
+    //public void BuyAnItem()
     //{
-    //        numberOfConsommable = (int)Random.Range(1f, 3f);
-    //        print(numberOfConsommable);
-    //        return numberOfConsommable;
+    //    Text A = gameObject.GetComponent<ShopItem>().textPrice.GetComponent<Text>();
+    //    string tempParse = A;
+    //    cost = int.Parse(tempParse);
+    //    print(cost + " de type " + cost.GetType());
+
+
+    //    if (inventory.goldPlayer >= )
+    //    {
+
+    //    }
     //}
 
-    private void GenerateRandomObjectInShop()
-    {
-        if (player.currentEtat == Player.EtatJoueur.shopping && shopList.Count<numberOfConsommable)
-        {
-            shopList.Insert(0, healthPotion);
-        }
-    }
     // Mis en commentaire car on ne l'utilise pas pour l'instant
     //private void GenerateFalseTable()
     //{

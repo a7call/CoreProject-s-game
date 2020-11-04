@@ -8,6 +8,6 @@ public class ShopItemButton : ScriptableObject
 {
     public string itemName;
     public string itemTextName;
-    public string itemTextPrice;
+    public int itemPrice;
     public Sprite itemImageObject;
 }

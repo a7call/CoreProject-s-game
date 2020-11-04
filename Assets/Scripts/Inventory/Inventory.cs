@@ -5,10 +5,11 @@ using UnityEngine.UIElements;
 
 public class Inventory : MonoBehaviour
 {
-
+    // L'argent que possède le joueur
     public int goldPlayer;
     private int amountToAdd = 20;
 
+    public List<GameObject> itemInventory = new List<GameObject>();
 
     private void Start()
     {
