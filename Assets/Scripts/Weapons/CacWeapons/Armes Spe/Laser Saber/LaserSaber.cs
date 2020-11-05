@@ -16,7 +16,7 @@ public class LaserSaber : CacWeapons
     protected override void Update()
     {
         base.Update();
-        if( Input.GetKeyDown(KeyCode.R) && readyToDeflect)
+        if( Input.GetKeyDown(KeyCode.P) && readyToDeflect)
         {
             StartCoroutine(DeflectProjectils());
         }
@@ -25,12 +25,10 @@ public class LaserSaber : CacWeapons
 
     private IEnumerator DeflectProjectils()
     {
-        Debug.LogWarning("Deflecting");
         readyToDeflect = false;
         readyToAttack = false;
         coll.enabled = true;
         yield return new WaitForSeconds(deflectTime);
-        Debug.LogWarning(" no more Deflecting");
         coll.enabled = false;
         readyToAttack = true;
         yield return new WaitForSeconds(deflectCD);

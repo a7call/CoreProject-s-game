@@ -7,22 +7,36 @@ using UnityEngine;
 /// </summary>
 public class CacWeapons : Weapons
 {
+
+    public static bool isAntiEmeuteModule;
+    public static float knockBackForceMultiplier;
+    private bool alreadyMultiplied;
+
     [SerializeField] protected CaCWeaponScriptableObject WeaponData;
-    
+    protected float knockBackForce;
+    protected GameObject player;
+    protected Vector2 dir;
     protected override void Awake()
     {
         base.Awake();
+        player = GameObject.FindGameObjectWithTag("Player");
         SetData();
        
     }
-    protected virtual void Update()
+    protected override void Update()
     {
-        if (isTotalDestructionModule && !damagealReadyMult)
+        if(isAntiEmeuteModule && !alreadyMultiplied)
         {
-            damagealReadyMult = true;
-            damage *= damageMultiplier;
+            knockBackForce *= knockBackForceMultiplier;
+            alreadyMultiplied = true;
         }
+        base.Update();
         GetAttackDirection();
+        dir = (attackPoint.position - player.transform.position).normalized;
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(Attack());
+        }
     }
     private void OnDrawGizmosSelected()
     {
@@ -37,6 +51,7 @@ public class CacWeapons : Weapons
         attackRadius = WeaponData.attackRadius;
         enemyLayer = WeaponData.enemyLayer;
         damage = WeaponData.damage;
+        knockBackForce = WeaponData.knockBackForce;
         attackDelay = WeaponData.AttackDelay;
     }
 
@@ -50,6 +65,8 @@ public class CacWeapons : Weapons
             foreach (Collider2D enemy in enemyHit)
             {
                 enemy.GetComponent<Enemy>().TakeDamage(damage);
+                print(dir);
+                enemy.GetComponent<Rigidbody2D>().AddForce(dir * knockBackForce * Time.deltaTime);
             }
 
             yield return new WaitForSeconds(attackDelay);

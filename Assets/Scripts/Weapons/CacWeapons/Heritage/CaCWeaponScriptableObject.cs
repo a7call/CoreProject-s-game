@@ -10,4 +10,5 @@ public class CaCWeaponScriptableObject : ScriptableObject
     public LayerMask enemyLayer;
     public float attackRadius;
     public float AttackDelay;
+    public float knockBackForce;
 }
