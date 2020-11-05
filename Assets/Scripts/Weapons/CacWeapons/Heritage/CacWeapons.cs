@@ -17,6 +17,16 @@ public class CacWeapons : Weapons
     protected float knockBackTime;
     protected GameObject player;
     protected Vector2 dir;
+
+    //FuryModule
+    [HideInInspector]
+    protected bool CadenceAlreadyUp = false;
+    [HideInInspector]
+    public static bool isFuryModule;
+    [HideInInspector]
+    public static int CadenceMultiplier;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,13 +41,22 @@ public class CacWeapons : Weapons
             knockBackForce *= knockBackForceMultiplier;
             alreadyMultiplied = true;
         }
+
+        if (isFuryModule && !CadenceAlreadyUp)
+        {
+            CadenceAlreadyUp = true;
+            attackDelay /= CadenceMultiplier;
+        }
+
         base.Update();
         GetAttackDirection();
         dir = (attackPoint.position - player.transform.position).normalized;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             StartCoroutine(Attack());
         }
+
+        
     }
     private void OnDrawGizmosSelected()
     {

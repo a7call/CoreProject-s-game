@@ -18,6 +18,25 @@ public class DistanceWeapon : Weapons
     [SerializeField] protected bool InfiniteAmmo;
     [SerializeField] int AmmoStock;
 
+    //CanonRapideModule
+    [HideInInspector]
+    protected bool CadenceAlreadyUp = false;
+    [HideInInspector]
+    public static bool isCanonRapideModule;
+    [HideInInspector]
+    public static int CadenceMultiplier;
+
+    //PrecisionModule
+    [HideInInspector]
+    protected bool PrecisionAlreadyUp = false;
+    [HideInInspector]
+    public static bool isPrecisionModule;
+    [HideInInspector]
+    public static int PrecisionMultiplier;
+
+    
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -46,12 +65,26 @@ public class DistanceWeapon : Weapons
            StartCoroutine(Shoot());
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && AmmoStock != 0)
         {
             StartCoroutine(Reload());
         }
 
         DisplayAmmo();
+
+        if (isCanonRapideModule && !CadenceAlreadyUp)
+        {
+            CadenceAlreadyUp = true;
+            attackDelay /= CadenceMultiplier;
+        }
+
+        if (isPrecisionModule && !PrecisionAlreadyUp)
+        {
+            PrecisionAlreadyUp = true;
+            Dispersion /= PrecisionMultiplier;
+        }
+
+        
     }
 
    protected virtual IEnumerator Shoot()
