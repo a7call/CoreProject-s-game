@@ -5,9 +5,12 @@ using UnityEngine;
 public class AntiEmeuteModule : PassiveObjects
 {
     [SerializeField] private float knockBackForceM;
+  
     void Start()
     {
         CacWeapons.isAntiEmeuteModule = true;
         CacWeapons.knockBackForceMultiplier = knockBackForceM;
     }
+
+   
 }

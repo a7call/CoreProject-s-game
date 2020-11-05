@@ -14,6 +14,7 @@ public class CacWeapons : Weapons
 
     [SerializeField] protected CaCWeaponScriptableObject WeaponData;
     protected float knockBackForce;
+    protected float knockBackTime;
     protected GameObject player;
     protected Vector2 dir;
     protected override void Awake()
@@ -53,6 +54,7 @@ public class CacWeapons : Weapons
         damage = WeaponData.damage;
         knockBackForce = WeaponData.knockBackForce;
         attackDelay = WeaponData.AttackDelay;
+        knockBackTime = WeaponData.knockBackTime;
     }
 
     protected virtual IEnumerator Attack()
@@ -64,14 +66,32 @@ public class CacWeapons : Weapons
 
             foreach (Collider2D enemy in enemyHit)
             {
-                enemy.GetComponent<Enemy>().TakeDamage(damage);
-                print(dir);
-                enemy.GetComponent<Rigidbody2D>().AddForce(dir * knockBackForce * Time.deltaTime);
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.TakeDamage(damage);
+                enemyScript.rb.isKinematic = false;
+                enemyScript.rb.AddForce(dir * knockBackForce);
+                StartCoroutine(KnockCo(enemyScript));
             }
 
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;
         }
         
+    }
+
+    
+
+    private IEnumerator KnockCo(Enemy enemy)
+    {
+        if (enemy != null)
+        {
+            enemy.currentState = Enemy.State.KnockedBack;
+            yield return new WaitForSeconds(knockBackTime);
+            if (enemy == null) yield break;
+            enemy.currentState = Enemy.State.Attacking;
+            if (enemy == null) yield break;
+            enemy.rb.isKinematic = false;
+        }
+
     }
 }

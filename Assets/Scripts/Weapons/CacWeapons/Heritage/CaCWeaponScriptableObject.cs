@@ -11,4 +11,5 @@ public class CaCWeaponScriptableObject : ScriptableObject
     public float attackRadius;
     public float AttackDelay;
     public float knockBackForce;
+    public float knockBackTime;
 }
