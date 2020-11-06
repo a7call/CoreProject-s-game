@@ -21,11 +21,24 @@ public class Projectile : MonoBehaviour
     protected float distance;
 
     [SerializeField] public float ActiveTime;
-    
+    GameObject[] enemies;
     protected virtual void Awake()
     {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
         //Get player reference;
-       target = GameObject.FindGameObjectWithTag("Player").transform;
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");        
+        foreach(Transform child in target)
+        {
+          if(child.GetComponent<BoxCollider2D>() != null)
+            {
+                Physics2D.IgnoreCollision(child.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            }
+        }
+        foreach (GameObject enemy in enemies)
+        {
+            Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
+      
     }
     protected virtual void Update()
     {
@@ -51,8 +64,6 @@ public class Projectile : MonoBehaviour
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Weapon") || collision.CompareTag("WeaponManager")) return;
-        if (collision.CompareTag("Enemy")) return;
         Destroy(gameObject);
     }
 }
