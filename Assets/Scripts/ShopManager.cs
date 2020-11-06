@@ -150,6 +150,8 @@ public class ShopManager : MonoBehaviour
         }
 
         // Génère les consommables
+        // Si le tableau est vide de base, on s'assure d'au moins donner le premier objet
+        int count = 0;
         for (int row = 0; row < rowConsommable ; row++)
         {
             print("Ligne " + (row + 1) + " du tableau.");
@@ -161,10 +163,10 @@ public class ShopManager : MonoBehaviour
                 {
                     Instantiate(nothing, sellButtonsParents);
                     consommablesChance = 1.25f * initConsommablesChance;
+                    count++;
                 }
                 else
                 {
-
                     if(row==0 && column == 0)
                     {
                         Instantiate(halfHp, sellButtonsParents);
@@ -199,6 +201,14 @@ public class ShopManager : MonoBehaviour
             consommablesChance = initConsommablesChance;
   
         }
+
+        if (count==(rowConsommable * tableau.GetLength(1)))
+        {
+            print("A");
+            Instantiate(halfHp, sellButtonsParents);
+        }
+
+        
 
         // A moduler selon la rareté des armes
         for (int row = rowConsommable ; row < tableau.GetLength(0); row++)
