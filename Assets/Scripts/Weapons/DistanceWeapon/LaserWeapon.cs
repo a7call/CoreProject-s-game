@@ -30,7 +30,7 @@ public class LaserWeapon : DistanceWeapon
         
         if (!isAttacking && !IsToHot)
         {
-            //yield return new WaitForSeconds(LoadingDelay);
+            
             isAttacking = true;
             Instantiate(projectile, attackPoint.position, Quaternion.identity);
             count++;
