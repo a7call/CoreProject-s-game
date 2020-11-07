@@ -410,6 +410,7 @@ MonoBehaviour:
   wayPoints:
   - {fileID: 0}
   - {fileID: 0}
+  isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -418,6 +419,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   healthBarGFX: {fileID: 3612759243928439222}
   timeBeforeDesactive: 2
+  isTakingDot: 0
   CacDatas: {fileID: 11400000, guid: f6eefc7057f2fe245a62d819c9b6c619, type: 2}
   attackPoint: {fileID: 3612759243388555237}
 --- !u!61 &-1355802768155341345
@@ -444,7 +446,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
 --- !u!1 &3612759245341375533
 GameObject:

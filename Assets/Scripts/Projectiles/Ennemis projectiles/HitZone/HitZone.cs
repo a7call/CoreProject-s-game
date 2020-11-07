@@ -8,12 +8,13 @@ public class HitZone : MonoBehaviour
     [SerializeField] float timeIntervale;
     [SerializeField] float zoneRadius;
     private int n = 0;
-
+    private PlayerHealth playerHealth;
     //[SerializeField] protected GameObject HitZoneGO;
 
     private void Awake()
     {
         StartCoroutine(hitZone());
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
 
@@ -32,9 +33,9 @@ public class HitZone : MonoBehaviour
             {
                 if (h.CompareTag("Player"))
                 {
-                    print("test");
+                    playerHealth.TakeDamage(20);
                 }
-                // TakeDamage();
+               
 
             }
             n++;

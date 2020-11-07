@@ -12,15 +12,17 @@ public class Laser : Projectile
     [SerializeField] protected float ShootDelay;
     [SerializeField] protected LayerMask HitLayer;
     //[SerializeField] protected GameObject ennemy;
+    private PlayerHealth playerHealth;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerHealth = FindObjectOfType<PlayerHealth>();
         GetDirection();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         StartCoroutine(OkToShoot());
 
@@ -33,7 +35,7 @@ public class Laser : Projectile
             Debug.DrawRay(transform.position, dir * 10, Color.red);
             if (hit.collider != null)
             {
-                print("test");
+                playerHealth.TakeDamage(20);
             }
            
 
