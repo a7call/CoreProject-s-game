@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4319916844987548269}
   - component: {fileID: 2157235090676625964}
   - component: {fileID: 932678859474061154}
+  - component: {fileID: 1456050647}
   m_Layer: 9
   m_Name: Bubble360_2
   m_TagString: Enemy
@@ -153,7 +154,7 @@ MonoBehaviour:
   moveSpeed: 0
   wayPoints:
   - {fileID: 0}
-  - {fileID: 0}
+  isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -162,13 +163,39 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4319916844987548269}
   healthBarGFX: {fileID: 4861770152723950919}
   timeBeforeDesactive: 0
-  DistanceData: {fileID: 0}
+  isTakingDot: 0
+  DistanceData: {fileID: 11400000, guid: 5298eb01c86297643a86ab9827419b9c, type: 2}
   isShooting: 0
   isReadytoShoot: 1
   rayon: {fileID: 6328469197216230427, guid: 2dc98f65b7ecc9949930c2f519fe5273, type: 3}
-  differentRadius: []
   timeBetweenTwoShots: 0.5
   differentRadius: []
+--- !u!61 &1456050647
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2283266578544582819}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.022714943, y: 0.01703608}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.45439953, y: 0.44304204}
+  m_EdgeRadius: 0
 --- !u!1 &2299002075484899519
 GameObject:
   m_ObjectHideFlags: 0
