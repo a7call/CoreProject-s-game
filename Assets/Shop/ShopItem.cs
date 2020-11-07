@@ -14,8 +14,6 @@ public class ShopItem : MonoBehaviour
     private Inventory inventory;
     private ShopManager shopManager;
 
-    private bool canBuyItem = true;
-
     private void Start()
     {
         nameObject = shopItemButton.name;
@@ -27,18 +25,38 @@ public class ShopItem : MonoBehaviour
         shopManager = FindObjectOfType<ShopManager>();
     }
 
+    private void Update()
+    {
+        SetButtonIteractible();
+    }
+
+    private void SetButtonIteractible()
+    {
+        Button button = gameObject.GetComponent<Button>();
+
+        if (inventory.goldPlayer >= shopItemButton.itemPrice)
+        {
+            button.interactable = true;
+        }
+        else
+        {
+            button.interactable = false;
+        }
+    }
+
     public void BuyItem()
     {
-        if (inventory.goldPlayer >= shopItemButton.itemPrice && canBuyItem)
+        if (inventory.goldPlayer >= shopItemButton.itemPrice)
         {
-            canBuyItem = false;
             inventory.goldPlayer -= shopItemButton.itemPrice;
+            print("La pos du button à détruire" + gameObject.transform);
             // On enlève le button du shop
+            // Voir comment récupérer la position du boutton sur lequel on clique
+            Instantiate(shopManager.oneHp, gameObject.transform);
             gameObject.SetActive(false);
             // On ajoute l'item à l'inventaire
             inventory.itemInventory.Add(gameObject);
             // On rajouter un boutton nothing
-            Instantiate(shopManager.nothing, shopManager.sellButtonsParents);
             Debug.Log("A acheté l'item, donc celui-ci disparait du shop");
         }
         else

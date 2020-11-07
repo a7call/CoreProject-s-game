@@ -164,10 +164,10 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
-
                     if(row==0 && column == 0)
                     {
                         Instantiate(halfHp, sellButtonsParents);
+                        
                     }
                     else if(row == 0 && column == 1)
                     {
@@ -211,6 +211,7 @@ public class ShopManager : MonoBehaviour
             }
         }
     }
+
 
     // Fonction qui ajoute l'item de la liste à l'invitaire si il est présent dans la liste
     //private void AddItemToInventory()
