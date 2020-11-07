@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerMouvement : Player
 {
 
+    public static bool isModuleInertie;
+
     private Vector2 mouvement;
 
     //Changement de velocity de privée à public
@@ -141,6 +143,7 @@ public class PlayerMouvement : Player
             GetComponent<BoxCollider2D>().enabled = false;
             rb.AddForce(dir * dashForce*Time.deltaTime, ForceMode2D.Impulse);
             yield return new WaitForSeconds(DashDuration);
+            if (isModuleInertie) CoroutineManager.Instance.StartCoroutine(ModuleInertie.InertieCo());
             isDashing = false;
             GetComponent<BoxCollider2D>().enabled = true;
         }
