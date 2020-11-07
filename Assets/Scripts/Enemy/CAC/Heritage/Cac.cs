@@ -17,9 +17,10 @@ using UnityEngine;
 public class Cac : Enemy
 {
     [SerializeField] protected CacScriptableObject CacDatas;
+
    
 
-   // Set data du scriptable object Type1Data
+    // Set data du scriptable object Type1Data
     protected virtual void SetData()
     {
         attackRange = CacDatas.attackRange;
@@ -33,7 +34,8 @@ public class Cac : Enemy
         whiteMat = CacDatas.whiteMat;
         defaultMat = CacDatas.defaultMat;
     }
-    
+
+
 
     // Mouvement
 

@@ -128,7 +128,9 @@ public class Distance : Enemy
     // Instansiate projectiles
     protected virtual void Shoot()
     {
-        GameObject.Instantiate(projetile, transform.position, Quaternion.identity);
+        
+        Instantiate(projetile, transform.position, Quaternion.identity);
+        
     }
 
 

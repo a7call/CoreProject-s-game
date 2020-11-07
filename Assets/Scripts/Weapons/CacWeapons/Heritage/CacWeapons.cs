@@ -7,22 +7,71 @@ using UnityEngine;
 /// </summary>
 public class CacWeapons : Weapons
 {
+
+    public static bool isAntiEmeuteModule;
+    public static float knockBackForceMultiplier;
+    private bool alreadyMultiplied;
+
     [SerializeField] protected CaCWeaponScriptableObject WeaponData;
-    
+    protected float knockBackForce;
+    protected float knockBackTime;
+    protected GameObject player;
+    protected Vector2 dir;
+
+    //FuryModule
+    [HideInInspector]
+    protected bool CadenceAlreadyUp = false;
+    [HideInInspector]
+    public static bool isFuryModule;
+    [HideInInspector]
+    public static int CadenceMultiplier;
+
+    //UpRangeModule
+    [HideInInspector]
+    protected bool isRangeAlreadyUp = false;
+    [HideInInspector]
+    public static bool isUpRangeCacModule;
+    [HideInInspector]
+    public static float RangeMultiplier;
+
+
     protected override void Awake()
     {
         base.Awake();
+        player = GameObject.FindGameObjectWithTag("Player");
         SetData();
        
     }
-    protected virtual void Update()
+    protected override void Update()
     {
-        if (isTotalDestructionModule && !damagealReadyMult)
+        if(isAntiEmeuteModule && !alreadyMultiplied)
         {
-            damagealReadyMult = true;
-            damage *= damageMultiplier;
+            knockBackForce *= knockBackForceMultiplier;
+            alreadyMultiplied = true;
         }
+
+        if (isFuryModule && !CadenceAlreadyUp)
+        {
+            CadenceAlreadyUp = true;
+            attackDelay /= CadenceMultiplier;
+        }
+
+        if (isUpRangeCacModule && !isRangeAlreadyUp)
+        {
+            isRangeAlreadyUp = true;
+            attackRadius *= RangeMultiplier;
+        }
+
+
+        base.Update();
         GetAttackDirection();
+        dir = (attackPoint.position - player.transform.position).normalized;
+        if (Input.GetMouseButton(0))
+        {
+            StartCoroutine(Attack());
+        }
+
+        
     }
     private void OnDrawGizmosSelected()
     {
@@ -37,7 +86,9 @@ public class CacWeapons : Weapons
         attackRadius = WeaponData.attackRadius;
         enemyLayer = WeaponData.enemyLayer;
         damage = WeaponData.damage;
+        knockBackForce = WeaponData.knockBackForce;
         attackDelay = WeaponData.AttackDelay;
+        knockBackTime = WeaponData.knockBackTime;
     }
 
     protected virtual IEnumerator Attack()
@@ -49,12 +100,32 @@ public class CacWeapons : Weapons
 
             foreach (Collider2D enemy in enemyHit)
             {
-                enemy.GetComponent<Enemy>().TakeDamage(damage);
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.TakeDamage(damage);
+                enemyScript.rb.isKinematic = false;
+                enemyScript.rb.AddForce(dir * knockBackForce);
+                StartCoroutine(KnockCo(enemyScript));
             }
 
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;
         }
         
+    }
+
+    
+
+    private IEnumerator KnockCo(Enemy enemy)
+    {
+        if (enemy != null)
+        {
+            enemy.currentState = Enemy.State.KnockedBack;
+            yield return new WaitForSeconds(knockBackTime);
+            if (enemy == null) yield break;
+            enemy.currentState = Enemy.State.Attacking;
+            if (enemy == null) yield break;
+            enemy.rb.isKinematic = false;
+        }
+
     }
 }

@@ -43,7 +43,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -72,7 +72,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerProjectileData: {fileID: 11400000, guid: 47731c257b89cc045a6507bc0f040780, type: 2}
-  knockBackForce: 100000
+  Dispersion: 0
+  isDirUpdat: 0
+  knockBackForce: 500
+  knockBackTime: 0.1
 --- !u!212 &3599483321606400227
 SpriteRenderer:
   m_ObjectHideFlags: 0

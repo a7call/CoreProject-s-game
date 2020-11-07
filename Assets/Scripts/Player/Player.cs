@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public EtatJoueur currentEtat = EtatJoueur.normal;
 
     public PlayerManager playerManager;
-
+   
     public enum EtatJoueur
     {
         normal,

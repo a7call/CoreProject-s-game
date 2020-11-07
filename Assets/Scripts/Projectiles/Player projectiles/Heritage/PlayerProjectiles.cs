@@ -21,8 +21,19 @@ public class PlayerProjectiles : MonoBehaviour
     //CryoModule
     public static bool isCryoModule = false;
 
+    //ParaModule
+    public static bool isParaModule = false;
+
     //InteligentAmoModule
     public static bool isInteligentAmmoModule = false;
+
+    //RocketAmmoModule
+    [HideInInspector]
+    protected bool AmmoSpeedAlreadyUp = false;
+    [HideInInspector]
+    public static bool isRocketAmmoModule;
+    [HideInInspector]
+    public static float SpeedMultiplier;
 
 
 
@@ -62,6 +73,12 @@ public class PlayerProjectiles : MonoBehaviour
         {
            CoroutineManager.Instance.StartCoroutine(getNewDir(this.gameObject));
         }
+
+        if (isRocketAmmoModule && !AmmoSpeedAlreadyUp)
+        {
+            AmmoSpeedAlreadyUp = true;
+            speed *= SpeedMultiplier;
+        }
     }
    
 
@@ -95,10 +112,16 @@ public class PlayerProjectiles : MonoBehaviour
             {
                 CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
             }
+            if (isParaModule)
+            {
+                CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
+            }
 
             if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
             if(!gameObject.CompareTag("TraversProj")) Destroy(gameObject);
-           
+
+            
+
         }
  
     }

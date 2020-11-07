@@ -16,17 +16,14 @@ public class EggProjectileExplosion : Projectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if (collision.CompareTag("Player"))
-        {
-            
+       
             Collider2D[] playerHit = Physics2D.OverlapCircleAll(transform.position, explosionRadius, playerLayer);
             foreach (Collider2D hit in playerHit)
             {
                 hit.gameObject.GetComponent<PlayerHealth>().TakeDamage(explosionDamage);
             }
             Destroy(gameObject);
-        }
+        
         base.OnTriggerEnter2D(collision);
     }
 

@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
         Attacking,
         ShootingLaser,
         Paralysed,
+        KnockedBack
         
     }
     // pour l'épée electrique
@@ -51,6 +52,10 @@ public class Enemy : MonoBehaviour
         {
             case State.Paralysed:
                 //animation;
+                break;
+
+            case State.KnockedBack:
+
                 break;
         }
         if (isSlowed && !alReadySlowed)
