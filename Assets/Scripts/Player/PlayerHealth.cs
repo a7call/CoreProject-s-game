@@ -21,16 +21,16 @@ public class PlayerHealth : Player
     }
 
     //Pour tester la fonction Take20Damage
-    private void Update()
+    protected override void Update()
     {
         Take20Damage();
-        healthBar.SetHealth(currentHealth);
+       // healthBar.SetHealth(currentHealth);
     }
 
     public void SetMaxHealth()
     {
         currentHealth =  maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+       // healthBar.SetMaxHealth(maxHealth);
         
     }
 

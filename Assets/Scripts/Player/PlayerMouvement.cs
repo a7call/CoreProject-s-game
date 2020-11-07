@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 /// <summary>
 /// Classe gérant les mouvements du joueur (se référer à Lopez)
 /// </summary>
@@ -36,9 +37,9 @@ public class PlayerMouvement : Player
                 GetLastDirection();
                 SetAnimationVariable();
 
-                if (Input.GetKeyDown(KeyCode.C) && playerEnergy.currentEnergy >= dashEnergyCost)
+                if (Input.GetMouseButtonDown(1) && playerEnergy.currentEnergy >= dashEnergyCost)
                 {
-                    Dash();
+                    StartCoroutine(DashCo());
                 }
 
                 break;
@@ -128,14 +129,23 @@ public class PlayerMouvement : Player
         }
     }
 
-
-    void Dash()
-    {   
-        Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-        playerEnergy.SpendEnergy(dashEnergyCost);
-        rb.AddForce(dir * dashForce);
+    [SerializeField] private float DashDuration;
+    private bool isDashing;
+    private IEnumerator DashCo()
+    {
+        if (!isDashing)
+        {
+            Vector2 dir = new Vector2(mouvement.x, mouvement.y);
+            playerEnergy.SpendEnergy(dashEnergyCost);
+            isDashing = true;
+            GetComponent<BoxCollider2D>().enabled = false;
+            rb.AddForce(dir * dashForce*Time.deltaTime, ForceMode2D.Impulse);
+            yield return new WaitForSeconds(DashDuration);
+            isDashing = false;
+            GetComponent<BoxCollider2D>().enabled = true;
+        }
+        
     }
-
     protected override void NormalMode()
     {
         base.NormalMode();

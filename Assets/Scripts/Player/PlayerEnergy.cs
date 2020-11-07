@@ -15,14 +15,14 @@ public class PlayerEnergy : Player
     protected override void Awake()
     {
         base.Awake();
-        energyBarGFX = GameObject.FindGameObjectWithTag("EnergyBar");
-        energyBarGFX.SetActive(false);
+        //energyBarGFX = GameObject.FindGameObjectWithTag("EnergyBar");
+        //energyBarGFX.SetActive(false);
         SetMaxEnergy();
     }
     private void Update()
     {
        if(!energyIsReloading) StartCoroutine(EnergyReload());
-       energyBar.SetEnergy(currentEnergy);
+      // energyBar.SetEnergy(currentEnergy);
     }
     
     // Déduit l'energie dépensée
@@ -36,7 +36,7 @@ public class PlayerEnergy : Player
     void SetMaxEnergy()
     {
         currentEnergy = playerData.maxEnergy;
-        energyBar.SetMaxEnergy(playerData.maxEnergy);
+       // energyBar.SetMaxEnergy(playerData.maxEnergy);
     }
 
     // Energie recupérée au cours du temps
@@ -48,7 +48,7 @@ public class PlayerEnergy : Player
 
             if (!isActive)
             {
-                energyBarGFX.SetActive(true);
+               // energyBarGFX.SetActive(true);
                 isActive = true;
             }
             energyIsReloading = true;
@@ -60,7 +60,7 @@ public class PlayerEnergy : Player
         {
             if (isActive)
             {
-                energyBarGFX.SetActive(false);
+                //energyBarGFX.SetActive(false);
                 isActive = false;
             }
             yield break;

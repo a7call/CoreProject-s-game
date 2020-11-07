@@ -35,5 +35,20 @@ public class RobotProtecteur : MonoBehaviour
         var offset = new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
         transform.position = _centre + offset;
     }
-   
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            collision.GetComponent<Enemy>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+        else if(collision.CompareTag("EnemyProjectil"))
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+        
+    }
+
 }
