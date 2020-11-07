@@ -11,13 +11,12 @@ public class Laser : Projectile
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
     [SerializeField] protected LayerMask HitLayer;
-    //[SerializeField] protected GameObject ennemy;
-    private PlayerHealth playerHealth;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        //playerHealth = FindObjectOfType<PlayerHealth>();
         GetDirection();
     }
 

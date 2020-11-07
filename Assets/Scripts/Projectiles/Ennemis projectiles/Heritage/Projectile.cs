@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
     public Vector3 dir;
     // distance entre le player et le projectile
     protected float distance;
-    private PlayerHealth playerHealth;
+    protected PlayerHealth playerHealth;
 
     //TacticVisionModule
     [HideInInspector]

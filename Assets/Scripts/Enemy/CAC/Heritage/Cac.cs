@@ -18,7 +18,9 @@ public class Cac : Enemy
 {
     [SerializeField] protected CacScriptableObject CacDatas;
 
-   
+    //DontFuckModule
+    [HideInInspector]
+    public static bool IsDontFuckWithMe = false;
 
     // Set data du scriptable object Type1Data
     protected virtual void SetData()
@@ -115,6 +117,10 @@ public class Cac : Enemy
         foreach (Collider2D h in hits)
         {
             // TakeDamage();
+            if (IsDontFuckWithMe)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

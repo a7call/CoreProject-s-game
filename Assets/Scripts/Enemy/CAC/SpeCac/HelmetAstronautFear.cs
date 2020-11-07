@@ -97,6 +97,10 @@ public class HelmetAstronautFear : Cac
         isFearCdEnd = false;
         playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.fear;
         yield return new WaitForSeconds(fearTime);
+        if (IsDontFuckWithMe)
+        {
+            Destroy(gameObject);
+        }
         playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.normal;
         isFear = false;
         isFearCdEnd = true;

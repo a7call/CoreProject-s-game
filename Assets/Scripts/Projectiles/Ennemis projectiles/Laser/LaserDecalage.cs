@@ -13,14 +13,14 @@ public class LaserDecalage : Projectile
     Vector3 directionTir;
     public float angleDecalage;
     [SerializeField] protected LayerMask HitLayer;
-    private PlayerHealth playerHealth;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         GetDirection();
         ConeShoot();
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        //playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     protected void ConeShoot()
