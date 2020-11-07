@@ -21,6 +21,9 @@ public class PlayerProjectiles : MonoBehaviour
     //CryoModule
     public static bool isCryoModule = false;
 
+    //ParaModule
+    public static bool isParaModule = false;
+
     //InteligentAmoModule
     public static bool isInteligentAmmoModule = false;
 
@@ -108,6 +111,10 @@ public class PlayerProjectiles : MonoBehaviour
             if (isCryoModule)
             {
                 CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
+            }
+            if (isParaModule)
+            {
+                CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
             }
 
             if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;

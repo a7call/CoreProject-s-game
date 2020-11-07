@@ -26,6 +26,14 @@ public class CacWeapons : Weapons
     [HideInInspector]
     public static int CadenceMultiplier;
 
+    //UpRangeModule
+    [HideInInspector]
+    protected bool isRangeAlreadyUp = false;
+    [HideInInspector]
+    public static bool isUpRangeCacModule;
+    [HideInInspector]
+    public static float RangeMultiplier;
+
 
     protected override void Awake()
     {
@@ -47,6 +55,13 @@ public class CacWeapons : Weapons
             CadenceAlreadyUp = true;
             attackDelay /= CadenceMultiplier;
         }
+
+        if (isUpRangeCacModule && !isRangeAlreadyUp)
+        {
+            isRangeAlreadyUp = true;
+            attackRadius *= RangeMultiplier;
+        }
+
 
         base.Update();
         GetAttackDirection();
