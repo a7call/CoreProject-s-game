@@ -9,6 +9,8 @@ public class DistanceLaser : Distance
 {
     protected Vector3 dir;
     [SerializeField] protected float delayMovement;
+    public Laser Laser;
+    
 
 
     void Start()
@@ -19,6 +21,7 @@ public class DistanceLaser : Distance
         // Set data
         SetData();
         SetMaxHealth();
+        Laser.EnnemyAlive = true;
 
     }
 
@@ -59,6 +62,17 @@ public class DistanceLaser : Distance
     protected override void SetData()
     {
         base.SetData();
+    }
+
+    public override void TakeDamage(int _damage)
+    {
+        currentHealth -= _damage;
+        StartCoroutine(WhiteFlash());
+        if (currentHealth < 1)
+        {
+            Laser.EnnemyAlive = false;
+            Destroy(gameObject);
+        }
     }
 
     // Mouvement

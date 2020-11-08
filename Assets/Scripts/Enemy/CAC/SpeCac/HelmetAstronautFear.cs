@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HelmetAstronautFear : Cac
 {
-    private PlayerHealth playerHealth;
+    
     private PlayerMouvement playerMouvement;
 
     // Variables liées à l'attaque qui fear
@@ -23,7 +23,7 @@ public class HelmetAstronautFear : Cac
 
     private void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+       
         playerMouvement = FindObjectOfType<PlayerMouvement>();
 
         currentState = State.Chasing;

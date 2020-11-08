@@ -8,11 +8,11 @@ public class HelmetAstronautExplose : Cac
     [SerializeField] private float timeToExplode = 1f;
     private bool firstAttack = true;
 
-    private PlayerHealth playerHealth;
+    
 
     private void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        
 
         currentState = State.Chasing;
         // Get Player Reference

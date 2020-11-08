@@ -14,6 +14,8 @@ using Pathfinding;
 /// </summary>
 public class Enemy : MonoBehaviour
 {
+    protected PlayerHealth playerHealth;
+
     public State currentState;
     public enum State
     {
@@ -44,6 +46,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.1f);
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     protected virtual void Update()

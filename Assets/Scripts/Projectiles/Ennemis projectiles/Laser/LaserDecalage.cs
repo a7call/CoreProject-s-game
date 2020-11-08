@@ -20,7 +20,7 @@ public class LaserDecalage : Projectile
     {
         GetDirection();
         ConeShoot();
-        //playerHealth = FindObjectOfType<PlayerHealth>();
+       
     }
 
     protected void ConeShoot()

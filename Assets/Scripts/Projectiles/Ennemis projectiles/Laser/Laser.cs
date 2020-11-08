@@ -11,7 +11,7 @@ public class Laser : Projectile
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
     [SerializeField] protected LayerMask HitLayer;
-    
+    public bool EnnemyAlive;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +25,8 @@ public class Laser : Projectile
     {
         StartCoroutine(OkToShoot());
 
-        if (ReadyToShoot == true)
+        if (ReadyToShoot == true )
         {
-            
             StartCoroutine(destroy());
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, Mathf.Infinity, HitLayer);
 

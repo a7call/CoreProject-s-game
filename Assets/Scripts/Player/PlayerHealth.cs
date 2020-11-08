@@ -14,6 +14,11 @@ public class PlayerHealth : Player
     public HealthBar healthBar;
 
     public SpriteRenderer graphics;
+
+    //LastChanceModule
+    [HideInInspector]
+    public static bool isLastChanceModule = false;
+
     protected override void Awake()
     {
         base.Awake();
