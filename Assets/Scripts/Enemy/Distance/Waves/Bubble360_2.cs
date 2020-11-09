@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class Bubble360_2 : Distance
 {
-    private PlayerHealth playerHealth;
     [SerializeField] protected GameObject rayon;
 
     [SerializeField] private float timeBetweenTwoShots = 0.5f;
@@ -16,8 +14,6 @@ public class Bubble360_2 : Distance
 
     void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
-
         currentState = State.Chasing;
         // Set premier targetPoint
         SetFirstPatrolPoint();

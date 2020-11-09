@@ -228,6 +228,10 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
+            RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
+            rewardSpawner.RandomCoinReward(this.gameObject);
+            rewardSpawner.SpawnKeyReward(this.gameObject);
+            rewardSpawner.SpawnHeartReward(this.gameObject);
             Destroy(gameObject);
         }
     }
