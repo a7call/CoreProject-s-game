@@ -35,6 +35,8 @@ public class PlayerProjectiles : MonoBehaviour
     [HideInInspector]
     public static float SpeedMultiplier;
 
+   
+
 
 
 
@@ -79,6 +81,8 @@ public class PlayerProjectiles : MonoBehaviour
             AmmoSpeedAlreadyUp = true;
             speed *= SpeedMultiplier;
         }
+
+       
     }
    
 

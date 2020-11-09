@@ -34,7 +34,15 @@ public class DistanceWeapon : Weapons
     [HideInInspector]
     public static int PrecisionMultiplier;
 
-    
+    //FastReloadModule
+    [HideInInspector]
+    protected bool FastReloadAlreadyActive = false;
+    [HideInInspector]
+    public static bool isFastReloadModule;
+    [HideInInspector]
+    public static float ReloadSpeedMultiplier;
+
+
 
 
     protected override void Awake()
@@ -83,8 +91,12 @@ public class DistanceWeapon : Weapons
             PrecisionAlreadyUp = true;
             Dispersion /= PrecisionMultiplier;
         }
+        if (isFastReloadModule && !FastReloadAlreadyActive)
+        {
+            FastReloadAlreadyActive = true;
+            ReloadDelay /= ReloadSpeedMultiplier;
+        }
 
-        
     }
 
    protected virtual IEnumerator Shoot()
