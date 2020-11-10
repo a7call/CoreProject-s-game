@@ -1637,6 +1637,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 101717229859328991, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1802063036242590232, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1850,7 +1854,7 @@ GameObject:
   - component: {fileID: 1876051276}
   m_Layer: 0
   m_Name: Inventory
-  m_TagString: Untagged
+  m_TagString: Inventory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1868,6 +1872,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldPlayer: 0
+  numberOfKeys: 0
+  numberOfHearts: 0
   itemInventory: []
 --- !u!4 &1876051277
 Transform:
@@ -2106,7 +2112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8182b6be08e92b54aa822787439b9d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopPnjTransform: {fileID: 0}
 --- !u!1001 &812592455978323190
 PrefabInstance:
   m_ObjectHideFlags: 0

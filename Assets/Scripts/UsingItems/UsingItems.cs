@@ -11,7 +11,6 @@ public class UsingItems : MonoBehaviour
     // Déclarations des variables
     private PlayerHealth playerHealth;
     private PlayerMouvement playerMouvement;
-    private PlayerAttack playerAttack;
 
 
     public PlayerScriptableObjectScript playerData;
@@ -21,7 +20,6 @@ public class UsingItems : MonoBehaviour
     private void Start()
     {
         playerMouvement = FindObjectOfType<PlayerMouvement>();
-        playerAttack = FindObjectOfType<PlayerAttack>();
 
         //playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
 

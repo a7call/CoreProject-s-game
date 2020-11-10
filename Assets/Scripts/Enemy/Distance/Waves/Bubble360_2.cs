@@ -12,7 +12,7 @@ public class Bubble360_2 : Distance
 
     //isShooting déclarée dans Distance
 
-    void Start()
+    protected void Start()
     {
         currentState = State.Chasing;
         // Set premier targetPoint
