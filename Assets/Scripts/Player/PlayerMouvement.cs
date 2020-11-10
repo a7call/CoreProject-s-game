@@ -17,6 +17,14 @@ public class PlayerMouvement : Player
     private Vector2 mouvementVector;
     private PlayerEnergy playerEnergy;
 
+    //SpeedShoesModule
+    [HideInInspector]
+    protected bool SpeedAlreadyUp = false;
+    [HideInInspector]
+    public static bool isSpeedShoesModule;
+    [HideInInspector]
+    public static float SpeedMultiplier;
+
     protected override void Awake()
     {
         base.Awake();
@@ -27,7 +35,13 @@ public class PlayerMouvement : Player
 
         base.Update();
 
-        switch (currentEtat)
+        if (isSpeedShoesModule && !SpeedAlreadyUp)
+        {
+            SpeedAlreadyUp = true;
+            mooveSpeed *= SpeedMultiplier;
+        }
+
+            switch (currentEtat)
         {
             default:
                 break;
