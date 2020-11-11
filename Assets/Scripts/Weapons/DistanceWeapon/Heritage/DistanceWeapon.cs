@@ -60,8 +60,6 @@ public class DistanceWeapon : Weapons
     }
     void Start()
     {
-        //AmmoText.gameObject.SetActive(true);
-        //AmmoStockText.gameObject.SetActive(true);
 
     }
 
