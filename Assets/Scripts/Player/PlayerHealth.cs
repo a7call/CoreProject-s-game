@@ -12,8 +12,14 @@ public class PlayerHealth : Player
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
     public HealthBar healthBar;
+    
 
     public SpriteRenderer graphics;
+
+    //LastChanceModule
+    [HideInInspector]
+    public static bool isLastChanceModule = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -41,6 +47,17 @@ public class PlayerHealth : Player
         currentHealth -= damage;
         StartCoroutine(InvincibilityDelay());
         StartCoroutine(InvincibilityFlash());
+        }
+
+        if (currentHealth <= 0 && !isLastChanceModule)
+        {
+            Debug.Log("Mort");
+        }
+
+        else if (currentHealth <=0 && isLastChanceModule)
+        {
+            currentHealth = maxHealth;
+            isLastChanceModule = false;
         }
     }
 

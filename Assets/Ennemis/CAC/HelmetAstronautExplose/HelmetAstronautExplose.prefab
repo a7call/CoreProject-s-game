@@ -154,6 +154,7 @@ MonoBehaviour:
   nextWayPointDistance: 3
   moveSpeed: 0
   wayPoints: []
+  isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -162,6 +163,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7935423324295601577}
   healthBarGFX: {fileID: 7935423324336618499}
   timeBeforeDesactive: 0
+  isTakingDot: 0
   CacDatas: {fileID: 11400000, guid: acc34666874151c4eb6e253a7e5b8095, type: 2}
   attackPoint: {fileID: 7935423324654334769}
   distanceToExplode: 2
@@ -190,7 +192,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
 --- !u!1 &7935423324336618499
 GameObject:

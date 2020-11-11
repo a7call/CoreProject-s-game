@@ -117,12 +117,12 @@ GameObject:
   - component: {fileID: 8558823404436240972}
   - component: {fileID: 8477476304997786372}
   m_Layer: 9
-  m_Name: EyeTentacleAstronauteLaser 1
+  m_Name: EyeTentacleAstronauteLaser
   m_TagString: Enemy
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7291090580177061500
 Transform:
   m_ObjectHideFlags: 0
@@ -257,6 +257,7 @@ MonoBehaviour:
   wayPoints:
   - {fileID: 0}
   - {fileID: 0}
+  isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -265,9 +266,13 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7291090580177061501}
   healthBarGFX: {fileID: 7291090579946456046}
   timeBeforeDesactive: 0
+  isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 42102e3549a6b44b1a9b1d01bd6929f4, type: 2}
   isShooting: 0
+  isReadytoShoot: 1
   delayMovement: 1.5
+  Laser: {fileID: 4546720056206555000, guid: fdfd10d9d3485440fb06b05a90ebc20d, type: 3}
+  ennemyAlive: 1
 --- !u!61 &8477476304997786372
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -292,7 +297,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
 --- !u!1 &7291090580406216158
 GameObject:
@@ -501,7 +506,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.0011999905, y: -0.0012000017}
   m_SizeDelta: {x: -0.026428223, y: -0.026428223}
   m_Pivot: {x: 0.5, y: 0.5}

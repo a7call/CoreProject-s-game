@@ -19,6 +19,7 @@ public class Projectile : MonoBehaviour
     public Vector3 dir;
     // distance entre le player et le projectile
     protected float distance;
+    protected PlayerHealth playerHealth;
 
     //TacticVisionModule
     [HideInInspector]
@@ -32,6 +33,7 @@ public class Projectile : MonoBehaviour
     GameObject[] enemies;
     protected virtual void Awake()
     {
+        playerHealth = FindObjectOfType<PlayerHealth>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         //Get player reference;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");        
@@ -78,6 +80,10 @@ public class Projectile : MonoBehaviour
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Player"))
+        { 
+            playerHealth.TakeDamage(20);
+        }
         Destroy(gameObject);
     }
 }

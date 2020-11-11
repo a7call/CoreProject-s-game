@@ -16,7 +16,7 @@ public class DistanceWeapon : Weapons
     protected Text AmmoText;
     protected Text AmmoStockText;
     [SerializeField] protected bool InfiniteAmmo;
-    [SerializeField] int AmmoStock;
+    public int AmmoStock;
 
     //CanonRapideModule
     [HideInInspector]
@@ -34,7 +34,17 @@ public class DistanceWeapon : Weapons
     [HideInInspector]
     public static int PrecisionMultiplier;
 
-    
+    //FastReloadModule
+    [HideInInspector]
+    protected bool FastReloadAlreadyActive = false;
+    [HideInInspector]
+    public static bool isFastReloadModule;
+    [HideInInspector]
+    public static float ReloadSpeedMultiplier;
+
+    //UnlimitedAmmoModule
+    [HideInInspector]
+    public static bool isUnlimitedAmmoModule;
 
 
     protected override void Awake()
@@ -50,8 +60,7 @@ public class DistanceWeapon : Weapons
     }
     void Start()
     {
-        //AmmoText.gameObject.SetActive(true);
-        //AmmoStockText.gameObject.SetActive(true);
+
     }
 
     // Update is called once per frame
@@ -59,16 +68,22 @@ public class DistanceWeapon : Weapons
     {
 
         base.Update();
+
+        //UnlimitedAmmoModule
+        InfiniteAmmo = isUnlimitedAmmoModule;
+
         GetAttackDirection();
         if (Input.GetMouseButton(0))
         {
            StartCoroutine(Shoot());
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && AmmoStock != 0)
+        if (Input.GetKeyDown(KeyCode.R) && (AmmoStock != 0 | InfiniteAmmo))
         {
             StartCoroutine(Reload());
         }
+
+       
 
         DisplayAmmo();
 
@@ -83,8 +98,12 @@ public class DistanceWeapon : Weapons
             PrecisionAlreadyUp = true;
             Dispersion /= PrecisionMultiplier;
         }
+        if (isFastReloadModule && !FastReloadAlreadyActive)
+        {
+            FastReloadAlreadyActive = true;
+            ReloadDelay /= ReloadSpeedMultiplier;
+        }
 
-        
     }
 
    protected virtual IEnumerator Shoot()
@@ -130,17 +149,21 @@ public class DistanceWeapon : Weapons
     {
         IsReloading = true;
         yield return new WaitForSeconds(ReloadDelay);
-        if (AmmoStock + BulletInMag >= MagSize)
+        if (AmmoStock + BulletInMag >= MagSize && !InfiniteAmmo)
         {
             AmmoStock = AmmoStock + BulletInMag;
             AmmoStock = AmmoStock - MagSize;
             BulletInMag = MagSize;   
         }
-        else
+        else if(AmmoStock + BulletInMag <= MagSize && !InfiniteAmmo)
         {
             AmmoStock = AmmoStock + BulletInMag;
             BulletInMag = AmmoStock;
             AmmoStock = AmmoStock - BulletInMag;
+        }
+        else if (isUnlimitedAmmoModule)
+        {
+            BulletInMag = MagSize;
         }
 
         IsReloading = false;
@@ -156,7 +179,7 @@ public class DistanceWeapon : Weapons
 
         else
         {
-            AmmoText.text = "Infini";
+            AmmoText.text = BulletInMag.ToString();
             AmmoStockText.text = "Infini";
         }
     }

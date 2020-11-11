@@ -13,13 +13,14 @@ public class LaserDecalage : Projectile
     Vector3 directionTir;
     public float angleDecalage;
     [SerializeField] protected LayerMask HitLayer;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         GetDirection();
         ConeShoot();
-        
+       
     }
 
     protected void ConeShoot()
@@ -58,7 +59,7 @@ public class LaserDecalage : Projectile
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         StartCoroutine(OkToShoot());
 
@@ -72,7 +73,7 @@ public class LaserDecalage : Projectile
 
             if (hit.collider != null)
             {
-                print("test");
+                playerHealth.TakeDamage(20);
             }
 
         }

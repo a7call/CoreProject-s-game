@@ -430,6 +430,7 @@ MonoBehaviour:
   moveSpeed: 0
   wayPoints:
   - {fileID: 0}
+  isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -438,8 +439,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   healthBarGFX: {fileID: 4864977652259965363}
   timeBeforeDesactive: 0
+  isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 0a2d20f249211224a9064b2b3c35292b, type: 2}
   isShooting: 0
+  isReadytoShoot: 1
 --- !u!61 &1258333905
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -464,7 +467,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
 --- !u!1 &4864977653536036762
 GameObject:

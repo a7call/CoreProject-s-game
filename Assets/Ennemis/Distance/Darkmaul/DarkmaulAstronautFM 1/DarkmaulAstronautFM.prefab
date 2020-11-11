@@ -157,6 +157,7 @@ MonoBehaviour:
   wayPoints:
   - {fileID: 0}
   - {fileID: 0}
+  isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -165,8 +166,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2463838739638309392}
   healthBarGFX: {fileID: 2463838739502720554}
   timeBeforeDesactive: 0
+  isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 9ca88a69ce723459f9b0f48c4813c2d5, type: 2}
   isShooting: 0
+  isReadytoShoot: 1
   RafaleDistanceData: {fileID: 11400000, guid: 9ca88a69ce723459f9b0f48c4813c2d5, type: 2}
 --- !u!50 &2463838739638309394
 Rigidbody2D:
@@ -292,7 +295,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
 --- !u!1 &2463838739678964734
 GameObject:

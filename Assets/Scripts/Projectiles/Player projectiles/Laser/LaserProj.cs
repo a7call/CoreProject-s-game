@@ -9,7 +9,7 @@ public class LaserProj : PlayerProjectiles
     
     
 
-    void Update()
+    protected override void Update()
     {
         StartCoroutine(destroy());
 

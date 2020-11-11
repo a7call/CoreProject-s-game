@@ -350,6 +350,7 @@ MonoBehaviour:
   moveSpeed: 0
   wayPoints:
   - {fileID: 0}
+  isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -358,8 +359,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   healthBarGFX: {fileID: 4176917774904211691}
   timeBeforeDesactive: 0
+  isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 2f4a58f1146317f48b8de29f24b38fc1, type: 2}
   isShooting: 0
+  isReadytoShoot: 1
   EggsSpawner: {fileID: 4807663664610656559, guid: 8e1e5f5d502e095428b580627c04260d, type: 3}
   reloadSpe: 5
 --- !u!114 &4176917776664502970
@@ -414,7 +417,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
 --- !u!1 &4176917776774809224
 GameObject:

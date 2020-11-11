@@ -9,6 +9,8 @@ public class PaintBall : DistanceWeapon
     private int i;
 
 
+   
+
     protected override IEnumerator Shoot()
     {
         if (!isAttacking && BulletInMag > 0 && !IsReloading)

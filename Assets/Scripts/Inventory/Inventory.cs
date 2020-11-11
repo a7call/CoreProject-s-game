@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
 {
     // L'argent que possède le joueur
     public int goldPlayer;
+    public int numberOfKeys;
+    public int numberOfHearts;
     private int amountToAdd = 20;
 
     public List<GameObject> itemInventory = new List<GameObject>();
@@ -29,5 +31,6 @@ public class Inventory : MonoBehaviour
             goldPlayer += _amountToAdd;
         }
     }
+
 
 }

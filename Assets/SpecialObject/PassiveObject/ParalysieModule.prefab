@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 475622293946897584}
   - component: {fileID: 475622293946897587}
+  - component: {fileID: 3935813425213571471}
   m_Layer: 0
   m_Name: ParalysieModule
   m_TagString: PassiveObject
@@ -57,3 +58,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3935813425213571471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475622293946897581}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8259a880bb5554df6af8ee92d4b4d045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParaT: 3
+  isParalysieActive: 0

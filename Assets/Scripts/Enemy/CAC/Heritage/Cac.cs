@@ -18,7 +18,9 @@ public class Cac : Enemy
 {
     [SerializeField] protected CacScriptableObject CacDatas;
 
-   
+    //DontFuckModule
+    [HideInInspector]
+    public static bool IsDontFuckWithMe = false;
 
     // Set data du scriptable object Type1Data
     protected virtual void SetData()
@@ -96,7 +98,7 @@ public class Cac : Enemy
     protected LayerMask hitLayers;
     // Check si l'ennemi est en range d'attaque
     protected bool isInAttackRange;
-
+    
 
 
     // Check if PLayer is in Range pour définir la State en Attacking ou Chasing (ici, pas de patrouille)
@@ -114,7 +116,11 @@ public class Cac : Enemy
 
         foreach (Collider2D h in hits)
         {
-            // TakeDamage();
+            playerHealth.TakeDamage(20);
+            if (IsDontFuckWithMe)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

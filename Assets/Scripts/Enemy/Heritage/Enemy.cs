@@ -14,6 +14,8 @@ using Pathfinding;
 /// </summary>
 public class Enemy : MonoBehaviour
 {
+    protected PlayerHealth playerHealth;
+
     public State currentState;
     public enum State
     {
@@ -44,6 +46,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.1f);
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     protected virtual void Update()
@@ -225,6 +228,11 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
+            RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
+            rewardSpawner.RandomCoinReward(this.gameObject);
+            rewardSpawner.SpawnKeyReward(this.gameObject);
+            rewardSpawner.SpawnHeartReward(this.gameObject);
+            rewardSpawner.SpawnAmoReward(this.gameObject);
             Destroy(gameObject);
         }
     }
