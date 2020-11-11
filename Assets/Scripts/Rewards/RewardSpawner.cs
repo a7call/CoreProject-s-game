@@ -39,13 +39,13 @@ public class RewardSpawner : MonoBehaviour
     [SerializeField] private float chanceToGetKey;
 
 
-    private float ChanceToDropKey()
+    private float ChanceToDrop()
     {
         return Random.Range(0f, 1f);
     }
     public void SpawnKeyReward(GameObject deadEnemy)
     {
-        if(ChanceToDropKey() >= 1 - chanceToGetKey)
+        if (ChanceToDrop() >= 1 - chanceToGetKey)
         {
             Instantiate(key, deadEnemy.transform.position, Quaternion.identity);
         }
@@ -58,15 +58,11 @@ public class RewardSpawner : MonoBehaviour
     [SerializeField] private float chanceToGetFullHeart;
 
 
-    private float ChanceToDropHeart()
-    {
-        return Random.Range(0f, 1f);
-    }
     public void SpawnHeartReward(GameObject deadEnemy)
     {
-        if (ChanceToDropHeart() >= 1 - chanceToGetHearts)
+        if (ChanceToDrop() >= 1 - chanceToGetHearts)
         {
-            if(ChanceToDropHeart() >= 1 - chanceToGetFullHeart)
+            if (ChanceToDrop() >= 1 - chanceToGetFullHeart)
             {
                 Instantiate(fullHeart, deadEnemy.transform.position, Quaternion.identity);
             }
@@ -75,6 +71,19 @@ public class RewardSpawner : MonoBehaviour
                 Instantiate(halfHeart, deadEnemy.transform.position, Quaternion.identity);
             }
            
+        }
+    }
+
+    [SerializeField] private GameObject amoCase;
+    [SerializeField] private float chanceToGetAmoCase;
+
+
+
+    public void SpawnAmoReward(GameObject deadEnemy)
+    {
+        if (ChanceToDrop() >= 1 - chanceToGetAmoCase)
+        {
+            Instantiate(amoCase, deadEnemy.transform.position, Quaternion.identity);
         }
     }
 

@@ -232,6 +232,7 @@ public class Enemy : MonoBehaviour
             rewardSpawner.RandomCoinReward(this.gameObject);
             rewardSpawner.SpawnKeyReward(this.gameObject);
             rewardSpawner.SpawnHeartReward(this.gameObject);
+            rewardSpawner.SpawnAmoReward(this.gameObject);
             Destroy(gameObject);
         }
     }

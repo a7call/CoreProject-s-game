@@ -16,7 +16,7 @@ public class DistanceWeapon : Weapons
     protected Text AmmoText;
     protected Text AmmoStockText;
     [SerializeField] protected bool InfiniteAmmo;
-    [SerializeField] protected int AmmoStock;
+    public int AmmoStock;
 
     //CanonRapideModule
     [HideInInspector]
