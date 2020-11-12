@@ -82,7 +82,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         { 
-            playerHealth.TakeDamage(20);
+            playerHealth.TakeDamage(1);
         }
         Destroy(gameObject);
     }

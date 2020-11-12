@@ -50,7 +50,7 @@ public class RadiusGrowUp : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, hit.transform.position) >= Mathf.Abs(RadiusGrowByTime() - 0.01f) && Vector3.Distance(transform.position, hit.transform.position) <= Mathf.Abs(RadiusGrowByTime() + 0.01f))
                 {
-                    hit.transform.GetComponent<PlayerHealth>().TakeDamage(20);
+                    hit.transform.GetComponent<PlayerHealth>().TakeDamage(1);
                     print("Vie du joueur si y'a eu un touche " + playerHealth.currentHealth);
                 }
             }
