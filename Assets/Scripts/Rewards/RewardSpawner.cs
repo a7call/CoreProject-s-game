@@ -2,26 +2,95 @@
 
 public class RewardSpawner : MonoBehaviour
 {
-    [SerializeField] private int minimumCoin = 2;
-    [SerializeField] private int maximumCoin = 10;
+    [SerializeField] private float minimumCoin = 2;
+    [SerializeField] private float maximumCoin = 10;
     [SerializeField] private GameObject coin;
 
 
+    //AvariceModule
+    [HideInInspector]
+    protected bool isAvariceModuleAlreadyUse = false;
+    [HideInInspector]
+    public static bool isAvariceModule;
+    [HideInInspector]
+    public static float AvariceCoinChanceMultiplier;
 
-    
+    //ReapproModule
+    [HideInInspector]
+    protected bool isReapproModuleAlreadyUse = false;
+    [HideInInspector]
+    public static bool isReapproModule;
+    [HideInInspector]
+    public static float ReapproAmmoChanceMultiplier;
 
-    private int MinimumCoins()
+    //ReapproModule
+    [HideInInspector]
+    protected bool isMoissoneurDeCrystauxModuleAlreadyUse = false;
+    [HideInInspector]
+    public static bool isMoissoneurDeCrystauxModule;
+    [HideInInspector]
+    public static float FullHeartChanceMultiplier;
+    [HideInInspector]
+    public static float HalfHeartChanceMultiplier;
+
+    //VoleurDeTombeModule
+    [HideInInspector]
+    protected bool isVoleurDeTombeAlreadyUse = false;
+    [HideInInspector]
+    public static bool isVoleurDeTombeModule;
+    [HideInInspector]
+    public static float VoleurKeyChanceMultiplier;
+    [HideInInspector]
+    public static float VoleurCoinChanceMultiplier;
+
+
+
+    private float MinimumCoins()
     {
         return this.minimumCoin;
     }
-    private int MaximumCoins()
+    private float MaximumCoins()
     {
         return this.maximumCoin;
     }
 
+    public void Update()
+    {
+        if (isAvariceModule && !isAvariceModuleAlreadyUse)
+        {
+            minimumCoin *= AvariceCoinChanceMultiplier;
+            maximumCoin *= AvariceCoinChanceMultiplier;
+            isAvariceModuleAlreadyUse = true;
+        }
+
+        if (isVoleurDeTombeModule && !isVoleurDeTombeAlreadyUse)
+        {
+            minimumCoin *= VoleurCoinChanceMultiplier;
+            maximumCoin *= VoleurCoinChanceMultiplier;
+
+            chanceToGetKey *= VoleurKeyChanceMultiplier;
+
+            isVoleurDeTombeAlreadyUse = true;
+        }
+
+        if (isReapproModule && !isReapproModuleAlreadyUse)
+        {
+            chanceToGetAmoCase *= ReapproAmmoChanceMultiplier;
+            isReapproModuleAlreadyUse = true;
+        }
+
+        if(isMoissoneurDeCrystauxModule && !isMoissoneurDeCrystauxModuleAlreadyUse)
+        {
+            chanceToGetFullHeart *= FullHeartChanceMultiplier;
+            chanceToGetHearts *= HalfHeartChanceMultiplier;
+            isMoissoneurDeCrystauxModuleAlreadyUse = true;
+        }
+    }
+
     public void RandomCoinReward(GameObject deadEnemy)
     {
-        int numberOfCoinToSpawn = Random.Range(this.MinimumCoins(), this.MaximumCoins());
+        
+        int numberOfCoinToSpawn = (int)Random.Range(this.MinimumCoins(), this.MaximumCoins());
         for(int i=0; i< numberOfCoinToSpawn; i++)
         {
             Instantiate(coin, deadEnemy.transform.position + RandomVector(Vector3.zero, Vector3.one), Quaternion.identity);
@@ -43,6 +112,7 @@ public class RewardSpawner : MonoBehaviour
     {
         return Random.Range(0f, 1f);
     }
+
     public void SpawnKeyReward(GameObject deadEnemy)
     {
         if (ChanceToDrop() >= 1 - chanceToGetKey)
