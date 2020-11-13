@@ -24,7 +24,7 @@ public class ShopManager : MonoBehaviour
     private float consommablesChance;
     private float weaponsChance = 50f;
 
-    private int cost;
+    // private int cost;
 
     // Variable de type Text UI qui correspond à l'argent du joueur
     public Text goldPlayerShopView;

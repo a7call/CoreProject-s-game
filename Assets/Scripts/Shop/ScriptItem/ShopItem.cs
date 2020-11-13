@@ -16,6 +16,12 @@ public class ShopItem : MonoBehaviour
 
     private Button button;
 
+    // Module de shop
+    public static bool isShopFree = false;
+    public static bool isShopDiscount = false; 
+    [SerializeField] private int discount;
+    [SerializeField] private bool isAlreadyInDiscount = false;
+
     private void Start()
     {
         nameObject = shopItemButton.name;
@@ -32,6 +38,30 @@ public class ShopItem : MonoBehaviour
     private void Update()
     {
         SetButtonIteractible();
+        DiscountShop();
+    }
+
+    private void DiscountShop()
+    {
+        if (isShopDiscount == true)
+        {
+            print("DiscountOn");
+            discount = 20;
+            shopItemButton.itemPrice = shopItemButton.itemPrice - (discount / 100 * shopItemButton.itemPrice);
+            textPrice.text = "Reduc";
+            isAlreadyInDiscount = true;
+        }
+
+        // Comment est ce qu'il va dedans ? 
+        
+        if (isShopFree == true)
+        {
+            print("FreeShop");
+            discount = 0;
+            shopItemButton.itemPrice = 0;
+            textPrice.text = "0";
+            isAlreadyInDiscount = true;
+        }
     }
 
     private void SetButtonIteractible()
