@@ -9,8 +9,8 @@ public class MoissoneurDeCrystauxModule : PassiveObjects
     void Start()
     {
         RewardSpawner.isMoissoneurDeCrystauxModule = true;
-        RewardSpawner.FullHeartChanceMultiplier = FullHeartChanceMultiplier;
-        RewardSpawner.HalfHeartChanceMultiplier = HeartsChanceMultiplier;
+        RewardSpawner.MoissoneurFullHeartChanceMultiplier = FullHeartChanceMultiplier;
+        RewardSpawner.MoissoneurHalfHeartChanceMultiplier = HeartsChanceMultiplier;
     }
 
 

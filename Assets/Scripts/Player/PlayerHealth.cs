@@ -64,7 +64,7 @@ public class PlayerHealth : Player
         {
             //A mettre ici par la suite
             //image1.sprite = emptyHearth;
-            Debug.Log("Mort");
+            //Debug.Log("Mort");
         }
 
         else if (currentHealth <=0 && isLastChanceModule)

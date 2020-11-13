@@ -7,6 +7,7 @@ public class RewardSpawner : MonoBehaviour
     [SerializeField] private GameObject coin;
 
 
+
     //AvariceModule
     [HideInInspector]
     protected bool isAvariceModuleAlreadyUse = false;
@@ -23,15 +24,27 @@ public class RewardSpawner : MonoBehaviour
     [HideInInspector]
     public static float ReapproAmmoChanceMultiplier;
 
-    //ReapproModule
+    //MoissoneurModule
     [HideInInspector]
     protected bool isMoissoneurDeCrystauxModuleAlreadyUse = false;
     [HideInInspector]
     public static bool isMoissoneurDeCrystauxModule;
     [HideInInspector]
-    public static float FullHeartChanceMultiplier;
+    public static float MoissoneurFullHeartChanceMultiplier;
     [HideInInspector]
-    public static float HalfHeartChanceMultiplier;
+    public static float MoissoneurHalfHeartChanceMultiplier;
+
+    //VampirismeModule
+    [HideInInspector]
+    protected bool isVampirismeModuleUse = false;
+    [HideInInspector]
+    public static bool isVampirismeModule;
+    [HideInInspector]
+    public static bool isAttackCAC;
+    [HideInInspector]
+    public static float VampirismeFullHeartChanceMultiplier;
+    [HideInInspector]
+    public static float VampirismeHalfHeartChanceMultiplier;
 
     //VoleurDeTombeModule
     [HideInInspector]
@@ -81,10 +94,12 @@ public class RewardSpawner : MonoBehaviour
 
         if(isMoissoneurDeCrystauxModule && !isMoissoneurDeCrystauxModuleAlreadyUse)
         {
-            chanceToGetFullHeart *= FullHeartChanceMultiplier;
-            chanceToGetHearts *= HalfHeartChanceMultiplier;
+            chanceToGetFullHeart *= MoissoneurFullHeartChanceMultiplier;
+            chanceToGetHearts *= MoissoneurHalfHeartChanceMultiplier;
             isMoissoneurDeCrystauxModuleAlreadyUse = true;
         }
+
+        
     }
 
     public void RandomCoinReward(GameObject deadEnemy)
@@ -130,6 +145,16 @@ public class RewardSpawner : MonoBehaviour
 
     public void SpawnHeartReward(GameObject deadEnemy)
     {
+        //VampirismeModule
+        if (isVampirismeModule && !isVampirismeModuleUse && isAttackCAC)
+        {
+            chanceToGetFullHeart *= VampirismeFullHeartChanceMultiplier;
+            chanceToGetHearts *= VampirismeHalfHeartChanceMultiplier;
+            isVampirismeModuleUse = true;
+        }
+
+        //Debug.Log(chanceToGetFullHeart);
+
         if (ChanceToDrop() >= 1 - chanceToGetHearts)
         {
             if (ChanceToDrop() >= 1 - chanceToGetFullHeart)
@@ -141,6 +166,13 @@ public class RewardSpawner : MonoBehaviour
                 Instantiate(halfHeart, deadEnemy.transform.position, Quaternion.identity);
             }
            
+        }
+        //VampirismeModule
+        if (isVampirismeModuleUse)
+        {
+            chanceToGetFullHeart /= VampirismeFullHeartChanceMultiplier;
+            chanceToGetHearts /= VampirismeHalfHeartChanceMultiplier;
+            isVampirismeModuleUse = false;
         }
     }
 

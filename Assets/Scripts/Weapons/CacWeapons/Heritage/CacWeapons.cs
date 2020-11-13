@@ -18,6 +18,10 @@ public class CacWeapons : Weapons
     protected GameObject player;
     protected Vector2 dir;
 
+    //Vampirisme
+    [HideInInspector]
+    public static bool isVampirismeModule;
+
     //FuryModule
     [HideInInspector]
     protected bool CadenceAlreadyUp = false;
@@ -98,6 +102,11 @@ public class CacWeapons : Weapons
             isAttacking = true;
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
 
+            if (isVampirismeModule)
+            {
+                RewardSpawner.isAttackCAC = true;
+            }
+
             foreach (Collider2D enemy in enemyHit)
             {
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
@@ -108,6 +117,7 @@ public class CacWeapons : Weapons
             }
 
             yield return new WaitForSeconds(attackDelay);
+            RewardSpawner.isAttackCAC = false;
             isAttacking = false;
         }
         
