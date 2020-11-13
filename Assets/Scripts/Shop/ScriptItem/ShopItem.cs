@@ -48,12 +48,10 @@ public class ShopItem : MonoBehaviour
             print("DiscountOn");
             discount = 20;
             shopItemButton.itemPrice = shopItemButton.itemPrice - (discount / 100 * shopItemButton.itemPrice);
-            textPrice.text = "Reduc";
+            textPrice.text = shopItemButton.itemPrice.ToString();
             isAlreadyInDiscount = true;
         }
 
-        // Comment est ce qu'il va dedans ? 
-        
         if (isShopFree == true)
         {
             print("FreeShop");
