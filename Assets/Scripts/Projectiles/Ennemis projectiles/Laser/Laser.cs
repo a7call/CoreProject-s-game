@@ -11,18 +11,25 @@ public class Laser : Projectile
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
     [SerializeField] protected LayerMask HitLayer;
-    public bool EnnemyAlive;
+    [SerializeField] protected DistanceLaser distancelaser;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        //playerHealth = FindObjectOfType<PlayerHealth>();
+        
         GetDirection();
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        //Debug.Log(distancelaser.isEnemyAlive);
+
+        //if (!distancelaser.isEnemyAlive)
+        //{
+         //   Destroy(gameObject);
+       // }
         StartCoroutine(OkToShoot());
 
         if (ReadyToShoot == true )

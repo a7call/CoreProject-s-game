@@ -9,25 +9,28 @@ public class DistanceLaser : Distance
 {
     protected Vector3 dir;
     [SerializeField] protected float delayMovement;
-    public Laser Laser;
-    
+    public bool isEnemyAlive;
+
 
 
     void Start()
     {
+        isEnemyAlive = true;
         currentState = State.Patrolling;
         // Set premier targetPoint
         SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
-        Laser.EnnemyAlive = true;
+        //isEnemyAlive = true;
 
     }
 
    
     protected override void Update()
     {
+        //Debug.Log(isEnemyAlive);
+
         base.Update();
         switch (currentState)
         {
@@ -70,8 +73,9 @@ public class DistanceLaser : Distance
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
-            Laser.EnnemyAlive = false;
+            isEnemyAlive = false;
             Destroy(gameObject);
+            Debug.Log("destroy ");
         }
     }
 
