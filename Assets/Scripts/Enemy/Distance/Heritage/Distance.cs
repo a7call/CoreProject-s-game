@@ -44,12 +44,6 @@ public class Distance : Enemy
         {
             targetPoint = target;
         }
-        else
-        {
-            // retourne patrouiller
-            currentState = State.Patrolling;
-            return;
-        }
     }
 
     protected override void PlayerInSight()

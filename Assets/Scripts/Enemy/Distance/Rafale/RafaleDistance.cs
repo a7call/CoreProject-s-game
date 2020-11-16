@@ -39,8 +39,6 @@ public class RafaleDistance : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                // script de patrol
-                Patrol();
                 PlayerInSight();
                 MoveToPath();
                 break;
@@ -69,61 +67,6 @@ public class RafaleDistance : Distance
     {
         targetPoint = target;
     }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
-
-    // Health
-
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-    // Attack
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator CanShoot()
-    {
-        return base.CanShoot();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void ResetAggro()
-    {
-        base.ResetAggro();
-    }
-
 
     // Voir Enemy.cs (héritage)
     protected override void Shoot()

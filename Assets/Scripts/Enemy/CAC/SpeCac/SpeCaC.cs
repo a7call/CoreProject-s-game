@@ -31,7 +31,6 @@ public class SpeCaC : Cac
         {
             case State.Patrolling:
                 MoveToPath();
-                Patrol();
                 PlayerInSight();
                 break;
 
@@ -71,12 +70,6 @@ public class SpeCaC : Cac
                 Instantiate(mobs, transform.position, Quaternion.identity);
             }
             targetPoint = target;
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void Patrol()
-    {
-        base.Patrol();
     }
 
     protected override void PlayerInSight()

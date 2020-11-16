@@ -42,7 +42,6 @@ public class SpeedIncreaseProjectile : Projectile
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);
-        // Damage
     }
 
     protected override void CalculDistance()

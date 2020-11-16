@@ -41,65 +41,6 @@ public class TentaculeAstronauteSpawner : Distance
     }
 
 
-    protected override void SetData()
-    {
-        base.SetData();
-    }
-
-    //Mouvement
-
-    // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
-    protected override void Aggro()
-    {
-        targetPoint = target;
-    }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
-
-
-    //Health
-
-
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-
-
-    //Attack
-
 
     // Projectile spé
      [SerializeField] protected GameObject EggsSpawner;
@@ -142,15 +83,7 @@ public class TentaculeAstronauteSpawner : Distance
         
     }
 
-
-    // Voir Distance.cs (héritage)
-    protected override void Shoot()
-    {
-        base.Shoot();
-    }
     // Instantiate projectile spé
-
-    
     protected void Eggs()
     {
         GameObject.Instantiate(EggsSpawner, transform.position, Quaternion.identity);

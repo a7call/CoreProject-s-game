@@ -119,8 +119,6 @@ public class Enemy : MonoBehaviour
 
     //Mouvement
     public float moveSpeed;
-    // Array de point pour patrouille
-    [SerializeField] protected Transform[] wayPoints;
     public bool isSlowed = false;
     // Destination pour patrouille
     protected Transform targetPoint;
@@ -134,25 +132,11 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D rb;
 
 
-
-  
-
-    // Enemy patrol fonction
-    protected virtual void Patrol()
-    {
-            // Check la distance en lui et le prochain point (puis change de point)
-            if (Vector3.Distance(transform.position, targetPoint.position) < 1f)
-            {
-                index = (index + 1) % wayPoints.Length;
-                targetPoint = wayPoints[index];
-
-            }
-    }
     private float slowTime = 2f;
     private bool alReadySlowed;
+
     protected IEnumerator EnemySlowed()
     {
-
         alReadySlowed = true;
         float realSpeed = moveSpeed;
         moveSpeed *= 0.5f;
@@ -165,7 +149,11 @@ public class Enemy : MonoBehaviour
     // Actualise le State en Chasing si le joueur est repéré
     protected virtual void PlayerInSight()
     {
-        if (Vector3.Distance(transform.position, target.position) < inSight) currentState = State.Chasing;
+        if (Vector3.Distance(transform.position, target.position) < inSight)
+        {
+            currentState = State.Chasing;
+            targetPoint = target;
+        }
     }
 
     // Enemy take Player aggro 
@@ -179,7 +167,7 @@ public class Enemy : MonoBehaviour
     // Set le premier point de patrouille
     protected virtual void SetFirstPatrolPoint()
     {
-        targetPoint = wayPoints[0];
+        targetPoint = transform;
     }
 
 

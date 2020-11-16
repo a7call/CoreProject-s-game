@@ -38,58 +38,6 @@ public class Cac : Enemy
     }
 
 
-
-    // Mouvement
-
-    // Voir Enemy.cs (héritage)
-    protected override void Aggro()
-    {
-        base.Aggro();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-    // Voir Enemy.cs (héritage)
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-
-
-    // Health
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-
-    // Voir Enemy.cs (héritage)
-    public override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-    }
-
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-    //Attack
-
     // Centre du rayon de l'attaque de l'ennemi
     [SerializeField] protected Transform attackPoint;
     // Rayon d'attaque de l'ennemi
@@ -99,14 +47,6 @@ public class Cac : Enemy
     // Check si l'ennemi est en range d'attaque
     protected bool isInAttackRange;
     
-
-
-    // Check if PLayer is in Range pour définir la State en Attacking ou Chasing (ici, pas de patrouille)
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-
 
     // CAC attack (TK enable or disable)
     protected virtual void BaseAttack()

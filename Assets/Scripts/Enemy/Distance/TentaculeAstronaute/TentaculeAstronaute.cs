@@ -45,73 +45,11 @@ public class TentaculeAstronaute : Distance
         }
     }
 
-
-    protected override void SetData()
-    {
-        base.SetData();
-    }
-
-    //Mouvement
-
     // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
     protected override void Aggro()
     {
         targetPoint = target;
     }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
-
-
-    //Health
-
-
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-
-
-    //Attack
-
-
-    // Projectile spé
-   // [SerializeField] protected GameObject EggsProjectiles;
-    // Check si attaque spé rdy
-    private bool isSpeRdy = true;
-    // Time entre deux attaque spé
-  //  [SerializeField] protected float reloadSpe;
  
     // Couroutine du shoot
     protected override IEnumerator CanShoot()
@@ -127,24 +65,6 @@ public class TentaculeAstronaute : Distance
             // Peut tirer de nouveau
             isReadytoShoot = true;
         }
-
-      /*  else if (isSpeRdy && isShooting && isReadytoShoot)
-        {
-            // Ne peut plus tirer car déjà entrain de tirer spé + normal
-            isSpeRdy = false;
-            isReadytoShoot = false;
-            // Shoot spé
-            Eggs();
-            // Repos entre deux tire
-            yield return new WaitForSeconds(restTime);
-            // Peut tirer normalement
-            isReadytoShoot = true;
-            // Reload attaque spé
-            yield return new WaitForSeconds(reloadSpe);
-            // attaque spé rdy
-            isSpeRdy = true;
-        }
-      */
     }
 
 
@@ -153,14 +73,6 @@ public class TentaculeAstronaute : Distance
     {
         base.Shoot();
     }
-    // Instantiate projectile spé
-  
-    /*
-    protected void Eggs()
-    {
-        GameObject.Instantiate(EggsProjectiles, transform.position, Quaternion.identity);
-    }
-    */
 
 
 }

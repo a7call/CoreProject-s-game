@@ -11,8 +11,9 @@ using UnityEngine;
 
 public class Faux : CacWeapons
 {
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (Input.GetKeyDown(KeyCode.T) && !isCleaving)
         {
             AngleCalcule();

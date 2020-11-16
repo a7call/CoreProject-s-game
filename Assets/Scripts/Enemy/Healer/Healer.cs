@@ -214,48 +214,4 @@ public class Healer : Enemy
         }
         
     }
-
-
-
-
-    // Héritage 
-
-    protected override void Aggro()
-    {
-        base.Aggro();
-    }
-    protected override void MoveToPath()
-    {
-        base.MoveToPath();
-    }
-
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-    public override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-    }
-
-    protected override void UpdatePath()
-    {
-        base.UpdatePath();
-    }
-
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
 }

@@ -25,8 +25,6 @@ public class SnotZone : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                // script de patrol
-                Patrol();
                 PlayerInSight();
                 MoveToPath();
                 break;
@@ -47,13 +45,7 @@ public class SnotZone : Distance
 
     }
 
-    protected override void SetData()
-    {
-        base.SetData();
-    }
-
-    // Mouvement
-
+  
     // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
     protected override void Aggro()
     {
@@ -71,67 +63,6 @@ public class SnotZone : Distance
             // TakeDamage();
 
         }
-    }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    protected override void isInRange()
-    {
-        //base.isInRange();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
-
-    // Health
-
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-    // Attack
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator CanShoot()
-    {
-        return base.CanShoot();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void ResetAggro()
-    {
-        base.ResetAggro();
-    }
-
-
-    // Voir Enemy.cs (héritage)
-    protected override void Shoot()
-    {
-        //base.Shoot();
     }
 
 }

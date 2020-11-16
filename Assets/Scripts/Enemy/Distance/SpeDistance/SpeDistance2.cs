@@ -72,11 +72,7 @@ public class SpeDistance2 : Distance
         base.isInRange();
     }
 
-    // Voir Enemy.cs (héritage)
-    protected override void Patrol()
-    {
-        base.Patrol();
-    }
+    
 
     //Voir Enemy.cs(héritage)
     protected override void SetFirstPatrolPoint()
