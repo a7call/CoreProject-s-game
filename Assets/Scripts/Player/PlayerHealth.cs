@@ -12,21 +12,23 @@ public class PlayerHealth : Player
     private bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
-    public HealthBar healthBar;
     
 
     public SpriteRenderer graphics;
 
+    [HideInInspector]
     public Image image1;
+    [HideInInspector]
     public Image image2;
+    [HideInInspector]
     public Image image3;
 
-    public Sprite emptyHearth;
-    public Sprite halfHearth;
-    public Sprite fullHeart;
-
-    //LastChanceModule
     [HideInInspector]
+    public Sprite emptyHearth;
+    [HideInInspector]
+    public Sprite halfHearth;
+    [HideInInspector]
+    public Sprite fullHeart;
     public static bool isLastChanceModule = false;
 
     protected override void Awake()
@@ -41,13 +43,11 @@ public class PlayerHealth : Player
         AddLifePlayer();
         UpdateUILife();
         Take1Damage();
-       // healthBar.SetHealth(currentHealth);
     }
 
     public void SetMaxHealth()
     {
         currentHealth =  maxHealth;
-       // healthBar.SetMaxHealth(maxHealth);
         
     }
 
@@ -62,7 +62,7 @@ public class PlayerHealth : Player
 
         if (currentHealth <= 0 && !isLastChanceModule)
         {
-            //A mettre ici par la suite
+            //A mettre ici par la suite;
             //image1.sprite = emptyHearth;
             //Debug.Log("Mort");
         }
