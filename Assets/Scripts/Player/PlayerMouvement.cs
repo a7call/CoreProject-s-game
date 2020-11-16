@@ -11,6 +11,7 @@ public class PlayerMouvement : Player
     private Vector2 mouvement;
 
     //Changement de velocity de privée à public
+    [HideInInspector]
     public Vector3 velocity = Vector3.zero;
     public float StartSmoothTime;
     public float StopSmoothTime;
@@ -18,11 +19,8 @@ public class PlayerMouvement : Player
     private PlayerEnergy playerEnergy;
 
     //SpeedShoesModule
-    [HideInInspector]
     protected bool SpeedAlreadyUp = false;
-    [HideInInspector]
     public static bool isSpeedShoesModule;
-    [HideInInspector]
     public static float SpeedMultiplier;
 
     protected override void Awake()

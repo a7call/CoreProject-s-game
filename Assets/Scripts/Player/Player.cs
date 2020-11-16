@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D rb;
-    public Animator animator;
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public Animator animator;
     public PlayerScriptableObjectScript playerData;
+    [HideInInspector]
     public EtatJoueur currentEtat = EtatJoueur.normal;
-
-    public PlayerManager playerManager;
+    
+    //public PlayerManager playerManager;
    
     public enum EtatJoueur
     {
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour
     protected virtual void Awake()
     {
         SetData();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
    
 }
