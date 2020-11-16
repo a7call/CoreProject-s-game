@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class Inventory : MonoBehaviour
 {
     // L'argent que possède le joueur
-    public int goldPlayer;
+    public float goldPlayer;
     public int numberOfKeys;
     public int numberOfHearts;
     private int amountToAdd = 20;
