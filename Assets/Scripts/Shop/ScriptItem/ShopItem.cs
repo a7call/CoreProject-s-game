@@ -19,8 +19,8 @@ public class ShopItem : MonoBehaviour
     // Module de shop
     public static bool isShopFree = false;
     public static bool isShopDiscount = false; 
-    [SerializeField] private int discount;
-    private bool isAlreadyInDiscount = false;
+    private float discount;
+    private float newPrice;
 
     private void Start()
     {
@@ -45,20 +45,15 @@ public class ShopItem : MonoBehaviour
     {
         if (isShopDiscount == true)
         {
-            print("DiscountOn");
             discount = 20;
-            shopItemButton.itemPrice = shopItemButton.itemPrice - (discount / 100 * shopItemButton.itemPrice);
-            textPrice.text = shopItemButton.itemPrice.ToString();
-            isAlreadyInDiscount = true;
+            newPrice = shopItemButton.itemPrice - (discount / 100f * shopItemButton.itemPrice);
+            GetComponent<ShopItem>().textPrice.GetComponent<Text>().text = newPrice.ToString();
         }
 
         if (isShopFree == true)
         {
-            print("FreeShop");
-            discount = 0;
-            shopItemButton.itemPrice = 0;
-            textPrice.text = "0";
-            isAlreadyInDiscount = true;
+            newPrice = 0;
+            GetComponent<ShopItem>().textPrice.GetComponent<Text>().text = newPrice.ToString();
         }
     }
 
@@ -70,7 +65,7 @@ public class ShopItem : MonoBehaviour
         }
         else
         {
-            if (inventory.goldPlayer >= shopItemButton.itemPrice)
+            if (inventory.goldPlayer >= newPrice)
             {
                 button.interactable = true;
             }
@@ -79,18 +74,45 @@ public class ShopItem : MonoBehaviour
                 button.interactable = false;
             }
         }
-        
+
     }
 
     public void BuyItem()
     {
-        if (inventory.goldPlayer >= shopItemButton.itemPrice)
+        if (isShopDiscount == false && isShopFree == false)
         {
             // Décompte les sous du joueur
             inventory.goldPlayer -= shopItemButton.itemPrice;
             // On enlève l'item du shop. Pour ce faire, on change les caractéristiques du bouton, et on le désactive
-            // Pour l'instant, on change juste le texte. Quand on détaillera le shop, il faudra reprendre ce point
+            // Quand on détaillera le shop, il faudra reprendre les trois lignes ci-dessous!!
             GetComponent<ShopItem>().textName.GetComponent<Text>().text = "Nothing";
+            GetComponent<ShopItem>().textPrice.GetComponent<Text>().text = "0";
+            GetComponent<ShopItem>().imageObject.GetComponent<Image>().sprite = null;
+            // Désactivation et non intéractabilité possible du bouton
+            GetComponent<ShopItem>().enabled = false;
+            button.interactable = false;
+            // On ajoute l'item à l'inventaire
+            inventory.itemInventory.Add(gameObject);
+        }
+        else if (isShopDiscount == true && isShopFree == true)
+        {
+            newPrice = 0f;
+            inventory.goldPlayer -= newPrice;
+            GetComponent<ShopItem>().textName.GetComponent<Text>().text = "Nothing";
+            GetComponent<ShopItem>().textPrice.GetComponent<Text>().text = "0";
+            GetComponent<ShopItem>().imageObject.GetComponent<Image>().sprite = null;
+            // Désactivation et non intéractabilité possible du bouton
+            GetComponent<ShopItem>().enabled = false;
+            button.interactable = false;
+            // On ajoute l'item à l'inventaire
+            inventory.itemInventory.Add(gameObject);
+        }
+        else
+        {
+            inventory.goldPlayer -= newPrice;
+            GetComponent<ShopItem>().textName.GetComponent<Text>().text = "Nothing";
+            GetComponent<ShopItem>().textPrice.GetComponent<Text>().text = "0";
+            GetComponent<ShopItem>().imageObject.GetComponent<Image>().sprite = null;
             // Désactivation et non intéractabilité possible du bouton
             GetComponent<ShopItem>().enabled = false;
             button.interactable = false;

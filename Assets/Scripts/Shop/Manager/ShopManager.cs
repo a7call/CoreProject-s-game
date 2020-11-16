@@ -154,7 +154,6 @@ public class ShopManager : MonoBehaviour
         int count = 0;
         for (int row = 0; row < rowConsommable ; row++)
         {
-            print("Ligne " + (row + 1) + " du tableau.");
             for (int column = 0; column < tableau.GetLength(1); column++)
             {
                 tableau[row, column] = RandomBoolean.RandomBool(consommablesChance);
@@ -196,7 +195,6 @@ public class ShopManager : MonoBehaviour
                     consommablesChance = initConsommablesChance;
                 }
 
-                Debug.LogWarning(tableau[row, column] + ":");
             }
 
             consommablesChance = initConsommablesChance;
@@ -205,7 +203,6 @@ public class ShopManager : MonoBehaviour
 
         if (count==(rowConsommable * tableau.GetLength(1)))
         {
-            print("A");
             Instantiate(halfHp, sellButtonsParents);
         }
 
@@ -214,11 +211,9 @@ public class ShopManager : MonoBehaviour
         // A moduler selon la rareté des armes
         for (int row = rowConsommable ; row < tableau.GetLength(0); row++)
         {
-            print("Ligne " + (row + 1) + " du tableau.");
             for (int column = 0; column < tableau.GetLength(1); column++)
             {
                 tableau[row, column] = RandomBoolean.RandomBool(weaponsChance);
-                Debug.Log(tableau[row, column] + ":");
             }
         }
     }
