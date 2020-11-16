@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class NuclearExplosionModule : PassiveObjects
 {
-    [SerializeField] private int explosionDamageMultiplier;
+    [SerializeField] private int explosionDamageMultiplier = 0;
     [SerializeField] public static float nuclearDotTimer;
     [SerializeField] public static int nuclearDotDamage;
-    [SerializeField] private int nuclearDotD;
-    [SerializeField] private float nuclearDotT;
+    [SerializeField] private int nuclearDotD = 0;
+    [SerializeField] private float nuclearDotT = 0f;
 
 
     private void Awake()

@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class ModuleInertie : PassiveObjects
 {
-    [SerializeField] private float moveSpeedMulti;
+    [SerializeField] private float moveSpeedMulti = 0f;
     public static float moveSpeedMultiplier;
-    [SerializeField] private float boostDur;
+    [SerializeField] private float boostDur = 0f;
     public static float boostDuration;
     public static PlayerMouvement player;
     private void Awake()

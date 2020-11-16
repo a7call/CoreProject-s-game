@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpeedShoesModule : PassiveObjects
 {
-    [SerializeField] private float SpeedMultiplier;
+    [SerializeField] private float SpeedMultiplier = 0f;
     void Start()
     {
         PlayerMouvement.isSpeedShoesModule = true;

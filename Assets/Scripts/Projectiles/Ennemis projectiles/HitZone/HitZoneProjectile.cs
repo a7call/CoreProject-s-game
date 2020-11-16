@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class HitZoneProjectile : Projectile
 {
-     private int n = 0;
     [SerializeField] int nbHit; //durée d'activité de la zone
     [SerializeField] int timeIntervale; //intervalle entre les dégats de zone
     [SerializeField] int zoneRadius; //rayon de la zone de dégats

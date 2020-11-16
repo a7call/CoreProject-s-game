@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PaintBall : DistanceWeapon
 {
-    [SerializeField] GameObject[] projectiles;
-    [SerializeField] protected PlayerProjectiles[] ScriptProj;
+    [SerializeField] GameObject[] projectiles = null;
+    [SerializeField] protected PlayerProjectiles[] ScriptProj = null;
     private int i;
 
 

@@ -9,9 +9,9 @@ public class PompeDistanceEnemy : Distance
 {
 
     
-    [SerializeField] GameObject[] projectiles;
-    [SerializeField] int angleTir;
-    public AngleProjectile AngleProjectile ;
+    [SerializeField] GameObject[] projectiles = null;
+    [SerializeField] int angleTir = 0;
+    public AngleProjectile AngleProjectile; // à corriger
 
     void Start()
     {

@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class PlayerCollision: Player
 {
-    [SerializeField] private int numberOfAmoInCase;
+    [SerializeField] private int numberOfAmoInCase = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

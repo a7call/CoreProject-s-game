@@ -20,7 +20,7 @@ public class ShopItem : MonoBehaviour
     public static bool isShopFree = false;
     public static bool isShopDiscount = false; 
     [SerializeField] private int discount;
-    [SerializeField] private bool isAlreadyInDiscount = false;
+    private bool isAlreadyInDiscount = false;
 
     private void Start()
     {

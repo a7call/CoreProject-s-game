@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ModuleProtectionRobotique : PassiveObjects
 {
-    [SerializeField] private GameObject robotsProtection;
-    [SerializeField] private float spawnTimer;
+    [SerializeField] private GameObject robotsProtection = null;
+    [SerializeField] private float spawnTimer = 0f;
     void Start()
     {
         StartCoroutine(SpawnCo());

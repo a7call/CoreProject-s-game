@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Projectiles360 : Projectile
 {
-    private float radius;
-    private float coeffDir;
-    private float time = 10f;
-    private float timeRate = 1f;
+    //M'expliquer
+    private float radius = 0f;
+    private float coeffDir = 0f;
+    //private float time = 10f;
+    //private float timeRate = 1f;
     protected bool damageDone = false;
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
@@ -19,7 +20,7 @@ public class Projectiles360 : Projectile
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         StartCoroutine(OkToShoot());
 
@@ -39,6 +40,12 @@ public class Projectiles360 : Projectile
             }
 
         }
+        if (isTacticVisionModule && !AmmoSpeedAlreadyDown)
+        {
+            AmmoSpeedAlreadyDown = true;
+            speed /= SpeedDiviser;
+        }
+
     }
 
     private float UploadRadius()

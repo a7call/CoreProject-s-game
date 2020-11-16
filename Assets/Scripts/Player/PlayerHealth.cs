@@ -36,7 +36,7 @@ public class PlayerHealth : Player
     }
 
     //Pour tester la fonction Take1Damage
-    protected override void Update()
+    protected void Update()
     {
         AddLifePlayer();
         UpdateUILife();

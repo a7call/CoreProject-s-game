@@ -28,7 +28,7 @@ public class Faux : CacWeapons
     }
 
     [SerializeField]
-    float rotationRadius = 0.5f, angularSpeed = 2f, rotationTime;
+    float rotationRadius = 0.5f, angularSpeed = 2f, rotationTime = 0f;
     float posX, posY;
     float angle;
 

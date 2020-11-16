@@ -33,24 +33,6 @@ public class Distance : Enemy
         attackRange = DistanceData.attackRange;
     }
 
-
-    //Mouvement
-
-
-    // Aggro s'arrete pour tirer et ne bouge pas (à modifier) retourne patrouiller si plus à distance
-    protected override void Aggro()
-    {
-        if (Vector3.Distance(transform.position, target.position) < inSight)
-        {
-            targetPoint = target;
-        }
-    }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
     protected override void isInRange()
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
@@ -65,41 +47,6 @@ public class Distance : Enemy
             isShooting = false;
         }
     }
-
-
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
-
-
-    // Health
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-    // Voir Enemy.cs (héritage)
-    public override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-
-    // Attack
-
 
     // Check si prêt à tirer
     [SerializeField] protected bool isReadytoShoot = true;

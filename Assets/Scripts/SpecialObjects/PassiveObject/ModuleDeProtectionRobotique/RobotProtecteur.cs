@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class RobotProtecteur : MonoBehaviour
 {
-    [SerializeField] private float RotateSpeed;
-    [SerializeField] private float Radius;
-    [SerializeField] private int damage;
-    bool collidingPlayer = false;
+    [SerializeField] private float RotateSpeed = 0f;
+    [SerializeField] private float Radius = 0f;
+    [SerializeField] private int damage = 0;
     private Vector2 _centre;
     private float _angle;
     private GameObject player;

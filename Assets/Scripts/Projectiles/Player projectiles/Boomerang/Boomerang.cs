@@ -7,7 +7,7 @@ public class Boomerang : PlayerProjectiles
     
     private float distance;
     [SerializeField]
-    private float backDistance;
+    private float backDistance = 0f;
     private bool isComingBack;
     public static bool isAlreadyFired;
 

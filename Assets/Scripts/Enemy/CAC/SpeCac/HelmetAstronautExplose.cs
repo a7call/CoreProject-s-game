@@ -6,7 +6,6 @@ public class HelmetAstronautExplose : Cac
 {
     [SerializeField] private float distanceToExplode = 2f;
     [SerializeField] private float timeToExplode = 1f;
-    private bool firstAttack = true;
 
     
 

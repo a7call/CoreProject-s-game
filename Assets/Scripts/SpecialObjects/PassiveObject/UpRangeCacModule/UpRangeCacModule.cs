@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpRangeCacModule : PassiveObjects
 {
-    [SerializeField] private float RangeMultiplier;
+    [SerializeField] private float RangeMultiplier = 0f;
     void Start()
     {
         CacWeapons.isUpRangeCacModule = true;

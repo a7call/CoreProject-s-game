@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class VampirismeModule : PassiveObjects
 {
-    [SerializeField] private float FullHeartChanceMultiplier;
-    [SerializeField] private float HeartsChanceMultiplier;
+    [SerializeField] private float FullHeartChanceMultiplier = 0f;
+    [SerializeField] private float HeartsChanceMultiplier = 0f;
     void Start()
     {
         CacWeapons.isVampirismeModule = true;

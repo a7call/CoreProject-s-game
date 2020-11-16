@@ -55,7 +55,7 @@ public class WavesProjectile : Projectile
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         StartCoroutine(OkToShoot());
 
@@ -75,6 +75,12 @@ public class WavesProjectile : Projectile
 
             }
 
+        }
+
+        if (isTacticVisionModule && !AmmoSpeedAlreadyDown)
+        {
+            AmmoSpeedAlreadyDown = true;
+            speed /= SpeedDiviser;
         }
     }
 }

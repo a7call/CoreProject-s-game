@@ -9,20 +9,18 @@ using UnityEngine;
 
 public class SpeDistance2 : Distance
 {
-    [SerializeField] private bool isFirstAttack = true;
-    [SerializeField] private float timeDot;
+    [SerializeField] private bool isFirstAttack = true; // je sais pas c'est quoi ?
+    [SerializeField] private float timeDot = 0f;
     [SerializeField] private int dotNumber = 5;
     [SerializeField] private int dotDamages = 20;
-    
-    private PlayerHealth playerHealth;
 
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
 
-        currentState = State.Chasing;
+        currentState = State.Patrolling;
         // Set data
-        targetPoint = transform;
+        SetFirstPatrolPoint();
         SetData();
         SetMaxHealth();
     }
@@ -32,9 +30,10 @@ public class SpeDistance2 : Distance
         base.Update();
         switch (currentState)
         {
+            case State.Patrolling:
+                PlayerInSight();
+                break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
@@ -48,12 +47,6 @@ public class SpeDistance2 : Distance
         }
     }
 
-
-    protected override void SetData()
-    {
-        base.SetData();
-    }
-
     //Mouvement
 
     // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
@@ -61,25 +54,6 @@ public class SpeDistance2 : Distance
     {
         targetPoint = target;
     }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-
-    
-
-    //Voir Enemy.cs(héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
 
 
     //Health
@@ -93,29 +67,4 @@ public class SpeDistance2 : Distance
         isFirstAttack = false;
     }
     
-
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-
-   
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-    //Attack
-
-
-    // Voir Distance.cs (héritage)
-    protected override void Shoot()
-    {
-        base.Shoot();
-    }
 }

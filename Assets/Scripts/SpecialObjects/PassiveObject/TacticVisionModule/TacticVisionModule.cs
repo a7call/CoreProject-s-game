@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TacticVisionModule : PassiveObjects
 {
-    [SerializeField] private float SpeedDiviser;
+    [SerializeField] private float SpeedDiviser = 0f;
     void Start()
     {
         Projectile.isTacticVisionModule = true;

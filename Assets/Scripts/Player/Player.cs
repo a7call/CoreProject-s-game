@@ -18,11 +18,6 @@ public class Player : MonoBehaviour
         shopping,
     }
 
-    protected virtual void Update()
-    {
-        NormalMode();
-    }
-
     [HideInInspector]
     public int maxHealth;
     [HideInInspector]
@@ -53,15 +48,5 @@ public class Player : MonoBehaviour
     {
         SetData();
     }
-
-    protected virtual void NormalMode()
-    {
-        if(Input.GetKeyDown(KeyCode.M) == true)
-        {
-            currentEtat = EtatJoueur.normal;
-        }
-    }
-
    
-
 }

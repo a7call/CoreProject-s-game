@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ParticuleManager : MonoBehaviour
 {
-    [SerializeField] private GameObject weapon;
-    [SerializeField] private GameObject attackPoint;
+    [SerializeField] private GameObject weapon = null;
+    [SerializeField] private GameObject attackPoint = null;
     float angle;
-    float previousAngle;
 
     float CalculateAngle()
     {

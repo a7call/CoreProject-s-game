@@ -2,7 +2,7 @@
 
 public class CanonRapideModule : PassiveObjects
 {
-    [SerializeField] private int CadenceMultiplier;
+    [SerializeField] private int CadenceMultiplier = 0;
     void Start()
     {
         DistanceWeapon.isCanonRapideModule = true;

@@ -6,7 +6,7 @@ public class ParalysieModule : PassiveObjects
 {
     [SerializeField] public static float ParaTimer;
     
-    [SerializeField] private float ParaT;
+    [SerializeField] private float ParaT = 0f;
 
     [SerializeField] public bool isParalysieActive = false;
 

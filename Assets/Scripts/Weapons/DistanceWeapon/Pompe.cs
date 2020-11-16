@@ -5,9 +5,9 @@ using UnityEngine;
 public class Pompe : DistanceWeapon
 {
    
-    [SerializeField] GameObject[] projectiles;
-    [SerializeField] int angleTir;
-    [SerializeField] PompeProjectiles angleProjectile;
+    [SerializeField] GameObject[] projectiles = null;
+    [SerializeField] int angleTir = 0;
+    [SerializeField] PompeProjectiles angleProjectile; // à corriger 
 
    
 

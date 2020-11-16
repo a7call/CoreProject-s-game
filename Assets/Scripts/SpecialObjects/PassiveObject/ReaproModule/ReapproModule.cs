@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ReapproModule : PassiveObjects
 {
-    [SerializeField] private float AmmoChanceMultiplier;
+    [SerializeField] private float AmmoChanceMultiplier = 0f;
     void Start()
     {
         RewardSpawner.isReapproModule = true;

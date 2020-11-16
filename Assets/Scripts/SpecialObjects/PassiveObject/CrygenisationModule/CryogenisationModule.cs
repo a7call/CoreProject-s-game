@@ -6,8 +6,8 @@ public class CryogenisationModule : PassiveObjects
 {
     [SerializeField] public static float cryoTimer;
     [SerializeField] public static float slowMutliplier;
-    [SerializeField] private float cryoT;
-    [SerializeField] private float slowM;
+    [SerializeField] private float cryoT = 0f;
+    [SerializeField] private float slowM = 0f;
     private void Awake()
     {
         cryoTimer = cryoT;

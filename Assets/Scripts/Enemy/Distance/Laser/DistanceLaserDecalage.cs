@@ -8,11 +8,11 @@ using UnityEngine;
 public class DistanceLaserDecalage : Distance
 {
     protected Vector3 dir;
-    [SerializeField] protected float delayBeforeShoot;
-    [SerializeField] GameObject[] projectiles;
-    [SerializeField] int angleTir;
+    [SerializeField] protected float delayBeforeShoot = 0f;
+    [SerializeField] GameObject[] projectiles = null;
+    [SerializeField] int angleTir = 0;
     public LaserDecalage LaserDecalage;
-    [SerializeField] protected float delayMovement;
+    [SerializeField] protected float delayMovement = 0f;
 
     void Start()
     {

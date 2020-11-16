@@ -122,8 +122,6 @@ public class Enemy : MonoBehaviour
     public bool isSlowed = false;
     // Destination pour patrouille
     protected Transform targetPoint;
-    // Index de l'array
-    private int index = 0;
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player

@@ -5,7 +5,6 @@ using UnityEditor;
 
 public class BubbleMS : Distance
 {
-    private PlayerHealth playerHealth;
     [SerializeField] protected GameObject rayon;
 
     [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();

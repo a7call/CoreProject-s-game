@@ -27,7 +27,7 @@ public class Healer : Enemy
     // Ennemi entrain de se faire heal
     GameObject EnnemiHealed;
     //Distance à laquel le healer peut soigner;
-    [SerializeField] float healingDistance;
+    [SerializeField] float healingDistance = 0f;
     // couroutine déclaration
     IEnumerator mycouroutine;
     // Cd de heal 

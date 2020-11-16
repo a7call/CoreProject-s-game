@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PrecisionModule : PassiveObjects
 {
-    [SerializeField] private int PrecisionMultiplier;
+    [SerializeField] private int PrecisionMultiplier = 0;
     void Start()
     {
         DistanceWeapon.isPrecisionModule = true;

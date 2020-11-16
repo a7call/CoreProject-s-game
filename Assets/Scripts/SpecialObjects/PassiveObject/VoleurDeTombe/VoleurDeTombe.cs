@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class VoleurDeTombe : PassiveObjects
 {
-    [SerializeField] private float KeyChanceMultiplier;
-    [SerializeField] private float CoinChanceMultiplier;
+    [SerializeField] private float KeyChanceMultiplier = 0f;
+    [SerializeField] private float CoinChanceMultiplier = 0f;
     void Start()
     {
         RewardSpawner.isVoleurDeTombeModule = true;

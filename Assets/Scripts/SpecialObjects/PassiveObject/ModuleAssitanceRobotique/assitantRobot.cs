@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class assitantRobot : MonoBehaviour
 {
-    [SerializeField] private float RotateSpeed;
-    [SerializeField] private float Radius;
-    [SerializeField] private float shootRadius;
-    [SerializeField] private float shootTimer;
-    [SerializeField] protected GameObject proj;
+    [SerializeField] private float RotateSpeed = 0f;
+    [SerializeField] private float Radius = 0f;
+    [SerializeField] private float shootRadius = 0f;
+    [SerializeField] private float shootTimer = 0f;
+    [SerializeField] protected GameObject proj = null;
     [HideInInspector]
     public Vector2 dir;
     public int damage;
     private bool canShoot = true;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask enemyLayer = 0;
 
 
     private Vector2 _centre;

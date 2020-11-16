@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AvariceModule : PassiveObjects
 {
-    [SerializeField] private float ChanceMultiplier;
+    [SerializeField] private float ChanceMultiplier = 0f;
     void Start()
     {
         RewardSpawner.isAvariceModule = true;

@@ -39,10 +39,6 @@ public class SpeedIncreaseProjectile : Projectile
         transform.Translate(dir * speedIncreasing * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
-    }
 
     protected override void CalculDistance()
     {

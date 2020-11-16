@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HitZone : MonoBehaviour
 {
-    [SerializeField] int nbHit;
-    [SerializeField] float timeIntervale;
-    [SerializeField] float zoneRadius;
+    [SerializeField] int nbHit = 0;
+    [SerializeField] float timeIntervale = 0f;
+    [SerializeField] float zoneRadius = 0f;
     private int n = 0;
     private PlayerHealth playerHealth;
     //[SerializeField] protected GameObject HitZoneGO;

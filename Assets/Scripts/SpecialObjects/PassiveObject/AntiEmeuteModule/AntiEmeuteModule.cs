@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AntiEmeuteModule : PassiveObjects
 {
-    [SerializeField] private float knockBackForceM;
+    [SerializeField] private float knockBackForceM = 0f;
   
     void Start()
     {

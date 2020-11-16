@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LaserProj : PlayerProjectiles
 {
-    [SerializeField] float activeTime;
-    [SerializeField] protected LayerMask HitLayer;
+    [SerializeField] float activeTime = 0f;
+    [SerializeField] protected LayerMask HitLayer = 0;
     protected Enemy enemy;
     
 

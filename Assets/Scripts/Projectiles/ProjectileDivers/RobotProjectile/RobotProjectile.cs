@@ -5,7 +5,7 @@ using UnityEngine;
 public class RobotProjectile : MonoBehaviour
 {
     private assitantRobot robot;
-    [SerializeField] float speed;
+    [SerializeField] float speed = 0f;
     private Vector2 dir;
     private void Awake()
     {

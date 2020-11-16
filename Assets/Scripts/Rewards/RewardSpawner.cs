@@ -4,7 +4,7 @@ public class RewardSpawner : MonoBehaviour
 {
     [SerializeField] private float minimumCoin = 2;
     [SerializeField] private float maximumCoin = 10;
-    [SerializeField] private GameObject coin;
+    [SerializeField] private GameObject coin = null;
 
 
 
@@ -119,8 +119,8 @@ public class RewardSpawner : MonoBehaviour
     }
 
 
-    [SerializeField] private GameObject key;
-    [SerializeField] private float chanceToGetKey;
+    [SerializeField] private GameObject key = null;
+    [SerializeField] private float chanceToGetKey = 0f;
 
 
     private float ChanceToDrop()
@@ -137,10 +137,10 @@ public class RewardSpawner : MonoBehaviour
     }
 
 
-    [SerializeField] private GameObject fullHeart;
-    [SerializeField] private GameObject halfHeart;
-    [SerializeField] private float chanceToGetHearts;
-    [SerializeField] private float chanceToGetFullHeart;
+    [SerializeField] private GameObject fullHeart = null;
+    [SerializeField] private GameObject halfHeart = null;
+    [SerializeField] private float chanceToGetHearts = 0f;
+    [SerializeField] private float chanceToGetFullHeart = 0f;
 
 
     public void SpawnHeartReward(GameObject deadEnemy)
@@ -176,8 +176,8 @@ public class RewardSpawner : MonoBehaviour
         }
     }
 
-    [SerializeField] private GameObject amoCase;
-    [SerializeField] private float chanceToGetAmoCase;
+    [SerializeField] private GameObject amoCase = null;
+    [SerializeField] private float chanceToGetAmoCase = 0f;
 
 
 

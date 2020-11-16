@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// à retaper entierement 
 public class LaserSaber : CacWeapons
 {
     private Collider2D coll;
-    [SerializeField] private float deflectTime;
-    [SerializeField] private float deflectCD;
+    [SerializeField] private float deflectTime = 0f;
+    [SerializeField] private float deflectCD = 0f;
     private bool readyToDeflect = true;
     
     private void Start()

@@ -30,11 +30,8 @@ public class PlayerMouvement : Player
         base.Awake();
         playerEnergy = GetComponent<PlayerEnergy>();
     }
-    protected override void Update()
+    protected  void Update()
     {
-
-        base.Update();
-
         if (isSpeedShoesModule && !SpeedAlreadyUp)
         {
             SpeedAlreadyUp = true;
@@ -145,7 +142,7 @@ public class PlayerMouvement : Player
         }
     }
 
-    [SerializeField] private float DashDuration;
+    [SerializeField] private float DashDuration = 0f;
     private bool isDashing;
     private IEnumerator DashCo()
     {
@@ -162,9 +159,5 @@ public class PlayerMouvement : Player
             GetComponent<BoxCollider2D>().enabled = true;
         }
         
-    }
-    protected override void NormalMode()
-    {
-        base.NormalMode();
     }
 }
