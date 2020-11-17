@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     // pour l'épée electrique
     public bool isAlreadyElectrified;
 
+
     // PathFinding
     public float nextWayPointDistance = 3f;
     Path path;
@@ -60,10 +61,6 @@ public class Enemy : MonoBehaviour
             case State.KnockedBack:
 
                 break;
-        }
-        if (isSlowed && !alReadySlowed)
-        {
-            StartCoroutine(EnemySlowed());
         }
         healthBar.SetHealth(currentHealth);
         DisplayBar();
@@ -128,21 +125,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Transform target;
     [HideInInspector]
     public Rigidbody2D rb;
-
-
-    private float slowTime = 2f;
-    private bool alReadySlowed;
-
-    protected IEnumerator EnemySlowed()
-    {
-        alReadySlowed = true;
-        float realSpeed = moveSpeed;
-        moveSpeed *= 0.5f;
-        yield return new WaitForSeconds(slowTime);
-        moveSpeed = realSpeed;
-        isSlowed = false;
-        alReadySlowed = false;
-    }
 
     // Actualise le State en Chasing si le joueur est repéré
     protected virtual void PlayerInSight()

@@ -20,9 +20,15 @@ public class CryogenisationModule : PassiveObjects
 
     public static IEnumerator CryoCo(Enemy enemy)
     {
+        if (!enemy.isSlowed)
+        {
+            enemy.isSlowed = true;
             float baseMoveSpeed = enemy.moveSpeed;
             enemy.moveSpeed *= slowMutliplier;
             yield return new WaitForSeconds(cryoTimer);
             enemy.moveSpeed = baseMoveSpeed;
+            enemy.isSlowed = false;
+        }
+            
     }
 }
