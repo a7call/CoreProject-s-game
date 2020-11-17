@@ -84,7 +84,7 @@ public class Projectile : MonoBehaviour
         { 
             playerHealth.TakeDamage(1);
         }
-        Destroy(gameObject);
+        if(!collision.CompareTag("DontDestroy")) Destroy(gameObject);
     }
 }
 
