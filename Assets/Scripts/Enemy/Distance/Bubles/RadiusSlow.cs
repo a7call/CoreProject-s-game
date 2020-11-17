@@ -44,6 +44,7 @@ public class RadiusSlow : RadiusGrowUp
 
     protected override void ShootRadius()
     {
+        float realMoveSpeed = playerMouvement.playerData.mooveSpeed;
         hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
         foreach (RaycastHit2D hit in hits)
         {
@@ -51,19 +52,16 @@ public class RadiusSlow : RadiusGrowUp
             {
                 if (Vector3.Distance(transform.position, hit.transform.position) <= RadiusGrowByTime())
                 {
+
                     playerMouvement.mooveSpeed = newPlayerMoveSpeed;
                 }
                 else
                 {
-                    // Voir si on peut accéder aux données du scriptableObject
-                    playerMouvement.mooveSpeed = 200f;
+                    playerMouvement.mooveSpeed = realMoveSpeed;
                 }
+                // Détruire les objets qui sont destructibles
             }
-
-            // Détruire les objets qui sont destructibles
-
-            // Voir si on diminue la ms des ennemis ou non
         }
-    }
 
+    }
 }

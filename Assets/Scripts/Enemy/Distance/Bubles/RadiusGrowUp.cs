@@ -43,7 +43,6 @@ public class RadiusGrowUp : MonoBehaviour
     protected virtual void ShootRadius()
     {
         hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
-
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -51,7 +50,6 @@ public class RadiusGrowUp : MonoBehaviour
                 if (Vector3.Distance(transform.position, hit.transform.position) >= Mathf.Abs(RadiusGrowByTime() - 0.01f) && Vector3.Distance(transform.position, hit.transform.position) <= Mathf.Abs(RadiusGrowByTime() + 0.01f))
                 {
                     hit.transform.GetComponent<PlayerHealth>().TakeDamage(1);
-                    print("Vie du joueur si y'a eu un touche " + playerHealth.currentHealth);
                 }
             }
             else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))

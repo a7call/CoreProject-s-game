@@ -31,6 +31,7 @@ public class Distance : Enemy
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
         attackRange = DistanceData.attackRange;
+        timeToSwitch = DistanceData.timeToSwich;
     }
 
     protected override void isInRange()
@@ -39,23 +40,34 @@ public class Distance : Enemy
         {
             currentState = State.Attacking;
             isShooting = true;
-            rb.velocity = Vector2.zero;
+            isReadyToSwitchState = false;
         }
         else
         {
-            currentState = State.Chasing;
-            isShooting = false;
+            if (currentState == State.Attacking) StartCoroutine(transiChasing());
+            if (isReadyToSwitchState)
+            {
+                currentState = State.Chasing;
+                isShooting = false;
+            }
+           
         }
     }
 
+    
     // Check si prêt à tirer
     [SerializeField] protected bool isReadytoShoot = true;
     // Repos après tire
     protected float restTime;
     // Projectile to instantiate
     protected GameObject projetile;
-
-
+    protected bool isReadyToSwitchState;
+    [SerializeField] protected float timeToSwitch;
+    protected IEnumerator transiChasing()
+    {
+        yield return new WaitForSeconds(timeToSwitch);
+        isReadyToSwitchState = true;
+    }
     protected virtual IEnumerator CanShoot()
     {
         if (isShooting && isReadytoShoot)
@@ -85,5 +97,10 @@ public class Distance : Enemy
         }
     }
 
+
+    protected void DontMoveShooting()
+    {
+        rb.velocity = Vector2.zero;
+    }
 
 }

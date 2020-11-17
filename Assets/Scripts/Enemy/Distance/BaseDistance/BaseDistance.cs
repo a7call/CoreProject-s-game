@@ -32,17 +32,12 @@ public class BaseDistance : Distance
                 break;
             case State.Attacking:
                 isInRange();
+                DontMoveShooting();
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
                 break;
         }
 
     }
-
-    // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
-    protected override void Aggro()
-    {
-            targetPoint = target;
-    }
-
+    
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopPnj : MonoBehaviour
+public class ShopPNJ : MonoBehaviour
 {
 
     public Transform shopPnjTransform;

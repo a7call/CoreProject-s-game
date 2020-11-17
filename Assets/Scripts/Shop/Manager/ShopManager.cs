@@ -31,7 +31,7 @@ public class ShopManager : MonoBehaviour
 
     // Variable pour récuperer les données du joueur est du ShopPNJ
     private Player player;
-    private ShopPnj shopPnj;
+    private ShopPNJ shopPnj;
 
     private bool isPlayerShopping = false;
 
@@ -46,7 +46,7 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
-        shopPnj = FindObjectOfType<ShopPnj>();
+        shopPnj = FindObjectOfType<ShopPNJ>();
         inventory = FindObjectOfType<Inventory>();
 
         // On génére un tableau de false en début de jeu

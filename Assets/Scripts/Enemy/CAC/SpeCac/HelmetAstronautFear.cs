@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// A refaire ou à supprimer !
 public class HelmetAstronautFear : Cac
 {
-    
     private PlayerMouvement playerMouvement;
 
     // Variables liées à l'attaque qui fear
@@ -26,7 +26,7 @@ public class HelmetAstronautFear : Cac
        
         playerMouvement = FindObjectOfType<PlayerMouvement>();
 
-        currentState = State.Chasing;
+        currentState = State.Patrolling;
         // Get Player Reference
         FindPlayer();
         // Set target
@@ -42,8 +42,10 @@ public class HelmetAstronautFear : Cac
         switch (currentState)
         {
             default:
+            case State.Patrolling:
+                PlayerInSight();
+                break;
             case State.Chasing:
-                Aggro();
                 isInRange();
                 MoveToPath();
                 if (isFear)
@@ -123,64 +125,6 @@ public class HelmetAstronautFear : Cac
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    //Mouvement
-
-    // Override fonction Aggro (Enemy.cs)  => aggro à l'initialisation
-    protected override void Aggro()
-    {
-        targetPoint = target;
-    }
-
-
-    protected override void SetData()
-    {
-        base.SetData();
-    }
-
-    // Mouvement
-
-
-    // Voir Enemy.cs (héritage)
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    // Health
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-    // Voir Enemy.cs (héritage)
-    public override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-    // Voir Cac.cs (héritage)
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void GetPlayerPos()
-    {
-        base.GetPlayerPos();
-    }
-
-    // Voir Cac.cs (héritage)
     protected override void BaseAttack()
     {
         rb.velocity = Vector2.zero;
@@ -188,7 +132,7 @@ public class HelmetAstronautFear : Cac
 
         foreach (Collider2D h in hits)
         {
-            //Take dammage
+            playerHealth.TakeDamage(1);
         }
     }
 

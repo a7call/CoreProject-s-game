@@ -12,10 +12,8 @@ public class BubbleMS : Distance
     private bool firstShoot = true;
 
     void Start()
-    {
-        playerHealth = FindObjectOfType<PlayerHealth>();
-
-        currentState = State.Chasing;
+    { 
+        currentState = State.Patrolling;
         // Set premier targetPoint
         SetFirstPatrolPoint();
         // Set data
@@ -27,8 +25,10 @@ public class BubbleMS : Distance
         base.Update();
         switch (currentState)
         {
+            case State.Patrolling:
+                PlayerInSight();
+                break;
             case State.Chasing:
-                Aggro();
                 isInRange();
                 MoveToPath();
                 if(!firstShoot) rb.velocity = Vector2.zero;
