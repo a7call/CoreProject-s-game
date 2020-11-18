@@ -69,7 +69,7 @@ public class CacWeapons : Weapons
 
         base.Update();
         GetAttackDirection();
-        dir = (attackPoint.position - player.transform.position).normalized;
+        GetKnockBackDir();
         if (Input.GetMouseButton(0))
         {
             StartCoroutine(Attack());
@@ -137,5 +137,9 @@ public class CacWeapons : Weapons
             enemy.rb.isKinematic = false;
         }
 
+    }
+    private void GetKnockBackDir()
+    {
+        dir = (attackPoint.position - player.transform.position).normalized;
     }
 }

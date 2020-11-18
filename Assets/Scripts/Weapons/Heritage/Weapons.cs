@@ -22,6 +22,7 @@ public class Weapons : MonoBehaviour
     public Transform attackPoint;
     protected float attackRadius;
     protected float attackDelay;
+    [HideInInspector]
     public bool isAttacking = false;
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;

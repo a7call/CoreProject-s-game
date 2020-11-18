@@ -38,9 +38,9 @@ public class ElectrikSword : CacWeapons
 
         foreach (Collider2D enemyE in enemyElectrified)
         {
+            if (enemyE == enemy) continue;
             Enemy enemyH = enemyE.GetComponent<Enemy>();
             enemyH.TakeDamage(damage);
-            DamageToNearEnemyElectrified(enemyE);
         }
     }
 }
