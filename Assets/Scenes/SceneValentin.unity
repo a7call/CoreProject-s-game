@@ -2829,17 +2829,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 839267079145290884, guid: 664f727daeebc7842855a2320e4d6e27, type: 3}
-      propertyPath: WeaponData
-      value: 
-      objectReference: {fileID: 11400000, guid: 260c34a9dad99304a8961586647cb808, type: 2}
     - target: {fileID: 4319733253939091815, guid: 664f727daeebc7842855a2320e4d6e27, type: 3}
       propertyPath: m_Name
       value: Taser
       objectReference: {fileID: 0}
     - target: {fileID: 4319733253939091815, guid: 664f727daeebc7842855a2320e4d6e27, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5893097017295417440, guid: 664f727daeebc7842855a2320e4d6e27, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2944,7 +2940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2168784956161887989, guid: 95fcb171725b98048af80dd944c610b3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95fcb171725b98048af80dd944c610b3, type: 3}
@@ -3102,7 +3098,7 @@ PrefabInstance:
       objectReference: {fileID: 3215672818284486199, guid: 900447cddf316fe42bb26bbab4fd0426, type: 3}
     - target: {fileID: 6655770501543760638, guid: 43a10b37ae2dd6d489c70505c58af0e2, type: 3}
       propertyPath: chanceToGetAmoCase
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43a10b37ae2dd6d489c70505c58af0e2, type: 3}
@@ -3570,7 +3566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4222710106289304435, guid: 20d00fc34690b664b9905b49177f9728, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4222710106289304436, guid: 20d00fc34690b664b9905b49177f9728, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4612,13 +4608,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 434138718843060495, guid: ce664aaa5bf5a9146925cb1eacaf8a51, type: 3}
+      propertyPath: AmmoStock
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 5050124357231534407, guid: ce664aaa5bf5a9146925cb1eacaf8a51, type: 3}
       propertyPath: m_Name
       value: Carabine
       objectReference: {fileID: 0}
     - target: {fileID: 5050124357231534407, guid: ce664aaa5bf5a9146925cb1eacaf8a51, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5744481843100838521, guid: ce664aaa5bf5a9146925cb1eacaf8a51, type: 3}
       propertyPath: m_TagString
@@ -4748,7 +4748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8097735221954756042, guid: d571c2ef0189d61428ed9fbdf47619bc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097735221954756044, guid: d571c2ef0189d61428ed9fbdf47619bc, type: 3}
       propertyPath: m_IsTrigger

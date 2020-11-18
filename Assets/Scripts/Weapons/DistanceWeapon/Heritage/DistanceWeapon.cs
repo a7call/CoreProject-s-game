@@ -62,21 +62,10 @@ public class DistanceWeapon : Weapons
     {
 
     }
-    protected override void GetAttackDirection()
-    {
-
-        // position de la souris sur l'écran 
-        screenMousePos = Input.mousePosition;
-        // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
-        // position du point d'attaque 
-        attackPoint.position = new Vector2(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
-    }
 
     // Update is called once per frame
     protected override void Update()
     {
-
         base.Update();
 
         //UnlimitedAmmoModule
@@ -85,12 +74,12 @@ public class DistanceWeapon : Weapons
         GetAttackDirection();
         if (Input.GetMouseButton(0))
         {
-           StartCoroutine(Shoot());
+          CoroutineManager.Instance.StartCoroutine(Shoot());
         }
 
         if (Input.GetKeyDown(KeyCode.R) && (AmmoStock != 0 | InfiniteAmmo))
         {
-            StartCoroutine(Reload());
+             StartCoroutine(Reload());
         }
 
        
@@ -118,8 +107,10 @@ public class DistanceWeapon : Weapons
 
    protected virtual IEnumerator Shoot()
     {
-        if(!isAttacking && BulletInMag > 0 && !IsReloading)
+
+        if (!isAttacking && BulletInMag > 0 && !IsReloading)
         {
+            
             float decalage = Random.Range(-Dispersion, Dispersion);
             isAttacking = true;
             Proj.Dispersion = decalage;

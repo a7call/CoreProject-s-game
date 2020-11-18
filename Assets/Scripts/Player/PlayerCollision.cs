@@ -40,6 +40,7 @@ public class PlayerCollision: Player
             if (gameObject.GetComponentInChildren<WeaponManager>().GetComponentInChildren<DistanceWeapon>())
             {
                 DistanceWeapon weapon = gameObject.GetComponentInChildren<WeaponManager>().GetComponentInChildren<DistanceWeapon>();
+                print(weapon.gameObject);
                 weapon.AmmoStock += numberOfAmoInCase;
                 Destroy(collision.gameObject);
             }

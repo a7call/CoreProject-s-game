@@ -22,9 +22,7 @@ public class BaseCaC : Cac
     {
         base.Update();
         switch (currentState) {
-        default:
-                Debug.LogWarning("not implemented");
-                break;
+
         case State.Patrolling:
                 PlayerInSight();
             break;

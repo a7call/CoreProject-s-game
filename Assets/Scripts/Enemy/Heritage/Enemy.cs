@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour
         switch (currentState)
         {
             case State.Paralysed:
-                //animation;
+                rb.velocity = Vector2.zero;
                 break;
 
             case State.KnockedBack:
