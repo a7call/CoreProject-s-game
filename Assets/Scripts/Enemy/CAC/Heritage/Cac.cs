@@ -35,6 +35,7 @@ public class Cac : Enemy
         maxHealth = CacDatas.maxHealth;
         whiteMat = CacDatas.whiteMat;
         defaultMat = CacDatas.defaultMat;
+        timeToSwitch = CacDatas.timeToSwich;
     }
 
 
@@ -56,7 +57,7 @@ public class Cac : Enemy
 
         foreach (Collider2D h in hits)
         {
-            playerHealth.TakeDamage(20);
+            h.GetComponent<PlayerHealth>().TakeDamage(1);
             if (IsDontFuckWithMe)
             {
                 Destroy(gameObject);

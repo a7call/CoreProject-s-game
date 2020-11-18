@@ -136,19 +136,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Enemy take Player aggro 
-    protected virtual void Aggro()
-    {
-        if(currentState == State.Chasing)
-            // Change de target 
-            targetPoint = target;
-    }
 
     // Set le premier point de patrouille
     protected virtual void SetFirstPatrolPoint()
     {
         targetPoint = transform;
     }
+
+  
 
 
 
@@ -240,25 +235,44 @@ public class Enemy : MonoBehaviour
     //Attack
 
     protected float attackRange;
+
+    protected bool isReadyToSwitchState;
+    protected float timeToSwitch;
+    protected IEnumerator transiChasing()
+    {
+        yield return new WaitForSeconds(timeToSwitch);
+        isReadyToSwitchState = true;
+    }
+
+    
     protected virtual void isInRange()
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
             currentState = State.Attacking;
+            isReadyToSwitchState = false;
         }
         else
         {
-            currentState = State.Chasing;
+            if (currentState == State.Attacking) StartCoroutine(transiChasing());
+            if (isReadyToSwitchState)
+            {
+                currentState = State.Chasing;
+            }
+
         }
     }
-
     // Face le player quand il le suit
     void FacePlayer()
     {
         //to do
     }
 
+    protected virtual void Aggro()
+    {
 
+    }
+        
 
 
 

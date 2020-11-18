@@ -25,14 +25,9 @@ public class TentaculeAstronaute : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                // script de patrol
-                // Patrol();
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
@@ -45,12 +40,6 @@ public class TentaculeAstronaute : Distance
         }
     }
 
-    // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
-    protected override void Aggro()
-    {
-        targetPoint = target;
-    }
- 
     // Couroutine du shoot
     protected override IEnumerator CanShoot()
     {

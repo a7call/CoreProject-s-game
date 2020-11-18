@@ -20,14 +20,9 @@ public class TentaculeAstronauteSpawner : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                // script de patrol
-                // Patrol();
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
@@ -35,6 +30,7 @@ public class TentaculeAstronauteSpawner : Distance
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
+                DontMoveShooting();
                 StartCoroutine("CanShoot");
                 break;
         }

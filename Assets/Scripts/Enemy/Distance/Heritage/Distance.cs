@@ -61,13 +61,6 @@ public class Distance : Enemy
     protected float restTime;
     // Projectile to instantiate
     protected GameObject projetile;
-    protected bool isReadyToSwitchState;
-    [SerializeField] protected float timeToSwitch;
-    protected IEnumerator transiChasing()
-    {
-        yield return new WaitForSeconds(timeToSwitch);
-        isReadyToSwitchState = true;
-    }
     protected virtual IEnumerator CanShoot()
     {
         if (isShooting && isReadytoShoot)

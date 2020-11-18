@@ -23,8 +23,8 @@ public class Weapons : MonoBehaviour
     protected float attackRadius;
     protected float attackDelay;
     public bool isAttacking = false;
-    Vector3 screenMousePos;
-    Vector3 screenPlayerPos;
+    protected Vector3 screenMousePos;
+    protected Vector3 screenPlayerPos;
 
     protected virtual void Awake()
     {
