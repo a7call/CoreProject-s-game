@@ -40,7 +40,7 @@ public class Laser : Projectile
             Debug.DrawRay(transform.position, dir * 10, Color.red);
             if (hit.collider != null)
             {
-                playerHealth.TakeDamage(20);
+                playerHealth.TakeDamage(1);
             }
            
 

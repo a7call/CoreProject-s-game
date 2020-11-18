@@ -56,6 +56,16 @@ public class RewardSpawner : MonoBehaviour
     [HideInInspector]
     public static float VoleurCoinChanceMultiplier;
 
+    //ChercheurDeTresorModule
+    [HideInInspector]
+    protected bool isChercheurDeTresorAlreadyUse = false;
+    [HideInInspector]
+    public static bool isChercheurDeTresorModule;
+    [HideInInspector]
+    public static float TresorKeyChanceMultiplier;
+    [HideInInspector]
+    public static float TresorCoffreChanceMultiplier;
+
 
 
     private float MinimumCoins()
@@ -99,7 +109,16 @@ public class RewardSpawner : MonoBehaviour
             isMoissoneurDeCrystauxModuleAlreadyUse = true;
         }
 
-        
+        if (isChercheurDeTresorModule && !isChercheurDeTresorAlreadyUse)
+        {
+            chanceToGetCoffreArme *= TresorCoffreChanceMultiplier;
+            chanceToGetCoffreModule *= TresorCoffreChanceMultiplier;
+
+            chanceToGetKey *= TresorKeyChanceMultiplier;
+
+            isChercheurDeTresorAlreadyUse = true;
+        }
+
     }
 
     public void RandomCoinReward(GameObject deadEnemy)
@@ -189,4 +208,31 @@ public class RewardSpawner : MonoBehaviour
         }
     }
 
+    [SerializeField] private GameObject CoffreArme = null;
+    [SerializeField] private float chanceToGetCoffreArme =0f;
+
+
+
+    public void SpawnCoffreArmeReward(GameObject deadEnemy)
+    {
+        if (ChanceToDrop() >= 1 - chanceToGetCoffreArme)
+        {
+            Instantiate(CoffreArme, deadEnemy.transform.position, Quaternion.identity);
+        }
+    }
+
+
+    [SerializeField] private GameObject CoffreModule = null;
+    [SerializeField] private float chanceToGetCoffreModule = 0f;
+
+
+
+    public void SpawnCoffreModuleReward(GameObject deadEnemy)
+    {
+        if (ChanceToDrop() >= 1 - chanceToGetCoffreModule)
+        {
+            Debug.Log("popCoffreModule");
+            Instantiate(CoffreModule, deadEnemy.transform.position, Quaternion.identity);
+        }
+    }
 }

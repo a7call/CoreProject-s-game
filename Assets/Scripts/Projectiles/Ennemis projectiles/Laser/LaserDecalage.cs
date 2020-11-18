@@ -73,7 +73,7 @@ public class LaserDecalage : Projectile
 
             if (hit.collider != null)
             {
-                playerHealth.TakeDamage(20);
+                playerHealth.TakeDamage(1);
             }
 
         }
