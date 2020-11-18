@@ -23,8 +23,7 @@ public class ShopManager : MonoBehaviour
     private float initConsommablesChance = 50f;
     private float consommablesChance;
     private float weaponsChance = 50f;
-
-    // private int cost;
+    private int count = 0;
 
     // Variable de type Text UI qui correspond à l'argent du joueur
     public Text goldPlayerShopView;
@@ -43,23 +42,19 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private float distanceToShop = 5f;
     private bool isInRange;
 
+
     private void Start()
     {
         player = FindObjectOfType<Player>();
         shopPnj = FindObjectOfType<ShopPNJ>();
         inventory = FindObjectOfType<Inventory>();
 
-        // On génére un tableau de false en début de jeu
-        //GenerateFalseTable();
-        // On remplit un tableau aléatoirement
         CompleteTable();
     }
 
     private void Update()
     {
         CanShop();
-        OnPlayerShop();
-
 
         switch (player.currentEtat)
         {
@@ -72,7 +67,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    // Méthode pour savoir si le joueur est en range d'ouvrir le shop
+    // Méthode qui permet au joueur d'ouvrir le shop si il se trouve dans la range
     private void CanShop()
     {
         if (Vector3.Distance(shopPnj.shopPnjTransform.position, player.transform.position) <= distanceToShop) isInRange = true;
@@ -83,22 +78,14 @@ public class ShopManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 isPlayerShopping = true;
+                shopManagerUI.SetActive(true);
+                player.currentEtat = Player.EtatJoueur.shopping;
             }
         }
     }
 
-    // Méthode pour activer le shop
-    private void OnPlayerShop()
-    {
-        if (isPlayerShopping == true)
-        {
-            shopManagerUI.SetActive(true);
-            player.currentEtat = Player.EtatJoueur.shopping;
-        }
-    }
-
     // Méthode pour désactiver le shop
-    // Déclarer en public car on l'instancie à l'aide d'un OnClick sur le button (de ce fait, elle n'est pas appellée dans le Update)
+    // Déclarer en public car on l'instancie à l'aide d'un OnClick sur le button (elle n'est pas appellée dans le Update)
     public void PlayerLeaveShop()
     {
         shopManagerUI.SetActive(false);
@@ -106,52 +93,29 @@ public class ShopManager : MonoBehaviour
         player.currentEtat = Player.EtatJoueur.normal;
     }
 
-    // Permet de montrer dans le shop l'argent que possède le jour
+    // Permet de montrer dans le shop l'argent que possède le joueur
     public void GoldViewOnShop()
     {
         goldPlayerShopView.text = inventory.goldPlayer.ToString();
     }
 
-    // On appelle la fonction en appuyant sur le button
-    //public void BuyAnItem()
-    //{
-    //    Text A = gameObject.GetComponent<ShopItem>().textPrice.GetComponent<Text>();
-    //    string tempParse = A;
-    //    cost = int.Parse(tempParse);
-    //    print(cost + " de type " + cost.GetType());
-
-
-    //    if (inventory.goldPlayer >= )
-    //    {
-
-    //    }
-    //}
-
-    // Mis en commentaire car on ne l'utilise pas pour l'instant
-    //private void GenerateFalseTable()
-    //{
-    //    for (int row = 0; row < tableau.GetLength(0); row++)
-    //    {
-    //        //print("Ligne " + (row+1) + " du tableau.");
-    //        for (int column = 0; column < tableau.GetLength(1); column++)
-    //        {
-    //            tableau[row, column] = false ;
-    //            //print(tableau[row, column] + ":");
-    //        }
-    //    }
-    //}
-
-    private void CompleteTable()
+    private void DeleteElement()
     {
         // Supprime les éléments contenus par défaut
         for (int i = 0; i < sellButtonsParents.childCount; i++)
         {
             Destroy(sellButtonsParents.GetChild(i).gameObject);
         }
+    }
+
+    // Méthode qui permet de générer le shop de manière aléatoire
+    private void CompleteTable()
+    {
+        DeleteElement();
 
         // Génère les consommables
-        // Si le tableau est vide de base, on s'assure d'au moins donner le premier objet
-        int count = 0;
+        // De plus si par malchance le shop est vide, on s'assure d'au moins donner le premier consommable
+        // C'est ce que à quoi sert la variable count
         for (int row = 0; row < rowConsommable ; row++)
         {
             for (int column = 0; column < tableau.GetLength(1); column++)
@@ -169,7 +133,6 @@ public class ShopManager : MonoBehaviour
                     if(row==0 && column == 0)
                     {
                         Instantiate(halfHp, sellButtonsParents);
-                        
                     }
                     else if(row == 0 && column == 1)
                     {
@@ -201,12 +164,11 @@ public class ShopManager : MonoBehaviour
   
         }
 
-        if (count==(rowConsommable * tableau.GetLength(1)))
+        if (count == (rowConsommable * tableau.GetLength(1)))
         {
-            Instantiate(halfHp, sellButtonsParents);
+            count = 0;
+            CompleteTable();
         }
-
-        
 
         // A moduler selon la rareté des armes
         for (int row = rowConsommable ; row < tableau.GetLength(0); row++)
@@ -218,33 +180,19 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-
-    // Fonction qui ajoute l'item de la liste à l'invitaire si il est présent dans la liste
-    //private void AddItemToInventory()
+    // // MIS EN COMMENTAIRE CAR ON NE L'UTILISE PAS POUR L'INSTANT
+    // // PERMET DE GENERER UN TABLEAU DE FALSE
+    //private void GenerateFalseTable()
     //{
-    //    foreach (ShopItemButton item in shopPanel)
+    //    for (int row = 0; row < tableau.GetLength(0); row++)
     //    {
-
+    //        //print("Ligne " + (row+1) + " du tableau.");
+    //        for (int column = 0; column < tableau.GetLength(1); column++)
+    //        {
+    //            tableau[row, column] = false ;
+    //            //print(tableau[row, column] + ":");
+    //        }
     //    }
     //}
 
-    private void RemoveItemOfShopList()
-    {
-        // Fonction qui retire l'item de la liste si il n'est plus présent dans le panel
-    }
-
-    //private void Test()
-    //{
-    //    foreach (GameObject item in shopItems)
-    //    {
-    //        print("Le nom de l'item" + item.name);
-            
-    //        Text textContent = item.GetComponent<ShopItem>().textPrice.GetComponent<Text>();
-    //        print(textContent.text);
-
-    //    //string tempParse = item.
-    //    //cost = int.Parse(tempParse);
-    //    //print(cost + " de type " + cost.GetType());
-    //    }
-    //}
 }
