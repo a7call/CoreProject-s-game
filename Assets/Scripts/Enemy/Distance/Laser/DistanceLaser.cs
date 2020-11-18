@@ -32,6 +32,7 @@ public class DistanceLaser : Distance
         //Debug.Log(isEnemyAlive);
 
         base.Update();
+
         switch (currentState)
         {
             case State.Patrolling:
@@ -61,17 +62,7 @@ public class DistanceLaser : Distance
     }
 
 
-    public override void TakeDamage(int _damage)
-    {
-        currentHealth -= _damage;
-        StartCoroutine(WhiteFlash());
-        if (currentHealth < 1)
-        {
-            isEnemyAlive = false;
-            Destroy(gameObject);
-            Debug.Log("destroy ");
-        }
-    }
+ 
 
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
