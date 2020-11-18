@@ -196,6 +196,8 @@ public class Enemy : MonoBehaviour
             rewardSpawner.SpawnKeyReward(this.gameObject);
             rewardSpawner.SpawnHeartReward(this.gameObject);
             rewardSpawner.SpawnAmoReward(this.gameObject);
+            rewardSpawner.SpawnCoffreArmeReward(this.gameObject);
+            rewardSpawner.SpawnCoffreModuleReward(this.gameObject);
             Destroy(gameObject);
         }
     }
