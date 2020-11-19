@@ -13,6 +13,7 @@ public class PompeDistanceEnemy : Distance
     [SerializeField] int angleTir = 0;
     public AngleProjectile AngleProjectile; // à corriger
 
+
     void Start()
     {
         currentState = State.Patrolling;
@@ -22,6 +23,7 @@ public class PompeDistanceEnemy : Distance
         SetData();
         SetMaxHealth();
     }
+
     protected override void Update()
     {
         base.Update();
@@ -46,7 +48,6 @@ public class PompeDistanceEnemy : Distance
         }
 
     }
-
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {

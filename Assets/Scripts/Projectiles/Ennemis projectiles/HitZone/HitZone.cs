@@ -33,7 +33,7 @@ public class HitZone : MonoBehaviour
             {
                 if (h.CompareTag("Player"))
                 {
-                    playerHealth.TakeDamage(20);
+                    playerHealth.TakeDamage(1);
                 }
                
 

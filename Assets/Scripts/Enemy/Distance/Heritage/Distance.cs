@@ -14,7 +14,7 @@ public class Distance : Enemy
     // Scriptable Object
     [SerializeField] protected DistanceScriptableObject DistanceData;
     // Check si tire
-    [SerializeField] public bool isShooting;
+    public bool isShooting;
 
 
     protected virtual void SetData()

@@ -6,7 +6,7 @@ public class LaserProj : PlayerProjectiles
 {
     [SerializeField] float activeTime = 0f;
     [SerializeField] protected LayerMask HitLayer = 0;
-    protected Enemy enemy;
+    //protected Enemy enemy;
     
 
     protected override void Update()
@@ -22,6 +22,7 @@ public class LaserProj : PlayerProjectiles
             Debug.DrawRay(weaponAttackP.attackPoint.position, dir * 10, Color.red);
             if (hit.collider != null)
             {
+                
                 enemy.TakeDamage(weaponDamage);
             }
         

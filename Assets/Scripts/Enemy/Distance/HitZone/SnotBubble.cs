@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class SnotBubble : Distance
 {
-    [SerializeField] protected GameObject HitZoneGO;
-    
+    //[SerializeField] protected GameObject HitZoneGO;
+
 
     void Start()
     {
@@ -26,30 +26,25 @@ public class SnotBubble : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
                 break;
-            case State.Attacking:
-                isInRange();
-                // Couroutine gérant les shoots 
-                StartCoroutine("CanShoot");
-                break;
+            
         }
 
-
     }
+ 
+    
+}
 
     // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
-    protected override void Aggro()
-    {
-        targetPoint = target;
-        GameObject.Instantiate(HitZoneGO, transform.position, Quaternion.identity);
+   // protected override void Aggro()
+    //{
+      //  targetPoint = target;
+        //GameObject.Instantiate(HitZoneGO, transform.position, Quaternion.identity);
 
-    }
-}
+    //}
+

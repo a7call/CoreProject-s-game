@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 843201367665889978}
   - component: {fileID: 843201367665889979}
   - component: {fileID: 2861753254431760664}
+  - component: {fileID: 3505065083546226118}
   m_Layer: 9
   m_Name: SnotBubble
   m_TagString: Enemy
@@ -161,6 +162,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
+--- !u!114 &3505065083546226118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843201367665889981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d212b4b76998f4e4f95d8c17b9743a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  isAlreadyElectrified: 0
+  nextWayPointDistance: 3
+  moveSpeed: 0
+  isSlowed: 0
+  target: {fileID: 0}
+  rb: {fileID: 0}
+  currentHealth: 0
+  maxHealth: 0
+  healthBar: {fileID: 843201368574001634}
+  spriteRenderer: {fileID: 843201367665889979}
+  healthBarGFX: {fileID: 843201368574001637}
+  timeBeforeDesactive: 0
+  isTakingDot: 0
+  DistanceData: {fileID: 11400000, guid: a8fbd9d6a3737431180708c1d1dd6715, type: 2}
+  isShooting: 0
+  isReadytoShoot: 1
 --- !u!1 &843201367879394988
 GameObject:
   m_ObjectHideFlags: 0

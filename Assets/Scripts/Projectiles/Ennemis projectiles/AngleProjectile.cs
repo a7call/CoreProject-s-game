@@ -23,26 +23,8 @@ public class AngleProjectile : Projectile
         GetDirection();
         ConeShoot();
 
-
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            // Damage
-        }
-        base.OnTriggerEnter2D(collision);
-        
-        
-    }
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-        //modifier angle
-        
-    }
 
     protected override void Lauch()
     {
