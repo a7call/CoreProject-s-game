@@ -8,17 +8,15 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
     [SerializeField] protected float directionUpdateTime;
     [SerializeField] protected float detectionRadius;
     protected GameObject lockedEnemy;
-
-
-    private bool isDirUpdate;
     private bool isEnemyLocked;
+    public Rigidbody2D rb;
 
 
     protected override void Update()
     {
         base.Update();
         LockEnemy();
-        if (!isDirUpdate && isEnemyLocked) StartCoroutine(UpdateDirection());
+
 
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -35,12 +33,31 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
 
 
     }
-    private IEnumerator UpdateDirection()
+    private void UpdateDirection()
     {
-        isDirUpdate = true;
-        directionTir = (lockedEnemy.transform.position - transform.position).normalized;
-        yield return new WaitForSeconds(directionUpdateTime);
+       
+        Vector3 direction= (lockedEnemy.transform.position - transform.position).normalized;
+        float rotateAmount = Vector3.Cross(direction, transform.up).z;
+        Vector3.RotateTowards(transform.forward, direction, 500f * Time.deltaTime,0f);
+        
 
+    }
+
+    protected override void Launch()
+    {
+        if (isEnemyLocked)
+        {
+            Vector2 direction = ((Vector2)lockedEnemy.transform.position - rb.position);
+            direction.Normalize();
+            float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
+            rb.angularVelocity = -rotationAmount * 200f;
+            rb.velocity = (transform.up*directionTir.y+transform.right*directionTir.x)* speed;
+            
+        }
+        else
+        {
+           transform.Translate(directionTir * speed* Time.deltaTime, Space.World);
+        }
     }
 
     private void LockEnemy()
@@ -52,7 +69,5 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
             isEnemyLocked = true;
             lockedEnemy = enemy.gameObject;
         }
-           
-        
     }
 }

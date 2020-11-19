@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4046720032284086601}
   - component: {fileID: 7846858748072340237}
   - component: {fileID: 7521237069765907618}
+  - component: {fileID: 5786724536287125436}
   m_Layer: 0
   m_Name: ExplosionProjectileLanceRoquetteTeteChercheuse
   m_TagString: Untagged
@@ -124,6 +125,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerProjectileData: {fileID: 11400000, guid: 04c34348d3c137749a948130fe38e2dd, type: 2}
   Dispersion: 0.1
+  isDirUpdat: 0
   explosionRadius: 1
   directionUpdateTime: 0.3
   detectionRadius: 2
+  rb: {fileID: 5786724536287125436}
+--- !u!50 &5786724536287125436
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534053402315269177}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
