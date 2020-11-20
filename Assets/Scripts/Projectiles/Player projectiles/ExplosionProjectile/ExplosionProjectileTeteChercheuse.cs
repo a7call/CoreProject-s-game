@@ -7,6 +7,7 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
     [SerializeField] protected float explosionRadius;
     [SerializeField] protected float directionUpdateTime;
     [SerializeField] protected float detectionRadius;
+    [SerializeField] protected float angularSpeed = 0f;
     protected GameObject lockedEnemy;
     private bool isEnemyLocked;
     public Rigidbody2D rb;
@@ -33,15 +34,6 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
 
 
     }
-    private void UpdateDirection()
-    {
-       
-        Vector3 direction= (lockedEnemy.transform.position - transform.position).normalized;
-        float rotateAmount = Vector3.Cross(direction, transform.up).z;
-        Vector3.RotateTowards(transform.forward, direction, 500f * Time.deltaTime,0f);
-        
-
-    }
 
     protected override void Launch()
     {
@@ -50,13 +42,13 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
             Vector2 direction = ((Vector2)lockedEnemy.transform.position - rb.position);
             direction.Normalize();
             float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
-            rb.angularVelocity = -rotationAmount * 200f;
-            rb.velocity = (transform.up*directionTir.y+transform.right*directionTir.x)* speed;
-            
+            rb.angularVelocity = -rotationAmount * angularSpeed;
+            rb.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * speed;
+            angularSpeed++;
         }
         else
         {
-           transform.Translate(directionTir * speed* Time.deltaTime, Space.World);
+            transform.Translate(directionTir * speed * Time.deltaTime, Space.World);
         }
     }
 

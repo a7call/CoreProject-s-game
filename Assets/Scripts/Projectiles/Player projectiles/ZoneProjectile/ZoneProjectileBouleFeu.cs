@@ -24,9 +24,10 @@ public class ZoneProjectileBouleFeu : PlayerProjectiles
 
     private IEnumerator ZoneCo()
     {
+        Vector2 pos = transform.position;
         while (isActive)
         {
-            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, zoneRadius, weaponLayer);
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(pos, zoneRadius, weaponLayer);
 
             yield return new WaitForSeconds(hitTimer);
             foreach (Collider2D enemyCol in enemies)
