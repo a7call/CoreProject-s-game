@@ -21,6 +21,7 @@ public class Cac : Enemy
     //DontFuckModule
     [HideInInspector]
     public static bool IsDontFuckWithMe = false;
+    protected float attackDelay;
 
     // Set data du scriptable object Type1Data
     protected virtual void SetData()
@@ -36,6 +37,7 @@ public class Cac : Enemy
         whiteMat = CacDatas.whiteMat;
         defaultMat = CacDatas.defaultMat;
         timeToSwitch = CacDatas.timeToSwich;
+        attackDelay = CacDatas.attackDelay;
     }
 
 
@@ -47,21 +49,27 @@ public class Cac : Enemy
     protected LayerMask hitLayers;
     // Check si l'ennemi est en range d'attaque
     protected bool isInAttackRange;
-    
+    protected bool isAttacking;
 
     // CAC attack (TK enable or disable)
-    protected virtual void BaseAttack()
+    protected virtual IEnumerator BaseAttack()
     {
-        rb.velocity = Vector2.zero;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
-
-        foreach (Collider2D h in hits)
+        if (!isAttacking)
         {
-            h.GetComponent<PlayerHealth>().TakeDamage(1);
-            if (IsDontFuckWithMe)
+            isAttacking = true;
+            rb.velocity = Vector2.zero;
+            Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
+
+            foreach (Collider2D h in hits)
             {
-                Destroy(gameObject);
+                h.GetComponent<PlayerHealth>().TakeDamage(1);
+                if (IsDontFuckWithMe)
+                {
+                    Destroy(gameObject);
+                }
             }
+            yield return new WaitForSeconds(attackDelay);
+            isAttacking = false;
         }
     }
 

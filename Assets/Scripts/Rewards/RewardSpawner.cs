@@ -208,6 +208,17 @@ public class RewardSpawner : MonoBehaviour
         }
     }
 
+    [SerializeField] private GameObject armor = null;
+    [SerializeField] private float chanceToGetArmor = 0f;
+
+    public void SpawnArmorReward(GameObject deadEnemy)
+    {
+        if (ChanceToDrop() >= 1 - chanceToGetArmor)
+        {
+            Instantiate(armor, deadEnemy.transform.position, Quaternion.identity);
+        }
+    }
+
     [SerializeField] private GameObject CoffreArme = null;
     [SerializeField] private float chanceToGetCoffreArme =0f;
 
@@ -235,4 +246,6 @@ public class RewardSpawner : MonoBehaviour
             Instantiate(CoffreModule, deadEnemy.transform.position, Quaternion.identity);
         }
     }
+
+
 }

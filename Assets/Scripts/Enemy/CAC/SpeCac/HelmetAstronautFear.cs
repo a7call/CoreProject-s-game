@@ -66,7 +66,7 @@ public class HelmetAstronautFear : Cac
                     StartCoroutine(FearAttack());
 
                 }
-                BaseAttack();
+                StartCoroutine(BaseAttack());
                 GetPlayerPos();
                 isInRange();
                 break;
@@ -125,15 +125,4 @@ public class HelmetAstronautFear : Cac
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    protected override void BaseAttack()
-    {
-        rb.velocity = Vector2.zero;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
-
-        foreach (Collider2D h in hits)
-        {
-            playerHealth.TakeDamage(1);
-        }
-    }
-
 }

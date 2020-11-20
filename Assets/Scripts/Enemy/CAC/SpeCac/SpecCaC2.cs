@@ -100,7 +100,7 @@ public class SpecCaC2 : Cac
                     StartCoroutine(FearAttack());
                     
                 }
-                BaseAttack();
+                StartCoroutine(BaseAttack());
                 GetPlayerPos();
                 isInRange();
                 break;
@@ -181,68 +181,5 @@ public class SpecCaC2 : Cac
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    //Mouvement
-
-    // Override fonction Aggro (Enemy.cs)  => aggro à l'initialisation
-    protected override void Aggro()
-    {
-        targetPoint = target;
-    }
-
-
-    protected override void SetData()
-    {
-        base.SetData();
-    }
-
-    // Mouvement
-
-
-    // Voir Enemy.cs (héritage)
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    // Health
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-    // Voir Enemy.cs (héritage)
-    public override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
-    }
-
-
-    // Voir Cac.cs (héritage)
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void GetPlayerPos()
-    {
-        base.GetPlayerPos();
-    }
-
-    // Voir Cac.cs (héritage)
-    protected override void BaseAttack()
-    {
-        base.BaseAttack();
-    }
-
 
 }

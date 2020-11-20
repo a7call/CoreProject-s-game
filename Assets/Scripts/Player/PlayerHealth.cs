@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class PlayerHealth : Player
 {
-
+    [HideInInspector]
     public int currentHealth;
+    public int currentArmor;
     private bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
@@ -40,7 +41,7 @@ public class PlayerHealth : Player
     //Pour tester la fonction Take1Damage
     protected void Update()
     {
-        AddLifePlayer();
+        //AddLifePlayer();
         UpdateUILife();
         Take1Damage();
     }
@@ -55,9 +56,18 @@ public class PlayerHealth : Player
     {
         if (!isInvincible)
         {
-        currentHealth -= damage;
-        StartCoroutine(InvincibilityDelay());
-        StartCoroutine(InvincibilityFlash());
+            if (currentArmor >0)
+            {
+                currentArmor -= damage;
+                StartCoroutine(InvincibilityDelay());
+                StartCoroutine(InvincibilityFlash());
+            }
+            else
+            {
+                currentHealth -= damage;
+                StartCoroutine(InvincibilityDelay());
+                StartCoroutine(InvincibilityFlash());
+            }
         }
 
         if (currentHealth <= 0 && !isLastChanceModule)
@@ -100,11 +110,12 @@ public class PlayerHealth : Player
         isInvincible = false;
     }
 
-    private void AddLifePlayer()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
+    public void AddLifePlayer(int health)
+    {   
+       currentHealth += health;
+       if(currentHealth > maxHealth)
         {
-            currentHealth += 1;
+            currentHealth = maxHealth;
         }
     }
 

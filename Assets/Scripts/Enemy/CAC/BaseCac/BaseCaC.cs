@@ -34,7 +34,7 @@ public class BaseCaC : Cac
         case State.Attacking:
                 isInRange();
                 GetPlayerPos();
-                BaseAttack();
+               StartCoroutine(BaseAttack());
                 break;
            
         }

@@ -21,13 +21,17 @@ public class PlayerCollision: Player
         }
         else if (collision.CompareTag("HalfHeart"))
         {
-            inventory.numberOfHearts += 1;
-            
+            GetComponent<PlayerHealth>().AddLifePlayer(1);
+            Destroy(collision.gameObject);
+        }else if (collision.CompareTag("Armor"))
+        {
+            GetComponent<PlayerHealth>().currentArmor += 1;
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("FullHeart"))
         {
-            inventory.numberOfHearts += 2;
+
+            GetComponent<PlayerHealth>().AddLifePlayer(1);
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("Currency"))

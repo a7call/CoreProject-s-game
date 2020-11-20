@@ -42,7 +42,7 @@ public class SpeCaC : Cac
                 break;
 
             case State.Attacking:
-                BaseAttack();
+                StartCoroutine(BaseAttack());
                 GetPlayerPos();
                 isInRange();
                 break;
@@ -51,13 +51,6 @@ public class SpeCaC : Cac
         }       
 
     }
-
-    protected override void SetData()
-    {
-        base.SetData();
-    }
-
-    // Mouvement
 
 
     // Aggro si pas entrain de charger + Instantiate trash (BaseCaC.cs) 
@@ -70,38 +63,6 @@ public class SpeCaC : Cac
                 Instantiate(mobs, transform.position, Quaternion.identity);
             }
             targetPoint = target;
-    }
-
-    protected override void PlayerInSight()
-    {
-        base.PlayerInSight();
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetFirstPatrolPoint()
-    {
-        base.SetFirstPatrolPoint();
-    }
-
-
-    // Health
-
-    // Voir Enemy.cs (héritage)
-    protected override void SetMaxHealth()
-    {
-        base.SetMaxHealth();
-    }
-
-    // Voir Enemy.cs (héritage)
-    public override void TakeDamage(int _damage)
-    {
-        base.TakeDamage(_damage);
-    }
-
-    // Voir Enemy.cs (héritage)
-    protected override IEnumerator WhiteFlash()
-    {
-        return base.WhiteFlash();
     }
 
 
@@ -149,21 +110,4 @@ public class SpeCaC : Cac
         }
 
     }
-    // Voir Cac.cs (héritage)
-    protected override void isInRange()
-    {
-        base.isInRange();
-    }
-    // Voir Enemy.cs (héritage)
-    protected override void GetPlayerPos()
-    {
-        base.GetPlayerPos();
-    }
-    // Voir Cac.cs (héritage)
-    protected override void BaseAttack()
-    {
-        base.BaseAttack();
-    }
-
-
 }
