@@ -21,8 +21,10 @@ public class PlayerCollision: Player
         }
         else if (collision.CompareTag("HalfHeart"))
         {
-            GetComponent<PlayerHealth>().AddLifePlayer(1);
             Destroy(collision.gameObject);
+            print("test");
+            GetComponent<PlayerHealth>().AddLifePlayer(1);
+            
         }else if (collision.CompareTag("Armor"))
         {
             GetComponent<PlayerHealth>().currentArmor += 1;
@@ -43,9 +45,10 @@ public class PlayerCollision: Player
         {
             if (gameObject.GetComponentInChildren<WeaponManager>().GetComponentInChildren<DistanceWeapon>())
             {
+                Destroy(collision.gameObject);
                 DistanceWeapon weapon = gameObject.GetComponentInChildren<WeaponManager>().GetComponentInChildren<DistanceWeapon>();
                 weapon.AmmoStock += numberOfAmoInCase;
-                Destroy(collision.gameObject);
+               
             }
             if (gameObject.GetComponentInChildren<WeaponManager>().GetComponentInChildren<CacWeapons>())
             {
