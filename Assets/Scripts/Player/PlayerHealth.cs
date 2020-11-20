@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class PlayerHealth : Player
 {
-    [HideInInspector]
+    //[HideInInspector]
     public int currentHealth;
     public int currentArmor;
     private bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
-    
+
 
     public SpriteRenderer graphics;
 
@@ -23,14 +23,20 @@ public class PlayerHealth : Player
     public Image image2;
     [HideInInspector]
     public Image image3;
+    [HideInInspector]
+    public Image image4;
 
     [HideInInspector]
     public Sprite emptyHearth;
     [HideInInspector]
     public Sprite halfHearth;
     [HideInInspector]
-    public Sprite fullHeart;
+    public Sprite fullHearth;
+
     public static bool isLastChanceModule = false;
+
+    // Lié aux modules du PowerUp
+    [HideInInspector] public static bool isPowerUp = false;
 
     protected override void Awake()
     {
@@ -48,15 +54,15 @@ public class PlayerHealth : Player
 
     public void SetMaxHealth()
     {
-        currentHealth =  maxHealth;
-        
+        currentHealth = maxHealth;
+
     }
 
     public void TakeDamage(int damage)
     {
         if (!isInvincible)
         {
-            if (currentArmor >0)
+            if (currentArmor > 0)
             {
                 currentArmor -= damage;
                 StartCoroutine(InvincibilityDelay());
@@ -77,7 +83,7 @@ public class PlayerHealth : Player
             //Debug.Log("Mort");
         }
 
-        else if (currentHealth <=0 && isLastChanceModule)
+        else if (currentHealth <= 0 && isLastChanceModule)
         {
             currentHealth = maxHealth;
             isLastChanceModule = false;
@@ -95,7 +101,7 @@ public class PlayerHealth : Player
 
     private IEnumerator InvincibilityFlash()
     {
-        while(isInvincible){
+        while (isInvincible) {
             graphics.color = new Color(1f, 1f, 1f, 0f);
             yield return new WaitForSeconds(InvincibilityFlashDelay);
             graphics.color = new Color(1f, 1f, 1f, 1f);
@@ -111,9 +117,9 @@ public class PlayerHealth : Player
     }
 
     public void AddLifePlayer(int health)
-    {   
-       currentHealth += health;
-       if(currentHealth > maxHealth)
+    {
+        currentHealth += health;
+        if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
@@ -121,47 +127,118 @@ public class PlayerHealth : Player
 
     private void UpdateUILife()
     {
-        if(currentHealth==maxHealth)
+
+        if (isPowerUp == false)
         {
-            image1.sprite = fullHeart;
-            image2.sprite = fullHeart;
-            image3.sprite = fullHeart;
+            if (currentHealth == maxHealth)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = fullHearth;
+            }
+            else if (currentHealth == maxHealth - 1)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = halfHearth;
+            }
+            else if (currentHealth == maxHealth - 2)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 3)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = halfHearth;
+                image3.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 4)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = emptyHearth;
+                image3.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 5)
+            {
+                image1.sprite = halfHearth;
+                image2.sprite = emptyHearth;
+                image3.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 6)
+            {
+                image1.sprite = emptyHearth;
+                image2.sprite = emptyHearth;
+                image3.sprite = emptyHearth;
+            }
         }
-        else if (currentHealth == maxHealth - 1)
+        else
         {
-            image1.sprite = fullHeart;
-            image2.sprite = fullHeart;
-            image3.sprite = halfHearth;
-        }
-        else if (currentHealth == maxHealth - 2)
-        {
-            image1.sprite = fullHeart;
-            image2.sprite = fullHeart;
-            image3.sprite = emptyHearth;
-        }
-        else if (currentHealth == maxHealth - 3)
-        {
-            image1.sprite = fullHeart;
-            image2.sprite = halfHearth;
-            image3.sprite = emptyHearth;
-        }
-        else if (currentHealth == maxHealth - 4)
-        {
-            image1.sprite = fullHeart;
-            image2.sprite = emptyHearth;
-            image3.sprite = emptyHearth;
-        }
-        else if (currentHealth == maxHealth - 5)
-        {
-            image1.sprite = halfHearth;
-            image2.sprite = emptyHearth;
-            image3.sprite = emptyHearth;
-        }
-        else if (currentHealth == maxHealth - 6)
-        {
-            image1.sprite = emptyHearth;
-            image2.sprite = emptyHearth;
-            image3.sprite = emptyHearth;
+            image4.enabled = true;
+            if (currentHealth == maxHealth)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = fullHearth;
+                image4.sprite = fullHearth;
+            }
+            else if (currentHealth == maxHealth - 1)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = fullHearth;
+                image4.sprite = halfHearth;
+            }
+            else if (currentHealth == maxHealth - 2)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = fullHearth;
+                image4.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 3)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = halfHearth;
+                image4.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 4)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = fullHearth;
+                image3.sprite = emptyHearth;
+                image4.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 5)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = halfHearth;
+                image3.sprite = emptyHearth;
+                image4.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 6)
+            {
+                image1.sprite = fullHearth;
+                image2.sprite = emptyHearth;
+                image3.sprite = emptyHearth;
+                image4.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 7)
+            {
+                image1.sprite = halfHearth;
+                image2.sprite = emptyHearth;
+                image3.sprite = emptyHearth;
+                image4.sprite = emptyHearth;
+            }
+            else if (currentHealth == maxHealth - 8)
+            {
+                image1.sprite = emptyHearth;
+                image2.sprite = emptyHearth;
+                image3.sprite = emptyHearth;
+                image4.sprite = emptyHearth;
+            }
         }
     }
 }

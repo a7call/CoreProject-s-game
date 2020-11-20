@@ -22,6 +22,9 @@ public class ShopItem : MonoBehaviour
     private float discount;
     private float newPrice;
 
+    // Afin de modifier les caractéristiques du joueur après son achat
+    private PlayerHealth playerHealth;
+
     private void Start()
     {
         nameObject = shopItemButton.name;
@@ -33,6 +36,8 @@ public class ShopItem : MonoBehaviour
         shopManager = FindObjectOfType<ShopManager>();
 
         button = gameObject.GetComponent<Button>();
+
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     private void Update()
@@ -62,6 +67,18 @@ public class ShopItem : MonoBehaviour
         if (gameObject.CompareTag("NothingButton"))
         {
             button.interactable = false;
+        }
+
+        if(isShopDiscount==false && isShopFree == false)
+        {
+            if (inventory.goldPlayer >= shopItemButton.itemPrice)
+            {
+                button.interactable = true;
+            }
+            else
+            {
+                button.interactable = false;
+            }
         }
         else
         {
@@ -119,5 +136,7 @@ public class ShopItem : MonoBehaviour
             // On ajoute l'item à l'inventaire
             inventory.itemInventory.Add(gameObject);
         }
+
+        playerHealth.AddLifePlayer(shopItemButton.itemHealth);
     }
 }
