@@ -7,13 +7,20 @@ public class Pompe : DistanceWeapon
    
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
+    private PompeProjectiles PompeProjectile;
 
-    [SerializeField] PompeProjectiles PompeProjectile; //à corriger
-
+    private void Start()
+    {
+        foreach(GameObject projectile in projectiles)
+        {
+            PompeProjectile = projectile.GetComponent<PompeProjectiles>();
+        }
+    }
 
 
     protected override IEnumerator Shoot()
     {
+
         
         if (!isAttacking && BulletInMag > 0 && !IsReloading)
         {
