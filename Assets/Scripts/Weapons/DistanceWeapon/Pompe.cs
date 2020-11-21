@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pompe : DistanceWeapon
@@ -21,10 +20,10 @@ public class Pompe : DistanceWeapon
     protected override IEnumerator Shoot()
     {
 
-        
         if (!isAttacking && BulletInMag > 0 && !IsReloading)
         {
             
+
             isAttacking = true;
             float decalage = angleTir / (projectiles.Length - 1);
             PompeProjectile.angleDecalage = -decalage * (projectiles.Length + 1) / 2;

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 /// <summary>
 /// Classe héritière de Distance.cs
