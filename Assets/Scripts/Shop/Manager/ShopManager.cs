@@ -12,9 +12,17 @@ public class ShopManager : MonoBehaviour
     public GameObject shopManagerUI;
 
     // Déclaration de tous les objets potentiellement présents dans le shop
+    [HideInInspector]
     public GameObject nothing;
+    [HideInInspector]
     public GameObject halfHp;
-    public GameObject oneHp;
+    [HideInInspector]
+    public GameObject fullHp;
+    [HideInInspector]
+    public GameObject halfArmor;
+    [HideInInspector]
+    public GameObject fullArmor;
+
     public Transform sellButtonsParents;
 
     // Variables qui permettent de gérer le tableau du shop
@@ -140,19 +148,19 @@ public class ShopManager : MonoBehaviour
                     }
                     else if (row == 0 && column == 2)
                     {
-                        Instantiate(oneHp, sellButtonsParents);
+                        Instantiate(fullHp, sellButtonsParents);
                     }
                     else if (row == 1 && column == 0)
                     {
-                        Instantiate(halfHp, sellButtonsParents);
+                        Instantiate(halfArmor, sellButtonsParents);
                     }
                     else if (row == 1 && column == 1)
                     {
-                        Instantiate(halfHp, sellButtonsParents);
+                        Instantiate(halfArmor, sellButtonsParents);
                     }
                     else if (row == 1 && column == 2)
                     {
-                        Instantiate(oneHp, sellButtonsParents);
+                        Instantiate(fullArmor, sellButtonsParents);
                     }
 
                     consommablesChance = initConsommablesChance;

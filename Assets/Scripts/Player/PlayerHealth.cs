@@ -10,6 +10,7 @@ public class PlayerHealth : Player
     //[HideInInspector]
     public int currentHealth;
     public int currentArmor;
+    private int maxArmor = 2;
     private bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
@@ -17,6 +18,7 @@ public class PlayerHealth : Player
 
     public SpriteRenderer graphics;
 
+    // Pour le UI de la vie
     [HideInInspector]
     public Image image1;
     [HideInInspector]
@@ -25,13 +27,21 @@ public class PlayerHealth : Player
     public Image image3;
     [HideInInspector]
     public Image image4;
-
     [HideInInspector]
     public Sprite emptyHearth;
     [HideInInspector]
     public Sprite halfHearth;
     [HideInInspector]
     public Sprite fullHearth;
+
+    // Pour le UI de l'armor
+    [HideInInspector]
+    public Image imageArmor;
+    [HideInInspector]
+    public Sprite halfArmor;
+    [HideInInspector]
+    public Sprite fullArmor;
+
 
     public static bool isLastChanceModule = false;
 
@@ -47,7 +57,6 @@ public class PlayerHealth : Player
     //Pour tester la fonction Take1Damage
     protected void Update()
     {
-        //AddLifePlayer();
         UpdateUILife();
         Take1Damage();
     }
@@ -95,7 +104,14 @@ public class PlayerHealth : Player
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            currentHealth -= 1;
+            if (currentArmor > 0)
+            {
+                currentArmor -= damage;
+            }
+            else
+            {
+                currentHealth -= damage;
+            }
         }
     }
 
@@ -125,8 +141,33 @@ public class PlayerHealth : Player
         }
     }
 
+    public void AddArmorPlayer(int _armor)
+    {
+        currentArmor += _armor;
+        if (currentArmor > maxArmor)
+        {
+            currentArmor = maxArmor;
+        }
+    }
+
+    // Masquée car très longue et redondante
     private void UpdateUILife()
     {
+        if (currentArmor == maxArmor)
+        {
+            imageArmor.enabled = true;
+            imageArmor.sprite = fullArmor;
+        }
+        else if(currentArmor == maxArmor -1)
+        {
+            imageArmor.enabled = true;
+            imageArmor.sprite = halfArmor;
+        }
+        else
+        {
+            imageArmor.enabled = false;
+        }
+
 
         if (isPowerUp == false)
         {
@@ -241,4 +282,5 @@ public class PlayerHealth : Player
             }
         }
     }
+
 }
