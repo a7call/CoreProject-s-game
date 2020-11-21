@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 /// <summary>
 /// Classe héritière de Projectile.cs
@@ -10,14 +9,8 @@ using UnityEngine;
 public class AngleProjectile : Projectile
 {
    public float angleDecalage;
-    
-    Vector3 directionTir;
+   Vector3 directionTir;
 
-
-    // private float dist;
-    //private GameObject target;
-
-    // Start is called before the first frame update
     void Start()
     {
         GetDirection();

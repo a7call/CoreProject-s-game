@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pompe : DistanceWeapon
@@ -8,16 +7,18 @@ public class Pompe : DistanceWeapon
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
 
-    [SerializeField] PompeProjectiles PompeProjectile; //à corriger
+   // [SerializeField] PompeProjectiles PompeProjectile; //à corriger
 
 
 
     protected override IEnumerator Shoot()
     {
-        
+        PompeProjectiles PompeProjectile = FindObjectOfType<PompeProjectiles>();
+
         if (!isAttacking && BulletInMag > 0 && !IsReloading)
         {
             
+
             isAttacking = true;
             float decalage = angleTir / (projectiles.Length - 1);
             PompeProjectile.angleDecalage = -decalage * (projectiles.Length + 1) / 2;
