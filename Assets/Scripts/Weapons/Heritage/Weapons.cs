@@ -8,7 +8,7 @@ public class Weapons : MonoBehaviour
 {
 
     [HideInInspector]
-    public int damage;
+    public float damage;
     [HideInInspector]
     public static bool isTotalDestructionModule;
     [HideInInspector]

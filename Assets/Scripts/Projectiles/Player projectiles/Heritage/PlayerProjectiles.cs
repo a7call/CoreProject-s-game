@@ -48,7 +48,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected float speed;
     protected Weapons weaponAttackP;
     protected LayerMask weaponLayer;
-    protected int weaponDamage;
+    protected float weaponDamage;
     [SerializeField]
     protected PlayerProjectileScriptableObject PlayerProjectileData;
     protected Vector3 directionTir;

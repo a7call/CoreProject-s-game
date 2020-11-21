@@ -5,11 +5,17 @@ using UnityEngine;
 public class PaintBall : DistanceWeapon
 {
     [SerializeField] GameObject[] projectiles = null;
-    [SerializeField] protected PlayerProjectiles[] ScriptProj = null;
+     protected PlayerProjectiles ScriptProj = null;
     private int i;
 
+    private void Start()
+    {
+        foreach (GameObject projectile in projectiles)
+        {
+            ScriptProj = projectile.GetComponent<PlayerProjectiles>();
+        }
+    }
 
-   
 
     protected override IEnumerator Shoot()
     {
@@ -17,7 +23,7 @@ public class PaintBall : DistanceWeapon
         {
             float decalage = Random.Range(-Dispersion, Dispersion + 1);
             i = Random.Range(0, projectiles.Length);
-            ScriptProj[i].Dispersion = decalage;
+            ScriptProj.Dispersion = decalage;
             isAttacking = true;
             GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
             BulletInMag--;

@@ -64,7 +64,7 @@ public class DistanceLaserSniper : Distance
 
         while (n < nbTir)
         {
-            base.Shoot();
+            Shoot();
             rb.velocity = Vector2.zero;
             currentState = State.ShootingLaser;
             yield return new WaitForSeconds(timeIntervale);
@@ -81,6 +81,14 @@ public class DistanceLaserSniper : Distance
         currentState = State.ShootingLaser;
         yield return new WaitForSeconds(delayMovement);
         currentState = State.Chasing;
+
+    }
+
+    protected override void Shoot()
+    {
+        GameObject myproj = Instantiate(projetile, transform.position, Quaternion.identity);
+        myproj.transform.parent = gameObject.transform;
+        StartCoroutine(MovementDelay());
 
     }
 }

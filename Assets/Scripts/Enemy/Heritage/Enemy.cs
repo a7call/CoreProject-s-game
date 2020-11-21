@@ -150,7 +150,7 @@ public class Enemy : MonoBehaviour
     //Health
 
     // Vie actuelle
-    public int currentHealth;
+    public float currentHealth;
     // Vie initial
    
     public int maxHealth;
@@ -185,7 +185,7 @@ public class Enemy : MonoBehaviour
     }
 
     // prends les dammages
-    public virtual void TakeDamage(int _damage)
+    public virtual void TakeDamage(float _damage)
     {
         currentHealth -= _damage;
         StartCoroutine(WhiteFlash());

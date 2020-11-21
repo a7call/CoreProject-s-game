@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DistanceWeaponScriptableObject : ScriptableObject
 {
-    public int damage;
+    public float damage;
     public LayerMask enemyLayer;
     public GameObject projectile;
     public float AttackDelay;

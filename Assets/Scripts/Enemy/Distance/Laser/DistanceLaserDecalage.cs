@@ -11,11 +11,13 @@ public class DistanceLaserDecalage : Distance
     [SerializeField] protected float delayBeforeShoot = 0f;
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
-    public LaserDecalage LaserDecalage;
+    private LaserDecalage LaserDecalage;
     [SerializeField] protected float delayMovement = 0f;
 
     void Start()
     {
+
+        GetProj();
         currentState = State.Patrolling;
         // Set premier targetPoint
         SetFirstPatrolPoint();
@@ -67,10 +69,12 @@ public class DistanceLaserDecalage : Distance
         for (int i = 0; i < projectiles.Length; i++)
         {
             LaserDecalage.angleDecalage = LaserDecalage.angleDecalage + decalage;
-            GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
+            GameObject myproj = Instantiate(projectiles[i], transform.position, Quaternion.identity);
+            myproj.transform.parent = gameObject.transform;
         }
         StartCoroutine(MovementDelay());
     }
+
 
     protected IEnumerator MovementDelay()
     {
@@ -79,5 +83,13 @@ public class DistanceLaserDecalage : Distance
         yield return new WaitForSeconds(delayMovement);
         currentState = State.Chasing;
 
+    }
+
+    private void GetProj()
+    {
+        foreach (GameObject projectile in projectiles)
+        {
+            LaserDecalage = projectile.GetComponent<LaserDecalage>();
+        }
     }
 }

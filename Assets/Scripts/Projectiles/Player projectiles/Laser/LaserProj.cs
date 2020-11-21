@@ -12,7 +12,6 @@ public class LaserProj : PlayerProjectiles
     protected override void Update()
     {
         StartCoroutine(destroy());
-        Enemy enemy = FindObjectOfType<Enemy>();
 
         dir = (weaponAttackP.attackPoint.position - playerTransform.position).normalized;
 
@@ -23,7 +22,7 @@ public class LaserProj : PlayerProjectiles
             if (hit.collider != null)
             {
                 
-                enemy.TakeDamage(weaponDamage);
+                hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(weaponDamage);
             }
         
     }

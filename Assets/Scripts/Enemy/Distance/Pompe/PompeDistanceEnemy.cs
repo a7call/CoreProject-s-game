@@ -10,11 +10,14 @@ public class PompeDistanceEnemy : Distance
     
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
-    public AngleProjectile AngleProjectile; // à corriger
+    private AngleProjectile AngleProjectile;
+
+
 
 
     void Start()
     {
+        GetProjectile();
         currentState = State.Patrolling;
         // Set premier targetPoint
         SetFirstPatrolPoint();
@@ -30,17 +33,15 @@ public class PompeDistanceEnemy : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
                 break;
             case State.Attacking:
                 isInRange();
+                DontMoveShooting();
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
                 break;
@@ -62,4 +63,12 @@ public class PompeDistanceEnemy : Distance
 
     }
 
+
+    private void GetProjectile()
+    {
+        foreach(GameObject projectile in projectiles)
+        {
+           AngleProjectile = projectile.GetComponent<AngleProjectile>();
+        }
+    }
 }

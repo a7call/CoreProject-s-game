@@ -67,7 +67,8 @@ public class DistanceLaser : Distance
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        base.Shoot();
+        GameObject myproj = Instantiate(projetile, transform.position, Quaternion.identity);
+        myproj.transform.parent = gameObject.transform;
         StartCoroutine(MovementDelay());
 
     }
