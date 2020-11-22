@@ -34,6 +34,7 @@ public class TentaculeAstronaute : Distance
                 break;
             case State.Attacking:
                 isInRange();
+                DontMoveShooting();
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
                 break;
