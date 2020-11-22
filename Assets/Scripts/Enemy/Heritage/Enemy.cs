@@ -28,10 +28,12 @@ public class Enemy : MonoBehaviour
         
     }
     // pour l'épée electrique
+    [HideInInspector]
     public bool isAlreadyElectrified;
 
 
     // PathFinding
+    [HideInInspector]
     public float nextWayPointDistance = 3f;
     Path path;
     int currentWayPoint;
@@ -115,14 +117,16 @@ public class Enemy : MonoBehaviour
 
 
     //Mouvement
+    [HideInInspector]
     public float moveSpeed;
+    [HideInInspector]
     public bool isSlowed = false;
     // Destination pour patrouille
     protected Transform targetPoint;
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player
-    [SerializeField] protected Transform target;
+    protected Transform target;
     [HideInInspector]
     public Rigidbody2D rb;
 
@@ -143,16 +147,17 @@ public class Enemy : MonoBehaviour
         targetPoint = transform;
     }
 
-  
+
 
 
 
     //Health
 
     // Vie actuelle
+    [HideInInspector]
     public float currentHealth;
     // Vie initial
-   
+    [HideInInspector]
     public int maxHealth;
     // Material d'indication pour un ennemi touché
     protected Material whiteMat;
@@ -175,6 +180,7 @@ public class Enemy : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
+    [HideInInspector]
     public bool isTakingDot;
     protected float DotTime = 3f;
     public IEnumerator DotOnEnemy()
@@ -241,10 +247,13 @@ public class Enemy : MonoBehaviour
 
     protected bool isReadyToSwitchState;
     protected float timeToSwitch;
+    protected bool isInTransition;
     protected IEnumerator transiChasing()
     {
+        isInTransition = true;
         yield return new WaitForSeconds(timeToSwitch);
         isReadyToSwitchState = true;
+        isInTransition = false;
     }
 
     

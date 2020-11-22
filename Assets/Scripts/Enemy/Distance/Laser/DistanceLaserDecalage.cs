@@ -38,17 +38,15 @@ public class DistanceLaserDecalage : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
                 break;
             case State.Attacking:
                 isInRange();
+                DontMoveShooting();
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
                 break;

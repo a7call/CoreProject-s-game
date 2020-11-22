@@ -14,7 +14,9 @@ public class Distance : Enemy
     // Scriptable Object
     [SerializeField] protected DistanceScriptableObject DistanceData;
     // Check si tire
+    [HideInInspector]
     public bool isShooting;
+ 
 
 
     protected virtual void SetData()
@@ -44,7 +46,7 @@ public class Distance : Enemy
         }
         else
         {
-            if (currentState == State.Attacking) StartCoroutine(transiChasing());
+            if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
             if (isReadyToSwitchState)
             {
                 currentState = State.Chasing;
@@ -56,7 +58,7 @@ public class Distance : Enemy
 
     
     // Check si prêt à tirer
-    [SerializeField] protected bool isReadytoShoot = true;
+    protected bool isReadytoShoot = true;
     // Repos après tire
     protected float restTime;
     // Projectile to instantiate
@@ -78,18 +80,6 @@ public class Distance : Enemy
         Instantiate(projetile, transform.position, Quaternion.identity);
         
     }
-
-
-    // Reset la couroutine CanShoot (Non ultilisée)
-    protected virtual void ResetAggro()
-    {
-        if (isShooting)
-        {
-            StopCoroutine("CanShoot");
-            isReadytoShoot = true;
-        }
-    }
-
 
     protected void DontMoveShooting()
     {

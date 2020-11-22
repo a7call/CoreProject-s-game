@@ -269,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2137125575470076344
 Transform:
   m_ObjectHideFlags: 0
@@ -401,11 +401,7 @@ MonoBehaviour:
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
   moveSpeed: 0
-  wayPoints:
-  - {fileID: 0}
-  - {fileID: 0}
   isSlowed: 0
-  target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
   maxHealth: 0
@@ -416,15 +412,13 @@ MonoBehaviour:
   isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: b9bfdd13b1cab404c9f72e25b938a147, type: 2}
   isShooting: 0
-  isReadytoShoot: 1
   delayBeforeShoot: 0.5
   projectiles:
   - {fileID: 7077177239863182697, guid: 5081a5ad3ec094826a21faf4331c0bbc, type: 3}
   - {fileID: 7077177239863182697, guid: 5081a5ad3ec094826a21faf4331c0bbc, type: 3}
   - {fileID: 7077177239863182697, guid: 5081a5ad3ec094826a21faf4331c0bbc, type: 3}
   angleTir: 50
-  LaserDecalage: {fileID: 5829856311520857116, guid: 5081a5ad3ec094826a21faf4331c0bbc, type: 3}
-  delayMovement: 0
+  delayMovement: 2
 --- !u!61 &1232886552824793151
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -487,7 +481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -968.43, y: -535.6}
+  m_AnchoredPosition: {x: -950.73, y: -538.04}
   m_SizeDelta: {x: -1919.3857, y: -1079.8895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2137125575475764080

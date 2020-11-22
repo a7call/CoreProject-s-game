@@ -9,21 +9,17 @@ public class DistanceLaser : Distance
 {
     protected Vector3 dir;
     [SerializeField] protected float delayMovement;
-    public bool isEnemyAlive;
 
 
 
     void Start()
     {
-        isEnemyAlive = true;
         currentState = State.Patrolling;
         // Set premier targetPoint
         SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
-        //isEnemyAlive = true;
-
     }
 
    
@@ -37,18 +33,15 @@ public class DistanceLaser : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
                 break;
             case State.Attacking:
                 isInRange();
-                // Couroutine gérant les shoots 
+                DontMoveShooting();
                 StartCoroutine("CanShoot");
                 break;
 

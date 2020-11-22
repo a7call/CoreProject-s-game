@@ -41,11 +41,8 @@ public class DistanceLaserSniper : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();

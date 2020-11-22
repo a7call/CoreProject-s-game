@@ -125,6 +125,11 @@ public class PlayerHealth : Player
         }
     }
 
+    public void AddArmorPlayer(int armor)
+    {
+        currentArmor += armor;
+    }
+
     private void UpdateUILife()
     {
 

@@ -183,7 +183,6 @@ public class RewardSpawner : MonoBehaviour
             else
             {
                 Instantiate(halfHeart, deadEnemy.transform.position, Quaternion.identity);
-                print("roto");
             }
            
         }

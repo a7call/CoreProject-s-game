@@ -40,11 +40,8 @@ public class RafaleDistance : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
@@ -52,21 +49,13 @@ public class RafaleDistance : Distance
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
+                DontMoveShooting();
                 StartCoroutine("CanShoot");
                 break;
         }
 
     }
 
-    
-
-    // Mouvement
-
-    // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
-    protected override void Aggro()
-    {
-        targetPoint = target;
-    }
 
     // Voir Enemy.cs (héritage)
     protected override void Shoot()

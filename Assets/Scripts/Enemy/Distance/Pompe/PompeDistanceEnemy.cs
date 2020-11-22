@@ -57,7 +57,7 @@ public class PompeDistanceEnemy : Distance
         //base.Shoot();
         for(int i=0; i <projectiles.Length; i++)
             {
-            AngleProjectile.angleDecalage = AngleProjectile.angleDecalage + decalage;
+                AngleProjectile.angleDecalage = AngleProjectile.angleDecalage + decalage;
                 GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
             }
 
