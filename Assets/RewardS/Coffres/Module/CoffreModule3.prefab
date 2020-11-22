@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3801197850365574655
+--- !u!1 &2378591847031967373
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2726233056672938227}
-  - component: {fileID: 7282419424269102073}
-  - component: {fileID: 7034263955496368236}
+  - component: {fileID: 3465347727051017089}
+  - component: {fileID: 8129766991902365835}
+  - component: {fileID: 6222417369864852140}
   m_Layer: 0
-  m_Name: Coffre d'Arme
+  m_Name: CoffreModule3
   m_TagString: Untagged
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2726233056672938227
+--- !u!4 &3465347727051017089
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3801197850365574655}
+  m_GameObject: {fileID: 2378591847031967373}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.98, y: -4.1, z: -2.010247}
+  m_LocalPosition: {x: -5.48, y: -3.3, z: -2.010247}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7282419424269102073
+--- !u!61 &8129766991902365835
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3801197850365574655}
+  m_GameObject: {fileID: 2378591847031967373}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -58,23 +58,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
---- !u!114 &7034263955496368236
+--- !u!114 &6222417369864852140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3801197850365574655}
+  m_GameObject: {fileID: 2378591847031967373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c460906b5e1a42fabb8735567208bc8, type: 3}
+  m_Script: {fileID: 11500000, guid: 204202cfc97fc43c1b0a800735ea31b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ListArmes:
-  - {fileID: 8281438935766862942, guid: 8a10e79d716325442b16b41544864cbd, type: 3}
-  - {fileID: 7413021412479677385, guid: fd93e224dfb73458a8845f78f5705e74, type: 3}
-  - {fileID: 8487729922649270852, guid: 9412003d024be4ead833f726843b9c8a, type: 3}
-  - {fileID: 441180908215731278, guid: 6cc83a199a94044c89281efe983887cb, type: 3}
-  - {fileID: 3139470876765727044, guid: 766b499c41b4b4c0a80a2951225fdad2, type: 3}
-  - {fileID: 7969941689199163594, guid: a868b220ca502458cad8e1ef0133b29a, type: 3}
-  - {fileID: 7969941689199163594, guid: afe1f858f12004f85a2d0d1766b677ac, type: 3}
+  ListeObjects3: []

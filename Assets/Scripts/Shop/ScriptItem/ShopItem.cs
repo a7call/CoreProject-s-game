@@ -138,5 +138,6 @@ public class ShopItem : MonoBehaviour
         }
 
         playerHealth.AddLifePlayer(shopItemButton.itemHealth);
+        playerHealth.AddArmorPlayer(shopItemButton.itemArmor);
     }
 }
