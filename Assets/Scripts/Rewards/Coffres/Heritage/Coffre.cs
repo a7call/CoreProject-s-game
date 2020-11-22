@@ -6,25 +6,25 @@ public class Coffre : MonoBehaviour
 {
     protected bool isOpen = false;
     
-    [SerializeField] protected GameObject[] ListArmes;
+    public static List<GameObject> SListeObjects;
 
     //PassePartoutModule
     [HideInInspector]
-    public static bool isKeyPassePartoutModule =false;
-    
+    public static bool isKeyPassePartoutModule = false;
 
+    
 
     protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         Inventory inventory = FindObjectOfType<Inventory>();
-        
+
 
         if (collision.CompareTag("Player") && !isOpen && Input.GetKeyDown(KeyCode.E))
         {
-            if ( inventory.numberOfKeys >= 1 && !isKeyPassePartoutModule)
+            if (inventory.numberOfKeys >= 1 && !isKeyPassePartoutModule)
             {
                 isOpen = true;
-                
+
                 inventory.numberOfKeys--;
                 PopRandomObject();
             }
@@ -32,7 +32,7 @@ public class Coffre : MonoBehaviour
             else if (isKeyPassePartoutModule)
             {
                 isOpen = true;
-                
+
                 PopRandomObject();
             }
             else
@@ -41,13 +41,15 @@ public class Coffre : MonoBehaviour
             }
 
         }
-            
+
     }
 
-    protected void PopRandomObject()
+    protected virtual void PopRandomObject()
     {
-        int ArmeChoice = Random.Range(0, ListArmes.Length);
-        GameObject.Instantiate(ListArmes[ArmeChoice], transform.position, Quaternion.identity);
         
+        int Choice = Random.Range(0, SListeObjects.Count);
+        GameObject.Instantiate(SListeObjects[Choice], transform.position, Quaternion.identity);
+        SListeObjects.Remove(SListeObjects[Choice]);
     }
+
 }
