@@ -22,19 +22,7 @@ public class EggProjectileExplosion : Projectile
             {
                 hit.gameObject.GetComponent<PlayerHealth>().TakeDamage(explosionDamage);
             }
-            Destroy(gameObject);
-        
-        base.OnTriggerEnter2D(collision);
-    }
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-    }
-
-    protected override void Lauch()
-    {
-        base.Lauch();
+             base.OnTriggerEnter2D(collision);
     }
 
 }

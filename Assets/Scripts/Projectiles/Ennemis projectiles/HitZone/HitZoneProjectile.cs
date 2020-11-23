@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class HitZoneProjectile : Projectile
 {
-    [SerializeField] int nbHit; //durée d'activité de la zone
-    [SerializeField] int timeIntervale; //intervalle entre les dégats de zone
-    [SerializeField] int zoneRadius; //rayon de la zone de dégats
     [SerializeField] protected GameObject HitZoneGO;
 
     // Start is called before the first frame update
@@ -25,20 +22,6 @@ public class HitZoneProjectile : Projectile
         if (collision.CompareTag("Player")) Instantiate(HitZoneGO, transform.position, Quaternion.identity);
         base.OnTriggerEnter2D(collision);
     }
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-    }
-
-    protected override void Lauch()
-    {
-        base.Lauch();
-    }
-
-    
-
-    
 
 }
 

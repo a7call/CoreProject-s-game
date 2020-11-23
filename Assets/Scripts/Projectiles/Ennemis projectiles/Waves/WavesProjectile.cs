@@ -8,6 +8,7 @@ public class WavesProjectile : Projectile
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
     Vector3 directionTir;
+    [SerializeField] public float ActiveTime;
     public float angleDecalage;
 
     // Start is called before the first frame update
@@ -23,24 +24,6 @@ public class WavesProjectile : Projectile
         directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
     }
 
-
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        base.OnTriggerEnter2D(collision);
-        // Damage
-    }
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-    }
-
-    protected override void Lauch()
-    {
-        base.Lauch();
-    }
 
     protected IEnumerator destroy()
     {
@@ -69,10 +52,7 @@ public class WavesProjectile : Projectile
 
             if (hit.collider.CompareTag("Player") && !damageDone)
             {
-                //take Damage
-                Debug.Log("Damage");
                 damageDone = true;
-
             }
 
         }

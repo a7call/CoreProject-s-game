@@ -13,7 +13,8 @@ public class LaserDecalage : Projectile
     Vector3 directionTir;
     public float angleDecalage;
     [SerializeField] protected LayerMask HitLayer;
-    
+    [SerializeField] public float ActiveTime;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,22 +30,6 @@ public class LaserDecalage : Projectile
     }
 
     
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-     //   Destroy(gameObject);
-        // Damage
-    //}
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-    }
-
-    protected override void Lauch()
-    {
-        base.Lauch();
-    }
 
     protected IEnumerator destroy()
     {
@@ -73,7 +58,7 @@ public class LaserDecalage : Projectile
 
             if (hit.collider != null)
             {
-                playerHealth.TakeDamage(1);
+                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
             }
 
         }

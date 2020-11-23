@@ -14,7 +14,6 @@ public class HitZone : MonoBehaviour
     private void Awake()
     {
         StartCoroutine(hitZone());
-        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
 
@@ -33,7 +32,7 @@ public class HitZone : MonoBehaviour
             {
                 if (h.CompareTag("Player"))
                 {
-                    playerHealth.TakeDamage(1);
+                    h.GetComponent<PlayerHealth>().TakeDamage(1);
                 }
                
 

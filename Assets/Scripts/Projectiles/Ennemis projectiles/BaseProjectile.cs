@@ -13,25 +13,5 @@ public class BaseProjectile : Projectile
         GetDirection();
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            // Damage
-        }
-        base.OnTriggerEnter2D(collision);
-
-
-    }
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-    }
-
-    protected override void Lauch()
-    {
-        base.Lauch();
-    }
 
 }

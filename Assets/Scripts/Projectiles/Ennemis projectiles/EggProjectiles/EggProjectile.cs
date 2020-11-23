@@ -10,7 +10,6 @@ public class EggProjectile : Projectile
     protected void Start()
     {
         GetDirection();
-       // Invoke("PopMobs", 3f);
     }
 
   
@@ -18,27 +17,15 @@ public class EggProjectile : Projectile
     {
         if (collision.CompareTag("Player"))
         {
-            GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
-            // Damage
+            PopMobs();
         }
         base.OnTriggerEnter2D(collision);
 
-    }
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-    }
-
-    protected override void Lauch()
-    {
-        base.Lauch();
     }
 
     // Pop mob if touch nothing 
     protected void PopMobs()
     {
         GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 }

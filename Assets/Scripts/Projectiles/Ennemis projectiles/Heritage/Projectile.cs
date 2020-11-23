@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
     [HideInInspector]
     public static float SpeedDiviser;
 
-    [SerializeField] public float ActiveTime;
+
     GameObject[] enemies;
     protected virtual void Awake()
     {

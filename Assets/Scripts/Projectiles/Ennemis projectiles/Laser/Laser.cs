@@ -10,6 +10,7 @@ public class Laser : Projectile
     protected bool damageDone = false;
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
+    [SerializeField] public float ActiveTime;
     [SerializeField] protected LayerMask HitLayer;
     
 
@@ -36,23 +37,11 @@ public class Laser : Projectile
             Debug.DrawRay(transform.position, dir * 10, Color.red);
             if (hit.collider != null)
             {
-                playerHealth.TakeDamage(1);
+                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
             }
            
 
         }
-    }
-
-   
-
-    protected override void GetDirection()
-    {
-        base.GetDirection();
-    }
-
-    protected override void Lauch()
-    {
-        base.Lauch();
     }
 
     protected IEnumerator destroy()

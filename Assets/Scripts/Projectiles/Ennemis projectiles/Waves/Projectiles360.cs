@@ -12,6 +12,7 @@ public class Projectiles360 : Projectile
     protected bool damageDone = false;
     private bool ReadyToShoot = false;
     [SerializeField] protected float ShootDelay;
+    [SerializeField] public float ActiveTime;
 
     // Start is called before the first frame update
     void Start()
