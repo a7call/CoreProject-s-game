@@ -12,15 +12,15 @@ public class ShopManager : MonoBehaviour
     public GameObject shopManagerUI;
 
     // Déclaration de tous les objets potentiellement présents dans le shop
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject nothing;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject halfHp;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject fullHp;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject halfArmor;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject fullArmor;
 
     public Transform sellButtonsParents;

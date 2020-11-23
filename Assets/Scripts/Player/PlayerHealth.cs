@@ -19,27 +19,27 @@ public class PlayerHealth : Player
     public SpriteRenderer graphics;
 
     // Pour le UI de la vie
-    [HideInInspector]
+    //[HideInInspector]
     public Image image1;
-    [HideInInspector]
+    //[HideInInspector]
     public Image image2;
-    [HideInInspector]
+    //[HideInInspector]
     public Image image3;
-    [HideInInspector]
+    //[HideInInspector]
     public Image image4;
-    [HideInInspector]
+    //[HideInInspector]
     public Sprite emptyHearth;
-    [HideInInspector]
+    //[HideInInspector]
     public Sprite halfHearth;
-    [HideInInspector]
+    //[HideInInspector]
     public Sprite fullHearth;
 
     // Pour le UI de l'armor
-    [HideInInspector]
+    //[HideInInspector]
     public Image imageArmor;
-    [HideInInspector]
+    //[HideInInspector]
     public Sprite halfArmor;
-    [HideInInspector]
+    //[HideInInspector]
     public Sprite fullArmor;
 
 

@@ -12,6 +12,12 @@ public class Inventory : MonoBehaviour
     public int numberOfHearts;
     private int amountToAdd = 20;
 
+    // Affichage UI des golds du joueur
+    public Text goldText;
+
+    // Affiche UI des clés du joueur
+    public Text keyText;
+
     public List<GameObject> itemInventory = new List<GameObject>();
 
     // A priori, ne sert à rien ici
@@ -29,6 +35,8 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
         AddGold(amountToAdd);
+        UpdateUIGold();
+        UpdateUIKey();
         //AddObject();
     }
 
@@ -39,6 +47,16 @@ public class Inventory : MonoBehaviour
         {
             goldPlayer += _amountToAdd;
         }
+    }
+
+    private void UpdateUIGold()
+    {
+        goldText.text = goldPlayer.ToString();
+    }
+
+    private void UpdateUIKey()
+    {
+        keyText.text = numberOfKeys.ToString();
     }
 
     // A priori, ne sert à rien
