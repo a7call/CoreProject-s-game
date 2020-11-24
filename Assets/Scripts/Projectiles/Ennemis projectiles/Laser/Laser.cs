@@ -23,10 +23,10 @@ public class Laser : Projectile
     // Update is called once per frame
     protected override void Update()
     {
-        if (transform.parent.gameObject == null)
-        {
-            Destroy(gameObject);
-        } 
+        //if (transform.parent.gameObject == null)
+        //{
+            
+        //} 
         StartCoroutine(OkToShoot());
 
         if (ReadyToShoot == true )
@@ -39,7 +39,7 @@ public class Laser : Projectile
             {
                 hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
             }
-           
+            destroy();
 
         }
     }

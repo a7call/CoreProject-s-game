@@ -363,8 +363,8 @@ GameObject:
   - component: {fileID: 4798076891483016963}
   - component: {fileID: 4798076891483016960}
   - component: {fileID: 4798076891483016961}
-  - component: {fileID: -5255198359605179338}
   - component: {fileID: -6599147512715064862}
+  - component: {fileID: -7270802255606128380}
   m_Layer: 9
   m_Name: EyeTentacleAstonautSniper
   m_TagString: Enemy
@@ -487,35 +487,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5255198359605179338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4798076891483016975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4e6c301f4fb64a058f5c4f316aa4a01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  isAlreadyElectrified: 0
-  nextWayPointDistance: 3
-  moveSpeed: 0
-  isSlowed: 0
-  rb: {fileID: 0}
-  currentHealth: 0
-  maxHealth: 0
-  healthBar: {fileID: 4798076891433775641}
-  spriteRenderer: {fileID: 4798076891483016961}
-  healthBarGFX: {fileID: 4798076891433775716}
-  timeBeforeDesactive: 0
-  isTakingDot: 0
-  DistanceData: {fileID: 11400000, guid: dd5ee99a5e0fe465bbee216bbc78d688, type: 2}
-  isShooting: 0
-  RafaleDistanceData: {fileID: 11400000, guid: dd5ee99a5e0fe465bbee216bbc78d688, type: 2}
-  delayMovement: 2
 --- !u!61 &-6599147512715064862
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -542,3 +513,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
+--- !u!114 &-7270802255606128380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4798076891483016975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e6c301f4fb64a058f5c4f316aa4a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  isAlreadyElectrified: 0
+  nextWayPointDistance: 3
+  moveSpeed: 0
+  isSlowed: 0
+  rb: {fileID: 0}
+  currentHealth: 0
+  maxHealth: 0
+  healthBar: {fileID: 4798076891433775641}
+  spriteRenderer: {fileID: 4798076891483016961}
+  healthBarGFX: {fileID: 4798076891433775716}
+  timeBeforeDesactive: 0
+  isTakingDot: 0
+  DistanceData: {fileID: 11400000, guid: dd5ee99a5e0fe465bbee216bbc78d688, type: 2}
+  isShooting: 0
+  delayMovement: 1.8

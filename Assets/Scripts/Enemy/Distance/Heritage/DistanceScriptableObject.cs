@@ -13,4 +13,7 @@ public class DistanceScriptableObject : EnemyScriptableObject
     public float restTime;
     public GameObject projetile;
     public float timeToSwich;
+    public float timeIntervale;
+    public int nbTir;
+
 }

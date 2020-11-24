@@ -18,7 +18,7 @@ public class LaserProj : PlayerProjectiles
         StartCoroutine(destroy());
             RaycastHit2D hit = Physics2D.Raycast(weaponAttackP.attackPoint.position, dir, Mathf.Infinity, HitLayer);
 
-            Debug.DrawRay(weaponAttackP.attackPoint.position, dir * 10, Color.red);
+            Debug.DrawRay(weaponAttackP.attackPoint.position, dir*20, Color.red);
             if (hit.collider != null)
             {
                 

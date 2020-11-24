@@ -7,18 +7,18 @@ using UnityEngine;
 /// </summary>
 public class RafaleDistance : Distance
 {
-    [SerializeField] protected RafaleDistanceData RafaleDistanceData;
+    //[SerializeField] protected RafaleDistanceData RafaleDistanceData;
 
-    private float timeIntervale;
-    private int nbTir;
+    protected float timeIntervale;
+    protected int nbTir;
 
     private int n = 0; //compteur pour le while
 
     protected override void SetData()
     {
         base.SetData();
-        timeIntervale = RafaleDistanceData.timeIntervale;
-        nbTir = RafaleDistanceData.nbTir;
+        timeIntervale = DistanceData.timeIntervale;
+        nbTir = DistanceData.nbTir;
     }
     
 
