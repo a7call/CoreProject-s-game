@@ -72,25 +72,30 @@ public class DungeonGenerator : MonoBehaviour
                
                 if (takenPositions.Contains(myWalker.pos))
                 {
+                    print(myWalker.pos + "deja");
                     continue;
                 }
                 else if((int)myWalker.pos.x >= gridSizeX - 0)
                 {
                     print(myWalker.pos + "rejeter");
+                   // revenir en arriere
                     continue;
                 }
                 else if ((int)myWalker.pos.x <= 0)
                 {
                     print(myWalker.pos + "rejeter");
+                    // revenir en arriere
                     continue;
                 }
                 else if((int)myWalker.pos.y >= gridSizeY) {
                     print(myWalker.pos + "rejeter");
+                    // revenir en arriere
                     continue;
                 }
                 else if ((int)myWalker.pos.y <= 0)
                 {
                     print(myWalker.pos + "rejeter");
+                    // revenir en arriere
                     continue;
                 }
                 else
@@ -100,24 +105,13 @@ public class DungeonGenerator : MonoBehaviour
                     print(newPos);
                     takenPositions.Insert(0, newPos);
                     rooms[(int)myWalker.pos.x, (int)myWalker.pos.y] = new Room(newPos, 1);
-                    //Faire une classe de walker et c'est finis
-                    
-
+                    //passer walker en Classe
                     index++;
                 }
 
             }
 
             int numberChecks = walkers.Count; //might modify count while in this loop
-            for (int i = 0; i < numberChecks; i++)
-            {
-                //only if its not the only one, and at a low chance
-                if (Random.value < chanceWalkersDestroy && walkers.Count > 1)
-                {
-                    walkers.RemoveAt(i);
-                    break; //only destroy one per iteration
-                }
-            }
 
             for (int i = 0; i < walkers.Count; i++)
             {
@@ -129,21 +123,6 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
 
-
-            numberChecks = walkers.Count; //might modify count while in this loop
-            for (int i = 0; i < numberChecks; i++)
-            {
-                //only if # of walkers < max, and at a low chance
-                if (Random.value < chanceToSpawnWalker && walkers.Count < maxWalkers)
-                {
-                    //create a walker 
-                    
-                    walker newWalker = new walker();
-                    newWalker.dir = RandomDirection();
-                    newWalker.pos = walkers[i].pos;
-                    walkers.Add(newWalker);
-                }
-            }
 
             for (int i = 0; i < walkers.Count; i++)
             {
