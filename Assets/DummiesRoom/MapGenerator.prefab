@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5630774210785081105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3623937462270671951}
+  - component: {fileID: 876866179541647695}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3623937462270671951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630774210785081105}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.5818408, y: 2.9315934, z: -0.63328177}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &876866179541647695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630774210785081105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31113e0c5eff0b4ea497f90388d1492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spU: {fileID: 8151912186092606414, guid: 6a3e7c3b360631145b18e3e9b662db91, type: 3}
+  spD: {fileID: 8699974921591429373, guid: c603d650293b4914cb410158351cdcdf, type: 3}
+  spR: {fileID: 7441460036654727624, guid: 1e2743e4e04943f4690c9ba6e8e8c39e, type: 3}
+  spL: {fileID: 27551164804052404, guid: d5217fe2bd69f8b4780f554c14ef84e1, type: 3}
+  spUD: {fileID: 5475596411872543470, guid: 23b5865b44a0a0d4a97837f8e7416db7, type: 3}
+  spRL: {fileID: 7303204925075413052, guid: af64b2e28f691e847839ec6a9cbcab7d, type: 3}
+  spUR: {fileID: 5286813063809728502, guid: a70c0e12d43d4324bbd88c3810495ad2, type: 3}
+  spUL: {fileID: 676350628266877062, guid: b480456ec58d1f94faeb09e841d2b424, type: 3}
+  spDR: {fileID: 7312427400183333523, guid: 66f81d602e24037459332a7bd55c18e2, type: 3}
+  spDL: {fileID: 7760612169147336320, guid: 3ed6ed7d1e64e104cafcae8399991f0f, type: 3}
+  spULD: {fileID: 4954428481711466689, guid: 19d98ea0020e5684ca471485993021cf, type: 3}
+  spRUL: {fileID: 6099495147320378534, guid: 0ab35b526d347bd4d8c7a253f3ba9b15, type: 3}
+  spDRU: {fileID: 2398355261420235276, guid: ca4fb23e887abe34dbb8cc366ca20887, type: 3}
+  spLDR: {fileID: 7777278945762319009, guid: 944c735d16feab84da375859ecf645d7, type: 3}
+  spUDRL: {fileID: 7796573522798271747, guid: 363ca48f2b46ee74fa7f5aa6648695f1, type: 3}
+  specificRoom: {fileID: 8148325122554482098, guid: 8bb93ef686bcbb443b56607e6873e87d, type: 3}
+  ChanceToSpawnBoss: 0.3
+  startRoom: {fileID: 8281438935766862942, guid: 8a10e79d716325442b16b41544864cbd, type: 3}

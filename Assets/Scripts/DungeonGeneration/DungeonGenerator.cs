@@ -19,7 +19,7 @@ public class DungeonGenerator : MonoBehaviour
         public Vector2 dir;
     }
     public List<walker> walkers = new List<walker>();
-    float chanceWalkerChangeDir = 0.5f, chanceToSpawnWalker = 0.05f, chanceWalkersDestroy = 0.05f;
+    float chanceWalkerChangeDir = 0.5f, chanceToSpawnWalker = 0f, chanceWalkersDestroy = 0.05f;
     int maxWalkers = 10;
     public float ChanceToSpawnBoss = 0.3f;
     private bool BossAlreadySpawned;
@@ -36,7 +36,8 @@ public class DungeonGenerator : MonoBehaviour
 
     void Setup()
     {
-        if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
+       
+        if (numberOfRooms >= (worldSize.x ) * (worldSize.y ))
         {
             numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
         }
@@ -44,10 +45,10 @@ public class DungeonGenerator : MonoBehaviour
 
         gridSizeX = Mathf.RoundToInt(worldSize.x);
         gridSizeY = Mathf.RoundToInt(worldSize.y);
-        rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         walker newWalker = new walker();
         newWalker.dir = RandomDirection();
         //find center of grid
+        
         Vector2 spawnPos = new Vector2(Mathf.RoundToInt(gridSizeX / 2.0f), Mathf.RoundToInt(gridSizeY / 2.0f));
 
         newWalker.pos = spawnPos;
@@ -59,7 +60,8 @@ public class DungeonGenerator : MonoBehaviour
 
     void CreateRooms()
     {
-        rooms = new Room[gridSizeX * 2, gridSizeY * 2];
+        rooms = new Room[gridSizeX + 1, gridSizeY + 1];
+
         int iterations = 0;//loop will not run forever
         do
         {
@@ -67,17 +69,39 @@ public class DungeonGenerator : MonoBehaviour
             int index = 0;
             foreach (walker myWalker in walkers)
             {
-
-                if (takenPositions.Contains(myWalker.pos) || myWalker.pos.x > gridSizeX || myWalker.pos.x < 0 || myWalker.pos.y > gridSizeY || myWalker.pos.y < 0)
+               
+                if (takenPositions.Contains(myWalker.pos))
                 {
+                    continue;
+                }
+                else if((int)myWalker.pos.x >= gridSizeX - 0)
+                {
+                    print(myWalker.pos + "rejeter");
+                    continue;
+                }
+                else if ((int)myWalker.pos.x <= 0)
+                {
+                    print(myWalker.pos + "rejeter");
+                    continue;
+                }
+                else if((int)myWalker.pos.y >= gridSizeY) {
+                    print(myWalker.pos + "rejeter");
+                    continue;
+                }
+                else if ((int)myWalker.pos.y <= 0)
+                {
+                    print(myWalker.pos + "rejeter");
                     continue;
                 }
                 else
                 {
+                    
                     Vector2 newPos = new Vector2((int)myWalker.pos.x, (int)myWalker.pos.y);
-
+                    print(newPos);
                     takenPositions.Insert(0, newPos);
                     rooms[(int)myWalker.pos.x, (int)myWalker.pos.y] = new Room(newPos, 1);
+                    //Faire une classe de walker et c'est finis
+                    
 
                     index++;
                 }
@@ -113,6 +137,7 @@ public class DungeonGenerator : MonoBehaviour
                 if (Random.value < chanceToSpawnWalker && walkers.Count < maxWalkers)
                 {
                     //create a walker 
+                    
                     walker newWalker = new walker();
                     newWalker.dir = RandomDirection();
                     newWalker.pos = walkers[i].pos;
@@ -120,9 +145,9 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
 
-
             for (int i = 0; i < walkers.Count; i++)
             {
+                Debug.LogWarning("test" + i);
                 walker thisWalker = walkers[i];
                 thisWalker.pos += thisWalker.dir;
                 walkers[i] = thisWalker;
@@ -130,8 +155,6 @@ public class DungeonGenerator : MonoBehaviour
             }
             if (takenPositions.Count > numberOfRooms - 1)
             {
-
-
                 break;
             }
 
@@ -141,22 +164,28 @@ public class DungeonGenerator : MonoBehaviour
     }
 
 
-
+    [SerializeField] GameObject startRoom;
     void SpawnLevel()
     {
+        int index = 0;
         foreach (Room room in rooms)
         {
-            int index = 0;
             if (room == null)
             {
                 continue; //skip where there is no room
             }
+            print(room.gridPos + "room");
             Vector2 drawPos = room.gridPos;
-            print(drawPos);
-            drawPos.x *= 20;//aspect ratio of map sprite
-            drawPos.y *= 12;
+
+            drawPos.x *= 0.2f;//aspect ratio of map sprite
+            drawPos.y *= 0.1f;
             ChanceToSpawnBoss += 0.1f;
             PickSprite(room, drawPos);
+           
+            if (index == 0)
+            {
+                Instantiate(startRoom, drawPos, Quaternion.identity);
+            }
             index++;
 
         }
@@ -181,9 +210,9 @@ public class DungeonGenerator : MonoBehaviour
 
     void SetRoomDoors()
     {
-        for (int x = 0; x < ((gridSizeX * 2)); x++)
+        for (int x = 0; x < ((gridSizeX )); x++)
         {
-            for (int y = 0; y < ((gridSizeY * 2)); y++)
+            for (int y = 0; y < ((gridSizeY )); y++)
             {
                 if (rooms[x, y] == null)
                 {
@@ -225,6 +254,7 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
     }
+  
 
     void PickSprite(Room room, Vector2 _drawPos)
     { //picks correct sprite based on the four door bools
