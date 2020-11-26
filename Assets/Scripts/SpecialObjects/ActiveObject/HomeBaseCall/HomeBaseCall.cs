@@ -6,7 +6,7 @@ public class HomeBaseCall : ActiveObjects
 {
     [SerializeField] private GameObject amoCase = null;
     private GameObject player;
-    [SerializeField] private float SupplyDelay;
+    [SerializeField] private float SupplyDelay=0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,7 @@ public class HomeBaseCall : ActiveObjects
     protected override void Update()
     {
         base.Update();
+
 
         if (UseModule && !ModuleAlreadyUse)
         {
