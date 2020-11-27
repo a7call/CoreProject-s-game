@@ -20,10 +20,9 @@ public class HomeBaseCall : ActiveObjects
         base.Update();
 
 
-        if (UseModule && !ModuleAlreadyUse)
+        if (UseModule)
         {
             StartCoroutine(AmmoSupply());
-            ModuleAlreadyUse = true;
         }
     }
 
@@ -32,7 +31,6 @@ public class HomeBaseCall : ActiveObjects
         player = GameObject.FindGameObjectWithTag("Player");
         yield return new WaitForSeconds(SupplyDelay);
         Instantiate(amoCase, player.transform.position, Quaternion.identity);
-        print("test");
     }
 }
 
