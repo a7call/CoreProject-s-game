@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 987070384810583381}
   m_Layer: 0
   m_Name: 'GravityBomb '
-  m_TagString: ActiveObject
+  m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.049505234, y: 0}
@@ -61,9 +61,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b516bf8eaaf41340b011f1c0a6019ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cd: 0
-  timeBeforActivation: 0
-  timeBeforDesactivation: 0
+  timeBeforActivation: 0.5
+  timeBeforDesactivation: 3
+  radius: 1
+  explosionDamage: 4
+  hit:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!1 &4369751657905179165
 GameObject:
   m_ObjectHideFlags: 0

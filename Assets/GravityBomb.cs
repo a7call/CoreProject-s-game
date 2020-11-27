@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityBomb : ActiveObjects
+public class GravityBomb : MonoBehaviour
 {
     [SerializeField] private float timeBeforActivation;
     [SerializeField] private float timeBeforDesactivation;
