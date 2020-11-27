@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2023128672656592647}
   m_Layer: 0
   m_Name: Sniper
-  m_TagString: Weapon
+  m_TagString: DistanceWeapon
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,8 +72,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   attackPoint: {fileID: 2023128673275008546}
+  isAttacking: 0
   DistanceWeaponData: {fileID: 11400000, guid: f1370b77ea77c0a4c95860e2af6ec5f4, type: 2}
+  InfiniteAmmo: 0
+  AmmoStock: 0
 --- !u!1 &2023128673275008547
 GameObject:
   m_ObjectHideFlags: 0

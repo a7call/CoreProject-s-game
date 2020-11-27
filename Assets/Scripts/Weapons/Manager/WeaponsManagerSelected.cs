@@ -1,20 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
 /// Weapon manager, gére le script actif en fontion de l'arme ramassé
 /// </summary>
-public class WeaponsXavier : MonoBehaviour
+public class WeaponsManagerSelected : MonoBehaviour
 {
-    public int selectedCacWeapon = 0;
-    public int selectedDistanceWeapon = 0;
+    // On le met à moins 1 car la première arme ramassée correspond au 0 et non pas 1
+    [HideInInspector]
+    public int selectedCacWeapon = -1;
+    [HideInInspector]
+    public int selectedDistanceWeapon = -1;
 
     public List<GameObject> cacWeaponsList = new List<GameObject>();
     public List<GameObject> distanceWeaponsList = new List<GameObject>();
 
-    [SerializeField] private bool isPlayingCac=false;
-    [SerializeField] private bool isPlayingDistance=false;
-
+    private bool isPlayingCac=false;
+    private bool isPlayingDistance=false;
 
     private void Start()
     {
@@ -90,7 +93,6 @@ public class WeaponsXavier : MonoBehaviour
             }
             foreach(GameObject weapon in distanceWeaponsList)
             {
-                print(weapon.name + " est désactivé");
                 weapon.gameObject.SetActive(false);
             }
         }
@@ -111,31 +113,49 @@ public class WeaponsXavier : MonoBehaviour
             }
             foreach (GameObject weapon in cacWeaponsList)
             {
-                print(weapon.name + " est désactivé");
                 weapon.gameObject.SetActive(false);
             }
         }
     }
 
+    // Actuellement, il appuie sur deux touches différentes pour choisir le mode
     private void SwitchCacToDistance()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             isPlayingCac = false;
             isPlayingDistance = true;
-            //transform.GetChild(selectedCacWeapon).gameObject.SetActive(false);
-            //transform.GetChild(selectedDistanceWeapon).gameObject.SetActive(true);
+
+                for (int i = 0; i < distanceWeaponsList.Count; i++)
+                {
+                    if (i == selectedDistanceWeapon) distanceWeaponsList[i].gameObject.SetActive(true);
+                    else distanceWeaponsList[i].gameObject.SetActive(false);
+                }
+
+                foreach (GameObject cacWeapon in cacWeaponsList)
+                {
+                    cacWeapon.gameObject.SetActive(false);
+                }
         }
     }
 
     private void SwitchDistanceToCac()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             isPlayingCac = true;
             isPlayingDistance = false;
-            //transform.GetChild(selectedDistanceWeapon).gameObject.SetActive(false);
-            //transform.GetChild(selectedCacWeapon).gameObject.SetActive(true);
+
+                for (int i = 0; i < cacWeaponsList.Count; i++)
+                {
+                    if (i == selectedCacWeapon) cacWeaponsList[i].gameObject.SetActive(true);
+                    else cacWeaponsList[i].gameObject.SetActive(false);
+                }
+
+                foreach (GameObject distanceWeapon in distanceWeaponsList)
+                {
+                    distanceWeapon.gameObject.SetActive(false);
+                }
         }
     }
 
@@ -201,9 +221,9 @@ public class WeaponsXavier : MonoBehaviour
                 SelectWeapon();
             }
         }
-
     }
 
+    // Méthode générique non utilisée mais conservée [A utiliser potentiellement si le code ci dessus est trop lourd]
     //private void ScrollWeapons(int _selectedWeapon, List<GameObject> _selectedWeaponList)
     //{
     //    if (Input.GetAxis("Mouse ScrollWheel") > 0f)

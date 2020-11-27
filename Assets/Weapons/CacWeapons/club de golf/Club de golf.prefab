@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7303981555537663228}
   m_Layer: 0
   m_Name: Club de golf
-  m_TagString: Weapon
+  m_TagString: CacWeapon
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,5 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c74bddd29218434fa724b78ce83ca46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   attackPoint: {fileID: 7303981555307248899}
+  isAttacking: 0
   WeaponData: {fileID: 11400000, guid: 56203dff7a2c841d8a22ad799273977f, type: 2}

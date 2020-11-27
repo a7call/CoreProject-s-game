@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3926991588948171627}
   m_Layer: 0
   m_Name: LanceRoquette
-  m_TagString: Weapon
+  m_TagString: DistanceWeapon
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   attackPoint: {fileID: 3926991589815059022}
+  isAttacking: 0
   DistanceWeaponData: {fileID: 11400000, guid: ea8e6d415d0f91c46872dec04e426fbc, type: 2}
+  InfiniteAmmo: 0
+  AmmoStock: 0
 --- !u!1 &3926991589815059023
 GameObject:
   m_ObjectHideFlags: 0

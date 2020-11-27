@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2168784956161887990}
   m_Layer: 0
   m_Name: ElectikSword
-  m_TagString: Weapon
+  m_TagString: CacWeapon
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f688ac80790c948acd6b2de6a7a413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   attackPoint: {fileID: 2168784955452047560}
+  isAttacking: 0
   WeaponData: {fileID: 11400000, guid: 76f6c9fcb08b3aa4c97e7aae9e4f0726, type: 2}
   electrificationRadius: 0.6

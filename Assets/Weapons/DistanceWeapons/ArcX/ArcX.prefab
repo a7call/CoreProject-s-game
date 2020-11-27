@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2342384580564293463}
   m_Layer: 0
   m_Name: ArcX
-  m_TagString: Weapon
+  m_TagString: DistanceWeapon
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   attackPoint: {fileID: 2342384581003398770}
+  isAttacking: 0
   DistanceWeaponData: {fileID: 11400000, guid: 5da8d80a34b3f8a4fb798c680eecb127, type: 2}
+  InfiniteAmmo: 0
+  AmmoStock: 0
 --- !u!1 &2342384581003398771
 GameObject:
   m_ObjectHideFlags: 0

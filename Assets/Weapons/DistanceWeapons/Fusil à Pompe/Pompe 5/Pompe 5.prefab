@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7377886326490444691}
   m_Layer: 0
   m_Name: Pompe 5
-  m_TagString: Weapon
+  m_TagString: DistanceWeapon
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   attackPoint: {fileID: 1403464446472241918}
+  isAttacking: 0
   DistanceWeaponData: {fileID: 11400000, guid: 9145858597bdf4bf292ba99bebbb7a3e, type: 2}
+  InfiniteAmmo: 0
+  AmmoStock: 0
   projectiles:
   - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
@@ -84,7 +87,6 @@ MonoBehaviour:
   - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   angleTir: 30
-  angleProjectile: {fileID: 6476964039208178378, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
 --- !u!1 &9007182729464379717
 GameObject:
   m_ObjectHideFlags: 0

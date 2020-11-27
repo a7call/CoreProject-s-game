@@ -149,8 +149,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2119372096}
-  - component: {fileID: 2119372098}
   - component: {fileID: 2119372097}
+  - component: {fileID: 7497258168238222437}
   m_Layer: 0
   m_Name: WeaponManager
   m_TagString: WeaponManager
@@ -172,19 +172,6 @@ Transform:
   m_Father: {fileID: 101717229859328977}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2119372098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119372095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a00de1646d35b64eafecfbf1ba1772b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedWeapon: 0
 --- !u!61 &2119372097
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -211,6 +198,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7497258168238222437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119372095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180b6c382b4353e44bccfadec8fa4f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedCacWeapon: -1
+  selectedDistanceWeapon: -1
+  cacWeaponsList: []
+  distanceWeaponsList: []
 --- !u!1 &101717229859328989
 GameObject:
   m_ObjectHideFlags: 0
