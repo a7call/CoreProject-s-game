@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
 {
     protected PlayerHealth playerHealth;
 
+    [HideInInspector]
+    public static bool isPerturbateurIEM = false;
+
     public State currentState;
     public enum State
     {
@@ -54,6 +57,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
+
+       
         switch (currentState)
         {
             case State.Paralysed:
@@ -66,6 +71,7 @@ public class Enemy : MonoBehaviour
         }
         healthBar.SetHealth(currentHealth);
         DisplayBar();
+       
     }
 
     //seeker.IsDone() vérifie si le path est calculé

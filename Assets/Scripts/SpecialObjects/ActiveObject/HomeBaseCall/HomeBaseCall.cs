@@ -23,6 +23,7 @@ public class HomeBaseCall : ActiveObjects
         if (UseModule)
         {
             StartCoroutine(AmmoSupply());
+            UseModule = false;
         }
     }
 
