@@ -66,7 +66,7 @@ public class RafaleDistance : Distance
     protected virtual IEnumerator intervalleTir()
     {
         
-        while (n < nbTir)
+        while (n < nbTir && !isPerturbateurIEM)
         {
             base.Shoot();
             yield return new WaitForSeconds(timeIntervale);
