@@ -565,6 +565,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 101717229859328979, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: image1
+      value: 
+      objectReference: {fileID: 1639525639}
+    - target: {fileID: 101717229859328979, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: image2
+      value: 
+      objectReference: {fileID: 1035698031}
+    - target: {fileID: 101717229859328979, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: image3
+      value: 
+      objectReference: {fileID: 1529220113}
+    - target: {fileID: 101717229859328979, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: image4
+      value: 
+      objectReference: {fileID: 1704662636}
+    - target: {fileID: 101717229859328979, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: imageArmor
+      value: 
+      objectReference: {fileID: 1742159300}
     - target: {fileID: 101717229859328989, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_Name
       value: Player
@@ -763,14 +783,6 @@ PrefabInstance:
     - target: {fileID: 7189363472646908300, guid: 92a513fb9006d45539e20c8379aecd57, type: 3}
       propertyPath: m_Name
       value: Thompson
-      objectReference: {fileID: 0}
-    - target: {fileID: 7189363472646908300, guid: 92a513fb9006d45539e20c8379aecd57, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7189363472646908300, guid: 92a513fb9006d45539e20c8379aecd57, type: 3}
-      propertyPath: m_TagString
-      value: DistanceWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92a513fb9006d45539e20c8379aecd57, type: 3}
@@ -1075,6 +1087,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92a513fb9006d45539e20c8379aecd57, type: 3}
+--- !u!114 &1035698031 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8614095763956649105, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+  m_PrefabInstance: {fileID: 416148658}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1114777398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,14 +1236,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Batte de baseball
       objectReference: {fileID: 0}
-    - target: {fileID: 5573587791631282442, guid: a305cfdd4c9554e229ea2acddcbebdb6, type: 3}
-      propertyPath: m_TagString
-      value: CacWeapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5573587791631282444, guid: a305cfdd4c9554e229ea2acddcbebdb6, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5573587791631282445, guid: a305cfdd4c9554e229ea2acddcbebdb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.9
@@ -1353,11 +1368,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5989040002390356997, guid: 37a6248a2c3ddd24687f7b03cfd9d188, type: 3}
   m_PrefabInstance: {fileID: 7236159226623678681}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1529220113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8614095765066527845, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+  m_PrefabInstance: {fileID: 416148658}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1603783286 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7935423324295601574, guid: bad4d33ed43c4b14c9d2377914452d23, type: 3}
   m_PrefabInstance: {fileID: 7935423325174223200}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1639525639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8614095764970249776, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+  m_PrefabInstance: {fileID: 416148658}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1642393957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,6 +1457,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9124114158507296001, guid: ad8f83a35d8543045946b89e62c068e3, type: 3}
   m_PrefabInstance: {fileID: 1893540986668466043}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1704662636 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8614095765005043096, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+  m_PrefabInstance: {fileID: 416148658}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1742159300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8614095763942242484, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+  m_PrefabInstance: {fileID: 416148658}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1749531663
 PrefabInstance:
   m_ObjectHideFlags: 0

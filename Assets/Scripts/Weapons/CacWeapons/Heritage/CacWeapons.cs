@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 /// <summary>
 /// Classe héritière de Weapons.cs et mère de toutes les armes CAC.
 /// Elle contient une fonction permettant de recupérer la direction de l'attaque
@@ -38,6 +39,7 @@ public class CacWeapons : Weapons
     [HideInInspector]
     public static float RangeMultiplier;
 
+    public Sprite image;
 
     protected override void Awake()
     {
@@ -93,6 +95,7 @@ public class CacWeapons : Weapons
         knockBackForce = WeaponData.knockBackForce;
         attackDelay = WeaponData.AttackDelay;
         knockBackTime = WeaponData.knockBackTime;
+        image = WeaponData.image;
     }
 
     protected virtual IEnumerator Attack()

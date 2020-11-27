@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 /// <summary>
 /// Weapon manager, gére le script actif en fontion de l'arme ramassé
 /// </summary>
@@ -19,6 +19,8 @@ public class WeaponsManagerSelected : MonoBehaviour
     private bool isPlayingCac=false;
     private bool isPlayingDistance=false;
 
+    public Sprite cacSprite;
+
     private void Start()
     {
         SelectWeapon();
@@ -30,6 +32,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         SwitchDistanceToCac();
         ChangeWeapons();
         //WhichWeaponScroll();
+        //UpdateUICacWeapon();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -262,6 +265,17 @@ public class WeaponsManagerSelected : MonoBehaviour
     //    {
     //        print("Parcours liste distance");
     //        ScrollWeapons(selectedDistanceWeapon, distanceWeaponsList);
+    //    }
+    //}
+
+    //public void UpdateUICacWeapon()
+    //{
+    //    for (int i = 0; i < cacWeaponsList.Count; i++)
+    //    {
+    //        if (i == selectedCacWeapon)
+    //        {
+    //            cacSprite = cacWeaponsList[i].GetComponent<Sprite>();
+    //        }
     //    }
     //}
 }
