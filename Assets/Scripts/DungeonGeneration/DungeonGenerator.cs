@@ -72,31 +72,13 @@ public class DungeonGenerator : MonoBehaviour
                
                 if (takenPositions.Contains(myWalker.pos))
                 {
-                    print(myWalker.pos + "deja");
                     continue;
                 }
-                else if((int)myWalker.pos.x >= gridSizeX - 0)
+                else if(myWalker.pos.x > gridSizeX || myWalker.pos.x < 0 || myWalker.pos.y > gridSizeY || myWalker.pos.y < 0)
                 {
-                    print(myWalker.pos + "rejeter");
-                   // revenir en arriere
-                    continue;
-                }
-                else if ((int)myWalker.pos.x <= 0)
-                {
-                    print(myWalker.pos + "rejeter");
+                    walkers.RemoveAt(index);
                     // revenir en arriere
-                    continue;
-                }
-                else if((int)myWalker.pos.y >= gridSizeY) {
-                    print(myWalker.pos + "rejeter");
-                    // revenir en arriere
-                    continue;
-                }
-                else if ((int)myWalker.pos.y <= 0)
-                {
-                    print(myWalker.pos + "rejeter");
-                    // revenir en arriere
-                    continue;
+                    break;
                 }
                 else
                 {
@@ -105,13 +87,26 @@ public class DungeonGenerator : MonoBehaviour
                     print(newPos);
                     takenPositions.Insert(0, newPos);
                     rooms[(int)myWalker.pos.x, (int)myWalker.pos.y] = new Room(newPos, 1);
-                    //passer walker en Classe
-                    index++;
+                    
                 }
+                index++;
 
             }
 
             int numberChecks = walkers.Count; //might modify count while in this loop
+            if(numberChecks < 1)
+            {
+                walker newWalker = new walker();
+                newWalker.dir = RandomDirection();
+                //find center of grid
+
+                Vector2 spawnPos = new Vector2(Mathf.RoundToInt(gridSizeX / 2.0f), Mathf.RoundToInt(gridSizeY / 2.0f));
+
+                newWalker.pos = spawnPos;
+
+                //add walker to list
+                walkers.Add(newWalker);
+            }
 
             for (int i = 0; i < walkers.Count; i++)
             {
@@ -120,6 +115,31 @@ public class DungeonGenerator : MonoBehaviour
                     walker thisWalker = walkers[i];
                     thisWalker.dir = RandomDirection();
                     walkers[i] = thisWalker;
+                }
+            }
+
+            numberChecks = walkers.Count; //might modify count while in this loop
+            for (int i = 0; i < numberChecks; i++)
+            {
+                //only if # of walkers < max, and at a low chance
+                if (Random.value < chanceToSpawnWalker && walkers.Count < maxWalkers)
+                {
+                    //create a walker 
+                    walker newWalker = new walker();
+                    newWalker.dir = RandomDirection();
+                    newWalker.pos = walkers[i].pos;
+                    walkers.Add(newWalker);
+                }
+            }
+
+            numberChecks = walkers.Count; //might modify count while in this loop
+            for (int i = 0; i < numberChecks; i++)
+            {
+                //only if its not the only one, and at a low chance
+                if (Random.value < chanceWalkersDestroy && walkers.Count > 1)
+                {
+                    walkers.RemoveAt(i);
+                    break; //only destroy one per iteration
                 }
             }
 
