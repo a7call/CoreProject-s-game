@@ -128,11 +128,13 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public bool isSlowed = false;
     // Destination pour patrouille
-    protected Transform targetPoint;
+    [HideInInspector]
+    public Transform targetPoint;
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player
-    protected Transform target;
+    [HideInInspector]
+    public Transform target;
     [HideInInspector]
     public Rigidbody2D rb;
 
