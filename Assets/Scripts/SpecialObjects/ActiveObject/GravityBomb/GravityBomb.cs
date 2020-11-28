@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GravityBomb : MonoBehaviour
 {
-    [SerializeField] private float timeBeforActivation;
-    [SerializeField] private float timeBeforDesactivation;
-    [SerializeField] private float radius;
-    [SerializeField] private float explosionDamage;
-    [SerializeField] private LayerMask hit;
+    [SerializeField] private float timeBeforActivation = 0f;
+    [SerializeField] private float timeBeforDesactivation = 0f;
+    [SerializeField] private float radius = 0f;
+    [SerializeField] private float explosionDamage = 0f;
+    [SerializeField] private LayerMask hit = 0;
 
     private List<GameObject> enemiesSlowed;
 

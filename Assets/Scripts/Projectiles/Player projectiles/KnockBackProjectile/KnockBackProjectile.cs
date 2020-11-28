@@ -11,9 +11,8 @@ public class KnockBackProjectile : PlayerProjectiles
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.rb.isKinematic = false;
-            enemy.rb.AddForce(dir * knockBackForce);
-            CoroutineManager.Instance.StartCoroutine(KnockCo(enemy));
+            
+            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
         }
         base.OnTriggerEnter2D(collision);
 
@@ -23,6 +22,8 @@ public class KnockBackProjectile : PlayerProjectiles
     {
         if(enemy != null)
         {
+            enemy.rb.isKinematic = false;
+            enemy.rb.AddForce(dir * knockBackForce);
             enemy.currentState = Enemy.State.KnockedBack;
             yield return new WaitForSeconds(knockBackTime);
             if (enemy == null) yield break;

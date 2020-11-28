@@ -290,12 +290,24 @@ public class Enemy : MonoBehaviour
     {
 
     }
+
+
+
+
+
+    public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
+    {
+        rb.isKinematic = false;
+        rb.AddForce(dir * knockBackForce);
+        currentState = State.KnockedBack;
+        yield return new WaitForSeconds(knockBackTime);
+        if (enemy == null) yield break;  
+        currentState = State.Attacking;
+        if (enemy == null) yield break;
+        rb.isKinematic = true;
         
 
-
-
-
-
+    }
 
 
 
