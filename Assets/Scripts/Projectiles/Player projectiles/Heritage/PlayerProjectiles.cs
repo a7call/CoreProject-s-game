@@ -26,6 +26,8 @@ public class PlayerProjectiles : MonoBehaviour
 
     //InteligentAmoModule
     public static bool isInteligentAmmoModule = false;
+    //NanoRobotModule
+    public static bool isNanoRobotModule = false;
 
     //RocketAmmoModule
     [HideInInspector]
@@ -107,6 +109,10 @@ public class PlayerProjectiles : MonoBehaviour
             if (isExplosiveAmo)
             {
                 ExplosiveAmoModule.explosionFnc(this.gameObject);
+            }
+            if (isNanoRobotModule)
+            {
+                NanoRobotModule.enemiesTouched.Add(enemy);
             }
             if (isImolationModule)
             {
