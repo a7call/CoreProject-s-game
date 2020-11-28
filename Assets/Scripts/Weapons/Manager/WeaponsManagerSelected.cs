@@ -20,6 +20,8 @@ public class WeaponsManagerSelected : MonoBehaviour
     private bool isPlayingDistance=false;
 
     public Sprite cacSprite;
+    public Sprite distanceSprite;
+    public string ammoText;
 
     private void Start()
     {
@@ -32,7 +34,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         SwitchDistanceToCac();
         ChangeWeapons();
         //WhichWeaponScroll();
-        //UpdateUICacWeapon();
+        UpdateUIWeapon();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -268,14 +270,22 @@ public class WeaponsManagerSelected : MonoBehaviour
     //    }
     //}
 
-    //public void UpdateUICacWeapon()
-    //{
-    //    for (int i = 0; i < cacWeaponsList.Count; i++)
-    //    {
-    //        if (i == selectedCacWeapon)
-    //        {
-    //            cacSprite = cacWeaponsList[i].GetComponent<Sprite>();
-    //        }
-    //    }
-    //}
+    public void UpdateUIWeapon()
+    {
+        for (int i = 0; i < cacWeaponsList.Count; i++)
+        {
+            if (i == selectedCacWeapon)
+            {
+                cacSprite = cacWeaponsList[i].GetComponent<CacWeapons>().image;
+            }
+        }
+        for (int i = 0; i < distanceWeaponsList.Count; i++)
+        {
+            if (i == selectedDistanceWeapon)
+            {
+                distanceSprite = distanceWeaponsList[i].GetComponent<DistanceWeapon>().image;
+                ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
+            }
+        }
+    }
 }

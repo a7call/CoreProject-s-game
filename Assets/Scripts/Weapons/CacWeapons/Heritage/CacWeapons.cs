@@ -39,6 +39,7 @@ public class CacWeapons : Weapons
     [HideInInspector]
     public static float RangeMultiplier;
 
+    [HideInInspector]
     public Sprite image;
 
     protected override void Awake()

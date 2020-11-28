@@ -390,9 +390,10 @@ GameObject:
   - component: {fileID: 8605225320444518157}
   - component: {fileID: 8854278649264625643}
   - component: {fileID: 6290195642460032207}
+  - component: {fileID: 2114442490}
   m_Layer: 0
   m_Name: ImageDistanceWepaons
-  m_TagString: Untagged
+  m_TagString: DistanceWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -444,7 +445,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6443550284840856088, guid: 7aa88417c1963764b826393fd21aaff5, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -454,6 +455,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2114442490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178444601293479063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d15f2ed74f03b449260af24d6d1f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6511483190418148265
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,9 +553,10 @@ GameObject:
   - component: {fileID: 4807440492329335429}
   - component: {fileID: 3532711055724685012}
   - component: {fileID: 825169302454931106}
+  - component: {fileID: 161431193}
   m_Layer: 0
   m_Name: ImageDistanceWepaons
-  m_TagString: Untagged
+  m_TagString: CacWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -594,7 +608,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3739511120503831459, guid: 7aa88417c1963764b826393fd21aaff5, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -604,6 +618,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &161431193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888470248963641560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d15f2ed74f03b449260af24d6d1f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7244320716899299569
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +641,7 @@ GameObject:
   - component: {fileID: 8320027895314637330}
   - component: {fileID: 3909148015765419497}
   - component: {fileID: 6936670002420379637}
+  - component: {fileID: 108272090}
   m_Layer: 0
   m_Name: TextDistanceWeapons
   m_TagString: Untagged
@@ -682,7 +709,21 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 300
+  m_Text: '
+
+'
+--- !u!114 &108272090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7244320716899299569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d15f2ed74f03b449260af24d6d1f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7714933811950782938
 GameObject:
   m_ObjectHideFlags: 0

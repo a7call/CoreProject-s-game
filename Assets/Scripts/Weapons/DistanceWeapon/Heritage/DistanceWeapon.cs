@@ -10,7 +10,7 @@ public class DistanceWeapon : Weapons
     protected PlayerProjectiles Proj;
     protected float Dispersion;
     protected bool IsReloading;
-    protected int BulletInMag;
+    public int BulletInMag;
     protected float ReloadDelay;
     protected int MagSize;
     protected Text AmmoText;
@@ -46,6 +46,8 @@ public class DistanceWeapon : Weapons
     [HideInInspector]
     public static bool isUnlimitedAmmoModule;
 
+    [HideInInspector]
+    public Sprite image;
 
     protected override void Awake()
     {
@@ -133,6 +135,7 @@ public class DistanceWeapon : Weapons
         ReloadDelay = DistanceWeaponData.ReloadDelay;
 
         BulletInMag = MagSize;
+        image = DistanceWeaponData.image;
         
     }
 

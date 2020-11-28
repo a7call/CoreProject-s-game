@@ -13,5 +13,5 @@ public class DistanceWeaponScriptableObject : ScriptableObject
     public float Dispersion;
     public int MagSize;
     public float ReloadDelay;
-
+    public Sprite image;
 }
