@@ -6,11 +6,13 @@ using UnityEngine;
 public class PlayerEnergy : Player
 {
 
-    public int currentEnergy;
+    public float currentEnergy;
     public EnergyBar energyBar;
     public GameObject energyBarGFX;
     public bool energyIsReloading = false;
     private bool isActive;
+    public int maxStackNumber=3;
+    public int currentStack;
 
     protected override void Awake()
     {
@@ -21,14 +23,16 @@ public class PlayerEnergy : Player
     }
     private void Update()
     {
-       if(!energyIsReloading) StartCoroutine(EnergyReload());
-      // energyBar.SetEnergy(currentEnergy);
+        StartCoroutine(EnergyReloading());
+        // energyBar.SetEnergy(currentEnergy);
+        CalculNumberStack();
+        ResetEnergy();
     }
     
     // Déduit l'energie dépensée
-    public void SpendEnergy(int energySpent)
+    public void SpendEnergy(float energySpend)
     {
-        currentEnergy -= energySpent;
+        currentEnergy -= energySpend;
     }
 
 
@@ -39,33 +43,79 @@ public class PlayerEnergy : Player
        // energyBar.SetMaxEnergy(playerData.maxEnergy);
     }
 
-    // Energie recupérée au cours du temps
-    private IEnumerator EnergyReload()
+    private void ResetEnergy()
     {
-
-        if (currentEnergy < playerData.maxEnergy)
+        if (currentEnergy < 0)
         {
+            currentEnergy = 0f;
+        }
+        if (currentEnergy > maxEnergy)
+        {
+            currentEnergy = maxEnergy;
+        }
+    }
+    private void CalculNumberStack()
+    {
+        if (currentEnergy <= maxEnergy)
+        {
+            currentStack = maxStackNumber;
 
-            if (!isActive)
-            {
-               // energyBarGFX.SetActive(true);
-                isActive = true;
-            }
-            energyIsReloading = true;
+                if (currentEnergy < 75)
+                {
+                    currentStack = maxStackNumber - 1;
+
+                    if (currentEnergy < 50)
+                    {
+                        currentStack = maxStackNumber - 2;
+
+                        if (currentEnergy < 25)
+                        {
+                            currentStack = maxStackNumber - 3;
+                        }
+                    }
+                }
+        }
+    }
+
+    // Energie recupérée au cours du temps
+    //private IEnumerator EnergyReload()
+    //{
+
+    //    if (currentEnergy < playerData.maxEnergy)
+    //    {
+
+    //        if (!isActive)
+    //        {
+    //           // energyBarGFX.SetActive(true);
+    //            isActive = true;
+    //        }
+    //        energyIsReloading = true;
+    //        currentEnergy += playerData.energyReloadNumber;
+    //        yield return new WaitForSeconds(0.1f);
+    //        energyIsReloading = false;
+    //    }
+    //    else
+    //    {
+    //        if (isActive)
+    //        {
+    //            //energyBarGFX.SetActive(false);
+    //            isActive = false;
+    //        }
+    //        yield break;
+    //    }
+        
+    //}
+    
+    public IEnumerator EnergyReloading()
+    {
+        if (energyIsReloading && currentEnergy < playerData.maxEnergy)
+        {
             currentEnergy += playerData.energyReloadNumber;
             yield return new WaitForSeconds(0.1f);
-            energyIsReloading = false;
         }
         else
         {
-            if (isActive)
-            {
-                //energyBarGFX.SetActive(false);
-                isActive = false;
-            }
             yield break;
         }
-        
     }
-    
 }

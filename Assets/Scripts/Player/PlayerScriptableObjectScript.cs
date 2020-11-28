@@ -14,7 +14,7 @@ public class PlayerScriptableObjectScript: ScriptableObject
     public float mooveSpeed;
     public float dashForce;
     public float attackRadius;
-    public int dashEnergyCost;
+    public float dashEnergyCost;
     public int damage;
-    public int energyReloadNumber;
+    public float energyReloadNumber;
 }

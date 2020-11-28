@@ -9,6 +9,8 @@ public class PlayerMouvement : Player
     public static bool isModuleInertie;
 
     private Vector2 mouvement;
+    private bool isCorotinePlaying=false;
+    [SerializeField]private bool canDash = true;
 
     //Changement de velocity de privée à public
     [HideInInspector]
@@ -48,9 +50,20 @@ public class PlayerMouvement : Player
                 GetLastDirection();
                 SetAnimationVariable();
 
-                if (Input.GetMouseButtonDown(1) && playerEnergy.currentEnergy >= dashEnergyCost)
+                MakesEnergy();
+                LastStack();
+
+                if (canDash)
                 {
-                    StartCoroutine(DashCo());
+                    if(Input.GetMouseButton(1))
+                    {
+                        playerEnergy.energyIsReloading = false;
+                        Dash();
+                        if (isCorotinePlaying == false)
+                        {
+                            StartCoroutine(Coro());
+                        }
+                    }
                 }
 
                 break;
@@ -142,20 +155,58 @@ public class PlayerMouvement : Player
 
     [SerializeField] private float DashDuration = 0f;
     private bool isDashing;
-    private IEnumerator DashCo()
-    {
-        if (!isDashing)
-        {
-            Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-            playerEnergy.SpendEnergy(dashEnergyCost);
-            isDashing = true;
-            GetComponent<BoxCollider2D>().enabled = false;
-            rb.AddForce(dir * dashForce*Time.deltaTime, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(DashDuration);
-            if (isModuleInertie) CoroutineManager.Instance.StartCoroutine(ModuleInertie.InertieCo());
-            isDashing = false;
-            GetComponent<BoxCollider2D>().enabled = true;
-        }
+    //private IEnumerator DashCo()
+    //{
+    //    if (!isDashing)
+    //    {
+    //        Vector2 dir = new Vector2(mouvement.x, mouvement.y);
+    //        playerEnergy.SpendEnergy(dashEnergyCost);
+    //        isDashing = true;
+    //        GetComponent<BoxCollider2D>().enabled = false;
+    //        rb.AddForce(dir * dashForce*Time.deltaTime, ForceMode2D.Impulse);
+    //        yield return new WaitForSeconds(DashDuration);
+    //        if (isModuleInertie) CoroutineManager.Instance.StartCoroutine(ModuleInertie.InertieCo());
+    //        isDashing = false;
+    //        GetComponent<BoxCollider2D>().enabled = true;
+    //    }
         
+    //}
+
+    private void MakesEnergy()
+    {
+        if (Input.GetMouseButtonUp(1) && playerEnergy.currentEnergy < playerEnergy.maxEnergy)
+        {
+            playerEnergy.energyIsReloading = true;
+        }
     }
+
+    private void LastStack()
+    {
+        if (playerEnergy.energyIsReloading && playerEnergy.currentStack == 0)
+        {
+            canDash = false;
+        }
+        else if (playerEnergy.energyIsReloading && playerEnergy.currentStack != 0)
+        {
+            canDash = true;
+        }
+    }
+
+    private IEnumerator Coro()
+    {
+        isCorotinePlaying = true;
+        playerEnergy.SpendEnergy(2.5f);
+        yield return new WaitForSeconds(0.1f);
+        isCorotinePlaying = false;
+    }
+
+    private void Dash()
+    {
+        if (canDash)
+        {
+            print("A");
+            // FAIRE LA FONCTION DE DASH
+        }
+    }
+
 }

@@ -25,14 +25,12 @@ public class Player : MonoBehaviour
     public int maxEnergy;
     [HideInInspector]
     public float mooveSpeed;
-    [HideInInspector]
+    //[HideInInspector]
     public float dashForce;
-    [HideInInspector]
-    public int dashEnergyCost;
     [HideInInspector]
     public int damage;
     [HideInInspector]
-    public int energyReloadNumber;
+    public float energyReloadNumber;
 
     protected void SetData()
     {
@@ -40,7 +38,6 @@ public class Player : MonoBehaviour
         maxEnergy = playerData.maxEnergy;
         mooveSpeed = playerData.mooveSpeed;
         dashForce = playerData.dashForce;
-        dashEnergyCost = playerData.dashEnergyCost;
         damage = playerData.damage;
         energyReloadNumber = playerData.energyReloadNumber;
     }
