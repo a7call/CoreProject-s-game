@@ -23,7 +23,7 @@ public class HitZone : MonoBehaviour
         while (n < nbHit)
         {
             //OnDrawGizmos();
-            yield return new WaitForSeconds(timeIntervale);
+            
 
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneRadius);
            
@@ -38,6 +38,7 @@ public class HitZone : MonoBehaviour
 
             }
             n++;
+            yield return new WaitForSeconds(timeIntervale);
         }
 
         Destroy(gameObject);
