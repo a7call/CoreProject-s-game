@@ -6,7 +6,7 @@ public class LaserProj : PlayerProjectiles
 {
     [SerializeField] float activeTime = 0f;
     [SerializeField] protected LayerMask HitLayer = 0;
-    //protected Enemy enemy;
+    
     
 
     protected override void Update()
