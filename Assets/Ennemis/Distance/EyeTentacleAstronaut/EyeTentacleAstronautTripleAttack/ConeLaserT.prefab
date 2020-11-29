@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6155952957189626401}
   m_Layer: 0
   m_Name: ConeLaserT
-  m_TagString: Untagged
+  m_TagString: EnemyProjectil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,12 +98,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   dir: {x: 0, y: 0, z: 0}
-  ActiveTime: 1
   ShootDelay: 0.5
   angleDecalage: 25
   HitLayer:
     serializedVersion: 2
     m_Bits: 256
+  ActiveTime: 1
 --- !u!61 &6155952957189626401
 BoxCollider2D:
   m_ObjectHideFlags: 0
