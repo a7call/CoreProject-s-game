@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flaque : MonoBehaviour
+public class Flaque : ModuleLauchPhase
 {
     private bool isActive;
     [SerializeField] protected float ZoneRadius;
@@ -10,11 +10,9 @@ public class Flaque : MonoBehaviour
     [SerializeField] protected float hitTimer;
     [SerializeField] protected float zoneTimer;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        //StartCoroutine(CoFlaque());
-        StartCoroutine(ActiveZone());
-        StartCoroutine(ZoneCo());
+        base.Start();
     }
 
     protected virtual IEnumerator ZoneCo()
@@ -29,7 +27,6 @@ public class Flaque : MonoBehaviour
                 {
                     Enemy enemyScript = enemy.GetComponent<Enemy>();
                     enemyScript.TakeDamage(ZoneDamage);
-                    print("Hit2");
                 }
 
             }
@@ -39,7 +36,17 @@ public class Flaque : MonoBehaviour
 
     }
 
-    
+    protected override void Update()
+    {
+        base.Update();
+        if (isNotMoving && !isAlreadyActive)
+        {
+            isAlreadyActive = true;
+            StartCoroutine(ActiveZone());
+            StartCoroutine(ZoneCo());
+        }
+    }
+
     private IEnumerator ActiveZone()
     {
         isActive = true;

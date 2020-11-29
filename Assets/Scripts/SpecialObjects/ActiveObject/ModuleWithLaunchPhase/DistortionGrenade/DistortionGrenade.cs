@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistortionGrenade : MonoBehaviour
+public class DistortionGrenade : ModuleLauchPhase
 {
     [SerializeField] private float timeBeforDesactivation;
     [SerializeField] private float radius;
@@ -11,8 +11,9 @@ public class DistortionGrenade : MonoBehaviour
     [SerializeField] protected float knockBackForce;
     [SerializeField] protected float knockBackTime;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         StartCoroutine(Explosion());
     }
     private IEnumerator Explosion()
@@ -32,6 +33,15 @@ public class DistortionGrenade : MonoBehaviour
         Destroy(gameObject);
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        if (isNotMoving && !isAlreadyActive)
+        {
+            isAlreadyActive = true;
+            StartCoroutine(Explosion());
+        }
+    }
     private Vector3 RandomDir()
     {
         int choice = Mathf.FloorToInt(Random.value * 3.99f);
