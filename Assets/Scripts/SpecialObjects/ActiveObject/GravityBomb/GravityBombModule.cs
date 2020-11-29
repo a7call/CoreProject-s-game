@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GravityBombModule : ActiveObjects
 {
     [SerializeField] private GameObject gravityBomb;
+     private bool spawned;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -14,12 +13,16 @@ public class GravityBombModule : ActiveObjects
         if (UseModule)
         {
             SpawnBomb();
+           
             UseModule = false;
         }
+
+        
     }
 
     private void SpawnBomb()
     {
+        spawned = true;
         Instantiate(gravityBomb, transform.position, Quaternion.identity);
     }
 }
