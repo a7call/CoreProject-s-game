@@ -13,6 +13,8 @@ public class PlayerEnergy : Player
     private bool isActive;
     public int maxStackNumber=3;
     public int currentStack;
+    private float timeToNotAbuse = 10f;
+    private float minAmountEnergy = 10f;
 
     protected override void Awake()
     {
@@ -110,8 +112,20 @@ public class PlayerEnergy : Player
     {
         if (energyIsReloading && currentEnergy < playerData.maxEnergy)
         {
-            currentEnergy += playerData.energyReloadNumber;
-            yield return new WaitForSeconds(0.1f);
+            if (currentEnergy <= minAmountEnergy)
+            {
+                energyIsReloading = false;
+                yield return new WaitForSeconds(timeToNotAbuse);
+                energyIsReloading = true;
+                currentEnergy = 25f;
+            }
+            else
+            {
+                energyIsReloading = false;
+                currentEnergy += playerData.energyReloadNumber;
+                yield return new WaitForSeconds(0.2f);
+                energyIsReloading = true;
+            }
         }
         else
         {
