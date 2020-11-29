@@ -37,7 +37,8 @@ public class PlayerProjectiles : MonoBehaviour
     [HideInInspector]
     public static float SpeedMultiplier;
 
-   
+    
+
 
 
 
@@ -90,7 +91,9 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void Launch()
     {
+        
         transform.Translate(directionTir * speed * Time.deltaTime);
+        
     }
     void SetData()
     {

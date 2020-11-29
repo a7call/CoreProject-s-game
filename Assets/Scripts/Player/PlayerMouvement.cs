@@ -25,6 +25,10 @@ public class PlayerMouvement : Player
     public static bool isSpeedShoesModule;
     public static float SpeedMultiplier;
 
+    [HideInInspector]
+    public static bool isArretTemporelActive = false;
+
+
     protected override void Awake()
     {
         base.Awake();
