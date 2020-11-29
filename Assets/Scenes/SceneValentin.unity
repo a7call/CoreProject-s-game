@@ -895,6 +895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cd: 60
   range: 0
+  speed: 0
   camouflageTime: 3
 --- !u!1001 &1106029745
 PrefabInstance:
@@ -2123,6 +2124,14 @@ PrefabInstance:
       propertyPath: distortionGrenade
       value: 
       objectReference: {fileID: 5839014059826409671, guid: b81a0bbecca01024eabf59f18178a9b1, type: 3}
+    - target: {fileID: 1782015824480300236, guid: 6aab1253316660443beadefe72877cdc, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782015824480300236, guid: 6aab1253316660443beadefe72877cdc, type: 3}
+      propertyPath: range
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5281539817610820322, guid: 6aab1253316660443beadefe72877cdc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.54
@@ -2177,7 +2186,7 @@ PrefabInstance:
       objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8314612836248002957, guid: 6aab1253316660443beadefe72877cdc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aab1253316660443beadefe72877cdc, type: 3}
@@ -4014,7 +4023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7771398355913417660, guid: f0f4e95306ab3f04e9e36303763faaee, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0f4e95306ab3f04e9e36303763faaee, type: 3}
