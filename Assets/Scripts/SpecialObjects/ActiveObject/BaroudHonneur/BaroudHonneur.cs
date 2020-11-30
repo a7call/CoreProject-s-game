@@ -15,7 +15,12 @@ public class BaroudHonneur : ActiveObjects
     {
         if (Input.GetKeyDown(KeyCode.U) && readyToUse)
         {
-            print("A");
+            ActiveBaroudHonneur();
+        }
+
+        if (ModuleAlreadyUse)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -24,11 +29,10 @@ public class BaroudHonneur : ActiveObjects
         if (playerHealth.currentHealth == 0)
         {
             UseModule = true;
-            StartCoroutine(playerHealth.InvincibilityFlash());
-            StartCoroutine(playerHealth.InvincibilityDelay());
             GainHp();
+            // VOIR CE QU'ON FAIT ? RESET ROOM, INVINCIBLE QUELQUES SECONDES ?
             ModuleAlreadyUse = true;
-            readyToUse=false
+            readyToUse = false;
         }
     }
 

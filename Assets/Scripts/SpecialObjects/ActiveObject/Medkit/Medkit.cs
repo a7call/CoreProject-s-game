@@ -9,7 +9,7 @@ public class Medkit : ActiveObjects
     private PlayerMouvement playerMouvement;
 
     private float timeCantMoove = 1.5f;
-    [SerializeField]private bool isHealing = false;
+    [SerializeField] private bool isHealing = false;
     private bool canWalk = true;
 
 
@@ -20,10 +20,10 @@ public class Medkit : ActiveObjects
     }
     protected override void Update()
     {
-        //if (ModuleAlreadyUse)
-        //{
-        //    DestroyObject();
-        //}
+        if (ModuleAlreadyUse)
+        {
+            Destroy(gameObject);
+        }
 
         if (Input.GetKeyDown(KeyCode.U))
         {

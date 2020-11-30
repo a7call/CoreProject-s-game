@@ -59,10 +59,5 @@ public class ActiveObjects : MonoBehaviour
         Vector3 direction = (GetMousePosition() - transform.position).normalized;
         return direction;
     }
-
-    public virtual void DestroyObject()
-    {
-        Destroy(gameObject);
-    }
-    
+   
 }

@@ -21,7 +21,7 @@ public class ProteinBar : ActiveObjects
 
         if (ModuleAlreadyUse)
         {
-            DestroyObject();
+            Destroy(gameObject);
         }
     }
 
@@ -33,11 +33,5 @@ public class ProteinBar : ActiveObjects
         ModuleAlreadyUse = true;
         readyToUse = false;
     }
-
-    private void DestroyObject()
-    {
-        Destroy(gameObject);
-    }
-
 
 }

@@ -6,6 +6,6 @@ public class PowerUpModule : PassiveObjects
 {
     private void Start()
     {
-        PlayerHealth.isPowerUp = true;    
+        PlayerHealth.isPowerUp = true;
     }
 }
