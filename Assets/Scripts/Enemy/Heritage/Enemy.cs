@@ -74,6 +74,10 @@ public class Enemy : MonoBehaviour
 
                 break;
 
+            case State.Freeze:
+                rb.velocity = Vector2.zero;
+                break;
+
             
         }
         healthBar.SetHealth(currentHealth);

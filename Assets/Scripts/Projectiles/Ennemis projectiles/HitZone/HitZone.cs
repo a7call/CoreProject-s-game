@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitZone : MonoBehaviour
+public class HitZone : Projectile
 {
     [SerializeField] int nbHit = 0;
     [SerializeField] float timeIntervale = 0f;
     [SerializeField] float zoneRadius = 0f;
     private int n = 0;
-    private PlayerHealth playerHealth;
+    
     //[SerializeField] protected GameObject HitZoneGO;
 
-    private void Awake()
+    protected override void Awake()
     {
         StartCoroutine(hitZone());
     }
 
+    protected override void Update()
+    {
+        
+    }
 
     protected virtual IEnumerator hitZone()
     {

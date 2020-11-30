@@ -47,6 +47,10 @@ public class ArretTemporel : ActiveObjects
         Enemy.isArretTemporel = false;
         foreach (GameObject enemy in ennemis)
         {
+            if (enemy == null)
+            {
+                continue;
+            }
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.currentState = Enemy.State.Patrolling;
 
@@ -54,6 +58,10 @@ public class ArretTemporel : ActiveObjects
 
         foreach (GameObject proj in projectiles)
         {
+            if (proj == null)
+            {
+                continue;
+            }
             Projectile projScript = proj.GetComponent<Projectile>();
             projScript.speed = ProjSpeed;
 
