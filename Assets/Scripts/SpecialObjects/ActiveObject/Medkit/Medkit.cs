@@ -9,7 +9,7 @@ public class Medkit : ActiveObjects
     private PlayerMouvement playerMouvement;
 
     private float timeCantMoove = 1.5f;
-    private bool isHealing = false;
+    [SerializeField]private bool isHealing = false;
     private bool canWalk = true;
 
 
