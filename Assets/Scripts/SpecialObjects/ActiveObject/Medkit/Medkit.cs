@@ -8,8 +8,7 @@ public class Medkit : ActiveObjects
     private PlayerHealth playerHealth;
     private PlayerMouvement playerMouvement;
 
-    private float timeMedkit = 1.5f;
-    private float timeCantMoove = 9f;
+    private float timeCantMoove = 1.5f;
     private bool isHealing = false;
     private bool canWalk = true;
 
@@ -39,11 +38,10 @@ public class Medkit : ActiveObjects
     }
     private IEnumerator CantMoove(float _timeCantMoove)
     {
-        float normalSpeed = playerMouvement.mooveSpeed;
-        canWalk = false;
         playerMouvement.mooveSpeed = 0;
         yield return new WaitForSeconds(_timeCantMoove);
-        playerMouvement.mooveSpeed = normalSpeed;
+        canWalk = false;
+        playerMouvement.mooveSpeed = 100; // On remet 100 car on veut remettre la valeur de vitesse initiale dans tous les cas !!!
         UseModule = false;
         ModuleAlreadyUse = true;
     }
@@ -62,22 +60,22 @@ public class Medkit : ActiveObjects
         {
             if (canWalk)
             {
-                StartCoroutine(CantMoove(9f));
+                StartCoroutine(CantMoove(timeCantMoove));
             }
             if (isHealing)
             {
-                StartCoroutine(CoroutineDeSoin(1.125f));
+                StartCoroutine(CoroutineDeSoin(0.25f));
             }
         }
         else if (playerHealth.maxHealth == 8)
         {
             if (canWalk)
             {
-                StartCoroutine(CantMoove(9f));
+                StartCoroutine(CantMoove(timeCantMoove));
             }
             if (isHealing)
             {
-                StartCoroutine(CoroutineDeSoin(9 / 8f));
+                StartCoroutine(CoroutineDeSoin(0.1875f));
             }
         }
     }

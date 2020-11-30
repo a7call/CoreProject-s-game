@@ -10,7 +10,7 @@ public class PlayerMouvement : Player
 
     private Vector2 mouvement;
     private bool isCorotinePlaying=false;
-    private bool canDash = true;
+    public bool canDash = true;
 
     //Changement de velocity de privée à public
     [HideInInspector]
@@ -57,16 +57,14 @@ public class PlayerMouvement : Player
                 MakesEnergy();
                 LastStack();
 
-                if (canDash)
+                
+                if(Input.GetMouseButton(1))
                 {
-                    if(Input.GetMouseButton(1))
+                    playerEnergy.energyIsReloading = false;
+                    Dash();
+                    if (isCorotinePlaying == false)
                     {
-                        playerEnergy.energyIsReloading = false;
-                        Dash();
-                        if (isCorotinePlaying == false)
-                        {
-                            StartCoroutine(Coro());
-                        }
+                        StartCoroutine(Coro());
                     }
                 }
 

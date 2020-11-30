@@ -9,6 +9,7 @@ public class PlayerEnergy : Player
     public float currentEnergy;
     public EnergyBar energyBar;
     public GameObject energyBarGFX;
+    //[HideInInspector]
     public bool energyIsReloading = false;
     private bool isActive;
     public int maxStackNumber=3;
@@ -110,7 +111,7 @@ public class PlayerEnergy : Player
     
     public IEnumerator EnergyReloading()
     {
-        if (energyIsReloading && currentEnergy < playerData.maxEnergy)
+        if (energyIsReloading && currentEnergy < playerData.maxEnergy && !EnergyDrink.interrupt)
         {
             if (currentEnergy <= minAmountEnergy)
             {
