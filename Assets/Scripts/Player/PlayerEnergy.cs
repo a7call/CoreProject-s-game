@@ -9,10 +9,13 @@ public class PlayerEnergy : Player
     public float currentEnergy;
     public EnergyBar energyBar;
     public GameObject energyBarGFX;
+    //[HideInInspector]
     public bool energyIsReloading = false;
     private bool isActive;
     public int maxStackNumber=3;
     public int currentStack;
+    private float timeToNotAbuse = 10f;
+    private float minAmountEnergy = 10f;
 
     protected override void Awake()
     {
@@ -108,10 +111,22 @@ public class PlayerEnergy : Player
     
     public IEnumerator EnergyReloading()
     {
-        if (energyIsReloading && currentEnergy < playerData.maxEnergy)
+        if (energyIsReloading && currentEnergy < playerData.maxEnergy && !EnergyDrink.interrupt)
         {
-            currentEnergy += playerData.energyReloadNumber;
-            yield return new WaitForSeconds(0.1f);
+            if (currentEnergy <= minAmountEnergy)
+            {
+                energyIsReloading = false;
+                yield return new WaitForSeconds(timeToNotAbuse);
+                energyIsReloading = true;
+                currentEnergy = 25f;
+            }
+            else
+            {
+                energyIsReloading = false;
+                currentEnergy += playerData.energyReloadNumber;
+                yield return new WaitForSeconds(0.2f);
+                energyIsReloading = true;
+            }
         }
         else
         {

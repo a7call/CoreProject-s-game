@@ -19,6 +19,10 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public static bool isPerturbateurIEM = false;
 
+    [HideInInspector]
+    public static bool isArretTemporel = false;
+    
+
     public State currentState;
     public enum State
     {
@@ -27,7 +31,8 @@ public class Enemy : MonoBehaviour
         Attacking,
         ShootingLaser,
         Paralysed,
-        KnockedBack
+        KnockedBack,
+        Freeze
         
     }
     // pour l'épée electrique
@@ -68,6 +73,12 @@ public class Enemy : MonoBehaviour
             case State.KnockedBack:
 
                 break;
+
+            case State.Freeze:
+                rb.velocity = Vector2.zero;
+                break;
+
+            
         }
         healthBar.SetHealth(currentHealth);
         DisplayBar();

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5454122889349020017}
   - component: {fileID: 5454122889349020018}
-  - component: {fileID: 1331674477183271181}
+  - component: {fileID: 239862291}
   m_Layer: 0
   m_Name: HomeBaseCall
   m_TagString: ActiveObject
@@ -58,18 +58,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1331674477183271181
+--- !u!114 &239862291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5454122889349020012}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 059d1fc42a7c14d2d9a4f487f9771e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cd: 180
-  amoCase: {fileID: 3215672818284486199, guid: 900447cddf316fe42bb26bbab4fd0426, type: 3}
-  SupplyDelay: 2
+  cd: 0
+  range: 0
+  speed: 0
+  amoCase: {fileID: 0}
+  SupplyDelay: 0

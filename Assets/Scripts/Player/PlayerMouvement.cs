@@ -10,7 +10,7 @@ public class PlayerMouvement : Player
 
     private Vector2 mouvement;
     private bool isCorotinePlaying=false;
-    [SerializeField]private bool canDash = true;
+    public bool canDash = true;
 
     //Changement de velocity de privée à public
     [HideInInspector]
@@ -57,18 +57,18 @@ public class PlayerMouvement : Player
                 MakesEnergy();
                 LastStack();
 
-                if (canDash)
+                
+                if(Input.GetMouseButton(1))
                 {
-                    if(Input.GetMouseButton(1))
+                    playerEnergy.energyIsReloading = false;
+                    Dash();
+                    if (isCorotinePlaying == false)
                     {
-                        playerEnergy.energyIsReloading = false;
-                        Dash();
-                        if (isCorotinePlaying == false)
-                        {
-                            StartCoroutine(Coro());
-                        }
+                        StartCoroutine(Coro());
                     }
                 }
+
+
 
                 break;
 
@@ -164,25 +164,6 @@ public class PlayerMouvement : Player
         }
     }
 
-    [SerializeField] private float DashDuration = 0f;
-    private bool isDashing;
-    //private IEnumerator DashCo()
-    //{
-    //    if (!isDashing)
-    //    {
-    //        Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-    //        playerEnergy.SpendEnergy(dashEnergyCost);
-    //        isDashing = true;
-    //        GetComponent<BoxCollider2D>().enabled = false;
-    //        rb.AddForce(dir * dashForce*Time.deltaTime, ForceMode2D.Impulse);
-    //        yield return new WaitForSeconds(DashDuration);
-    //        if (isModuleInertie) CoroutineManager.Instance.StartCoroutine(ModuleInertie.InertieCo());
-    //        isDashing = false;
-    //        GetComponent<BoxCollider2D>().enabled = true;
-    //    }
-        
-    //}
-
     private void MakesEnergy()
     {
         if (Input.GetMouseButtonUp(1) && playerEnergy.currentEnergy < playerEnergy.maxEnergy)
@@ -201,6 +182,10 @@ public class PlayerMouvement : Player
         {
             canDash = true;
         }
+        else if(playerEnergy.currentEnergy==0)
+        {
+            canDash = false;
+        }
     }
 
     private IEnumerator Coro()
@@ -215,8 +200,9 @@ public class PlayerMouvement : Player
     {
         if (canDash)
         {
-            print("A");
-            // FAIRE LA FONCTION DE DASH
+            Vector2 dir = new Vector2(mouvement.x, mouvement.y);
+            rb.AddForce(dir * dashForce * Time.deltaTime, ForceMode2D.Impulse);
+            if (isModuleInertie) CoroutineManager.Instance.StartCoroutine(ModuleInertie.InertieCo());
         }
     }
 
