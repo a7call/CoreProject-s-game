@@ -9,7 +9,7 @@ public class Medkit : ActiveObjects
     private PlayerMouvement playerMouvement;
 
     private float timeCantMoove = 1.5f;
-    private bool isHealing = false;
+    [SerializeField] private bool isHealing = false;
     private bool canWalk = true;
 
 
@@ -22,7 +22,7 @@ public class Medkit : ActiveObjects
     {
         if (ModuleAlreadyUse)
         {
-            DestoyMedkit();
+            Destroy(gameObject);
         }
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -78,9 +78,5 @@ public class Medkit : ActiveObjects
                 StartCoroutine(CoroutineDeSoin(0.1875f));
             }
         }
-    }
-    private void DestoyMedkit()
-    {
-        Destroy(gameObject);
     }
 }

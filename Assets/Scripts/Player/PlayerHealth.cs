@@ -47,6 +47,7 @@ public class PlayerHealth : Player
 
     // Lié aux modules du PowerUp
     [HideInInspector] public static bool isPowerUp = false;
+    private bool isPowerUpAlreadyUse = false;
 
     protected override void Awake()
     {
@@ -57,6 +58,7 @@ public class PlayerHealth : Player
     //Pour tester la fonction Take1Damage
     protected void Update()
     {
+        AjustHhealth();
         UpdateUILife();
         Take1Damage();
     }
@@ -64,7 +66,26 @@ public class PlayerHealth : Player
     public void SetMaxHealth()
     {
         currentHealth = maxHealth;
+    }
 
+    private void AjustHhealth()
+    {
+        if (isPowerUp && !isPowerUpAlreadyUse)
+        {
+            maxHealth = 8;
+            currentHealth += 2;
+            isPowerUpAlreadyUse = true;
+        }
+
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        // RETIRER LE HEALTH IF LORSQUE L'ON AURA FAIT LA MORT DU JOUEUR
+        else if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -115,7 +136,7 @@ public class PlayerHealth : Player
         }
     }
 
-    private IEnumerator InvincibilityFlash()
+    public IEnumerator InvincibilityFlash()
     {
         while (isInvincible) {
             graphics.color = new Color(1f, 1f, 1f, 0f);
@@ -125,7 +146,7 @@ public class PlayerHealth : Player
         }
     }
 
-    private IEnumerator InvincibilityDelay()
+    public IEnumerator InvincibilityDelay()
     {
         isInvincible = true;
         yield return new WaitForSeconds(InvincibleDelay);
