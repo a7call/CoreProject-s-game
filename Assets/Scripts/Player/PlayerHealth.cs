@@ -115,7 +115,7 @@ public class PlayerHealth : Player
         }
     }
 
-    private IEnumerator InvincibilityFlash()
+    public IEnumerator InvincibilityFlash()
     {
         while (isInvincible) {
             graphics.color = new Color(1f, 1f, 1f, 0f);
@@ -125,7 +125,7 @@ public class PlayerHealth : Player
         }
     }
 
-    private IEnumerator InvincibilityDelay()
+    public IEnumerator InvincibilityDelay()
     {
         isInvincible = true;
         yield return new WaitForSeconds(InvincibleDelay);

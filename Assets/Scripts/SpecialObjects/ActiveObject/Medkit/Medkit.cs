@@ -20,10 +20,10 @@ public class Medkit : ActiveObjects
     }
     protected override void Update()
     {
-        if (ModuleAlreadyUse)
-        {
-            DestoyMedkit();
-        }
+        //if (ModuleAlreadyUse)
+        //{
+        //    DestroyObject();
+        //}
 
         if (Input.GetKeyDown(KeyCode.U))
         {
@@ -78,9 +78,5 @@ public class Medkit : ActiveObjects
                 StartCoroutine(CoroutineDeSoin(0.1875f));
             }
         }
-    }
-    private void DestoyMedkit()
-    {
-        Destroy(gameObject);
     }
 }
