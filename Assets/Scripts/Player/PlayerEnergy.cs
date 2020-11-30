@@ -17,12 +17,16 @@ public class PlayerEnergy : Player
     private float timeToNotAbuse = 10f;
     private float minAmountEnergy = 10f;
 
+    private Redbull redbull;
+
     protected override void Awake()
     {
         base.Awake();
         //energyBarGFX = GameObject.FindGameObjectWithTag("EnergyBar");
         //energyBarGFX.SetActive(false);
         SetMaxEnergy();
+
+        redbull = FindObjectOfType<Redbull>();
     }
     private void Update()
     {
@@ -33,9 +37,17 @@ public class PlayerEnergy : Player
     }
     
     // Déduit l'energie dépensée
+    // Si module redbull présent, il a son énergie au max!
     public void SpendEnergy(float energySpend)
     {
-        currentEnergy -= energySpend;
+        if (redbull.UseModule)
+        {
+            currentEnergy = maxEnergy;
+        }
+        else
+        {
+            currentEnergy -= energySpend;
+        }
     }
 
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ActiveObjects : MonoBehaviour
 {
-
-    protected bool UseModule = false;
+    // Xavier a passé UseModule en public (est-ce dérangeant?)
+    public bool UseModule = false;
     protected bool ModuleAlreadyUse = false;
     protected bool readyToUse = true;
     [SerializeField] protected float cd;
