@@ -78,6 +78,10 @@ public class PlayerMouvement : Player
             case EtatJoueur.shopping:
                 //Definir tout ce qu'on veut faire dedans
                 break;
+
+            case EtatJoueur.Grapping:
+
+                break;
         }
 
     }
@@ -98,6 +102,9 @@ public class PlayerMouvement : Player
 
             case EtatJoueur.shopping:
                 rb.velocity = Vector2.zero;
+                break;
+
+            case EtatJoueur.Grapping:
                 break;
         }
         

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rewards : MonoBehaviour
 {
     protected Inventory inventory;
-    void Start()
+    protected virtual void Start()
     { 
         inventory = FindObjectOfType<Inventory>();
 
