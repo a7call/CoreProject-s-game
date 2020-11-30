@@ -13,9 +13,14 @@ public class BaroudHonneur : ActiveObjects
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U) && readyToUse)
+        if (readyToUse && playerHealth.currentHealth==0)
         {
-            ActiveBaroudHonneur();
+            AutoBaroudHonneur();
+        }
+
+        if(Input.GetKeyDown(KeyCode.U) && readyToUse && playerHealth.currentHealth != 0)
+        {
+            ActiveManualBaroudHonneur();
         }
 
         if (ModuleAlreadyUse)
@@ -24,16 +29,22 @@ public class BaroudHonneur : ActiveObjects
         }
     }
 
-    private void ActiveBaroudHonneur()
+    private void ActiveManualBaroudHonneur()
     {
-        if (playerHealth.currentHealth == 0)
-        {
-            UseModule = true;
-            GainHp();
-            // VOIR CE QU'ON FAIT ? RESET ROOM, INVINCIBLE QUELQUES SECONDES ?
-            ModuleAlreadyUse = true;
-            readyToUse = false;
-        }
+        UseModule = true;
+        GainHp();
+        ModuleAlreadyUse = true;
+        readyToUse = false;
+    }
+
+    private void AutoBaroudHonneur()
+    {
+        UseModule = true;
+        GainHp();
+        CoroutineManager.Instance.StartCoroutine(playerHealth.InvincibilityDelay());
+        CoroutineManager.Instance.StartCoroutine(playerHealth.InvincibilityFlash());
+        ModuleAlreadyUse = true;
+        readyToUse = false;
     }
 
     private void GainHp()
