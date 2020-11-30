@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
 {
     // vitesse des projectiles
     public float speed;
+    public bool isDisabled;
     // cible des projectiles (Player)
     protected Transform target;
     // direction (en fonction de la place de la cible)
@@ -52,7 +53,12 @@ public class Projectile : MonoBehaviour
     }
     protected virtual void Update()
     {
-        Lauch();
+        if (!isDisabled)
+        {
+            Lauch();
+        }
+       
+
 
         if (isTacticVisionModule && !AmmoSpeedAlreadyDown)
         {
@@ -69,6 +75,7 @@ public class Projectile : MonoBehaviour
     //envoie le projectile
     protected virtual void Lauch()
     {
+
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
