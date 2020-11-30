@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
 {
     // L'argent que possède le joueur
     public float goldPlayer;
+    public List<GameObject> BlackHoles = new List<GameObject>();
     // Les clés que possèdent le joueur
     public int numberOfKeys;
     public int numberOfHearts;

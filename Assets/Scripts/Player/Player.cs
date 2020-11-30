@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
         normal,
         fear,
         shopping,
+        Grapping,
     }
 
     [HideInInspector]
