@@ -296,7 +296,7 @@ GameObject:
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5989040002390356997
 Transform:
   m_ObjectHideFlags: 0
@@ -429,6 +429,7 @@ MonoBehaviour:
   nextWayPointDistance: 3
   moveSpeed: 0
   isSlowed: 0
+  targetPoint: {fileID: 0}
   target: {fileID: 0}
   rb: {fileID: 0}
   currentHealth: 0
@@ -440,8 +441,6 @@ MonoBehaviour:
   isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 921e86c1082a22c4bb742bbc8d43a589, type: 2}
   isShooting: 0
-  isReadytoShoot: 1
-  timeToSwitch: 0
   rayon: {fileID: 4234345229324104036, guid: 411ecaa5d9a3b054dbc6ff8f2f30aa71, type: 3}
   differentRadius: []
 --- !u!61 &2413620300795474763
@@ -503,7 +502,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.0011999905, y: -0.0012000017}
   m_SizeDelta: {x: -0.026428223, y: -0.026428223}
   m_Pivot: {x: 0.5, y: 0.5}
