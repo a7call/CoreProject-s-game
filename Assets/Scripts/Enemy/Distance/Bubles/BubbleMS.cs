@@ -55,7 +55,8 @@ public class BubbleMS : Distance
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        Instantiate(rayon, transform.position, Quaternion.identity);
+        GameObject monRayon = Instantiate(rayon, transform.position, Quaternion.identity);
+        monRayon.transform.parent = gameObject.transform;
         AddShoot();
     }
 
@@ -63,4 +64,5 @@ public class BubbleMS : Distance
     {
         differentRadius.Insert(0, rayon);
     }
+    
 }

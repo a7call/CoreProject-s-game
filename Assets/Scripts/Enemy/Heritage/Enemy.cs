@@ -15,6 +15,7 @@ using Pathfinding;
 public class Enemy : MonoBehaviour
 {
     protected PlayerHealth playerHealth;
+    protected PlayerMouvement playerMouvement;
 
     [HideInInspector]
     public static bool isPerturbateurIEM = false;
@@ -32,7 +33,8 @@ public class Enemy : MonoBehaviour
         ShootingLaser,
         Paralysed,
         KnockedBack,
-        Freeze
+        Freeze,
+        Feared
         
     }
     // pour l'épée electrique
@@ -58,6 +60,7 @@ public class Enemy : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, 0.1f);
         target = GameObject.FindGameObjectWithTag("Player").transform;
         playerHealth = FindObjectOfType<PlayerHealth>();
+        playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
 
     protected virtual void Update()
@@ -76,6 +79,10 @@ public class Enemy : MonoBehaviour
 
             case State.Freeze:
                 rb.velocity = Vector2.zero;
+                break;
+
+            case State.Feared:
+                Fear();
                 break;
 
             
@@ -166,7 +173,15 @@ public class Enemy : MonoBehaviour
         targetPoint = transform;
     }
 
-
+    // Fear l'ennemi dans la direction opposée au joueur
+    private Vector3 direction;
+    private int fearDistance = 5;
+    protected virtual void Fear()
+    {
+        direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
+        //fearPoint = gameObject.transform.position - fearDistance * direction;
+        rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
+    }
 
 
 
