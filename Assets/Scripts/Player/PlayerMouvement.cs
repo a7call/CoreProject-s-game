@@ -25,9 +25,12 @@ public class PlayerMouvement : Player
     public static bool isSpeedShoesModule;
     public static float SpeedMultiplier;
 
+    //PiercedPocketModule
+    public static bool isPiercedPocketModule; 
+
     [HideInInspector]
     public static bool isArretTemporelActive = false;
-
+    
 
     protected override void Awake()
     {
@@ -61,7 +64,15 @@ public class PlayerMouvement : Player
                 if(Input.GetMouseButton(1))
                 {
                     playerEnergy.energyIsReloading = false;
-                    Dash();
+                    if (canDash)
+                    {
+                        Dash();
+                        if (isPiercedPocketModule  )
+                        {
+                            PiercedPocketModule pockets = FindObjectOfType<PiercedPocketModule>();
+                            if(pockets.bombsReady) StartCoroutine(pockets.SpawnBombs());
+                        }
+                    }
                     if (isCorotinePlaying == false)
                     {
                         StartCoroutine(Coro());
@@ -198,12 +209,11 @@ public class PlayerMouvement : Player
 
     private void Dash()
     {
-        if (canDash)
-        {
+       
             Vector2 dir = new Vector2(mouvement.x, mouvement.y);
             rb.AddForce(dir * dashForce * Time.deltaTime, ForceMode2D.Impulse);
             if (isModuleInertie) CoroutineManager.Instance.StartCoroutine(ModuleInertie.InertieCo());
-        }
+        
     }
 
 }
