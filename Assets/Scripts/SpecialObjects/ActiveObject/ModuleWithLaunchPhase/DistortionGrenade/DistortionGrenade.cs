@@ -25,8 +25,8 @@ public class DistortionGrenade : ModuleLauchPhase
             if (hit.gameObject.GetComponent<Enemy>())
             {
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-
-                CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, RandomDir(), knockBackTime, enemy));
+                Vector3 Direction = enemy.transform.position - gameObject.transform.position;
+                CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
                 enemy.TakeDamage(explosionDamage);
             }
         }
