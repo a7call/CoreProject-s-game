@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1716502740751683505}
   - component: {fileID: 1716502740751683506}
+  - component: {fileID: 2435751546531831651}
   m_Layer: 0
   m_Name: ParasiteIdol
   m_TagString: ActiveObject
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716502740751683500}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.6, y: -4.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -57,3 +58,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2435751546531831651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716502740751683500}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db881cbecb1339b4386c653931c24594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseModule: 0
+  cd: 0
+  range: 0
+  speed: 0

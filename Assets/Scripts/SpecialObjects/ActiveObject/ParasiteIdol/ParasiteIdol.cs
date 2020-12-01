@@ -5,6 +5,9 @@ using UnityEngine;
 public class ParasiteIdol : ActiveObjects
 {
     GameObject[] enemiesInRoom;
+    public static bool parasiteIdolFear = false;
+    [SerializeField] private float fearTime = 5f;
+    [SerializeField] private float currentTime = 0;
 
     protected override void Start()
     {
@@ -15,7 +18,14 @@ public class ParasiteIdol : ActiveObjects
     {
         if(Input.GetKeyDown(KeyCode.U) && readyToUse)
         {
-            FearEnemy();
+            UseModule = true;
+            parasiteIdolFear = true;
+            StartCoroutine(ResetStateChasing());
+        }
+
+        if (ModuleAlreadyUse)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -26,9 +36,23 @@ public class ParasiteIdol : ActiveObjects
             enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Feared;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void EnemyChasing()
     {
-        
+        foreach (GameObject enemy in enemiesInRoom)
+        {
+            enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
+        }
     }
+
+    private IEnumerator ResetStateChasing()
+    {
+        FearEnemy();
+        yield return new WaitForSeconds(fearTime);
+        EnemyChasing();
+        UseModule = false;
+        ModuleAlreadyUse = true;
+        readyToUse = false;
+    }
+
+
 }

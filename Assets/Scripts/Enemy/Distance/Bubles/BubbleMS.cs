@@ -23,6 +23,8 @@ public class BubbleMS : Distance
     protected override void Update()
     {
         base.Update();
+        EnabledRayon();
+
         switch (currentState)
         {
             case State.Patrolling:
@@ -64,5 +66,17 @@ public class BubbleMS : Distance
     {
         differentRadius.Insert(0, rayon);
     }
-    
+
+    private void EnabledRayon()
+    {
+        if (ParasiteIdol.parasiteIdolFear)
+        {
+            if(gameObject.transform.GetChild(1) != null) 
+            {
+                // gameObject.transform.GetChild(1).GetComponent<RadiusGrowUp>().enabled = false;
+                GameObject myRayon = GameObject.FindGameObjectWithTag("RayonMS");
+                Destroy(myRayon);
+            }
+        }
+    }
 }
