@@ -30,9 +30,9 @@ public class VoidGrenade : ModuleLauchPhase
             {
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
                 ennemyTouche.Add(enemy);
-
+                Vector3 Direction = enemy.transform.position - gameObject.transform.position;
                 enemy.TakeDamage(explosionDamage);
-                CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, RandomDir(), knockBackTime, enemy));
+                CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
                 
                 enemy.moveSpeed /= SpeedDivisor;
             }
@@ -85,4 +85,6 @@ public class VoidGrenade : ModuleLauchPhase
         }
         
     }
+
+    
 }
