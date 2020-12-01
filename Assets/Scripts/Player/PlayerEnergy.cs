@@ -14,7 +14,7 @@ public class PlayerEnergy : Player
     private bool isActive;
     public int maxStackNumber=3;
     public int currentStack;
-    private float timeToNotAbuse = 10f;
+    private float timeToNotAbuse = 5f;
     private float minAmountEnergy = 10f;
 
     private Redbull redbull;
@@ -26,7 +26,7 @@ public class PlayerEnergy : Player
         //energyBarGFX.SetActive(false);
         SetMaxEnergy();
 
-        redbull = FindObjectOfType<Redbull>();
+        //redbull = FindObjectOfType<Redbull>();
     }
     private void Update()
     {
@@ -40,14 +40,14 @@ public class PlayerEnergy : Player
     // Si module redbull présent, il a son énergie au max!
     public void SpendEnergy(float energySpend)
     {
-        if (redbull.UseModule)
+       /* if (redbull.UseModule)
         {
             currentEnergy = maxEnergy;
         }
-        else
-        {
+       */
+        
             currentEnergy -= energySpend;
-        }
+        
     }
 
 
@@ -118,31 +118,40 @@ public class PlayerEnergy : Player
     //        }
     //        yield break;
     //    }
-        
+
     //}
-    
+
+    private bool CoroBool;
     public IEnumerator EnergyReloading()
     {
-        if (energyIsReloading && currentEnergy < playerData.maxEnergy && !EnergyDrink.interrupt)
+        if (currentEnergy >= playerData.maxEnergy)
         {
+            energyIsReloading = false;
+            yield break;
+        }
+        if (!CoroBool && currentEnergy < playerData.maxEnergy && !EnergyDrink.interrupt)
+        {
+           
+            
             if (currentEnergy <= minAmountEnergy)
             {
+                CoroBool = true;
                 energyIsReloading = false;
                 yield return new WaitForSeconds(timeToNotAbuse);
                 energyIsReloading = true;
+                CoroBool = false;
                 currentEnergy = 25f;
             }
             else
             {
-                energyIsReloading = false;
+                energyIsReloading = true;
+                CoroBool = true;
                 currentEnergy += playerData.energyReloadNumber;
                 yield return new WaitForSeconds(0.2f);
-                energyIsReloading = true;
+                CoroBool = false;
             }
+            
         }
-        else
-        {
-            yield break;
-        }
+       
     }
 }
