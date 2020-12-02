@@ -7,7 +7,6 @@ public class ParasiteIdol : ActiveObjects
     GameObject[] enemiesInRoom;
     public static bool parasiteIdolFear = false;
     [SerializeField] private float fearTime = 5f;
-    [SerializeField] private float currentTime = 0;
 
     protected override void Start()
     {
@@ -46,12 +45,12 @@ public class ParasiteIdol : ActiveObjects
 
     private IEnumerator ResetStateChasing()
     {
+        readyToUse = false;
         FearEnemy();
         yield return new WaitForSeconds(fearTime);
         EnemyChasing();
         UseModule = false;
         ModuleAlreadyUse = true;
-        readyToUse = false;
     }
 
 

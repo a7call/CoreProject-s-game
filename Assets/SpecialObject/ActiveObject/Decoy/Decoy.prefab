@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &174644473771040200
+--- !u!1 &6995849491839922254
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 174644473771040213}
-  - component: {fileID: 174644473771040214}
-  - component: {fileID: 3541562272314866314}
+  - component: {fileID: 6995849491839922259}
+  - component: {fileID: 6995849491839922256}
+  - component: {fileID: 8828836545388642071}
   m_Layer: 0
-  m_Name: SunBang
+  m_Name: Decoy
   m_TagString: ActiveObject
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &174644473771040213
+--- !u!4 &6995849491839922259
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174644473771040200}
+  m_GameObject: {fileID: 6995849491839922254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: -4.12, z: 0}
+  m_LocalPosition: {x: -2.93, y: -6.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &174644473771040214
+--- !u!61 &6995849491839922256
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174644473771040200}
+  m_GameObject: {fileID: 6995849491839922254}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -58,21 +58,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3541562272314866314
+--- !u!114 &8828836545388642071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174644473771040200}
-  m_Enabled: 0
+  m_GameObject: {fileID: 6995849491839922254}
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2c200572792a7b45852d76fc29fa0e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 80e3826cefeedca49a7294f355af8bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseModule: 0
   cd: 0
-  range: 0
-  speed: 0
-  radiusZone: 5
-  stunTime: 5
+  range: 2
+  speed: 100
+  decoyObject: {fileID: 7924523612297044904, guid: da2b78462443e5a4c99f817218675f29, type: 3}

@@ -11,9 +11,12 @@ public class SunBang : ActiveObjects
 
     private Enemy enemy;
 
+    private GameObject[] enemies;
+
     protected override void Start()
     {
         enemy = FindObjectOfType<Enemy>();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     protected override void Update()
@@ -26,7 +29,7 @@ public class SunBang : ActiveObjects
 
         if (ModuleAlreadyUse)
         {
-            UseSunBang();
+            ResetEnemyState();
             Destroy(gameObject);
         }
     }
@@ -41,11 +44,7 @@ public class SunBang : ActiveObjects
                 {
                     hit.transform.GetComponent<Enemy>().currentState = Enemy.State.Paralysed;
                 }
-                else
-                {
-                    hit.transform.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
-                }
-                
+
             }
         }
     }
@@ -57,6 +56,14 @@ public class SunBang : ActiveObjects
         UseModule = false;
         readyToUse = false;
         ModuleAlreadyUse = true;
+    }
+
+    private void ResetEnemyState()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Attacking;
+        }
     }
 
     public void OnDrawGizmos()
