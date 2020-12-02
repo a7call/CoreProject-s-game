@@ -31,29 +31,12 @@ public class DistortionMine : MonoBehaviour
             if (hit.gameObject.GetComponent<Enemy>())
             {
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-                print(enemy);
-                CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, RandomDir(), knockBackTime, enemy));
+                Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
+                CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
                 enemy.TakeDamage(explosionDamage);
                 Destroy(gameObject);
             }
         }
         
-    }
-
-    private Vector3 RandomDir()
-    {
-        int choice = Mathf.FloorToInt(Random.value * 3.99f);
-        //use that int to chose a direction
-        switch (choice)
-        {
-            case 0:
-                return Vector2.down;
-            case 1:
-                return Vector2.left;
-            case 2:
-                return Vector2.up;
-            default:
-                return Vector2.right;
-        }
     }
 }
