@@ -18,29 +18,7 @@ public class PlayerHealth : Player
 
     public SpriteRenderer graphics;
 
-    // Pour le UI de la vie
-    //[HideInInspector]
-    public Image image1;
-    //[HideInInspector]
-    public Image image2;
-    //[HideInInspector]
-    public Image image3;
-    //[HideInInspector]
-    public Image image4;
-    //[HideInInspector]
-    public Sprite emptyHearth;
-    //[HideInInspector]
-    public Sprite halfHearth;
-    //[HideInInspector]
-    public Sprite fullHearth;
-
-    // Pour le UI de l'armor
-    //[HideInInspector]
-    public Image imageArmor;
-    //[HideInInspector]
-    public Sprite halfArmor;
-    //[HideInInspector]
-    public Sprite fullArmor;
+   
 
 
     public static bool isLastChanceModule = false;
@@ -238,7 +216,10 @@ public class PlayerHealth : Player
         }
         else
         {
-            image4.enabled = true;
+            
+            HealthContent.Find("ImagePowerUpHP").GetComponent<Image>().enabled = true;
+            image4 = HealthContent.Find("ImagePowerUpHP").GetComponent<Image>();
+
             if (currentHealth == maxHealth)
             {
                 image1.sprite = fullHearth;

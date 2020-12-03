@@ -51,13 +51,24 @@ public class AmmoConverter : ActiveObjects
     {
         if (collision.CompareTag("EnemyProjectil"))
         {
-            GameObject Arme = GameObject.FindGameObjectWithTag("DistanceWeapon");
-            DistanceWeapon ArmeScript = Arme.GetComponent<DistanceWeapon>();
+            
+            Player player = FindObjectOfType<Player>();
+            
+            WeaponsManagerSelected weaponManager =  player.GetComponentInChildren<WeaponsManagerSelected>();
+            if(weaponManager.GetComponentInChildren<DistanceWeapon>())
+            {
+                DistanceWeapon distanceWeapon = weaponManager.GetComponentInChildren<DistanceWeapon>();
+                distanceWeapon.AmmoStock++;
 
-            print("test1");
-            print(Arme.name);
-            ArmeScript.AmmoStock++;
-            print("test2");
+            }
+            else
+            {
+                return;
+            }
+
+
+
+
         }
     }
     
