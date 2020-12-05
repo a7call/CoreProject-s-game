@@ -33,8 +33,7 @@ public class Decoy : ModuleLauchPhase
             if (hit.gameObject.GetComponent<Enemy>())
             {
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-                //Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
-                //enemy.rb.velocity = Direction * enemy.moveSpeed * Time.deltaTime;
+                enemy.target = gameObject.transform;
             }
         }
         Destroy(gameObject);

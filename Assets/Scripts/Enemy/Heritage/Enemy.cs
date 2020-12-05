@@ -22,7 +22,6 @@ public class Enemy : MonoBehaviour
 
     [HideInInspector]
     public static bool isArretTemporel = false;
-    
 
     public State currentState;
     public enum State
@@ -65,7 +64,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-
        
         switch (currentState)
         {
