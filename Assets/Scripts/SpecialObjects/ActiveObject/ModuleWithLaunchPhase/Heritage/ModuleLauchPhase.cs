@@ -20,20 +20,20 @@ public class ModuleLauchPhase : MonoBehaviour
 
     protected virtual void Start()
     {
-        
         GetDatas();
-        rbBomb = transBomb.GetComponent<Rigidbody2D>();
-        
-        float distanceToPlayer = (positionMouse - playePos).sqrMagnitude;
+        SetVerticalForce();
+        StartCoroutine(CheckIfFalling());
+    }
+    private void SetVerticalForce()
+    {
+        float distanceToPlayer = Vector3.Distance(positionMouse, playePos);
         if (distanceToPlayer > module.range) distanceToPlayer = module.range;
         coef = distanceToPlayer / module.range;
-        rbBomb.AddForce(new Vector2(0, 25 + coef*300), ForceMode2D.Force);
-        StartCoroutine(CheckIfFalling());
-
-    
+        if (coef < 0.42) coef = 0.42f;
+        rbBomb.AddForce(new Vector2(0, coef * 300), ForceMode2D.Force);
     }
 
-    protected void Launch2(Vector3 mousePos, Vector3 playerPos, float range, Vector3 dir)
+    protected void Launch(Vector3 mousePos, Vector3 playerPos, float range, Vector3 dir)
     {
         if ((Vector3.Distance(mousePos, playerPos) < 1))
         {
@@ -66,7 +66,7 @@ public class ModuleLauchPhase : MonoBehaviour
     protected virtual void Update()
     {
         StartCoroutine(CheckIfMoving());
-        Launch2(positionMouse, playePos, module.range, direction);
+        Launch(positionMouse, playePos, module.range, direction);
         CheckIfTouchingGround();
 
 
@@ -74,6 +74,7 @@ public class ModuleLauchPhase : MonoBehaviour
 
     private void GetDatas()
     {
+        rbBomb = transBomb.GetComponent<Rigidbody2D>();
         module = FindObjectOfType<ActiveObjects>();
         positionMouse = module.GetMousePosition();
         playePos = module.transform.position;
