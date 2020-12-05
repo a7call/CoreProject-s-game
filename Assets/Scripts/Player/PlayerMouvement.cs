@@ -30,7 +30,8 @@ public class PlayerMouvement : Player
 
     [HideInInspector]
     public static bool isArretTemporelActive = false;
-    
+
+    public static object instance { get; internal set; }
 
     protected override void Awake()
     {
