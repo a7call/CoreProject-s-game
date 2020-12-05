@@ -14,64 +14,62 @@ public class ModuleLauchPhase : MonoBehaviour
     protected bool isAlreadyActive = false;
     public Transform transBomb;
     public Transform transShadow;
-
+    protected bool isFalling = false;
+    protected float coef;
 
 
     protected virtual void Start()
     {
+        
         GetDatas();
         rbBomb = transBomb.GetComponent<Rigidbody2D>();
-        rbBomb.AddForce(new Vector2(0, 300), ForceMode2D.Force);
+        
+        float distanceToPlayer = (positionMouse - playePos).sqrMagnitude;
+        if (distanceToPlayer > module.range) distanceToPlayer = module.range;
+        coef = distanceToPlayer / module.range;
+        rbBomb.AddForce(new Vector2(0, 25 + coef*300), ForceMode2D.Force);
+        StartCoroutine(CheckIfFalling());
+
+    
     }
 
     protected void Launch2(Vector3 mousePos, Vector3 playerPos, float range, Vector3 dir)
     {
+        if ((Vector3.Distance(mousePos, playerPos) < 1))
+        {
+            isFalling = true;
+            rbBomb.gravityScale = 0;
+            transBomb.position = transShadow.position;
+            return;
+        }
         if (Vector3.Distance(mousePos, playerPos) < range)
         {
-            if (Vector3.Distance(mousePos, transform.position) > 0.3)
+            if (Vector3.Distance(mousePos, transform.position) > 0.1)
             {
-                transShadow.Translate(dir * 3f * Time.deltaTime);
-                transBomb.Translate(dir * 3f * Time.deltaTime);
+                transform.Translate(dir * 3f * Time.deltaTime);
             }
             else
             {
                 transform.position = mousePos;
+               
             }
         }
         else
         {
             if (Vector3.Distance(transform.position, playePos) < range)
             {
-                transShadow.Translate(dir * 3f * Time.deltaTime);
-                transBomb.Translate(dir * 3f * Time.deltaTime);
+                transform.Translate(dir * 3f * Time.deltaTime);
             }
         }
-    }
-    protected void Launch(Vector3 mousePos, Vector3 playerPos, float range, Vector3 dir)
-    {
-        if (Vector3.Distance(mousePos, playerPos) < range)
-        {
-            if (Vector3.Distance(mousePos, transform.position) > 0.3)
-            {
-                transform.Translate(dir * 1.5f * Time.deltaTime);
-            }
-            else
-            {
-                transform.position = mousePos;
-            }
-        }
-        else
-        {
-            if (Vector3.Distance(transform.position, playePos) < range)
-            {
-                transform.Translate(dir * 5 * Time.deltaTime);
-            }
-        }
+       
     }
     protected virtual void Update()
     {
         StartCoroutine(CheckIfMoving());
         Launch2(positionMouse, playePos, module.range, direction);
+        CheckIfTouchingGround();
+
+
     }
 
     private void GetDatas()
@@ -92,5 +90,24 @@ public class ModuleLauchPhase : MonoBehaviour
         {
             isNotMoving = true;
         }
+    }
+
+    private IEnumerator CheckIfFalling()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isFalling = true;
+    }
+
+    private void CheckIfTouchingGround()
+    {
+        if (Vector2.Distance(transBomb.position, transform.position) < 0.15 && isFalling)
+        {
+            rbBomb.gravityScale = 0;
+            transBomb.position = transShadow.position;
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(playePos, 1);
     }
 }
