@@ -88,8 +88,6 @@ public class Player : MonoBehaviour
         image1 = HealthContent.Find("ImageFirstHP").GetComponent<Image>();
         image2 = HealthContent.Find("ImageSecondHP").GetComponent<Image>();
         image3 = HealthContent.Find("ImageThirdHP").GetComponent<Image>();
-        
-
         Transform ArmorContent = canvas.transform.Find("ArmorContent");
         imageArmor = ArmorContent.Find("ImageArmor").GetComponent<Image>();
     }
