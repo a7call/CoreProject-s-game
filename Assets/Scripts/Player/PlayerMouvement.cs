@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+//using UnityEngine.InputSystem;
 /// <summary>
 /// Classe gérant les mouvements du joueur (se référer à Lopez)
 /// </summary>
@@ -217,4 +218,14 @@ public class PlayerMouvement : Player
         
     }
 
+
+    //public void OnHorizontal(InputValue val)
+    //{
+    //    mouvement.x = val.Get<float>();
+    //}
+
+    //public void OnVertical(InputValue val)
+    //{
+    //    mouvement.y = val.Get<float>();
+    //}
 }

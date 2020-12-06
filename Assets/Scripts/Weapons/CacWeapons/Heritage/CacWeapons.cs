@@ -101,7 +101,7 @@ public class CacWeapons : Weapons
 
     protected virtual IEnumerator Attack()
     {
-        if (!isAttacking)
+        if (!isAttacking && !PauseMenu.isGamePaused)
         {
             isAttacking = true;
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);

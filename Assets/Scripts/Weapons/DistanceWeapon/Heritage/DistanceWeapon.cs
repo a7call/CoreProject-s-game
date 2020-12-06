@@ -106,7 +106,7 @@ public class DistanceWeapon : Weapons
    protected virtual IEnumerator Shoot()
     {
 
-        if (!isAttacking && BulletInMag > 0 && !IsReloading)
+        if (!isAttacking && BulletInMag > 0 && !IsReloading && !PauseMenu.isGamePaused)
         {
             
             float decalage = Random.Range(-Dispersion, Dispersion);
@@ -182,5 +182,10 @@ public class DistanceWeapon : Weapons
             AmmoText.text = BulletInMag.ToString();
             AmmoStockText.text = "Infini";
         }
+    }
+
+    public void OnShoot()
+    {
+        Shoot();
     }
 }
