@@ -11,6 +11,7 @@ public class ModuleLauchPhase : MonoBehaviour
     protected ActiveObjects module;
     protected Rigidbody2D rbBomb;
     protected bool isNotMoving;
+    protected bool isSetToGround;
     protected bool isAlreadyActive = false;
     public Transform transBomb;
     public Transform transShadow;
@@ -66,9 +67,20 @@ public class ModuleLauchPhase : MonoBehaviour
     }
     protected virtual void Update()
     {
-        StartCoroutine(CheckIfMoving());
-        Launch(positionMouse, playePos, module.range, direction);
-        CheckIfTouchingGround();
+        if (!isNotMoving)
+        {
+            StartCoroutine(CheckIfMoving());
+            CheckIfTouchingGround();
+        }
+        if (!isSetToGround)
+        {
+            Launch(positionMouse, playePos, module.range, direction);
+        }
+        else
+        {
+            transBomb.position = transform.position;
+        }
+        
 
 
     }
@@ -91,6 +103,7 @@ public class ModuleLauchPhase : MonoBehaviour
         if(firstPos == secondPos)
         {
             isNotMoving = true;
+            isSetToGround = true;
         }
     }
 
@@ -104,12 +117,9 @@ public class ModuleLauchPhase : MonoBehaviour
     {
         if (Vector2.Distance(transBomb.position, transform.position) < 0.15 && isFalling)
         {
+            
             rbBomb.gravityScale = 0;
-            transBomb.position = transShadow.position;
+            transBomb.position = transform.position;
         }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(playePos, 1);
     }
 }

@@ -39,7 +39,7 @@ public class VoidGrenade : ModuleLauchPhase
         }
         CoroutineManager.Instance.StartCoroutine(SlowEnemy());
 
-        Destroy(gameObject);
+       // Destroy(gameObject);
     }
 
     protected override void Update()
@@ -52,23 +52,6 @@ public class VoidGrenade : ModuleLauchPhase
             //StartCoroutine(SlowEnemy());
         }
     }
-    private Vector3 RandomDir()
-    {
-        int choice = Mathf.FloorToInt(Random.value * 3.99f);
-        //use that int to chose a direction
-        switch (choice)
-        {
-            case 0:
-                return Vector2.down;
-            case 1:
-                return Vector2.left;
-            case 2:
-                return Vector2.up;
-            default:
-                return Vector2.right;
-        }
-    }
-
     private IEnumerator SlowEnemy()
     {
         

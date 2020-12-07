@@ -1,45 +1,52 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class JetPackModule : ActiveObjects
 {
 
-    [SerializeField] protected GameObject Flaque;
     private bool isAlreadyFlying;
     public Transform packGFX;
-    private Rigidbody2D rbPackGFX;
     private Rigidbody2D rbPlayer;
     private GameObject player;
     protected override void Start()
     {
         base.Start();
         player = GameObject.FindGameObjectWithTag("Player");
-        rbPackGFX = packGFX.GetComponent<Rigidbody2D>();
         rbPlayer = player.GetComponent<Rigidbody2D>();
-        rbPackGFX.gravityScale = 0;
     }
     protected override void Update()
     {
-        if (isAlreadyFlying)
+       
+        if (Input.GetKeyDown(KeyCode.U) && readyToUse && !isAlreadyFlying)
         {
-            isAlreadyFlying = false;
+            StartCoroutine(StartFlying());
         }
-        if (Input.GetKey(KeyCode.U) && readyToUse)
+        else if (Input.GetKeyDown(KeyCode.U) && isAlreadyFlying)
         {
             StartCoroutine(CdToReUse());
             readyToUse = false;
-            StartFlying();
+            StartCoroutine(StopFlying());
+
         }
     }
-
-    private void StartFlying()
-    {
+    
+    private IEnumerator StartFlying()
+    {       
+        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = null;
+        rbPlayer.AddForce(new Vector2(0, 300));
+        yield return new WaitForSeconds(0.1f);
+        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = player.transform;
         isAlreadyFlying = true;
-        rbPackGFX.isKinematic = false;
-        rbPackGFX.gravityScale = 0;
-        rbPlayer.gravityScale = 0;
-        rbPackGFX.AddForce(new Vector2(0, 50));
-        rbPlayer.AddForce(new Vector2(0, 50));
-        rbPackGFX.isKinematic = false;
-        rbPlayer.gravityScale = 0;
+
+    }
+    private IEnumerator StopFlying()
+    {
+        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = null;
+        rbPlayer.AddForce(new Vector2(0, -300));
+        yield return new WaitForSeconds(0.1f);
+        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = player.transform;
+        isAlreadyFlying = false;
+
     }
 }

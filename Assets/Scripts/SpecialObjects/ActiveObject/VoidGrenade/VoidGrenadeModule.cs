@@ -4,7 +4,6 @@ public class VoidGrenadeModule : ActiveObjects
 {
     [SerializeField] private GameObject GrenadeModule;
 
-    private bool spawned;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -23,7 +22,6 @@ public class VoidGrenadeModule : ActiveObjects
 
     private void SpawnBomb()
     {
-        spawned = true;
         Instantiate(GrenadeModule, transform.position, Quaternion.identity);
     }
 }
