@@ -149,7 +149,7 @@ public class Enemy : MonoBehaviour
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player
-    [HideInInspector]
+    //[HideInInspector]
     public Transform target;
     [HideInInspector]
     public Rigidbody2D rb;

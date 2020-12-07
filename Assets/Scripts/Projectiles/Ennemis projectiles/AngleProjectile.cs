@@ -11,8 +11,9 @@ public class AngleProjectile : Projectile
    public float angleDecalage;
    Vector3 directionTir;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         GetDirection();
         ConeShoot();
 

@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 /// <summary>
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
@@ -58,8 +57,9 @@ public class PompeDistanceEnemy : Distance
         for(int i=0; i <projectiles.Length; i++)
             {
                 AngleProjectile.angleDecalage = AngleProjectile.angleDecalage + decalage;
-                GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
-            }
+                GameObject myProjectile = GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
+                myProjectile.transform.parent = gameObject.transform;
+        }
 
     }
 

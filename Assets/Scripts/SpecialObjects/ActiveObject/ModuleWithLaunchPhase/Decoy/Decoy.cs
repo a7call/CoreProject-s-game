@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Decoy : ModuleLauchPhase
 {
+    private Player player;
 
     [SerializeField] private float timeBeforDesactivation;
     [SerializeField] private float radius;
@@ -12,6 +13,7 @@ public class Decoy : ModuleLauchPhase
     protected override void Start()
     {
         base.Start();
+        player = FindObjectOfType<Player>();
     }
     protected override void Update()
     {
@@ -25,17 +27,30 @@ public class Decoy : ModuleLauchPhase
 
     private IEnumerator DecoyFunction()
     {
-        yield return new WaitForSeconds(timeBeforDesactivation);
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, hit);
         foreach (Collider2D hit in hits)
         {
             if (hit.gameObject.GetComponent<Enemy>())
             {
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
+                enemy.targetPoint = gameObject.transform;
                 enemy.target = gameObject.transform;
+                enemy.currentState = Enemy.State.Chasing;
             }
         }
-        //Destroy(gameObject);
+        yield return new WaitForSeconds(timeBeforDesactivation);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.gameObject.GetComponent<Enemy>())
+            {
+                Enemy enemy = hit.gameObject.GetComponent<Enemy>();
+                enemy.targetPoint = player.transform ;
+                enemy.target = player.transform;
+                enemy.currentState = Enemy.State.Chasing;
+            }
+        }
+        Destroy(gameObject);
     }
 
 }

@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
         target = GetComponentInParent<Enemy>().target;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         transform.parent = null;
-        foreach (Transform child in target)
+        foreach (Transform child in playerHealth.transform)
         {
             if (child.GetComponent<BoxCollider2D>() != null)
             {
