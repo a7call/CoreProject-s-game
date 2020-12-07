@@ -39,7 +39,7 @@ public class VoidGrenade : ModuleLauchPhase
         }
         CoroutineManager.Instance.StartCoroutine(SlowEnemy());
 
-       // Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     protected override void Update()

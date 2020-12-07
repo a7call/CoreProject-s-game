@@ -77,8 +77,9 @@ public class Distance : Enemy
     protected virtual void Shoot()
     {
         
-        Instantiate(projetile, transform.position, Quaternion.identity);
-        
+       GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
+       myProjectile.transform.parent = gameObject.transform;
+
     }
 
     protected void DontMoveShooting()

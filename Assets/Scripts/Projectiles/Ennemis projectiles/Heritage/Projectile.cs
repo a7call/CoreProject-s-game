@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.WSA;
 
 /// <summary>
@@ -35,12 +37,16 @@ public class Projectile : MonoBehaviour
     protected virtual void Awake()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        //Get player reference;
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");        
-        foreach(Transform child in target)
+    }
+
+    protected virtual void Start()
+    {
+        target = GetComponentInParent<Enemy>().target;
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        transform.parent = null;
+        foreach (Transform child in target)
         {
-          if(child.GetComponent<BoxCollider2D>() != null)
+            if (child.GetComponent<BoxCollider2D>() != null)
             {
                 Physics2D.IgnoreCollision(child.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             }
@@ -49,7 +55,6 @@ public class Projectile : MonoBehaviour
         {
             Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
-      
     }
     protected virtual void Update()
     {
@@ -57,8 +62,6 @@ public class Projectile : MonoBehaviour
         {
             Lauch();
         }
-       
-
 
         if (isTacticVisionModule && !AmmoSpeedAlreadyDown)
         {
