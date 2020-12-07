@@ -14,7 +14,8 @@ public class Cryptoflaque : ActiveObjects
         {
             GetMousePosition();
             UseModule = false;
-            Instantiate(Flaque, MousePos, Quaternion.identity);
+            Instantiate(Flaque, transform.position, Quaternion.identity);
+            
         }
 
 

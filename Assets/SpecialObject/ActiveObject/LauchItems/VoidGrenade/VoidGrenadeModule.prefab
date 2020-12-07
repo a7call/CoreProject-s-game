@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8314612836248002957
+--- !u!1 &8367445544570917701
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5281539817610820322}
-  - component: {fileID: 4894962372736361744}
-  - component: {fileID: 1782015824480300236}
+  - component: {fileID: 5636148601859213354}
+  - component: {fileID: 4941070455046838232}
+  - component: {fileID: -7673170137141261138}
   m_Layer: 0
-  m_Name: DistortionGrenadeModule
+  m_Name: VoidGrenadeModule
   m_TagString: ActiveObject
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5281539817610820322
+--- !u!4 &5636148601859213354
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8314612836248002957}
+  m_GameObject: {fileID: 8367445544570917701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.714164, y: -5.7370353, z: 0}
+  m_LocalPosition: {x: -7.966502, y: -1.3296608, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 9045029665055254886}
+  - {fileID: 8861454312545000366}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &4894962372736361744
+--- !u!58 &4941070455046838232
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8314612836248002957}
+  m_GameObject: {fileID: 8367445544570917701}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -49,23 +49,24 @@ CircleCollider2D:
   m_Offset: {x: 0.049505234, y: 0}
   serializedVersion: 2
   m_Radius: 1.1545687
---- !u!114 &1782015824480300236
+--- !u!114 &-7673170137141261138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8314612836248002957}
+  m_GameObject: {fileID: 8367445544570917701}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3b8ad016196c5346aa479154a340338, type: 3}
+  m_Script: {fileID: 11500000, guid: 172d4ca4507014bafbc1f6339dd1fd95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cd: 3
+  UseModule: 0
+  cd: 10
   range: 5
-  speed: 2
-  distortionGrenade: {fileID: 5839014059826409671, guid: b81a0bbecca01024eabf59f18178a9b1, type: 3}
---- !u!1 &8849198086176025267
+  speed: 3
+  GrenadeModule: {fileID: 2260047086433306421, guid: 08d638791f0d2479db6df97b3881347a, type: 3}
+--- !u!1 &9057576643026131067
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +74,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9045029665055254886}
+  - component: {fileID: 8861454312545000366}
   m_Layer: 0
   m_Name: attackPoint
   m_TagString: Untagged
@@ -81,17 +82,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9045029665055254886
+--- !u!4 &8861454312545000366
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8849198086176025267}
+  m_GameObject: {fileID: 9057576643026131067}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5281539817610820322}
+  m_Father: {fileID: 5636148601859213354}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

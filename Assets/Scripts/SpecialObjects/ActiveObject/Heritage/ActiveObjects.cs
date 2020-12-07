@@ -34,7 +34,7 @@ public class ActiveObjects : MonoBehaviour
     }
 
 
-    private IEnumerator CdToReUse()
+    protected IEnumerator CdToReUse()
     {
         yield return new WaitForSeconds(cd);
         readyToUse = true;

@@ -31,6 +31,7 @@ public class ModuleLauchPhase : MonoBehaviour
         coef = distanceToPlayer / module.range;
         if (coef < 0.42) coef = 0.42f;
         rbBomb.AddForce(new Vector2(0, coef * 300), ForceMode2D.Force);
+
     }
 
     protected void Launch(Vector3 mousePos, Vector3 playerPos, float range, Vector3 dir)
