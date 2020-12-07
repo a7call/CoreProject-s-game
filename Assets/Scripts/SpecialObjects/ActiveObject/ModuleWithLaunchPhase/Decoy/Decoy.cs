@@ -12,7 +12,6 @@ public class Decoy : ModuleLauchPhase
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(DecoyFunction());
     }
     protected override void Update()
     {
@@ -36,7 +35,7 @@ public class Decoy : ModuleLauchPhase
                 enemy.target = gameObject.transform;
             }
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 }

@@ -12,6 +12,7 @@ public class DecoyModule : ActiveObjects
 
     protected override void Start()
     {
+        base.Start();
         player = FindObjectOfType<Player>();
     }
 
