@@ -5,18 +5,17 @@ using UnityEngine;
 public class SunBang : ActiveObjects
 {
     // Variables pour générer le cercle et voir si y'a des ennemis dans la zone
-    protected RaycastHit2D[] hits;
+    [SerializeField] private LayerMask hitLayer;
     [SerializeField] private float radiusZone = 5f;
     [SerializeField] private float stunTime = 5f;
 
-    private Enemy enemy;
+    private bool state;
 
-    private GameObject[] enemies;
+    private List<GameObject> enemiesInRange = new List<GameObject>();
 
     protected override void Start()
     {
-        enemy = FindObjectOfType<Enemy>();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
     }
 
     protected override void Update()
@@ -25,29 +24,33 @@ public class SunBang : ActiveObjects
         {
             StartCoroutine(StateCoroutine());
             UseSunBang();
+            StartCoroutine(CdToReUse());
+            state = true;
         }
 
-        if (ModuleAlreadyUse)
+        if (!UseModule && state)
         {
             ResetEnemyState();
-            Destroy(gameObject);
         }
     }
+
     private void UseSunBang()
     {
-        hits = Physics2D.CircleCastAll(transform.position, radiusZone, Vector2.zero, Mathf.Infinity);
-        foreach (RaycastHit2D hit in hits)
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radiusZone, hitLayer);
+        foreach (Collider2D hit in hits)
         {
             if (hit.transform.gameObject.CompareTag("Enemy"))
             {
                 if (!ModuleAlreadyUse)
                 {
+                    enemiesInRange.Add(hit.gameObject);
                     hit.transform.GetComponent<Enemy>().currentState = Enemy.State.Paralysed;
                 }
 
             }
         }
     }
+
 
     private IEnumerator StateCoroutine()
     {
@@ -60,10 +63,17 @@ public class SunBang : ActiveObjects
 
     private void ResetEnemyState()
     {
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject enemy in enemiesInRange)
         {
-            enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Attacking;
+            if(enemy == null)
+            {
+                continue;
+            }
+            enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
         }
+        enemiesInRange.Clear();
+        ModuleAlreadyUse = false;
+        state = false;
     }
 
     public void OnDrawGizmos()

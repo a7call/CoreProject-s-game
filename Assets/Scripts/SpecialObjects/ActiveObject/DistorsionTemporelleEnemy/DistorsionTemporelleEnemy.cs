@@ -4,58 +4,90 @@ using UnityEngine;
 
 public class DistorsionTemporelleEnemy : ActiveObjects
 {
-    public bool isDistorsionTemporelleEnemy;
-    private float timeDistorsionTemporelle = 10f;
+    private int roomRange = 50;
+    [SerializeField] private LayerMask hitLayer;
 
-    //private float moveDiviser = 0.5f;
+    [SerializeField] private float timeDistorsionTemporelle = 10f;
+
+    private List<GameObject> projectilsEnemy = new List<GameObject>();
 
     private GameObject[] enemies;
-    //private List<GameObject> projectile = new List<GameObject>();
-    private GameObject[] projectilsEnemy;
 
     protected override void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        projectilsEnemy = GameObject.FindGameObjectsWithTag("EnemyProjectil");
     }
 
     protected override void Update()
     {
-        projectilsEnemy = GameObject.FindGameObjectsWithTag("EnemyProjectil");
-
+        
         if (Input.GetKeyDown(KeyCode.U) && readyToUse)
         {
-            //Enemy.isDistorsionTemporelle = true;
-            //Enemy.moveSpeedDiviser = moveDiviser;
-            isDistorsionTemporelleEnemy = true;
-            StartCoroutine(DistorsionTemporelle());
+            StartCoroutine(CdToReUse());
+            readyToUse = false;
+            StartCoroutine(DistorsionTemporelleMoveSpeed());
         }
 
-        //if (isDistorsionTemporelleEnemy)
-        //{
-        //    StartCoroutine(DistorsionTemporelle());
-        //}
-
-        if (ModuleAlreadyUse)
+        if (UseModule)
         {
-            isDistorsionTemporelleEnemy = false;
-            Destroy(gameObject);
+           DistorsionTemporelleProjectile();
+        }
+
+    }
+
+    private void DistorsionTemporelleProjectile()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, roomRange, hitLayer);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("EnemyProjectil"))
+            {
+
+                if (!projectilsEnemy.Contains(hit.gameObject))
+                {
+                    projectilsEnemy.Add(hit.gameObject);
+                    hit.GetComponent<Projectile>().speed /= 2;
+                }
+            }
         }
     }
 
-    private IEnumerator DistorsionTemporelle()
+    private IEnumerator DistorsionTemporelleMoveSpeed()
     {
-        print("A");
         readyToUse = false;
+        UseModule = true;
 
         foreach (GameObject enemy in enemies)
         {
-            Rigidbody2D rb = enemy.gameObject.GetComponent<Enemy>().GetComponent<Rigidbody2D>();
-            Vector2 velocity = rb.velocity;
-            velocity = velocity / 2;
+            if(enemy == null)
+            {
+                continue;
+            }
+            enemy.gameObject.GetComponent<Enemy>().moveSpeed /= 2;
         }
 
         yield return new WaitForSeconds(timeDistorsionTemporelle);
+
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+            enemy.gameObject.GetComponent<Enemy>().moveSpeed *= 2;
+        }
+
+        foreach (GameObject projectil in projectilsEnemy)
+        {
+            if(projectil == null)
+            {
+                continue;
+            }
+            projectil.GetComponent<Projectile>().speed *= 2;
+        }
+
         ModuleAlreadyUse = true;
+        UseModule = false;
     }
+
 }

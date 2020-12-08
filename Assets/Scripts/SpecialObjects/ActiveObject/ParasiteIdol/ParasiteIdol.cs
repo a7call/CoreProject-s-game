@@ -20,11 +20,8 @@ public class ParasiteIdol : ActiveObjects
             UseModule = true;
             parasiteIdolFear = true;
             StartCoroutine(ResetStateChasing());
-        }
-
-        if (ModuleAlreadyUse)
-        {
-            Destroy(gameObject);
+            StartCoroutine(CdToReUse());
+            readyToUse = false;
         }
     }
 

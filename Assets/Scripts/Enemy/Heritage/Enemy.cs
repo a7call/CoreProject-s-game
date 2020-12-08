@@ -177,7 +177,6 @@ public class Enemy : MonoBehaviour
     protected virtual void Fear()
     {
         direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
-        //fearPoint = gameObject.transform.position - fearDistance * direction;
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 
