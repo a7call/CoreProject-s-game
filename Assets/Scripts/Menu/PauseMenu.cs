@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool isGamePaused = false;
+    private PlayerMouvement playerMvt;
 
     public GameObject pauseMenuUI;
 
@@ -27,9 +28,9 @@ public class PauseMenu : MonoBehaviour
 
     protected void Paused()
     {
-        
+        playerMvt = FindObjectOfType<PlayerMouvement>();
+        playerMvt.rb.velocity = Vector2.zero;
         pauseMenuUI.SetActive(true);
-        PlayerMouvement.instance = false;
         Time.timeScale = 0;
         isGamePaused = true;
     }
@@ -37,7 +38,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        PlayerMouvement.instance = true;
+        
         Time.timeScale = 1;
         isGamePaused = false;
     }

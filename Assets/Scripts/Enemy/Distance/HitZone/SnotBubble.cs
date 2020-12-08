@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class SnotBubble : Distance
 {
-    [SerializeField] protected GameObject HitZoneGO;
+    
 
 
     void Start()
@@ -28,7 +28,7 @@ public class SnotBubble : Distance
                 PlayerInSight();
                 break;
             case State.Chasing:
-                isInRange();
+                
                 Shoot();
                 // suit le path créé et s'arrête pour tirer
                 MoveToPath();
@@ -37,7 +37,13 @@ public class SnotBubble : Distance
         }
 
     }
+    protected override void Shoot()
+    {
 
+        Instantiate(projetile, transform.position, Quaternion.identity);
+        
+
+    }
 
 }
 

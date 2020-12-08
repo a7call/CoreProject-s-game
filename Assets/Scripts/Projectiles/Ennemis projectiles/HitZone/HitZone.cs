@@ -2,56 +2,63 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitZone : Projectile
+public class HitZone : MonoBehaviour
 {
-    [SerializeField] int nbHit = 0;
-    [SerializeField] float timeIntervale = 0f;
-    [SerializeField] float zoneRadius = 0f;
-    private int n = 0;
-    
-    //[SerializeField] protected GameObject HitZoneGO;
-
-    protected override void Awake()
+   
+    private bool isActive;
+    [SerializeField] protected float ZoneRadius;
+    [SerializeField] protected int ZoneDamage;
+    [SerializeField] protected float hitTimer;
+    [SerializeField] protected float zoneTimer;
+    // Start is called before the first frame update
+    protected  void Start()
     {
-        StartCoroutine(hitZone());
+        //base.Start();
+        StartCoroutine(ActiveZone());
+        StartCoroutine(ZoneCo());
     }
 
-    protected override void Update()
+    protected virtual IEnumerator ZoneCo()
     {
-        
-    }
-
-    protected virtual IEnumerator hitZone()
-    {
-        
-        while (n < nbHit)
+        while (isActive)
         {
-            //OnDrawGizmos();
             
+            Collider2D[] collision = Physics2D.OverlapCircleAll(transform.position, ZoneRadius);
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneRadius);
-           
-
-            foreach (Collider2D h in hits)
+            foreach (Collider2D hit in collision)
             {
-                if (h.CompareTag("Player"))
+                if (hit.CompareTag("Player"))
                 {
-                    h.GetComponent<PlayerHealth>().TakeDamage(1);
+                    PlayerHealth playerHealthScript = hit.GetComponent<PlayerHealth>();
+                    playerHealthScript.TakeDamage(ZoneDamage);
                 }
-               
 
             }
-            n++;
-            yield return new WaitForSeconds(timeIntervale);
+
+            yield return new WaitForSeconds(hitTimer);
         }
 
-        Destroy(gameObject);
-
     }
 
-    
+    protected void Update()
+    {
+       
+          
+    }
+
+    private IEnumerator ActiveZone()
+    {
+        isActive = true;
+        yield return new WaitForSeconds(zoneTimer);
+        isActive = false;
+        Destroy(gameObject);
+    }
+
     public void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position,zoneRadius);
+        Gizmos.DrawWireSphere(transform.position, ZoneRadius);
     }
 }
+
+
+

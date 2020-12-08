@@ -15,19 +15,19 @@ public class Laser : Projectile
     
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        target = GetComponentInParent<Enemy>().target;
+        StartCoroutine(OkToShoot());
+
         GetDirection();
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        //if (transform.parent.gameObject == null)
-        //{
-            
-        //} 
-        StartCoroutine(OkToShoot());
+       
+        
 
         if (ReadyToShoot == true )
         {
@@ -35,6 +35,8 @@ public class Laser : Projectile
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, Mathf.Infinity, HitLayer);
 
             Debug.DrawRay(transform.position, dir * 10, Color.red);
+            
+
             if (hit.collider != null)
             {
                 hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
@@ -54,6 +56,7 @@ public class Laser : Projectile
     {
         yield return new WaitForSeconds(ShootDelay);
         ReadyToShoot = true;
+        
     }
 }
 

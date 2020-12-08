@@ -17,11 +17,13 @@ public class LaserDecalage : Projectile
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        target = GetComponentInParent<Enemy>().target;
         GetDirection();
         ConeShoot();
-       
+        StartCoroutine(OkToShoot());
+        
     }
 
     protected void ConeShoot()
@@ -46,14 +48,13 @@ public class LaserDecalage : Projectile
     // Update is called once per frame
     protected override void Update()
     {
-        StartCoroutine(OkToShoot());
+        
 
         if (ReadyToShoot == true)
         {
             
             StartCoroutine(destroy());
             RaycastHit2D hit = Physics2D.Raycast(transform.position, directionTir, Mathf.Infinity, HitLayer);
-
             Debug.DrawRay(transform.position, directionTir * 10, Color.red);
 
             if (hit.collider != null)
