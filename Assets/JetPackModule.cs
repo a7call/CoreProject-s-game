@@ -9,43 +9,51 @@ public class JetPackModule : ActiveObjects
     public Transform packGFX;
     private Rigidbody2D rbPlayer;
     private GameObject player;
+    private Transform shadow;
+    private float distance;
+    private bool isShadowSet;
+    Vector3 currentPos;
     protected override void Start()
     {
         base.Start();
         player = GameObject.FindGameObjectWithTag("Player");
         rbPlayer = player.GetComponent<Rigidbody2D>();
+        shadow = GameObject.FindGameObjectWithTag("PlayerShadow").transform;
     }
     protected override void Update()
     {
        
         if (Input.GetKeyDown(KeyCode.U) && readyToUse && !isAlreadyFlying)
         {
-            StartCoroutine(StartFlying());
+           StartFlying();
         }
         else if (Input.GetKeyDown(KeyCode.U) && isAlreadyFlying)
         {
             StartCoroutine(CdToReUse());
             readyToUse = false;
-            StartCoroutine(StopFlying());
+            StopFlying();
 
         }
-    }
-    
-    private IEnumerator StartFlying()
-    {       
-        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = null;
-        rbPlayer.AddForce(new Vector2(0, 300));
-        yield return new WaitForSeconds(0.1f);
-        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = player.transform;
-        isAlreadyFlying = true;
+        if(!isAlreadyFlying) shadow.position = new Vector2(player.transform.position.x, player.transform.position.y - 0.53f);
+        if (isShadowSet)
+        {
+            shadow.position = new Vector2(player.transform.position.x, currentPos.y);
+            
+        }
 
     }
-    private IEnumerator StopFlying()
+    
+    private void StartFlying()
     {
-        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = null;
+        currentPos = shadow.position;
+        rbPlayer.AddForce(new Vector2(0, 300));
+        isAlreadyFlying = true;
+        isShadowSet = true;
+
+    }   
+    private void StopFlying()
+    {
         rbPlayer.AddForce(new Vector2(0, -300));
-        yield return new WaitForSeconds(0.1f);
-        GameObject.FindGameObjectWithTag("PlayerShadow").transform.parent = player.transform;
         isAlreadyFlying = false;
 
     }
