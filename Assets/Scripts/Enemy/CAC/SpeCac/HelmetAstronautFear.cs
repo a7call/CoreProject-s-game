@@ -5,7 +5,6 @@ using UnityEngine;
 // A refaire ou à supprimer !
 public class HelmetAstronautFear : Cac
 {
-    private PlayerMouvement playerMouvement;
 
     // Variables liées à l'attaque qui fear
     private bool isFirstAttack = true;
@@ -21,11 +20,9 @@ public class HelmetAstronautFear : Cac
     private Vector3 vecEnemyPlayer;
     private Vector3 pointPos;
 
-    private void Start()
+    protected void Start()
     {
        
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
-
         currentState = State.Patrolling;
         // Get Player Reference
         FindPlayer();

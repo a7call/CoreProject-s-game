@@ -22,7 +22,6 @@ public class BubbleMS : Distance
     }
     protected override void Update()
     {
-        base.Update();
         EnabledRayon();
 
         switch (currentState)
@@ -39,7 +38,25 @@ public class BubbleMS : Distance
                 isInRange();
                 StartCoroutine(CanShoot());
                 break;
+
+            case State.Paralysed:
+                rb.velocity = Vector2.zero;
+                break;
+
+            case State.KnockedBack:
+                rb.velocity = Vector2.zero;
+                break;
+
+            case State.Freeze:
+                rb.velocity = Vector2.zero;
+                break;
+
+            case State.Feared:
+                Fear();
+                break;
+
         }
+
     }
 
     protected override IEnumerator CanShoot()
@@ -77,6 +94,9 @@ public class BubbleMS : Distance
                 GameObject myRayon = GameObject.FindGameObjectWithTag("RayonMS");
                 Destroy(myRayon);
             }
+            ParasiteIdol.parasiteIdolFear = false;
+            firstShoot = true;
+            isReadytoShoot = true;
         }
     }
 }

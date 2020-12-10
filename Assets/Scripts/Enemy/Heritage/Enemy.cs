@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
 
     // PathFinding
     [HideInInspector]
-    public float nextWayPointDistance = 3f;
+    public float nextWayPointDistance = 1f;
     Path path;
     int currentWayPoint;
     bool reachedEndOfPath;
