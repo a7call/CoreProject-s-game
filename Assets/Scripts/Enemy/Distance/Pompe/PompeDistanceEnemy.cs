@@ -36,7 +36,6 @@ public class PompeDistanceEnemy : Distance
             case State.Chasing:
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
-                MoveToPath();
                 break;
             case State.Attacking:
                 isInRange();

@@ -31,7 +31,6 @@ public class SnotBubble : Distance
                 
                 Shoot();
                 // suit le path créé et s'arrête pour tirer
-                MoveToPath();
                 break;
 
         }

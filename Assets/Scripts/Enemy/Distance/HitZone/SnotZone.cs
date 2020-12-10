@@ -29,7 +29,6 @@ public class SnotZone : Distance
                 PlayerInSight();
                 break;
             case State.Chasing:
-                MoveToPath();
                 StartCoroutine(Zone());
                 // suit le path créé et s'arrête pour tirer
 
@@ -39,7 +38,6 @@ public class SnotZone : Distance
         }
 
     }
-    
     private IEnumerator Zone()
     {
         if (hasStartAttacking)

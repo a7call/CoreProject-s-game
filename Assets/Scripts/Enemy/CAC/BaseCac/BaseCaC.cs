@@ -28,7 +28,6 @@ public class BaseCaC : Cac
             break;
         case State.Chasing:
                 isInRange();
-                MoveToPath();
             break;
 
         case State.Attacking:

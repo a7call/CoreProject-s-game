@@ -28,7 +28,6 @@ public class Bubble360 : Distance
                 break;
             case State.Chasing:
                 isInRange();
-                MoveToPath();
                 break;
             case State.Attacking:
                 isInRange();

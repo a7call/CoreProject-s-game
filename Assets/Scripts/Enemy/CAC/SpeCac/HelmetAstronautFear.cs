@@ -44,7 +44,6 @@ public class HelmetAstronautFear : Cac
                 break;
             case State.Chasing:
                 isInRange();
-                MoveToPath();
                 if (isFear)
                 {
                     DistancePlayerFearPoint();

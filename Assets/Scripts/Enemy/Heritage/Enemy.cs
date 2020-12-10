@@ -136,6 +136,18 @@ public class Enemy : MonoBehaviour
     }
 
 
+    protected virtual void FixedUpdate()
+    {
+
+        switch (currentState)
+        {
+            case State.Chasing:
+                MoveToPath();
+                break;
+        }
+    }
+
+
 
 
     //Mouvement

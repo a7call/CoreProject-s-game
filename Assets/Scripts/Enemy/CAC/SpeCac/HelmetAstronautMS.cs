@@ -15,12 +15,10 @@ public class HelmetAstronautMS : Cac
     [SerializeField] private float newSpeedEnemy = 225f;
     [SerializeField] private float speedDuration = 1.75f;
 
-    private PlayerMouvement playerMouvement;
     private Enemy enemy;
 
     private void Start()
     {
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
         enemy = FindObjectOfType<Enemy>();
 
         currentState = State.Patrolling;
@@ -44,7 +42,6 @@ public class HelmetAstronautMS : Cac
                 PlayerInSight();
                 break;
             case State.Chasing:
-                MoveToPath();
                 StartCoroutine(PowerMode());
                 if (isPowerMode) StartCoroutine(IncreaseSpeed());
                 isInRange();
