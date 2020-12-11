@@ -7,7 +7,8 @@ using System.Linq;
 
 public class SettingsWindow : MonoBehaviour
 {
-    public AudioMixer audioMixer;
+    public AudioMixer MainAudioMixer;
+    
 
     Resolution[] resolutions;
 
@@ -39,9 +40,19 @@ public class SettingsWindow : MonoBehaviour
         Screen.fullScreen = true;
     }
 
-    public void SetVolume(float volume)
+    public void SetMainVolume(float volume)
     {
-        audioMixer.SetFloat("volume", volume);
+        MainAudioMixer.SetFloat("MainVolume", volume);
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        MainAudioMixer.SetFloat("MusicVolume", volume);
+    }
+
+    public void SetEffectVolume(float volume)
+    {
+        MainAudioMixer.SetFloat("EffectsVolume", volume);
     }
 
     public void FullScreen(bool isFullScreen)
