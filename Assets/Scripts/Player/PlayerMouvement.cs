@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
-//using UnityEngine.InputSystem;
+
+using UnityEngine.InputSystem;
+
 /// <summary>
 /// Classe gérant les mouvements du joueur (se référer à Lopez)
 /// </summary>
@@ -54,7 +56,7 @@ public class PlayerMouvement : Player
 
             case EtatJoueur.normal:
                 CheckInputs();
-                GetInputAxis();
+                //GetInputAxis();
                 ClampMouvement(mouvement);
                 GetLastDirection();
                 SetAnimationVariable();
@@ -150,12 +152,12 @@ public class PlayerMouvement : Player
     }
 
     // Get Input
-    void GetInputAxis()
-    {
-        mouvement.x = Input.GetAxisRaw("Horizontal");
-        mouvement.y = Input.GetAxisRaw("Vertical");
+    //void GetInputAxis()
+    //{
+    //    mouvement.x = Input.GetAxisRaw("Horizontal");
+    //    mouvement.y = Input.GetAxisRaw("Vertical");
        
-    }
+    //}
 
     // Get last Direction for Idle
     void GetLastDirection()
@@ -219,13 +221,26 @@ public class PlayerMouvement : Player
     }
 
 
-    //public void OnHorizontal(InputValue val)
-    //{
-    //    mouvement.x = val.Get<float>();
-    //}
+    public void OnHorizontal(InputValue val)
+    {
+        print("x");
+        mouvement.x = val.Get<float>();
+        
+    }
 
-    //public void OnVertical(InputValue val)
-    //{
-    //    mouvement.y = val.Get<float>();
-    //}
+    public void OnVertical(InputValue val)
+    {
+        print("y");
+        mouvement.y = val.Get<float>();
+    }
+
+    public void OnTest()
+    {
+        print("a");
+    }
+
+    public void OnDeviceLost()
+    {
+        print("a");
+    }
 }
