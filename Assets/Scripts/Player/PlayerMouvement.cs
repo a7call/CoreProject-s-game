@@ -156,7 +156,7 @@ public class PlayerMouvement : Player
     //{
     //    mouvement.x = Input.GetAxisRaw("Horizontal");
     //    mouvement.y = Input.GetAxisRaw("Vertical");
-       
+
     //}
 
     // Get last Direction for Idle
@@ -225,22 +225,22 @@ public class PlayerMouvement : Player
     {
         print("x");
         mouvement.x = val.Get<float>();
-        
+
     }
 
     public void OnVertical(InputValue val)
     {
         print("y");
         mouvement.y = val.Get<float>();
+
     }
 
-    public void OnTest()
+    public void OnDash()
     {
-        print("a");
-    }
+        Dash();
 
-    public void OnDeviceLost()
-    {
-        print("a");
+        //PlayerControl variable;
+        //variable.Player.Reload.actionMap.AddBinding("<Keyboard/a");
     }
+    
 }

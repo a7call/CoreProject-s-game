@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class DistanceWeapon : Weapons
 {
@@ -10,6 +11,7 @@ public class DistanceWeapon : Weapons
     protected PlayerProjectiles Proj;
     protected float Dispersion;
     protected bool IsReloading;
+    protected bool OkToShoot;
     public int BulletInMag;
     protected float ReloadDelay;
     protected int MagSize;
@@ -70,16 +72,20 @@ public class DistanceWeapon : Weapons
         InfiniteAmmo = isUnlimitedAmmoModule;
 
         GetAttackDirection();
-        if (Input.GetMouseButton(0))
-        {
-          CoroutineManager.Instance.StartCoroutine(Shoot());
-        }
+        //if (Input.GetMouseButton(0))
+        //{
+        //  CoroutineManager.Instance.StartCoroutine(Shoot());
+        //}
 
-        if (Input.GetKeyDown(KeyCode.R) && (AmmoStock != 0 | InfiniteAmmo))
+        //if (Input.GetKeyDown(KeyCode.R) && (AmmoStock != 0 | InfiniteAmmo))
+        //{
+        //     StartCoroutine(Reload());
+        //}
+        if (OkToShoot)
         {
-             StartCoroutine(Reload());
+            CoroutineManager.Instance.StartCoroutine(Shoot());
+            //OkToShoot = false;
         }
-
        
 
         DisplayAmmo();
@@ -186,6 +192,21 @@ public class DistanceWeapon : Weapons
 
     public void OnShoot()
     {
-        Shoot();
+        print("val");
+        CoroutineManager.Instance.StartCoroutine(Shoot());
+        //if(this.enabled == true)
+        //{
+        //    OkToShoot = true;
+        //}
+
+    }
+
+    public void OnReload()
+    {
+        print("reload");
+        if (BulletInMag != MagSize && (AmmoStock != 0 | InfiniteAmmo))
+        {
+            StartCoroutine(Reload());
+        }
     }
 }

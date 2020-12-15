@@ -233,7 +233,6 @@ GameObject:
   - component: {fileID: 101717229859328990}
   - component: {fileID: 101717229859328981}
   - component: {fileID: 101717229859328991}
-  - component: {fileID: 276165847}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -458,48 +457,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5772815, y: 0.71818733}
   m_EdgeRadius: 0
---- !u!114 &276165847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101717229859328989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 01d56eec450cf43eca1d2030dc23b6fb, type: 3}
-  m_NotificationBehavior: 1
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 31d6a01a-d369-4aa9-aa6c-62abf804c8b0
-    m_ActionName: PlayerMap/Horizontal[/Keyboard/leftArrow,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 51d0cd68-2649-482a-91a6-fe61ed4f6afc
-    m_ActionName: PlayerMap/Vertical[/Keyboard/downArrow,/Keyboard/upArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9fa4e1b1-19bc-4e9f-95f3-d16b07da42b3
-    m_ActionName: PlayerMap/Test[/Keyboard/a]
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Mouse & KeyBoard
-  m_DefaultActionMap: PlayerMap
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &7031026118287547503
 GameObject:
   m_ObjectHideFlags: 0

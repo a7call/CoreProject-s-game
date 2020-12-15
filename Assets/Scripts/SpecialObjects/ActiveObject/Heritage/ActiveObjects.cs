@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ActiveObjects : MonoBehaviour
 {
@@ -25,12 +26,7 @@ public class ActiveObjects : MonoBehaviour
     protected virtual void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.U) && readyToUse)
-        {
-            StartCoroutine(CdToReUse());
-            readyToUse = false;
-            UseModule = true;
-        }
+        
     }
 
 
@@ -59,5 +55,15 @@ public class ActiveObjects : MonoBehaviour
         Vector3 direction = (GetMousePosition() - transform.position).normalized;
         return direction;
     }
-   
+
+    public void OnUse()
+    {
+        print("use");
+        if (readyToUse)
+        {
+            StartCoroutine(CdToReUse());
+            readyToUse = false;
+            UseModule = true;
+        }
+    }
 }
