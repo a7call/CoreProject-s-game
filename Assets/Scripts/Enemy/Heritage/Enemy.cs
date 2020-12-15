@@ -53,13 +53,19 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
+        GetReference();
+        StartPathing();
+    }
+
+    void GetReference()
+    {
         healthBarGFX.SetActive(false);
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-        InvokeRepeating("UpdatePath", 0f, 0.1f);
         target = GameObject.FindGameObjectWithTag("Player").transform;
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
+
     }
 
     protected virtual void Update()
@@ -68,6 +74,7 @@ public class Enemy : MonoBehaviour
         switch (currentState)
         {
             case State.Paralysed:
+                // animation
                 rb.velocity = Vector2.zero;
                 break;
 
@@ -76,10 +83,12 @@ public class Enemy : MonoBehaviour
                 break;
 
             case State.Freeze:
+                //animation
                 rb.velocity = Vector2.zero;
                 break;
 
             case State.Feared:
+                //animation
                 Fear();
                 break;
 
@@ -90,8 +99,29 @@ public class Enemy : MonoBehaviour
        
     }
 
+    protected virtual void FixedUpdate()
+    {
+
+        switch (currentState)
+        {
+            case State.Chasing:
+                MoveToPath();
+                break;
+        }
+    }
+
+
+
+
+
+    ///  Pathing code 
+    
     //seeker.IsDone() vérifie si le path est calculé
     //seeker.StartPath() est appellée pour commencer à calculer le chemin
+    void StartPathing()
+    {
+        InvokeRepeating("UpdatePath", 0f, 0.1f);
+    }
    protected virtual void UpdatePath()
     {
         if (seeker.IsDone())
@@ -135,17 +165,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// End of Pathing code
 
-    protected virtual void FixedUpdate()
-    {
-
-        switch (currentState)
-        {
-            case State.Chasing:
-                MoveToPath();
-                break;
-        }
-    }
+   
 
 
 
@@ -183,7 +205,12 @@ public class Enemy : MonoBehaviour
         targetPoint = transform;
     }
 
+   
     // Fear l'ennemi dans la direction opposée au joueur
+
+    /// <summary>
+    /// NE DEVRAIT PAS ETRE LA
+    /// </summary>
     private Vector3 direction;
     private int fearDistance = 5;
     protected virtual void Fear()
@@ -222,7 +249,9 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
+    
 
+    // A MODIFIER AVEC LES ARMES A PARTICULE
     [HideInInspector]
     public bool isTakingDot;
     protected float DotTime = 3f;
@@ -232,6 +261,8 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(DotTime);
         isTakingDot = false;
     }
+    //
+
 
     // prends les dammages
     public virtual void TakeDamage(float _damage)
@@ -240,16 +271,22 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
-            RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
-            rewardSpawner.RandomCoinReward(this.gameObject);
-            rewardSpawner.SpawnKeyReward(this.gameObject);
-            rewardSpawner.SpawnHeartReward(this.gameObject);
-            rewardSpawner.SpawnAmoReward(this.gameObject);
-            rewardSpawner.SpawnCoffreArmeReward(this.gameObject);
-            rewardSpawner.SpawnCoffreModuleReward(this.gameObject);
-            rewardSpawner.SpawnArmorReward(this.gameObject);
-            Destroy(gameObject);
+            SpawnRewards();
         }
+    }
+
+
+    void SpawnRewards()
+    {
+        RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
+        rewardSpawner.RandomCoinReward(this.gameObject);
+        rewardSpawner.SpawnKeyReward(this.gameObject);
+        rewardSpawner.SpawnHeartReward(this.gameObject);
+        rewardSpawner.SpawnAmoReward(this.gameObject);
+        rewardSpawner.SpawnCoffreArmeReward(this.gameObject);
+        rewardSpawner.SpawnCoffreModuleReward(this.gameObject);
+        rewardSpawner.SpawnArmorReward(this.gameObject);
+        Destroy(gameObject);
     }
 
     // Couroutine white flash on hit

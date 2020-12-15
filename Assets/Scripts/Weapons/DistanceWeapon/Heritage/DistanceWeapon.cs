@@ -84,7 +84,7 @@ public class DistanceWeapon : Weapons
         if (OkToShoot)
         {
             CoroutineManager.Instance.StartCoroutine(Shoot());
-            //OkToShoot = false;
+            OkToShoot = false;
         }
        
 
@@ -194,10 +194,10 @@ public class DistanceWeapon : Weapons
     {
         print("val");
         CoroutineManager.Instance.StartCoroutine(Shoot());
-        //if(this.enabled == true)
-        //{
-        //    OkToShoot = true;
-        //}
+        if(this.enabled == true)
+        {
+            OkToShoot = true;
+        }
 
     }
 

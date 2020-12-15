@@ -162,7 +162,7 @@ public class PlayerMouvement : Player
     // Get last Direction for Idle
     void GetLastDirection()
     {
-        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == -1 || Input.GetAxisRaw("Vertical") == 1)
+        if (mouvement.x == 1 || mouvement.x == -1 || mouvement.y == -1 || mouvement.y == 1)
         {
             animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
