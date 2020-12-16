@@ -129,7 +129,7 @@ public class CacWeapons : Weapons
 
     public void ToAttack()
     {
-        StartCoroutine(Attack());
+        CoroutineManager.Instance.StartCoroutine(Attack());
     }
 
     

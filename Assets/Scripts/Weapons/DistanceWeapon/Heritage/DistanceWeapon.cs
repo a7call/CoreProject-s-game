@@ -132,7 +132,7 @@ public class DistanceWeapon : Weapons
 
     public void toShoot()
     {
-        StartCoroutine(Shoot());
+       CoroutineManager.Instance.StartCoroutine(Shoot());
     }
 
     protected virtual void SetData()

@@ -18,7 +18,6 @@ public class ParasiteIdol : ActiveObjects
         if(Input.GetKeyDown(KeyCode.U) && readyToUse)
         {
             UseModule = true;
-            parasiteIdolFear = true;
             StartCoroutine(ResetStateChasing());
             StartCoroutine(CdToReUse());
             readyToUse = false;
@@ -37,6 +36,7 @@ public class ParasiteIdol : ActiveObjects
         foreach (GameObject enemy in enemiesInRoom)
         {
             enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
+            enemy.gameObject.GetComponent<Enemy>().direction = Vector3.zero;
         }
     }
 
@@ -46,6 +46,7 @@ public class ParasiteIdol : ActiveObjects
         FearEnemy();
         yield return new WaitForSeconds(fearTime);
         EnemyChasing();
+
         UseModule = false;
         ModuleAlreadyUse = true;
     }

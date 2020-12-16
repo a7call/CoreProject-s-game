@@ -120,12 +120,16 @@ public class Enemy : MonoBehaviour
     //seeker.StartPath() est appellée pour commencer à calculer le chemin
     void StartPathing()
     {
-        InvokeRepeating("UpdatePath", 0f, 0.1f);
+        InvokeRepeating("UpdatePath", 0f, 0.3f);
     }
    protected virtual void UpdatePath()
     {
         if (seeker.IsDone())
+        {
             seeker.StartPath(transform.position, targetPoint.position, OnPathComplete);
+            
+        }
+
     }
 
     void OnPathComplete(Path p)
@@ -134,6 +138,7 @@ public class Enemy : MonoBehaviour
         {
             path = p;
             currentWayPoint = 0;
+            print("test");
         }
     }
 
@@ -211,11 +216,10 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// NE DEVRAIT PAS ETRE LA
     /// </summary>
-    private Vector3 direction;
+    public Vector3 direction = Vector3.zero;
     private int fearDistance = 5;
     protected virtual void Fear()
-    {
-        direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
+    {   if(direction == Vector3.zero) direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 
