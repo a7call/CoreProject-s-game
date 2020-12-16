@@ -130,6 +130,11 @@ public class DistanceWeapon : Weapons
        
     }
 
+    public void toShoot()
+    {
+        StartCoroutine(Shoot());
+    }
+
     protected virtual void SetData()
     {
         projectile = DistanceWeaponData.projectile;
@@ -153,26 +158,35 @@ public class DistanceWeapon : Weapons
 
     protected IEnumerator Reload()
     {
-        IsReloading = true;
-        yield return new WaitForSeconds(ReloadDelay);
-        if (AmmoStock + BulletInMag >= MagSize && !InfiniteAmmo)
+        if (BulletInMag != MagSize && (AmmoStock != 0 | InfiniteAmmo))
         {
-            AmmoStock = AmmoStock + BulletInMag;
-            AmmoStock = AmmoStock - MagSize;
-            BulletInMag = MagSize;   
-        }
-        else if(AmmoStock + BulletInMag <= MagSize && !InfiniteAmmo)
-        {
-            AmmoStock = AmmoStock + BulletInMag;
-            BulletInMag = AmmoStock;
-            AmmoStock = AmmoStock - BulletInMag;
-        }
-        else if (isUnlimitedAmmoModule)
-        {
-            BulletInMag = MagSize;
-        }
 
-        IsReloading = false;
+            IsReloading = true;
+            yield return new WaitForSeconds(ReloadDelay);
+            if (AmmoStock + BulletInMag >= MagSize && !InfiniteAmmo)
+            {
+                AmmoStock = AmmoStock + BulletInMag;
+                AmmoStock = AmmoStock - MagSize;
+                BulletInMag = MagSize;
+            }
+            else if (AmmoStock + BulletInMag <= MagSize && !InfiniteAmmo)
+            {
+                AmmoStock = AmmoStock + BulletInMag;
+                BulletInMag = AmmoStock;
+                AmmoStock = AmmoStock - BulletInMag;
+            }
+            else if (isUnlimitedAmmoModule)
+            {
+                BulletInMag = MagSize;
+            }
+
+            IsReloading = false;
+        }
+    }
+
+    public void toReload()
+    {
+        StartCoroutine(Reload());
     }
 
     protected void DisplayAmmo()
@@ -190,16 +204,6 @@ public class DistanceWeapon : Weapons
         }
     }
 
-    public void OnShoot()
-    {
-        print("val");
-        CoroutineManager.Instance.StartCoroutine(Shoot());
-        if(this.enabled == true)
-        {
-            OkToShoot = true;
-        }
-
-    }
 
     public void OnReload()
     {

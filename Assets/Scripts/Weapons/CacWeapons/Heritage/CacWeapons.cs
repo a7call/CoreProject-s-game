@@ -127,6 +127,11 @@ public class CacWeapons : Weapons
         
     }
 
+    public void ToAttack()
+    {
+        StartCoroutine(Attack());
+    }
+
     
 
     private IEnumerator KnockCo(Enemy enemy)

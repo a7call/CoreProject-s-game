@@ -16,8 +16,10 @@ public class WeaponsManagerSelected : MonoBehaviour
     public List<GameObject> cacWeaponsList = new List<GameObject>();
     public List<GameObject> distanceWeaponsList = new List<GameObject>();
 
-    private bool isPlayingCac=false;
-    private bool isPlayingDistance=false;
+    [HideInInspector]
+    public bool isPlayingCac=false;
+    [HideInInspector]
+    public bool isPlayingDistance=false;
 
     public Sprite cacSprite;
     public Sprite distanceSprite;

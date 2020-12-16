@@ -29,6 +29,14 @@ public class ActiveObjects : MonoBehaviour
         
     }
 
+    public void ToUseModule()
+    {
+        if (readyToUse)
+        {
+            UseModule = true;
+            StartCoroutine(CdToReUse());
+        }   
+    }
 
     protected IEnumerator CdToReUse()
     {

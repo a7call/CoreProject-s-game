@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5533627787624720240}
   m_Layer: 0
   m_Name: attackPoint
-  m_TagString: AttackPointPlayer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 577309146241068898}
   - component: {fileID: 368481402091863267}
   - component: {fileID: 1588082215053512320}
-  - component: {fileID: 7857480750041030836}
+  - component: {fileID: 1074200611}
   m_Layer: 0
   m_Name: Riffle(ak47)
   m_TagString: DistanceWeapon
@@ -109,11 +109,11 @@ MonoBehaviour:
   attackPoint: {fileID: 5533627787624720240}
   isAttacking: 0
   DistanceWeaponData: {fileID: 11400000, guid: 0f69c7db581b71b4fbecc1eb15cb805f, type: 2}
-  BulletInMag: 0
+  BulletInMag: 20
   InfiniteAmmo: 0
   AmmoStock: 35
   image: {fileID: 0}
---- !u!114 &7857480750041030836
+--- !u!114 &1074200611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,36 +130,16 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: aa6fd914-784f-498f-a4e0-ad6d3db9d09a
-    m_ActionName: Keyboard & Mouse/Shoot[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 59b4ab65-7454-47f1-8f25-5876b5d5e38d
-    m_ActionName: Keyboard & Mouse/Reload[/Keyboard/r]
+  m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard & Mouse
-  m_DefaultActionMap: Weapon
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

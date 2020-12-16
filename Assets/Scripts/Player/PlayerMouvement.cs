@@ -43,6 +43,7 @@ public class PlayerMouvement : Player
     }
     protected  void Update()
     {
+
         if (isSpeedShoesModule && !SpeedAlreadyUp)
         {
             SpeedAlreadyUp = true;
@@ -223,16 +224,12 @@ public class PlayerMouvement : Player
 
     public void OnHorizontal(InputValue val)
     {
-        print("x");
         mouvement.x = val.Get<float>();
-
     }
 
     public void OnVertical(InputValue val)
     {
-        print("y");
         mouvement.y = val.Get<float>();
-
     }
 
     public void OnDash()
@@ -242,5 +239,7 @@ public class PlayerMouvement : Player
         //PlayerControl variable;
         //variable.Player.Reload.actionMap.AddBinding("<Keyboard/a");
     }
+
+   
     
 }
