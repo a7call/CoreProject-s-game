@@ -30,6 +30,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""name"": ""Shoot"",
                     ""type"": ""Value"",
                     ""id"": ""d9f6a315-5fe0-46c8-8c1d-77f1f947feca"",
+                    ""expectedControlType"": ""Digital"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
