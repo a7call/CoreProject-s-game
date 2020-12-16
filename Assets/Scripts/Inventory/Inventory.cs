@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
         AddGold(amountToAdd);
         UpdateUIGold();
         UpdateUIKey();
-        if (Input.GetKeyDown(KeyCode.Space)) SpawnBlackHole();
+        //if (Input.GetKeyDown(KeyCode.Space)) SpawnBlackHole();
         //AddObject();
     }
 
@@ -72,7 +72,7 @@ public class Inventory : MonoBehaviour
     //}
 
     
-    private void SpawnBlackHole()
+    public void SpawnBlackHole()
     {
         if (BlackHoles.Count >= 1)
         {

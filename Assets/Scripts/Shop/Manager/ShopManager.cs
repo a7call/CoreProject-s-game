@@ -49,7 +49,7 @@ public class ShopManager : MonoBehaviour
     // Pour l'instant en SerializeField pour modifier la distance voulue
     [SerializeField] private float distanceToShop = 5f;
     private bool isInRange;
-
+    public bool OpenShop = false;
 
     private void Start()
     {
@@ -83,7 +83,7 @@ public class ShopManager : MonoBehaviour
 
         if (isInRange == true)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (OpenShop)
             {
                 isPlayerShopping = true;
                 shopManagerUI.SetActive(true);
