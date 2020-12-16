@@ -13,7 +13,7 @@ public class CoffreArme3 : Coffre
     }
 
 
-    protected override void PopRandomObject()
+    public override void PopRandomObject()
     {
         int Choice = Random.Range(0, SListeArmes3.Count);
         GameObject.Instantiate(SListeArmes3[Choice], transform.position, Quaternion.identity);

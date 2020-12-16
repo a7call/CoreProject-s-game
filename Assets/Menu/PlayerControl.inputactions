@@ -15,9 +15,9 @@
                 },
                 {
                     "name": "Shoot",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "d9f6a315-5fe0-46c8-8c1d-77f1f947feca",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Digital",
                     "processors": "",
                     "interactions": ""
                 },
@@ -50,6 +50,30 @@
                     "type": "Button",
                     "id": "472c6375-56fa-4010-aad0-42ceeaf20a3c",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "BlackHole",
+                    "type": "Button",
+                    "id": "a9ed9a00-a03d-459d-ad15-4d21b5494e2d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "OpenCoffre",
+                    "type": "Value",
+                    "id": "32abab0f-79dd-4354-bff0-eea9459f1644",
+                    "expectedControlType": "Digital",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "OpenShop",
+                    "type": "Value",
+                    "id": "6673a60c-eae3-4dbb-9a2f-e4b3ce1325f6",
+                    "expectedControlType": "Digital",
                     "processors": "",
                     "interactions": ""
                 }
@@ -228,6 +252,66 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81731a2f-20a5-46cd-b5f9-eb08069d022e",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "BlackHole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e2294b5-66a4-49d6-9884-079c09673197",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "OpenCoffre",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c6e3939-53f6-4632-ace2-b07858e03e7d",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "OpenShop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "16f374cf-1a31-43a1-bbd5-2d33e37d6f40",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "bd2cef6d-c3bf-4b3d-926b-a5a2f1c2053c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8bc2015f-a7dc-4434-b40e-06b4eee2930a",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

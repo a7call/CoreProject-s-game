@@ -11,7 +11,7 @@ public class DistanceWeapon : Weapons
     protected PlayerProjectiles Proj;
     protected float Dispersion;
     protected bool IsReloading;
-    protected bool OkToShoot;
+    public bool OkToShoot;
     public int BulletInMag;
     protected float ReloadDelay;
     protected int MagSize;
@@ -84,7 +84,7 @@ public class DistanceWeapon : Weapons
         if (OkToShoot)
         {
             CoroutineManager.Instance.StartCoroutine(Shoot());
-            OkToShoot = false;
+            
         }
        
 

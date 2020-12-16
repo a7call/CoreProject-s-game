@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Coffre : MonoBehaviour
 {
-    protected bool isOpen = false;
+    public bool isOpen = false;
+    public bool OkToOpen = false;
     
     public static List<GameObject> SListeObjects;
 
@@ -12,14 +13,14 @@ public class Coffre : MonoBehaviour
     [HideInInspector]
     public static bool isKeyPassePartoutModule = false;
 
-    
+
 
     protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         Inventory inventory = FindObjectOfType<Inventory>();
 
 
-        if (collision.CompareTag("Player") && !isOpen && Input.GetKeyDown(KeyCode.E))
+        if (collision.CompareTag("Player") && !isOpen && OkToOpen)
         {
             if (inventory.numberOfKeys >= 1 && !isKeyPassePartoutModule)
             {
@@ -44,7 +45,7 @@ public class Coffre : MonoBehaviour
 
     }
 
-    protected virtual void PopRandomObject()
+    public virtual void PopRandomObject()
     {
         
         int Choice = Random.Range(0, SListeObjects.Count);

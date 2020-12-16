@@ -28,9 +28,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Shoot"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""d9f6a315-5fe0-46c8-8c1d-77f1f947feca"",
-                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -63,6 +62,30 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""472c6375-56fa-4010-aad0-42ceeaf20a3c"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""BlackHole"",
+                    ""type"": ""Button"",
+                    ""id"": ""a9ed9a00-a03d-459d-ad15-4d21b5494e2d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""OpenCoffre"",
+                    ""type"": ""Value"",
+                    ""id"": ""32abab0f-79dd-4354-bff0-eea9459f1644"",
+                    ""expectedControlType"": ""Digital"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""OpenShop"",
+                    ""type"": ""Value"",
+                    ""id"": ""6673a60c-eae3-4dbb-9a2f-e4b3ce1325f6"",
+                    ""expectedControlType"": ""Digital"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -243,6 +266,66 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""UseObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81731a2f-20a5-46cd-b5f9-eb08069d022e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""BlackHole"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e2294b5-66a4-49d6-9884-079c09673197"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""OpenCoffre"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c6e3939-53f6-4632-ace2-b07858e03e7d"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""OpenShop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""16f374cf-1a31-43a1-bbd5-2d33e37d6f40"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd2cef6d-c3bf-4b3d-926b-a5a2f1c2053c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8bc2015f-a7dc-4434-b40e-06b4eee2930a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -274,6 +357,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_Horizontal = m_Player.FindAction("Horizontal", throwIfNotFound: true);
         m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
         m_Player_UseObject = m_Player.FindAction("UseObject", throwIfNotFound: true);
+        m_Player_BlackHole = m_Player.FindAction("BlackHole", throwIfNotFound: true);
+        m_Player_OpenCoffre = m_Player.FindAction("OpenCoffre", throwIfNotFound: true);
+        m_Player_OpenShop = m_Player.FindAction("OpenShop", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -329,6 +418,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Horizontal;
     private readonly InputAction m_Player_Vertical;
     private readonly InputAction m_Player_UseObject;
+    private readonly InputAction m_Player_BlackHole;
+    private readonly InputAction m_Player_OpenCoffre;
+    private readonly InputAction m_Player_OpenShop;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -339,6 +431,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @Horizontal => m_Wrapper.m_Player_Horizontal;
         public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
         public InputAction @UseObject => m_Wrapper.m_Player_UseObject;
+        public InputAction @BlackHole => m_Wrapper.m_Player_BlackHole;
+        public InputAction @OpenCoffre => m_Wrapper.m_Player_OpenCoffre;
+        public InputAction @OpenShop => m_Wrapper.m_Player_OpenShop;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -366,6 +461,15 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @UseObject.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseObject;
                 @UseObject.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseObject;
                 @UseObject.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseObject;
+                @BlackHole.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlackHole;
+                @BlackHole.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlackHole;
+                @BlackHole.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlackHole;
+                @OpenCoffre.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCoffre;
+                @OpenCoffre.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCoffre;
+                @OpenCoffre.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCoffre;
+                @OpenShop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
+                @OpenShop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
+                @OpenShop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -388,10 +492,52 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @UseObject.started += instance.OnUseObject;
                 @UseObject.performed += instance.OnUseObject;
                 @UseObject.canceled += instance.OnUseObject;
+                @BlackHole.started += instance.OnBlackHole;
+                @BlackHole.performed += instance.OnBlackHole;
+                @BlackHole.canceled += instance.OnBlackHole;
+                @OpenCoffre.started += instance.OnOpenCoffre;
+                @OpenCoffre.performed += instance.OnOpenCoffre;
+                @OpenCoffre.canceled += instance.OnOpenCoffre;
+                @OpenShop.started += instance.OnOpenShop;
+                @OpenShop.performed += instance.OnOpenShop;
+                @OpenShop.canceled += instance.OnOpenShop;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Pause;
+    public struct UIActions
+    {
+        private @PlayerControl m_Wrapper;
+        public UIActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -409,5 +555,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnHorizontal(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
         void OnUseObject(InputAction.CallbackContext context);
+        void OnBlackHole(InputAction.CallbackContext context);
+        void OnOpenCoffre(InputAction.CallbackContext context);
+        void OnOpenShop(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }
