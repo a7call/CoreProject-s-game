@@ -8,9 +8,15 @@ using System.Linq;
 public class SettingsWindow : MonoBehaviour
 {
     public AudioMixer MainAudioMixer;
-    
+
+    public Text Dash,Up,Down,Left,Right,Shoot,Reload,UseObject,BlackHole;
+    private GameObject CurrentKey;
+
+    private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
+    //private Dictionary<string, Mouse> mouse = new Dictionary<string, Mouse>();
 
     Resolution[] resolutions;
+
 
     public Dropdown resoltionDropdown;
 
@@ -38,6 +44,33 @@ public class SettingsWindow : MonoBehaviour
         resoltionDropdown.RefreshShownValue();
 
         Screen.fullScreen = true;
+
+        keys.Add("Dash", KeyCode.Mouse1);
+        Dash.text = keys["Dash"].ToString();
+
+        keys.Add("Up", KeyCode.Z);
+        Up.text = keys["Up"].ToString();
+
+        keys.Add("Down", KeyCode.S);
+        Down.text = keys["Down"].ToString();
+
+        keys.Add("Right", KeyCode.D);
+        Right.text = keys["Right"].ToString();
+
+        keys.Add("Left", KeyCode.Q);
+        Left.text = keys["Left"].ToString();
+
+        keys.Add("Shoot", KeyCode.Mouse0);
+        Shoot.text = keys["Shoot"].ToString();
+
+        keys.Add("Reload", KeyCode.R);
+        Reload.text = keys["Reload"].ToString();
+
+        keys.Add("BlackHole", KeyCode.Space);
+        BlackHole.text = keys["BlackHole"].ToString();
+
+        keys.Add("UseObject", KeyCode.U);
+        UseObject.text = keys["UseObject"].ToString();
     }
 
     public void SetMainVolume(float volume)
@@ -64,5 +97,44 @@ public class SettingsWindow : MonoBehaviour
     {
         Resolution resolution = resolutions[ResolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    void OnGUI()
+    {
+        if(CurrentKey != null)
+        {
+            Event e = Event.current;
+            
+            if (e.isKey)
+            {
+                
+                keys[CurrentKey.name] = e.keyCode;
+                CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
+                CurrentKey = null;
+            }
+            else if (e.isMouse)
+            {
+                if (e.button == 0)
+                {
+                    keys[CurrentKey.name] = KeyCode.Mouse0;
+                    CurrentKey.transform.GetChild(0).GetComponent<Text>().text = "Mouse0";
+                }
+                if (e.button == 1)
+                {
+                    keys[CurrentKey.name] = KeyCode.Mouse1;
+                    CurrentKey.transform.GetChild(0).GetComponent<Text>().text = "Mouse1";
+                }
+
+                CurrentKey = null;
+            }
+        }
+    }
+
+    public void ChangeKey(GameObject clicked)
+    {
+        CurrentKey = clicked;
+        
+
+        
     }
 }
