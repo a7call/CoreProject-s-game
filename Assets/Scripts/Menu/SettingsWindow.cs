@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.InputSystem;
+using TMPro;
 
 public class SettingsWindow : MonoBehaviour
 {
     public AudioMixer MainAudioMixer;
 
+    public InputActionMap actionMap;
     public Text Dash,Up,Down,Left,Right,Shoot,Reload,UseObject,BlackHole;
     private GameObject CurrentKey;
 
     private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
-    //private Dictionary<string, Mouse> mouse = new Dictionary<string, Mouse>();
+    
 
     Resolution[] resolutions;
 
@@ -101,14 +104,15 @@ public class SettingsWindow : MonoBehaviour
 
     void OnGUI()
     {
-        if(CurrentKey != null)
+        if (CurrentKey != null)
         {
             Event e = Event.current;
-            
+
             if (e.isKey)
             {
-                
+                //print(e);
                 keys[CurrentKey.name] = e.keyCode;
+                //print(actionMap.FindAction(CurrentKey.name));
                 CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
                 CurrentKey = null;
             }
@@ -133,8 +137,81 @@ public class SettingsWindow : MonoBehaviour
     public void ChangeKey(GameObject clicked)
     {
         CurrentKey = clicked;
-        
 
-        
     }
-}
+
+    //private InputActionRebindingExtensions.RebindingOperation rebindOperation;
+    //private PlayerInput focusedPlayerInput;
+    //private InputAction focusedInputAction;
+
+
+    //public void ButtonPressedStartRebind()
+    //{
+    //    print("1");
+    //    StartRebindProcess();
+        
+    //}
+
+    //public void StartRebindProcess()
+    //{
+
+    //    //ToggleGameObjectState(rebindButtonObject, false);
+    //    //ToggleGameObjectState(resetButtonObject, false);
+    //    //ToggleGameObjectState(listeningForInputObject, true);
+
+
+    //    rebindOperation = focusedInputAction.PerformInteractiveRebinding()
+    //        .WithControlsExcluding("<Mouse>/position")
+    //        .WithControlsExcluding("<Mouse>/delta")
+    //        .WithControlsExcluding("<Gamepad>/Start")
+    //        .WithControlsExcluding("<Keyboard>/escape")
+    //        .OnMatchWaitForAnother(0.1f)
+    //        .OnComplete(operation => RebindCompleted());
+
+    //    rebindOperation.Start();
+    //}
+
+
+    //void RebindCompleted()
+    //{
+    //    rebindOperation.Dispose();
+    //    print(rebindOperation);
+    //    rebindOperation = null;
+
+    //    //ToggleGameObjectState(rebindButtonObject, true);
+    //    //ToggleGameObjectState(resetButtonObject, true);
+    //    //ToggleGameObjectState(listeningForInputObject, false);
+
+    //    //UpdateActionDisplayUI();
+    //    //UpdateBindingDisplayUI();
+    //}
+
+    
+
+    
+    ////[Header("Rebind Settings")]
+    ////public string actionName;
+
+    ////[Header("Device Display Settings")]
+    ////public DeviceDisplayConfigurator deviceDisplaySettings;
+
+    ////[Header("UI Display - Action Text")]
+    ////public TextMeshProUGUI actionNameDisplayText;
+
+    ////[Header("UI Display - Binding Text or Icon")]
+    ////public TextMeshProUGUI bindingNameDisplayText;
+    ////public Image bindingIconDisplayImage;
+
+    ////[Header("UI Display - Buttons")]
+    ////public GameObject rebindButtonObject;
+    ////public GameObject resetButtonObject;
+
+    ////[Header("UI Display - Listening Text")]
+    ////public GameObject listeningForInputObject;
+
+
+    
+
+    
+
+    }
