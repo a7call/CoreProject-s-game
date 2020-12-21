@@ -366,6 +366,11 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
+    internal InputAction FindAction(string actionName)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Dispose()
     {
         UnityEngine.Object.Destroy(asset);
