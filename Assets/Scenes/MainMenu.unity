@@ -2411,7 +2411,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671945921}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2843,12 +2843,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainAudioMixer: {fileID: 24100000, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
-  actionMap:
-    m_Name: Action Map
-    m_Id: 69d87776-ead1-4a11-b50f-1fd9767f1966
-    m_Asset: {fileID: 0}
-    m_Actions: []
-    m_Bindings: []
   Dash: {fileID: 64411263}
   Up: {fileID: 1448731020}
   Down: {fileID: 1650266857}
@@ -2859,6 +2853,14 @@ MonoBehaviour:
   UseObject: {fileID: 1138579074}
   BlackHole: {fileID: 2123419373}
   resoltionDropdown: {fileID: 1778705659}
+  inputAction:
+    m_Name: Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: bc9f056d-7210-492e-ab8f-4033f0170088
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
 --- !u!1 &721269966
 GameObject:
   m_ObjectHideFlags: 0
@@ -5290,7 +5292,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434557180}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5300,7 +5302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9, y: -100.000015}
+  m_AnchoredPosition: {x: 9.000044, y: -100.00002}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434557182
@@ -5348,11 +5350,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 703602659}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: StartInteractiveRebind
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1434557180}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

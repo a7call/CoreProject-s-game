@@ -11,7 +11,7 @@ public class SettingsWindow : MonoBehaviour
 {
     public AudioMixer MainAudioMixer;
 
-    public InputActionMap actionMap;
+    //public InputActionMap actionMap;
     public Text Dash,Up,Down,Left,Right,Shoot,Reload,UseObject,BlackHole;
     private GameObject CurrentKey;
 
@@ -74,6 +74,8 @@ public class SettingsWindow : MonoBehaviour
 
         keys.Add("UseObject", KeyCode.U);
         UseObject.text = keys["UseObject"].ToString();
+
+        
     }
 
     public void SetMainVolume(float volume)
@@ -102,7 +104,7 @@ public class SettingsWindow : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         if (CurrentKey != null)
         {
@@ -137,28 +139,47 @@ public class SettingsWindow : MonoBehaviour
     public void ChangeKey(GameObject clicked)
     {
         CurrentKey = clicked;
-
+        //actionName = keys[CurrentKey.name].ToString();
+        //print(actionName);
     }
 
     //private InputActionRebindingExtensions.RebindingOperation rebindOperation;
     //private PlayerInput focusedPlayerInput;
     //private InputAction focusedInputAction;
+    //public string actionName;
 
+    //public PlayerControl playerInput;
+
+    //public void UpdateBehaviour()
+    //{
+    //    //GetFocusedPlayerInput();
+    //    //SetupFocusedInputAction();
+    //    //UpdateActionDisplayUI();
+    //    //UpdateBindingDisplayUI();
+    //}
+
+    //void GetFocusedPlayerInput()
+    //{
+    //    PlayerMouvement focusedPlayerController = GameManager.Instance.GetFocusedPlayerController();
+    //    focusedPlayerInput = focusedPlayerController.GetPlayerInput();
+    //}
+
+    //void SetupFocusedInputAction()
+    //{
+    //    focusedInputAction = PlayerAttack.actions.FindAction(actionName);
+    //}
 
     //public void ButtonPressedStartRebind()
     //{
     //    print("1");
     //    StartRebindProcess();
-        
+    //    focusedInputAction = playerInput.FindAction(actionName);
+
     //}
 
     //public void StartRebindProcess()
     //{
-
-    //    //ToggleGameObjectState(rebindButtonObject, false);
-    //    //ToggleGameObjectState(resetButtonObject, false);
-    //    //ToggleGameObjectState(listeningForInputObject, true);
-
+    //    print("2");
 
     //    rebindOperation = focusedInputAction.PerformInteractiveRebinding()
     //        .WithControlsExcluding("<Mouse>/position")
@@ -178,40 +199,24 @@ public class SettingsWindow : MonoBehaviour
     //    print(rebindOperation);
     //    rebindOperation = null;
 
-    //    //ToggleGameObjectState(rebindButtonObject, true);
-    //    //ToggleGameObjectState(resetButtonObject, true);
-    //    //ToggleGameObjectState(listeningForInputObject, false);
-
-    //    //UpdateActionDisplayUI();
-    //    //UpdateBindingDisplayUI();
     //}
 
-    
 
-    
-    ////[Header("Rebind Settings")]
-    ////public string actionName;
+    private InputActionRebindingExtensions.RebindingOperation rebindOperation;
+    public InputAction inputAction;
 
-    ////[Header("Device Display Settings")]
-    ////public DeviceDisplayConfigurator deviceDisplaySettings;
-
-    ////[Header("UI Display - Action Text")]
-    ////public TextMeshProUGUI actionNameDisplayText;
-
-    ////[Header("UI Display - Binding Text or Icon")]
-    ////public TextMeshProUGUI bindingNameDisplayText;
-    ////public Image bindingIconDisplayImage;
-
-    ////[Header("UI Display - Buttons")]
-    ////public GameObject rebindButtonObject;
-    ////public GameObject resetButtonObject;
-
-    ////[Header("UI Display - Listening Text")]
-    ////public GameObject listeningForInputObject;
-
-
-    
-
-    
-
+    public void StartInteractiveRebind()
+    {
+        
+        rebindOperation = inputAction.PerformInteractiveRebinding().OnComplete(operation => RebindCompleted());
+        rebindOperation.Start();
     }
+
+    void RebindCompleted()
+    {
+        rebindOperation.Dispose();
+
+        //Apply UI Changes (IE: New Binding Icon)
+    }
+
+}

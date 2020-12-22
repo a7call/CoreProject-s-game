@@ -12,6 +12,8 @@ public class PlayerAttack : Player
     protected bool OpenCoffre = false;
     protected bool OpenShop = false;
 
+    public PlayerInput playerInput;
+
     protected override void Awake()
     {
         base.Awake();
@@ -114,4 +116,8 @@ public class PlayerAttack : Player
         }
     }
 
+    public PlayerInput GetPlayerInput()
+    {
+        return playerInput;
+    }
 }
