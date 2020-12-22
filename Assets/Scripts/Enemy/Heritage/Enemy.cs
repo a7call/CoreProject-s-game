@@ -138,7 +138,7 @@ public class Enemy : MonoBehaviour
         {
             path = p;
             currentWayPoint = 0;
-            print("test");
+
         }
     }
 
