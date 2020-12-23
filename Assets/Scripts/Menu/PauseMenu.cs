@@ -7,7 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool isGamePaused = false;
     private PlayerMouvement playerMvt;
-
+    public GameObject settingsWindow;
     public GameObject pauseMenuUI;
 
     protected void Update()
@@ -17,6 +17,7 @@ public class PauseMenu : MonoBehaviour
             if (isGamePaused)
             {
                 Resume();
+                settingsWindow.SetActive(false);
             }
             else
             {
@@ -47,5 +48,14 @@ public class PauseMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
         Resume();
+    }
+
+    public void SettingsButton()
+    {
+        settingsWindow.SetActive(true);
+    }
+    public void CloseSettingsWindow()
+    {
+        settingsWindow.SetActive(false);
     }
 }

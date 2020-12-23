@@ -186,8 +186,9 @@ public class DistanceWeapon : Weapons
 
     public void toReload()
     {
-        StartCoroutine(Reload());
+        OnReload();
     }
+  
 
     protected void DisplayAmmo()
     {
@@ -207,7 +208,7 @@ public class DistanceWeapon : Weapons
 
     public void OnReload()
     {
-        print("reload");
+        
         if (BulletInMag != MagSize && (AmmoStock != 0 | InfiniteAmmo))
         {
             StartCoroutine(Reload());

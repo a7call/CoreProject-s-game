@@ -5,15 +5,15 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.InputSystem;
-using TMPro;
+//using TMPro;
 
 public class SettingsWindow : MonoBehaviour
 {
     public AudioMixer MainAudioMixer;
 
-    //public InputActionMap actionMap;
+    
     public Text Dash,Up,Down,Left,Right,Shoot,Reload,UseObject,BlackHole;
-    private GameObject CurrentKey;
+    private GameObject CurrentKey = null;
 
     private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
     
@@ -48,7 +48,7 @@ public class SettingsWindow : MonoBehaviour
 
         Screen.fullScreen = true;
 
-        keys.Add("Dash", KeyCode.Mouse1);
+        keys.Add("Dash", KeyCode.W);
         Dash.text = keys["Dash"].ToString();
 
         keys.Add("Up", KeyCode.Z);
@@ -74,6 +74,8 @@ public class SettingsWindow : MonoBehaviour
 
         keys.Add("UseObject", KeyCode.U);
         UseObject.text = keys["UseObject"].ToString();
+
+        
 
         
     }
@@ -104,7 +106,7 @@ public class SettingsWindow : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    private void OnGUI()
+    protected void OnGUI()
     {
         if (CurrentKey != null)
         {
@@ -112,11 +114,11 @@ public class SettingsWindow : MonoBehaviour
 
             if (e.isKey)
             {
-                //print(e);
                 keys[CurrentKey.name] = e.keyCode;
-                //print(actionMap.FindAction(CurrentKey.name));
                 CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
                 CurrentKey = null;
+
+                
             }
             else if (e.isMouse)
             {
@@ -139,84 +141,53 @@ public class SettingsWindow : MonoBehaviour
     public void ChangeKey(GameObject clicked)
     {
         CurrentKey = clicked;
-        //actionName = keys[CurrentKey.name].ToString();
-        //print(actionName);
+        StartRebindProcess();
+        
     }
 
-    //private InputActionRebindingExtensions.RebindingOperation rebindOperation;
-    //private PlayerInput focusedPlayerInput;
-    //private InputAction focusedInputAction;
-    //public string actionName;
-
-    //public PlayerControl playerInput;
-
-    //public void UpdateBehaviour()
-    //{
-    //    //GetFocusedPlayerInput();
-    //    //SetupFocusedInputAction();
-    //    //UpdateActionDisplayUI();
-    //    //UpdateBindingDisplayUI();
-    //}
-
-    //void GetFocusedPlayerInput()
-    //{
-    //    PlayerMouvement focusedPlayerController = GameManager.Instance.GetFocusedPlayerController();
-    //    focusedPlayerInput = focusedPlayerController.GetPlayerInput();
-    //}
-
-    //void SetupFocusedInputAction()
-    //{
-    //    focusedInputAction = PlayerAttack.actions.FindAction(actionName);
-    //}
-
-    //public void ButtonPressedStartRebind()
-    //{
-    //    print("1");
-    //    StartRebindProcess();
-    //    focusedInputAction = playerInput.FindAction(actionName);
-
-    //}
-
-    //public void StartRebindProcess()
-    //{
-    //    print("2");
-
-    //    rebindOperation = focusedInputAction.PerformInteractiveRebinding()
-    //        .WithControlsExcluding("<Mouse>/position")
-    //        .WithControlsExcluding("<Mouse>/delta")
-    //        .WithControlsExcluding("<Gamepad>/Start")
-    //        .WithControlsExcluding("<Keyboard>/escape")
-    //        .OnMatchWaitForAnother(0.1f)
-    //        .OnComplete(operation => RebindCompleted());
-
-    //    rebindOperation.Start();
-    //}
-
-
-    //void RebindCompleted()
-    //{
-    //    rebindOperation.Dispose();
-    //    print(rebindOperation);
-    //    rebindOperation = null;
-
-    //}
-
-
+    public InputActionAsset playerControls;
     private InputActionRebindingExtensions.RebindingOperation rebindOperation;
-    public InputAction inputAction;
+    private InputAction actionToRebind;
+    private InputActionMap gameplayActionMap;
 
-    public void StartInteractiveRebind()
+    private void Awake()
     {
-        
-        rebindOperation = inputAction.PerformInteractiveRebinding().OnComplete(operation => RebindCompleted());
+        gameplayActionMap = playerControls.FindActionMap("Player");
+
+    }
+
+    public void StartRebindProcess()
+    {
+        //print("0");
+        actionToRebind = gameplayActionMap.FindAction(CurrentKey.name);
+        //print("1");
+        actionToRebind.actionMap.Disable();
+        rebindOperation = actionToRebind.PerformInteractiveRebinding()
+            .WithControlsExcluding("<Mouse>/position")
+            .WithControlsExcluding("<Mouse>/delta")
+            .WithControlsExcluding("<Gamepad>/Start")
+            .WithControlsExcluding("<Keyboard>/escape")
+            .OnMatchWaitForAnother(0.1f)
+            .OnComplete(operation => RebindCompleted());
+        //print("2");
+
         rebindOperation.Start();
+        //print("22");
+        
     }
 
     void RebindCompleted()
     {
+
+        
         rebindOperation.Dispose();
+        print(rebindOperation);
+        if (rebindOperation.completed)
+        {
+            print("3");
+        }
 
-        //Apply UI Changes (IE: New Binding Icon)
+        rebindOperation = null;
+        actionToRebind.actionMap.Enable();
     }
-
 }

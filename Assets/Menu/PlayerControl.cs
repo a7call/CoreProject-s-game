@@ -95,7 +95,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9ff6a153-09b9-4bae-9a95-8654402b9b01"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
@@ -364,11 +364,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
-    }
-
-    internal InputAction FindAction(string actionName)
-    {
-        throw new NotImplementedException();
     }
 
     public void Dispose()
