@@ -41,13 +41,16 @@ public class Enemy : MonoBehaviour
     public bool isAlreadyElectrified;
 
 
-    // PathFinding
+    // PathFinding variable
     [HideInInspector]
-    public float nextWayPointDistance = 1f;
+    public float nextWayPointDistance = 0.05f;
     Path path;
     int currentWayPoint;
     bool reachedEndOfPath;
     Seeker seeker;
+    Vector2 force;
+    // end of Pathfinding variable
+
 
    
 
@@ -105,7 +108,7 @@ public class Enemy : MonoBehaviour
         switch (currentState)
         {
             case State.Chasing:
-                MoveToPath();
+               // MoveToPath();
                 break;
         }
     }
@@ -115,12 +118,9 @@ public class Enemy : MonoBehaviour
 
 
     ///  Pathing code 
-    
-    //seeker.IsDone() vérifie si le path est calculé
-    //seeker.StartPath() est appellée pour commencer à calculer le chemin
     void StartPathing()
     {
-        InvokeRepeating("UpdatePath", 0f, 0.3f);
+       // InvokeRepeating("UpdatePath", 0f, 0.1f);
     }
    protected virtual void UpdatePath()
     {
@@ -160,8 +160,10 @@ public class Enemy : MonoBehaviour
         }
 
         Vector2 dir = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
-        Vector2 force = dir * moveSpeed * Time.fixedDeltaTime;
-        rb.velocity = force;
+        force = dir * moveSpeed * Time.deltaTime;
+        print(force.sqrMagnitude);
+        
+        rb.AddForce(force, ForceMode2D.Force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);
         if (distance < nextWayPointDistance)
