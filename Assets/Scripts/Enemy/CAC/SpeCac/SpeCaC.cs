@@ -20,8 +20,6 @@ public class SpeCaC : Cac
         currentState = State.Patrolling;
         // Set data
         SetData();
-        // Set initial targetPoint
-        SetFirstPatrolPoint();
         SetMaxHealth();
     }
     protected override void Update()
@@ -30,14 +28,11 @@ public class SpeCaC : Cac
         switch (currentState)
         {
             case State.Patrolling:
-                MoveToPath();
                 PlayerInSight();
                 break;
 
             case State.Chasing:
-                Aggro();
-                if(!isCharging) MoveToPath();
-                StartCoroutine(Charge());
+                //StartCoroutine(Charge());
                 isInRange();
                 break;
 
@@ -51,21 +46,6 @@ public class SpeCaC : Cac
         }       
 
     }
-
-
-    // Aggro si pas entrain de charger + Instantiate trash (BaseCaC.cs) 
-    // Quaternion.identy = pas de rotation de l'objet instantié lors de sa création. L'objet est aligné avec le monde et ses parents
-    protected override void Aggro()
-    {
-            if (!spawned)
-            {
-                spawned = true;
-                Instantiate(mobs, transform.position, Quaternion.identity);
-            }
-            targetPoint = target;
-    }
-
-
 
     //Attack
 

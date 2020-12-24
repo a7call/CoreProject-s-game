@@ -24,10 +24,6 @@ public class HelmetAstronautFear : Cac
     {
        
         currentState = State.Patrolling;
-        // Get Player Reference
-        FindPlayer();
-        // Set target
-        targetPoint = target;
         // Set data
         SetData();
         SetMaxHealth();
@@ -109,7 +105,7 @@ public class HelmetAstronautFear : Cac
     {
         isFirstAttack = false;
         Vector3 pos = pointPos;
-        Vector3 targetPos = targetPoint.position;
+        Vector3 targetPos = target.position;
         Vector3 direction = (pos - targetPos).normalized;
         playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
         yield return new WaitForSeconds(loadDelay);

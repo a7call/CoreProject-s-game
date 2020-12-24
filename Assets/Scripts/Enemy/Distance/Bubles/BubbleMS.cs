@@ -14,8 +14,6 @@ public class BubbleMS : Distance
     void Start()
     { 
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -31,7 +29,6 @@ public class BubbleMS : Distance
                 break;
             case State.Chasing:
                 isInRange();
-                MoveToPath();
                 if(!firstShoot) rb.velocity = Vector2.zero;
                 break;
             case State.Attacking:

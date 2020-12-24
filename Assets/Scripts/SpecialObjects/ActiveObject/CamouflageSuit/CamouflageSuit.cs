@@ -5,6 +5,7 @@ using UnityEngine;
 public class CamouflageSuit : ActiveObjects
 {
     [SerializeField] private float camouflageTime;
+    [SerializeField] private Transform targteOfEnemy;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -23,12 +24,15 @@ public class CamouflageSuit : ActiveObjects
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy enemy in enemies)
         {
-            enemy.targetPoint = enemy.transform;
+            enemy.targetSetter.target = enemy.transform;
+            enemy.enabled = false;
+
         }     
         yield return new WaitForSeconds(camouflageTime);
         foreach (Enemy enemy in enemies)
         {
-            enemy.targetPoint = enemy.target;
+            enemy.enabled = true;
+            enemy.targetSetter.target = enemy.target;
         }
     }
 }

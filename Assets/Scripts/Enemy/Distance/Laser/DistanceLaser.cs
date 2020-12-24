@@ -15,8 +15,6 @@ public class DistanceLaser : Distance
     void Start()
     {
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -40,7 +38,6 @@ public class DistanceLaser : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                DontMoveShooting();
                 StartCoroutine("CanShoot");
                 break;
 

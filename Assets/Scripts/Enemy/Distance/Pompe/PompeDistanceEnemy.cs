@@ -18,8 +18,6 @@ public class PompeDistanceEnemy : Distance
     {
         GetProjectile();
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -39,7 +37,6 @@ public class PompeDistanceEnemy : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                DontMoveShooting();
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
                 break;

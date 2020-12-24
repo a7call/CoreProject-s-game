@@ -64,8 +64,6 @@ public class SpecCaC2 : Cac
         currentState = State.Chasing;
         // Get Player Reference
         FindPlayer();
-        // Set target
-        targetPoint = target;
         // Set data
         SetData();
         SetMaxHealth();
@@ -78,8 +76,6 @@ public class SpecCaC2 : Cac
         {
             default:
             case State.Chasing:
-                Aggro();
-                MoveToPath();
                 StartCoroutine(PowerMode());
                 if(isPowerMode) StartCoroutine(DecreasePlayerSpeed());
                 isInRange();
@@ -153,7 +149,7 @@ public class SpecCaC2 : Cac
     {
         isFirstAttack = false;
         Vector3 pos = pointPos;
-        Vector3 targetPos = targetPoint.position;
+        Vector3 targetPos = target.position;
         Vector3 direction = (pos - targetPos).normalized;
         playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
         yield return new WaitForSeconds(loadDelay);

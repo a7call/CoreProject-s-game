@@ -22,10 +22,6 @@ public class HelmetAstronautMS : Cac
         enemy = FindObjectOfType<Enemy>();
 
         currentState = State.Patrolling;
-        // Get Player Reference
-        FindPlayer();
-        // Set target
-        targetPoint = target;
         // Set data
         SetData();
         SetMaxHealth();
@@ -82,9 +78,4 @@ public class HelmetAstronautMS : Cac
         enemy.moveSpeed = baseMoveSpeed;
     }
 
-    // Find player to follow
-    private void FindPlayer()
-    {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-    }
 }

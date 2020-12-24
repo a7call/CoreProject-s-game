@@ -12,8 +12,6 @@ public class SpeDistanceHitZone : Distance
     void Start()
     {
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -26,11 +24,8 @@ public class SpeDistanceHitZone : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                MoveToPath();
                 break;
             case State.Chasing:
-                // récupération de l'aggro
-                Aggro();
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
                 break;

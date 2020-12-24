@@ -33,7 +33,7 @@ public class Decoy : ModuleLauchPhase
             if (hit.gameObject.GetComponent<Enemy>())
             {
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-                enemy.targetPoint = gameObject.transform;
+                //enemy.targetPoint = gameObject.transform;
                 enemy.target = gameObject.transform;
                 enemy.currentState = Enemy.State.Chasing;
             }
@@ -45,7 +45,7 @@ public class Decoy : ModuleLauchPhase
             if (hit.gameObject.GetComponent<Enemy>())
             {
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-                enemy.targetPoint = player.transform ;
+               // enemy.targetPoint = player.transform ;
                 enemy.target = player.transform;
                 enemy.currentState = Enemy.State.Chasing;
             }

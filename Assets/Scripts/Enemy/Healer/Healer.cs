@@ -41,7 +41,6 @@ public class Healer : Enemy
         // Initialise la liste
         List<GameObject> ennemies = new List<GameObject>();
         // Set point to lui même car pas de patrouille
-        targetPoint = transform;
         
 
     }
@@ -61,8 +60,6 @@ public class Healer : Enemy
                 checkehealingDistance();
                 break;
             case State.Chasing:
-                // algo de Pathfinding
-                MoveToPath();
                 // voir détails
                 GetEnnemiToHeal();
                 // vérifi si l'énnemis en cours de heal est tué, si c'est le cas stop la couroutine de heal et recommence une boucle
@@ -99,7 +96,6 @@ public class Healer : Enemy
                 {
                     ennemies.Remove(ennemiArray[i]);
                     hasFinished = true;
-                    targetPoint = transform;
                     return;
                 }
 
@@ -133,7 +129,7 @@ public class Healer : Enemy
                         // Passe l'etat à chase
                         currentState = State.Chasing;
                         // change target vers l'ennemi à heal
-                        targetPoint = ennemiArray[i].GetComponent<Transform>().transform;
+                        target = ennemiArray[i].GetComponent<Transform>().transform;
                     }
 
 
@@ -193,7 +189,7 @@ public class Healer : Enemy
             StopCoroutine(mycouroutine);
             // s'arrete
             rb.velocity = Vector2.zero;
-            targetPoint = transform;
+            target = transform;
         }
         else return;
     }

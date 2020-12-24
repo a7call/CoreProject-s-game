@@ -13,8 +13,6 @@ public class SnotBubble : Distance
     void Start()
     {
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();

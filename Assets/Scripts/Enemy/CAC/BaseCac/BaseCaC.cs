@@ -11,7 +11,6 @@ public class BaseCaC : Cac
     private void Start()
     {
         currentState = State.Patrolling;
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -33,7 +32,7 @@ public class BaseCaC : Cac
         case State.Attacking:
                 isInRange();
                 GetPlayerPos();
-               StartCoroutine(BaseAttack());
+                StartCoroutine(BaseAttack());
                 break;
            
         }

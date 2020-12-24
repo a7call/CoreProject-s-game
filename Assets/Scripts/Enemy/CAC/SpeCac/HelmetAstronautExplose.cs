@@ -13,10 +13,6 @@ public class HelmetAstronautExplose : Cac
         
 
         currentState = State.Patrolling;
-        // Get Player Reference
-        FindPlayer();
-        // Set target
-        targetPoint = target;
         // Set data
         SetData();
         SetMaxHealth();
@@ -45,17 +41,12 @@ public class HelmetAstronautExplose : Cac
         }
 
     }
+    // WTF ?
 
     private void AliveOrNot()
     {
         if (currentHealth <= 0) BaseAttack();
-    
-    }
 
-    // Find player to follow
-    private void FindPlayer()
-    {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
    
 

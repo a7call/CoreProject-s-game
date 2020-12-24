@@ -14,8 +14,6 @@ public class SnotZone : Distance
     protected void Start()
     {
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();

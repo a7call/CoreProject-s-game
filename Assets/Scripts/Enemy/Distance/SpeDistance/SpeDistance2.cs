@@ -17,10 +17,7 @@ public class SpeDistance2 : Distance
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
-
         currentState = State.Patrolling;
-        // Set data
-        SetFirstPatrolPoint();
         SetData();
         SetMaxHealth();
     }
@@ -35,8 +32,6 @@ public class SpeDistance2 : Distance
                 break;
             case State.Chasing:
                 isInRange();
-                // suit le path créé et s'arrête pour tirer
-                MoveToPath();
                 break;
             case State.Attacking:
                 isInRange();
@@ -47,13 +42,6 @@ public class SpeDistance2 : Distance
         }
     }
 
-    //Mouvement
-
-    // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
-    protected override void Aggro()
-    {
-        targetPoint = target;
-    }
 
 
     //Health

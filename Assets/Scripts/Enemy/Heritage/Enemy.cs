@@ -44,11 +44,10 @@ public class Enemy : MonoBehaviour
     // PathFinding variable
     [HideInInspector]
     public float nextWayPointDistance = 0.05f;
-    Path path;
-    int currentWayPoint;
-    bool reachedEndOfPath;
-    Seeker seeker;
-    Vector2 force;
+    [HideInInspector]
+    public AIPath aIPath;
+    [HideInInspector]
+    public AIDestinationSetter targetSetter;
     // end of Pathfinding variable
 
 
@@ -57,15 +56,16 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         GetReference();
-        StartPathing();
     }
 
     void GetReference()
     {
         healthBarGFX.SetActive(false);
-        seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        aIPath = GetComponent<AIPath>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        targetSetter = GetComponent<AIDestinationSetter>();
+        targetSetter.target = target;
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
 
@@ -94,7 +94,6 @@ public class Enemy : MonoBehaviour
                 //animation
                 Fear();
                 break;
-
             
         }
         healthBar.SetHealth(currentHealth);
@@ -102,91 +101,13 @@ public class Enemy : MonoBehaviour
        
     }
 
-    protected virtual void FixedUpdate()
-    {
-
-        switch (currentState)
-        {
-            case State.Chasing:
-               // MoveToPath();
-                break;
-        }
-    }
-
-
-
-
-
-    ///  Pathing code 
-    void StartPathing()
-    {
-       // InvokeRepeating("UpdatePath", 0f, 0.1f);
-    }
-   protected virtual void UpdatePath()
-    {
-        if (seeker.IsDone())
-        {
-            seeker.StartPath(transform.position, targetPoint.position, OnPathComplete);
-            
-        }
-
-    }
-
-    void OnPathComplete(Path p)
-    {
-        if (!p.error)
-        {
-            path = p;
-            currentWayPoint = 0;
-            //print("test");
-        }
-    }
-
-    protected virtual void MoveToPath()
-    {
-        if (path == null)
-        {
-            return;
-        }
-
-        if (currentWayPoint >= path.vectorPath.Count)
-        {
-            reachedEndOfPath = true;
-            return;
-        }
-        else
-        {
-            reachedEndOfPath = false;
-        }
-
-        Vector2 dir = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
-        force = dir * moveSpeed * Time.deltaTime;
-        print(force.sqrMagnitude);
-        
-        rb.AddForce(force, ForceMode2D.Force);
-
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);
-        if (distance < nextWayPointDistance)
-        {
-            currentWayPoint++;
-        }
-    }
-
-    /// End of Pathing code
-
-   
-
-
-
+  
 
     //Mouvement
     [HideInInspector]
     public float moveSpeed;
     [HideInInspector]
     public bool isSlowed = false;
-    // Destination pour patrouille
-    [HideInInspector]
-    public Transform targetPoint;
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player
@@ -201,19 +122,8 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(transform.position, target.position) < inSight)
         {
             currentState = State.Chasing;
-            targetPoint = target;
         }
     }
-
-
-    // Set le premier point de patrouille
-    protected virtual void SetFirstPatrolPoint()
-    {
-        targetPoint = transform;
-    }
-
-   
-    // Fear l'ennemi dans la direction opposée au joueur
 
     /// <summary>
     /// NE DEVRAIT PAS ETRE LA
@@ -225,6 +135,46 @@ public class Enemy : MonoBehaviour
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 
+    //Attack
+
+    protected float attackRange;
+
+    protected bool isReadyToSwitchState;
+    protected float timeToSwitch;
+    protected bool isInTransition;
+    protected IEnumerator transiChasing()
+    {
+        isInTransition = true;
+        yield return new WaitForSeconds(timeToSwitch);
+        aIPath.canMove = true;
+        isReadyToSwitchState = true;
+        isInTransition = false;
+    }
+
+
+    protected virtual void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+            isReadyToSwitchState = false;
+            aIPath.canMove = false;
+        }
+        else
+        {
+            if (currentState == State.Attacking) StartCoroutine(transiChasing());
+            if (isReadyToSwitchState)
+            {
+                currentState = State.Chasing;
+            }
+
+        }
+    }
+    // Face le player quand il le suit
+    void FacePlayer()
+    {
+        //to do
+    }
 
 
     //Health
@@ -326,53 +276,6 @@ public class Enemy : MonoBehaviour
         healthBarGFX.SetActive(false);
         isHealthBarActive = false;
     }
-
-    //Attack
-
-    protected float attackRange;
-
-    protected bool isReadyToSwitchState;
-    protected float timeToSwitch;
-    protected bool isInTransition;
-    protected IEnumerator transiChasing()
-    {
-        isInTransition = true;
-        yield return new WaitForSeconds(timeToSwitch);
-        isReadyToSwitchState = true;
-        isInTransition = false;
-    }
-
-    
-    protected virtual void isInRange()
-    {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            isReadyToSwitchState = false;
-        }
-        else
-        {
-            if (currentState == State.Attacking) StartCoroutine(transiChasing());
-            if (isReadyToSwitchState)
-            {
-                currentState = State.Chasing;
-            }
-
-        }
-    }
-    // Face le player quand il le suit
-    void FacePlayer()
-    {
-        //to do
-    }
-
-    protected virtual void Aggro()
-    {
-
-    }
-
-
-
 
 
     public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)

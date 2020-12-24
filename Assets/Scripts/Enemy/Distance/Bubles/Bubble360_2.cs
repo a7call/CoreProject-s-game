@@ -15,8 +15,6 @@ public class Bubble360_2 : Distance
     protected void Start()
     {
         currentState = State.Chasing;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -27,23 +25,15 @@ public class Bubble360_2 : Distance
         switch (currentState)
         {
             case State.Chasing:
-                Aggro();
                 isInRange();
                 break;
             case State.Attacking:
                 isInRange();
-                DontMoveShooting();
                 StartCoroutine(CanShoot());
                 break;
         }
     }
 
-
-    // Override(Enemy.cs) Aggro s'arrete pour tirer et suit le player si plus à distance
-    protected override void Aggro()
-    {
-        targetPoint = target;
-    }
 
 
     //Voir Enemy.cs(héritage)

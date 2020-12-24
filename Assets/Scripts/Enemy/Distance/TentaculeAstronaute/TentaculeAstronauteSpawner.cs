@@ -7,8 +7,6 @@ public class TentaculeAstronauteSpawner : Distance
     void Start()
     {
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -29,7 +27,6 @@ public class TentaculeAstronauteSpawner : Distance
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
-                DontMoveShooting();
                 StartCoroutine("CanShoot");
                 break;
         }

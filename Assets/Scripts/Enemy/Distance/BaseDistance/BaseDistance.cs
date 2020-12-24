@@ -10,9 +10,6 @@ public class BaseDistance : Distance
 
     void Start()
     {
-        currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -23,7 +20,6 @@ public class BaseDistance : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();
@@ -31,7 +27,6 @@ public class BaseDistance : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                DontMoveShooting();
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
                 break;

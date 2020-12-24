@@ -43,6 +43,7 @@ public class Distance : Enemy
             currentState = State.Attacking;
             isShooting = true;
             isReadyToSwitchState = false;
+            aIPath.canMove = false;
         }
         else
         {
@@ -82,9 +83,5 @@ public class Distance : Enemy
 
     }
 
-    protected void DontMoveShooting()
-    {
-        rb.velocity = Vector2.zero;
-    }
 
 }

@@ -12,8 +12,6 @@ public class Bubble360 : Distance
     void Start()
     {
         currentState = State.Patrolling;
-        // Set premier targetPoint
-        SetFirstPatrolPoint();
         // Set data
         SetData();
         SetMaxHealth();
@@ -31,7 +29,6 @@ public class Bubble360 : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                DontMoveShooting();
                 StartCoroutine(CanShoot());
                 break;
         }
