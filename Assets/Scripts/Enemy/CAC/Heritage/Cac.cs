@@ -19,7 +19,6 @@ public class Cac : Enemy
     [SerializeField] protected CacScriptableObject CacDatas;
 
     //DontFuckModule
-    [HideInInspector]
     public static bool IsDontFuckWithMe = false;
     protected float attackDelay;
 
@@ -62,11 +61,16 @@ public class Cac : Enemy
 
             foreach (Collider2D h in hits)
             {
-                h.GetComponent<PlayerHealth>().TakeDamage(1);
-                if (IsDontFuckWithMe)
+
+                if (h.CompareTag("Player"))
                 {
-                    Destroy(gameObject);
+                    h.GetComponent<PlayerHealth>().TakeDamage(1);
+                    if (IsDontFuckWithMe)
+                    {
+                        Destroy(gameObject);
+                    }
                 }
+               
             }
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;

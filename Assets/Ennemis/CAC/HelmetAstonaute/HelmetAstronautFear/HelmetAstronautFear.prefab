@@ -395,13 +395,15 @@ GameObject:
   - component: {fileID: 5089267359397140885}
   - component: {fileID: 4910353845703961983}
   - component: {fileID: 465007031}
+  - component: {fileID: 98468065}
+  - component: {fileID: 98468066}
   m_Layer: 9
   m_Name: HelmetAstronautFear
   m_TagString: Enemy
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9124114158507296001
 Transform:
   m_ObjectHideFlags: 0
@@ -533,10 +535,13 @@ MonoBehaviour:
   currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
+  aIPath: {fileID: 0}
+  targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   currentHealth: 0
   maxHealth: 0
   healthBar: {fileID: 3119190946449167991}
@@ -575,3 +580,53 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
+--- !u!114 &98468065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769968692367372370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  target: {fileID: 0}
+--- !u!114 &98468066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769968692367372370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  radius: 0.7
+  height: 2
+  repathRate: 0.5
+  canSearch: 1
+  canMove: 1
+  maxSpeed: 1
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  orientation: 1
+  enableRotation: 0
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.5
+  pickNextWaypointDist: 2
+  endReachedDistance: 0.2
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 0

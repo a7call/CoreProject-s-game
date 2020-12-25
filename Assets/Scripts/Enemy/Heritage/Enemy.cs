@@ -16,11 +16,7 @@ public class Enemy : MonoBehaviour
 {
     protected PlayerHealth playerHealth;
     protected PlayerMouvement playerMouvement;
-
-    [HideInInspector]
     public static bool isPerturbateurIEM = false;
-
-    [HideInInspector]
     public static bool isArretTemporel = false;
 
     public State currentState;
@@ -111,7 +107,7 @@ public class Enemy : MonoBehaviour
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player
-    //[HideInInspector]
+    [HideInInspector]
     public Transform target;
     [HideInInspector]
     public Rigidbody2D rb;
@@ -128,6 +124,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// NE DEVRAIT PAS ETRE LA
     /// </summary>
+    [HideInInspector]
     public Vector3 direction = Vector3.zero;
     private int fearDistance = 5;
     protected virtual void Fear()
@@ -138,7 +135,6 @@ public class Enemy : MonoBehaviour
     //Attack
 
     protected float attackRange;
-
     protected bool isReadyToSwitchState;
     protected float timeToSwitch;
     protected bool isInTransition;

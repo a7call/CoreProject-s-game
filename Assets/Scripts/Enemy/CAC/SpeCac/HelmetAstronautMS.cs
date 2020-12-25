@@ -15,14 +15,8 @@ public class HelmetAstronautMS : Cac
     [SerializeField] private float newSpeedEnemy = 225f;
     [SerializeField] private float speedDuration = 1.75f;
 
-    private Enemy enemy;
-
     private void Start()
     {
-        enemy = FindObjectOfType<Enemy>();
-
-        currentState = State.Patrolling;
-        // Set data
         SetData();
         SetMaxHealth();
     }
@@ -35,7 +29,6 @@ public class HelmetAstronautMS : Cac
         {
             default:
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
                 StartCoroutine(PowerMode());
@@ -45,7 +38,7 @@ public class HelmetAstronautMS : Cac
 
             case State.Attacking:
                 GetPlayerPos();
-                BaseAttack();
+                StartCoroutine(BaseAttack());
                 isInRange();
                 break;
         }
@@ -55,9 +48,9 @@ public class HelmetAstronautMS : Cac
     private IEnumerator PowerMode()
     {
         distanceEnemyPlayer = Vector3.Distance(target.transform.position, transform.position);
-        
         if (distanceEnemyPlayer <= distanceEnemyAggressive && isPowerModeReady)
         {
+            
             isPowerModeReady = false;
             isPowerMode = true;
             yield return new WaitForSeconds(powerModeTime);
@@ -71,11 +64,12 @@ public class HelmetAstronautMS : Cac
     // Coroutine qui permet d'augmenter la vitesse de l'ennemi
     private IEnumerator IncreaseSpeed()
     {
+     
         isPowerMode = false;
-        float baseMoveSpeed = enemy.moveSpeed;
-        enemy.moveSpeed = newSpeedEnemy;
+        float baseMoveSpeed = aIPath.maxSpeed;
+        aIPath.maxSpeed = newSpeedEnemy;
         yield return new WaitForSeconds(speedDuration);
-        enemy.moveSpeed = baseMoveSpeed;
+        aIPath.maxSpeed = baseMoveSpeed;
     }
 
 }

@@ -22,8 +22,6 @@ public class HelmetAstronautFear : Cac
 
     protected void Start()
     {
-       
-        currentState = State.Patrolling;
         // Set data
         SetData();
         SetMaxHealth();
@@ -36,7 +34,6 @@ public class HelmetAstronautFear : Cac
         {
             default:
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();
@@ -110,11 +107,5 @@ public class HelmetAstronautFear : Cac
         playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
         yield return new WaitForSeconds(loadDelay);
         isFirstAttack = true;
-    }
-
-    // Find player to follow
-    private void FindPlayer()
-    {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 }

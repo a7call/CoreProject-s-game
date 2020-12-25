@@ -10,10 +10,6 @@ public class HelmetAstronautExplose : Cac
 
     private void Start()
     {
-        
-
-        currentState = State.Patrolling;
-        // Set data
         SetData();
         SetMaxHealth();
     }
@@ -21,14 +17,11 @@ public class HelmetAstronautExplose : Cac
     protected override void Update()
     {
 
-        AliveOrNot();
-
         base.Update();
         switch (currentState)
         {
             default:
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();
@@ -41,15 +34,7 @@ public class HelmetAstronautExplose : Cac
         }
 
     }
-    // WTF ?
-
-    private void AliveOrNot()
-    {
-        if (currentHealth <= 0) BaseAttack();
-
-    }
    
-
     private IEnumerator Attack()
     {
         rb.velocity = Vector2.zero;
@@ -58,7 +43,7 @@ public class HelmetAstronautExplose : Cac
 
         foreach (Collider2D h in hits)
         {
-            playerHealth.TakeDamage(1);
+            if(h.CompareTag("Player")) h.GetComponent<PlayerHealth>().TakeDamage(1);
         }
 
         Destroy(gameObject);

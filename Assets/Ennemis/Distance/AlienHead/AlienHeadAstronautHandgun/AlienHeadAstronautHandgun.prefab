@@ -33,7 +33,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.0011999905, y: -0.0012000017}
   m_SizeDelta: {x: -0.026428223, y: -0.026428223}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -89,13 +89,15 @@ GameObject:
   - component: {fileID: 9185998606612300465}
   - component: {fileID: 9185998606612300470}
   - component: {fileID: 225107268850530463}
+  - component: {fileID: 297901667}
+  - component: {fileID: 297901668}
   m_Layer: 9
   m_Name: AlienHeadAstronautHandgun
   m_TagString: Enemy
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9185998606612300477
 Transform:
   m_ObjectHideFlags: 0
@@ -197,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   drawGizmos: 1
-  detailedGizmos: 0
+  detailedGizmos: 1
   startEndModifier:
     addPoints: 0
     exactStartPoint: 3
@@ -223,13 +225,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0053cb8c988c3f2409689e9a52db3931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
+  aIPath: {fileID: 0}
+  targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   currentHealth: 0
   maxHealth: 0
   healthBar: {fileID: 9185998606808853572}
@@ -239,8 +244,6 @@ MonoBehaviour:
   isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 60dcea9e92d954565a87716c1c152f8f, type: 2}
   isShooting: 0
-  isReadytoShoot: 1
-  timeToSwitch: 0
 --- !u!61 &225107268850530463
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -252,7 +255,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0.0057525635, y: 0.017256021}
   m_SpriteTilingProperty:
@@ -267,6 +270,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4132862, y: 0.41328573}
   m_EdgeRadius: 0
+--- !u!114 &297901667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9185998606612300471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  radius: 0.7
+  height: 2
+  repathRate: 0.3
+  canSearch: 1
+  canMove: 1
+  maxSpeed: 2
+  gravity: {x: 0, y: 0, z: 0}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  orientation: 1
+  enableRotation: 0
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.6
+  pickNextWaypointDist: 2
+  endReachedDistance: 0.2
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 0
+--- !u!114 &297901668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9185998606612300471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  target: {fileID: 0}
 --- !u!1 &9185998606808853573
 GameObject:
   m_ObjectHideFlags: 0
