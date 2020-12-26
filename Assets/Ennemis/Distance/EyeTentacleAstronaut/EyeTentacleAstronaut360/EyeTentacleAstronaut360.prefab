@@ -164,6 +164,8 @@ GameObject:
   - component: {fileID: 1625931468885860145}
   - component: {fileID: 1625931468885860144}
   - component: {fileID: 4520734565110360987}
+  - component: {fileID: 2595673970053521101}
+  - component: {fileID: 403588834247472546}
   m_Layer: 9
   m_Name: EyeTentacleAstronaut360
   m_TagString: Enemy
@@ -298,12 +300,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d823b161cb94c57b00eb5c8bebfc5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
+  aIPath: {fileID: 0}
+  targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  target: {fileID: 0}
   rb: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   currentHealth: 0
   maxHealth: 0
   healthBar: {fileID: 1625931468901144034}
@@ -350,6 +356,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4132862, y: 0.4132862}
   m_EdgeRadius: 0
+--- !u!114 &2595673970053521101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625931468885860147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  radius: 0.7
+  height: 2
+  repathRate: 0.3
+  canSearch: 1
+  canMove: 1
+  maxSpeed: 2
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  orientation: 1
+  enableRotation: 0
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.6
+  pickNextWaypointDist: 2
+  endReachedDistance: 0.2
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 0
+--- !u!114 &403588834247472546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625931468885860147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  target: {fileID: 0}
 --- !u!1 &1625931468901144039
 GameObject:
   m_ObjectHideFlags: 0

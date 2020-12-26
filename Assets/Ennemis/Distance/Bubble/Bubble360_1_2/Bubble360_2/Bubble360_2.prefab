@@ -14,13 +14,15 @@ GameObject:
   - component: {fileID: 2157235090676625964}
   - component: {fileID: 932678859474061154}
   - component: {fileID: 1456050647}
+  - component: {fileID: 3657736724976219701}
+  - component: {fileID: 4327022137279662104}
   m_Layer: 9
   m_Name: Bubble360_2
   m_TagString: Enemy
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1719683917482201457
 Transform:
   m_ObjectHideFlags: 0
@@ -148,13 +150,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d747b3535d9067c4f98e26366dff46ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
+  aIPath: {fileID: 0}
+  targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
   target: {fileID: 0}
   rb: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   currentHealth: 0
   maxHealth: 0
   healthBar: {fileID: 6187143067161935919}
@@ -164,8 +169,6 @@ MonoBehaviour:
   isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 5298eb01c86297643a86ab9827419b9c, type: 2}
   isShooting: 0
-  isReadytoShoot: 1
-  timeToSwitch: 2
   rayon: {fileID: 6328469197216230427, guid: 2dc98f65b7ecc9949930c2f519fe5273, type: 3}
   timeBetweenTwoShots: 0.5
   differentRadius: []
@@ -195,6 +198,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.45439953, y: 0.44304204}
   m_EdgeRadius: 0
+--- !u!114 &3657736724976219701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2283266578544582819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  radius: 0.7
+  height: 2
+  repathRate: 0.3
+  canSearch: 1
+  canMove: 1
+  maxSpeed: 2
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  orientation: 1
+  enableRotation: 0
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.6
+  pickNextWaypointDist: 2
+  endReachedDistance: 0.2
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 0
+--- !u!114 &4327022137279662104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2283266578544582819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  target: {fileID: 0}
 --- !u!1 &2299002075484899519
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +281,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.0011999905, y: -0.0012000017}
   m_SizeDelta: {x: -0.026428223, y: -0.026428223}
   m_Pivot: {x: 0.5, y: 0.5}
