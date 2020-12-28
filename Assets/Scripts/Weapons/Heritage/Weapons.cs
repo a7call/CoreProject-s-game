@@ -40,7 +40,9 @@ public class Weapons : MonoBehaviour
         // position du player en pixel sur l'écran 
         screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
-        attackPoint.position = new Vector2(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
+
+        Vector2 posOfPoint = new Vector2(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
+        attackPoint.position = posOfPoint;
     }
 
     protected virtual void Update()

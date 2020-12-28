@@ -18,19 +18,4 @@ public class KnockBackProjectile : PlayerProjectiles
 
     }
 
-    private IEnumerator KnockCo(Enemy enemy)
-    {
-        if(enemy != null)
-        {
-            enemy.rb.isKinematic = false;
-            enemy.rb.AddForce(dir * knockBackForce);
-            enemy.currentState = Enemy.State.KnockedBack;
-            yield return new WaitForSeconds(knockBackTime);
-            if (enemy == null) yield break;
-            enemy.currentState = Enemy.State.Attacking;
-            if (enemy == null) yield break;
-            enemy.rb.isKinematic = true;
-        }
-       
-    }
 }

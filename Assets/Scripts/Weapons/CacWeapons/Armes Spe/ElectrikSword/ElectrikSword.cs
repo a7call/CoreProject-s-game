@@ -23,6 +23,7 @@ public class ElectrikSword : CacWeapons
                 Enemy enemyH = enemy.GetComponent<Enemy>();
                 enemyH.TakeDamage(damage);
                 DamageToNearEnemyElectrified(enemy);
+                CoroutineManager.Instance.StartCoroutine(enemyH.KnockCo(knockBackForce, dir, knockBackTime, enemyH));
 
             }
             yield return new WaitForSeconds(attackDelay);

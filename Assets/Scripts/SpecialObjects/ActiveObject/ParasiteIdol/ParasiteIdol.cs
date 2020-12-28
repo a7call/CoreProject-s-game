@@ -29,13 +29,16 @@ public class ParasiteIdol : ActiveObjects
         foreach (GameObject enemy in enemiesInRoom)
         {
             enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Feared;
+            enemy.gameObject.GetComponent<Enemy>().aIPath.canMove = false;
         }
     }
     private void EnemyChasing()
     {
         foreach (GameObject enemy in enemiesInRoom)
         {
+            enemy.gameObject.GetComponent<Enemy>().aIPath.canMove = true;
             enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
+            enemy.gameObject.GetComponent<Enemy>().rb.velocity = Vector3.zero;
             enemy.gameObject.GetComponent<Enemy>().direction = Vector3.zero;
         }
     }

@@ -17,7 +17,7 @@ public class CacWeapons : Weapons
     protected float knockBackForce;
     protected float knockBackTime;
     protected GameObject player;
-    protected Vector2 dir;
+    protected Vector3 dir;
 
     //Vampirisme
     [HideInInspector]
@@ -115,9 +115,7 @@ public class CacWeapons : Weapons
             {
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
-                enemyScript.rb.isKinematic = false;
-                enemyScript.rb.AddForce(dir * knockBackForce);
-                StartCoroutine(KnockCo(enemyScript));
+                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir,  knockBackTime, enemyScript));
             }
 
             yield return new WaitForSeconds(attackDelay);
@@ -132,21 +130,6 @@ public class CacWeapons : Weapons
         CoroutineManager.Instance.StartCoroutine(Attack());
     }
 
-    
-
-    private IEnumerator KnockCo(Enemy enemy)
-    {
-        if (enemy != null)
-        {
-            enemy.currentState = Enemy.State.KnockedBack;
-            yield return new WaitForSeconds(knockBackTime);
-            if (enemy == null) yield break;
-            enemy.currentState = Enemy.State.Attacking;
-            if (enemy == null) yield break;
-            enemy.rb.isKinematic = false;
-        }
-
-    }
     private void GetKnockBackDir()
     {
         dir = (attackPoint.position - player.transform.position).normalized;

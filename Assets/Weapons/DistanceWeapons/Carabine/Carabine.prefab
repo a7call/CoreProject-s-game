@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8952339611479472680}
   - component: {fileID: 1851047932567235425}
   - component: {fileID: 6490113792668093825}
-  - component: {fileID: 4617222450572892240}
   m_Layer: 0
   m_Name: Carabine
   m_TagString: DistanceWeapon
@@ -79,29 +78,11 @@ MonoBehaviour:
   attackPoint: {fileID: 5255898144882780588}
   isAttacking: 0
   DistanceWeaponData: {fileID: 11400000, guid: 012025508434e454faf03d19ffc87954, type: 2}
+  OkToShoot: 0
+  BulletInMag: 10
   InfiniteAmmo: 0
-  AmmoStock: 10
---- !u!114 &4617222450572892240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5050124357231534407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef35ea606f1d3bd488f3585124cd6604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 0}
-  isAttacking: 0
-  DistanceWeaponData: {fileID: 0}
-  InfiniteAmmo: 0
-  AmmoStock: 0
+  AmmoStock: 50
+  image: {fileID: 0}
 --- !u!1 &5744481843100838521
 GameObject:
   m_ObjectHideFlags: 0
