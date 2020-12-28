@@ -5,23 +5,34 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.InputSystem;
-//using TMPro;
+
 
 public class SettingsWindow : MonoBehaviour
 {
     public AudioMixer MainAudioMixer;
 
-    
-    public Text Dash,Up,Down,Left,Right,Shoot,Reload,UseObject,BlackHole;
-    private GameObject CurrentKey = null;
-
-    private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
-    
-
     Resolution[] resolutions;
 
 
     public Dropdown resoltionDropdown;
+
+    [SerializeField] private GameObject ReloadButton, LeftButton, RightButton, UpButton, DownButton, BlackHoleButton, UseObjectButton, ShootButton, DashButton = null;
+    [SerializeField] private GameObject waitingForInput = null;
+   
+
+    private InputAction actionToRebind;
+    private InputActionRebindingExtensions.RebindingOperation rebindOperation;
+    private InputActionMap gameplayActionMap;
+    public InputActionAsset playerControls;
+    private Text TextButton = null;
+    private Button buton;
+    public InputActionReference Reload,Horizontal,Vertical,BlackHole,Shoot,UseObject,Dash;
+
+    private void Awake()
+    {
+        gameplayActionMap = playerControls.FindActionMap("Player");
+
+    }
 
     public void Start()
     {
@@ -48,36 +59,33 @@ public class SettingsWindow : MonoBehaviour
 
         Screen.fullScreen = true;
 
-        keys.Add("Dash", KeyCode.W);
-        Dash.text = keys["Dash"].ToString();
+        Text ReloadButtonText = ReloadButton.GetComponentInChildren<Text>();
+        ReloadButtonText.text = InputControlPath.ToHumanReadableString(Reload.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("Up", KeyCode.Z);
-        Up.text = keys["Up"].ToString();
+        Text LeftButtonText = LeftButton.GetComponentInChildren<Text>();
+        LeftButtonText.text = InputControlPath.ToHumanReadableString(Horizontal.action.bindings[1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("Down", KeyCode.S);
-        Down.text = keys["Down"].ToString();
+        Text RightButtonText = RightButton.GetComponentInChildren<Text>();
+        RightButtonText.text = InputControlPath.ToHumanReadableString(Horizontal.action.bindings[2].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("Right", KeyCode.D);
-        Right.text = keys["Right"].ToString();
+        Text UpButtonText = UpButton.GetComponentInChildren<Text>();
+        UpButtonText.text = InputControlPath.ToHumanReadableString(Vertical.action.bindings[2].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("Left", KeyCode.Q);
-        Left.text = keys["Left"].ToString();
+        Text DownButtonText = DownButton.GetComponentInChildren<Text>();
+        DownButtonText.text = InputControlPath.ToHumanReadableString(Vertical.action.bindings[2].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("Shoot", KeyCode.Mouse0);
-        Shoot.text = keys["Shoot"].ToString();
+        Text ShootButtonText = ShootButton.GetComponentInChildren<Text>();
+        ShootButtonText.text = InputControlPath.ToHumanReadableString(Shoot.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("Reload", KeyCode.R);
-        Reload.text = keys["Reload"].ToString();
+        Text DashButtonText = DashButton.GetComponentInChildren<Text>();
+        DashButtonText.text = InputControlPath.ToHumanReadableString(Dash.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("BlackHole", KeyCode.Space);
-        BlackHole.text = keys["BlackHole"].ToString();
+        Text BlackHoleButtonText = BlackHoleButton.GetComponentInChildren<Text>();
+        BlackHoleButtonText.text = InputControlPath.ToHumanReadableString(BlackHole.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        keys.Add("UseObject", KeyCode.U);
-        UseObject.text = keys["UseObject"].ToString();
+        Text UseObjectButtonText = UseObjectButton.GetComponentInChildren<Text>();
+        UseObjectButtonText.text = InputControlPath.ToHumanReadableString(UseObject.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        
-
-        
     }
 
     public void SetMainVolume(float volume)
@@ -106,88 +114,95 @@ public class SettingsWindow : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    protected void OnGUI()
+    
+
+   
+
+    
+
+    public void ButtonReload()
     {
-        if (CurrentKey != null)
-        {
-            Event e = Event.current;
-
-            if (e.isKey)
-            {
-                keys[CurrentKey.name] = e.keyCode;
-                CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
-                CurrentKey = null;
-
-                
-            }
-            else if (e.isMouse)
-            {
-                if (e.button == 0)
-                {
-                    keys[CurrentKey.name] = KeyCode.Mouse0;
-                    CurrentKey.transform.GetChild(0).GetComponent<Text>().text = "Mouse0";
-                }
-                if (e.button == 1)
-                {
-                    keys[CurrentKey.name] = KeyCode.Mouse1;
-                    CurrentKey.transform.GetChild(0).GetComponent<Text>().text = "Mouse1";
-                }
-
-                CurrentKey = null;
-            }
-        }
+        StartRebinding("Reload", ReloadButton, 0);
     }
 
-    public void ChangeKey(GameObject clicked)
+    public void ButtonLeft()
     {
-        CurrentKey = clicked;
-        StartRebindProcess();
+        StartRebinding("Horizontal",LeftButton, 1);
+    }
+
+    public void ButtonRight()
+    {
+        StartRebinding("Horizontal",RightButton, 2);
+    }
+
+    public void ButtonUp()
+    {
+        StartRebinding("Vertical",UpButton, 2);
         
     }
 
-    public InputActionAsset playerControls;
-    private InputActionRebindingExtensions.RebindingOperation rebindOperation;
-    private InputAction actionToRebind;
-    private InputActionMap gameplayActionMap;
-
-    private void Awake()
+    public void ButtonDown()
     {
-        gameplayActionMap = playerControls.FindActionMap("Player");
+        StartRebinding("Vertical",DownButton, 1);
 
     }
 
-    public void StartRebindProcess()
+    public void ButtonBlackHole()
     {
-        //print("0");
-        actionToRebind = gameplayActionMap.FindAction(CurrentKey.name);
-        //print("1");
+        StartRebinding("BlackHole", BlackHoleButton, 0);
+    }
+
+    public void ButtonUseObject()
+    {
+        StartRebinding("UseObject", UseObjectButton, 0);
+    }
+
+    public void ButtonShoot()
+    {
+        StartRebinding("Shoot", ShootButton, 0);
+    }
+
+    public void ButtonDash()
+    {
+        StartRebinding("Dash", DashButton, 0);
+    }
+
+    public void StartRebinding(string ActionName, GameObject ActiveButton = null, int bindingIndex = -1)
+    {
+        
+        print(ActionName);
+
+        actionToRebind = gameplayActionMap.FindAction(ActionName);
         actionToRebind.actionMap.Disable();
-        rebindOperation = actionToRebind.PerformInteractiveRebinding()
+
+        buton = ActiveButton.GetComponentInChildren<Button>();
+        buton.GetComponent<Image>().color = Color.red;
+       
+        waitingForInput.SetActive(true);
+        
+        
+
+        rebindOperation = actionToRebind.PerformInteractiveRebinding(bindingIndex)
             .WithControlsExcluding("<Mouse>/position")
-            .WithControlsExcluding("<Mouse>/delta")
-            .WithControlsExcluding("<Gamepad>/Start")
-            .WithControlsExcluding("<Keyboard>/escape")
+            .WithControlsExcluding("<Mouse>/Delta")
             .OnMatchWaitForAnother(0.1f)
-            .OnComplete(operation => RebindCompleted());
-        //print("2");
+            .OnComplete((x) =>
+            {
+                
+                ActiveButton.SetActive(true);
+                
+                waitingForInput.SetActive(false);
+                buton.GetComponent<Image>().color = Color.green;
+                TextButton = ActiveButton.GetComponentInChildren<Text>();
+                TextButton.text = InputControlPath.ToHumanReadableString(x.action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        rebindOperation.Start();
-        //print("22");
-        
+                actionToRebind.actionMap.Enable();
+                x.Dispose();
+            })
+            .Start();
+
+
     }
 
-    void RebindCompleted()
-    {
-
-        
-        rebindOperation.Dispose();
-        print(rebindOperation);
-        if (rebindOperation.completed)
-        {
-            print("3");
-        }
-
-        rebindOperation = null;
-        actionToRebind.actionMap.Enable();
-    }
+   
 }

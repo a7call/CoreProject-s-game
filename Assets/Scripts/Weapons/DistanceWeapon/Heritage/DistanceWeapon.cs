@@ -72,15 +72,8 @@ public class DistanceWeapon : Weapons
         InfiniteAmmo = isUnlimitedAmmoModule;
 
         GetAttackDirection();
-        //if (Input.GetMouseButton(0))
-        //{
-        //  CoroutineManager.Instance.StartCoroutine(Shoot());
-        //}
 
-        //if (Input.GetKeyDown(KeyCode.R) && (AmmoStock != 0 | InfiniteAmmo))
-        //{
-        //     StartCoroutine(Reload());
-        //}
+        
         if (OkToShoot)
         {
             CoroutineManager.Instance.StartCoroutine(Shoot());
