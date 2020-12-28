@@ -57,6 +57,7 @@ public class PlayerProjectiles : MonoBehaviour
     [SerializeField]
     protected PlayerProjectileScriptableObject PlayerProjectileData;
     protected Vector3 directionTir;
+    [HideInInspector]
     public float Dispersion;
     private Rigidbody2D projectileRB;
 
