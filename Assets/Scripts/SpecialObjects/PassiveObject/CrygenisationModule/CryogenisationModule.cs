@@ -23,10 +23,10 @@ public class CryogenisationModule : PassiveObjects
         if (!enemy.isSlowed)
         {
             enemy.isSlowed = true;
-            float baseMoveSpeed = enemy.moveSpeed;
-            enemy.moveSpeed *= slowMutliplier;
+            float baseMoveSpeed = enemy.aIPath.maxSpeed;
+            enemy.aIPath.maxSpeed *= slowMutliplier;
             yield return new WaitForSeconds(cryoTimer);
-            enemy.moveSpeed = baseMoveSpeed;
+            enemy.aIPath.maxSpeed = baseMoveSpeed;
             enemy.isSlowed = false;
         }
             

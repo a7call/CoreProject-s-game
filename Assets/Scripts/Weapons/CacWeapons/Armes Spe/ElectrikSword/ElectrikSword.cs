@@ -17,14 +17,10 @@ public class ElectrikSword : CacWeapons
             isAttacking = true;
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
 
-
+            AttackAppliedOnEnemy(enemyHit);
             foreach (Collider2D enemy in enemyHit)
             {
-                Enemy enemyH = enemy.GetComponent<Enemy>();
-                enemyH.TakeDamage(damage);
                 DamageToNearEnemyElectrified(enemy);
-                CoroutineManager.Instance.StartCoroutine(enemyH.KnockCo(knockBackForce, dir, knockBackTime, enemyH));
-
             }
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;

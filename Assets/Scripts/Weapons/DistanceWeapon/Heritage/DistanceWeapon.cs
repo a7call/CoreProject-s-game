@@ -124,7 +124,7 @@ public class DistanceWeapon : Weapons
             isAttacking = false;
             if (BulletInMag <= 0)
             {
-                StartCoroutine(Reload());
+                CoroutineManager.Instance.StartCoroutine(Reload());
             }
         }
        

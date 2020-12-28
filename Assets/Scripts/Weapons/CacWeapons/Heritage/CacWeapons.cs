@@ -47,11 +47,11 @@ public class CacWeapons : Weapons
         base.Awake();
         player = GameObject.FindGameObjectWithTag("Player");
         SetData();
-       
+
     }
     protected override void Update()
     {
-        if(isAntiEmeuteModule && !alreadyMultiplied)
+        if (isAntiEmeuteModule && !alreadyMultiplied)
         {
             knockBackForce *= knockBackForceMultiplier;
             alreadyMultiplied = true;
@@ -78,7 +78,7 @@ public class CacWeapons : Weapons
             StartCoroutine(Attack());
         }
 
-        
+
     }
     private void OnDrawGizmosSelected()
     {
@@ -88,7 +88,7 @@ public class CacWeapons : Weapons
         Gizmos.DrawLine(transform.position, attackPoint.position);
     }
 
-   private void SetData()
+    private void SetData()
     {
         attackRadius = WeaponData.attackRadius;
         enemyLayer = WeaponData.enemyLayer;
@@ -111,18 +111,37 @@ public class CacWeapons : Weapons
                 RewardSpawner.isAttackCAC = true;
             }
 
-            foreach (Collider2D enemy in enemyHit)
-            {
-                Enemy enemyScript = enemy.GetComponent<Enemy>();
-                enemyScript.TakeDamage(damage);
-                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir,  knockBackTime, enemyScript));
-            }
+            AttackAppliedOnEnemy(enemyHit);
 
             yield return new WaitForSeconds(attackDelay);
             RewardSpawner.isAttackCAC = false;
             isAttacking = false;
         }
-        
+
+    }
+
+
+    protected void AttackAppliedOnEnemy(Collider2D [] enemyHit)
+    {
+        foreach (Collider2D enemy in enemyHit)
+        {
+           
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            enemyScript.TakeDamage(damage);
+            CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
+            if (PlayerProjectiles.isImolationModule)
+            {
+                CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
+            }
+            if (PlayerProjectiles.isCryoModule)
+            {
+                CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
+            }
+            if (PlayerProjectiles.isParaModule)
+            {
+                CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
+            }
+        }
     }
 
     public void ToAttack()

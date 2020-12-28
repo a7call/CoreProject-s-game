@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
+public class ExplosionProjectileTeteChercheuse : ExplosionProjectile
 {
-    [SerializeField] protected float explosionRadius;
     [SerializeField] protected float directionUpdateTime;
     [SerializeField] protected float detectionRadius;
     [SerializeField] protected float angularSpeed = 0f;
@@ -17,28 +16,16 @@ public class ExplosionProjectileTeteChercheuse : PlayerProjectiles
     {
         base.Update();
         LockEnemy();
-
-
     }
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        Collider2D[] ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
-
-        foreach (Collider2D enemy in ennemies)
-        {
-            Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
-            enemyScript.TakeDamage(weaponDamage);
-        }
-        base.OnTriggerEnter2D(collision);
 
 
-    }
+   
 
     protected override void Launch()
     {
         if (isEnemyLocked)
         {
+            if (lockedEnemy == null) return;
             Vector2 direction = ((Vector2)lockedEnemy.transform.position - rb.position);
             direction.Normalize();
             float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;

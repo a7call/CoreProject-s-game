@@ -56,6 +56,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected PlayerProjectileScriptableObject PlayerProjectileData;
     protected Vector3 directionTir;
     public float Dispersion;
+    private Rigidbody2D projectileRB;
 
     protected virtual void Awake()
     {
@@ -63,6 +64,7 @@ public class PlayerProjectiles : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         weapon = GameObject.FindGameObjectWithTag("WeaponManager");
         weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
+        projectileRB = GetComponent<Rigidbody2D>();
         weaponDamage = weaponAttackP.damage;
         weaponLayer = weaponAttackP.enemyLayer;
         playerTransform = player.GetComponent<Transform>();
@@ -73,10 +75,14 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void Update()
     {
-        Launch();
+        
         if (isInteligentAmmoModule)
         {
-           CoroutineManager.Instance.StartCoroutine(getNewDir(this.gameObject));
+            getNewDir(this.gameObject);
+        }
+        else
+        {
+            Launch();
         }
 
         if (isRocketAmmoModule && !AmmoSpeedAlreadyUp)
@@ -91,8 +97,8 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void Launch()
     {
-        
-        transform.Translate(directionTir * speed * Time.deltaTime);
+
+        transform.Translate(directionTir * speed * Time.deltaTime, Space.World) ;
         
     }
     void SetData()
@@ -129,8 +135,6 @@ public class PlayerProjectiles : MonoBehaviour
             {
                 CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
             }
-
-            if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
             if(!gameObject.CompareTag("TraversProj")) Destroy(gameObject);
 
             
@@ -145,20 +149,24 @@ public class PlayerProjectiles : MonoBehaviour
 
 
     //IntelligentAmoModule
-    public bool isDirUpdat;
-    public IEnumerator getNewDir(GameObject proj)
+    private float angularSpeed = 200f;
+    GameObject lockedEnemy;
+    public  void getNewDir(GameObject proj)
     {
-        if (InteligentAmmoModule.LockEnemy(proj) != null && !isDirUpdat)
+        if (InteligentAmmoModule.LockEnemy(proj) != null) lockedEnemy = InteligentAmmoModule.LockEnemy(proj);
+        if (lockedEnemy != null )
         {
-
-            isDirUpdat = true;
-            directionTir = (InteligentAmmoModule.LockEnemy(proj).transform.position - proj.transform.position).normalized;
-            yield return new WaitForSeconds(0.5f);
-            isDirUpdat = false;
+            if (lockedEnemy == null) return;
+            Vector2 direction = (lockedEnemy.transform.position - proj.transform.position);
+            direction.Normalize();
+            float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
+            projectileRB.angularVelocity = -rotationAmount * angularSpeed;
+            projectileRB.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * speed;
+            angularSpeed++;
         }
         else
         {
-            yield break;
+            Launch();
         }
 
 

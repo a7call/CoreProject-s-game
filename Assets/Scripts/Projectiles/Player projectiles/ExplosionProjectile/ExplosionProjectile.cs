@@ -15,19 +15,23 @@ public class ExplosionProjectile : PlayerProjectiles
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        Collider2D[] ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
+        Explosion(ennemies);
+        base.OnTriggerEnter2D(collision);
+    }
 
-     Collider2D[] ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
-
-        foreach(Collider2D enemy in ennemies)
+    protected void Explosion(Collider2D[] ennemies)
+    {
+        foreach (Collider2D enemy in ennemies)
         {
+            if (enemy == null) continue;
             Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
+            if (enemyScript == null) continue;
             enemyScript.TakeDamage(weaponDamage);
             if (isNuclearExplosionModule)
             {
                 CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
             }
         }
-        base.OnTriggerEnter2D(collision);
-
     }
 }
