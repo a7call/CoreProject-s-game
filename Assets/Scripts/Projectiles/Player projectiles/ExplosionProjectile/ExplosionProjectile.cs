@@ -16,15 +16,16 @@ public class ExplosionProjectile : PlayerProjectiles
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         Collider2D[] ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
-        Explosion(ennemies);
+        Explosion(ennemies, collision);
         base.OnTriggerEnter2D(collision);
     }
 
-    protected void Explosion(Collider2D[] ennemies)
+    protected virtual void Explosion(Collider2D[] ennemies, Collider2D collision)
     {
         foreach (Collider2D enemy in ennemies)
         {
-            if (enemy == null) continue;
+            
+            if (enemy == null || enemy == collision) continue;
             Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
             if (enemyScript == null) continue;
             enemyScript.TakeDamage(weaponDamage);

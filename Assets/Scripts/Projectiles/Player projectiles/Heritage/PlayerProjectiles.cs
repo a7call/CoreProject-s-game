@@ -37,8 +37,10 @@ public class PlayerProjectiles : MonoBehaviour
     [HideInInspector]
     public static float SpeedMultiplier;
 
-    
 
+    //Knoclback
+     protected float knockBackForce;
+     protected float knockBackTime;
 
 
 
@@ -104,6 +106,8 @@ public class PlayerProjectiles : MonoBehaviour
     void SetData()
     {
         speed = PlayerProjectileData.speed;
+        knockBackForce = PlayerProjectileData.knockBackForce;
+        knockBackTime = PlayerProjectileData.knockBackTime;
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -111,37 +115,40 @@ public class PlayerProjectiles : MonoBehaviour
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(weaponDamage);
-
-            
-
+            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
             //Modules
-            if (isExplosiveAmo)
-            {
-                ExplosiveAmoModule.explosionFnc(this.gameObject);
-            }
-            if (isNanoRobotModule)
-            {
-                NanoRobotModule.enemiesTouched.Add(enemy);
-            }
-            if (isImolationModule)
-            {
-               CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemy));
-            }
-            if (isCryoModule)
-            {
-                CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
-            }
-            if (isParaModule)
-            {
-                CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
-            }
-            if(!gameObject.CompareTag("TraversProj")) Destroy(gameObject);
-
-            
-
+            ModuleProcs(enemy);
         }
  
     }
+
+     protected void ModuleProcs(Enemy enemy)
+    {
+        if (isExplosiveAmo)
+        {
+            ExplosiveAmoModule.explosionFnc(this.gameObject);
+        }
+        if (isNanoRobotModule)
+        {
+            NanoRobotModule.enemiesTouched.Add(enemy);
+        }
+        if (isImolationModule)
+        {
+            CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemy));
+        }
+        if (isCryoModule)
+        {
+            CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
+        }
+        if (isParaModule)
+        {
+            CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
+        }
+        if (!gameObject.CompareTag("TraversProj")) Destroy(gameObject);
+
+    }
+
+
     protected void ConeShoot()
     {
         directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;

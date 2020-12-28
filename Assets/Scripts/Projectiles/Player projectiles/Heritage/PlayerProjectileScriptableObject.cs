@@ -6,4 +6,6 @@ using UnityEngine;
 public class PlayerProjectileScriptableObject : ScriptableObject
 {
     public float speed;
+    public float knockBackForce;
+    public float knockBackTime;
 }

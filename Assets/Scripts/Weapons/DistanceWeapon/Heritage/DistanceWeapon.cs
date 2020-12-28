@@ -67,20 +67,8 @@ public class DistanceWeapon : Weapons
     protected override void Update()
     {
         base.Update();
-
-        //UnlimitedAmmoModule
         InfiniteAmmo = isUnlimitedAmmoModule;
-
         GetAttackDirection();
-        //if (Input.GetMouseButton(0))
-        //{
-        //  CoroutineManager.Instance.StartCoroutine(Shoot());
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.R) && (AmmoStock != 0 | InfiniteAmmo))
-        //{
-        //     StartCoroutine(Reload());
-        //}
         if (OkToShoot)
         {
             CoroutineManager.Instance.StartCoroutine(Shoot());
