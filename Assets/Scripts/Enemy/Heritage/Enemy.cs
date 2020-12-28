@@ -152,6 +152,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void isInRange()
     {
+        if (gameObject == null) return;
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
             currentState = State.Attacking;

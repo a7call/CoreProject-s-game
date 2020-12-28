@@ -65,10 +65,6 @@ public class Cac : Enemy
                 if (h.CompareTag("Player"))
                 {
                     h.GetComponent<PlayerHealth>().TakeDamage(1);
-                    if (IsDontFuckWithMe)
-                    {
-                        Destroy(gameObject);
-                    }
                 }
                
             }

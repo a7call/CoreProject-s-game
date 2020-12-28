@@ -38,23 +38,24 @@ public class Distance : Enemy
 
     protected override void isInRange()
     {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            isShooting = true;
-            isReadyToSwitchState = false;
-            aIPath.canMove = false;
-        }
-        else
-        {
-            if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
-            if (isReadyToSwitchState)
+            if (Vector3.Distance(transform.position, target.position) < attackRange)
             {
-                currentState = State.Chasing;
-                isShooting = false;
+                currentState = State.Attacking;
+                isShooting = true;
+                isReadyToSwitchState = false;
+                aIPath.canMove = false;
             }
-           
-        }
+            else
+            {
+                if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
+                if (isReadyToSwitchState)
+                {
+                    currentState = State.Chasing;
+                    isShooting = false;
+                }
+
+            }
+       
     }
 
     

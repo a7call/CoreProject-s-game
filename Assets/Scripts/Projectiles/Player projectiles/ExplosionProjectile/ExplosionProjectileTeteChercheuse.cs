@@ -6,8 +6,8 @@ public class ExplosionProjectileTeteChercheuse : ExplosionProjectile
 {
     [SerializeField] protected float directionUpdateTime;
     [SerializeField] protected float detectionRadius;
-    [SerializeField] protected float angularSpeed = 0f;
-    protected GameObject lockedEnemy;
+    [SerializeField] private float angularSpeed = 0f;
+    private GameObject lockedEnemy;
     private bool isEnemyLocked;
     public Rigidbody2D rb;
 

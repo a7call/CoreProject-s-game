@@ -149,20 +149,20 @@ public class PlayerProjectiles : MonoBehaviour
 
 
     //IntelligentAmoModule
-    private float angularSpeed = 200f;
-    GameObject lockedEnemy;
+    private float angulSpeed = 200f;
+    private GameObject lockEnemy;
     public  void getNewDir(GameObject proj)
     {
-        if (InteligentAmmoModule.LockEnemy(proj) != null) lockedEnemy = InteligentAmmoModule.LockEnemy(proj);
-        if (lockedEnemy != null )
+        if (InteligentAmmoModule.LockEnemy(proj) != null) lockEnemy = InteligentAmmoModule.LockEnemy(proj);
+        if (lockEnemy != null )
         {
-            if (lockedEnemy == null) return;
-            Vector2 direction = (lockedEnemy.transform.position - proj.transform.position);
+            if (lockEnemy == null) return;
+            Vector2 direction = (lockEnemy.transform.position - proj.transform.position);
             direction.Normalize();
             float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
-            projectileRB.angularVelocity = -rotationAmount * angularSpeed;
+            projectileRB.angularVelocity = -rotationAmount * angulSpeed;
             projectileRB.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * speed;
-            angularSpeed++;
+            angulSpeed++;
         }
         else
         {
