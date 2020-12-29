@@ -67,12 +67,12 @@ public class Distance : Enemy
     protected GameObject projetile;
     protected virtual IEnumerator CanShoot()
     {
-        if (isShooting && isReadytoShoot && !isPerturbateurIEM)
+        if (isShooting && isreadyToAttack && !isPerturbateurIEM)
         {
-            isReadytoShoot = false;
+            isreadyToAttack = false;
             Shoot();
             yield return new WaitForSeconds(restTime);
-            isReadytoShoot = true;
+            isreadyToAttack = true;
         }
     }
     // Instansiate projectiles

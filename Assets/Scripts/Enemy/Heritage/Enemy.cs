@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     protected PlayerMouvement playerMouvement;
     public static bool isPerturbateurIEM = false;
     public static bool isArretTemporel = false;
+    public bool isreadyToAttack = true;
 
     public State currentState;
     public enum State
