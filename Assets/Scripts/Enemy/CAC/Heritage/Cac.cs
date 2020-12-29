@@ -53,9 +53,9 @@ public class Cac : Enemy
     // CAC attack (TK enable or disable)
     protected virtual IEnumerator BaseAttack()
     {
-        if (!isAttacking)
+        if (isreadyToAttack)
         {
-            isAttacking = true;
+            isreadyToAttack = false;
             rb.velocity = Vector2.zero;
             Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
 
@@ -69,7 +69,7 @@ public class Cac : Enemy
                
             }
             yield return new WaitForSeconds(attackDelay);
-            isAttacking = false;
+            isreadyToAttack = true;
         }
     }
 
