@@ -18,18 +18,18 @@ public class DotProjectilePoison : PlayerProjectiles
             CoroutineManager.Instance.StartCoroutine(DotCo(enemy));
         }
         base.OnTriggerEnter2D(collision);
+        
 
     }
 
     private IEnumerator DotCo(Enemy enemy)
     {
-        while (isPoisoned && enemy != null)
-        {   
+        while (isPoisoned)
+        {
+            
             yield return new WaitForSeconds(timeBetweenHits);
-            if (enemy != null)
-            {
-                enemy.TakeDamage(weaponDamage);
-            }              
+            if (enemy == null) break;
+            enemy.TakeDamage(weaponDamage);              
         }
       
         
@@ -40,7 +40,5 @@ public class DotProjectilePoison : PlayerProjectiles
         isPoisoned = true;
         yield return new WaitForSeconds(poisonedTimer);
         isPoisoned = false;
-        Destroy(gameObject);
-
     }
 }

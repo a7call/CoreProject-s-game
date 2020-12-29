@@ -15,7 +15,7 @@ public class Weapons : MonoBehaviour
     public static int damageMultiplier;
     [HideInInspector]
     protected bool damagealReadyMult;
-    [HideInInspector]
+    
     public LayerMask enemyLayer;
     protected bool readyToAttack;
 
