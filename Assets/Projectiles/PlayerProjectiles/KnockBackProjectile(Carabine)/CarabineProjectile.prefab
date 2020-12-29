@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8399999305006020208}
   - component: {fileID: 447874545833512403}
   - component: {fileID: -1722993414655278476}
-  - component: {fileID: 3869958189068216651}
+  - component: {fileID: -6540519872746729804}
+  - component: {fileID: 1732317974274642409}
   m_Layer: 0
-  m_Name: BlackBall
+  m_Name: CarabineProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerProjectileData: {fileID: 11400000, guid: ee77f75f39d7b43138080cf7022f1fca, type: 2}
-  Dispersion: 10.457552
+  PlayerProjectileData: {fileID: 11400000, guid: 3b832639fe557f84aa32b760c8108de0, type: 2}
+  Dispersion: 0
 --- !u!212 &-1722993414655278476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10756, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +99,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3869958189068216651
+--- !u!61 &-6540519872746729804
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,3 +125,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
+--- !u!50 &1732317974274642409
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
