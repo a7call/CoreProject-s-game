@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e111cd77f1ca0c94bb357cd9316c435d, type: 3}
   m_Name: LaserSaber
   m_EditorClassIdentifier: 
-  damage: 7
+  damage: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  attackRadius: 0.4
-  AttackDelay: 0.5
+  attackRadius: 0.9
+  AttackDelay: 0.7
+  knockBackForce: 150
+  knockBackTime: 0.15
+  image: {fileID: 0}
