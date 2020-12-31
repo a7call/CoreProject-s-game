@@ -7,18 +7,16 @@ public class PerturbateurIEM : ActiveObjects
     [SerializeField] protected float ActiveTime = 0;
     protected override void Update()
     {
-        base.Update();
         if (UseModule)
         {
-            StartCoroutine(ActiveTimeIEM());
-            Enemy.isPerturbateurIEM = true;
+            ActiveTimeIEM();
             UseModule = false;
         }
     }
 
-    protected IEnumerator ActiveTimeIEM()
+    protected void ActiveTimeIEM()
     {
-        yield return new WaitForSeconds(ActiveTime);
-        Enemy.isPerturbateurIEM = false;
+        Projectile enemyProjectile = FindObjectOfType<Projectile>();
+        if(enemyProjectile) Destroy(enemyProjectile.gameObject);
     }
 }

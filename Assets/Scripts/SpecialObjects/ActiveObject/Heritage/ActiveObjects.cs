@@ -34,6 +34,7 @@ public class ActiveObjects : MonoBehaviour
         if (readyToUse)
         {
             UseModule = true;
+            readyToUse = false;
             StartCoroutine(CdToReUse());
         }   
     }

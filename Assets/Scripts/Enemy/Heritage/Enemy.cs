@@ -74,21 +74,20 @@ public class Enemy : MonoBehaviour
         switch (currentState)
         {
             case State.Paralysed:
-                // animation
-                rb.velocity = Vector2.zero;
+                aIPath.canMove = false;
                 break;
 
             case State.KnockedBack:
-
+                aIPath.canMove = false;
                 break;
 
             case State.Freeze:
                 //animation
-                rb.velocity = Vector2.zero;
+                aIPath.canMove = false;
                 break;
 
             case State.Feared:
-                //animation
+                aIPath.canMove = false;
                 Fear();
                 break;
             
