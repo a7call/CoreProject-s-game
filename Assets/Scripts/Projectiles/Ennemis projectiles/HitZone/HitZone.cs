@@ -40,11 +40,7 @@ public class HitZone : MonoBehaviour
 
     }
 
-    protected void Update()
-    {
-       
-          
-    }
+   
 
     private IEnumerator ActiveZone()
     {

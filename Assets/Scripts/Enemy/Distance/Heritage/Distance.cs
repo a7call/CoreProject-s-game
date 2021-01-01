@@ -38,23 +38,24 @@ public class Distance : Enemy
 
     protected override void isInRange()
     {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            isShooting = true;
-            isReadyToSwitchState = false;
-            aIPath.canMove = false;
-        }
-        else
-        {
-            if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
-            if (isReadyToSwitchState)
+            if (Vector3.Distance(transform.position, target.position) < attackRange)
             {
-                currentState = State.Chasing;
-                isShooting = false;
+                currentState = State.Attacking;
+                isShooting = true;
+                isReadyToSwitchState = false;
+                aIPath.canMove = false;
             }
-           
-        }
+            else
+            {
+                if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
+                if (isReadyToSwitchState)
+                {
+                    currentState = State.Chasing;
+                    isShooting = false;
+                }
+
+            }
+       
     }
 
     
@@ -66,12 +67,12 @@ public class Distance : Enemy
     protected GameObject projetile;
     protected virtual IEnumerator CanShoot()
     {
-        if (isShooting && isReadytoShoot && !isPerturbateurIEM)
+        if (isShooting && isreadyToAttack && !isPerturbateurIEM)
         {
-            isReadytoShoot = false;
+            isreadyToAttack = false;
             Shoot();
             yield return new WaitForSeconds(restTime);
-            isReadytoShoot = true;
+            isreadyToAttack = true;
         }
     }
     // Instansiate projectiles

@@ -11,6 +11,7 @@ public class MagnetizedBeld : ActiveObjects
     private GameObject player;
     private PlayerMouvement playerMouv;
     [SerializeField]  protected LayerMask hitLayer;
+    [SerializeField] protected float speed;
     protected override void Start()
     {
         base.Start();

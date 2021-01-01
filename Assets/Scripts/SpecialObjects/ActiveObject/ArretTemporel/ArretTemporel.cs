@@ -30,6 +30,7 @@ public class ArretTemporel : ActiveObjects
         {
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.currentState = Enemy.State.Freeze;
+            enemyScript.isreadyToAttack = false;
             
         }
 
@@ -52,7 +53,9 @@ public class ArretTemporel : ActiveObjects
                 continue;
             }
             Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.currentState = Enemy.State.Patrolling;
+            enemyScript.currentState = Enemy.State.Chasing;
+            enemyScript.aIPath.canMove = true;
+            enemyScript.isreadyToAttack = true;
 
         }
 

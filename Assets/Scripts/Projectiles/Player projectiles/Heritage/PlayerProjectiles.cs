@@ -37,8 +37,10 @@ public class PlayerProjectiles : MonoBehaviour
     [HideInInspector]
     public static float SpeedMultiplier;
 
-    
 
+    //Knoclback
+     protected float knockBackForce;
+     protected float knockBackTime;
 
 
 
@@ -55,7 +57,9 @@ public class PlayerProjectiles : MonoBehaviour
     [SerializeField]
     protected PlayerProjectileScriptableObject PlayerProjectileData;
     protected Vector3 directionTir;
+    [HideInInspector]
     public float Dispersion;
+    private Rigidbody2D projectileRB;
 
     protected virtual void Awake()
     {
@@ -63,6 +67,7 @@ public class PlayerProjectiles : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         weapon = GameObject.FindGameObjectWithTag("WeaponManager");
         weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
+        projectileRB = GetComponent<Rigidbody2D>();
         weaponDamage = weaponAttackP.damage;
         weaponLayer = weaponAttackP.enemyLayer;
         playerTransform = player.GetComponent<Transform>();
@@ -73,10 +78,14 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void Update()
     {
-        Launch();
+        
         if (isInteligentAmmoModule)
         {
-           CoroutineManager.Instance.StartCoroutine(getNewDir(this.gameObject));
+            getNewDir(this.gameObject);
+        }
+        else
+        {
+            Launch();
         }
 
         if (isRocketAmmoModule && !AmmoSpeedAlreadyUp)
@@ -91,13 +100,15 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void Launch()
     {
-        
-        transform.Translate(directionTir * speed * Time.deltaTime);
+
+        transform.Translate(directionTir * speed * Time.deltaTime, Space.World) ;
         
     }
     void SetData()
     {
         speed = PlayerProjectileData.speed;
+        knockBackForce = PlayerProjectileData.knockBackForce;
+        knockBackTime = PlayerProjectileData.knockBackTime;
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -105,39 +116,40 @@ public class PlayerProjectiles : MonoBehaviour
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(weaponDamage);
-
-            
-
+            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
             //Modules
-            if (isExplosiveAmo)
-            {
-                ExplosiveAmoModule.explosionFnc(this.gameObject);
-            }
-            if (isNanoRobotModule)
-            {
-                NanoRobotModule.enemiesTouched.Add(enemy);
-            }
-            if (isImolationModule)
-            {
-               CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemy));
-            }
-            if (isCryoModule)
-            {
-                CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
-            }
-            if (isParaModule)
-            {
-                CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
-            }
-
-            if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
-            if(!gameObject.CompareTag("TraversProj")) Destroy(gameObject);
-
-            
-
+            ModuleProcs(enemy);
         }
  
     }
+
+     protected void ModuleProcs(Enemy enemy)
+    {
+        if (isExplosiveAmo)
+        {
+            ExplosiveAmoModule.explosionFnc(this.gameObject);
+        }
+        if (isNanoRobotModule)
+        {
+            NanoRobotModule.enemiesTouched.Add(enemy);
+        }
+        if (isImolationModule)
+        {
+            CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemy));
+        }
+        if (isCryoModule)
+        {
+            CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
+        }
+        if (isParaModule)
+        {
+            CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
+        }
+        if (!gameObject.CompareTag("TraversProj")) Destroy(gameObject);
+
+    }
+
+
     protected void ConeShoot()
     {
         directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
@@ -145,20 +157,24 @@ public class PlayerProjectiles : MonoBehaviour
 
 
     //IntelligentAmoModule
-    public bool isDirUpdat;
-    public IEnumerator getNewDir(GameObject proj)
+    private float angulSpeed = 200f;
+    private GameObject lockEnemy;
+    public  void getNewDir(GameObject proj)
     {
-        if (InteligentAmmoModule.LockEnemy(proj) != null && !isDirUpdat)
+        if (InteligentAmmoModule.LockEnemy(proj) != null) lockEnemy = InteligentAmmoModule.LockEnemy(proj);
+        if (lockEnemy != null )
         {
-
-            isDirUpdat = true;
-            directionTir = (InteligentAmmoModule.LockEnemy(proj).transform.position - proj.transform.position).normalized;
-            yield return new WaitForSeconds(0.5f);
-            isDirUpdat = false;
+            if (lockEnemy == null) return;
+            Vector2 direction = (lockEnemy.transform.position - proj.transform.position);
+            direction.Normalize();
+            float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
+            projectileRB.angularVelocity = -rotationAmount * angulSpeed;
+            projectileRB.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * speed;
+            angulSpeed++;
         }
         else
         {
-            yield break;
+            Launch();
         }
 
 

@@ -27,14 +27,13 @@ public class JetPackModule : ActiveObjects
     protected override void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.U) && readyToUse && !isAlreadyFlying)
+        if (UseModule && !isAlreadyFlying)
         {
             StartCoroutine(StartFlying());
         }
-        else if (Input.GetKeyDown(KeyCode.U) && isAlreadyFlying)
+        else if (UseModule && isAlreadyFlying)
         {
-            StartCoroutine(CdToReUse());
-            readyToUse = false;
+            UseModule = false;
             StartCoroutine(StopFlying());
 
         }

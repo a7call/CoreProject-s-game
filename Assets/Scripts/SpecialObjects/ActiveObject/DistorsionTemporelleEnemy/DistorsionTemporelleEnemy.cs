@@ -21,10 +21,9 @@ public class DistorsionTemporelleEnemy : ActiveObjects
     protected override void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.U) && readyToUse)
+        if (UseModule)
         {
-            StartCoroutine(CdToReUse());
-            readyToUse = false;
+            UseModule = false;
             StartCoroutine(DistorsionTemporelleMoveSpeed());
         }
 

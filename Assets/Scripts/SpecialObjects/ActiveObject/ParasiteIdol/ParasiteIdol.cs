@@ -2,53 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParasiteIdol : ActiveObjects
+public class ParasiteIdol : CdObjects
 {
-    GameObject[] enemiesInRoom;
+    [SerializeField] protected LayerMask enemyLayer;
     public static bool parasiteIdolFear = false;
     [SerializeField] private float fearTime = 5f;
+    Collider2D[] hits;
 
     protected override void Start()
     {
-        enemiesInRoom = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     protected override void Update()
     {
-        if(Input.GetKeyDown(KeyCode.U) && readyToUse)
+        if(UseModule)
         {
-            UseModule = true;
-            StartCoroutine(ResetStateChasing());
-            StartCoroutine(CdToReUse());
-            readyToUse = false;
+            UseModule = false;
+            CoroutineManager.Instance.StartCoroutine(ResetStateChasing());
         }
     }
 
     private void FearEnemy()
     {
-        foreach (GameObject enemy in enemiesInRoom)
+        hits = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
+        foreach (Collider2D enemy in hits)
         {
             enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Feared;
         }
     }
     private void EnemyChasing()
     {
-        foreach (GameObject enemy in enemiesInRoom)
+
+        foreach (Collider2D enemy in hits)
         {
+            enemy.gameObject.GetComponent<Enemy>().aIPath.canMove = true;
             enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
+            enemy.gameObject.GetComponent<Enemy>().rb.velocity = Vector3.zero;
             enemy.gameObject.GetComponent<Enemy>().direction = Vector3.zero;
         }
     }
 
     private IEnumerator ResetStateChasing()
     {
-        readyToUse = false;
         FearEnemy();
         yield return new WaitForSeconds(fearTime);
         EnemyChasing();
-
-        UseModule = false;
-        ModuleAlreadyUse = true;
     }
 
 

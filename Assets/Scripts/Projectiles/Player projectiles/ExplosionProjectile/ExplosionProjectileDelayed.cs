@@ -2,33 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionProjectileDelayed : PlayerProjectiles
+public class ExplosionProjectileDelayed : ExplosionProjectile
 {
-    [SerializeField] protected float explosionRadius;
     [SerializeField] protected float explosionDelay;
+    private Collider2D[] ennemies;
 
+     protected override void Update()
+    {
+        base.Update();
+        ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
+    }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        Collider2D[] ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
-        foreach (Collider2D enemy in ennemies)
+        if (collision.CompareTag("Enemy"))
         {
-            CoroutineManager.Instance.StartCoroutine(DelayedExplosion(enemy));
+            Enemy enemy = collision.GetComponent<Enemy>();
+            enemy.TakeDamage(weaponDamage);
+            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
+            //Modules
+            ModuleProcs(enemy);
         }
+        
+        CoroutineManager.Instance.StartCoroutine(DelayedExplosion(ennemies, collision));
 
-        if (collision.CompareTag("Player") || collision.CompareTag("WeaponManager")) return;
-        base.OnTriggerEnter2D(collision);
+
 
     }
 
-    private IEnumerator DelayedExplosion(Collider2D enemy)
+    private IEnumerator DelayedExplosion(Collider2D[] ennemies, Collider2D collision)
     {
         yield return new WaitForSeconds(explosionDelay);
-        Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
-        enemyScript.TakeDamage(weaponDamage);
-        if (isNuclearExplosionModule)
+        Explosion(ennemies, collision);
+    }
+    protected override void Explosion(Collider2D[] ennemies, Collider2D collision)
+    {
+        if(ennemies.Length > 0)
         {
-            CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
+            foreach (Collider2D enemy in ennemies)
+            {
+
+                if (enemy == null) continue;
+                Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
+                if (enemyScript == null) continue;
+                enemyScript.TakeDamage(weaponDamage);
+                if (isNuclearExplosionModule)
+                {
+                    CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
+                }
+            }
         }
     }
+       
 }

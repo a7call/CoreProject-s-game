@@ -1,5 +1,84 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4402463800844741969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7662332197042394938}
+  - component: {fileID: 3146952306962857778}
+  - component: {fileID: 8612397969505763935}
+  m_Layer: 5
+  m_Name: waitingForInputText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &7662332197042394938
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402463800844741969}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5.372297, y: 3.7920628, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6930911523986819809}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3146952306962857778
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402463800844741969}
+  m_CullTransparentMesh: 0
+--- !u!114 &8612397969505763935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402463800844741969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8396226, g: 0.11485406, b: 0.11485406, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 21
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 92
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Waiting for input
 --- !u!1 &6930911523044362961
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,8 +669,8 @@ RectTransform:
   m_Father: {fileID: 6930911523829452895}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -666,7 +745,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1330,11 +1409,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonLeft
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911523380634387}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1691,7 +1770,7 @@ GameObject:
   - component: {fileID: 6930911523609590030}
   - component: {fileID: 6930911523609590031}
   m_Layer: 5
-  m_Name: BlackHole
+  m_Name: ButtonBlackHole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1710,7 +1789,7 @@ RectTransform:
   m_Children:
   - {fileID: 6930911524769078254}
   m_Father: {fileID: 6930911523986819809}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1800,11 +1879,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonBlackHole
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911523609590029}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1823,7 +1902,7 @@ GameObject:
   - component: {fileID: 6930911523628249572}
   - component: {fileID: 6930911523628249573}
   m_Layer: 5
-  m_Name: Shoot
+  m_Name: ButtonShoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1842,7 +1921,7 @@ RectTransform:
   m_Children:
   - {fileID: 6930911524393872449}
   m_Father: {fileID: 6930911523986819809}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1932,11 +2011,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonShoot
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911523628249571}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2582,10 +2661,12 @@ RectTransform:
   - {fileID: 6930911524048654332}
   - {fileID: 6930911524312511363}
   - {fileID: 6930911523990159811}
+  - {fileID: 6930911523991937195}
   - {fileID: 6930911523628249570}
   - {fileID: 6930911523609590028}
   - {fileID: 6930911524945509047}
   - {fileID: 6930911524117209183}
+  - {fileID: 7662332197042394938}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2655,6 +2736,17 @@ MonoBehaviour:
   UseObject: {fileID: 6930911524421108611}
   BlackHole: {fileID: 6930911524769078252}
   resoltionDropdown: {fileID: 6930911525097026042}
+  ReloadAction: {fileID: 4458847831806502506, guid: 8a521fe2406334952b525fefa2ad1a40, type: 3}
+  ReloadButton: {fileID: 6930911524117209180}
+  LeftButton: {fileID: 6930911523380634387}
+  RightButton: {fileID: 6930911524048654333}
+  UpButton: {fileID: 6930911524312511360}
+  DownButton: {fileID: 6930911523990159808}
+  BlackHoleButton: {fileID: 6930911523609590029}
+  UseObjectButton: {fileID: 6930911524945509044}
+  ShootButton: {fileID: 6930911523628249571}
+  DashButton: {fileID: 6930911523991937192}
+  waitingForInput: {fileID: 4402463800844741969}
   playerControls: {fileID: -944628639613478452, guid: 8a521fe2406334952b525fefa2ad1a40, type: 3}
 --- !u!1 &6930911523990159808
 GameObject:
@@ -2687,7 +2779,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6930911524966385641}
-  - {fileID: 6930911523991937195}
   m_Father: {fileID: 6930911523986819809}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2779,11 +2870,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonDown
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911523990159808}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2802,7 +2893,7 @@ GameObject:
   - component: {fileID: 6930911523991937197}
   - component: {fileID: 6930911523991937194}
   m_Layer: 5
-  m_Name: Dash
+  m_Name: ButtonDash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2820,12 +2911,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6930911523347071872}
-  m_Father: {fileID: 6930911523990159811}
-  m_RootOrder: 1
+  m_Father: {fileID: 6930911523986819809}
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 391.9999, y: 84.999985}
+  m_AnchoredPosition: {x: 340, y: -55.000057}
   m_SizeDelta: {x: 150, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6930911523991937196
@@ -2911,11 +3002,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonDash
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911523991937192}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3333,7 +3424,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: StartInteractiveRebind
+        m_MethodName: ButtonRight
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3376,7 +3467,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3589,7 +3680,7 @@ GameObject:
   - component: {fileID: 6930911524117209185}
   - component: {fileID: 6930911524117209182}
   m_Layer: 5
-  m_Name: Reload
+  m_Name: ButtonReload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3608,7 +3699,7 @@ RectTransform:
   m_Children:
   - {fileID: 6930911524917956470}
   m_Father: {fileID: 6930911523986819809}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3698,11 +3789,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonReload
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911524117209180}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3777,7 +3868,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4016,11 +4107,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonUp
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911524312511360}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4058,8 +4149,8 @@ RectTransform:
   m_Father: {fileID: 6930911524706187331}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4809,8 +4900,8 @@ RectTransform:
   m_Father: {fileID: 6930911524659229622}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5484,7 +5575,7 @@ GameObject:
   - component: {fileID: 6930911524945509049}
   - component: {fileID: 6930911524945509046}
   m_Layer: 5
-  m_Name: UseObject
+  m_Name: ButtonUseObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5503,7 +5594,7 @@ RectTransform:
   m_Children:
   - {fileID: 6930911524421108613}
   m_Father: {fileID: 6930911523986819809}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5593,11 +5684,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6930911523986819810}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeKey
-        m_Mode: 2
+        m_MethodName: ButtonUseObject
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 6930911524945509044}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

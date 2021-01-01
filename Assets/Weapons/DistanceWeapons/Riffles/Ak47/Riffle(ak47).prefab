@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 577309146241068898}
   - component: {fileID: 368481402091863267}
   - component: {fileID: 1588082215053512320}
-  - component: {fileID: 1074200611}
   m_Layer: 0
   m_Name: Riffle(ak47)
   m_TagString: DistanceWeapon
@@ -109,37 +108,8 @@ MonoBehaviour:
   attackPoint: {fileID: 5533627787624720240}
   isAttacking: 0
   DistanceWeaponData: {fileID: 11400000, guid: 0f69c7db581b71b4fbecc1eb15cb805f, type: 2}
+  OkToShoot: 0
   BulletInMag: 20
   InfiniteAmmo: 0
-  AmmoStock: 35
+  AmmoStock: 300
   image: {fileID: 0}
---- !u!114 &1074200611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8281438935766862942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 8a521fe2406334952b525fefa2ad1a40, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}

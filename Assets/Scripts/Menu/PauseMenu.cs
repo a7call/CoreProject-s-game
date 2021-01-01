@@ -10,14 +10,17 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsWindow;
     public GameObject pauseMenuUI;
 
+    private bool pause = false;
+
     protected void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            pause = false;
             if (isGamePaused)
             {
                 Resume();
-                settingsWindow.SetActive(false);
+                
             }
             else
             {
@@ -39,7 +42,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        
+        settingsWindow.SetActive(false);
         Time.timeScale = 1;
         isGamePaused = false;
     }
@@ -57,5 +60,16 @@ public class PauseMenu : MonoBehaviour
     public void CloseSettingsWindow()
     {
         settingsWindow.SetActive(false);
+    }
+
+    public void BestiaireButton()
+    {
+        settingsWindow.SetActive(false);
+        //Bestiaire.setActive(true);
+    }
+
+    public void OnPause()
+    {
+        pause = true;
     }
 }

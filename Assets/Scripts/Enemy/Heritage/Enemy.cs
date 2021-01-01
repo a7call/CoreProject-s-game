@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     protected PlayerMouvement playerMouvement;
     public static bool isPerturbateurIEM = false;
     public static bool isArretTemporel = false;
+    public bool isreadyToAttack = true;
 
     public State currentState;
     public enum State
@@ -73,21 +74,20 @@ public class Enemy : MonoBehaviour
         switch (currentState)
         {
             case State.Paralysed:
-                // animation
-                rb.velocity = Vector2.zero;
+                aIPath.canMove = false;
                 break;
 
             case State.KnockedBack:
-
+                aIPath.canMove = false;
                 break;
 
             case State.Freeze:
                 //animation
-                rb.velocity = Vector2.zero;
+                aIPath.canMove = false;
                 break;
 
             case State.Feared:
-                //animation
+                aIPath.canMove = false;
                 Fear();
                 break;
             
@@ -128,7 +128,9 @@ public class Enemy : MonoBehaviour
     public Vector3 direction = Vector3.zero;
     private int fearDistance = 5;
     protected virtual void Fear()
-    {   if(direction == Vector3.zero) direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
+
+    {
+        if(direction == Vector3.zero) direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 
@@ -150,6 +152,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void isInRange()
     {
+        if (gameObject == null) return;
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
             currentState = State.Attacking;
@@ -276,15 +279,16 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
-        rb.isKinematic = false;
+        aIPath.canMove = false;
         rb.AddForce(dir * knockBackForce);
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
         if (enemy == null) yield break;  
         currentState = State.Attacking;
         if (enemy == null) yield break;
-        rb.isKinematic = true;
-        
+        rb.velocity = Vector2.zero;
+        aIPath.canMove = true;
+
 
     }
 

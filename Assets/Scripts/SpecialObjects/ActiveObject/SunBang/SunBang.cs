@@ -9,9 +9,7 @@ public class SunBang : ActiveObjects
     [SerializeField] private float radiusZone = 5f;
     [SerializeField] private float stunTime = 5f;
 
-    private bool state;
-
-    private List<GameObject> enemiesInRange = new List<GameObject>();
+    public List<Enemy> enemiesInRange = new List<Enemy>();
 
     protected override void Start()
     {
@@ -20,62 +18,43 @@ public class SunBang : ActiveObjects
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U) && readyToUse)
+        if (UseModule)
         {
-            StartCoroutine(StateCoroutine());
-            UseSunBang();
-            StartCoroutine(CdToReUse());
-            state = true;
+            StartCoroutine(UseSunBang());
+            UseModule = false;
         }
 
-        if (!UseModule && state)
-        {
-            ResetEnemyState();
-        }
     }
 
-    private void UseSunBang()
+    private IEnumerator UseSunBang()
     {
+   
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radiusZone, hitLayer);
         foreach (Collider2D hit in hits)
         {
-            if (hit.transform.gameObject.CompareTag("Enemy"))
+            
+            if (hit.CompareTag("Enemy"))
             {
-                if (!ModuleAlreadyUse)
-                {
-                    enemiesInRange.Add(hit.gameObject);
-                    hit.transform.GetComponent<Enemy>().currentState = Enemy.State.Paralysed;
-                }
+                Enemy enemyScript = hit.GetComponent<Enemy>();
+                enemiesInRange.Insert(0, enemyScript);
+                enemyScript.currentState = Enemy.State.Paralysed;
+                enemyScript.isreadyToAttack = false;
 
             }
         }
-    }
-
-
-    private IEnumerator StateCoroutine()
-    {
-        UseModule = true;
         yield return new WaitForSeconds(stunTime);
-        UseModule = false;
-        readyToUse = false;
-        ModuleAlreadyUse = true;
-    }
 
-    private void ResetEnemyState()
-    {
-        foreach (GameObject enemy in enemiesInRange)
+        foreach (Enemy enemy in enemiesInRange.ToArray()) 
         {
-            if(enemy == null)
-            {
-                continue;
-            }
-            enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
+            enemy.currentState = Enemy.State.Chasing;
+            enemy.aIPath.canMove = true; 
+            enemy.isreadyToAttack = true;
+            enemiesInRange.Remove(enemy);
         }
-        enemiesInRange.Clear();
-        ModuleAlreadyUse = false;
-        state = false;
+
     }
 
+    
     public void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, radiusZone);

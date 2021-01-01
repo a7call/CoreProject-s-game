@@ -18,11 +18,10 @@ public class Taser : CacWeapons
             isAttacking = true;
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
 
-
+            AttackAppliedOnEnemy(enemyHit);
             foreach (Collider2D enemy in enemyHit)
             {
                 Enemy enemyH = enemy.GetComponent<Enemy>();
-                enemyH.TakeDamage(damage);
                 StartCoroutine(TasedEnemy(enemyH));
 
             }
@@ -34,8 +33,9 @@ public class Taser : CacWeapons
 
     protected IEnumerator TasedEnemy(Enemy enemy)
     {
-        enemy.currentState = Enemy.State.Paralysed;
+        float baseMoveSpeed = enemy.aIPath.maxSpeed;
+        enemy.aIPath.maxSpeed = 0;
         yield return new WaitForSeconds(paralysedTime);
-        enemy.currentState = Enemy.State.Chasing;
+        enemy.aIPath.maxSpeed = baseMoveSpeed;
     }
 }

@@ -32,6 +32,7 @@ public class ZoneProjectileBouleFeu : PlayerProjectiles
             yield return new WaitForSeconds(hitTimer);
             foreach (Collider2D enemyCol in enemies)
             {
+                if (enemyCol == null) continue;
                 Enemy enemy  = enemyCol.GetComponent<Enemy>();
                 enemy.TakeDamage(weaponDamage);
             }

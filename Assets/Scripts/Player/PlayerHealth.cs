@@ -65,7 +65,8 @@ public class PlayerHealth : Player
             currentHealth = 0;
         }
     }
-
+    //DontFuckModule
+    public static bool IsDontFuckWithMe = false;
     public void TakeDamage(int damage)
     {
         if (!isInvincible)
@@ -82,6 +83,11 @@ public class PlayerHealth : Player
                 StartCoroutine(InvincibilityDelay());
                 StartCoroutine(InvincibilityFlash());
             }
+        }
+        if (IsDontFuckWithMe)
+        {
+            DontFuckWithMeModule.DestroyAllEnemyInRange();
+            print("tes");
         }
 
         if (currentHealth <= 0 && !isLastChanceModule)
