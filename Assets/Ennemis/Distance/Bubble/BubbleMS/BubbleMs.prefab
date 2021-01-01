@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -259,6 +260,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5985980063024395459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d72179ad7ee85548b479ffa082cfacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isreadyToAttack: 1
   currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
@@ -447,6 +450,17 @@ MonoBehaviour:
   isShooting: 0
   rayon: {fileID: 4234345229324104036, guid: 411ecaa5d9a3b054dbc6ff8f2f30aa71, type: 3}
   differentRadius: []
+  projectiles:
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
+  - {fileID: 198050544120400641, guid: b32381bacf35adb4fa7d35a41fe8fbce, type: 3}
 --- !u!61 &2413620300795474763
 BoxCollider2D:
   m_ObjectHideFlags: 0

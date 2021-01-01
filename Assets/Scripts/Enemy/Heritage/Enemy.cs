@@ -231,7 +231,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    void SpawnRewards()
+    protected void SpawnRewards()
     {
         RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
         rewardSpawner.RandomCoinReward(this.gameObject);
