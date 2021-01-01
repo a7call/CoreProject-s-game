@@ -6,18 +6,22 @@ public class StacksObjects : ActiveObjects
 {
    [SerializeField] protected int numberOfUse = 0;
    [SerializeField] protected float cd;
-    private bool isOutOfUse = false;
+    protected bool isOutOfUse = false;
 
 
     protected override IEnumerator WayToReUse()
     {
         numberOfUse--;
-        if (numberOfUse < 1) isOutOfUse = true;
+        if (numberOfUse < 1)
+        {
+            isOutOfUse = true;
+        }
+            
         if (!isOutOfUse)
         {
             yield return new WaitForSeconds(cd);
             readyToUse = true;
-        }  
+        }
     }
 
     protected override void Update()

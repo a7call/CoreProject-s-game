@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnetizedBeld : ActiveObjects
+public class MagnetizedBeld : CdObjects
 {
     protected Vector3 dir;
     protected RaycastHit2D hit;

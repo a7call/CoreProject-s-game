@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoConverter : ActiveObjects
+public class AmmoConverter : CdObjects
 {
 
     //private GameObject player;
@@ -20,18 +20,14 @@ public class AmmoConverter : ActiveObjects
 
     protected override void Update()
     {
-        
-
         base.Update();
 
         if (UseModule)
         {
             StartCoroutine(ActiveTime());
             UseModule = false;
-            isActive = true;
 
-        }
-        
+        } 
         
     }
 
@@ -42,14 +38,12 @@ public class AmmoConverter : ActiveObjects
         yield return new WaitForSeconds(activeTime);
 
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
-        readyToUse = true;
-        isActive = false;
         
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyProjectil"))
+        if (collision.CompareTag("EnemyProjectil") && isActive)
         {
             
             Player player = FindObjectOfType<Player>();
@@ -65,6 +59,7 @@ public class AmmoConverter : ActiveObjects
             {
                 return;
             }
+            Destroy(collision.gameObject);
 
 
 

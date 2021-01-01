@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistorsionTemporelle : ActiveObjects
+public class DistorsionTemporelle : CdObjects
 {
-
-    [SerializeField] private float currentSlowMotion = 0f;
+     private float currentSlowMotion = 0f;
     [SerializeField] private float slowTimeAllowed = 3f;
     private float newTime = 0.5f; // En mettant 0.5, le jeu va deux fois moins vite
 
@@ -16,25 +15,18 @@ public class DistorsionTemporelle : ActiveObjects
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U) && !UseModule)
+        base.Update();
+        if (UseModule)
         {
             SlowMotionFonction();
+            UseModule = false;
         }
-
-        if (readyToUse)
-        {
-            VerifySlowMo();
-        }
-
-        if (ModuleAlreadyUse)
-        {
-            Destroy(gameObject);
-        }
+        VerifySlowMo();
+      
     }
 
     private void SlowMotionFonction()
     {
-        UseModule = true;
         if (Time.timeScale == 1f)
         {
             Time.timeScale = newTime;
@@ -49,7 +41,6 @@ public class DistorsionTemporelle : ActiveObjects
 
     private void VerifySlowMo()
     {
-
         if (Time.timeScale == newTime)
         {
             currentSlowMotion += Time.deltaTime;
@@ -59,8 +50,6 @@ public class DistorsionTemporelle : ActiveObjects
         {
             currentSlowMotion = 0;
             Time.timeScale = 1f;
-            readyToUse = false;
-            ModuleAlreadyUse = true;
         }
     }
 }

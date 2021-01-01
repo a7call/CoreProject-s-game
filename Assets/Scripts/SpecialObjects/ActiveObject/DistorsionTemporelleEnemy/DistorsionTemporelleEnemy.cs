@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistorsionTemporelleEnemy : ActiveObjects
+public class DistorsionTemporelleEnemy : CdObjects
 {
     private int roomRange = 50;
     [SerializeField] private LayerMask hitLayer;
@@ -25,13 +25,9 @@ public class DistorsionTemporelleEnemy : ActiveObjects
         {
             UseModule = false;
             StartCoroutine(DistorsionTemporelleMoveSpeed());
-        }
+            DistorsionTemporelleProjectile();
 
-        if (UseModule)
-        {
-           DistorsionTemporelleProjectile();
         }
-
     }
 
     private void DistorsionTemporelleProjectile()
@@ -51,10 +47,7 @@ public class DistorsionTemporelleEnemy : ActiveObjects
         }
     }
 
-    private IEnumerator DistorsionTemporelleMoveSpeed()
-    {
-        readyToUse = false;
-        UseModule = true;
+    private IEnumerator DistorsionTemporelleMoveSpeed() { 
 
         foreach (GameObject enemy in enemies)
         {
@@ -62,7 +55,7 @@ public class DistorsionTemporelleEnemy : ActiveObjects
             {
                 continue;
             }
-            enemy.gameObject.GetComponent<Enemy>().moveSpeed /= 2;
+            enemy.gameObject.GetComponent<Enemy>().aIPath.maxSpeed /= 2;
         }
 
         yield return new WaitForSeconds(timeDistorsionTemporelle);
@@ -73,7 +66,7 @@ public class DistorsionTemporelleEnemy : ActiveObjects
             {
                 continue;
             }
-            enemy.gameObject.GetComponent<Enemy>().moveSpeed *= 2;
+            enemy.gameObject.GetComponent<Enemy>().aIPath.maxSpeed *= 2;
         }
 
         foreach (GameObject projectil in projectilsEnemy)
@@ -85,8 +78,7 @@ public class DistorsionTemporelleEnemy : ActiveObjects
             projectil.GetComponent<Projectile>().speed *= 2;
         }
 
-        ModuleAlreadyUse = true;
-        UseModule = false;
+
     }
 
 }

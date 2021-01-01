@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomeBaseCall : ActiveObjects
+public class HomeBaseCall : StacksObjects
 {
     [SerializeField] private GameObject amoCase = null;
     private GameObject player;
@@ -18,7 +18,7 @@ public class HomeBaseCall : ActiveObjects
 
         if (UseModule)
         {
-            StartCoroutine(AmmoSupply());
+            CoroutineManager.Instance.StartCoroutine(AmmoSupply());
             UseModule = false;
         }
     }

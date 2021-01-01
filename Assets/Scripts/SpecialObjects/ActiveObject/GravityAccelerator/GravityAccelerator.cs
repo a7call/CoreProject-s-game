@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityAccelerator : ActiveObjects
+public class GravityAccelerator : StacksObjects
 {
     [SerializeField] private GameObject acceleratorBomb;
     // Start is called before the first frame update

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DecoyModule : ActiveObjects
+public class DecoyModule : StacksObjects
 {
     [SerializeField] private GameObject decoyObject;
 
