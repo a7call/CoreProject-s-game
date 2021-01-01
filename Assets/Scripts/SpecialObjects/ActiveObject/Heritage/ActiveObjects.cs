@@ -9,10 +9,7 @@ public class ActiveObjects : MonoBehaviour
     public bool UseModule = false;
     protected bool ModuleAlreadyUse = false;
     protected bool readyToUse = true;
-    [SerializeField] protected float cd;
     public float range;
-    [SerializeField] protected float speed;
-
     protected Vector3 MousePos;
     protected Camera Cam;
 
@@ -35,14 +32,14 @@ public class ActiveObjects : MonoBehaviour
         {
             UseModule = true;
             readyToUse = false;
-            StartCoroutine(CdToReUse());
+            StartCoroutine(WayToReUse());
         }   
     }
 
-    protected IEnumerator CdToReUse()
+    protected virtual IEnumerator WayToReUse()
     {
-        yield return new WaitForSeconds(cd);
-        readyToUse = true;
+        // Voir selon l'object
+        yield return null;
     }
 
 
@@ -63,16 +60,5 @@ public class ActiveObjects : MonoBehaviour
     {
         Vector3 direction = (GetMousePosition() - transform.position).normalized;
         return direction;
-    }
-
-    public void OnUse()
-    {
-        print("use");
-        if (readyToUse)
-        {
-            StartCoroutine(CdToReUse());
-            readyToUse = false;
-            UseModule = true;
-        }
     }
 }

@@ -2,54 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyDrink : ActiveObjects
+public class EnergyDrink : StacksObjects
 {
-    private PlayerEnergy playerEnergy;
-    private PlayerMouvement playerMouvement;
-    [SerializeField] private float timeUsing = 2f;
-    public static bool interrupt = false;
+
 
     protected override void Start()
     {
-        playerEnergy = FindObjectOfType<PlayerEnergy>();
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+       
     }
 
     protected override void Update()
     {
-
-        if (ModuleAlreadyUse)
-        {
-            interrupt = false;
-            DestoyEnergyDrink();
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UseModule = true;
-        }
-
+        base.Update();
         if (UseModule)
         {
             UseModule = false;
-            StartCoroutine(UseEnergyDring());
+            CoroutineManager.Instance.StartCoroutine(UseEnergyDring());
         }
     }
 
     private IEnumerator UseEnergyDring()
     {
-        playerMouvement.canDash = false;
-        yield return new WaitForSeconds(timeUsing);
-        RefillEnergy();
-        playerMouvement.canDash = true;
-        ModuleAlreadyUse = true;
+        yield return new WaitForSeconds(0.5f);
+        print("test");
     }
 
     private void RefillEnergy()
     {
-        playerEnergy.currentEnergy = playerEnergy.maxEnergy;
-        playerEnergy.energyIsReloading = false;
-        interrupt = true;
+       
     }
 
     private void DestoyEnergyDrink()

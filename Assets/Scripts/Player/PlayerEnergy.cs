@@ -129,7 +129,7 @@ public class PlayerEnergy : Player
             energyIsReloading = false;
             yield break;
         }
-        if (!CoroBool && currentEnergy < playerData.maxEnergy && !EnergyDrink.interrupt)
+        if (!CoroBool && currentEnergy < playerData.maxEnergy)
         {
            
             
