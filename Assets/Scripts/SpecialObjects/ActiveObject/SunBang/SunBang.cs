@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SunBang : ActiveObjects
+public class SunBang : StacksObjects
 {
     // Variables pour générer le cercle et voir si y'a des ennemis dans la zone
     [SerializeField] private LayerMask hitLayer;
-    [SerializeField] private float radiusZone = 5f;
     [SerializeField] private float stunTime = 5f;
 
     public List<Enemy> enemiesInRange = new List<Enemy>();
@@ -18,6 +17,7 @@ public class SunBang : ActiveObjects
 
     protected override void Update()
     {
+        base.Update();
         if (UseModule)
         {
             StartCoroutine(UseSunBang());
@@ -29,7 +29,7 @@ public class SunBang : ActiveObjects
     private IEnumerator UseSunBang()
     {
    
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radiusZone, hitLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, hitLayer);
         foreach (Collider2D hit in hits)
         {
             
@@ -46,6 +46,7 @@ public class SunBang : ActiveObjects
 
         foreach (Enemy enemy in enemiesInRange.ToArray()) 
         {
+            if (enemy == null) continue;
             enemy.currentState = Enemy.State.Chasing;
             enemy.aIPath.canMove = true; 
             enemy.isreadyToAttack = true;
@@ -57,6 +58,6 @@ public class SunBang : ActiveObjects
     
     public void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, radiusZone);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }

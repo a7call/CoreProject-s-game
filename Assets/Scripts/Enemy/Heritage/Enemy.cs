@@ -226,11 +226,20 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
+            nanoRobot();
             SpawnRewards();
         }
     }
 
+    protected void nanoRobot()
+    {
+        if (PlayerProjectiles.isNanoRobotModule)
+        {
+            NanoRobotModule nanoRobotModule = FindObjectOfType<NanoRobotModule>();
 
+            nanoRobotModule.NanoRobotExplosion(gameObject.transform);
+        }
+    }
     void SpawnRewards()
     {
         RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();

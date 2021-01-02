@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PerturbateurIEM : ActiveObjects
+public class PerturbateurIEM : StacksObjects
 {
     [SerializeField] protected float ActiveTime = 0;
     protected override void Update()
     {
+        base.Update();
         if (UseModule)
         {
             ActiveTimeIEM();
@@ -16,7 +17,14 @@ public class PerturbateurIEM : ActiveObjects
 
     protected void ActiveTimeIEM()
     {
-        Projectile enemyProjectile = FindObjectOfType<Projectile>();
-        if(enemyProjectile) Destroy(enemyProjectile.gameObject);
+        Projectile[] enemyProjectile = FindObjectsOfType<Projectile>();
+        if (enemyProjectile.Length > 0)
+        {
+            foreach(Projectile projectile in enemyProjectile)
+            {
+                Destroy(projectile.gameObject);
+            }
+            
+        }
     }
 }
