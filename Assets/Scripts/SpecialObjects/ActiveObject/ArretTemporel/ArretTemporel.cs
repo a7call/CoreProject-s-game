@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArretTemporel : ActiveObjects
+public class ArretTemporel : CdObjects
 {
     [SerializeField] protected float activeTime;
     protected GameObject[] ennemis;

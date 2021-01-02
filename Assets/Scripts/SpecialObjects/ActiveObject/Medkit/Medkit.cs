@@ -2,81 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Medkit : ActiveObjects
+public class Medkit : StacksObjects
 {
 
     private PlayerHealth playerHealth;
-    private PlayerMouvement playerMouvement;
 
     private float timeCantMoove = 1.5f;
-    [SerializeField] private bool isHealing = false;
     private bool canWalk = true;
 
 
     protected override void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
     protected override void Update()
     {
-        if (ModuleAlreadyUse)
-        {
-            Destroy(gameObject);
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UseModule = true;
-            isHealing = true;
-        }
-
+        base.Update();
         if (UseModule)
         {
-            UseMedkit();
+           SoinFull();
+            UseModule = false;
         }
     }
-    private IEnumerator CantMoove(float _timeCantMoove)
+    protected override IEnumerator WayToReUse()
     {
-        playerMouvement.mooveSpeed = 0;
-        yield return new WaitForSeconds(_timeCantMoove);
-        canWalk = false;
-        playerMouvement.mooveSpeed = 100; // On remet 100 car on veut remettre la valeur de vitesse initiale dans tous les cas !!!
-        UseModule = false;
-        ModuleAlreadyUse = true;
+        if(playerHealth.currentHealth != playerHealth.maxHealth)
+        {
+            numberOfUse--;
+        }
+        if (numberOfUse < 1)
+        {
+            isOutOfUse = true;
+        }
+
+        if (!isOutOfUse )
+        {
+            yield return new WaitForSeconds(cd);
+            readyToUse = true;
+        }
     }
 
-    private IEnumerator CoroutineDeSoin(float _timeMedkit)
+    private void SoinFull()
     {
-        isHealing = false;
-        playerHealth.currentHealth += 1;
-        yield return new WaitForSeconds(_timeMedkit);
-        isHealing = true;
+        playerHealth.currentHealth = playerHealth.maxHealth;
     }
 
-    private void UseMedkit()
-    {
-        if (playerHealth.maxHealth == 6)
-        {
-            if (canWalk)
-            {
-                StartCoroutine(CantMoove(timeCantMoove));
-            }
-            if (isHealing)
-            {
-                StartCoroutine(CoroutineDeSoin(0.25f));
-            }
-        }
-        else if (playerHealth.maxHealth == 8)
-        {
-            if (canWalk)
-            {
-                StartCoroutine(CantMoove(timeCantMoove));
-            }
-            if (isHealing)
-            {
-                StartCoroutine(CoroutineDeSoin(0.1875f));
-            }
-        }
-    }
 }

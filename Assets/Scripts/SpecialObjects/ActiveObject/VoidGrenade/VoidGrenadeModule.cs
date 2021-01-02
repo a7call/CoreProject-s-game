@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class VoidGrenadeModule : ActiveObjects
+public class VoidGrenadeModule : StacksObjects
 {
     [SerializeField] private GameObject GrenadeModule;
 

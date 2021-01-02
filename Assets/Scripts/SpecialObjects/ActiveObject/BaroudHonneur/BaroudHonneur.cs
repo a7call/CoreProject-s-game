@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaroudHonneur : ActiveObjects
+public class BaroudHonneur : StacksObjects
 {
     private PlayerHealth playerHealth;
 
@@ -13,38 +13,32 @@ public class BaroudHonneur : ActiveObjects
 
     protected override void Update()
     {
-        if (readyToUse && playerHealth.currentHealth==0)
+        
+        if (playerHealth.currentHealth==0)
         {
             AutoBaroudHonneur();
+            Destroy(gameObject);
+            
         }
 
-        if(Input.GetKeyDown(KeyCode.U) && readyToUse && playerHealth.currentHealth != 0)
+        if(UseModule)
         {
             ActiveManualBaroudHonneur();
         }
-
-        if (ModuleAlreadyUse)
-        {
-            Destroy(gameObject);
-        }
+        base.Update();
     }
 
     private void ActiveManualBaroudHonneur()
     {
-        UseModule = true;
         GainHp();
-        ModuleAlreadyUse = true;
-        readyToUse = false;
     }
 
     private void AutoBaroudHonneur()
     {
-        UseModule = true;
+
         GainHp();
         CoroutineManager.Instance.StartCoroutine(playerHealth.InvincibilityDelay());
         CoroutineManager.Instance.StartCoroutine(playerHealth.InvincibilityFlash());
-        ModuleAlreadyUse = true;
-        readyToUse = false;
     }
 
     private void GainHp()

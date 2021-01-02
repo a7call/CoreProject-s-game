@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistortionGrenadeModule : ActiveObjects
+public class DistortionGrenadeModule : StacksObjects
 {
     [SerializeField] private GameObject distortionGrenade;
     // Start is called before the first frame update

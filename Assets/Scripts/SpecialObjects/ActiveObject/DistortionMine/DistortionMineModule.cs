@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistortionMineModule : ActiveObjects
+public class DistortionMineModule : StacksObjects
 {
     [SerializeField] private GameObject distortionMine;
     // Start is called before the first frame update

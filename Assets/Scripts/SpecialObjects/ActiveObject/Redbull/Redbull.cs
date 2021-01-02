@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Redbull : ActiveObjects
+public class Redbull : StacksObjects
 {
 
     private PlayerMouvement playerMouvement;
@@ -20,14 +20,11 @@ public class Redbull : ActiveObjects
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U) && readyToUse)
+        base.Update();
+        if (UseModule)
         {
             StartCoroutine(MoveCoroutine());
-        }
-
-        if (ModuleAlreadyUse)
-        {
-            Destroy(gameObject);
+            UseModule = false;
         }
     }
 
@@ -40,9 +37,6 @@ public class Redbull : ActiveObjects
         // playerEnergy.SpendEnergy(0);
         yield return new WaitForSeconds(timeMoveSpeed);
         playerMouvement.mooveSpeed = moveSpeed;
-        UseModule = false;
-        readyToUse = false;
-        ModuleAlreadyUse = true;
     }
 
 }

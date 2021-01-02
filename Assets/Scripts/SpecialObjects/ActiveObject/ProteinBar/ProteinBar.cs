@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProteinBar : ActiveObjects
+public class ProteinBar : StacksObjects
 {
 
     private PlayerHealth playerHealth;
@@ -14,24 +14,18 @@ public class ProteinBar : ActiveObjects
 
     protected override void Update()
     {
-        if(Input.GetKeyDown(KeyCode.U) && readyToUse)
+        base.Update();
+        if(UseModule)
         {
             TakeProteinBar();
-        }
-
-        if (ModuleAlreadyUse)
-        {
-            Destroy(gameObject);
+            UseModule = false;
         }
     }
 
     private void TakeProteinBar()
     {
         int gainHp = 2;
-        UseModule = true;
         playerHealth.currentHealth += gainHp;
-        ModuleAlreadyUse = true;
-        readyToUse = false;
     }
 
 }

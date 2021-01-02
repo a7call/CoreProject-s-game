@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-public class GravityBombModule : ActiveObjects
+public class GravityBombModule : StacksObjects
 {
     [SerializeField] private GameObject gravityBomb;
-     private bool spawned;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -22,7 +21,6 @@ public class GravityBombModule : ActiveObjects
 
     private void SpawnBomb()
     {
-        spawned = true;
         Instantiate(gravityBomb, transform.position, Quaternion.identity);
     }
 }
