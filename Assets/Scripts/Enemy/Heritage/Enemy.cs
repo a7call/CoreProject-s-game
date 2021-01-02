@@ -30,8 +30,8 @@ public class Enemy : MonoBehaviour
         Paralysed,
         KnockedBack,
         Freeze,
-        Feared
-        
+        Feared,
+        Charging
     }
     // pour l'épée electrique
     [HideInInspector]
