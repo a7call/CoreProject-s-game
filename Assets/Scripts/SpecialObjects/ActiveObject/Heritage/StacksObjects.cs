@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class StacksObjects : ActiveObjects
 {
-   [SerializeField] protected int numberOfUse = 0;
-   [SerializeField] protected float cd;
-    protected bool isOutOfUse = false;
+    public int numberOfUse = 0;
+    [SerializeField] protected float cd;
+    public bool isOutOfUse = false;
 
 
     protected override IEnumerator WayToReUse()

@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class Detonator : ModuleLauchPhase
 {
-    [SerializeField] private float timeBeforDesactivation;
     [SerializeField] private float radius;
     [SerializeField] private float explosionDamage;
     [SerializeField] private LayerMask hit;
     [SerializeField] protected float knockBackForce;
     [SerializeField] protected float knockBackTime;
-    [SerializeField] protected float exploDelay;
-    [SerializeField] protected bool readyToUse = false;
+    DetonatorModule detonatorModule;
 
 
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(ExploDelay());
+        detonatorModule = FindObjectOfType<DetonatorModule>();
         
     }
 
     protected override void Update()
     {
         base.Update();
-        if (Input.GetKeyDown(KeyCode.U) && readyToUse)
+        if (detonatorModule.readyToExplode && detonatorModule.UseModule)
         {
             Explosion();
-            readyToUse = false;
-
+            detonatorModule.readyToExplode = false;
+            detonatorModule.UseModule = false;
+            if (detonatorModule.numberOfUse < 1)
+            {
+                detonatorModule.isOutOfUse = true;
+            }
         }
     }
 
@@ -50,19 +52,4 @@ public class Detonator : ModuleLauchPhase
         Destroy(gameObject);
     }
 
-
-    protected IEnumerator ExploDelay()
-    {
-        yield return new WaitForSeconds(exploDelay);
-        readyToUse = true;
-    }
-    //protected override void Update()
-    //{
-    //    base.Update();
-    //    if (isNotMoving && !isAlreadyActive)
-    //    {
-    //        isAlreadyActive = true;
-    //        StartCoroutine(Explosion());
-    //    }
-    //}
 }

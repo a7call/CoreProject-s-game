@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4025607436608148730}
   - component: {fileID: 8858582566800578618}
   - component: {fileID: 6902723265267078792}
+  - component: {fileID: 4748637484915742869}
   m_Layer: 0
   m_Name: DotProjectile(Poison)
   m_TagString: Untagged
@@ -123,5 +124,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerProjectileData: {fileID: 11400000, guid: b3fa1035766f2c5438f8ef5acfe87b76, type: 2}
+  Dispersion: 0
   timeBetweenHits: 1
   poisonedTimer: 2
+--- !u!50 &4748637484915742869
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927276475640717706}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
