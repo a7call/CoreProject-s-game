@@ -8,19 +8,14 @@ public class BubbleMS : Distance
     [SerializeField] protected GameObject rayon;
 
     [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();
+
+    public GameObject deathObject;
     
     private bool firstShoot = true;
-    [SerializeField] private bool canDie = false;
 
-    private AngleProjectile AngleProjectile;
-    [SerializeField] GameObject[] projectiles;
-
-    private float timeShoot = 6f;
-    private int angleTir = 360;
 
     void Start()
     {
-        GetProjectile();
         currentState = State.Patrolling;
         // Set data
         SetData();
@@ -28,7 +23,6 @@ public class BubbleMS : Distance
     }
     protected override void Update()
     {
-        print(currentHealth);
         EnabledRayon();
 
         switch (currentState)
@@ -71,7 +65,7 @@ public class BubbleMS : Distance
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
-            CoroutineManager.Instance.StartCoroutine(Die());
+            Instantiate(deathObject, transform.position, Quaternion.identity);
             SpawnRewards();
         }
     }
@@ -114,34 +108,6 @@ public class BubbleMS : Distance
             ParasiteIdol.parasiteIdolFear = false;
             firstShoot = true;
             isReadytoShoot = true;
-        }
-    }
-
-    private IEnumerator Die()
-    {
-        print("A");
-        canDie = true;
-        
-        float decalage = angleTir / (projectiles.Length - 1);
-        AngleProjectile.angleDecalage = -decalage * (projectiles.Length + 1) / 2;
-
-        //base.Shoot();
-        for (int i = 0; i < projectiles.Length; i++)
-        {
-            AngleProjectile.angleDecalage = AngleProjectile.angleDecalage + decalage;
-            GameObject myProjectile = GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
-            myProjectile.transform.parent = gameObject.transform;
-        }
-
-        yield return new WaitForSeconds(timeShoot);
-        print("test");
-    }
-
-    private void GetProjectile()
-    {
-        foreach (GameObject projectile in projectiles)
-        {
-            AngleProjectile = projectile.GetComponent<AngleProjectile>();
         }
     }
 

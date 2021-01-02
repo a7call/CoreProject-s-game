@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     public float speed;
     public bool isDisabled;
     // cible des projectiles (Player)
-    protected Transform target;
+    public Transform target;
     // direction (en fonction de la place de la cible)
     [HideInInspector]
     public Vector3 dir;
@@ -41,7 +41,10 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Start()
     {
-        target = GetComponentInParent<Enemy>().target;
+        if (GetComponentInParent<Enemy>())
+        {
+            target = GetComponentInParent<Enemy>().target;
+        }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         transform.parent = null;
         foreach (Transform child in playerHealth.transform)
