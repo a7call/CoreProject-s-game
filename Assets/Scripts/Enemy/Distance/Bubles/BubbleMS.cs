@@ -23,8 +23,8 @@ public class BubbleMS : Distance
     }
     protected override void Update()
     {
+        base.Update();
         EnabledRayon();
-
         switch (currentState)
         {
             case State.Patrolling:
@@ -38,23 +38,6 @@ public class BubbleMS : Distance
                 isInRange();
                 StartCoroutine(CanShoot());
                 break;
-
-            case State.Paralysed:
-                rb.velocity = Vector2.zero;
-                break;
-
-            case State.KnockedBack:
-                rb.velocity = Vector2.zero;
-                break;
-
-            case State.Freeze:
-                rb.velocity = Vector2.zero;
-                break;
-
-            case State.Feared:
-                Fear();
-                break;
-
         }
 
     }

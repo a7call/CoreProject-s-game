@@ -34,9 +34,12 @@ public class Projectile : MonoBehaviour
 
 
     GameObject[] enemies;
+    LayerMask ignoreLayer = 3;
+    LayerMask ignoreLayer2 = 6;
     protected virtual void Awake()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
+        Physics2D.IgnoreLayerCollision(ignoreLayer, ignoreLayer2, true);
     }
 
     protected virtual void Start()
@@ -47,6 +50,7 @@ public class Projectile : MonoBehaviour
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         transform.parent = null;
+
         foreach (Transform child in playerHealth.transform)
         {
             if (child.GetComponent<BoxCollider2D>() != null)
