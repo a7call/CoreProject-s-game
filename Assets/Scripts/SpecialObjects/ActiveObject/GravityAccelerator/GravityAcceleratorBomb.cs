@@ -12,12 +12,13 @@ public class GravityAcceleratorBomb : MonoBehaviour
     {
         enemiesSlowed = new List<GameObject>();
         Invoke("Activation", timeBeforActivation);
-        StartCoroutine(Desactivation());
+        CoroutineManager.Instance.StartCoroutine(Desactivation());
         
     }
     private void Activation()
     {
-        GetComponent<Collider2D>().enabled = true;
+
+        GetComponent<CircleCollider2D>().enabled = true;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,6 +26,11 @@ public class GravityAcceleratorBomb : MonoBehaviour
         {
             collision.GetComponent<Enemy>().moveSpeed /= 2f;
             enemiesSlowed.Add(collision.gameObject);
+        }
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerMouvement>().mooveSpeed /= 2f;
+           
         }
     }
 
@@ -34,6 +40,11 @@ public class GravityAcceleratorBomb : MonoBehaviour
         {
             collision.GetComponent<Enemy>().moveSpeed *= 2f;
             enemiesSlowed.Remove(collision.gameObject);
+        }
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerMouvement>().mooveSpeed *= 2f;
+
         }
     }
 

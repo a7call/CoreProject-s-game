@@ -9,34 +9,51 @@ public class DistortionMine : MonoBehaviour
     [SerializeField] private LayerMask hit;
     [SerializeField] protected float knockBackForce;
     [SerializeField] protected float knockBackTime;
+    protected bool isActive = false;
+    protected float timeBeforActive = 1.5f;
 
     private void Start()
     {
+        Invoke("Activation", timeBeforActive);
         Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Collider2D>(), GetComponent<Collider2D>());
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+ 
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
             Explosion();
         }
-        
     }
     private void Explosion()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, hit);
-        foreach (Collider2D hit in hits)
+        if (isActive)
         {
-            if (hit.gameObject.GetComponent<Enemy>())
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, hit);
+            foreach (Collider2D hit in hits)
             {
-                Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-                Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
-                CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
-                enemy.TakeDamage(explosionDamage);
+                if (hit.gameObject.GetComponent<Enemy>())
+                {
+                    Enemy enemy = hit.gameObject.GetComponent<Enemy>();
+                    Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
+                    CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
+                    enemy.TakeDamage(explosionDamage);
+                    
+                }
+
+                if (hit.gameObject.GetComponent<PlayerHealth>())
+                {
+                    PlayerHealth player = hit.gameObject.GetComponent<PlayerHealth>();
+                    player.TakeDamage(1);
+                }
                 Destroy(gameObject);
             }
-        }
-        
+        } 
+    }
+
+    private void Activation()
+    {
+        isActive = true;
     }
 }

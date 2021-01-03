@@ -148,7 +148,7 @@ GameObject:
   m_Layer: 0
   m_Name: VoidGrenade
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -198,13 +198,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transBomb: {fileID: 1276869474020593630}
   transShadow: {fileID: 573794249171479019}
-  timeBeforExplosion: 2
-  SlowTime: 5
+  timeBeforDesactivation: 3
   radius: 3
   explosionDamage: 0
   hit:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
   knockBackForce: 150
   knockBackTime: 0.15
+  timeBeforExplosion: 2
+  SlowTime: 5
   SpeedDivisor: 4

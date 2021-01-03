@@ -49,7 +49,7 @@ GameObject:
   m_Layer: 9
   m_Name: HeltmetAstronautMS
   m_TagString: Enemy
-  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4378bbe7b21ee26468837b0a99caead3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isreadyToAttack: 1
   currentState: 0
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
@@ -201,7 +202,7 @@ MonoBehaviour:
   CacDatas: {fileID: 11400000, guid: c06b49dc52aef264eaa09d5b520d69f1, type: 2}
   attackPoint: {fileID: 9149136851748265925}
   distanceEnemyAggressive: 5
-  newSpeedEnemy: 225
+  newSpeedEnemy: 200
   speedDuration: 1.75
 --- !u!61 &8529353626898803446
 BoxCollider2D:
@@ -482,6 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -613,6 +615,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &9149136853435438791
 MonoBehaviour:
   m_ObjectHideFlags: 0

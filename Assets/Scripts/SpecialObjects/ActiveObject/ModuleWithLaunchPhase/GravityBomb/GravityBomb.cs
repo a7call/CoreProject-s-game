@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityBomb : ModuleLauchPhase
+public class GravityBomb : ExplosivesModule
 {
     [SerializeField] private float timeBeforActivation = 0f;
-    [SerializeField] private float timeBeforDesactivation = 0f;
-    [SerializeField] private float radius = 0f;
-    [SerializeField] private float explosionDamage = 0f;
-    [SerializeField] private LayerMask hit = 0;
-    
-   
-    
 
     private List<GameObject> enemiesSlowed;
 
@@ -33,6 +26,11 @@ public class GravityBomb : ModuleLauchPhase
             collision.GetComponent<Enemy>().moveSpeed /= 2f;
             enemiesSlowed.Add(collision.gameObject);
         }
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerMouvement>().mooveSpeed /= 2f;
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -41,6 +39,10 @@ public class GravityBomb : ModuleLauchPhase
         {
             collision.GetComponent<Enemy>().moveSpeed *= 2f;
             enemiesSlowed.Remove(collision.gameObject);
+        }
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerMouvement>().mooveSpeed *= 2f;
         }
     }
 
@@ -51,22 +53,8 @@ public class GravityBomb : ModuleLauchPhase
         {
             isAlreadyActive = true;
             Invoke("Activation", timeBeforActivation);
-            StartCoroutine(Desactivation());
+            CoroutineManager.Instance.StartCoroutine(ExplosionOnEnemy());
         }
     }
-    private IEnumerator Desactivation()
-    {
-        yield return new WaitForSeconds(timeBeforDesactivation);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, hit);
-        foreach(Collider2D hit in hits) {
-            if (hit.gameObject.GetComponent<Enemy>())
-            {
-                hit.GetComponent<Enemy>().TakeDamage(explosionDamage);
-            }
-        }
-        Destroy(gameObject);
-    }
-
-
-   
+ 
 }

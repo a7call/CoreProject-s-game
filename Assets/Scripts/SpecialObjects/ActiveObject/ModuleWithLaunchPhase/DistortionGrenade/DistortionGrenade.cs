@@ -9,17 +9,12 @@ public class DistortionGrenade : ExplosivesModule
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(ExplosionOnEnemy());
+        CoroutineManager.Instance.StartCoroutine(ExplosionOnEnemy());
     }
    
 
     protected override void Update()
     {
         base.Update();
-        if (isNotMoving && !isAlreadyActive)
-        {
-            isAlreadyActive = true;
-            StartCoroutine(ExplosionOnEnemy());
-        }
     }
 }
