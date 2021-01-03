@@ -293,7 +293,7 @@ public class Enemy : MonoBehaviour
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
         if (enemy == null) yield break;  
-        currentState = State.Attacking;
+        currentState = State.Chasing;
         if (enemy == null) yield break;
         rb.velocity = Vector2.zero;
         aIPath.canMove = true;
