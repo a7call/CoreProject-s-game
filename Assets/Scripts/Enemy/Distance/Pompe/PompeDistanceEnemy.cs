@@ -8,8 +8,6 @@ using UnityEngine;
 /// </summary>
 public class PompeDistanceEnemy : Distance
 {
-
-    
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
     private AngleProjectile AngleProjectile;
@@ -17,7 +15,7 @@ public class PompeDistanceEnemy : Distance
     void Start()
     {
         GetProjectile();
-        currentState = State.Patrolling;
+        currentState = State.Chasing;
         // Set data
         SetData();
         SetMaxHealth();
@@ -31,17 +29,10 @@ public class PompeDistanceEnemy : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
-                if (canCharge)
-                {
-                    currentState = Enemy.State.Charging;
-                }
                 break;
             case State.Chasing:
                 isInRange();
-                if (canCharge)
-                {
-                    currentState = Enemy.State.Charging;
-                }
+                ChargingMode();
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:
@@ -50,7 +41,7 @@ public class PompeDistanceEnemy : Distance
                 StartCoroutine("CanShoot");
                 break;
             case State.Charging:
-                print("En mode chargingState");
+                ChargeToAttack();
                 StartCoroutine(ChargingCoroutine());
                 break;
         }
@@ -72,6 +63,24 @@ public class PompeDistanceEnemy : Distance
 
     }
 
+    private void ChargeToAttack()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+            // A changer par la suite
+            aIPath.maxSpeed = 2f;
+        }
+    }
+
+    private void ChargingMode()
+    {
+        if (canCharge)
+        {
+            currentState = Enemy.State.Charging;
+        }
+    }
+
     private void GetProjectile()
     {
         foreach(GameObject projectile in projectiles)
@@ -85,7 +94,7 @@ public class PompeDistanceEnemy : Distance
     /// Accélère lorsqu'il charge
     /// Charge et s'arrête légèrement avant l'ennemi
     /// Passe en state attacking car il est en range
-    /// Il peut charger toutes les minutes
+    /// Il peut charger toutes les x secondes
     /// La première charge doit être réalisée quelques secondes après le pop du mob
     
    // Délai entre deux charges
@@ -121,6 +130,7 @@ public class PompeDistanceEnemy : Distance
             yield return new WaitForSeconds(chargeTime);
             isCharging = false;
             aIPath.maxSpeed = initialMoveSpeed;
+            currentState = Enemy.State.Chasing;
             yield return new WaitForSeconds(chargeDelay);
             canCharge = true;
         }
