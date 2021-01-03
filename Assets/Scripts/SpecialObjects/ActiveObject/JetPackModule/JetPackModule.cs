@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JetPackModule : ActiveObjects
+public class JetPackModule : CdObjects
 {
 
     private bool isAlreadyFlying;
@@ -30,6 +30,7 @@ public class JetPackModule : ActiveObjects
         if (UseModule && !isAlreadyFlying)
         {
             StartCoroutine(StartFlying());
+            UseModule = false;
         }
         else if (UseModule && isAlreadyFlying)
         {

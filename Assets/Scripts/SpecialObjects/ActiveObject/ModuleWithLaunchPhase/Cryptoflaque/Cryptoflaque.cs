@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cryptoflaque : ActiveObjects
+public class Cryptoflaque : StacksObjects
 {
 
     [SerializeField] protected GameObject Flaque;

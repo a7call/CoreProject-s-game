@@ -20,7 +20,7 @@ public class ExplosivesModule : ModuleLauchPhase
             }
          base.Start();
     }
-    protected IEnumerator ExplosionOnEnemy()
+    protected virtual IEnumerator ExplosionOnEnemy()
     {
         yield return new WaitForSeconds(timeBeforDesactivation);
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, hit);
@@ -31,10 +31,16 @@ public class ExplosivesModule : ModuleLauchPhase
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
                 ExplosionEffects(enemy);
             }
+            if (hit.gameObject.GetComponent<PlayerHealth>())
+            {
+                PlayerHealth player = hit.gameObject.GetComponent<PlayerHealth>();
+                player.TakeDamage(1);
+            }
+            
         }
-       
+        Destroy(gameObject);
     }
-    protected void ExplosionEffects(Enemy enemy)
+    protected virtual void ExplosionEffects(Enemy enemy)
     {
         Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
         CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
@@ -43,6 +49,6 @@ public class ExplosivesModule : ModuleLauchPhase
             CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemy));
         }
         enemy.TakeDamage(explosionDamage);
-        Destroy(gameObject);
+        
     }
 }
