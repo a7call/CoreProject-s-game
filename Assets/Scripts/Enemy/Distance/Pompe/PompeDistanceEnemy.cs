@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 /// <summary>
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
@@ -11,9 +14,6 @@ public class PompeDistanceEnemy : Distance
     [SerializeField] int angleTir = 0;
     private AngleProjectile AngleProjectile;
 
-
-
-
     void Start()
     {
         GetProjectile();
@@ -21,6 +21,7 @@ public class PompeDistanceEnemy : Distance
         // Set data
         SetData();
         SetMaxHealth();
+        StartCoroutine(ChargeLoading());
     }
 
     protected override void Update()
@@ -30,15 +31,27 @@ public class PompeDistanceEnemy : Distance
         {
             case State.Patrolling:
                 PlayerInSight();
+                if (canCharge)
+                {
+                    currentState = Enemy.State.Charging;
+                }
                 break;
             case State.Chasing:
                 isInRange();
+                if (canCharge)
+                {
+                    currentState = Enemy.State.Charging;
+                }
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
                 StartCoroutine("CanShoot");
+                break;
+            case State.Charging:
+                print("En mode chargingState");
+                StartCoroutine(ChargingCoroutine());
                 break;
         }
 
@@ -59,7 +72,6 @@ public class PompeDistanceEnemy : Distance
 
     }
 
-
     private void GetProjectile()
     {
         foreach(GameObject projectile in projectiles)
@@ -67,4 +79,55 @@ public class PompeDistanceEnemy : Distance
            AngleProjectile = projectile.GetComponent<AngleProjectile>();
         }
     }
+
+    /// Fonctionnement du charging
+    /// S'arrête quelques secondes
+    /// Accélère lorsqu'il charge
+    /// Charge et s'arrête légèrement avant l'ennemi
+    /// Passe en state attacking car il est en range
+    /// Il peut charger toutes les minutes
+    /// La première charge doit être réalisée quelques secondes après le pop du mob
+    
+   // Délai entre deux charges
+    [SerializeField] private float chargeDelay = 10f;
+    // Temps de la charge
+    private float chargeTime = 1f;
+    // Temps d'attente avant la première charge
+    private float delayToFirstCharge = 2f;
+    // Temps pendant lequel le personnage ne bouge pas
+    private float waitingTime = 1f;
+
+    [SerializeField] private bool canCharge = false;
+    [SerializeField] private bool isCharging = false;
+
+    private IEnumerator ChargeLoading()
+    {
+        yield return new WaitForSeconds(delayToFirstCharge);
+        canCharge = true;
+    }
+
+
+    private IEnumerator ChargingCoroutine()
+    {
+        if(canCharge && !isCharging)
+        {
+            canCharge = false;
+            aIPath.canMove = false;
+            isCharging = true;
+            float initialMoveSpeed = aIPath.maxSpeed;
+            yield return new WaitForSeconds(waitingTime);
+            aIPath.maxSpeed = 10f;
+            aIPath.canMove = true;
+            yield return new WaitForSeconds(chargeTime);
+            isCharging = false;
+            aIPath.maxSpeed = initialMoveSpeed;
+            yield return new WaitForSeconds(chargeDelay);
+            canCharge = true;
+        }
+        else
+        {
+            yield return null;
+        }
+    }
+
 }
