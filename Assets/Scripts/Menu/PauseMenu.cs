@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
 
     protected void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (pause)
         {
             pause = false;
             if (isGamePaused)
@@ -70,6 +70,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnPause()
     {
+        print("tet");
         pause = true;
     }
 }

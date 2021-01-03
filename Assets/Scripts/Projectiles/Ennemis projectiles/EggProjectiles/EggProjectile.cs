@@ -7,8 +7,9 @@ public class EggProjectile : Projectile
 {
    [SerializeField] protected GameObject mobs;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
         GetDirection();
     }
 

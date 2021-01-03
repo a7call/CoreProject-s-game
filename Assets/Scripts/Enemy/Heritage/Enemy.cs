@@ -126,7 +126,6 @@ public class Enemy : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
-    private int fearDistance = 5;
     protected virtual void Fear()
 
     {
