@@ -82,6 +82,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4864977651687928431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -424,12 +426,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d20db9f78484f242bafd9063eacfc2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  isreadyToAttack: 1
+  currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
+  aIPath: {fileID: 0}
+  targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  target: {fileID: 0}
   rb: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   currentHealth: 0
   maxHealth: 0
   healthBar: {fileID: 4864977652259965326}

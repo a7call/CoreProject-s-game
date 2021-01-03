@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89abe315c2b6c4d15ac4a1dd3aba15b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isreadyToAttack: 1
   currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
@@ -169,7 +170,7 @@ MonoBehaviour:
   isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 3a7ec0a8c55c24e79a05b4e5ee678a3d, type: 2}
   isShooting: 0
-  range: 0
+  range: 2
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -481,6 +482,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8632570933923486596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
