@@ -10,18 +10,19 @@ public class HelmetAstronautExplose : Cac
 
     private void Start()
     {
+       
         SetData();
         SetMaxHealth();
     }
 
     protected override void Update()
     {
-
         base.Update();
         switch (currentState)
         {
-            default:
+
             case State.Patrolling:
+                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();
@@ -31,9 +32,11 @@ public class HelmetAstronautExplose : Cac
                 GetPlayerPos();
                 StartCoroutine(Attack());
                 break;
+
         }
 
     }
+   
    
     private IEnumerator Attack()
     {

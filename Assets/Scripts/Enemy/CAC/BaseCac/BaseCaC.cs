@@ -10,7 +10,7 @@ public class BaseCaC : Cac
     
     private void Start()
     {
-        currentState = State.Patrolling;
+        //currentState = State.Patrolling;
         // Set data
         SetData();
         SetMaxHealth();
