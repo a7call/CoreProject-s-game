@@ -72,7 +72,7 @@ public class SettingsWindow : MonoBehaviour
         UpButtonText.text = InputControlPath.ToHumanReadableString(Vertical.action.bindings[2].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
         Text DownButtonText = DownButton.GetComponentInChildren<Text>();
-        DownButtonText.text = InputControlPath.ToHumanReadableString(Vertical.action.bindings[2].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        DownButtonText.text = InputControlPath.ToHumanReadableString(Vertical.action.bindings[1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
         Text ShootButtonText = ShootButton.GetComponentInChildren<Text>();
         ShootButtonText.text = InputControlPath.ToHumanReadableString(Shoot.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
