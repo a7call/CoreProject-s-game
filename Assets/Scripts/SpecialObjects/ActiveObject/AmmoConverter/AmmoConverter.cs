@@ -26,6 +26,7 @@ public class AmmoConverter : CdObjects
         {
             StartCoroutine(ActiveTime());
             UseModule = false;
+            
 
         } 
         
@@ -34,15 +35,18 @@ public class AmmoConverter : CdObjects
     protected virtual IEnumerator ActiveTime()
     {
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        isActive = true;
 
         yield return new WaitForSeconds(activeTime);
 
+        isActive = false;
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
         
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.CompareTag("EnemyProjectil") && isActive)
         {
             
@@ -53,6 +57,7 @@ public class AmmoConverter : CdObjects
             {
                 DistanceWeapon distanceWeapon = weaponManager.GetComponentInChildren<DistanceWeapon>();
                 distanceWeapon.AmmoStock++;
+                
 
             }
             else
