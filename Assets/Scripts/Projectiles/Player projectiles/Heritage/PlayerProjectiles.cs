@@ -60,10 +60,12 @@ public class PlayerProjectiles : MonoBehaviour
     [HideInInspector]
     public float Dispersion;
     private Rigidbody2D projectileRB;
-
+  
     protected virtual void Awake()
     {
+        
         SetData();
+        LayerSettings();
         player = GameObject.FindGameObjectWithTag("Player");
         weapon = GameObject.FindGameObjectWithTag("WeaponManager");
         weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
@@ -74,7 +76,7 @@ public class PlayerProjectiles : MonoBehaviour
         dir = (weaponAttackP.attackPoint.position - playerTransform.position).normalized;
         ConeShoot();
     }
-
+    
 
     protected virtual void Update()
     {
@@ -109,6 +111,16 @@ public class PlayerProjectiles : MonoBehaviour
         speed = PlayerProjectileData.speed;
         knockBackForce = PlayerProjectileData.knockBackForce;
         knockBackTime = PlayerProjectileData.knockBackTime;
+    }
+
+    LayerMask ignoreLayerProjectile = 3;
+    LayerMask ignoreLayerObject = 7;
+    void LayerSettings()
+    {
+        gameObject.layer = 6;
+        Physics2D.IgnoreLayerCollision(gameObject.layer, ignoreLayerProjectile, true);
+        Physics2D.IgnoreLayerCollision(gameObject.layer, ignoreLayerObject, true);
+
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {

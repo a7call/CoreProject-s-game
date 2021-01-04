@@ -111,11 +111,11 @@ public class PlayerHealth : Player
         {
             if (currentArmor > 0)
             {
-                currentArmor -= damage;
+                currentArmor -= 1;
             }
             else
             {
-                currentHealth -= damage;
+                currentHealth -= 1;
             }
         }
     }

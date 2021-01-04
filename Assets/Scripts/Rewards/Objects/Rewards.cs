@@ -8,6 +8,7 @@ public class Rewards : MonoBehaviour
 
     protected virtual void Start()
     {
+        SetLayer();
         Transform player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         inventory = FindObjectOfType<Inventory>();
         foreach (Transform child in player)
@@ -26,4 +27,8 @@ public class Rewards : MonoBehaviour
         Destroy(gameObject);  
     }
 
+    void SetLayer()
+    {
+        gameObject.layer = 7;
+    }
 }

@@ -34,12 +34,10 @@ public class Projectile : MonoBehaviour
 
 
     GameObject[] enemies;
-    LayerMask ignoreLayer = 3;
-    LayerMask ignoreLayer2 = 6;
+    
     protected virtual void Awake()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        Physics2D.IgnoreLayerCollision(ignoreLayer, ignoreLayer2, true);
     }
 
     protected virtual void Start()
