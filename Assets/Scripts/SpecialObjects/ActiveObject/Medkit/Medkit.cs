@@ -13,6 +13,7 @@ public class Medkit : StacksObjects
 
     protected override void Start()
     {
+        base.Start();
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
     protected override void Update()

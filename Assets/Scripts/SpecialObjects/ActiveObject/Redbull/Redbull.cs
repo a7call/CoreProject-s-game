@@ -12,6 +12,7 @@ public class Redbull : StacksObjects
 
     protected override void Start()
     {
+        base.Start();
         // pas cumulable (c'est chiant)
         timeMoveSpeed = cd + 1;
         playerMouvement = FindObjectOfType<PlayerMouvement>();
