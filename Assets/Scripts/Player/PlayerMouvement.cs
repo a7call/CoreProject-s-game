@@ -60,20 +60,6 @@ public class PlayerMouvement : Player
                 ClampMouvement(mouvement);
                 GetLastDirection();
                 SetAnimationVariable();
-
-                
-                if(Input.GetMouseButton(1))
-                {
-
-                        if (isPiercedPocketModule  )
-                        {
-                         
-                          
-                        } 
-                }
-
-
-
                 break;
 
             case EtatJoueur.fear:
@@ -96,6 +82,7 @@ public class PlayerMouvement : Player
         switch (currentEtat)
         {
             default:
+
                 break;
 
             case EtatJoueur.normal:
@@ -114,7 +101,6 @@ public class PlayerMouvement : Player
 
             case EtatJoueur.Dashing:
                 gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                StartCoroutine(Dash());
                 PiercedPocketActivation();
                 break;
         }
@@ -183,15 +169,19 @@ public class PlayerMouvement : Player
         if (canDash && playerEnergy.currentStack > 0)
         {
             Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-            currentEtat = EtatJoueur.Dashing;
-            playerEnergy.SpendEnergy(1);
-            canDash = false;
-            rb.AddForce(dir * dashForce * Time.deltaTime, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(DashTime);
-            gameObject.GetComponent<BoxCollider2D>().enabled = true;
-            currentEtat = EtatJoueur.normal;
-            yield return new WaitForSeconds(timeBetweenDashes);
-            canDash = true;
+            if(dir!= Vector2.zero)
+            {
+                currentEtat = EtatJoueur.Dashing;
+                playerEnergy.SpendEnergy(1);
+                canDash = false;
+                rb.AddForce(dir * dashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                yield return new WaitForSeconds(DashTime);
+                gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                currentEtat = EtatJoueur.normal;
+                yield return new WaitForSeconds(timeBetweenDashes);
+                canDash = true;
+            }
+            
         }     
     }
 

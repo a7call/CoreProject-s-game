@@ -8,7 +8,6 @@ public class MagnetizedBeld : CdObjects
     protected RaycastHit2D hit;
     protected RaycastHit2D hitMemory;
     private bool isGoingToWall;
-    private GameObject player;
     private PlayerMouvement playerMouv;
     [SerializeField]  protected LayerMask hitLayer;
     [SerializeField] protected float speed;
@@ -19,7 +18,6 @@ public class MagnetizedBeld : CdObjects
     }
     private void GetDatas()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         playerMouv = player.GetComponent<PlayerMouvement>();
     }
     protected override void Update()

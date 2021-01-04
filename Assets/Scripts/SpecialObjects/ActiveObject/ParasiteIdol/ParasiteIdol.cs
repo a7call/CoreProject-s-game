@@ -11,10 +11,12 @@ public class ParasiteIdol : CdObjects
 
     protected override void Start()
     {
+        base.Start();
     }
 
     protected override void Update()
     {
+        base.Update();
         if(UseModule)
         {
             UseModule = false;

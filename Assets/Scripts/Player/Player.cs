@@ -8,8 +8,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
     public PlayerScriptableObjectScript playerData;
-    [HideInInspector]
-    public EtatJoueur currentEtat = EtatJoueur.normal;
+    public EtatJoueur currentEtat ;
 
     protected Transform HealthContent;
     protected GameObject canvas;
@@ -54,7 +53,7 @@ public class Player : MonoBehaviour
     public int maxStacks;
     [HideInInspector]
     public float mooveSpeed;
-    //[HideInInspector]
+    [HideInInspector]
     public float dashForce;
     protected float DashTime;
     [HideInInspector]

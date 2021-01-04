@@ -7,7 +7,6 @@ public class JetPackModule : CdObjects
 
     private bool isAlreadyFlying;
     private Rigidbody2D rbPlayer;
-    private GameObject player;
     private Transform shadow;
     [SerializeField] private float hauteurDeVole;
     [SerializeField] private float ShadowPosY;
@@ -16,25 +15,32 @@ public class JetPackModule : CdObjects
     private bool isStoppingfly;
     Vector3 playerCurrentPos;
     Vector3 currentShadowPos;
+    bool isFlying;
     protected override void Start()
     {
         base.Start();
-        player = GameObject.FindGameObjectWithTag("Player");
         shadow = GameObject.FindGameObjectWithTag("PlayerShadow").transform;
         rbPlayer = player.GetComponent<Rigidbody2D>();
         
     }
     protected override void Update()
     {
+        if (isFlying)
+        {
+           player.canDash = false;
+        }
         
         if (UseModule && !isAlreadyFlying)
         {
             StartCoroutine(StartFlying());
             UseModule = false;
+            isFlying = true;
         }
         else if (UseModule && isAlreadyFlying)
         {
             UseModule = false;
+            player.canDash = true;
+            isFlying = false;
             StartCoroutine(StopFlying());
 
         }
