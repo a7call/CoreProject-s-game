@@ -19,6 +19,7 @@ public class ActiveObjects : MonoBehaviour
     {
         Cam = Camera.main;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMouvement>();
+       
 
     }
 
@@ -30,8 +31,6 @@ public class ActiveObjects : MonoBehaviour
 
     public void ToUseModule()
     {
-       
-       
         if (readyToUse && player.currentEtat == PlayerMouvement.EtatJoueur.normal)
         {
             UseModule = true;
