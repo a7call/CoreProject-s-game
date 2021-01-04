@@ -51,6 +51,7 @@ public class GravityBomb : ExplosivesModule
         base.Update();
         if(isNotMoving && !isAlreadyActive)
         {
+            print("test");
             isAlreadyActive = true;
             Invoke("Activation", timeBeforActivation);
             CoroutineManager.Instance.StartCoroutine(ExplosionOnEnemy());

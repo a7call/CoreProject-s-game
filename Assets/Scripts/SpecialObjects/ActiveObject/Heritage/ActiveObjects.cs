@@ -25,12 +25,11 @@ public class ActiveObjects : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        
+
     }
 
     public void ToUseModule()
     {
-       
        
         if (readyToUse && player.currentEtat == PlayerMouvement.EtatJoueur.normal)
         {

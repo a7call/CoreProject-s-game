@@ -5,6 +5,7 @@ using UnityEngine;
 public class DistortionMine : MonoBehaviour
 {
     [SerializeField] private float radius;
+    [SerializeField] private float ExplosionRadius;
     [SerializeField] private float explosionDamage;
     [SerializeField] private LayerMask hit;
     [SerializeField] protected float knockBackForce;
@@ -17,6 +18,8 @@ public class DistortionMine : MonoBehaviour
         Invoke("Activation", timeBeforActive);
         Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Collider2D>(), GetComponent<Collider2D>());
+        CircleCollider2D CirlceCollider = gameObject.AddComponent<CircleCollider2D>();
+        CirlceCollider.radius = radius;
     }
  
     private void OnTriggerStay2D(Collider2D collision)
@@ -30,7 +33,7 @@ public class DistortionMine : MonoBehaviour
     {
         if (isActive)
         {
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, hit);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius, hit);
             foreach (Collider2D hit in hits)
             {
                 if (hit.gameObject.GetComponent<Enemy>())
@@ -55,5 +58,11 @@ public class DistortionMine : MonoBehaviour
     private void Activation()
     {
         isActive = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, ExplosionRadius);
     }
 }
