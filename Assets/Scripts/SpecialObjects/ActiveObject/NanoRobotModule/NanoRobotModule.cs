@@ -51,7 +51,7 @@ public class NanoRobotModule : CdObjects
             if (hit.gameObject == null) continue;
             if (hit.CompareTag("Enemy"))
             {
-                if (hit.gameObject == enemy.gameObject) continue;
+                if (hit.gameObject == enemy.gameObject) Destroy(gameObject);
                 Enemy enemyScript = hit.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
                 Vector2 dir = (enemy.transform.position - hit.gameObject.transform.position).normalized;

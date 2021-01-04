@@ -5,23 +5,21 @@ using UnityEngine;
 public class HelmetAstronautExplose : Cac
 {
     [SerializeField] private float timeToExplode = 1f;
-
-    
-
     private void Start()
     {
+       
         SetData();
         SetMaxHealth();
     }
 
     protected override void Update()
     {
-
         base.Update();
         switch (currentState)
         {
-            default:
+
             case State.Patrolling:
+                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();
@@ -31,9 +29,11 @@ public class HelmetAstronautExplose : Cac
                 GetPlayerPos();
                 StartCoroutine(Attack());
                 break;
+
         }
 
     }
+   
    
     private IEnumerator Attack()
     {

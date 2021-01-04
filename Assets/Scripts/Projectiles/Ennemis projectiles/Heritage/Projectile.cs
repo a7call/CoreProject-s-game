@@ -34,6 +34,7 @@ public class Projectile : MonoBehaviour
 
 
     GameObject[] enemies;
+    
     protected virtual void Awake()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -47,6 +48,7 @@ public class Projectile : MonoBehaviour
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         transform.parent = null;
+
         foreach (Transform child in playerHealth.transform)
         {
             if (child.GetComponent<BoxCollider2D>() != null)

@@ -12,8 +12,7 @@ public class PlayerMouvement : Player
     public static bool isModuleInertie;
 
     private Vector2 mouvement;
-    private bool isCorotinePlaying=false;
-    public bool canDash = true;
+
 
     //Changement de velocity de privée à public
     [HideInInspector]
@@ -61,31 +60,6 @@ public class PlayerMouvement : Player
                 ClampMouvement(mouvement);
                 GetLastDirection();
                 SetAnimationVariable();
-
-                MakesEnergy();
-                LastStack();
-
-                
-                if(Input.GetMouseButton(1))
-                {
-                    playerEnergy.energyIsReloading = false;
-                    if (canDash)
-                    {
-                        Dash();
-                        if (isPiercedPocketModule  )
-                        {
-                            PiercedPocketModule pockets = FindObjectOfType<PiercedPocketModule>();
-                            if(pockets.bombsReady) StartCoroutine(pockets.SpawnBombs());
-                        }
-                    }
-                    if (isCorotinePlaying == false)
-                    {
-                        StartCoroutine(Coro());
-                    }
-                }
-
-
-
                 break;
 
             case EtatJoueur.fear:
@@ -98,6 +72,7 @@ public class PlayerMouvement : Player
             case EtatJoueur.Grapping:
 
                 break;
+
         }
 
     }
@@ -107,6 +82,7 @@ public class PlayerMouvement : Player
         switch (currentEtat)
         {
             default:
+
                 break;
 
             case EtatJoueur.normal:
@@ -121,6 +97,11 @@ public class PlayerMouvement : Player
                 break;
 
             case EtatJoueur.Grapping:
+                break;
+
+            case EtatJoueur.Dashing:
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                PiercedPocketActivation();
                 break;
         }
         
@@ -180,45 +161,37 @@ public class PlayerMouvement : Player
         }
     }
 
-    private void MakesEnergy()
+    
+    public bool canDash = true;
+    public float timeBetweenDashes= 0.5f;
+    private IEnumerator Dash()
     {
-        if (Input.GetMouseButtonUp(1) && playerEnergy.currentEnergy < playerEnergy.maxEnergy)
+        if (canDash && playerEnergy.currentStack > 0)
         {
-            playerEnergy.energyIsReloading = true;
-        }
-    }
-
-    private void LastStack()
-    {
-        if (playerEnergy.energyIsReloading && playerEnergy.currentStack == 0)
-        {
-            canDash = false;
-        }
-        else if (playerEnergy.energyIsReloading && playerEnergy.currentStack != 0)
-        {
-            canDash = true;
-        }
-        else if(playerEnergy.currentEnergy==0)
-        {
-            canDash = false;
-        }
-    }
-
-    private IEnumerator Coro()
-    {
-        isCorotinePlaying = true;
-        playerEnergy.SpendEnergy(2.5f);
-        yield return new WaitForSeconds(0.1f);
-        isCorotinePlaying = false;
-    }
-
-    private void Dash()
-    {
-       
             Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-            rb.AddForce(dir * dashForce * Time.deltaTime, ForceMode2D.Impulse);
-            if (isModuleInertie) CoroutineManager.Instance.StartCoroutine(ModuleInertie.InertieCo());
-        
+            if(dir!= Vector2.zero)
+            {
+                currentEtat = EtatJoueur.Dashing;
+                playerEnergy.SpendEnergy(1);
+                canDash = false;
+                rb.AddForce(dir * dashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                yield return new WaitForSeconds(DashTime);
+                gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                currentEtat = EtatJoueur.normal;
+                yield return new WaitForSeconds(timeBetweenDashes);
+                canDash = true;
+            }
+            
+        }     
+    }
+
+    void PiercedPocketActivation()
+    {
+        PiercedPocketModule pockets = FindObjectOfType<PiercedPocketModule>();
+        if (pockets)
+        {
+            if (pockets.bombsReady) StartCoroutine(pockets.SpawnBombs());
+        }
     }
 
 
@@ -234,7 +207,7 @@ public class PlayerMouvement : Player
 
     public void OnDash()
     {
-        Dash();
+        StartCoroutine(Dash());
 
         //PlayerControl variable;
         //variable.Player.Reload.actionMap.AddBinding("<Keyboard/a");

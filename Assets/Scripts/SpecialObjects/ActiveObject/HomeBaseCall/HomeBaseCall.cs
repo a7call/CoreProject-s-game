@@ -5,8 +5,8 @@ using UnityEngine;
 public class HomeBaseCall : StacksObjects
 {
     [SerializeField] private GameObject amoCase = null;
-    private GameObject player;
     [SerializeField] private float SupplyDelay=0;
+    private Vector3 SupplyPosition = Vector3.zero;
 
    
 
@@ -20,14 +20,15 @@ public class HomeBaseCall : StacksObjects
         {
             CoroutineManager.Instance.StartCoroutine(AmmoSupply());
             UseModule = false;
+            SupplyPosition = player.transform.position;
         }
     }
 
     protected virtual IEnumerator AmmoSupply()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        
         yield return new WaitForSeconds(SupplyDelay);
-        Instantiate(amoCase, player.transform.position, Quaternion.identity);
+        Instantiate(amoCase, SupplyPosition, Quaternion.identity);
     }
 }
 

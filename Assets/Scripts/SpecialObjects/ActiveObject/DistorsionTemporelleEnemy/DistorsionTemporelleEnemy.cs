@@ -15,6 +15,7 @@ public class DistorsionTemporelleEnemy : CdObjects
 
     protected override void Start()
     {
+        base.Start();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 

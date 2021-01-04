@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4413396992568862765}
   - component: {fileID: 2399827947047375488}
   - component: {fileID: 5829856311520857116}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ConeLaser
   m_TagString: EnemyProjectil
   m_Icon: {fileID: 0}
@@ -96,9 +96,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  ActiveTime: 1
+  isDisabled: 0
+  target: {fileID: 0}
+  dir: {x: 0, y: 0, z: 0}
   ShootDelay: 0.5
   angleDecalage: 25
   HitLayer:
     serializedVersion: 2
     m_Bits: 0
+  ActiveTime: 1

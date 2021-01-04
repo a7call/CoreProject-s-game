@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamouflageSuit : ActiveObjects
+public class CamouflageSuit : CdObjects
 {
     [SerializeField] private float camouflageTime;
     // Start is called before the first frame update

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2346081532834695897}
   - component: {fileID: 6842225187966021842}
   - component: {fileID: 6777343948282961651}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DecalageProjectile PUMP
   m_TagString: EnemyProjectil
   m_Icon: {fileID: 0}
@@ -123,5 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  isDisabled: 0
+  target: {fileID: 0}
   dir: {x: 0, y: 0, z: 0}
   angleDecalage: 24

@@ -12,25 +12,27 @@ public class ActiveObjects : MonoBehaviour
     public float range;
     protected Vector3 MousePos;
     protected Camera Cam;
+    protected PlayerMouvement player;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         Cam = Camera.main;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMouvement>();
+       
+
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        
-        
+
     }
 
     public void ToUseModule()
     {
-        if (readyToUse)
+        if (readyToUse && player.currentEtat == PlayerMouvement.EtatJoueur.normal)
         {
-
             UseModule = true;
             readyToUse = false;
             StartCoroutine(WayToReUse());

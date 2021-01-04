@@ -8,8 +8,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
     public PlayerScriptableObjectScript playerData;
-    [HideInInspector]
-    public EtatJoueur currentEtat = EtatJoueur.normal;
+    public EtatJoueur currentEtat ;
 
     protected Transform HealthContent;
     protected GameObject canvas;
@@ -45,29 +44,29 @@ public class Player : MonoBehaviour
         fear,
         shopping,
         Grapping,
+        Dashing,
     }
 
     [HideInInspector]
     public int maxHealth;
     [HideInInspector]
-    public int maxEnergy;
+    public int maxStacks;
     [HideInInspector]
     public float mooveSpeed;
-    //[HideInInspector]
+    [HideInInspector]
     public float dashForce;
+    protected float DashTime;
     [HideInInspector]
-    public int damage;
-    [HideInInspector]
-    public float energyReloadNumber;
+    public float stacksReloadTime;
 
     protected void SetData()
     {
         maxHealth = playerData.maxHealth;
-        maxEnergy = playerData.maxEnergy;
+        maxStacks = playerData.maxStacks;
         mooveSpeed = playerData.mooveSpeed;
         dashForce = playerData.dashForce;
-        damage = playerData.damage;
-        energyReloadNumber = playerData.energyReloadNumber;
+        stacksReloadTime = playerData.stacksReloadTime;
+        DashTime = playerData.DashTime;
 
         
         emptyHearth = playerData.emptyHearth;

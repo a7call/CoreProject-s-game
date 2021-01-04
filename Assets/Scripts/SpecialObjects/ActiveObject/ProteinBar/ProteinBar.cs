@@ -9,6 +9,7 @@ public class ProteinBar : StacksObjects
 
     protected override void Start()
     {
+        base.Start();
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
 

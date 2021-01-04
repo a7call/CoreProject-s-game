@@ -8,10 +8,10 @@ public class EggProjectileExplosion : Projectile
     [SerializeField] protected LayerMask playerLayer;
     [SerializeField] protected int explosionDamage;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
         GetDirection();
-        // Invoke("PopMobs", 3f);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

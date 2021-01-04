@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4224201017661204807}
   - component: {fileID: 4566696781441948300}
   - component: {fileID: 4546720056206555000}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LaserCourt
   m_TagString: EnemyProjectil
   m_Icon: {fileID: 0}
@@ -123,8 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  ActiveTime: 0.3
+  isDisabled: 0
+  target: {fileID: 0}
+  dir: {x: 0, y: 0, z: 0}
   ShootDelay: 0.5
+  ActiveTime: 0.3
   HitLayer:
     serializedVersion: 2
     m_Bits: 0

@@ -126,7 +126,6 @@ public class Enemy : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
-    private int fearDistance = 5;
     protected virtual void Fear()
 
     {
@@ -226,8 +225,9 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
-            nanoRobot();
             SpawnRewards();
+            nanoRobot();
+            
         }
     }
 
@@ -236,7 +236,7 @@ public class Enemy : MonoBehaviour
         if (PlayerProjectiles.isNanoRobotModule)
         {
             NanoRobotModule nanoRobotModule = FindObjectOfType<NanoRobotModule>();
-            nanoRobotModule.NanoRobotExplosion(gameObject.transform);
+            //nanoRobotModule.NanoRobotExplosion(gameObject.transform);
         }
     }
 	
@@ -293,7 +293,7 @@ public class Enemy : MonoBehaviour
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
         if (enemy == null) yield break;  
-        currentState = State.Attacking;
+        currentState = State.Chasing;
         if (enemy == null) yield break;
         rb.velocity = Vector2.zero;
         aIPath.canMove = true;

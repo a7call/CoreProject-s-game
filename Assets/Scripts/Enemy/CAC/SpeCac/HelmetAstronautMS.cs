@@ -8,17 +8,19 @@ public class HelmetAstronautMS : Cac
     [SerializeField] private float distanceEnemyAggressive = 5f;
     private bool isPowerMode = false;
     private bool isPowerModeReady = true;
+    private bool canPowerMode = false;
     // Variable de temps au bout du quel il peut relancer le PowerMode
     private float powerModeTime = 5f;
     private float powerModeCd = 10f;
     // Variable sur la vitesse de déplacement
-    [SerializeField] private float newSpeedEnemy = 225f;
+    [SerializeField] private float newSpeedEnemy = 3f;
     [SerializeField] private float speedDuration = 1.75f;
 
     private void Start()
     {
         SetData();
         SetMaxHealth();
+        StartCoroutine(enabledPowerMode());
     }
 
 
@@ -31,7 +33,7 @@ public class HelmetAstronautMS : Cac
             case State.Patrolling:
                 break;
             case State.Chasing:
-                StartCoroutine(PowerMode());
+                if (canPowerMode) StartCoroutine(PowerMode());
                 if (isPowerMode) StartCoroutine(IncreaseSpeed());
                 isInRange();
                 break;
@@ -59,6 +61,12 @@ public class HelmetAstronautMS : Cac
             isPowerModeReady = true;
 
         }
+    }
+
+    private IEnumerator enabledPowerMode()
+    {
+        yield return new WaitForSeconds(2f);
+        canPowerMode = true;
     }
 
     // Coroutine qui permet d'augmenter la vitesse de l'ennemi

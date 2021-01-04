@@ -182,13 +182,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transBomb: {fileID: 6524927301636025539}
   transShadow: {fileID: 6173359256876722241}
-  timeBeforActivation: 1.5
   timeBeforDesactivation: 4.5
-  radius: 2
-  explosionDamage: 4
+  radius: 3
+  explosionDamage: 1
   hit:
     serializedVersion: 2
     m_Bits: 768
+  knockBackForce: 0
+  knockBackTime: 0
+  timeBeforActivation: 0
 --- !u!58 &6173359257629487880
 CircleCollider2D:
   m_ObjectHideFlags: 0
