@@ -7,7 +7,7 @@ public class PlayerProjectiles : MonoBehaviour
 {
     public static bool isNuclearExplosionModule;
     public static bool isAtomiqueExplosionModule;
-    public static int explosionDamageMultiplier;
+    public static float explosionDamageMultiplier;
 
     // ExplosionModule
     public static bool isExplosiveAmo = false; 

@@ -116,6 +116,11 @@ public class PlayerAttack : Player
         }
     }
 
+    public void OnPause()
+    {
+        PauseMenu.pause = true;
+    }
+
     public PlayerInput GetPlayerInput()
     {
         return playerInput;

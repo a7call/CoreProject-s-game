@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4042658959185586530
 Transform:
   m_ObjectHideFlags: 0
@@ -62,10 +62,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseModule: 0
-  cd: 10
   range: 5
-  speed: 3
+  numberOfUse: 3
+  cd: 2
+  isOutOfUse: 0
   distortionGrenade: {fileID: 5635945466601641085, guid: b81a0bbecca01024eabf59f18178a9b1, type: 3}
+  readyToExplode: 0
 --- !u!1 &805746427438345924
 GameObject:
   m_ObjectHideFlags: 0

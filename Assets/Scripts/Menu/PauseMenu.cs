@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsWindow;
     public GameObject pauseMenuUI;
 
-    private bool pause = false;
+    public static bool pause = false;
 
     protected void Update()
     {
@@ -68,9 +68,5 @@ public class PauseMenu : MonoBehaviour
         //Bestiaire.setActive(true);
     }
 
-    public void OnPause()
-    {
-        print("tet");
-        pause = true;
-    }
+    
 }

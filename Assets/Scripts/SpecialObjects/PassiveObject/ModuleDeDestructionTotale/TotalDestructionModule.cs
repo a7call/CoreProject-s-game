@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TotalDestructionModule : PassiveObjects
 {
-   [SerializeField] private int damageMultiplier = 0;
+   [SerializeField] private float damageMultiplier = 0;
     void Start()
     {
         Weapons.isTotalDestructionModule = true;
