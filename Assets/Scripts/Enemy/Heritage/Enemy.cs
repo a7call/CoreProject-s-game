@@ -225,8 +225,9 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
-            SpawnRewards();
             nanoRobot();
+            SpawnRewards();
+            
             
         }
     }
@@ -236,7 +237,7 @@ public class Enemy : MonoBehaviour
         if (PlayerProjectiles.isNanoRobotModule)
         {
             NanoRobotModule nanoRobotModule = FindObjectOfType<NanoRobotModule>();
-            //nanoRobotModule.NanoRobotExplosion(gameObject.transform);
+            nanoRobotModule.NanoRobotExplosion(gameObject.transform);
         }
     }
 	
