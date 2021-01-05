@@ -41,7 +41,7 @@ public class VoidGrenade : ExplosivesModule
             {
                 continue;
             }
-            enemy.moveSpeed *= SpeedDivisor;
+            enemy.aIPath.maxSpeed *= SpeedDivisor;
             
         }
         

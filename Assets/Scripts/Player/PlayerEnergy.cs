@@ -17,6 +17,12 @@ public class PlayerEnergy : Player
     private void Update()
     {
         StartCoroutine(EnergyReloading());
+        if(currentStack  > maxStacks)
+        {
+            currentStack = maxStacks;
+            energyIsReloading = false;
+            StopAllCoroutines();
+        }
     }
     
     // Déduit l'energie dépensée
