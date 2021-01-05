@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
         Patrolling,
         Chasing,
         Attacking,
+        Death,
         ShootingLaser,
         Paralysed,
         KnockedBack,
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour
         Feared,
         Charging
     }
+
     // pour l'épée electrique
     [HideInInspector]
     public bool isAlreadyElectrified;
@@ -90,7 +92,11 @@ public class Enemy : MonoBehaviour
                 aIPath.canMove = false;
                 Fear();
                 break;
-            
+
+            case State.Death:
+                EnemyDie();
+                currentState = State.Death;
+                break;
         }
         healthBar.SetHealth(currentHealth);
         DisplayBar();
@@ -203,7 +209,18 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
-    
+
+    private bool isDying = false;
+    protected virtual void EnemyDie()
+    {
+        if (isDying)
+        {
+            isDying = false;
+            SpawnRewards();
+            nanoRobot();
+            Destroy(gameObject);    
+        }
+    }
 
     // A MODIFIER AVEC LES ARMES A PARTICULE
     [HideInInspector]
@@ -225,8 +242,10 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
-            SpawnRewards();
+            isDying = true;
+            currentState = State.Death;
             nanoRobot();
+            SpawnRewards();
             
         }
     }
@@ -236,7 +255,7 @@ public class Enemy : MonoBehaviour
         if (PlayerProjectiles.isNanoRobotModule)
         {
             NanoRobotModule nanoRobotModule = FindObjectOfType<NanoRobotModule>();
-            //nanoRobotModule.NanoRobotExplosion(gameObject.transform);
+            nanoRobotModule.NanoRobotExplosion(gameObject.transform);
         }
     }
 	
@@ -250,7 +269,6 @@ public class Enemy : MonoBehaviour
         rewardSpawner.SpawnCoffreArmeReward(this.gameObject);
         rewardSpawner.SpawnCoffreModuleReward(this.gameObject);
         rewardSpawner.SpawnArmorReward(this.gameObject);
-        Destroy(gameObject);
     }
 
     // Couroutine white flash on hit

@@ -8,7 +8,7 @@ public class EnergyDrink : StacksObjects
 
     protected override void Start()
     {
-       
+        base.Start();
     }
 
     protected override void Update()
@@ -17,24 +17,24 @@ public class EnergyDrink : StacksObjects
         if (UseModule)
         {
             UseModule = false;
-            CoroutineManager.Instance.StartCoroutine(UseEnergyDring());
+            RefillEnergy();
         }
     }
 
-    private IEnumerator UseEnergyDring()
-    {
-        yield return new WaitForSeconds(0.5f);
-        print("test");
-    }
+
 
     private void RefillEnergy()
     {
-       
+        
+        PlayerEnergy energy = player.gameObject.GetComponent<PlayerEnergy>();
+        if(energy.currentStack != energy.maxStacks)
+        {
+            energy.currentStack++;
+           
+        }
+        
     }
 
-    private void DestoyEnergyDrink()
-    {
-        Destroy(gameObject);
-    }
+
 
 }

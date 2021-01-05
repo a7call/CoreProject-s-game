@@ -41,16 +41,12 @@ public class BubbleMS : Distance
         }
 
     }
-
-    public override void TakeDamage(float _damage)
+    protected override void EnemyDie()
     {
-        currentHealth -= _damage;
-        StartCoroutine(WhiteFlash());
-        if (currentHealth < 1)
-        {
-            Instantiate(deathObject, transform.position, Quaternion.identity);
-            SpawnRewards();
-        }
+        SpawnRewards();
+        Instantiate(deathObject, transform.position, Quaternion.identity);
+        nanoRobot();
+        Destroy(gameObject);
     }
 
     protected override IEnumerator CanShoot()
