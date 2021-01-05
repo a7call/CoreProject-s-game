@@ -37,20 +37,18 @@ public class TentacleAstronautEggPopMother : Distance
                 break;
         }
     }
-
-    // Fonction pour instantier les ennemis lorsqu'il meurt
-    public override void TakeDamage(float _damage)
+    protected override void EnemyDie()
     {
-        currentHealth -= _damage;
-        StartCoroutine(WhiteFlash());
-        if (currentHealth < 1)
+        if (isDying)
         {
+            SpawnRewards();
             foreach (GameObject parasite in listParasite)
             {
                 Vector2 transf2D = new Vector2(transform.position.x, transform.position.y);
                 Instantiate(parasite, transf2D + radius * Random.insideUnitCircle.normalized, Quaternion.identity);
             }
-            SpawnRewards();
+            nanoRobot();
+            Destroy(gameObject);
         }
     }
 

@@ -209,7 +209,7 @@ public class Enemy : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    private bool isDying = false;
+    protected bool isDying = false;
     protected virtual void EnemyDie()
     {
         if (isDying)

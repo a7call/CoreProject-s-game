@@ -43,10 +43,14 @@ public class BubbleMS : Distance
     }
     protected override void EnemyDie()
     {
-        SpawnRewards();
-        Instantiate(deathObject, transform.position, Quaternion.identity);
-        nanoRobot();
-        Destroy(gameObject);
+        if (isDying)
+        {
+            isDying = false;
+            SpawnRewards();
+            Instantiate(deathObject, transform.position, Quaternion.identity);
+            nanoRobot();
+            Destroy(gameObject);
+        }
     }
 
     protected override IEnumerator CanShoot()
