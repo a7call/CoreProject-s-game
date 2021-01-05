@@ -10,11 +10,11 @@ public class RadiusSlow : RadiusGrowUp
     [SerializeField] private float maxRadius = 5f;
     [SerializeField] private float newPlayerMoveSpeed = 100f;
     private PlayerMouvement playerMouvement;
+    float realMoveSpeed;
 
     protected override void Start()
     {
         playerMouvement = FindObjectOfType<PlayerMouvement>();
-        float playerMoveSpeed = playerMouvement.mooveSpeed;
         base.Start();
     }
 
@@ -22,11 +22,6 @@ public class RadiusSlow : RadiusGrowUp
     protected override void Update()
     {
         base.Update();
-    }
-
-    protected override float Timer()
-    {
-        return base.Timer();
     }
 
     protected override float RadiusGrowByTime()
@@ -44,7 +39,7 @@ public class RadiusSlow : RadiusGrowUp
 
     protected override void ShootRadius()
     {
-        float realMoveSpeed = playerMouvement.playerData.mooveSpeed;
+        realMoveSpeed = playerMouvement.playerData.mooveSpeed;
         hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
         foreach (RaycastHit2D hit in hits)
         {
@@ -63,5 +58,10 @@ public class RadiusSlow : RadiusGrowUp
             }
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        playerMouvement.mooveSpeed = realMoveSpeed;
     }
 }

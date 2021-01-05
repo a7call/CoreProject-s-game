@@ -182,7 +182,7 @@ public class PlayerProjectiles : MonoBehaviour
             float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
             projectileRB.angularVelocity = -rotationAmount * angulSpeed;
             projectileRB.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * speed;
-            angulSpeed++;
+            angulSpeed += 2;
         }
         else
         {

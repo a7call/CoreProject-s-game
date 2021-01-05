@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-       
+
         switch (currentState)
         {
             case State.Paralysed:
@@ -95,7 +95,6 @@ public class Enemy : MonoBehaviour
 
             case State.Death:
                 EnemyDie();
-                currentState = State.Death;
                 break;
         }
         healthBar.SetHealth(currentHealth);
@@ -242,12 +241,19 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WhiteFlash());
         if (currentHealth < 1)
         {
+
             isDying = true;
-            currentState = State.Death;
+            StartCoroutine(DeathSate());
             nanoRobot();
             SpawnRewards();
             
         }
+    }
+
+    private IEnumerator DeathSate()
+    {
+       yield return new WaitForEndOfFrame();
+       currentState = State.Death;
     }
 
     protected void nanoRobot()
@@ -291,6 +297,7 @@ public class Enemy : MonoBehaviour
         }
         else if (currentHealth < maxHealth && !isHealthBarActive)
         { 
+            
             healthBarGFX.SetActive(true);
             isHealthBarActive = true;
         }
@@ -315,8 +322,6 @@ public class Enemy : MonoBehaviour
         if (enemy == null) yield break;
         rb.velocity = Vector2.zero;
         aIPath.canMove = true;
-
-
     }
 
 
