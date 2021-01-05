@@ -25,14 +25,14 @@ public class ExplosionProjectile : PlayerProjectiles
         foreach (Collider2D enemy in ennemies)
         {
             
-            if (enemy == null || enemy == collision) continue;
             Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
             if (enemyScript == null) continue;
-            enemyScript.TakeDamage(weaponDamage);
             if (isNuclearExplosionModule)
             {
                 CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
             }
+            if (enemy == null || enemy == collision) continue;
+            enemyScript.TakeDamage(weaponDamage);
         }
     }
 }

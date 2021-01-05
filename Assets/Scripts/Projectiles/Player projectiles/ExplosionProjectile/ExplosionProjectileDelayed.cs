@@ -40,15 +40,15 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
         {
             foreach (Collider2D enemy in ennemies)
             {
-
                 if (enemy == null) continue;
                 Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
-                if (enemyScript == null) continue;
-                enemyScript.TakeDamage(weaponDamage);
                 if (isNuclearExplosionModule)
                 {
                     CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
                 }
+                if (enemy == null || enemy == collision) continue;
+                enemyScript.TakeDamage(weaponDamage);
+               
             }
         }
     }

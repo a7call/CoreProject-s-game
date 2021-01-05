@@ -18,10 +18,8 @@ public class VoidGrenade : ExplosivesModule
     protected override void ExplosionEffects(Enemy enemy)
     {
          ennemyTouche.Add(enemy);
-         Vector3 Direction = enemy.transform.position - gameObject.transform.position;
-         enemy.TakeDamage(explosionDamage);
-         CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
-         enemy.moveSpeed /= SpeedDivisor;
+         base.ExplosionEffects(enemy);
+         enemy.aIPath.maxSpeed /= SpeedDivisor;
          CoroutineManager.Instance.StartCoroutine(SlowEnemy());
          
     }
