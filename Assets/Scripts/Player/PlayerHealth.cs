@@ -99,7 +99,7 @@ public class PlayerHealth : Player
 
         else if (currentHealth <= 0 && isLastChanceModule)
         {
-            currentHealth = maxHealth;
+            currentHealth += 2;
             isLastChanceModule = false;
         }
     }

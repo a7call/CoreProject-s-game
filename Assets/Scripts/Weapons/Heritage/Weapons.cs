@@ -12,7 +12,7 @@ public class Weapons : MonoBehaviour
     [HideInInspector]
     public static bool isTotalDestructionModule;
     [HideInInspector]
-    public static int damageMultiplier;
+    public static float damageMultiplier;
     [HideInInspector]
     protected bool damagealReadyMult;
     

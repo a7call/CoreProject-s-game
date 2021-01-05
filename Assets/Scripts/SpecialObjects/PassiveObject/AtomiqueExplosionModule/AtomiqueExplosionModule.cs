@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AtomiqueExplosionModule : PassiveObjects
 {
-    [SerializeField] private int explosionDamageMultiplier = 0;
+    [SerializeField] private float explosionDamageMultiplier = 0;
     void Start()
     {
         PlayerProjectiles.isAtomiqueExplosionModule = true;
