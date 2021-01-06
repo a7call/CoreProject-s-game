@@ -10,7 +10,7 @@ public class BlackHole : MonoBehaviour
     [SerializeField] private float radiusSpeed;
     [SerializeField] private float timeToExplod;
     [SerializeField] private LayerMask hitLayer;
-    List<Collider2D> hitsList = new List<Collider2D>();
+    List<GameObject> hitsList = new List<GameObject>();
 
     private void Start()
     {
@@ -29,9 +29,9 @@ public class BlackHole : MonoBehaviour
 
         foreach(Collider2D hit in hits)
         {
-            if(hit.CompareTag("Enemy")|| hit.CompareTag("EnemyProjectil"))
+            if(hit.CompareTag("Enemy"))
             {
-                hitsList.Add(hit);
+                hitsList.Add(hit.gameObject);
             }
             
            
@@ -40,7 +40,7 @@ public class BlackHole : MonoBehaviour
 
     void AttractAllEnemies()
     {
-        foreach(Collider2D hit in hitsList)
+        foreach(GameObject hit in hitsList)
         {
             if (hit == null) continue;
             if (hit.CompareTag("Enemy"))
@@ -49,15 +49,10 @@ public class BlackHole : MonoBehaviour
                 Vector2 dir = (hitTrans.position - transform.position).normalized;
                 hitTrans.Translate(-dir * radiusSpeed * Time.deltaTime, Space.World); ;
                 hit.transform.RotateAround(transform.position, Vector3.forward, speed * Time.deltaTime);
-                hit.GetComponent<Enemy>().currentState = Enemy.State.KnockedBack;
-            }
-            if (hit.CompareTag("EnemyProjectil"))
-            {
-                hit.GetComponent<Projectile>().isDisabled = true;
-                Transform hitTrans = hit.GetComponent<Transform>();
-                Vector2 dir = (hitTrans.position - transform.position).normalized;
-                hitTrans.Translate(-dir * radiusSpeed * Time.deltaTime, Space.World); ;
-                hit.transform.RotateAround(transform.position, Vector3.forward, speed * Time.deltaTime);
+                hit.GetComponent<Enemy>().currentState = Enemy.State.Paralysed;
+                hit.GetComponent<Enemy>().aIPath.canMove = false;
+                hit.GetComponent<BoxCollider2D>().enabled = false;
+                
             }
         }
     }
@@ -65,9 +60,9 @@ public class BlackHole : MonoBehaviour
     private IEnumerator DestroyAll()
     {
         yield return new WaitForSeconds(timeToExplod);
-        foreach (Collider2D hit in hitsList)
+        foreach (GameObject hit in hitsList)
         {
-            Destroy(hit.gameObject);
+            Destroy(hit);
             
         }
         hitsList.Clear();

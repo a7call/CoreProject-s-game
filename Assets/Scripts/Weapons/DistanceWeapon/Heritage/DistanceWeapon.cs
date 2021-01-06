@@ -118,10 +118,6 @@ public class DistanceWeapon : Weapons
        
     }
 
-    public void toShoot()
-    {
-       CoroutineManager.Instance.StartCoroutine(Shoot());
-    }
 
     protected virtual void SetData()
     {
@@ -174,7 +170,10 @@ public class DistanceWeapon : Weapons
 
     public void toReload()
     {
-        OnReload();
+        if (BulletInMag != MagSize && (AmmoStock != 0 | InfiniteAmmo))
+        {
+            StartCoroutine(Reload());
+        }
     }
   
 
@@ -193,13 +192,4 @@ public class DistanceWeapon : Weapons
         }
     }
 
-
-    public void OnReload()
-    {
-        
-        if (BulletInMag != MagSize && (AmmoStock != 0 | InfiniteAmmo))
-        {
-            StartCoroutine(Reload());
-        }
-    }
 }

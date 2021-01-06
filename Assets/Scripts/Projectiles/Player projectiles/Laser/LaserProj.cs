@@ -6,31 +6,32 @@ public class LaserProj : PlayerProjectiles
 {
     [SerializeField] float activeTime = 0f;
     [SerializeField] protected LayerMask HitLayer = 0;
-    
-    
+    private WeaponsManagerSelected weaponManager;
+
+    protected  void Start()
+    {
+        weaponManager = GameObject.FindGameObjectWithTag("WeaponManager").GetComponentInChildren<WeaponsManagerSelected>();
+    }
+
+
 
     protected override void Update()
     {
-        StartCoroutine(destroy());
+        if (weaponManager.GetComponentInChildren<DistanceWeapon>().OkToShoot)
+        {
+            dir = (weaponAttackP.attackPoint.position - playerTransform.position).normalized;
 
-        dir = (weaponAttackP.attackPoint.position - playerTransform.position).normalized;
-
-        StartCoroutine(destroy());
             RaycastHit2D hit = Physics2D.Raycast(weaponAttackP.attackPoint.position, dir, Mathf.Infinity, HitLayer);
 
-            Debug.DrawRay(weaponAttackP.attackPoint.position, dir*20, Color.red);
+            Debug.DrawRay(weaponAttackP.attackPoint.position, dir * 20, Color.red);
             if (hit.collider != null)
             {
-                
+
                 hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(weaponDamage);
             }
-        
-    }
 
-    protected IEnumerator destroy()
-    {
-        yield return new WaitForSeconds(activeTime);
-        Destroy(gameObject);
+
+        }
     }
 
 }

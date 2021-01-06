@@ -9,7 +9,6 @@ public class BlackHoleToInventory : Rewards
     {
         if (collision.CompareTag("Player"))
         {
-            print(collision);
             inventory.BlackHoles.Add(BlackHole);
         }
         base.OnTriggerEnter2D(collision);

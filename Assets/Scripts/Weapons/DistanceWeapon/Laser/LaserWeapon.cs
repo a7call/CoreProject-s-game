@@ -5,13 +5,15 @@ using UnityEngine;
 public class LaserWeapon : DistanceWeapon
 {
     //[SerializeField] float LoadingDelay;
-    protected int count;
+    [SerializeField] protected int count;
     protected bool IsToHot = false;
     protected bool IsCooling = false;
    [SerializeField] protected float coolingTime;
    [SerializeField] protected float coolingDelay;
    [SerializeField] protected int countMax;
-    
+    Vector3 dir;
+
+
 
 
     protected override void Update()
@@ -21,28 +23,37 @@ public class LaserWeapon : DistanceWeapon
         {
             StartCoroutine(CoolDelay());
         }
+        if (OkToShoot && !IsToHot)
+        {
+            dir = (attackPoint.position - transform.position).normalized;
 
+            RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, dir, Mathf.Infinity, enemyLayer);
+
+            Debug.DrawRay(attackPoint.position, dir * 20, Color.red);
+            
+            if (hit.collider != null)
+            {
+                hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            }
+
+
+        }
     }
-
-
     protected override IEnumerator Shoot()
     {
-        
         if (!isAttacking && !IsToHot)
         {
-            
             isAttacking = true;
-            Instantiate(projectile, attackPoint.position, Quaternion.identity);
             count++;
-            yield return new WaitForSeconds(attackDelay);
+            yield return new WaitForSeconds(1f);
             isAttacking = false;
-            if (count >= countMax)
-            {
-                IsToHot = true;
-                StartCoroutine(LaserCooling());
-            }
         }
-
+        if (count >= countMax)
+        {
+            IsToHot = true;
+            StartCoroutine(LaserCooling());
+        }
+       
     }
 
     protected IEnumerator LaserCooling()
@@ -63,4 +74,7 @@ public class LaserWeapon : DistanceWeapon
         }
         
     }
+
+
+
 }
