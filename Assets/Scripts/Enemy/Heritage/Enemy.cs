@@ -67,7 +67,6 @@ public class Enemy : MonoBehaviour
         targetSetter.target = target;
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
-
     }
 
     protected virtual void Update()
