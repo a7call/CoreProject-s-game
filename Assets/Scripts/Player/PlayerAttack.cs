@@ -25,7 +25,6 @@ public class PlayerAttack : Player
     {
         if (!isShooting)
         {
-            //print("Shoot");
             isShooting = true;
 
             if (weaponManager.isPlayingDistance)
