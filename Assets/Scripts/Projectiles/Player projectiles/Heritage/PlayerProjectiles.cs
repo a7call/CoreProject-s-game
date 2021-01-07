@@ -39,8 +39,10 @@ public class PlayerProjectiles : MonoBehaviour
 
 
     //Knoclback
-     protected float knockBackForce;
-     protected float knockBackTime;
+    [HideInInspector]
+     public float knockBackForce;
+    [HideInInspector]
+    public float knockBackTime;
 
 
 

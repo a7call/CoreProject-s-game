@@ -8,6 +8,8 @@ public class CanonZeus : DistanceWeapon
     [SerializeField] protected float radius;
 
     [SerializeField] protected LayerMask hitLayer;
+    [SerializeField] protected float knockBackforce;
+    [SerializeField] protected float knockBackTime;
     private Vector2 dirTir;
 
     protected RaycastHit2D[] hits;
@@ -28,8 +30,10 @@ public class CanonZeus : DistanceWeapon
             {
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    hit.transform.GetComponent<Enemy>().TakeDamage(damage);
-                    continue;
+                    Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
+                    CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dirTir, knockBackTime, enemyScript));
+                    enemyScript.TakeDamage(damage);
+                    
                 }
                 else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
                 {
