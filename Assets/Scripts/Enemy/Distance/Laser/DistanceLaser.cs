@@ -14,7 +14,7 @@ public class DistanceLaser : Distance
 
     void Start()
     {
-        currentState = State.Patrolling;
+        currentState = State.Chasing;
         // Set data
         SetData();
         SetMaxHealth();
@@ -30,7 +30,6 @@ public class DistanceLaser : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();
@@ -58,16 +57,6 @@ public class DistanceLaser : Distance
     {
         GameObject myproj = Instantiate(projetile, transform.position, Quaternion.identity);
         myproj.transform.parent = gameObject.transform;
-        StartCoroutine(MovementDelay());
-
-    }
-
-  protected IEnumerator MovementDelay()
-    {
-        rb.velocity = Vector2.zero;
-        currentState = State.ShootingLaser;
-        yield return new WaitForSeconds(delayMovement);
-        currentState = State.Chasing;
 
     }
 

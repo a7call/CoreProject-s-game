@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -118,6 +119,7 @@ GameObject:
   - component: {fileID: 8477476304997786372}
   - component: {fileID: 3326898440723944388}
   - component: {fileID: 3384321771244679304}
+  - component: {fileID: 1245883779777688071}
   m_Layer: 9
   m_Name: EyeTentacleAstronauteLaser
   m_TagString: Enemy
@@ -252,6 +254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d35f791e57864f0785bdd609ed02842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isreadyToAttack: 1
+  animator: {fileID: 1245883779777688071}
   currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
@@ -348,6 +352,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
+--- !u!95 &1245883779777688071
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291090580177061496}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 740aeb4eff05eea4bb6f9e30f2ce57b7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7291090580406216158
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +528,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7291090580450258259
 MonoBehaviour:
   m_ObjectHideFlags: 0

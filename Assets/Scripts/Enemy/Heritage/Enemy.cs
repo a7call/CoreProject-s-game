@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public static bool isPerturbateurIEM = false;
     public static bool isArretTemporel = false;
     public bool isreadyToAttack = true;
+    public Animator animator;
 
     public State currentState;
     public enum State
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour
         KnockedBack,
         Freeze,
         Feared,
-        Charging
+        Charging,
     }
 
     // pour l'épée electrique
@@ -71,7 +72,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-
         switch (currentState)
         {
             case State.Paralysed:
@@ -98,16 +98,59 @@ public class Enemy : MonoBehaviour
         }
         healthBar.SetHealth(currentHealth);
         DisplayBar();
-       
+
+        SetAnimationVariable();
+        GetLastDirection();
+
     }
 
-  
+    void SetAnimationVariable()
+    {
+        if (aIPath.canMove)
+        {
+            animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
+            animator.SetFloat("VerticalSpeed", aIPath.velocity.y);
+            float EnemySpeed = aIPath.velocity.sqrMagnitude;
+            animator.SetFloat("Speed", EnemySpeed);
+            //print(aIPath.velocity);
+        }
+        else
+        {
+            animator.SetFloat("HorizontalSpeed", 0);
+            animator.SetFloat("VerticalSpeed", 0);
+            float EnemySpeed = 0;
+            animator.SetFloat("Speed", EnemySpeed);
+            //print(0);
+        }
+
+        if(currentState == State.Attacking)
+        {
+            animator.SetBool("IsAttacking", true);
+        }
+        else
+        {
+            animator.SetBool("IsAttacking", false);
+        }
+        
+    }
+    void GetLastDirection()
+    {
+        if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
+        {
+            animator.SetFloat("LastMoveX", targetSetter.target.position.x - rb.position.x);
+            animator.SetFloat("LastMoveY", targetSetter.target.position.y - rb.position.y);
+            
+
+        }
+    }
 
     //Mouvement
     [HideInInspector]
     public float moveSpeed;
     [HideInInspector]
     public bool isSlowed = false;
+    [HideInInspector]
+    public bool isBurned = false;
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player
