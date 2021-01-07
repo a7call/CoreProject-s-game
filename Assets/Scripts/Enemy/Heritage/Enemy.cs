@@ -71,7 +71,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-
         switch (currentState)
         {
             case State.Paralysed:
