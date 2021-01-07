@@ -11,6 +11,8 @@ public class LaserWeapon : DistanceWeapon
    [SerializeField] protected float coolingTime;
    [SerializeField] protected float coolingDelay;
    [SerializeField] protected int countMax;
+    [SerializeField] protected float knockBackforce;
+    [SerializeField] protected float knockBackTime;
     Vector3 dir;
 
 
@@ -25,15 +27,18 @@ public class LaserWeapon : DistanceWeapon
         }
         if (OkToShoot && !IsToHot)
         {
+            print("teet");
             dir = (attackPoint.position - transform.position).normalized;
 
             RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, dir, Mathf.Infinity, enemyLayer);
 
             Debug.DrawRay(attackPoint.position, dir * 20, Color.red);
-            
-            if (hit.collider != null)
+
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy")) 
             {
-                hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+                Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
+                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
+                enemyScript.GetComponent<Enemy>().TakeDamage(damage);
             }
 
 
