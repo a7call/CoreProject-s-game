@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
         KnockedBack,
         Freeze,
         Feared,
-        Charging
+        Charging,
     }
 
     // pour l'épée electrique
@@ -72,7 +72,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-
         switch (currentState)
         {
             case State.Paralysed:
@@ -150,6 +149,8 @@ public class Enemy : MonoBehaviour
     public float moveSpeed;
     [HideInInspector]
     public bool isSlowed = false;
+    [HideInInspector]
+    public bool isBurned = false;
     // Distance ou l'ennemi repère le joueur
     protected float inSight;
     // Player

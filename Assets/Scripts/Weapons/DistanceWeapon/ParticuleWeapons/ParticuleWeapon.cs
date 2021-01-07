@@ -2,20 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticuleWeapon : DistanceWeapon
+public class ParticuleWeapon : CollingWeapons
 {
-    //[SerializeField] float LoadingDelay;
-    [SerializeField] protected int count;
-    protected bool IsToHot = false;
-    protected bool IsCooling = false;
-    [SerializeField] protected float coolingTime;
-    [SerializeField] protected float coolingDelay;
-    [SerializeField] protected int countMax;
-    [SerializeField] protected float knockBackforce;
-    [SerializeField] protected float knockBackTime;
-    Vector3 dir;
-
-    private float radius = 1f;
+    protected Vector3 dir;
+    protected float radius = 1f;
 
 
     protected override void Update()
@@ -25,13 +15,21 @@ public class ParticuleWeapon : DistanceWeapon
         {
             StartCoroutine(CoolDelay());
         }
+        ActualShoot();
+
+
+    }
+
+    protected virtual void ActualShoot()
+    {
         if (OkToShoot && !IsToHot)
         {
+            if (!GetComponentInChildren<ParticleSystem>().isPlaying) GetComponentInChildren<ParticleSystem>().Play();
             dir = (attackPoint.position - transform.position).normalized;
 
             RaycastHit2D[] hits = Physics2D.CircleCastAll(attackPoint.position, radius, Vector2.zero);
 
-            
+
             foreach (RaycastHit2D hit in hits)
             {
                 if (hit.transform.gameObject.CompareTag("Enemy"))
@@ -42,6 +40,11 @@ public class ParticuleWeapon : DistanceWeapon
 
                 }
             }
+
+        }
+        else
+        {
+            if (GetComponentInChildren<ParticleSystem>().isPlaying) GetComponentInChildren<ParticleSystem>().Stop();
 
         }
     }
