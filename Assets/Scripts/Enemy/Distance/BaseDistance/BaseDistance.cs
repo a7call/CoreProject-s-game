@@ -10,6 +10,7 @@ public class BaseDistance : Distance
 
     void Start()
     {
+        
         // Set data
         SetData();
         SetMaxHealth();

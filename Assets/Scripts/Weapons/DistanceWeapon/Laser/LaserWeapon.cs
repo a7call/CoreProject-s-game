@@ -2,21 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserWeapon : DistanceWeapon
+public class LaserWeapon : CollingWeapons
 {
-    //[SerializeField] float LoadingDelay;
-    [SerializeField] protected int count;
-    protected bool IsToHot = false;
-    protected bool IsCooling = false;
-   [SerializeField] protected float coolingTime;
-   [SerializeField] protected float coolingDelay;
-   [SerializeField] protected int countMax;
-    [SerializeField] protected float knockBackforce;
-    [SerializeField] protected float knockBackTime;
+
     Vector3 dir;
-
-
-
 
     protected override void Update()
     {
@@ -27,7 +16,6 @@ public class LaserWeapon : DistanceWeapon
         }
         if (OkToShoot && !IsToHot)
         {
-            print("teet");
             dir = (attackPoint.position - transform.position).normalized;
 
             RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, dir, Mathf.Infinity, enemyLayer);
