@@ -28,7 +28,7 @@ public class Goblin : Enemy
     private void Start()
     {
         //spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        currentState = State.Patrolling;
+        currentState = State.Chasing;
         aIPath.canMove = false;
         SetData();
         SetMaxHealth();
@@ -50,7 +50,8 @@ public class Goblin : Enemy
 
         switch (currentState)
         {
-            case State.Patrolling:
+            case State.Chasing:
+                aIPath.canMove = false;
                 if(counter != stack)
                 {
                     StartCoroutine(RunningAway());
@@ -62,10 +63,6 @@ public class Goblin : Enemy
                 break;
         }
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-        
-    //}
 
     private IEnumerator RunningAway()
     {
@@ -79,6 +76,11 @@ public class Goblin : Enemy
             yield return new WaitForSeconds(afkTime);
             canGoToPos = true;
         }
+
+        if (counter == stack)
+        {
+            isDyingCoroutine = true;
+        }
     }
 
     private IEnumerator Starter()
@@ -89,13 +91,14 @@ public class Goblin : Enemy
 
     private IEnumerator DestroyEnemy()
     {
-        isDyingCoroutine = true;
+        isDyingCoroutine = false;
+        yield return new WaitForSeconds(timeBetweenFlashes);
         for (int i = 1; i < 6; i++)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f-0.2f*i);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f - 0.2f * i);
             yield return new WaitForSeconds(timeBetweenFlashes);
         }
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     protected override void Fear()
