@@ -38,7 +38,7 @@ public class Distance : Enemy
 
     protected override void isInRange()
     {
-            if (Vector3.Distance(transform.position, target.position) < attackRange)
+            if (Vector3.Distance(transform.position, target.position) < attackRange  )
             {
                 currentState = State.Attacking;
                 isShooting = true;
@@ -47,7 +47,7 @@ public class Distance : Enemy
             }
             else
             {
-                if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
+                if (currentState == State.Attacking && !isInTransition && isreadyToAttack ) StartCoroutine(transiChasing());
                 if (isReadyToSwitchState)
                 {
                     currentState = State.Chasing;

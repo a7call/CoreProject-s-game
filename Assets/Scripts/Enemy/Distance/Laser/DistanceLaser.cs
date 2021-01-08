@@ -9,7 +9,7 @@ public class DistanceLaser : Distance
 {
     protected Vector3 dir;
     [SerializeField] protected float delayMovement;
-    protected float timeBeforeShoot = 0.5f;
+    protected float timeBeforeShoot = 0.25f;
     protected float durationOfShoot = 1f;
     protected int damage = 1;
     protected bool isShootingLasers;
@@ -79,7 +79,7 @@ public class DistanceLaser : Distance
 
     protected virtual IEnumerator ShootLasersCo()
     {
-        if(!isShootingLasers && isreadyToAttack)
+        if(!isShootingLasers )
         {
 
             dir = (targetSetter.target.position - transform.position).normalized;
@@ -93,9 +93,9 @@ public class DistanceLaser : Distance
     protected override IEnumerator CanShoot()
     {
         if (isShooting && isreadyToAttack && !isPerturbateurIEM)
-        {
-            StartCoroutine(ShootLasersCo());
+        {   
             isreadyToAttack = false;
+            StartCoroutine(ShootLasersCo());
             yield return new WaitForSeconds(restTime);
             isreadyToAttack = true;
         }

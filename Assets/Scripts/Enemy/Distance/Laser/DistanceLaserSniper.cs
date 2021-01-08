@@ -5,30 +5,57 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class DistanceLaserSniper : RafaleDistance
+public class DistanceLaserSniper : DistanceLaser
 {
-    
-
-    
-    [SerializeField] protected float delayMovement;
-
-
+    float timeLocking = 3;
+    private bool isLockingEnemy;
     protected override void Shoot()
     {
-        base.Shoot();
-        StartCoroutine(MovementDelay());
+        if (isLockingEnemy)
+        {
+            dir = (targetSetter.target.position - transform.position);
+            Debug.DrawRay(transform.position, dir, Color.blue);
+        }
+        if (isShootingLasers)
+        {
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, Mathf.Infinity);
+            Debug.DrawRay(transform.position, dir, Color.red);
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.transform.gameObject.CompareTag("Player"))
+                {
+                    PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
+                    player.TakeDamage(damage);
+                }
+            }
+        }
     }
 
-   
-    protected IEnumerator MovementDelay()
+
+    protected override IEnumerator ShootLasersCo()
     {
-        rb.velocity = Vector2.zero;
-        currentState = State.ShootingLaser;
-        yield return new WaitForSeconds(delayMovement);
-        currentState = State.Chasing;
-
+        if (!isShootingLasers)
+        {
+            isLockingEnemy = true;
+            yield return new WaitForSeconds(timeLocking);
+            isLockingEnemy = false;
+            yield return new WaitForSeconds(timeBeforeShoot);
+            isShootingLasers = true;
+            yield return new WaitForSeconds(durationOfShoot);
+            isShootingLasers = false;
+        }
     }
 
+    protected override IEnumerator CanShoot()
+    {
+        if (isShooting && isreadyToAttack && !isPerturbateurIEM)
+        {   
+            isreadyToAttack = false;
+            StartCoroutine(ShootLasersCo());
+            yield return new WaitForSeconds(restTime);
+            isreadyToAttack = true;  
+        }
+    }
 
   
 }

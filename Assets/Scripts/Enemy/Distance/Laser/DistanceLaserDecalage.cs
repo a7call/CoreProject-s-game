@@ -51,7 +51,7 @@ public class DistanceLaserDecalage : DistanceLaser
 
     protected override IEnumerator ShootLasersCo()
     {
-        if (!isShootingLasers && isreadyToAttack)
+        if (!isShootingLasers )
         {
 
             decalage = angleTir / (projectiles);  
@@ -66,9 +66,9 @@ public class DistanceLaserDecalage : DistanceLaser
     protected override IEnumerator CanShoot()
     {
         if (isShooting && isreadyToAttack && !isPerturbateurIEM)
-        {
-            StartCoroutine(ShootLasersCo());
+        {   
             isreadyToAttack = false;
+            StartCoroutine(ShootLasersCo());
             yield return new WaitForSeconds(restTime);
             isreadyToAttack = true;
         }
