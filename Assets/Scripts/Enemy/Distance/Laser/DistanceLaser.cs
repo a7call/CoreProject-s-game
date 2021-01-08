@@ -9,6 +9,10 @@ public class DistanceLaser : Distance
 {
     protected Vector3 dir;
     [SerializeField] protected float delayMovement;
+    protected float timeBeforeShoot = 0.5f;
+    protected float durationOfShoot = 1f;
+    protected int damage = 1;
+    protected bool isShootingLasers;
 
 
 
@@ -24,7 +28,7 @@ public class DistanceLaser : Distance
     protected override void Update()
     {
         //Debug.Log(isEnemyAlive);
-
+        
         base.Update();
 
         switch (currentState)
@@ -36,11 +40,10 @@ public class DistanceLaser : Distance
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:
+                
                 isInRange();
                 StartCoroutine("CanShoot");
-                break;
-
-            case State.ShootingLaser:
+                Shoot();
                 break;
         }
 
@@ -55,9 +58,46 @@ public class DistanceLaser : Distance
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
-        GameObject myproj = Instantiate(projetile, transform.position, Quaternion.identity);
-        myproj.transform.parent = gameObject.transform;
+             
+        if(isShootingLasers)
+        { 
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, Mathf.Infinity);
 
+            Debug.DrawRay(transform.position, dir*10, Color.red);
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.transform.gameObject.CompareTag("Player"))
+                {
+                    PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
+                    player.TakeDamage(damage);
+                }
+            }
+        }
+       
     }
 
+
+    protected virtual IEnumerator ShootLasersCo()
+    {
+        if(!isShootingLasers && isreadyToAttack)
+        {
+
+            dir = (targetSetter.target.position - transform.position).normalized;
+            yield return new WaitForSeconds(timeBeforeShoot);
+            isShootingLasers = true;
+            yield return new WaitForSeconds(durationOfShoot);
+            isShootingLasers = false;
+        }   
+    }
+
+    protected override IEnumerator CanShoot()
+    {
+        if (isShooting && isreadyToAttack && !isPerturbateurIEM)
+        {
+            StartCoroutine(ShootLasersCo());
+            isreadyToAttack = false;
+            yield return new WaitForSeconds(restTime);
+            isreadyToAttack = true;
+        }
+    }
 }

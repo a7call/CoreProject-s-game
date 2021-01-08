@@ -122,8 +122,8 @@ public class Enemy : MonoBehaviour
             animator.SetFloat("Speed", EnemySpeed);
             //print(0);
         }
-
-        if(currentState == State.Attacking)
+        //mettre d'autre codition 
+        if(currentState == State.Attacking )
         {
             animator.SetBool("IsAttacking", true);
         }
