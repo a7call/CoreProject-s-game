@@ -125,23 +125,26 @@ public class CacWeapons : Weapons
     {
         foreach (Collider2D enemy in enemyHit)
         {
-           
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.TakeDamage(damage);
-            CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
-            if (PlayerProjectiles.isImolationModule)
+            if (enemy.gameObject.CompareTag("Enemy"))
             {
-                CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
-            }
-            if (PlayerProjectiles.isCryoModule)
-            {
-                CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
-            }
-            if (PlayerProjectiles.isParaModule)
-            {
-                CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.TakeDamage(damage);
+                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
+                if (PlayerProjectiles.isImolationModule)
+                {
+                    CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
+                }
+                if (PlayerProjectiles.isCryoModule)
+                {
+                    CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
+                }
+                if (PlayerProjectiles.isParaModule)
+                {
+                    CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
+                }
             }
         }
+           
     }
 
     public void ToAttack()
