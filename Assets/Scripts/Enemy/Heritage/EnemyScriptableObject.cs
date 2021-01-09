@@ -11,7 +11,6 @@ public class EnemyScriptableObject : ScriptableObject
 
 
     public float moveSpeed;
-    public float aggroDistance;
     public float attackRange;
 
 }

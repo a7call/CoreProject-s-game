@@ -22,7 +22,7 @@ public class Distance : Enemy
     protected virtual void SetData()
     {
         moveSpeed = DistanceData.moveSpeed;
-        inSight = DistanceData.aggroDistance;
+
 
 
         maxHealth = DistanceData.maxHealth;

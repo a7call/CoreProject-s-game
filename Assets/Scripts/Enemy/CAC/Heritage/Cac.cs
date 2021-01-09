@@ -30,7 +30,7 @@ public class Cac : Enemy
         hitLayers = CacDatas.hitLayers;
 
         moveSpeed = CacDatas.moveSpeed;
-        inSight = CacDatas.aggroDistance;
+
 
         maxHealth = CacDatas.maxHealth;
         whiteMat = CacDatas.whiteMat;
