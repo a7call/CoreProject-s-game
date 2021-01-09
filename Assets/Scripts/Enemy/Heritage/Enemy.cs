@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
         GetReference();
     }
 
-    void GetReference()
+     protected virtual void GetReference()
     {
         healthBarGFX.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
@@ -333,11 +333,7 @@ public class Enemy : MonoBehaviour
 
     protected  void DisplayBar()
     {
-        if(currentHealth >= maxHealth && isHealthBarActive)
-        {
-            StartCoroutine(WaitToDesactive());
-        }
-        else if (currentHealth < maxHealth && !isHealthBarActive)
+        if (currentHealth < maxHealth && !isHealthBarActive)
         { 
             
             healthBarGFX.SetActive(true);
