@@ -15,8 +15,10 @@ public class Projectile : MonoBehaviour
     // vitesse des projectiles
     public float speed;
     public bool isDisabled;
+    
     // cible des projectiles (Player)
     public Transform target;
+    public bool isConverted;
     // direction (en fonction de la place de la cible)
     [HideInInspector]
     public Vector3 dir;
@@ -99,7 +101,11 @@ public class Projectile : MonoBehaviour
         { 
             playerHealth.TakeDamage(1);
         }
-        if(!collision.CompareTag("DontDestroy")) Destroy(gameObject);
+        if (collision.CompareTag("Enemy") &&  isConverted)
+        {
+            collision.GetComponent<Enemy>().TakeDamage(1);
+        }
+        if (!collision.CompareTag("DontDestroy")) Destroy(gameObject);
     }
 }
 
