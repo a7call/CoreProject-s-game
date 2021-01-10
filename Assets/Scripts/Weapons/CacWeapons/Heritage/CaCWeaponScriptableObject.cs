@@ -4,13 +4,9 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "new Cac Weapon", menuName = "CacWeapon")]
-public class CaCWeaponScriptableObject : ScriptableObject
+public class CaCWeaponScriptableObject : WeaponScriptableObject
 {
-    public float damage;
-    public LayerMask enemyLayer;
     public float attackRadius;
-    public float AttackDelay;
     public float knockBackForce;
     public float knockBackTime;
-    public Sprite image;
 }
