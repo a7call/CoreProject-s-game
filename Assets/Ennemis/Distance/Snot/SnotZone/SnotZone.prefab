@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isreadyToAttack: 1
+  animator: {fileID: 0}
   currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
@@ -158,6 +159,7 @@ MonoBehaviour:
   targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -168,12 +170,10 @@ MonoBehaviour:
   healthBarGFX: {fileID: 8632570933967311997}
   timeBeforeDesactive: 0
   isTakingDot: 0
-  DistanceData: {fileID: 11400000, guid: 3a7ec0a8c55c24e79a05b4e5ee678a3d, type: 2}
-  isShooting: 0
-  range: 2
+  enemyScriptableObject: {fileID: 11400000, guid: 24a765aff81321c4c9c9bb6e16a74394, type: 2}
   hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!61 &8536790599320367727
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,18 +5,26 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class SnotZone : Distance
+public class SnotZone : Enemy
 {
-    [SerializeField] private float range;
+    [SerializeField] protected EnemyScriptableObject enemyScriptableObject;
     [SerializeField] private LayerMask hitLayer;
     private bool hasStartAttacking = true;
 
     protected void Start()
     {
-        currentState = State.Patrolling;
         // Set data
         SetData();
         SetMaxHealth();
+    }
+
+    void SetData()
+    {
+        moveSpeed = enemyScriptableObject.moveSpeed;
+        maxHealth = enemyScriptableObject.maxHealth;
+        whiteMat = enemyScriptableObject.whiteMat;
+        defaultMat = enemyScriptableObject.defaultMat;
+        attackRange = enemyScriptableObject.attackRange;
     }
     protected override void Update()
     {
@@ -41,7 +49,7 @@ public class SnotZone : Distance
         if (hasStartAttacking)
         {
             hasStartAttacking = false;
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, hitLayer);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, hitLayer);
 
             foreach (Collider2D hit in hits)
             {
@@ -56,7 +64,7 @@ public class SnotZone : Distance
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.red;
     }
 

@@ -16,7 +16,6 @@ public class BubbleMS : Distance
 
     void Start()
     {
-        currentState = State.Patrolling;
         // Set data
         SetData();
         SetMaxHealth();
@@ -28,7 +27,6 @@ public class BubbleMS : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();

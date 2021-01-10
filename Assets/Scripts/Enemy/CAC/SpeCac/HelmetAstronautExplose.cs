@@ -37,7 +37,6 @@ public class HelmetAstronautExplose : Cac
    
     private IEnumerator Attack()
     {
-        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(timeToExplode);
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, hitLayers);
 
@@ -48,6 +47,14 @@ public class HelmetAstronautExplose : Cac
 
         Destroy(gameObject);
        
+    }
+    protected override void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+            isReadyToSwitchState = false;
+        }
     }
 
 

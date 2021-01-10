@@ -19,7 +19,6 @@ public class HitZoneProjectile : Projectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        //TakeDamage();
         if (collision.CompareTag("Player")) Instantiate(HitZoneGO, transform.position, Quaternion.identity);
         base.OnTriggerEnter2D(collision);
     }

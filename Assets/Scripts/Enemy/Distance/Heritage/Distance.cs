@@ -67,7 +67,7 @@ public class Distance : Enemy
     protected GameObject projetile;
     protected virtual IEnumerator CanShoot()
     {
-        if (isShooting && isreadyToAttack && !isPerturbateurIEM)
+        if (isShooting && isreadyToAttack)
         {
             isreadyToAttack = false;
             Shoot();

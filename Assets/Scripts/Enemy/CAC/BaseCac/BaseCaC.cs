@@ -10,8 +10,6 @@ public class BaseCaC : Cac
     
     private void Start()
     {
-        //currentState = State.Patrolling;
-        // Set data
         SetData();
         SetMaxHealth();
     }
@@ -23,7 +21,6 @@ public class BaseCaC : Cac
         switch (currentState) {
 
         case State.Patrolling:
-                PlayerInSight();
             break;
         case State.Chasing:
                 isInRange();
