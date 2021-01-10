@@ -7,12 +7,11 @@ using UnityEngine;
 /// </summary>
 public class SnotBubble : Distance
 {
-    
 
+    private bool alreadyActive;
 
     void Start()
     {
-        currentState = State.Patrolling;
         // Set data
         SetData();
         SetMaxHealth();
@@ -23,23 +22,24 @@ public class SnotBubble : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
-                
-                Shoot();
+                StartCoroutine(ZoneCo());
                 // suit le path créé et s'arrête pour tirer
                 break;
 
         }
 
     }
-    protected override void Shoot()
+    protected IEnumerator ZoneCo()
     {
-
-        Instantiate(projetile, transform.position, Quaternion.identity);
-        
-
+        if (!alreadyActive)
+        {
+            alreadyActive = true;
+            yield return new WaitForSeconds(0.8f);
+            Instantiate(projetile, transform.position, Quaternion.identity);
+            alreadyActive = false;
+        }
     }
 
 }

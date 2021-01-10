@@ -37,7 +37,6 @@ public class RafaleDistance : Distance
         switch (currentState)
         {
             case State.Patrolling:
-                PlayerInSight();
                 break;
             case State.Chasing:
                 isInRange();
@@ -62,7 +61,7 @@ public class RafaleDistance : Distance
     protected virtual IEnumerator intervalleTir()
     {
         
-        while (n < nbTir && !isPerturbateurIEM && !isArretTemporel)
+        while (n < nbTir && !isArretTemporel)
         {
             base.Shoot();
             yield return new WaitForSeconds(timeIntervale);

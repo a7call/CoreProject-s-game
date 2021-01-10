@@ -56,7 +56,6 @@ public class Cac : Enemy
         if (isreadyToAttack)
         {
             isreadyToAttack = false;
-            rb.velocity = Vector2.zero;
             Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
 
             foreach (Collider2D h in hits)

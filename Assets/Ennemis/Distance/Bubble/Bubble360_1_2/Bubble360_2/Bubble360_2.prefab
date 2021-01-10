@@ -150,6 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d747b3535d9067c4f98e26366dff46ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isreadyToAttack: 1
+  animator: {fileID: 0}
   currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 3
@@ -157,6 +159,7 @@ MonoBehaviour:
   targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -405,6 +408,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3178168488545640456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,6 +554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
