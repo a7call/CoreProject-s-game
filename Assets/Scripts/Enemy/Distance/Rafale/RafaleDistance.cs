@@ -26,7 +26,7 @@ public class RafaleDistance : Distance
 
     void Start()
     {
-        currentState = State.Patrolling;
+        currentState = State.Chasing;
         // Set data
         SetData();
         SetMaxHealth();
