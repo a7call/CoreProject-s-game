@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
+  m_Script: {fileID: 11500000, guid: ff9f0aaf96fc3de41921ccf74fd87fd2, type: 3}
   m_Name: LanceFlamme
   m_EditorClassIdentifier: 
   damage: 0.01
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  projectile: {fileID: 5004741095190017796, guid: 25b3602113a73b142a35ef7263e60a02, type: 3}
-  AttackDelay: 1
-  Dispersion: 0
-  MagSize: 0
-  ReloadDelay: 0
+  AttackDelay: 0
   image: {fileID: 0}
+  coolingTime: 3
+  coolingDelay: 0.5
+  countMax: 6
+  knockBackforce: 15
+  knockBackTime: 0.1

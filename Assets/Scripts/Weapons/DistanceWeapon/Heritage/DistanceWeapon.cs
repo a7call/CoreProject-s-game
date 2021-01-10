@@ -6,18 +6,22 @@ using UnityEngine.InputSystem;
 
 public class DistanceWeapon : Weapons
 {
+    
     [SerializeField] protected DistanceWeaponScriptableObject DistanceWeaponData;
     protected GameObject projectile;
     protected PlayerProjectiles Proj;
     protected float Dispersion;
     protected bool IsReloading;
+    [HideInInspector]
     public bool OkToShoot;
+    [HideInInspector]
     public int BulletInMag;
     protected float ReloadDelay;
     protected int MagSize;
     protected Text AmmoText;
     protected Text AmmoStockText;
-    [SerializeField] protected bool InfiniteAmmo;
+    protected bool InfiniteAmmo;
+    [HideInInspector]
     public int AmmoStock;
 
     //CanonRapideModule
@@ -128,6 +132,7 @@ public class DistanceWeapon : Weapons
         Dispersion = DistanceWeaponData.Dispersion;
         MagSize = DistanceWeaponData.MagSize;
         ReloadDelay = DistanceWeaponData.ReloadDelay;
+        AmmoStock = DistanceWeaponData.AmmoStock;
 
         BulletInMag = MagSize;
         image = DistanceWeaponData.image;
