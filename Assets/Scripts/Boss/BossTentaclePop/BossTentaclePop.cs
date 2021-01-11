@@ -65,11 +65,14 @@ public class BossTentaclePop : Enemy
         switch (currentState)
         {
             case State.Chasing:
-                print("A");
+                isInRange();
+                print("Chasing");
             break;
 
             case State.Attacking:
-                print("B");
+                isInRange();
+                print("Attacking");
+                //Shoot();
                 break;
 
         }
