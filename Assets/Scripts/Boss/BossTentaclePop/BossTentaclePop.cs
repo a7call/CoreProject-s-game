@@ -4,34 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using Pathfinding;
 
-public class BossTentaclePop : MonoBehaviour
+public class BossTentaclePop : Enemy
 {
     [Header("Global Parameters")]
+    [SerializeField] private BossScriptableObject BossData;
+    private float restTime;
+    private int nbTir;
+    private GameObject projectile; // Mettre le projectile classique
     // Health paramaters
-    [SerializeField] private float maxHealth; // Write amount
-    [SerializeField] private float currentHealth;
-    [SerializeField] private Slider healthBar;
+    // maxHealth, currentHealth, healthBar
 
     // General Variables
-    private Animator animator;
-    private Rigidbody2D rb;
+    // Animator, rb
 
     // Player reference
-    private PlayerMouvement playerMouvement;
-    private PlayerHealth playerHealth;
-    public Transform target;
-
+    // playerMouvement, playerHealth, target
 
     // Sprite Renderer
-    private SpriteRenderer spriteRenderer; // GetLeComponent
+    // spriteRenderer
 
     // PathFinding Parameters
-    [HideInInspector]
-    public float nextWayPointDistance = 0.05f;
-    [HideInInspector]
-    public AIPath aIPath;
-    [HideInInspector]
-    public AIDestinationSetter targetSetter;
+
+    // Projectile
 
     // Projectile parameters
     // Projectile de type Salive
@@ -42,37 +36,52 @@ public class BossTentaclePop : MonoBehaviour
     // A configurer plutard. A priori, j'aimerai bien en tirer un nombre random (de 6 à 12 imaginons)
 
 
+    //[Header("Pattern Parameters")]
+    //[SerializeField] private bool isShooting;
+    //[SerializeField] private bool isReadyToShoot;
+    //[SerializeField] private float attackRange;
+
+    //[Header("SecondPhase Parameters")]
+    //[SerializeField] private float dps;
 
 
-    [Header("FirstPhase Parameters")]
-    [SerializeField] private float attackRange;
 
-    [Header("SecondPhase Parameters")]
-    [SerializeField] private float dps;
-
-    private void Awake()
+    protected override void Awake()
     {
-        GetReference();
+        base.Awake();
+        SetData();
     }
 
     private void Start()
     {
-        healthBar.maxValue = maxHealth;
-        healthBar.value = maxHealth;
+        currentState = State.Chasing;
+        SetMaxHealth();
+        //Shoot();
     }
 
-    private void Update()
+    // Deux states uniquement, chasing + attacking
+    protected override void Update()
     {
+        switch (currentState)
+        {
+            case State.Chasing:
+                print("A");
+            break;
+
+            case State.Attacking:
+                print("B");
+                break;
+
+        }
+        healthBar.SetHealth(currentHealth);
         SetAnimationVariable();
         GetLastDirection();
-        print("A");
     }
 
-    private void GetReference()
+    protected override void GetReference()
     {
-        animator = GetComponent<Animator>();
+        healthBarGFX.SetActive(true);
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         aIPath = GetComponent<AIPath>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         targetSetter = GetComponent<AIDestinationSetter>();
@@ -80,34 +89,25 @@ public class BossTentaclePop : MonoBehaviour
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
-
-    private void SetAnimationVariable()
+    private void SetData()
     {
-        if (aIPath.canMove)
-        {
-            animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
-            animator.SetFloat("VerticalSpeed", aIPath.velocity.y);
-            float BossSpeed = aIPath.velocity.sqrMagnitude;
-            animator.SetFloat("Speed", BossSpeed);
-        }
-        else
-        {
-            animator.SetFloat("HorizontalSpeed", 0);
-            animator.SetFloat("VerticalSpeed", 0);
-            float BossSpeed = 0;
-            animator.SetFloat("Speed", BossSpeed);
-        }
+        maxHealth = BossData.maxHealth;
+        whiteMat = BossData.whiteMat;
+        defaultMat = BossData.defaultMat;
+
+        attackRange = BossData.attackRange;
+        restTime = BossData.restTime;
+        timeToSwitch = BossData.timeToSwich;
+        nbTir = BossData.nbTir;
+        projectile = BossData.projectile;
     }
 
-    private void GetLastDirection()
+    private void Shoot()
     {
-        if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
-        {
-            animator.SetFloat("LastMoveX", targetSetter.target.position.x - rb.position.x);
-            animator.SetFloat("LastMoveY", targetSetter.target.position.y - rb.position.y);
-        }
+        GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
+        myProjectile.transform.parent = gameObject.transform;
     }
 
-    
+
 
 }

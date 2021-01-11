@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void SetAnimationVariable()
+    protected virtual void SetAnimationVariable()
     {
         if (aIPath.canMove)
         {
@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour
         }
         
     }
-    void GetLastDirection()
+    protected virtual void GetLastDirection()
     {
         if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
         {
@@ -263,19 +263,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // A MODIFIER AVEC LES ARMES A PARTICULE
-    [HideInInspector]
-    public bool isTakingDot;
-    protected float DotTime = 3f;
-    public IEnumerator DotOnEnemy()
-    {
-        isTakingDot = true;
-        yield return new WaitForSeconds(DotTime);
-        isTakingDot = false;
-    }
-    //
-
-
     // prends les dammages
     public virtual void TakeDamage(float _damage)
     {
@@ -331,7 +318,7 @@ public class Enemy : MonoBehaviour
     // Distance d'où l'ennemi peu lancer une attaque
    
 
-    protected  void DisplayBar()
+    protected void DisplayBar()
     {
         if (currentHealth < maxHealth && !isHealthBarActive)
         { 
