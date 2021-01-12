@@ -9,7 +9,6 @@ public class BossTentaclePop : Enemy
     [Header("Global Parameters")]
     [SerializeField] private BossScriptableObject BossData;
     private float restTime;
-    private int nbTir;
     private GameObject projectile; // Mettre le projectile classique
     // Health paramaters
     // maxHealth, currentHealth, healthBar
@@ -44,7 +43,13 @@ public class BossTentaclePop : Enemy
     //[Header("SecondPhase Parameters")]
     //[SerializeField] private float dps;
 
+    public BossState currentBossState;
 
+    public enum BossState
+    {
+        Phase1,
+        Phase2,
+    }
 
     protected override void Awake()
     {
@@ -55,24 +60,48 @@ public class BossTentaclePop : Enemy
     private void Start()
     {
         currentState = State.Chasing;
+        currentBossState = BossState.Phase1;
+        aIPath.canMove = false;
         SetMaxHealth();
+        StartCoroutine(DelayToStart());
         //Shoot();
     }
 
     // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
+
+        switch (currentBossState)
+        {
+            case BossState.Phase1:
+                ActualState();
+                print("State1");
+                break;
+            case BossState.Phase2:
+                ActualState();
+                    if (isReadyToCycle)
+                    {
+                        StartCoroutine(Cycle());
+                    }
+                print("State2");
+                break;
+        }
+
         switch (currentState)
         {
             case State.Chasing:
-                print("A");
+                isInRange();
+                print("Chasing");
             break;
 
             case State.Attacking:
-                print("B");
+                isInRange();
+                StartCoroutine(CanShoot());
+                print("Attacking");
+                //Shoot();
                 break;
-
         }
+
         healthBar.SetHealth(currentHealth);
         SetAnimationVariable();
         GetLastDirection();
@@ -89,6 +118,7 @@ public class BossTentaclePop : Enemy
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
+
     private void SetData()
     {
         maxHealth = BossData.maxHealth;
@@ -98,16 +128,135 @@ public class BossTentaclePop : Enemy
         attackRange = BossData.attackRange;
         restTime = BossData.restTime;
         timeToSwitch = BossData.timeToSwich;
-        nbTir = BossData.nbTir;
+
         projectile = BossData.projectile;
     }
 
-    private void Shoot()
+    private float starterTimer = 3f;
+    private IEnumerator DelayToStart()
     {
-        GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
-        myProjectile.transform.parent = gameObject.transform;
+        yield return new WaitForSeconds(starterTimer);
+        aIPath.canMove = true;
+        isReadyToCycle = true;
     }
 
+    private void ActualState()
+    {
+        if (currentHealth >= maxHealth / 2)
+        {
+            currentBossState = BossState.Phase1;
+        }
+        else
+        {
+            currentBossState = BossState.Phase2;
+        }
+    }
 
+    protected override void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+            isShooting = true;
+            isReadyToSwitchState = false;
+            aIPath.canMove = false;
+        }
+        else
+        {
+            if (currentState == State.Attacking && !isInTransition && isreadyToAttack) StartCoroutine(transiChasing());
+            if (isReadyToSwitchState)
+            {
+                currentState = State.Chasing;
+                isShooting = false;
+            }
+        }
+    }
+
+    private bool isReadyToCycle = false;
+    private bool inFirstAttack = false;
+    private bool inSecondAttack = false;
+    private bool inThirdAttack = false;
+
+    private float firstActionTime = 5f;
+    private float secondActionTime = 3f;
+    private float thirdActionTime = 3f;
+
+    private IEnumerator Cycle()
+    {
+        isReadyToCycle = false;
+
+        inFirstAttack = true;
+        yield return new WaitForSeconds(firstActionTime);
+
+        inFirstAttack = false;
+        inSecondAttack = true;
+        yield return new WaitForSeconds(secondActionTime);
+
+        inSecondAttack = false;
+        inThirdAttack = true;
+        yield return new WaitForSeconds(thirdActionTime);
+
+        inThirdAttack = false;
+
+        isReadyToCycle = true;
+    }
+
+    private int nbProjectile;
+    private int decalage;
+    private int angleTir;
+    private void Shoot()
+    {
+        if (inFirstAttack)
+        {
+            attackRange = BossData.attackRange;
+            restTime = BossData.restTime;
+            GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
+            myProjectile.transform.parent = gameObject.transform;
+        }
+
+        if (inSecondAttack)
+        {
+            attackRange = 5f;
+            restTime = 0.75f;
+            nbProjectile = 5;
+            angleTir = 40;
+            int offset = 20;
+
+            for (int i = 0; i < nbProjectile; i++)
+            {
+                decalage = (angleTir / (nbProjectile-1)) * i;
+                float angleDecalage = decalage - offset;
+                GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.AngleAxis(angleDecalage, Vector3.forward));
+                myProjectile.transform.parent = gameObject.transform;
+            }
+        }
+
+        if (inThirdAttack)
+        {
+            attackRange = 3f;
+            restTime = 1f;
+            nbProjectile = 20;
+            angleTir = 360;
+
+            for (int i = 0; i < nbProjectile; i++)
+            {
+                decalage = (angleTir / nbProjectile)*i;
+                GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.AngleAxis(decalage, Vector3.forward));
+                myProjectile.transform.parent = gameObject.transform;
+            }
+        }
+    }
+
+    private bool isShooting = false;
+    private IEnumerator CanShoot()
+    {
+        if (isShooting && isreadyToAttack)
+        {
+            isreadyToAttack = false;
+            Shoot();
+            yield return new WaitForSeconds(restTime);
+            isreadyToAttack = true;
+        }
+    }
 
 }
