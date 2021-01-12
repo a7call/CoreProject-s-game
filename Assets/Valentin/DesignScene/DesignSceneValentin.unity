@@ -772,6 +772,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8996840744722554461, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464d64273a4919644894301b0df1ba26, type: 3}
 --- !u!1 &298880737
@@ -785,6 +789,7 @@ GameObject:
   - component: {fileID: 298880738}
   - component: {fileID: 298880740}
   - component: {fileID: 298880739}
+  - component: {fileID: 298880741}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -825,7 +830,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 641f9bd0af358a44493ef6a82bb66478, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3926,6 +3931,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &298880741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298880737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8a87f585cda6848a0a0a3edd7dd9ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &389493619
 GameObject:
   m_ObjectHideFlags: 0

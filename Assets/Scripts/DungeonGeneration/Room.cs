@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+[System.Serializable]
 public class Room
 {
 	public bool down, up, left, right;
