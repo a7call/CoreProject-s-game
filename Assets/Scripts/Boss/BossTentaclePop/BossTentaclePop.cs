@@ -75,14 +75,14 @@ public class BossTentaclePop : Enemy
         {
             case BossState.Phase1:
                 ActualState();
-                print("State1");
-                break;
-            case BossState.Phase2:
-                ActualState();
                     if (isReadyToCycle)
                     {
                         StartCoroutine(Cycle());
                     }
+                print("State1");
+                break;
+            case BossState.Phase2:
+                ActualState();
                 print("State2");
                 break;
         }
