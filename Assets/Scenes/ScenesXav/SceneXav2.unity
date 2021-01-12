@@ -1502,6 +1502,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2192860235071860581, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192860235071860581, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192860235071860581, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2348188932936410993, guid: 464d64273a4919644894301b0df1ba26, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1509,6 +1521,30 @@ PrefabInstance:
     - target: {fileID: 2348188932936410993, guid: 464d64273a4919644894301b0df1ba26, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594983056253913837, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594983056253913837, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594983056253913837, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829853932725549453, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829853932725549453, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829853932725549453, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3374971622611939785, guid: 464d64273a4919644894301b0df1ba26, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1560,7 +1596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6355173688279944365, guid: 464d64273a4919644894301b0df1ba26, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6930911524484877362, guid: 464d64273a4919644894301b0df1ba26, type: 3}
       propertyPath: Dash
@@ -1810,9 +1846,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8637177504004529366, guid: 464d64273a4919644894301b0df1ba26, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8996840744722554461, guid: 464d64273a4919644894301b0df1ba26, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464d64273a4919644894301b0df1ba26, type: 3}
@@ -3203,7 +3243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isreadyToAttack: 1
   animator: {fileID: 1262782168}
-  currentState: 0
+  currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 0.05
   aIPath: {fileID: 0}
@@ -3221,6 +3261,7 @@ MonoBehaviour:
   healthBarGFX: {fileID: 380443351}
   timeBeforeDesactive: 0
   BossData: {fileID: 11400000, guid: 549076ffdb1ab5d418bc56dca064e64f, type: 2}
+  currentBossState: 0
 --- !u!61 &1262782173
 BoxCollider2D:
   m_ObjectHideFlags: 0

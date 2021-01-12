@@ -44,7 +44,13 @@ public class BossTentaclePop : Enemy
     //[Header("SecondPhase Parameters")]
     //[SerializeField] private float dps;
 
+    public BossState currentBossState;
 
+    public enum BossState
+    {
+        Phase1,
+        Phase2,
+    }
 
     protected override void Awake()
     {
@@ -55,6 +61,7 @@ public class BossTentaclePop : Enemy
     private void Start()
     {
         currentState = State.Chasing;
+        currentBossState = BossState.Phase1;
         SetMaxHealth();
         //Shoot();
     }
@@ -62,6 +69,24 @@ public class BossTentaclePop : Enemy
     // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
+        print(attackRange);
+        if (!isInCycle)
+        {
+            StartCoroutine(Cycle());
+        }
+
+        switch (currentBossState)
+        {
+            case BossState.Phase1:
+                ActualState();
+                print("State1");
+                break;
+            case BossState.Phase2:
+                ActualState();
+                print("State2");
+                break;
+        }
+
         switch (currentState)
         {
             case State.Chasing:
@@ -71,11 +96,12 @@ public class BossTentaclePop : Enemy
 
             case State.Attacking:
                 isInRange();
+                StartCoroutine(CanShoot());
                 print("Attacking");
                 //Shoot();
                 break;
-
         }
+
         healthBar.SetHealth(currentHealth);
         SetAnimationVariable();
         GetLastDirection();
@@ -92,6 +118,7 @@ public class BossTentaclePop : Enemy
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
+
     private void SetData()
     {
         maxHealth = BossData.maxHealth;
@@ -105,12 +132,74 @@ public class BossTentaclePop : Enemy
         projectile = BossData.projectile;
     }
 
+    private void ActualState()
+    {
+        if (currentHealth >= maxHealth / 2)
+        {
+            currentBossState = BossState.Phase1;
+        }
+        else
+        {
+            currentBossState = BossState.Phase2;
+        }
+    }
+
+    protected override void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+            isShooting = true;
+            isReadyToSwitchState = false;
+            aIPath.canMove = false;
+        }
+        else
+        {
+            if (currentState == State.Attacking && !isInTransition && isreadyToAttack) StartCoroutine(transiChasing());
+            if (isReadyToSwitchState)
+            {
+                currentState = State.Chasing;
+                isShooting = false;
+            }
+        }
+    }
+
+    private bool isInCycle = false;
+    private float firstActionTime = 5f;
+    private float secondActionTime = 3f;
+    private float thirdActionTime = 3f;
+
+    private IEnumerator Cycle()
+    {
+        isInCycle = true;
+        attackRange = BossData.attackRange;
+        restTime = BossData.restTime;
+        yield return new WaitForSeconds(firstActionTime);
+        attackRange = 5f;
+        restTime = 0.5f;
+        yield return new WaitForSeconds(secondActionTime);
+        attackRange = 3f;
+        restTime = 0.5f;
+        yield return new WaitForSeconds(thirdActionTime);
+        isInCycle = false;
+    }
+
     private void Shoot()
     {
         GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
         myProjectile.transform.parent = gameObject.transform;
     }
 
-
+    private bool isShooting = false;
+    private IEnumerator CanShoot()
+    {
+        if (isShooting && isreadyToAttack)
+        {
+            isreadyToAttack = false;
+            Shoot();
+            yield return new WaitForSeconds(restTime);
+            isreadyToAttack = true;
+        }
+    }
 
 }
