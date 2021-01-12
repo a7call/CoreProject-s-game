@@ -11,7 +11,7 @@ public class BossScriptableObject : ScriptableObject
     public float attackRange;
     public float restTime;
     public float timeToSwich;
-    public int nbTir;
+
     public GameObject projectile;
 }
 

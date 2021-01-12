@@ -9,7 +9,6 @@ public class BossTentaclePop : Enemy
     [Header("Global Parameters")]
     [SerializeField] private BossScriptableObject BossData;
     private float restTime;
-    private int nbTir;
     private GameObject projectile; // Mettre le projectile classique
     // Health paramaters
     // maxHealth, currentHealth, healthBar
@@ -62,18 +61,15 @@ public class BossTentaclePop : Enemy
     {
         currentState = State.Chasing;
         currentBossState = BossState.Phase1;
+        aIPath.canMove = false;
         SetMaxHealth();
+        StartCoroutine(DelayToStart());
         //Shoot();
     }
 
     // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
-        print(attackRange);
-        if (!isInCycle)
-        {
-            StartCoroutine(Cycle());
-        }
 
         switch (currentBossState)
         {
@@ -83,6 +79,10 @@ public class BossTentaclePop : Enemy
                 break;
             case BossState.Phase2:
                 ActualState();
+                    if (isReadyToCycle)
+                    {
+                        StartCoroutine(Cycle());
+                    }
                 print("State2");
                 break;
         }
@@ -128,8 +128,16 @@ public class BossTentaclePop : Enemy
         attackRange = BossData.attackRange;
         restTime = BossData.restTime;
         timeToSwitch = BossData.timeToSwich;
-        nbTir = BossData.nbTir;
+
         projectile = BossData.projectile;
+    }
+
+    private float starterTimer = 3f;
+    private IEnumerator DelayToStart()
+    {
+        yield return new WaitForSeconds(starterTimer);
+        aIPath.canMove = true;
+        isReadyToCycle = true;
     }
 
     private void ActualState()
@@ -164,30 +172,79 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    private bool isInCycle = false;
+    private bool isReadyToCycle = false;
+    private bool inFirstAttack = false;
+    private bool inSecondAttack = false;
+    private bool inThirdAttack = false;
+
     private float firstActionTime = 5f;
     private float secondActionTime = 3f;
     private float thirdActionTime = 3f;
 
     private IEnumerator Cycle()
     {
-        isInCycle = true;
-        attackRange = BossData.attackRange;
-        restTime = BossData.restTime;
+        isReadyToCycle = false;
+
+        inFirstAttack = true;
         yield return new WaitForSeconds(firstActionTime);
-        attackRange = 5f;
-        restTime = 0.5f;
+
+        inFirstAttack = false;
+        inSecondAttack = true;
         yield return new WaitForSeconds(secondActionTime);
-        attackRange = 3f;
-        restTime = 0.5f;
+
+        inSecondAttack = false;
+        inThirdAttack = true;
         yield return new WaitForSeconds(thirdActionTime);
-        isInCycle = false;
+
+        inThirdAttack = false;
+
+        isReadyToCycle = true;
     }
 
+    private int nbProjectile;
+    private int decalage;
+    private int angleTir;
     private void Shoot()
     {
-        GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
-        myProjectile.transform.parent = gameObject.transform;
+        if (inFirstAttack)
+        {
+            attackRange = BossData.attackRange;
+            restTime = BossData.restTime;
+            GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
+            myProjectile.transform.parent = gameObject.transform;
+        }
+
+        if (inSecondAttack)
+        {
+            attackRange = 5f;
+            restTime = 0.75f;
+            nbProjectile = 5;
+            angleTir = 40;
+            int offset = 20;
+
+            for (int i = 0; i < nbProjectile; i++)
+            {
+                decalage = (angleTir / (nbProjectile-1)) * i;
+                float angleDecalage = decalage - offset;
+                GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.AngleAxis(angleDecalage, Vector3.forward));
+                myProjectile.transform.parent = gameObject.transform;
+            }
+        }
+
+        if (inThirdAttack)
+        {
+            attackRange = 3f;
+            restTime = 1f;
+            nbProjectile = 20;
+            angleTir = 360;
+
+            for (int i = 0; i < nbProjectile; i++)
+            {
+                decalage = (angleTir / nbProjectile)*i;
+                GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.AngleAxis(decalage, Vector3.forward));
+                myProjectile.transform.parent = gameObject.transform;
+            }
+        }
     }
 
     private bool isShooting = false;
