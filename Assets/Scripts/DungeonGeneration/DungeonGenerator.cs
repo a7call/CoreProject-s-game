@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class DungeonGenerator : MonoBehaviour
 {
-
-
     Vector2 worldSize = new Vector2(30, 30);
-    List<Vector2> takenPositions = new List<Vector2>();
+    [SerializeField] List<Vector2> takenPositions = new List<Vector2>();
     int gridSizeX, gridSizeY, numberOfRooms = 40;
+    [SerializeField]  List<Room> roomsList = new List<Room>();
+    [SerializeField]  List<GameObject> SpriteList = new List<GameObject>();
     public Room[,] rooms;
     public GameObject spU, spD, spR, spL,
             spUD, spRL, spUR, spUL, spDR, spDL,
-            spULD, spRUL, spDRU, spLDR, spUDRL;
+            spULD, spRUL, spDRU, spLDR, spUDRL, BigRoom;
     public GameObject specificRoom;
     public struct walker
     {
@@ -36,8 +36,8 @@ public class DungeonGenerator : MonoBehaviour
 
     void Setup()
     {
-       
-        if (numberOfRooms >= (worldSize.x ) * (worldSize.y ))
+
+        if (numberOfRooms >= (worldSize.x) * (worldSize.y))
         {
             numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
         }
@@ -48,7 +48,7 @@ public class DungeonGenerator : MonoBehaviour
         walker newWalker = new walker();
         newWalker.dir = RandomDirection();
         //find center of grid
-        
+
         Vector2 spawnPos = new Vector2(Mathf.RoundToInt(gridSizeX / 2.0f), Mathf.RoundToInt(gridSizeY / 2.0f));
 
         newWalker.pos = spawnPos;
@@ -69,12 +69,12 @@ public class DungeonGenerator : MonoBehaviour
             int index = 0;
             foreach (walker myWalker in walkers)
             {
-               
+
                 if (takenPositions.Contains(myWalker.pos))
                 {
                     continue;
                 }
-                else if(myWalker.pos.x > gridSizeX || myWalker.pos.x < 0 || myWalker.pos.y > gridSizeY || myWalker.pos.y < 0)
+                else if (myWalker.pos.x > gridSizeX || myWalker.pos.x < 0 || myWalker.pos.y > gridSizeY || myWalker.pos.y < 0)
                 {
                     walkers.RemoveAt(index);
                     // revenir en arriere
@@ -82,19 +82,19 @@ public class DungeonGenerator : MonoBehaviour
                 }
                 else
                 {
-                    
+
                     Vector2 newPos = new Vector2((int)myWalker.pos.x, (int)myWalker.pos.y);
-                    print(newPos);
+
                     takenPositions.Insert(0, newPos);
                     rooms[(int)myWalker.pos.x, (int)myWalker.pos.y] = new Room(newPos, 1);
-                    
+
                 }
                 index++;
 
             }
 
             int numberChecks = walkers.Count; //might modify count while in this loop
-            if(numberChecks < 1)
+            if (numberChecks < 1)
             {
                 walker newWalker = new walker();
                 newWalker.dir = RandomDirection();
@@ -173,21 +173,16 @@ public class DungeonGenerator : MonoBehaviour
             {
                 continue; //skip where there is no room
             }
-            print(room.gridPos + "room");
-            Vector2 drawPos = room.gridPos;
+         
 
-            drawPos.x *= 0.2f;//aspect ratio of map sprite
-            drawPos.y *= 0.1f;
+            Vector2 drawPos = room.gridPos;
+            roomsList.Insert(0, room);
             ChanceToSpawnBoss += 0.1f;
-            PickSprite(room, drawPos);
-           
-            if (index == 0)
-            {
-                Instantiate(startRoom, drawPos, Quaternion.identity);
-            }
+            SpriteList.Insert(0,PickSprite(room, drawPos));
             index++;
 
         }
+        BigRooms();
     }
 
     private Vector2 RandomDirection()
@@ -209,9 +204,9 @@ public class DungeonGenerator : MonoBehaviour
 
     void SetRoomDoors()
     {
-        for (int x = 0; x < ((gridSizeX )); x++)
+        for (int x = 0; x < ((gridSizeX)); x++)
         {
-            for (int y = 0; y < ((gridSizeY )); y++)
+            for (int y = 0; y < ((gridSizeY)); y++)
             {
                 if (rooms[x, y] == null)
                 {
@@ -253,10 +248,13 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
     }
-  
 
-    void PickSprite(Room room, Vector2 _drawPos)
+    public GameObject sampleRoom;
+    GameObject PickSprite(Room room, Vector2 _drawPos)
     { //picks correct sprite based on the four door bools
+        _drawPos.x = _drawPos.x * (sampleRoom.GetComponent<Renderer>().bounds.size.x);
+        _drawPos.y = _drawPos.y * (sampleRoom.GetComponent<Renderer>().bounds.size.y);
+       
         if (room.up)
         {
             if (room.down)
@@ -265,22 +263,32 @@ public class DungeonGenerator : MonoBehaviour
                 {
                     if (room.left)
                     {
-                        Instantiate(spUDRL, _drawPos, Quaternion.identity);
+                       
+                         GameObject roomObj =  Instantiate(spUDRL, _drawPos, Quaternion.identity);
+                        return roomObj;
+                       
                     }
                     else
                     {
-                        Instantiate(spDRU, _drawPos, Quaternion.identity);
+
+
+                        GameObject roomObj = Instantiate(spDRU, _drawPos, Quaternion.identity);
+                        return roomObj;
+
                     }
                 }
                 else if (room.left)
                 {
 
-                    Instantiate(spULD, _drawPos, Quaternion.identity);
+                    GameObject roomObj =Instantiate(spULD, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
                 else
                 {
-                    Instantiate(spUD, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj= Instantiate(spUD, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
             }
@@ -290,30 +298,40 @@ public class DungeonGenerator : MonoBehaviour
                 {
                     if (room.left)
                     {
-                        Instantiate(spRUL, _drawPos, Quaternion.identity);
+
+                        GameObject roomObj = Instantiate(spRUL, _drawPos, Quaternion.identity);
+                        return roomObj;
 
                     }
                     else
                     {
-                        Instantiate(spUR, _drawPos, Quaternion.identity);
+
+                        GameObject roomObj = Instantiate(spUR, _drawPos, Quaternion.identity);
+                        return roomObj;
 
                     }
                 }
                 else if (room.left)
                 {
-                    Instantiate(spUL, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj = Instantiate(spUL, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
                 else
                 {
                     if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
                     {
+                       
                         BossAlreadySpawned = true;
-                        Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                        GameObject roomObj = Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                        return roomObj;
                     }
                     else
                     {
-                        Instantiate(spU, _drawPos, Quaternion.identity);
+
+                        GameObject roomObj = Instantiate(spU, _drawPos, Quaternion.identity);
+                        return roomObj;
 
                     }
 
@@ -321,7 +339,6 @@ public class DungeonGenerator : MonoBehaviour
 
                 }
             }
-            return;
         }
         if (room.down)
         {
@@ -329,53 +346,69 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if (room.left)
                 {
-                    Instantiate(spLDR, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj  = Instantiate(spLDR, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
                 else
                 {
-                    Instantiate(spDR, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj  = Instantiate(spDR, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
             }
             else if (room.left)
             {
-                Instantiate(spDL, _drawPos, Quaternion.identity);
+
+                GameObject roomObj = Instantiate(spDL, _drawPos, Quaternion.identity);
+                return roomObj;
 
             }
             else
             {
                 if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
                 {
+                  
                     BossAlreadySpawned = true;
-                    Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    GameObject roomObj =  Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    return roomObj;
                 }
                 else
                 {
-                    Instantiate(spD, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj =Instantiate(spD, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
 
             }
-            return;
+            
         }
         if (room.right)
         {
             if (room.left)
             {
-                Instantiate(spRL, _drawPos, Quaternion.identity);
+
+                GameObject roomObj =  Instantiate(spRL, _drawPos, Quaternion.identity);
+                return roomObj;
 
             }
             else
             {
                 if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
                 {
+                   
                     BossAlreadySpawned = true;
-                    Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    GameObject roomObj =  Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    return roomObj;
                 }
                 else
                 {
-                    Instantiate(spR, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj =  Instantiate(spR, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
             }
@@ -384,16 +417,64 @@ public class DungeonGenerator : MonoBehaviour
         {
             if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
             {
+              
                 BossAlreadySpawned = true;
-                Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                GameObject roomObj = Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                return roomObj;
             }
             else
             {
-                Instantiate(spL, _drawPos, Quaternion.identity);
+
+                GameObject roomObj = Instantiate(spL, _drawPos, Quaternion.identity);
+                return roomObj;
 
             }
 
 
+        }
+    }
+
+    bool isDone = false;
+   void BigRooms()
+    {
+        for (int x = 0; x < ((gridSizeX)); x++)
+        {
+            if (isDone) break;
+            for (int y = 0; y < ((gridSizeY)); y++)
+            {
+                if (isDone) break;
+                if (rooms[x, y] != null)
+                {
+                    
+                    if ((y - 1 > 0) && (x - 1 > 0))
+                    {
+                        
+                        if (rooms[x, y - 1] != null && rooms[x - 1, y] != null && rooms[x - 1, y - 1] != null)
+                        {
+                            int index = 0;
+                            foreach(Room room in roomsList.ToArray())
+                            {
+                                
+                                if (room.gridPos == rooms[x, y - 1].gridPos || room.gridPos == rooms[x - 1, y].gridPos || room.gridPos == rooms[x - 1, y - 1].gridPos || room.gridPos == rooms[x , y ].gridPos)
+                                {
+                                    print(room.gridPos);
+                                    Destroy(SpriteList[index].gameObject);
+                                }
+                                index++;
+
+                            }
+                            Vector2 pos = new Vector2(rooms[x, y].gridPos.x + rooms[x-1, y].gridPos.x, rooms[x, y].gridPos.y + rooms[x , y-1].gridPos.y);
+                            pos.x = pos.x * (sampleRoom.GetComponent<Renderer>().bounds.size.x)/2;
+                            pos.y = pos.y * (sampleRoom.GetComponent<Renderer>().bounds.size.y)/2;
+                            GameObject roomObj = Instantiate(BigRoom, pos  , Quaternion.identity);
+                            SpriteList.Insert(0, roomObj);
+                            isDone = true;
+                        }
+                        
+                    }
+
+                }
+            }
         }
     }
 }
