@@ -5,12 +5,13 @@ public class DungeonGenerator : MonoBehaviour
 {
     Vector2 worldSize = new Vector2(30, 30);
     [SerializeField] List<Vector2> takenPositions = new List<Vector2>();
-    int gridSizeX, gridSizeY, numberOfRooms = 20;
+    int gridSizeX, gridSizeY, numberOfRooms = 40;
     [SerializeField]  List<Room> roomsList = new List<Room>();
+    [SerializeField]  List<GameObject> SpriteList = new List<GameObject>();
     public Room[,] rooms;
     public GameObject spU, spD, spR, spL,
             spUD, spRL, spUR, spUL, spDR, spDL,
-            spULD, spRUL, spDRU, spLDR, spUDRL;
+            spULD, spRUL, spDRU, spLDR, spUDRL, BigRoom;
     public GameObject specificRoom;
     public struct walker
     {
@@ -83,7 +84,7 @@ public class DungeonGenerator : MonoBehaviour
                 {
 
                     Vector2 newPos = new Vector2((int)myWalker.pos.x, (int)myWalker.pos.y);
-                    print(newPos);
+
                     takenPositions.Insert(0, newPos);
                     rooms[(int)myWalker.pos.x, (int)myWalker.pos.y] = new Room(newPos, 1);
 
@@ -173,14 +174,15 @@ public class DungeonGenerator : MonoBehaviour
                 continue; //skip where there is no room
             }
          
-            print(room.gridPos + "room");
-            Vector2 drawPos = room.gridPos;
 
+            Vector2 drawPos = room.gridPos;
+            roomsList.Insert(0, room);
             ChanceToSpawnBoss += 0.1f;
-            PickSprite(room, drawPos);
+            SpriteList.Insert(0,PickSprite(room, drawPos));
             index++;
 
         }
+        BigRooms();
     }
 
     private Vector2 RandomDirection()
@@ -247,9 +249,12 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-
-    void PickSprite(Room room, Vector2 _drawPos)
+    public GameObject sampleRoom;
+    GameObject PickSprite(Room room, Vector2 _drawPos)
     { //picks correct sprite based on the four door bools
+        _drawPos.x = _drawPos.x * (sampleRoom.GetComponent<Renderer>().bounds.size.x);
+        _drawPos.y = _drawPos.y * (sampleRoom.GetComponent<Renderer>().bounds.size.y);
+       
         if (room.up)
         {
             if (room.down)
@@ -258,30 +263,32 @@ public class DungeonGenerator : MonoBehaviour
                 {
                     if (room.left)
                     {
-                        _drawPos.x = _drawPos.x * (spUDRL.GetComponent<Renderer>().bounds.size.x);
-                        _drawPos.y = _drawPos.y * (spUDRL.GetComponent<Renderer>().bounds.size.y);
-                        Instantiate(spUDRL, _drawPos, Quaternion.identity);
+                       
+                         GameObject roomObj =  Instantiate(spUDRL, _drawPos, Quaternion.identity);
+                        return roomObj;
+                       
                     }
                     else
                     {
-                        _drawPos.x = _drawPos.x * (spDRU.GetComponent<Renderer>().bounds.size.x);
-                        _drawPos.y = _drawPos.y * (spDRU.GetComponent<Renderer>().bounds.size.y);
-                        Instantiate(spDRU, _drawPos, Quaternion.identity);
+
+
+                        GameObject roomObj = Instantiate(spDRU, _drawPos, Quaternion.identity);
+                        return roomObj;
+
                     }
                 }
                 else if (room.left)
                 {
-                    _drawPos.x = _drawPos.x * (spULD.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (spULD.GetComponent<Renderer>().bounds.size.y);
 
-                    Instantiate(spULD, _drawPos, Quaternion.identity);
+                    GameObject roomObj =Instantiate(spULD, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
                 else
                 {
-                    _drawPos.x = _drawPos.x * (spUD.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (spUD.GetComponent<Renderer>().bounds.size.y);
-                    Instantiate(spUD, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj= Instantiate(spUD, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
             }
@@ -291,40 +298,40 @@ public class DungeonGenerator : MonoBehaviour
                 {
                     if (room.left)
                     {
-                        _drawPos.x = _drawPos.x * (spRUL.GetComponent<Renderer>().bounds.size.x);
-                        _drawPos.y = _drawPos.y * (spRUL.GetComponent<Renderer>().bounds.size.y);
-                        Instantiate(spRUL, _drawPos, Quaternion.identity);
+
+                        GameObject roomObj = Instantiate(spRUL, _drawPos, Quaternion.identity);
+                        return roomObj;
 
                     }
                     else
                     {
-                        _drawPos.x = _drawPos.x * (spUR.GetComponent<Renderer>().bounds.size.x);
-                        _drawPos.y = _drawPos.y * (spUR.GetComponent<Renderer>().bounds.size.y);
-                        Instantiate(spUR, _drawPos, Quaternion.identity);
+
+                        GameObject roomObj = Instantiate(spUR, _drawPos, Quaternion.identity);
+                        return roomObj;
 
                     }
                 }
                 else if (room.left)
                 {
-                    _drawPos.x = _drawPos.x * (spUL.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (spUL.GetComponent<Renderer>().bounds.size.y);
-                    Instantiate(spUL, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj = Instantiate(spUL, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
                 else
                 {
                     if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
                     {
-                        _drawPos.x = _drawPos.x * (specificRoom.GetComponent<Renderer>().bounds.size.x);
-                        _drawPos.y = _drawPos.y * (specificRoom.GetComponent<Renderer>().bounds.size.y);
+                       
                         BossAlreadySpawned = true;
-                        Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                        GameObject roomObj = Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                        return roomObj;
                     }
                     else
                     {
-                        _drawPos.x = _drawPos.x * (spU.GetComponent<Renderer>().bounds.size.x);
-                        _drawPos.y = _drawPos.y * (spU.GetComponent<Renderer>().bounds.size.y);
-                        Instantiate(spU, _drawPos, Quaternion.identity);
+
+                        GameObject roomObj = Instantiate(spU, _drawPos, Quaternion.identity);
+                        return roomObj;
 
                     }
 
@@ -332,7 +339,6 @@ public class DungeonGenerator : MonoBehaviour
 
                 }
             }
-            return;
         }
         if (room.down)
         {
@@ -340,69 +346,69 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if (room.left)
                 {
-                    _drawPos.x = _drawPos.x * (spLDR.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (spLDR.GetComponent<Renderer>().bounds.size.y);
-                    Instantiate(spLDR, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj  = Instantiate(spLDR, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
                 else
                 {
-                    _drawPos.x = _drawPos.x * (spDR.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (spDR.GetComponent<Renderer>().bounds.size.y);
-                    Instantiate(spDR, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj  = Instantiate(spDR, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
             }
             else if (room.left)
             {
-                _drawPos.x = _drawPos.x * (spDL.GetComponent<Renderer>().bounds.size.x);
-                _drawPos.y = _drawPos.y * (spDL.GetComponent<Renderer>().bounds.size.y);
-                Instantiate(spDL, _drawPos, Quaternion.identity);
+
+                GameObject roomObj = Instantiate(spDL, _drawPos, Quaternion.identity);
+                return roomObj;
 
             }
             else
             {
                 if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
                 {
-                    _drawPos.x = _drawPos.x * (specificRoom.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (specificRoom.GetComponent<Renderer>().bounds.size.y);
+                  
                     BossAlreadySpawned = true;
-                    Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    GameObject roomObj =  Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    return roomObj;
                 }
                 else
                 {
-                    _drawPos.x = _drawPos.x * (spD.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (spD.GetComponent<Renderer>().bounds.size.y);
-                    Instantiate(spD, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj =Instantiate(spD, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
 
             }
-            return;
+            
         }
         if (room.right)
         {
             if (room.left)
             {
-                _drawPos.x = _drawPos.x * (spRL.GetComponent<Renderer>().bounds.size.x);
-                _drawPos.y = _drawPos.y * (spRL.GetComponent<Renderer>().bounds.size.y);
-                Instantiate(spRL, _drawPos, Quaternion.identity);
+
+                GameObject roomObj =  Instantiate(spRL, _drawPos, Quaternion.identity);
+                return roomObj;
 
             }
             else
             {
                 if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
                 {
-                    _drawPos.x = _drawPos.x * (specificRoom.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (specificRoom.GetComponent<Renderer>().bounds.size.y);
+                   
                     BossAlreadySpawned = true;
-                    Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    GameObject roomObj =  Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                    return roomObj;
                 }
                 else
                 {
-                    _drawPos.x = _drawPos.x * (spR.GetComponent<Renderer>().bounds.size.x);
-                    _drawPos.y = _drawPos.y * (spR.GetComponent<Renderer>().bounds.size.y);
-                    Instantiate(spR, _drawPos, Quaternion.identity);
+
+                    GameObject roomObj =  Instantiate(spR, _drawPos, Quaternion.identity);
+                    return roomObj;
 
                 }
             }
@@ -411,16 +417,16 @@ public class DungeonGenerator : MonoBehaviour
         {
             if (ChanceToSpawnBoss >= Random.value && !BossAlreadySpawned)
             {
-                _drawPos.x = _drawPos.x * (specificRoom.GetComponent<Renderer>().bounds.size.x);
-                _drawPos.y = _drawPos.y * (specificRoom.GetComponent<Renderer>().bounds.size.y);
+              
                 BossAlreadySpawned = true;
-                Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                GameObject roomObj = Instantiate(specificRoom, _drawPos, Quaternion.identity);
+                return roomObj;
             }
             else
             {
-                _drawPos.x = _drawPos.x * (spL.GetComponent<Renderer>().bounds.size.x);
-                _drawPos.y = _drawPos.y * (spL.GetComponent<Renderer>().bounds.size.y);
-                Instantiate(spL, _drawPos, Quaternion.identity);
+
+                GameObject roomObj = Instantiate(spL, _drawPos, Quaternion.identity);
+                return roomObj;
 
             }
 
@@ -428,26 +434,47 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-
-   /* void BigRooms()
+    bool isDone = false;
+   void BigRooms()
     {
         for (int x = 0; x < ((gridSizeX)); x++)
         {
+            if (isDone) break;
             for (int y = 0; y < ((gridSizeY)); y++)
             {
+                if (isDone) break;
                 if (rooms[x, y] != null)
                 {
-                    if (y - 1 < 0 && x - 1 < 0)
+                    
+                    if ((y - 1 > 0) && (x - 1 > 0))
                     {
+                        
                         if (rooms[x, y - 1] != null && rooms[x - 1, y] != null && rooms[x - 1, y - 1] != null)
                         {
-                            rooms.
-                        }
+                            int index = 0;
+                            foreach(Room room in roomsList.ToArray())
+                            {
+                                
+                                if (room.gridPos == rooms[x, y - 1].gridPos || room.gridPos == rooms[x - 1, y].gridPos || room.gridPos == rooms[x - 1, y - 1].gridPos || room.gridPos == rooms[x , y ].gridPos)
+                                {
+                                    print(room.gridPos);
+                                    Destroy(SpriteList[index].gameObject);
+                                }
+                                index++;
 
+                            }
+                            Vector2 pos = new Vector2(rooms[x, y].gridPos.x + rooms[x-1, y].gridPos.x, rooms[x, y].gridPos.y + rooms[x , y-1].gridPos.y);
+                            pos.x = pos.x * (sampleRoom.GetComponent<Renderer>().bounds.size.x)/2;
+                            pos.y = pos.y * (sampleRoom.GetComponent<Renderer>().bounds.size.y)/2;
+                            GameObject roomObj = Instantiate(BigRoom, pos  , Quaternion.identity);
+                            SpriteList.Insert(0, roomObj);
+                            isDone = true;
+                        }
+                        
                     }
 
                 }
             }
         }
-    }*/
+    }
 }
