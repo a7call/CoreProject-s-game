@@ -10,38 +10,7 @@ public class BossTentaclePop : Enemy
     [SerializeField] private BossScriptableObject BossData;
     private float restTime;
     private GameObject projectile; // Mettre le projectile classique
-    // Health paramaters
-    // maxHealth, currentHealth, healthBar
-
-    // General Variables
-    // Animator, rb
-
-    // Player reference
-    // playerMouvement, playerHealth, target
-
-    // Sprite Renderer
-    // spriteRenderer
-
-    // PathFinding Parameters
-
-    // Projectile
-
-    // Projectile parameters
-    // Projectile de type Salive
-    //[SerializeField] private GameObject saliveProjectile; // Ne pas faire comme ca, voir comment Lopez à fait
-    // Projectile de type Pompe
-    //[SerializeField] private GameObject[] listPumpProjectiles = new GameObject[3];
-    // Projectile de type 360°
-    // A configurer plutard. A priori, j'aimerai bien en tirer un nombre random (de 6 à 12 imaginons)
-
-
-    //[Header("Pattern Parameters")]
-    //[SerializeField] private bool isShooting;
-    //[SerializeField] private bool isReadyToShoot;
-    //[SerializeField] private float attackRange;
-
-    //[Header("SecondPhase Parameters")]
-    //[SerializeField] private float dps;
+    private GameObject eggProjectile; // Projectile Egg qui invoque un parasite rampant
 
     public BossState currentBossState;
 
@@ -63,24 +32,36 @@ public class BossTentaclePop : Enemy
         currentBossState = BossState.Phase1;
         aIPath.canMove = false;
         SetMaxHealth();
-        StartCoroutine(DelayToStart());
-        //Shoot();
+        StartCoroutine(StarterCycle());
+        StartCoroutine(StarterFirstAbility());
     }
 
     // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
+        print(priorityFirstAbility);
+        print(isReadyToCycle);
+
 
         switch (currentBossState)
         {
             case BossState.Phase1:
+                
                 ActualState();
-                    if (isReadyToCycle)
+                    if (isReadyToCycle && !priorityFirstAbility)
                     {
+                        print("rentre dans le Cycle");
                         StartCoroutine(Cycle());
+                    }
+                    if (isReadyToFirstAbility)
+                    {
+                        print("Rentre dans l'ability");
+                        //StopCoroutine(Cycle());
+                        StartCoroutine(CanFirstAbility());
                     }
                 print("State1");
                 break;
+
             case BossState.Phase2:
                 ActualState();
                 print("State2");
@@ -91,14 +72,15 @@ public class BossTentaclePop : Enemy
         {
             case State.Chasing:
                 isInRange();
-                print("Chasing");
             break;
 
             case State.Attacking:
                 isInRange();
-                StartCoroutine(CanShoot());
-                print("Attacking");
-                //Shoot();
+                if(!priorityFirstAbility)
+                {
+                    print("Jte monte en l'air");
+                    StartCoroutine(CanShoot());
+                }
                 break;
         }
 
@@ -130,14 +112,7 @@ public class BossTentaclePop : Enemy
         timeToSwitch = BossData.timeToSwich;
 
         projectile = BossData.projectile;
-    }
-
-    private float starterTimer = 3f;
-    private IEnumerator DelayToStart()
-    {
-        yield return new WaitForSeconds(starterTimer);
-        aIPath.canMove = true;
-        isReadyToCycle = true;
+        eggProjectile = BossData.eggProjectile;
     }
 
     private void ActualState()
@@ -172,6 +147,14 @@ public class BossTentaclePop : Enemy
         }
     }
 
+    private float starterTimer = 3f;
+    private IEnumerator StarterCycle()
+    {
+        yield return new WaitForSeconds(starterTimer);
+        aIPath.canMove = true;
+        isReadyToCycle = true;
+    }
+
     private bool isReadyToCycle = false;
     private bool inFirstAttack = false;
     private bool inSecondAttack = false;
@@ -184,17 +167,39 @@ public class BossTentaclePop : Enemy
     private IEnumerator Cycle()
     {
         isReadyToCycle = false;
+        while (currentState == State.Chasing)
+        {
+            yield return null;
+        }
+
 
         inFirstAttack = true;
         yield return new WaitForSeconds(firstActionTime);
 
         inFirstAttack = false;
         inSecondAttack = true;
+
+        while (currentState == State.Chasing)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(secondActionTime);
 
         inSecondAttack = false;
         inThirdAttack = true;
+
+        while (currentState == State.Chasing)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(thirdActionTime);
+
+        while (currentState == State.Chasing)
+        {
+            yield return null;
+        }
 
         inThirdAttack = false;
 
@@ -208,7 +213,7 @@ public class BossTentaclePop : Enemy
     {
         if (inFirstAttack)
         {
-            attackRange = BossData.attackRange;
+            attackRange = BossData.attackRange; // Il faut qu'elle soit grande
             restTime = BossData.restTime;
             GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
             myProjectile.transform.parent = gameObject.transform;
@@ -216,7 +221,7 @@ public class BossTentaclePop : Enemy
 
         if (inSecondAttack)
         {
-            attackRange = 5f;
+            attackRange = 5f; // Il faut qu'elle soit petite
             restTime = 0.75f;
             nbProjectile = 5;
             angleTir = 40;
@@ -233,7 +238,7 @@ public class BossTentaclePop : Enemy
 
         if (inThirdAttack)
         {
-            attackRange = 3f;
+            attackRange = 8f; // Il faut qu'elle soit grande
             restTime = 1f;
             nbProjectile = 20;
             angleTir = 360;
@@ -259,4 +264,45 @@ public class BossTentaclePop : Enemy
         }
     }
 
+    private int firstAbilityCount = 0;
+    private int maxFirstAbilityCount = 10;
+    private bool isReadyToFirstAbility = false;
+    private bool priorityFirstAbility = false;
+    private float firstAbilityTimer = 15f;
+    private float reloadDelayFirstAbility = 12f;
+
+    private IEnumerator StarterFirstAbility()
+    {
+        yield return new WaitForSeconds(firstAbilityTimer);
+        isReadyToFirstAbility = true;
+    }
+
+    private void FirstAbility()
+    {
+        attackRange = BossData.attackRange;
+        GameObject myProjectile = Instantiate(eggProjectile, transform.position, Quaternion.identity);
+        myProjectile.transform.parent = gameObject.transform;
+        firstAbilityCount++;
+    }
+
+    private IEnumerator CanFirstAbility()
+    {
+        if (firstAbilityCount != maxFirstAbilityCount)
+        {
+            priorityFirstAbility = true;
+            restTime = 1f;
+            isReadyToFirstAbility = false;
+            FirstAbility();
+            yield return new WaitForSeconds(restTime);
+            isReadyToFirstAbility = true;
+        }
+        else if(firstAbilityCount == maxFirstAbilityCount) 
+        {
+            priorityFirstAbility = false;
+            isReadyToFirstAbility = false;
+            yield return new WaitForSeconds(reloadDelayFirstAbility);
+            isReadyToFirstAbility = true;
+            firstAbilityCount = 0;
+        }
+    }
 }

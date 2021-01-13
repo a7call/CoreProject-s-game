@@ -13,5 +13,6 @@ public class BossScriptableObject : ScriptableObject
     public float timeToSwich;
 
     public GameObject projectile;
+    public GameObject eggProjectile;
 }
 
