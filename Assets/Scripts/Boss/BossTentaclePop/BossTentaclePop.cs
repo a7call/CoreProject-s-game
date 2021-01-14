@@ -31,6 +31,7 @@ public class BossTentaclePop : Enemy
         currentState = State.Chasing;
         currentBossState = BossState.Phase1;
         aIPath.canMove = false;
+        SetTimers();
         SetMaxHealth();
         StartCoroutine(StarterCycle());
         StartCoroutine(StarterFirstAbility());
@@ -39,10 +40,6 @@ public class BossTentaclePop : Enemy
     // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
-        print(priorityFirstAbility);
-        print(isReadyToCycle);
-
-
         switch (currentBossState)
         {
             case BossState.Phase1:
@@ -50,20 +47,16 @@ public class BossTentaclePop : Enemy
                 ActualState();
                     if (isReadyToCycle && !priorityFirstAbility)
                     {
-                        print("rentre dans le Cycle");
                         StartCoroutine(Cycle());
                     }
                     if (isReadyToFirstAbility)
                     {
-                        print("Rentre dans l'ability");
-                        //StopCoroutine(Cycle());
                         StartCoroutine(CanFirstAbility());
                     }
                 print("State1");
                 break;
 
             case BossState.Phase2:
-                ActualState();
                 print("State2");
                 break;
         }
@@ -78,7 +71,6 @@ public class BossTentaclePop : Enemy
                 isInRange();
                 if(!priorityFirstAbility)
                 {
-                    print("Jte monte en l'air");
                     StartCoroutine(CanShoot());
                 }
                 break;
@@ -100,7 +92,11 @@ public class BossTentaclePop : Enemy
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
-
+    void SetTimers()
+    {
+        reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime;
+        firstAbilityTimer = reloadDelayFirstAbility + starterTimer;
+    }
     private void SetData()
     {
         maxHealth = BossData.maxHealth;
@@ -167,42 +163,22 @@ public class BossTentaclePop : Enemy
     private IEnumerator Cycle()
     {
         isReadyToCycle = false;
-        while (currentState == State.Chasing)
-        {
-            yield return null;
-        }
-
-
         inFirstAttack = true;
         yield return new WaitForSeconds(firstActionTime);
 
         inFirstAttack = false;
         inSecondAttack = true;
 
-        while (currentState == State.Chasing)
-        {
-            yield return null;
-        }
-
         yield return new WaitForSeconds(secondActionTime);
 
         inSecondAttack = false;
         inThirdAttack = true;
 
-        while (currentState == State.Chasing)
-        {
-            yield return null;
-        }
 
         yield return new WaitForSeconds(thirdActionTime);
 
-        while (currentState == State.Chasing)
-        {
-            yield return null;
-        }
 
         inThirdAttack = false;
-
         isReadyToCycle = true;
     }
 
@@ -268,8 +244,8 @@ public class BossTentaclePop : Enemy
     private int maxFirstAbilityCount = 10;
     private bool isReadyToFirstAbility = false;
     private bool priorityFirstAbility = false;
-    private float firstAbilityTimer = 15f;
-    private float reloadDelayFirstAbility = 12f;
+    private float firstAbilityTimer ;
+    private float reloadDelayFirstAbility;
 
     private IEnumerator StarterFirstAbility()
     {
@@ -285,6 +261,7 @@ public class BossTentaclePop : Enemy
         firstAbilityCount++;
     }
 
+    float timeBtwswitchAbility1 = 2f;
     private IEnumerator CanFirstAbility()
     {
         if (firstAbilityCount != maxFirstAbilityCount)
@@ -292,14 +269,16 @@ public class BossTentaclePop : Enemy
             priorityFirstAbility = true;
             restTime = 1f;
             isReadyToFirstAbility = false;
+            if (firstAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility1);
             FirstAbility();
             yield return new WaitForSeconds(restTime);
             isReadyToFirstAbility = true;
         }
         else if(firstAbilityCount == maxFirstAbilityCount) 
         {
-            priorityFirstAbility = false;
             isReadyToFirstAbility = false;
+            yield return new WaitForSeconds(timeBtwswitchAbility1);
+            priorityFirstAbility = false;
             yield return new WaitForSeconds(reloadDelayFirstAbility);
             isReadyToFirstAbility = true;
             firstAbilityCount = 0;
