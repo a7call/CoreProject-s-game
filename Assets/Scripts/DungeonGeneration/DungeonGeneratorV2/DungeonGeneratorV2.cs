@@ -174,6 +174,8 @@ public class DungeonGeneratorV2 : MonoBehaviour
 
 
             Vector2 drawPos = room.gridPos;
+             drawPos.x =    drawPos.x * 1000;
+             drawPos.y =    drawPos.y * 1000;
             roomsList.Insert(0, room);
             
             ChanceToSpawnBoss += 0.1f;
@@ -207,6 +209,8 @@ public class DungeonGeneratorV2 : MonoBehaviour
         foreach (Room room in roomsList)
         {
             GameObject test = Instantiate(sampleRoom, room.gridPos, Quaternion.identity);
+            Vector2 siz =test.GetComponent<Collider2D>().bounds.size;
+            test.transform.position *= siz;
             test.GetComponent<testdung>().left = room.left;
             test.GetComponent<testdung>().right = room.right;
             test.GetComponent<testdung>().up = room.up;
