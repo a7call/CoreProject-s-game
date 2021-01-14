@@ -8,14 +8,26 @@ public class testdung : MonoBehaviour
     public bool up = false;
     public bool right = false;
     public bool down = false;
-
+    
+    //DOORS
     [SerializeField] GameObject DoorUpTileMap;
     [SerializeField] GameObject DoorDownTileMap;
     [SerializeField] GameObject DoorLeftTileMap;
     [SerializeField] GameObject DoorRightTileMap;
+
+
+    // CORRIDORS
+    [SerializeField] GameObject CorridorDownTileMap;
+    [SerializeField] GameObject CorridorUpTileMap;
+    [SerializeField] GameObject CorridorRightTileMap;
+    [SerializeField] GameObject CorridorLeftTileMap;
+
     void Start()
     {
-
+        CorridorUpTileMap.SetActive(false); 
+        CorridorDownTileMap.SetActive(false);
+        CorridorRightTileMap.SetActive(false);
+        CorridorLeftTileMap.SetActive(false);
         Invoke("PickSprite", 3f);
     }
 
@@ -36,6 +48,10 @@ public class testdung : MonoBehaviour
                         Destroy(DoorDownTileMap);
                         Destroy(DoorLeftTileMap);
                         Destroy(DoorRightTileMap);
+                        CorridorUpTileMap.SetActive(true);
+                        CorridorDownTileMap.SetActive(true);
+                        CorridorRightTileMap.SetActive(true);
+                        CorridorLeftTileMap.SetActive(true);
 
                     }
                     else
@@ -45,6 +61,9 @@ public class testdung : MonoBehaviour
                         Destroy(DoorUpTileMap);
                         Destroy(DoorDownTileMap);
                         Destroy(DoorRightTileMap);
+                        CorridorUpTileMap.SetActive(true);
+                        CorridorDownTileMap.SetActive(true);
+                        CorridorRightTileMap.SetActive(true);
 
                     }
                 }
@@ -53,6 +72,9 @@ public class testdung : MonoBehaviour
                     Destroy(DoorUpTileMap);
                     Destroy(DoorDownTileMap);
                     Destroy(DoorLeftTileMap);
+                    CorridorUpTileMap.SetActive(true);
+                    CorridorDownTileMap.SetActive(true);
+                    CorridorLeftTileMap.SetActive(true);
 
                 }
                 else
@@ -60,6 +82,8 @@ public class testdung : MonoBehaviour
 
                     Destroy(DoorUpTileMap);
                     Destroy(DoorDownTileMap);
+                    CorridorUpTileMap.SetActive(true);
+                    CorridorDownTileMap.SetActive(true);
 
                 }
             }
@@ -72,12 +96,18 @@ public class testdung : MonoBehaviour
                         Destroy(DoorUpTileMap);
                         Destroy(DoorLeftTileMap);
                         Destroy(DoorRightTileMap);
+                        CorridorUpTileMap.SetActive(true);
+                        CorridorRightTileMap.SetActive(true);
+                        CorridorLeftTileMap.SetActive(true);
+
 
                     }
                     else
                     {
                         Destroy(DoorUpTileMap);
                         Destroy(DoorRightTileMap);
+                        CorridorRightTileMap.SetActive(true);
+                        CorridorUpTileMap.SetActive(true);
 
                     }
                 }
@@ -85,6 +115,8 @@ public class testdung : MonoBehaviour
                 {
                     Destroy(DoorUpTileMap);
                     Destroy(DoorLeftTileMap);
+                    CorridorLeftTileMap.SetActive(true);
+                    CorridorUpTileMap.SetActive(true);
 
                 }
                 else
@@ -92,6 +124,7 @@ public class testdung : MonoBehaviour
 
 
                     Destroy(DoorUpTileMap);
+                    CorridorUpTileMap.SetActive(true);
                 }
             }
             return;
@@ -102,15 +135,19 @@ public class testdung : MonoBehaviour
             {
                 if (left)
                 {
-
+                    CorridorDownTileMap.SetActive(true);
+                    CorridorRightTileMap.SetActive(true);
+                    CorridorLeftTileMap.SetActive(true);
                     Destroy(DoorDownTileMap);
                     Destroy(DoorLeftTileMap);
                     Destroy(DoorRightTileMap);
+                    
 
                 }
                 else
                 {
-
+                    CorridorDownTileMap.SetActive(true);
+                    CorridorRightTileMap.SetActive(true);
                     Destroy(DoorDownTileMap);
                     Destroy(DoorRightTileMap);
 
@@ -118,14 +155,15 @@ public class testdung : MonoBehaviour
             }
             else if (left)
             {
-
+                CorridorDownTileMap.SetActive(true);
+                CorridorLeftTileMap.SetActive(true);
                 Destroy(DoorDownTileMap);
                 Destroy(DoorLeftTileMap);
 
             }
             else
             {
-
+                CorridorDownTileMap.SetActive(true);
 
                 Destroy(DoorDownTileMap);
 
@@ -141,12 +179,14 @@ public class testdung : MonoBehaviour
 
                 Destroy(DoorLeftTileMap);
                 Destroy(DoorRightTileMap);
+                CorridorRightTileMap.SetActive(true);
+                CorridorLeftTileMap.SetActive(true);
 
             }
             else
             {
 
-
+                CorridorRightTileMap.SetActive(true);
                 Destroy(DoorRightTileMap);
 
 
@@ -155,7 +195,7 @@ public class testdung : MonoBehaviour
         else
         {
 
-
+            CorridorLeftTileMap.SetActive(true);
             Destroy(DoorLeftTileMap);
 
 
