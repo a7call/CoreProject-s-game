@@ -8,6 +8,11 @@ public class testdung : MonoBehaviour
     public bool up = false;
     public bool right = false;
     public bool down = false;
+
+    [SerializeField] GameObject DoorUpTileMap;
+    [SerializeField] GameObject DoorDownTileMap;
+    [SerializeField] GameObject DoorLeftTileMap;
+    [SerializeField] GameObject DoorRightTileMap;
     void Start()
     {
 
@@ -27,28 +32,34 @@ public class testdung : MonoBehaviour
                     if (left)
                     {
 
-                        this.GetComponent<SpriteRenderer>().color = Color.blue;
-
+                        Destroy(DoorUpTileMap);
+                        Destroy(DoorDownTileMap);
+                        Destroy(DoorLeftTileMap);
+                        Destroy(DoorRightTileMap);
 
                     }
                     else
                     {
 
 
-                        GetComponent<SpriteRenderer>().color = Color.yellow;
+                        Destroy(DoorUpTileMap);
+                        Destroy(DoorDownTileMap);
+                        Destroy(DoorRightTileMap);
 
                     }
                 }
                 else if (left)
                 {
-
-                    GetComponent<SpriteRenderer>().color = Color.blue;
+                    Destroy(DoorUpTileMap);
+                    Destroy(DoorDownTileMap);
+                    Destroy(DoorLeftTileMap);
 
                 }
                 else
                 {
 
-                    GetComponent<SpriteRenderer>().color = Color.cyan;
+                    Destroy(DoorUpTileMap);
+                    Destroy(DoorDownTileMap);
 
                 }
             }
@@ -58,33 +69,29 @@ public class testdung : MonoBehaviour
                 {
                     if (left)
                     {
-
-                        GetComponent<SpriteRenderer>().color = Color.black;
+                        Destroy(DoorUpTileMap);
+                        Destroy(DoorLeftTileMap);
+                        Destroy(DoorRightTileMap);
 
                     }
                     else
                     {
-
-                        GetComponent<SpriteRenderer>().color = Color.magenta;
+                        Destroy(DoorUpTileMap);
+                        Destroy(DoorRightTileMap);
 
                     }
                 }
                 else if (left)
                 {
-
-                    GetComponent<SpriteRenderer>().color = Color.green;
+                    Destroy(DoorUpTileMap);
+                    Destroy(DoorLeftTileMap);
 
                 }
                 else
                 {
 
 
-                    GetComponent<SpriteRenderer>().color = Color.grey;
-
-
-
-
-
+                    Destroy(DoorUpTileMap);
                 }
             }
             return;
@@ -96,27 +103,31 @@ public class testdung : MonoBehaviour
                 if (left)
                 {
 
-                    GetComponent<SpriteRenderer>().color = Color.green;
+                    Destroy(DoorDownTileMap);
+                    Destroy(DoorLeftTileMap);
+                    Destroy(DoorRightTileMap);
 
                 }
                 else
                 {
 
-                    GetComponent<SpriteRenderer>().color = Color.blue;
+                    Destroy(DoorDownTileMap);
+                    Destroy(DoorRightTileMap);
 
                 }
             }
             else if (left)
             {
 
-                GetComponent<SpriteRenderer>().color = Color.gray;
+                Destroy(DoorDownTileMap);
+                Destroy(DoorLeftTileMap);
 
             }
             else
             {
 
 
-                GetComponent<SpriteRenderer>().color = Color.green;
+                Destroy(DoorDownTileMap);
 
 
 
@@ -128,14 +139,15 @@ public class testdung : MonoBehaviour
             if (left)
             {
 
-                GetComponent<SpriteRenderer>().color = Color.white;
+                Destroy(DoorLeftTileMap);
+                Destroy(DoorRightTileMap);
 
             }
             else
             {
 
 
-                GetComponent<SpriteRenderer>().color = Color.yellow;
+                Destroy(DoorRightTileMap);
 
 
             }
@@ -144,7 +156,7 @@ public class testdung : MonoBehaviour
         {
 
 
-            GetComponent<SpriteRenderer>().color = Color.blue;
+            Destroy(DoorLeftTileMap);
 
 
 
