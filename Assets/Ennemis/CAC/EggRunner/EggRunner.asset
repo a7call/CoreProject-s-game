@@ -9,15 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841268f9b7743484c8e9425db0018966, type: 3}
-  m_Name: BossTentaclePop
+  m_Script: {fileID: 11500000, guid: 0bc7777a69baa9f4989733d88d876e0c, type: 3}
+  m_Name: EggRunner
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 4
   whiteMat: {fileID: 2100000, guid: 8da5fd2a7428c604c9a942d71eace545, type: 2}
   defaultMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  attackRange: 7
-  restTime: 0.1
-  timeToSwich: 0.5
-  projectile: {fileID: 6067136226036871257, guid: 7bc0c2873cf00cc4492e596e1ca719d9, type: 3}
-  eggProjectile: {fileID: 3190637831556677935, guid: 3dd2c0185a3faad4584b1dcea7a10648, type: 3}
-  eggRunner: {fileID: 8956151069799319384, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
+  moveSpeed: 20
+  attackRange: 2
+  attackRadius: 0
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  timeToSwich: 0
+  attackDelay: 0

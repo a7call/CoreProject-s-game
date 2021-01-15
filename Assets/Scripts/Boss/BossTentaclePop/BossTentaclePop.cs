@@ -11,6 +11,7 @@ public class BossTentaclePop : Enemy
     private float restTime;
     private GameObject projectile; // Mettre le projectile classique
     private GameObject eggProjectile; // Projectile Egg qui invoque un parasite rampant
+    private GameObject eggRunner;
 
     public BossState currentBossState;
 
@@ -40,6 +41,11 @@ public class BossTentaclePop : Enemy
     // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
+        if (!isTesting)
+        {
+            SecondAbility();
+        }
+
         switch (currentBossState)
         {
             case BossState.Phase1:
@@ -109,6 +115,7 @@ public class BossTentaclePop : Enemy
 
         projectile = BossData.projectile;
         eggProjectile = BossData.eggProjectile;
+        eggRunner = BossData.eggRunner;
     }
 
     private void ActualState()
@@ -283,5 +290,14 @@ public class BossTentaclePop : Enemy
             isReadyToFirstAbility = true;
             firstAbilityCount = 0;
         }
+    }
+
+    private bool isTesting = false;
+    private void SecondAbility()
+    {
+        isTesting = true;
+        attackRange = BossData.attackRange;
+        GameObject myProjectile = Instantiate(eggRunner, transform.position, Quaternion.identity);
+        myProjectile.transform.parent = gameObject.transform;
     }
 }

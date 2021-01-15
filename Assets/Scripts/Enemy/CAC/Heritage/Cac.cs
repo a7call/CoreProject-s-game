@@ -22,6 +22,18 @@ public class Cac : Enemy
     public static bool IsDontFuckWithMe = false;
     protected float attackDelay;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        SetData();
+    }
+
+    protected virtual void Start()
+    {
+        currentState = State.Chasing;
+        SetMaxHealth();
+    }
+
     // Set data du scriptable object Type1Data
     protected virtual void SetData()
     {

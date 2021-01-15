@@ -5,12 +5,6 @@ using UnityEngine;
 public class HelmetAstronautExplose : Cac
 {
     [SerializeField] private float timeToExplode = 1f;
-    private void Start()
-    {
-       
-        SetData();
-        SetMaxHealth();
-    }
 
     protected override void Update()
     {
