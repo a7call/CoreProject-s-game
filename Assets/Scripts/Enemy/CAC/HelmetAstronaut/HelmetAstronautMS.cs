@@ -16,10 +16,9 @@ public class HelmetAstronautMS : Cac
     [SerializeField] private float newSpeedEnemy = 3f;
     [SerializeField] private float speedDuration = 1.75f;
 
-    private void Start()
+    protected override void Start()
     {
-        SetData();
-        SetMaxHealth();
+        base.Start();
         StartCoroutine(enabledPowerMode());
     }
 

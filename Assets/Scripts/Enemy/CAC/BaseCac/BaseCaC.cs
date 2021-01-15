@@ -6,15 +6,6 @@ using UnityEngine;
 /// </summary>
 public class BaseCaC : Cac
 {
-
-    
-    private void Start()
-    {
-        SetData();
-        SetMaxHealth();
-    }
-
-
     protected override void Update()
     {
         base.Update();
@@ -35,8 +26,4 @@ public class BaseCaC : Cac
         }
 
     }
-
-  
-
-
 }

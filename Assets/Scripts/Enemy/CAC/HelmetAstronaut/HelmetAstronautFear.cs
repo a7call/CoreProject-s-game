@@ -20,13 +20,6 @@ public class HelmetAstronautFear : Cac
     private Vector3 vecEnemyPlayer;
     private Vector3 pointPos;
 
-    protected void Start()
-    {
-        // Set data
-        SetData();
-        SetMaxHealth();
-    }
-
     protected override void Update()
     {
         base.Update();
