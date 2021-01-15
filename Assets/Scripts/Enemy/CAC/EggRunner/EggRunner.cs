@@ -32,12 +32,20 @@ public class EggRunner : Cac
 
     }
 
+    private float agressiveDistance = 1f;
     protected override void isInRange()
     {
         if (gameObject == null) return;
         
-        if(Vector3.Distance(transform.position, randomPosition) >= 0.1f)
+        if(Vector3.Distance(transform.position, randomPosition) >= agressiveDistance)
         {
+            // Va au point
+            rb.velocity = moveSpeed * direction * Time.fixedDeltaTime;
+            currentState = State.Chasing;
+        }
+        else if(Vector3.Distance(transform.position, randomPosition) <= agressiveDistance && Vector3.Distance(transform.position, randomPosition) >= 0.1f)
+        {
+            // Lancer une animation qui fait comprendre qu'il va exploser
             rb.velocity = moveSpeed * direction * Time.fixedDeltaTime;
             currentState = State.Chasing;
         }
@@ -50,6 +58,7 @@ public class EggRunner : Cac
 
     private void Attack()
     {
+        // Explosion + Destroy
         print("Attaque");
     }
 }
