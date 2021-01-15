@@ -6,11 +6,18 @@ public class DungeonGeneratorV2 : MonoBehaviour
 {
     Vector2 worldSize = new Vector2(30, 30);
     [SerializeField] List<Vector2> takenPositions = new List<Vector2>();
-    int gridSizeX, gridSizeY, numberOfRooms = 40;
+    int gridSizeX, gridSizeY;
+    [SerializeField] int numberOfRooms = 40;
     [SerializeField] List<Room> roomsList = new List<Room>();
-    [SerializeField] List<GameObject> SpriteList = new List<GameObject>();
     public Room[,] rooms;
-    public GameObject specificRoom;
+
+
+
+    public GameObject BossRoom;
+    public GameObject StartRoom;
+    public GameObject[] sampleRooms;
+
+
     public struct walker
     {
         public Vector2 pos;
@@ -161,7 +168,6 @@ public class DungeonGeneratorV2 : MonoBehaviour
     }
 
 
-    [SerializeField] GameObject startRoom;
     void SpawnLevel()
     {
         int index = 0;
@@ -177,12 +183,11 @@ public class DungeonGeneratorV2 : MonoBehaviour
              drawPos.x =    drawPos.x * 1000;
              drawPos.y =    drawPos.y * 1000;
             roomsList.Insert(0, room);
-            
             ChanceToSpawnBoss += 0.1f;
             index++;
 
         }
-        GetBool();
+        InstansiateRooms();
     }
 
     private Vector2 RandomDirection()
@@ -202,20 +207,43 @@ public class DungeonGeneratorV2 : MonoBehaviour
         }
     }
 
-    public GameObject sampleRoom;
-    void GetBool()
+
+    void InstansiateRooms()
     {
         int i = 0;
+       
         foreach (Room room in roomsList)
         {
-            GameObject test = Instantiate(sampleRoom, room.gridPos, Quaternion.identity);
-            Vector2 siz =test.GetComponent<Collider2D>().bounds.size;
-            test.transform.position *= siz;
-            test.GetComponent<testdung>().left = room.left;
-            test.GetComponent<testdung>().right = room.right;
-            test.GetComponent<testdung>().up = room.up;
-            test.GetComponent<testdung>().down = room.down;
+            if(i == roomsList.Count-1)
+            {
+                GameObject test = Instantiate(BossRoom, room.gridPos, Quaternion.identity);
+                Vector2 siz = test.GetComponent<Collider2D>().bounds.size;
+                test.transform.position *= siz;
+                test.GetComponent<testdung>().left = room.left;
+                test.GetComponent<testdung>().right = room.right;
+                test.GetComponent<testdung>().up = room.up;
+                test.GetComponent<testdung>().down = room.down;
+            }
+            else
+            {
+
+                GameObject test = Instantiate(sampleRooms[RandomRoom()], room.gridPos, Quaternion.identity);
+                Vector2 siz = test.GetComponent<Collider2D>().bounds.size;
+                test.transform.position *= siz;
+                test.GetComponent<testdung>().left = room.left;
+                test.GetComponent<testdung>().right = room.right;
+                test.GetComponent<testdung>().up = room.up;
+                test.GetComponent<testdung>().down = room.down;
+                
+            }
+            
+            i++;
         }
+    }
+
+    int RandomRoom()
+    {
+        return Mathf.FloorToInt(Random.Range(0,sampleRooms.Length-1));
     }
 
     void SetRoomDoors()
