@@ -3083,30 +3083,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 35170083}
     m_Modifications:
-    - target: {fileID: 230135351451196300, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
-      propertyPath: canMove
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8563558701839712364, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 1829990854}
-    - target: {fileID: 8563558701839712364, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
-      propertyPath: maxDistance
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8563558701839712364, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
-      propertyPath: testGameObj
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8563558701839712364, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
-      propertyPath: currentState
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8563558701839712364, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
-      propertyPath: layer.m_Bits
-      value: 1280
-      objectReference: {fileID: 0}
     - target: {fileID: 8956151069134313576, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3117,11 +3093,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8956151069799319378, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.18
       objectReference: {fileID: 0}
     - target: {fileID: 8956151069799319378, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.18
       objectReference: {fileID: 0}
     - target: {fileID: 8956151069799319378, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3158,6 +3134,10 @@ PrefabInstance:
     - target: {fileID: 8956151069799319384, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
       propertyPath: m_Name
       value: EggRunner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8956151069799319384, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
@@ -3205,7 +3185,7 @@ GameObject:
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1262782168
 Animator:
   serializedVersion: 3
@@ -3468,7 +3448,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1312035716}
-  - component: {fileID: 1312035717}
   - component: {fileID: 1312035715}
   m_Layer: 10
   m_Name: Wall
@@ -3476,7 +3455,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1312035715
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3517,27 +3496,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1312035717
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312035714}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!4 &1326611187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4798076891483016962, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
@@ -4231,11 +4189,6 @@ Transform:
 --- !u!4 &1829990853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8956151069799319378, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
-  m_PrefabInstance: {fileID: 1151111163}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1829990854 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8004997190229022202, guid: aa5919f45d8a5fd43804e9b292960633, type: 3}
   m_PrefabInstance: {fileID: 1151111163}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1836997476 stripped
