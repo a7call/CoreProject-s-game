@@ -7,6 +7,7 @@ public class EggRunner : Cac
 {
     private Vector3 randomPosition;
     [SerializeField] private float maxDistance = 3f;
+    [SerializeField] private LayerMask layer;
 
     protected override void Start()
     {
@@ -56,9 +57,23 @@ public class EggRunner : Cac
         }
     }
 
+    private float zoneExplose = 1f;
     private void Attack()
     {
-        // Explosion + Destroy
-        print("Attaque");
+        // Rajouter animation d'explosion
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneExplose, layer);
+            foreach (Collider2D hit in hits)
+            {
+                if (hit.CompareTag("Player")) hit.GetComponent<PlayerHealth>().TakeDamage(1);
+            }
+        Destroy(gameObject);
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Wall"))
+        {
+            Attack();
+        }
+    }
+
 }

@@ -34,18 +34,12 @@ public class BossTentaclePop : Enemy
         aIPath.canMove = false;
         SetTimers();
         SetMaxHealth();
-        StartCoroutine(StarterCycle());
-        StartCoroutine(StarterFirstAbility());
+
     }
 
     // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
-        if (!isTesting)
-        {
-            SecondAbility();
-        }
-
         switch (currentBossState)
         {
             case BossState.Phase1:
@@ -58,6 +52,10 @@ public class BossTentaclePop : Enemy
                     if (isReadyToFirstAbility)
                     {
                         StartCoroutine(CanFirstAbility());
+                    }
+                    if (isReadyToSecondAbility)
+                    {
+                        StartCoroutine(CanSecondAbility());
                     }
                 print("State1");
                 break;
@@ -75,7 +73,7 @@ public class BossTentaclePop : Enemy
 
             case State.Attacking:
                 isInRange();
-                if(!priorityFirstAbility)
+                if(!priorityFirstAbility && !prioritySecondAbility)
                 {
                     StartCoroutine(CanShoot());
                 }
@@ -102,6 +100,13 @@ public class BossTentaclePop : Enemy
     {
         reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime;
         firstAbilityTimer = reloadDelayFirstAbility + starterTimer;
+
+        ///reloadDelaySecondAbility = reloadDelayFirstAbility;
+        //secondAbilityTimer = reloadDelaySecondAbility + starterTimer;
+
+        StartCoroutine(StarterCycle());
+        StartCoroutine(StarterFirstAbility());
+        StartCoroutine(StarterSecondtAbility());
     }
     private void SetData()
     {
@@ -268,7 +273,7 @@ public class BossTentaclePop : Enemy
         firstAbilityCount++;
     }
 
-    float timeBtwswitchAbility1 = 2f;
+    float timeBtwswitchAbility = 1f;
     private IEnumerator CanFirstAbility()
     {
         if (firstAbilityCount != maxFirstAbilityCount)
@@ -276,7 +281,7 @@ public class BossTentaclePop : Enemy
             priorityFirstAbility = true;
             restTime = 1f;
             isReadyToFirstAbility = false;
-            if (firstAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility1);
+            if (firstAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
             FirstAbility();
             yield return new WaitForSeconds(restTime);
             isReadyToFirstAbility = true;
@@ -284,7 +289,8 @@ public class BossTentaclePop : Enemy
         else if(firstAbilityCount == maxFirstAbilityCount) 
         {
             isReadyToFirstAbility = false;
-            yield return new WaitForSeconds(timeBtwswitchAbility1);
+            yield return new WaitForSeconds(timeBtwswitchAbility);
+            //isReadyToSecondAbility = true; => A mettre ici ?
             priorityFirstAbility = false;
             yield return new WaitForSeconds(reloadDelayFirstAbility);
             isReadyToFirstAbility = true;
@@ -292,12 +298,46 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    private bool isTesting = false;
+    private int secondAbilityCount = 0;
+    private int maxSecondAbilityCount = 15;
+    private bool isReadyToSecondAbility = false;
+    private bool prioritySecondAbility = false;
+    private float secondAbilityTimer;
+    private float reloadDelaySecondAbility;
+
+    private IEnumerator StarterSecondtAbility()
+    {
+        yield return new WaitForSeconds(secondAbilityTimer);
+        isReadyToSecondAbility = true;
+    }
+
     private void SecondAbility()
     {
-        isTesting = true;
         attackRange = BossData.attackRange;
-        GameObject myProjectile = Instantiate(eggRunner, transform.position, Quaternion.identity);
-        myProjectile.transform.parent = gameObject.transform;
+        GameObject enemy = Instantiate(eggRunner, transform.position, Quaternion.identity);
+        enemy.SetActive(true);
+    }
+
+    private IEnumerator CanSecondAbility()
+    {
+        if (secondAbilityCount != maxSecondAbilityCount)
+        {
+            prioritySecondAbility = true;
+            restTime = 0.25f;
+            isReadyToSecondAbility = false;
+            if (secondAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
+            SecondAbility();
+            yield return new WaitForSeconds(restTime);
+            secondAbilityCount++;
+        }
+        else
+        {
+            isReadyToSecondAbility = false;
+            yield return new WaitForSeconds(timeBtwswitchAbility);
+            prioritySecondAbility = false;
+            yield return new WaitForSeconds(reloadDelaySecondAbility);
+            isReadyToSecondAbility = true;
+            secondAbilityCount = 0;
+        }
     }
 }
