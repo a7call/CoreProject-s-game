@@ -27,6 +27,7 @@ public class EggProjectile : Projectile
     // Pop mob if touch nothing 
     protected void PopMobs()
     {
-        GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
+        GameObject mob = GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
+        mob.GetComponent<Enemy>().isInvokedInBossRoom = true;
     }
 }

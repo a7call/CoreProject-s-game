@@ -6,7 +6,7 @@ using Pathfinding;
 public class EggRunner : Cac
 {
     private Vector3 randomPosition;
-    [SerializeField] private float maxDistance = 3f;
+    [SerializeField] private float maxDistance = 8f;
     [SerializeField] private LayerMask layer;
 
     protected override void Start()
@@ -68,6 +68,17 @@ public class EggRunner : Cac
             }
         Destroy(gameObject);
     }
+
+    protected override void EnemyDie()
+    {
+        if (isDying)
+        {
+            isDying = false;
+            nanoRobot();
+            Attack();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Wall"))
