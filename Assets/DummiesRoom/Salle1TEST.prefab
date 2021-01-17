@@ -99,7 +99,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1932507879844140554
 Transform:
   m_ObjectHideFlags: 0
@@ -285,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1932507880051581213
 Transform:
   m_ObjectHideFlags: 0
@@ -531,7 +531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1932507880850939179
 Transform:
   m_ObjectHideFlags: 0
@@ -789,7 +789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1932507881069414012
 Transform:
   m_ObjectHideFlags: 0
@@ -2304,7 +2304,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1146857396950899728
 Transform:
   m_ObjectHideFlags: 0
@@ -13431,6 +13431,7 @@ GameObject:
   - component: {fileID: 8688758718351688123}
   - component: {fileID: 2738252563150487656}
   - component: {fileID: 3833144313019465790}
+  - component: {fileID: 2205317940733477417}
   m_Layer: 0
   m_Name: Salle1TEST
   m_TagString: Untagged
@@ -13446,7 +13447,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8688758718351688116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.664062, y: 3.2979317, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8688758718344374391}
@@ -13496,15 +13497,15 @@ MonoBehaviour:
   up: 0
   right: 0
   down: 0
-  DoorUpTileMap: {fileID: 1932507881069414013}
-  DoorDownTileMap: {fileID: 1932507879844140555}
-  DoorLeftTileMap: {fileID: 1932507880850939180}
-  DoorRightTileMap: {fileID: 1932507880051581214}
-  CorridorDownTileMap: {fileID: 2735644017155764879}
-  CorridorUpTileMap: {fileID: 8656478737770023511}
-  CorridorRightTileMap: {fileID: 6267915803702579413}
-  CorridorLeftTileMap: {fileID: 4913562568163528880}
-  DoorFaceSprite: {fileID: 7442046123242867710}
+  DoorUpTileMap: {fileID: 0}
+  DoorDownTileMap: {fileID: 0}
+  DoorLeftTileMap: {fileID: 0}
+  DoorRightTileMap: {fileID: 0}
+  CorridorDownTileMap: {fileID: 0}
+  CorridorUpTileMap: {fileID: 0}
+  CorridorRightTileMap: {fileID: 0}
+  CorridorLeftTileMap: {fileID: 0}
+  DoorFaceSprite: {fileID: 0}
   DoorOthersSprite: {fileID: 0}
 --- !u!61 &3833144313019465790
 BoxCollider2D:
@@ -13516,10 +13517,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.9846792, y: 0.977643}
+  m_Offset: {x: 3.9001474, y: -1.069171}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -13530,8 +13531,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30.009802, y: 19.991354}
+  m_Size: {x: 24.956491, y: 16.464823}
   m_EdgeRadius: 0
+--- !u!50 &2205317940733477417
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688758718351688116}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8688758718352167326
 GameObject:
   m_ObjectHideFlags: 0
@@ -14143,7 +14165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5280074592662441609
 Transform:
   m_ObjectHideFlags: 0
