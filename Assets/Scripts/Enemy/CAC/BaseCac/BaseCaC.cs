@@ -22,8 +22,7 @@ public class BaseCaC : Cac
                 GetPlayerPos();
                 StartCoroutine(BaseAttack());
                 break;
-           
         }
-
     }
+
 }

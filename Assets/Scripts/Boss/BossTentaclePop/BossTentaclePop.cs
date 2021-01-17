@@ -8,15 +8,20 @@ public class BossTentaclePop : Enemy
 {
     [Header("Global Parameters")]
     [SerializeField] private BossScriptableObject BossData;
+    
     private float restTime;
+    
     private GameObject projectile; // Mettre le projectile classique
     private GameObject eggProjectile; // Projectile Egg qui invoque un parasite rampant
     private GameObject eggRunner;
+    
+    private Player player;
 
     public BossState currentBossState;
 
     public enum BossState
     {
+        LoadingPhase,
         Phase1,
         Phase2,
     }
@@ -29,8 +34,9 @@ public class BossTentaclePop : Enemy
 
     private void Start()
     {
+        player.currentEtat = Player.EtatJoueur.shopping; // Etat AFK du joueur, il ne peut rien faire
         currentState = State.Chasing;
-        currentBossState = BossState.Phase1;
+        currentBossState = BossState.LoadingPhase;
         aIPath.canMove = false;
         SetTimers();
         SetMaxHealth();
@@ -42,10 +48,16 @@ public class BossTentaclePop : Enemy
     {
         switch (currentBossState)
         {
+            case BossState.LoadingPhase:
+                if (!isLoading)
+                {
+                    StartCoroutine(Loading());
+                }
+                break;
+
             case BossState.Phase1:
-                
                 ActualState();
-                    if (isReadyToCycle && !priorityFirstAbility)
+                    if (isReadyToCycle && !priorityFirstAbility &&!prioritySecondAbility)
                     {
                         StartCoroutine(Cycle());
                     }
@@ -93,20 +105,17 @@ public class BossTentaclePop : Enemy
         target = GameObject.FindGameObjectWithTag("Player").transform;
         targetSetter = GetComponent<AIDestinationSetter>();
         targetSetter.target = target;
+        player = FindObjectOfType<Player>();
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
     void SetTimers()
     {
-        reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime;
-        firstAbilityTimer = reloadDelayFirstAbility + starterTimer;
-
-        ///reloadDelaySecondAbility = reloadDelayFirstAbility;
-        //secondAbilityTimer = reloadDelaySecondAbility + starterTimer;
+        reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime + maxSecondAbilityCount*0.25f ;
+        firstAbilityTimer = firstActionTime + secondActionTime + thirdActionTime + starterTimer;
 
         StartCoroutine(StarterCycle());
         StartCoroutine(StarterFirstAbility());
-        StartCoroutine(StarterSecondtAbility());
     }
     private void SetData()
     {
@@ -156,6 +165,14 @@ public class BossTentaclePop : Enemy
     }
 
     private float starterTimer = 3f;
+    private bool isLoading = false;
+    private IEnumerator Loading()
+    {
+        isLoading = true;
+        yield return new WaitForSeconds(starterTimer);
+        player.currentEtat = Player.EtatJoueur.normal;
+        currentBossState = BossState.Phase1;
+    }
     private IEnumerator StarterCycle()
     {
         yield return new WaitForSeconds(starterTimer);
@@ -197,6 +214,8 @@ public class BossTentaclePop : Enemy
     private int nbProjectile;
     private int decalage;
     private int angleTir;
+    private int countThirdAttack = 0;
+    private int offset;
     private void Shoot()
     {
         if (inFirstAttack)
@@ -210,10 +229,10 @@ public class BossTentaclePop : Enemy
         if (inSecondAttack)
         {
             attackRange = 5f; // Il faut qu'elle soit petite
-            restTime = 0.75f;
+            restTime = 0.5f;
             nbProjectile = 5;
             angleTir = 40;
-            int offset = 20;
+            offset = 20;
 
             for (int i = 0; i < nbProjectile; i++)
             {
@@ -226,16 +245,30 @@ public class BossTentaclePop : Enemy
 
         if (inThirdAttack)
         {
-            attackRange = 8f; // Il faut qu'elle soit grande
-            restTime = 1f;
+            attackRange = BossData.attackRange; // Il faut qu'elle soit grande
+            restTime = 0.5f;
             nbProjectile = 20;
             angleTir = 360;
+            countThirdAttack++;
 
-            for (int i = 0; i < nbProjectile; i++)
+            if (countThirdAttack % 2 == 0) 
+            { 
+                for (int i = 0; i < nbProjectile; i++)
+                {
+                    decalage = (angleTir / nbProjectile)*i;
+                    GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.AngleAxis(decalage, Vector3.forward));
+                    myProjectile.transform.parent = gameObject.transform;
+                }
+            }
+            else
             {
-                decalage = (angleTir / nbProjectile)*i;
-                GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.AngleAxis(decalage, Vector3.forward));
-                myProjectile.transform.parent = gameObject.transform;
+                for (int i = 0; i < nbProjectile; i++)
+                {
+                    decalage = (angleTir / nbProjectile) * i;
+                    offset = (angleTir/nbProjectile) / 2;
+                    GameObject myProjectile = Instantiate(projectile, transform.position, Quaternion.AngleAxis(offset+decalage, Vector3.forward));
+                    myProjectile.transform.parent = gameObject.transform;
+                }
             }
         }
     }
@@ -273,13 +306,13 @@ public class BossTentaclePop : Enemy
         firstAbilityCount++;
     }
 
-    float timeBtwswitchAbility = 1f;
+    float timeBtwswitchAbility = 0.5f;
     private IEnumerator CanFirstAbility()
     {
         if (firstAbilityCount != maxFirstAbilityCount)
         {
             priorityFirstAbility = true;
-            restTime = 1f;
+            restTime = 0.25f;
             isReadyToFirstAbility = false;
             if (firstAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
             FirstAbility();
@@ -290,7 +323,8 @@ public class BossTentaclePop : Enemy
         {
             isReadyToFirstAbility = false;
             yield return new WaitForSeconds(timeBtwswitchAbility);
-            //isReadyToSecondAbility = true; => A mettre ici ?
+            prioritySecondAbility = true;
+            isReadyToSecondAbility = true;
             priorityFirstAbility = false;
             yield return new WaitForSeconds(reloadDelayFirstAbility);
             isReadyToFirstAbility = true;
@@ -302,41 +336,31 @@ public class BossTentaclePop : Enemy
     private int maxSecondAbilityCount = 15;
     private bool isReadyToSecondAbility = false;
     private bool prioritySecondAbility = false;
-    private float secondAbilityTimer;
-    private float reloadDelaySecondAbility;
-
-    private IEnumerator StarterSecondtAbility()
-    {
-        yield return new WaitForSeconds(secondAbilityTimer);
-        isReadyToSecondAbility = true;
-    }
 
     private void SecondAbility()
     {
         attackRange = BossData.attackRange;
         GameObject enemy = Instantiate(eggRunner, transform.position, Quaternion.identity);
         enemy.SetActive(true);
+        secondAbilityCount++;
     }
 
     private IEnumerator CanSecondAbility()
     {
         if (secondAbilityCount != maxSecondAbilityCount)
         {
-            prioritySecondAbility = true;
             restTime = 0.25f;
             isReadyToSecondAbility = false;
-            if (secondAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
+            //if (secondAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
             SecondAbility();
             yield return new WaitForSeconds(restTime);
-            secondAbilityCount++;
+            isReadyToSecondAbility = true;
         }
         else
         {
             isReadyToSecondAbility = false;
             yield return new WaitForSeconds(timeBtwswitchAbility);
             prioritySecondAbility = false;
-            yield return new WaitForSeconds(reloadDelaySecondAbility);
-            isReadyToSecondAbility = true;
             secondAbilityCount = 0;
         }
     }

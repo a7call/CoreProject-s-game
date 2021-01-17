@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
     public bool isreadyToAttack = true;
     public Animator animator;
 
+    // Permet de vérifier si le monstre est dans la BossRoom
+    public bool isInvokedInBossRoom = false;
+
     public State currentState;
     public enum State
     {
@@ -50,8 +53,6 @@ public class Enemy : MonoBehaviour
     public AIDestinationSetter targetSetter;
     // end of Pathfinding variable
 
-
-   
 
     protected virtual void Awake()
     {
@@ -296,14 +297,17 @@ public class Enemy : MonoBehaviour
 	
     protected void SpawnRewards()
     {
-        RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
-        rewardSpawner.RandomCoinReward(this.gameObject);
-        rewardSpawner.SpawnKeyReward(this.gameObject);
-        rewardSpawner.SpawnHeartReward(this.gameObject);
-        rewardSpawner.SpawnAmoReward(this.gameObject);
-        rewardSpawner.SpawnCoffreArmeReward(this.gameObject);
-        rewardSpawner.SpawnCoffreModuleReward(this.gameObject);
-        rewardSpawner.SpawnArmorReward(this.gameObject);
+        if (!isInvokedInBossRoom)
+        {
+            RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
+            rewardSpawner.RandomCoinReward(this.gameObject);
+            rewardSpawner.SpawnKeyReward(this.gameObject);
+            rewardSpawner.SpawnHeartReward(this.gameObject);
+            rewardSpawner.SpawnAmoReward(this.gameObject);
+            rewardSpawner.SpawnCoffreArmeReward(this.gameObject);
+            rewardSpawner.SpawnCoffreModuleReward(this.gameObject);
+            rewardSpawner.SpawnArmorReward(this.gameObject);
+        }
     }
 
     // Couroutine white flash on hit
