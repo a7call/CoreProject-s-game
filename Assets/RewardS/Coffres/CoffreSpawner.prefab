@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1274582532696595980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3004443501138492339}
+  - component: {fileID: 2406927556575205826}
+  m_Layer: 0
+  m_Name: CoffreSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3004443501138492339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274582532696595980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.6831746, y: 2.5225499, z: -155.85136}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2406927556575205826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274582532696595980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a602385c6c5de4599ab4662195829ecf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chanceToGetCoffre1: 0.4
+  chanceToGetCoffre2: 0.3
+  chanceToGetCoffre3: 0.2
+  chanceToGetCoffre4: 0.1
+  nbC1: 0
+  nbC2: 0
+  nbC3: 0
+  nbC4: 0
+  nbC: 0
+  Coffre1: {fileID: 3801197850365574655, guid: 1c889a698882a4b6981dabdc2041884f, type: 3}
+  Coffre2: {fileID: 3801197850365574655, guid: 3df130e43e21c4abbb53db7d9a9a1440, type: 3}
+  Coffre3: {fileID: 3801197850365574655, guid: a97deb1f2916b48cead239436306c70a, type: 3}
+  Coffre4: {fileID: 3801197850365574655, guid: 2b8ab869ef79f4be6b71db2ccf965ea2, type: 3}

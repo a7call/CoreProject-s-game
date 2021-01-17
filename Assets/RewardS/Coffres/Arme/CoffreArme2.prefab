@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2726233056672938227}
   - component: {fileID: 6804706582257760176}
   - component: {fileID: 5033427357710107954}
+  - component: {fileID: 2548746160281973353}
   m_Layer: 0
   m_Name: CoffreArme2
   m_TagString: Coffre
@@ -47,9 +48,19 @@ MonoBehaviour:
   isOpen: 0
   OkToOpen: 0
   ListeArmes2:
-  - {fileID: 441180908215731278, guid: 6cc83a199a94044c89281efe983887cb, type: 3}
+  - {fileID: 5336994864734638099, guid: c3abcb6340fc44df2b9100f1beb47328, type: 3}
+  - {fileID: 6619517802197788998, guid: e97ada83191254e2798a90086fef3d91, type: 3}
+  - {fileID: 7969941689199163594, guid: afe1f858f12004f85a2d0d1766b677ac, type: 3}
+  - {fileID: 2355238902889781765, guid: cf5dc8185150a4a99985909a9d3ef7c5, type: 3}
+  - {fileID: 3607933982305863803, guid: f3d22987b8dc646c8a7ca17f67cfe472, type: 3}
+  - {fileID: 5050124357231534407, guid: ce664aaa5bf5a9146925cb1eacaf8a51, type: 3}
   - {fileID: 3268745300092479952, guid: 4a8520f6f24914284bc3c3376082e6e9, type: 3}
-  - {fileID: 3139470876765727044, guid: 766b499c41b4b4c0a80a2951225fdad2, type: 3}
+  - {fileID: 231826454766768072, guid: ecb2979939b8b604394576acbadf5e93, type: 3}
+  - {fileID: 7862174263086004001, guid: e3522809079edc34b8e156404264fc46, type: 3}
+  - {fileID: 5479778964539699034, guid: ec4635fc3c114fe478df2ad0a6351e4a, type: 3}
+  - {fileID: 3926991588948171620, guid: 4bfbd1679e3dd8a4f89f6f2fd60857aa, type: 3}
+  - {fileID: 9039215970874249842, guid: 05a46ba4c7a45c543b05e010588a27c3, type: 3}
+  - {fileID: 3517320285631841591, guid: ec5edf90aba6d4d66a7650e96693fb14, type: 3}
 --- !u!212 &5033427357710107954
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101,3 +112,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2548746160281973353
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3801197850365574655}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.3333334, y: 1.3333334}
+    newSize: {x: 1.3333334, y: 1.3333334}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
