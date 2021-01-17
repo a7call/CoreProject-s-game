@@ -26,6 +26,9 @@ public class Projectile : MonoBehaviour
     protected float distance;
     protected PlayerHealth playerHealth;
 
+    [HideInInspector]
+    public float Dispersion=0;
+
     //TacticVisionModule
     [HideInInspector]
     protected bool AmmoSpeedAlreadyDown = false;
@@ -76,10 +79,15 @@ public class Projectile : MonoBehaviour
             speed /= SpeedDiviser;
         }
     }
+    //protected void ConeShoot()
+    //{
+    //    directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
+    //}
+
     // recupère la direction à prendre
     protected virtual void GetDirection()
     {
-        dir = (target.position - transform.position).normalized;
+        dir = Quaternion.AngleAxis(Dispersion, Vector3.forward)*(target.position - transform.position).normalized;
     }
     
     //envoie le projectile

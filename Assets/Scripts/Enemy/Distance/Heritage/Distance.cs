@@ -16,13 +16,12 @@ public class Distance : Enemy
     // Check si tire
     [HideInInspector]
     public bool isShooting;
- 
-
+    [HideInInspector]
+    public float Dispersion;
 
     protected virtual void SetData()
     {
         moveSpeed = DistanceData.moveSpeed;
-
 
 
         maxHealth = DistanceData.maxHealth;
@@ -34,6 +33,7 @@ public class Distance : Enemy
         projetile = DistanceData.projetile;
         attackRange = DistanceData.attackRange;
         timeToSwitch = DistanceData.timeToSwich;
+        Dispersion = DistanceData.Dispersion;
     }
 
     protected override void isInRange()
@@ -78,9 +78,14 @@ public class Distance : Enemy
     // Instansiate projectiles
     protected virtual void Shoot()
     {
-        
-       GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
-       myProjectile.transform.parent = gameObject.transform;
+        float decalage = Random.Range(-Dispersion, Dispersion);
+
+        GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
+        myProjectile.transform.parent = gameObject.transform;
+        Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
+        ScriptProj.Dispersion = decalage;
+        //ScriptProj.dir =
+        ////directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
 
     }
 

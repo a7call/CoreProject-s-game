@@ -15,5 +15,6 @@ public class DistanceScriptableObject : EnemyScriptableObject
     public float timeToSwich;
     public float timeIntervale;
     public int nbTir;
+    public float Dispersion;
 
 }
