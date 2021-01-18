@@ -15,5 +15,6 @@ public class BossScriptableObject : ScriptableObject
     public GameObject projectile;
     public GameObject eggProjectile;
     public GameObject eggRunner;
+    public GameObject eggPop;
 }
 

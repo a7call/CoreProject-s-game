@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using Pathfinding;
 
+
+/// <summary>
+/// Calculer le délai en commentaire
+/// Et voir pourquoi le cycle ne se relance pas dans la phase 2
+/// Puis on est bon
+/// </summary>
+
 public class BossTentaclePop : Enemy
 {
     [Header("Global Parameters")]
@@ -13,7 +20,8 @@ public class BossTentaclePop : Enemy
     
     private GameObject projectile; // Mettre le projectile classique
     private GameObject eggProjectile; // Projectile Egg qui invoque un parasite rampant
-    private GameObject eggRunner;
+    private GameObject eggRunner; // Ennemi qui run dans une direction aléatoire et explose
+    private GameObject eggPop; // C'est un nid qui va invoquer des monstres en continue jusqu'à ce qu'il soit détruit
     
     private Player player;
 
@@ -57,23 +65,36 @@ public class BossTentaclePop : Enemy
 
             case BossState.Phase1:
                 ActualState();
+
                     if (isReadyToCycle && !priorityFirstAbility &&!prioritySecondAbility)
                     {
                         StartCoroutine(Cycle());
                     }
-                    if (isReadyToFirstAbility)
+                    else if (isReadyToFirstAbility)
                     {
                         StartCoroutine(CanFirstAbility());
                     }
-                    if (isReadyToSecondAbility)
+                    else if (isReadyToSecondAbility)
                     {
                         StartCoroutine(CanSecondAbility());
                     }
-                print("State1");
                 break;
 
             case BossState.Phase2:
-                print("State2");
+                DeathState();
+
+                if(isReadyToCycle && !priorityFirstAbility &&!isReadyToThirdAbility)
+                {
+                    StartCoroutine(Cycle());
+                }
+                else if (isReadyToThirdAbility)
+                {
+                    StartCoroutine(CanThirdAbility());
+                }
+                else if (isReadyToFirstAbility)
+                {
+                    StartCoroutine(CanFirstAbility());
+                }
                 break;
         }
 
@@ -85,7 +106,7 @@ public class BossTentaclePop : Enemy
 
             case State.Attacking:
                 isInRange();
-                if(!priorityFirstAbility && !prioritySecondAbility)
+                if(!priorityFirstAbility && !prioritySecondAbility &&!isReadyToThirdAbility)
                 {
                     StartCoroutine(CanShoot());
                 }
@@ -114,6 +135,8 @@ public class BossTentaclePop : Enemy
         reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime + maxSecondAbilityCount*0.25f ;
         firstAbilityTimer = firstActionTime + secondActionTime + thirdActionTime + starterTimer;
 
+        reloadDelayThirdAbility = firstActionTime + secondActionTime + thirdActionTime + maxFirstAbilityCount*0.25f; //+ encore des timers de la premiere ability
+
         StartCoroutine(StarterCycle());
         StartCoroutine(StarterFirstAbility());
     }
@@ -130,17 +153,33 @@ public class BossTentaclePop : Enemy
         projectile = BossData.projectile;
         eggProjectile = BossData.eggProjectile;
         eggRunner = BossData.eggRunner;
+        eggPop = BossData.eggPop;
     }
 
     private void ActualState()
     {
-        if (currentHealth >= maxHealth / 2)
+        if (currentHealth > maxHealth / 2)
         {
             currentBossState = BossState.Phase1;
         }
         else
         {
+            StopAllCoroutines();
+            priorityFirstAbility = false;
+            prioritySecondAbility = false;
+            //priorityThirdAbility = true;
+            isReadyToThirdAbility = true;
+            isReadyToCycle = true;
+            reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime; // Calculer le nouveau reload
             currentBossState = BossState.Phase2;
+        }
+    }
+
+    private void DeathState()
+    {
+        if (currentHealth < 1)
+        {
+            print("Die");
         }
     }
 
@@ -306,7 +345,7 @@ public class BossTentaclePop : Enemy
         firstAbilityCount++;
     }
 
-    float timeBtwswitchAbility = 0.5f;
+    float timeBtwswitchAbility = 2f;
     private IEnumerator CanFirstAbility()
     {
         if (firstAbilityCount != maxFirstAbilityCount)
@@ -364,4 +403,33 @@ public class BossTentaclePop : Enemy
             secondAbilityCount = 0;
         }
     }
+
+    private void ThirdAbility()
+    {
+        attackRange = BossData.attackRange;
+        nbProjectile = 3;
+        // Faire le if avec le modulo pour changer la position de starter des oeufs selon le nb de fois qu'il les a lancé
+        for (int i = 0; i < nbProjectile; i++)
+        {
+            // Corriger la transform.position
+            GameObject nest = Instantiate(eggPop, transform.position, Quaternion.AngleAxis(i*(360/nbProjectile),Vector3.forward));
+            nest.SetActive(true);
+            nest.transform.parent = gameObject.transform;
+        }
+    }
+
+    private bool isReadyToThirdAbility = false;
+    private bool priorityThirdAbility = false;
+    private float reloadDelayThirdAbility;
+    private IEnumerator CanThirdAbility()
+    {
+        isReadyToThirdAbility = false;
+        yield return new WaitForSeconds(timeBtwswitchAbility);
+        ThirdAbility();
+        yield return new WaitForSeconds(timeBtwswitchAbility);
+        isReadyToFirstAbility = true;
+        yield return new WaitForSeconds(reloadDelayThirdAbility);
+        isReadyToThirdAbility = true;
+    }
+
 }
