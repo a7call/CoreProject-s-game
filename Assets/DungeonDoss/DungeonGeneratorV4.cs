@@ -6,12 +6,13 @@ public class DungeonGeneratorV4 : MonoBehaviour
 {
     [SerializeField] private int numberOfRooms;
     [SerializeField] Vector2 worldSize = new Vector2(50, 50);
-    float worldUnitsInOneGridCell = 1;
+    float worldUnitsInOneGridCell = 1f;
     int gridSizeX, gridSizeY;
+   
     [SerializeField] private GameObject roomObj;
     enum gridSpace
     {
-        empty, room, connections
+        empty, room, connections, belongToRoom
     }
 
     gridSpace [,] grid;
@@ -46,7 +47,6 @@ public class DungeonGeneratorV4 : MonoBehaviour
 
             RandomSetRoomPosition();
             iterations++;
-
             if (NumberOfRoom() >= numberOfRooms)
             {
                 break;
@@ -54,18 +54,61 @@ public class DungeonGeneratorV4 : MonoBehaviour
             } while (iterations < 10000) ;
         
     }
-    void  RandomSetRoomPosition()
-    {
-        Vector2 roomPos = new Vector2(GenerateRandomCoord().x, GenerateRandomCoord().y);
 
-        if (grid[Mathf.RoundToInt(roomPos.x), Mathf.RoundToInt(roomPos.y)] == gridSpace.empty)  {
+    [SerializeField] GameObject testObj;
+    void RandomSetRoomPosition()
+    {
+        List<Vector2> roomEspace = new List<Vector2>();
+        Vector2 roomPos = new Vector2(GenerateRandomCoord().x, GenerateRandomCoord().y);
+        if (grid[Mathf.RoundToInt(roomPos.x), Mathf.RoundToInt(roomPos.y)] == gridSpace.empty)
+        {
            
-                grid[Mathf.RoundToInt(roomPos.x), Mathf.RoundToInt(roomPos.y)] = gridSpace.room;
-            Instantiate(roomObj, roomPos, Quaternion.identity);
+            grid[Mathf.RoundToInt(roomPos.x), Mathf.RoundToInt(roomPos.y)] = gridSpace.room;
+        }
+        GameObject actualRoom = Instantiate(roomObj, roomPos, Quaternion.identity);
+        if (roomPos.x - Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.x / 2) < 0 || roomPos.x + Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.x / 2) > gridSizeX || roomPos.y + Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.y / 2) > gridSizeY || roomPos.y - Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.y / 2) < 0) {
+            grid[Mathf.RoundToInt(roomPos.x), Mathf.RoundToInt(roomPos.y)] = gridSpace.empty;
+            Destroy(actualRoom);
+            return;
+        }
+
+            for (int x = (int)roomPos.x - Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.x / 2); x < (int)roomPos.x + Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.x / 2); x++)
+            {
+                for (int y = (int)roomPos.y - Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.y / 2); y < (int)roomPos.y + Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.y / 2); y++)
+                {
+                    if (grid[x, y] != gridSpace.empty && x != roomPos.x && y != roomPos.y )
+                    {
+
+                        Destroy(actualRoom);
+                    foreach(Vector2 espace in roomEspace)
+                    {
+                        grid[(int)espace.x, (int)espace.y] = gridSpace.empty;
+                    }
+                    grid[(int)roomPos.x, (int)roomPos.y] = gridSpace.empty;
+
+                    break;
+
+                    }
+                    else if (x != roomPos.x && y != roomPos.y)
+                    {
+                    Vector2 goodCoord = new Vector2(x, y);
+                    roomEspace.Insert(0, goodCoord);
+                    grid[x, y] = gridSpace.belongToRoom;
+                    
+                    }
+                
+                   
+                }
+           
+
             }
-        
-        
     }
+              
+          
+    
+        
+        
+    
 
     Vector2 GenerateRandomCoord()
     {
