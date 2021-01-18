@@ -2,7 +2,7 @@
 
 public class RewardSpawner : MonoBehaviour
 {
-    [SerializeField] private float minimumCoin = 2;
+    [SerializeField] private float minimumCoin = 0;
     [SerializeField] private float maximumCoin = 10;
     [SerializeField] private GameObject coin = null;
 
