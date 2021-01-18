@@ -96,6 +96,15 @@ public class PlayerAttack : Player
             {
                 collision.GetComponent<Coffre>().OkToOpen = true;
             }
+            else return;
+        }
+    }
+
+    protected virtual void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Coffre"))
+        {
+            collision.GetComponent<Coffre>().OkToOpen = false;
         }
     }
 
