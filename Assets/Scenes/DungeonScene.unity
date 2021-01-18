@@ -177,7 +177,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.2774308
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -255,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &121449929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfRooms: 15
-  worldSize: {x: 150, y: 150}
+  worldSize: {x: 250, y: 250}
   roomGOList: []
   sampleRooms:
   - {fileID: 3388250012187415189, guid: 3e72ef3d3d35f6a4caf4f528b34862d7, type: 3}
@@ -437,6 +437,52 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 876866179541647695, guid: 9e50d93f73566aa4792ee282b155a413, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9e50d93f73566aa4792ee282b155a413, type: 3}
+--- !u!1 &540707030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540707032}
+  - component: {fileID: 540707031}
+  m_Layer: 0
+  m_Name: 'MapGeneratorV4 '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &540707031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540707030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62492f248c178c4c8ea95191ca1a1cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfRooms: 50
+  worldSize: {x: 10, y: 10}
+  roomObj: {fileID: 7303204925075413052, guid: af64b2e28f691e847839ec6a9cbcab7d, type: 3}
+--- !u!4 &540707032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540707030}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 445.39032, y: 262.14468, z: -1135.3491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2112825861 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5630774210785081105, guid: 9e50d93f73566aa4792ee282b155a413, type: 3}
