@@ -68,7 +68,7 @@ public class BossTentaclePop : Enemy
 
                     if (isReadyToCycle && !priorityFirstAbility &&!prioritySecondAbility)
                     {
-                        StartCoroutine(Cycle());
+                        StartCoroutine(Cycle1());
                     }
                     else if (isReadyToFirstAbility)
                     {
@@ -83,9 +83,9 @@ public class BossTentaclePop : Enemy
             case BossState.Phase2:
                 DeathState();
 
-                if(isReadyToCycle && !priorityFirstAbility &&!isReadyToThirdAbility)
+                if (isReadyToCycle && !priorityFirstAbility &&!isReadyToThirdAbility)
                 {
-                    StartCoroutine(Cycle());
+                    StartCoroutine(Cycle2());
                 }
                 else if (isReadyToThirdAbility)
                 {
@@ -93,7 +93,7 @@ public class BossTentaclePop : Enemy
                 }
                 else if (isReadyToFirstAbility)
                 {
-                    StartCoroutine(CanFirstAbility());
+                    StartCoroutine(CanFirstAbilityState2());
                 }
                 break;
         }
@@ -135,7 +135,7 @@ public class BossTentaclePop : Enemy
         reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime + maxSecondAbilityCount*0.25f ;
         firstAbilityTimer = firstActionTime + secondActionTime + thirdActionTime + starterTimer;
 
-        reloadDelayThirdAbility = firstActionTime + secondActionTime + thirdActionTime + maxFirstAbilityCount*0.25f; //+ encore des timers de la premiere ability
+        reloadDelayThirdAbility = firstActionTime + secondActionTime + thirdActionTime + maxFirstAbilityCount * 0.25f + 2*timeBtwswitchAbility;
 
         StartCoroutine(StarterCycle());
         StartCoroutine(StarterFirstAbility());
@@ -165,13 +165,15 @@ public class BossTentaclePop : Enemy
         else
         {
             StopAllCoroutines();
+            isReadyToThirdAbility = true;
             priorityFirstAbility = false;
             prioritySecondAbility = false;
             //priorityThirdAbility = true;
-            isReadyToThirdAbility = true;
-            isReadyToCycle = true;
-            reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime; // Calculer le nouveau reload
+            isReadyToCycle = false;
+            reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime + timeBtwswitchAbility;
+            countThirdAttack = 0;
             currentBossState = BossState.Phase2;
+            isreadyToAttack = true;
         }
     }
 
@@ -228,7 +230,7 @@ public class BossTentaclePop : Enemy
     private float secondActionTime = 3f;
     private float thirdActionTime = 3f;
 
-    private IEnumerator Cycle()
+    private IEnumerator Cycle1()
     {
         isReadyToCycle = false;
         inFirstAttack = true;
@@ -250,6 +252,29 @@ public class BossTentaclePop : Enemy
         isReadyToCycle = true;
     }
 
+    private IEnumerator Cycle2()
+    {
+        isReadyToCycle = false;
+        inFirstAttack = true;
+        yield return new WaitForSeconds(firstActionTime);
+
+        inFirstAttack = false;
+        inSecondAttack = true;
+
+        yield return new WaitForSeconds(secondActionTime);
+
+        inSecondAttack = false;
+        inThirdAttack = true;
+
+
+        yield return new WaitForSeconds(thirdActionTime);
+
+        inThirdAttack = false;
+
+        yield return new WaitForSeconds(timeBtwswitchAbility);
+        isReadyToCycle = true;
+    }
+
     private int nbProjectile;
     private int decalage;
     private int angleTir;
@@ -257,7 +282,7 @@ public class BossTentaclePop : Enemy
     private int offset;
     private void Shoot()
     {
-        if (inFirstAttack)
+        if(inFirstAttack)
         {
             attackRange = BossData.attackRange; // Il faut qu'elle soit grande
             restTime = BossData.restTime;
@@ -426,10 +451,33 @@ public class BossTentaclePop : Enemy
         isReadyToThirdAbility = false;
         yield return new WaitForSeconds(timeBtwswitchAbility);
         ThirdAbility();
-        yield return new WaitForSeconds(timeBtwswitchAbility);
         isReadyToFirstAbility = true;
         yield return new WaitForSeconds(reloadDelayThirdAbility);
         isReadyToThirdAbility = true;
+    }
+
+    private IEnumerator CanFirstAbilityState2()
+    {
+        if (firstAbilityCount != maxFirstAbilityCount)
+        {
+            priorityFirstAbility = true;
+            restTime = 0.25f;
+            isReadyToFirstAbility = false;
+            if (firstAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
+            FirstAbility();
+            yield return new WaitForSeconds(restTime);
+            isReadyToFirstAbility = true;
+        }
+        else if (firstAbilityCount == maxFirstAbilityCount)
+        {
+            isReadyToFirstAbility = false;
+            yield return new WaitForSeconds(timeBtwswitchAbility);
+            isReadyToCycle = true;
+            priorityFirstAbility = false;
+            yield return new WaitForSeconds(reloadDelayFirstAbility);
+            isReadyToFirstAbility = true;
+            firstAbilityCount = 0;
+        }
     }
 
 }
