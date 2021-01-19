@@ -14,7 +14,8 @@ using Pathfinding;
 /// </summary>
 
 
-// A FAIRE LE DIE + LIEU D'INVOCATION DES NIDS
+// A FAIRE LE DIE + Modifier la distance des eggRunner qui explosent au bout d'une distance fixe + Faire en sorte que les eggRunner explosent si ils touchent le joueur sur leur trajet
+// Rendre impossible le knockBack du Boss
 
 public class BossTentaclePop : Enemy
 {
@@ -28,6 +29,7 @@ public class BossTentaclePop : Enemy
     private GameObject eggProjectile; // Projectile Egg qui invoque un parasite rampant
     private GameObject eggRunner; // Ennemi qui run dans une direction aléatoire et explose
     private GameObject eggPop; // C'est un nid qui va invoquer des monstres en continue jusqu'à ce qu'il soit détruit
+    [SerializeField] private GameObject randomSpawner; // Objet qui va gérer les endroits d'invocations des eggPop
     
 
     // Tous les timers des différentes coroutines
@@ -89,7 +91,7 @@ public class BossTentaclePop : Enemy
     private float restTime; // Indique le délai entre deux projectiles
     private int decalage; // Angle de décallage entre les projectiles
     private int angleTir; // Angle total sur lequel on tir
-    private int offset; // Permet d'alligner le projectile central sur le joueur
+    private int offset; // Permet d'aligner le projectile central sur le joueur
 
 
     private Player player;
@@ -115,7 +117,6 @@ public class BossTentaclePop : Enemy
         aIPath.canMove = false;
         SetTimers();
         SetMaxHealth();
-
     }
 
     protected override void Update()
@@ -486,11 +487,9 @@ public class BossTentaclePop : Enemy
     {
         attackRange = BossData.attackRange;
         nbProjectile = 3;
-        // Faire le if avec le modulo pour changer la position de starter des oeufs selon le nb de fois qu'il les a lancé
         for (int i = 0; i < nbProjectile; i++)
         {
-            // Corriger la transform.position
-            GameObject nest = Instantiate(eggPop, transform.position, Quaternion.AngleAxis(i*(360/nbProjectile),Vector3.forward));
+            GameObject nest = Instantiate(eggPop, randomSpawner.GetComponent<SpawnerObjects>().sp[i], Quaternion.identity);
             nest.SetActive(true);
             nest.transform.parent = gameObject.transform;
         }
@@ -500,9 +499,13 @@ public class BossTentaclePop : Enemy
     private IEnumerator CanThirdAbility()
     {
         isCastingAbility = true;
+        aIPath.canMove = false;
+        randomSpawner.SetActive(true);
         isReadyToThirdAbility = false;
         yield return new WaitForSeconds(timeBtwswitchAbility);
         ThirdAbility();
+        aIPath.canMove = true;
+        randomSpawner.SetActive(false);
         isReadyToFirstAbility = true;
         yield return new WaitForSeconds(reloadDelayThirdAbility);
         isReadyToThirdAbility = true;
