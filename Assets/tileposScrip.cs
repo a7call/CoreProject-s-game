@@ -11,21 +11,21 @@ public class tileposScrip : MonoBehaviour
 
     void Start()
     {
-        
+
         tileMap = transform.GetComponent<Tilemap>();
         availablePlaces = new List<Vector3>();
-
         for (int n = tileMap.cellBounds.xMin; n < tileMap.cellBounds.xMax; n++)
         {
             for (int p = tileMap.cellBounds.yMin; p < tileMap.cellBounds.yMax; p++)
             {
+
                 Vector2Int localPlace = (new Vector2Int(n, p));
                 Vector2 place = tileMap.CellToWorld((Vector3Int)localPlace);
-                
+                print(place);
                 if (tileMap.HasTile((Vector3Int)localPlace))
                 {
                     //Tile at "place"
-                    print(localPlace);
+                   
                     availablePlaces.Add(place);
                 }
                 else
