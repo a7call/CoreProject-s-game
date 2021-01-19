@@ -4,28 +4,95 @@ using UnityEngine;
 using UnityEngine.UI;
 using Pathfinding;
 
-
 /// <summary>
-/// Calculer le délai en commentaire
-/// Et voir pourquoi le cycle ne se relance pas dans la phase 2
-/// Puis on est bon
+/// Le BossTentaclePop est basé sur deux states
+/// Il utilise un pattern d'attaque classique ainsi que trois compétences différentes
+/// Pour le Cycle, il tire des projectiles de PM, puis des projectiles de pompe, puis des projectiles à 360°
+/// La première compétence est une succession de tirs de projectiles qui invoquent des parasites rampants si ils touchent le joueur
+/// La deuxième compétence est une succession de mobs explosifs qui courent dans des directions randoms
+/// La troisième compétence est l'invocation de nids qui vont faire pop différents ennemis classiques
 /// </summary>
+
+
+// A FAIRE LE DIE + LIEU D'INVOCATION DES NIDS
 
 public class BossTentaclePop : Enemy
 {
-    [Header("Global Parameters")]
+    // Paramètres globaux du Boss
+    [Header("Global Boss Parameters")]
     [SerializeField] private BossScriptableObject BossData;
+    public BossState currentBossState; // Permet d'avoir plusieurs états pour le boss
     
-    private float restTime;
-    
+    // Les différents objets utilisés par le Boss
     private GameObject projectile; // Mettre le projectile classique
     private GameObject eggProjectile; // Projectile Egg qui invoque un parasite rampant
     private GameObject eggRunner; // Ennemi qui run dans une direction aléatoire et explose
     private GameObject eggPop; // C'est un nid qui va invoquer des monstres en continue jusqu'à ce qu'il soit détruit
     
-    private Player player;
 
-    public BossState currentBossState;
+    // Tous les timers des différentes coroutines
+    [HideInInspector]
+    [Header("Timers")]
+    private float starterTimer = 3f; // Timer de lancement
+    private float firstAbilityTimer ; // Timer de lancement de la première compétence
+    private float timeBtwswitchAbility = 2f; // Temps qui permet de switch entre deux compétences
+
+    // Timers liés au Cycle d'attaque
+    private float firstActionTime = 5f; // Temps pendant lequel il effectue des tirs de FM
+    private float secondActionTime = 3f; // Temps pendant lequel il effectue des tirs de pompe
+    private float thirdActionTime = 3f; // Temps pendant lequel il effectue des tirs à 360°.
+
+
+    // Tous les delay des différentes coroutines
+    [HideInInspector]
+    [Header("ReloadDelay")]
+    private float reloadDelayFirstAbility; // Delay de chargement de la première compétence
+    private float reloadDelayThirdAbility; // Delay de chargement de la seconde compétence
+
+
+    // Toutes les booléans
+    [HideInInspector]
+    [Header("Booleans")]
+    private bool isLoading = false; // Boolean du chargement
+
+    // Booleans du cycle
+    private bool isReadyToCycle = false; // Boolean qui permet de savoir si le Cycle d'attaque peut etre lancé
+    private bool inFirstAttack = false; // Boolean qui permet de gérer la première attaque du Cycle
+    private bool inSecondAttack = false; // Boolean qui permet de gérer la seconde attaque du Cycle
+    private bool inThirdAttack = false; // Boolean qui permet de gérer la troisième attaque du Cycle
+    private bool isShooting = false; // Boolean qui permet de savoir si le Boss tire
+
+    // Booleans des compétences
+    private bool isCastingAbility = false; // Boolean qui permet de savoir si une compétence est en cours
+    private bool isReadyToFirstAbility = false; // Boolean qui permet de savoir si la première compétence est prête à être lancée
+    private bool isReadyToSecondAbility = false; // Boolean qui permet de savoir si la seconde compétence est prête à être lancée
+    private bool isReadyToThirdAbility; // Boolean qui permet de savoir si la troisième compétence est prête à être lancée
+
+
+    // Tous les compteurs
+    [HideInInspector]
+    [Header("Counter")]
+    // Compteur des attaques du Cycle
+    private int countThirdAttack = 0; // Compteur lié à le troisième attaque. Il permet de décaller un coup sur deux
+    
+    // Compteurs des compétences
+    private int firstAbilityCount = 0; // Compteur de la première compétence
+    private int maxFirstAbilityCount = 10; // Compteur max de la première compétence
+    private int secondAbilityCount = 0; // Compteur de la seconde compétence
+    private int maxSecondAbilityCount = 15; // Compteur max de la seconde compétence
+
+
+    // Toutes les différents variables des projectilles
+    [HideInInspector]
+    [Header("Projectile Parameters")]
+    private int nbProjectile; // Indique le nombre à tirer
+    private float restTime; // Indique le délai entre deux projectiles
+    private int decalage; // Angle de décallage entre les projectiles
+    private int angleTir; // Angle total sur lequel on tir
+    private int offset; // Permet d'alligner le projectile central sur le joueur
+
+
+    private Player player;
 
     public enum BossState
     {
@@ -51,7 +118,6 @@ public class BossTentaclePop : Enemy
 
     }
 
-    // Deux states uniquement, chasing + attacking
     protected override void Update()
     {
         switch (currentBossState)
@@ -66,7 +132,7 @@ public class BossTentaclePop : Enemy
             case BossState.Phase1:
                 ActualState();
 
-                    if (isReadyToCycle && !priorityFirstAbility &&!prioritySecondAbility)
+                    if (isReadyToCycle && !isCastingAbility)
                     {
                         StartCoroutine(Cycle1());
                     }
@@ -83,7 +149,7 @@ public class BossTentaclePop : Enemy
             case BossState.Phase2:
                 DeathState();
 
-                if (isReadyToCycle && !priorityFirstAbility &&!isReadyToThirdAbility)
+                if (isReadyToCycle && !isCastingAbility)
                 {
                     StartCoroutine(Cycle2());
                 }
@@ -106,7 +172,7 @@ public class BossTentaclePop : Enemy
 
             case State.Attacking:
                 isInRange();
-                if(!priorityFirstAbility && !prioritySecondAbility &&!isReadyToThirdAbility)
+                if(!isCastingAbility)
                 {
                     StartCoroutine(CanShoot());
                 }
@@ -118,6 +184,7 @@ public class BossTentaclePop : Enemy
         GetLastDirection();
     }
 
+    // Permet d'avoir les références
     protected override void GetReference()
     {
         healthBarGFX.SetActive(true);
@@ -130,16 +197,8 @@ public class BossTentaclePop : Enemy
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMouvement = FindObjectOfType<PlayerMouvement>();
     }
-    void SetTimers()
-    {
-        reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime + maxSecondAbilityCount*0.25f ;
-        firstAbilityTimer = firstActionTime + secondActionTime + thirdActionTime + starterTimer;
-
-        reloadDelayThirdAbility = firstActionTime + secondActionTime + thirdActionTime + maxFirstAbilityCount * 0.25f + 2*timeBtwswitchAbility;
-
-        StartCoroutine(StarterCycle());
-        StartCoroutine(StarterFirstAbility());
-    }
+    
+    // Permet de Set les Data
     private void SetData()
     {
         maxHealth = BossData.maxHealth;
@@ -155,7 +214,43 @@ public class BossTentaclePop : Enemy
         eggRunner = BossData.eggRunner;
         eggPop = BossData.eggPop;
     }
+    
+    // Permet de déclarer les timers et de lancer les coroutines de Start
+    private void SetTimers()
+    {
+        reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime + maxSecondAbilityCount*0.25f ;
+        firstAbilityTimer = firstActionTime + secondActionTime + thirdActionTime + starterTimer;
 
+        reloadDelayThirdAbility = firstActionTime + secondActionTime + thirdActionTime + maxFirstAbilityCount * 0.25f + 2*timeBtwswitchAbility;
+
+        StartCoroutine(StarterFirstAbility());
+    }
+
+    // Cette coroutine permet de lancer le combat
+    private IEnumerator Loading()
+    {
+        isLoading = true;
+        yield return new WaitForSeconds(starterTimer);
+        aIPath.canMove = true;
+        isReadyToCycle = true;
+        player.currentEtat = Player.EtatJoueur.normal;
+        currentBossState = BossState.Phase1;
+    }
+    
+    // Permet de lancer la première compétence
+    private IEnumerator StarterFirstAbility()
+    {
+        yield return new WaitForSeconds(firstAbilityTimer);
+        isReadyToFirstAbility = true;
+    }
+
+    // Coroutine qui permet de faire une pause
+    private IEnumerator Pause()
+    {
+        yield return new WaitForSeconds(timeBtwswitchAbility);
+    }
+  
+    // Permet de savoir si le Boss est en State 1 ou 2
     private void ActualState()
     {
         if (currentHealth > maxHealth / 2)
@@ -164,27 +259,28 @@ public class BossTentaclePop : Enemy
         }
         else
         {
-            StopAllCoroutines();
+            isCastingAbility = true;
+            StartCoroutine(Pause());
             isReadyToThirdAbility = true;
-            priorityFirstAbility = false;
-            prioritySecondAbility = false;
-            //priorityThirdAbility = true;
             isReadyToCycle = false;
-            reloadDelayFirstAbility = firstActionTime + secondActionTime + thirdActionTime + timeBtwswitchAbility;
+            firstAbilityCount = 0;
             countThirdAttack = 0;
             currentBossState = BossState.Phase2;
             isreadyToAttack = true;
         }
     }
 
+    // Permet de gérer la mort du boss
     private void DeathState()
     {
         if (currentHealth < 1)
         {
             print("Die");
+            gameObject.SetActive(false);
         }
     }
 
+    // Permet de savoir si le Boss est en Chasing ou Attacking
     protected override void isInRange()
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
@@ -205,31 +301,7 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    private float starterTimer = 3f;
-    private bool isLoading = false;
-    private IEnumerator Loading()
-    {
-        isLoading = true;
-        yield return new WaitForSeconds(starterTimer);
-        player.currentEtat = Player.EtatJoueur.normal;
-        currentBossState = BossState.Phase1;
-    }
-    private IEnumerator StarterCycle()
-    {
-        yield return new WaitForSeconds(starterTimer);
-        aIPath.canMove = true;
-        isReadyToCycle = true;
-    }
-
-    private bool isReadyToCycle = false;
-    private bool inFirstAttack = false;
-    private bool inSecondAttack = false;
-    private bool inThirdAttack = false;
-
-    private float firstActionTime = 5f;
-    private float secondActionTime = 3f;
-    private float thirdActionTime = 3f;
-
+    // Permet de gérer le Cycle1
     private IEnumerator Cycle1()
     {
         isReadyToCycle = false;
@@ -252,6 +324,7 @@ public class BossTentaclePop : Enemy
         isReadyToCycle = true;
     }
 
+    // Permet de gérer le Cycle2 
     private IEnumerator Cycle2()
     {
         isReadyToCycle = false;
@@ -275,11 +348,7 @@ public class BossTentaclePop : Enemy
         isReadyToCycle = true;
     }
 
-    private int nbProjectile;
-    private int decalage;
-    private int angleTir;
-    private int countThirdAttack = 0;
-    private int offset;
+    // Différents shoots des Cycles
     private void Shoot()
     {
         if(inFirstAttack)
@@ -337,7 +406,7 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    private bool isShooting = false;
+    // Permet de gérer les tirs
     private IEnumerator CanShoot()
     {
         if (isShooting && isreadyToAttack)
@@ -349,19 +418,7 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    private int firstAbilityCount = 0;
-    private int maxFirstAbilityCount = 10;
-    private bool isReadyToFirstAbility = false;
-    private bool priorityFirstAbility = false;
-    private float firstAbilityTimer ;
-    private float reloadDelayFirstAbility;
-
-    private IEnumerator StarterFirstAbility()
-    {
-        yield return new WaitForSeconds(firstAbilityTimer);
-        isReadyToFirstAbility = true;
-    }
-
+    // Première compétence
     private void FirstAbility()
     {
         attackRange = BossData.attackRange;
@@ -370,12 +427,12 @@ public class BossTentaclePop : Enemy
         firstAbilityCount++;
     }
 
-    float timeBtwswitchAbility = 2f;
+    // Permet de gérer la première compétence dans le Cycle1
     private IEnumerator CanFirstAbility()
     {
         if (firstAbilityCount != maxFirstAbilityCount)
         {
-            priorityFirstAbility = true;
+            isCastingAbility = true;
             restTime = 0.25f;
             isReadyToFirstAbility = false;
             if (firstAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
@@ -387,20 +444,14 @@ public class BossTentaclePop : Enemy
         {
             isReadyToFirstAbility = false;
             yield return new WaitForSeconds(timeBtwswitchAbility);
-            prioritySecondAbility = true;
             isReadyToSecondAbility = true;
-            priorityFirstAbility = false;
             yield return new WaitForSeconds(reloadDelayFirstAbility);
             isReadyToFirstAbility = true;
             firstAbilityCount = 0;
         }
     }
 
-    private int secondAbilityCount = 0;
-    private int maxSecondAbilityCount = 15;
-    private bool isReadyToSecondAbility = false;
-    private bool prioritySecondAbility = false;
-
+    // Seconde compétence
     private void SecondAbility()
     {
         attackRange = BossData.attackRange;
@@ -409,6 +460,7 @@ public class BossTentaclePop : Enemy
         secondAbilityCount++;
     }
 
+    // Permet de gérer la seconde compétence
     private IEnumerator CanSecondAbility()
     {
         if (secondAbilityCount != maxSecondAbilityCount)
@@ -424,11 +476,12 @@ public class BossTentaclePop : Enemy
         {
             isReadyToSecondAbility = false;
             yield return new WaitForSeconds(timeBtwswitchAbility);
-            prioritySecondAbility = false;
+            isCastingAbility = false;
             secondAbilityCount = 0;
         }
     }
 
+    // Troisième compétence
     private void ThirdAbility()
     {
         attackRange = BossData.attackRange;
@@ -443,11 +496,10 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    private bool isReadyToThirdAbility = false;
-    private bool priorityThirdAbility = false;
-    private float reloadDelayThirdAbility;
+    // Permet de gérer la troisième compétence
     private IEnumerator CanThirdAbility()
     {
+        isCastingAbility = true;
         isReadyToThirdAbility = false;
         yield return new WaitForSeconds(timeBtwswitchAbility);
         ThirdAbility();
@@ -456,11 +508,11 @@ public class BossTentaclePop : Enemy
         isReadyToThirdAbility = true;
     }
 
+    // Permet de gérer la première compétence dans le Cycle2
     private IEnumerator CanFirstAbilityState2()
     {
         if (firstAbilityCount != maxFirstAbilityCount)
         {
-            priorityFirstAbility = true;
             restTime = 0.25f;
             isReadyToFirstAbility = false;
             if (firstAbilityCount == 0) yield return new WaitForSeconds(timeBtwswitchAbility);
@@ -472,10 +524,8 @@ public class BossTentaclePop : Enemy
         {
             isReadyToFirstAbility = false;
             yield return new WaitForSeconds(timeBtwswitchAbility);
+            isCastingAbility = false;
             isReadyToCycle = true;
-            priorityFirstAbility = false;
-            yield return new WaitForSeconds(reloadDelayFirstAbility);
-            isReadyToFirstAbility = true;
             firstAbilityCount = 0;
         }
     }
