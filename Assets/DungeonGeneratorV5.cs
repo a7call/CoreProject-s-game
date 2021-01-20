@@ -14,7 +14,7 @@ public class DungeonGeneratorV5 : MonoBehaviour
     [SerializeField] private GameObject roomObj;
     enum gridSpace
     {
-        empty, room, connections
+        empty, room, connections, corridor
     }
 
     gridSpace[,] grid;
@@ -22,6 +22,7 @@ public class DungeonGeneratorV5 : MonoBehaviour
     {
         SetUp();
         CreateLvl();
+        StartCoroutine(GeneratePathWay());
     }
 
     void CreateLvl()
@@ -36,7 +37,7 @@ public class DungeonGeneratorV5 : MonoBehaviour
             {
                 break;
             }
-        } while (iterations < 100);
+        } while (iterations < 10000);
 
     }
 
@@ -81,17 +82,25 @@ public class DungeonGeneratorV5 : MonoBehaviour
 
                 if (_tileMap.HasTile((Vector3Int)localPlace))
                 {
-                    print(place);
-                    if (grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y)] == gridSpace.empty)
-                    {  //Tile at "place"
-
-                        TemporaryStorage.Add(place);
-                    }
-                    else
+                    if(place.x <= 1 || place.x >= gridSizeX-1 || place.y <= 1 || place.y >= gridSizeY-1)
                     {
                         TemporaryStorage.Clear();
                         return null;
                     }
+                    else
+                    {
+                        if (grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y)] == gridSpace.empty)
+                        {  //Tile at "place"
+
+                            TemporaryStorage.Add(place);
+                        }
+                        else
+                        {
+                            TemporaryStorage.Clear();
+                            return null;
+                        }
+                    }
+                    
                 }
                 else
                 {
@@ -103,28 +112,27 @@ public class DungeonGeneratorV5 : MonoBehaviour
         foreach(Vector3 place in TemporaryStorage)
         {
             roomPoses.Insert(0, place);
-            grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y)] = gridSpace.room ;
+            grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y)] = gridSpace.room;
+            if (grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y)] = gridSpace.room;
+            if (grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y)] = gridSpace.room;
+            if (grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y+1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y+1)] = gridSpace.room;
+            if (grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y-1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y-1)] = gridSpace.room;
+            //if (grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y-1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y-1)] = gridSpace.room;
+            //if (grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y+1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y+1)] = gridSpace.room;
         }
         TemporaryStorage.Clear();
         return roomPoses;
     }
 
+
     void RandomSetRoomPosition()
     {
 
         Vector2 roomPos = new Vector2(GenerateRandomCoord().x, GenerateRandomCoord().y);
-
-        
         GameObject actualRoom = Instantiate(roomObj, roomPos, Quaternion.identity);
-        if (roomPos.x - Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.x ) < 0 || roomPos.x + Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.x) > gridSizeX || roomPos.y + Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.y ) > gridSizeY || roomPos.y - Mathf.RoundToInt(actualRoom.GetComponentInChildren<Collider2D>().bounds.size.y ) < 0)
-        {
-            grid[Mathf.RoundToInt(roomPos.x), Mathf.RoundToInt(roomPos.y)] = gridSpace.empty;
-            Destroy(actualRoom);
-            return;
-        }
-
         if ( GetTilePositions(actualRoom.transform.GetComponentInChildren<Tilemap>()) == null)
         {
+            grid[Mathf.RoundToInt(roomPos.x), Mathf.RoundToInt(roomPos.y)] = gridSpace.empty;
             Destroy(actualRoom);
             return;
         }
@@ -133,5 +141,146 @@ public class DungeonGeneratorV5 : MonoBehaviour
             sucess++;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    List<Vector2> startingPoints = new List<Vector2>();
+    List<Vector2> LookForStartingPoints()
+    {
+
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int y = 0; y < gridSizeY; y++)
+            {
+                if(grid[x,y] == gridSpace.empty)
+                {
+                    Vector2 newStartPoint = new Vector2(x, y);
+                    startingPoints.Insert(0, newStartPoint);
+                }
+                
+            }
+        }
+        return startingPoints;
+    }
+
+   List<Vector2> TracePos;
+  public Tile tile;
+  Vector2 dir;
+    IEnumerator GeneratePathWay()
+    {
+        
+        TracePos = new List<Vector2>();
+        int index = Random.Range(0, LookForStartingPoints().Count);
+        Vector2 StartPathPos = startingPoints[index];
+        int dirIndex = 0;
+        int iterations = 0;
+        int i = 0;
+        int ip = 1;
+        do
+        {
+            if(previousDirections.Count >0)
+            {
+                dir = RandomPathDirection();
+                if (dir == -previousDirections[dirIndex - 1])
+                {
+                    iterations++;
+                    continue;
+                }
+               
+            }
+            else
+            {
+                dir = RandomPathDirection();
+            }
+               
+
+            
+            
+           
+            
+            
+            
+            Vector2 pos = StartPathPos;
+            
+            Vector2 TempPos = pos + dir;
+            
+            if (TempPos.x <= 1 || TempPos.x >= gridSizeX - 1 || TempPos.y <= 1 || TempPos.y >= gridSizeY - 1)
+            {
+                if (i - ip > 0)
+                {
+                   
+                    StartPathPos = TracePos[i - ip];
+                    ip++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                StartPathPos = TempPos;
+                if (grid[Mathf.RoundToInt(StartPathPos.x), Mathf.RoundToInt(StartPathPos.y)] == gridSpace.empty)
+                {
+                    yield return new WaitForSeconds(0.001f);
+                    grid[Mathf.RoundToInt(StartPathPos.x), Mathf.RoundToInt(StartPathPos.y)] = gridSpace.corridor;
+
+                    Vector3Int fro = GetComponentInChildren<Tilemap>().WorldToCell(StartPathPos);
+                    GetComponentInChildren<Tilemap>().SetTile(fro, tile);
+                    
+                    
+                    TracePos.Add(StartPathPos);
+                    previousDirections.Add(dir);
+                    dirIndex++;
+                    i++;
+                    ip = 1;
+                }
+                else
+                {
+                  
+                  StartPathPos = TracePos[i - ip];
+                  if (i - ip > 0) ip++;
+                  
+                }
+            }
+            
+            iterations++;
+        }while(iterations < 10000);
+    }
+
+    public List<Vector2> previousDirections = new List<Vector2>();
+    private Vector2 RandomPathDirection()
+    {
+        int choice = Mathf.FloorToInt(Random.value * 3.99f);
+        //use that int to chose a direction
+        switch (choice)
+        {
+            case 0:
+                return Vector2.down;
+            case 1:
+                return Vector2.left;
+            case 2:
+                return Vector2.up;
+            default:
+                return Vector2.right;
+        }
+    }
+        
+     
+    
 }
 
