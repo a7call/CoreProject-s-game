@@ -63,7 +63,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.0011999905, y: -0.0012000017}
   m_SizeDelta: {x: -0.026428223, y: -0.026428223}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -438,6 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isreadyToAttack: 1
   animator: {fileID: 8004997190229022202}
+  isInvokedInBossRoom: 0
   currentState: 1
   isAlreadyElectrified: 0
   nextWayPointDistance: 0.05
@@ -457,7 +458,7 @@ MonoBehaviour:
   timeBeforeDesactive: 0
   CacDatas: {fileID: 11400000, guid: 56c5541db0257f843860602e24877735, type: 2}
   attackPoint: {fileID: 7521566648548073775}
-  maxDistance: 5
+  maxDistance: 8
   layer:
     serializedVersion: 2
     m_Bits: 1280

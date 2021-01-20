@@ -41,6 +41,7 @@ public class RandomSpawner : Enemy
         {
             int nb = (int)Random.Range(0, mobs.Count);
             GameObject mob = Instantiate(mobs[nb],transform.position,Quaternion.identity);
+            mob.transform.parent = gameObject.transform;
             mob.GetComponent<Enemy>().isInvokedInBossRoom = true;
             yield return new WaitForSeconds(spawnCd);
         }

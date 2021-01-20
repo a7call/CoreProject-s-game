@@ -13,9 +13,13 @@ using Pathfinding;
 /// La troisième compétence est l'invocation de nids qui vont faire pop différents ennemis classiques
 /// </summary>
 
+// Commentaires pour quand on reprendra le boss
+// Voir pour les animations
+// Voir pour l'intro et la mort du boss (dont ses rewards)
+// Voir l'équilibrage du boss et des compétences
+// Changer l'état Shopping du joueur par l'état AFK
+// Voir les effets des armes spéciales sur le boss (freeze, dot, etc..) qui ne doivent pas marcher
 
-// A FAIRE LE DIE + Modifier la distance des eggRunner qui explosent au bout d'une distance fixe + Faire en sorte que les eggRunner explosent si ils touchent le joueur sur leur trajet
-// Rendre impossible le knockBack du Boss
 
 public class BossTentaclePop : Enemy
 {
@@ -38,6 +42,7 @@ public class BossTentaclePop : Enemy
     private float starterTimer = 3f; // Timer de lancement
     private float firstAbilityTimer ; // Timer de lancement de la première compétence
     private float timeBtwswitchAbility = 2f; // Temps qui permet de switch entre deux compétences
+    private float dieTimer = 5f;
 
     // Timers liés au Cycle d'attaque
     private float firstActionTime = 5f; // Temps pendant lequel il effectue des tirs de FM
@@ -101,6 +106,7 @@ public class BossTentaclePop : Enemy
         LoadingPhase,
         Phase1,
         Phase2,
+        DeathPhase,
     }
 
     protected override void Awake()
@@ -111,6 +117,7 @@ public class BossTentaclePop : Enemy
 
     private void Start()
     {
+        gameObject.GetComponent<Enemy>().isInvokedInBossRoom = true;
         player.currentEtat = Player.EtatJoueur.shopping; // Etat AFK du joueur, il ne peut rien faire
         currentState = State.Chasing;
         currentBossState = BossState.LoadingPhase;
@@ -156,12 +163,16 @@ public class BossTentaclePop : Enemy
                 }
                 else if (isReadyToThirdAbility)
                 {
-                    StartCoroutine(CanThirdAbility());
+                    StartCoroutine("CanThirdAbility");
                 }
                 else if (isReadyToFirstAbility)
                 {
-                    StartCoroutine(CanFirstAbilityState2());
+                    StartCoroutine("CanFirstAbilityState2");
                 }
+                break;
+
+            case BossState.DeathPhase:
+                if (isDying) StartCoroutine(BossIsDead());
                 break;
         }
 
@@ -177,6 +188,11 @@ public class BossTentaclePop : Enemy
                 {
                     StartCoroutine(CanShoot());
                 }
+                break;
+
+            case State.Death:
+                player.currentEtat = Player.EtatJoueur.shopping; // Etat AFK du joueur où il ne peut plus tirer non plus
+                aIPath.canMove = false;
                 break;
         }
 
@@ -271,14 +287,36 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    // Permet de gérer la mort du boss
+    // Permet de savoir si le Boss est mort
     private void DeathState()
     {
-        if (currentHealth < 1)
+        if (currentHealth <= 0)
         {
-            print("Die");
-            gameObject.SetActive(false);
+            StopCoroutine("CanThirdAbility");
+            StopCoroutine("CanFirstAbilityState2");
+            isCastingAbility = true;
+            isReadyToFirstAbility = false;
+            isReadyToSecondAbility = false;
+            isReadyToThirdAbility = false;
+            currentBossState = BossState.DeathPhase;
+            currentState = State.Death;
+            isDying = true;
         }
+    }
+
+    // Permet de gérer la mort du Boss
+    private IEnumerator BossIsDead()
+    {
+        isDying = false;
+        // Animation de mort
+        foreach (Transform child in gameObject.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        // Drop du boss
+        yield return new WaitForSeconds(dieTimer);
+        player.currentEtat = Player.EtatJoueur.normal;
+        Destroy(gameObject);
     }
 
     // Permet de savoir si le Boss est en Chasing ou Attacking
@@ -457,6 +495,7 @@ public class BossTentaclePop : Enemy
     {
         attackRange = BossData.attackRange;
         GameObject enemy = Instantiate(eggRunner, transform.position, Quaternion.identity);
+        enemy.transform.parent = gameObject.transform;
         enemy.SetActive(true);
         secondAbilityCount++;
     }
@@ -490,8 +529,8 @@ public class BossTentaclePop : Enemy
         for (int i = 0; i < nbProjectile; i++)
         {
             GameObject nest = Instantiate(eggPop, randomSpawner.GetComponent<SpawnerObjects>().sp[i], Quaternion.identity);
-            nest.SetActive(true);
             nest.transform.parent = gameObject.transform;
+            nest.SetActive(true);
         }
     }
 

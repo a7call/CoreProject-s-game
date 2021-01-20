@@ -13,7 +13,7 @@ public class EggRunner : Cac
     {
         base.Start();
         aIPath.canMove = false;
-        randomPosition = maxDistance*Random.insideUnitCircle;
+        randomPosition = maxDistance*Random.insideUnitCircle.normalized;
         direction = (randomPosition - transform.position).normalized;
     }
 
@@ -82,6 +82,11 @@ public class EggRunner : Cac
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Wall"))
+        {
+            Attack();
+        }
+
+        if (collision.CompareTag("Player"))
         {
             Attack();
         }

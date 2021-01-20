@@ -269,7 +269,7 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= _damage;
         StartCoroutine(WhiteFlash());
-        if (currentHealth < 1)
+        if (currentHealth <= 0)
         {
 
             isDying = true;
@@ -342,7 +342,6 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
-        aIPath.canMove = false;
         rb.AddForce(dir * knockBackForce);
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
@@ -351,6 +350,7 @@ public class Enemy : MonoBehaviour
         if (enemy == null) yield break;
         rb.velocity = Vector2.zero;
         aIPath.canMove = true;
+        if (enemy.currentHealth <= 0) currentState = State.Death;
     }
 
 
