@@ -192,27 +192,21 @@ public class DungeonGeneratorV5 : MonoBehaviour
         int ip = 1;
         do
         {
+            print(iterations);
             if(previousDirections.Count >0)
             {
                 dir = RandomPathDirection();
                 if (dir == -previousDirections[dirIndex - 1])
                 {
                     iterations++;
+                    
                     continue;
                 }
-               
             }
             else
             {
                 dir = RandomPathDirection();
             }
-               
-
-            
-            
-           
-            
-            
             
             Vector2 pos = StartPathPos;
             
@@ -238,8 +232,9 @@ public class DungeonGeneratorV5 : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.001f);
                     grid[Mathf.RoundToInt(StartPathPos.x), Mathf.RoundToInt(StartPathPos.y)] = gridSpace.corridor;
-
+                 
                     Vector3Int fro = GetComponentInChildren<Tilemap>().WorldToCell(StartPathPos);
+                    
                     GetComponentInChildren<Tilemap>().SetTile(fro, tile);
                     
                     
