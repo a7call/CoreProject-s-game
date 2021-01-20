@@ -6,10 +6,28 @@
 public class EggProjectile : Projectile
 {
    [SerializeField] protected GameObject mobs;
+    private GameObject[] enemies;
 
     protected override void Start()
     {
-        base.Start();
+        if (GetComponentInParent<Enemy>())
+        {
+            target = GetComponentInParent<Enemy>().target;
+        }
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (Transform child in playerHealth.transform)
+        {
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                Physics2D.IgnoreCollision(child.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            }
+        }
+        foreach (GameObject enemy in enemies)
+        {
+            Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
+
         GetDirection();
     }
 
@@ -29,5 +47,6 @@ public class EggProjectile : Projectile
     {
         GameObject mob = GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
         mob.GetComponent<Enemy>().isInvokedInBossRoom = true;
+        mob.transform.parent = gameObject.transform.parent;
     }
 }
