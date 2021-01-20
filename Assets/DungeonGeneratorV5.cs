@@ -22,7 +22,7 @@ public class DungeonGeneratorV5 : MonoBehaviour
     {
         SetUp();
         CreateLvl();
-        Invoke("GeneratePathWay", 5f);
+        StartCoroutine(GeneratePathWay());
     }
 
     void CreateLvl()
@@ -37,7 +37,7 @@ public class DungeonGeneratorV5 : MonoBehaviour
             {
                 break;
             }
-        } while (iterations < 1000);
+        } while (iterations < 10000);
 
     }
 
@@ -117,12 +117,13 @@ public class DungeonGeneratorV5 : MonoBehaviour
             if (grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y)] = gridSpace.room;
             if (grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y+1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y+1)] = gridSpace.room;
             if (grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y-1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x), Mathf.RoundToInt(place.y-1)] = gridSpace.room;
-            if (grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y-1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y-1)] = gridSpace.room;
-            if (grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y+1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y+1)] = gridSpace.room;
+            //if (grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y-1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x-1), Mathf.RoundToInt(place.y-1)] = gridSpace.room;
+            //if (grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y+1)] == gridSpace.empty) grid[Mathf.RoundToInt(place.x+1), Mathf.RoundToInt(place.y+1)] = gridSpace.room;
         }
         TemporaryStorage.Clear();
         return roomPoses;
     }
+
 
     void RandomSetRoomPosition()
     {
@@ -140,6 +141,23 @@ public class DungeonGeneratorV5 : MonoBehaviour
             sucess++;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     List<Vector2> startingPoints = new List<Vector2>();
     List<Vector2> LookForStartingPoints()
     {
@@ -159,73 +177,92 @@ public class DungeonGeneratorV5 : MonoBehaviour
         return startingPoints;
     }
 
-    List<Vector2> TracePos;
-   public Tile tile;
-    void GeneratePathWay()
+   List<Vector2> TracePos;
+  public Tile tile;
+  Vector2 dir;
+    IEnumerator GeneratePathWay()
     {
         
         TracePos = new List<Vector2>();
         int index = Random.Range(0, LookForStartingPoints().Count);
         Vector2 StartPathPos = startingPoints[index];
-        Vector2 dir = RandomPathDirection();
+        int dirIndex = 0;
         int iterations = 0;
         int i = 0;
+        int ip = 1;
         do
         {
+            if(previousDirections.Count >0)
+            {
+                dir = RandomPathDirection();
+                if (dir == -previousDirections[dirIndex - 1])
+                {
+                    iterations++;
+                    continue;
+                }
+               
+            }
+            else
+            {
+                dir = RandomPathDirection();
+            }
+               
+
+            
+            
+           
+            
+            
             
             Vector2 pos = StartPathPos;
             
-            StartPathPos = pos + dir;
-            print(StartPathPos);
-            if (StartPathPos.x <= 1 || StartPathPos.x >= gridSizeX - 1 || StartPathPos.y <= 1 || StartPathPos.y >= gridSizeY - 1)
+            Vector2 TempPos = pos + dir;
+            
+            if (TempPos.x <= 1 || TempPos.x >= gridSizeX - 1 || TempPos.y <= 1 || TempPos.y >= gridSizeY - 1)
             {
-                if (i - 1 > 0)
+                if (i - ip > 0)
                 {
-                    StartPathPos = TracePos[i - 1];
-                    RandomPathDirection();
+                   
+                    StartPathPos = TracePos[i - ip];
+                    ip++;
                 }
                 else
                 {
-
-                    print("totot");
                     break;
-
                 }
             }
             else
             {
-                print(StartPathPos);
+                StartPathPos = TempPos;
                 if (grid[Mathf.RoundToInt(StartPathPos.x), Mathf.RoundToInt(StartPathPos.y)] == gridSpace.empty)
                 {
+                    yield return new WaitForSeconds(0.001f);
                     grid[Mathf.RoundToInt(StartPathPos.x), Mathf.RoundToInt(StartPathPos.y)] = gridSpace.corridor;
+
                     Vector3Int fro = GetComponentInChildren<Tilemap>().WorldToCell(StartPathPos);
                     GetComponentInChildren<Tilemap>().SetTile(fro, tile);
-                    TracePos.Insert(0, StartPathPos);
+                    
+                    
+                    TracePos.Add(StartPathPos);
+                    previousDirections.Add(dir);
+                    dirIndex++;
                     i++;
+                    ip = 1;
                 }
                 else
                 {
-                    if (i - 1 > 0)
-                    {
-                        StartPathPos = TracePos[i - 1];
-                        dir = RandomPathDirection();
-                    }
-                    else
-                    {
-                        break;
-                    }
-
+                  
+                  StartPathPos = TracePos[i - ip];
+                  if (i - ip > 0) ip++;
+                  
                 }
             }
-
-               
-      
-
-
+            
             iterations++;
-        }while(iterations < 1000);
+        }while(iterations < 10000);
     }
 
+    public List<Vector2> previousDirections = new List<Vector2>();
     private Vector2 RandomPathDirection()
     {
         int choice = Mathf.FloorToInt(Random.value * 3.99f);
@@ -242,5 +279,8 @@ public class DungeonGeneratorV5 : MonoBehaviour
                 return Vector2.right;
         }
     }
+        
+     
+    
 }
 
