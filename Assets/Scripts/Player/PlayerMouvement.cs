@@ -69,8 +69,11 @@ public class PlayerMouvement : Player
                 //Definir tout ce qu'on veut faire dedans
                 break;
 
-            case EtatJoueur.Grapping:
+            case EtatJoueur.AFK:
+                canDash = false;
+                break;
 
+            case EtatJoueur.Grapping:
                 break;
 
         }
@@ -97,6 +100,10 @@ public class PlayerMouvement : Player
                 break;
 
             case EtatJoueur.Grapping:
+                break;
+
+            case EtatJoueur.AFK:
+                rb.velocity = Vector2.zero;
                 break;
 
             case EtatJoueur.Dashing:

@@ -14,6 +14,7 @@ using Pathfinding;
 /// </summary>
 
 // Commentaires pour quand on reprendra le boss
+// Rajouter la dispersion
 // Voir pour les animations
 // Voir pour l'intro et la mort du boss (dont ses rewards)
 // Voir l'équilibrage du boss et des compétences
