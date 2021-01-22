@@ -574,15 +574,39 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: -1.084227e-19
+      e01: 2.1666306e+12
+      e02: -2.0118828
+      e03: 10.9581375
+      e10: 8.8e-43
+      e11: 4.5904e-41
+      e12: 8.81e-43
+      e13: 8.8e-43
+      e20: 6e-45
+      e21: 0.00000082596944
+      e22: 0.0000008259194
+      e23: 0.0000008259194
+      e30: 0
+      e31: 2.63e-43
+      e32: 2.63e-43
+      e33: 2.63e-43
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: -2.0118828, g: -2.0118828, b: -2.0118828, a: -2.0118828}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
+  m_Origin: {x: -6, y: 0, z: 0}
+  m_Size: {x: 14, y: 1, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -631,11 +655,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba2c0bf0694e4d4a8123c49831e35b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRooms: 15
+  numberOfRooms: 20
   worldSize: {x: 200, y: 200}
   roomPoses: []
   roomObj: {fileID: 3388250012187415189, guid: 3e72ef3d3d35f6a4caf4f528b34862d7, type: 3}
-  tile: {fileID: 11400000, guid: 0b681dcd0804f7346a71a62269a0d0c9, type: 2}
+  testSide: {fileID: 5628130634266873172, guid: 2aed2aee2a939bd48b2978567c376027, type: 3}
+  testUp: {fileID: 4204125662893652920, guid: 7dbfac7f64739994f880069328219d98, type: 3}
+  tile: {fileID: 11400000, guid: 2c14c821e757f3a4b926f83b5f0cbf21, type: 2}
+  previousDirections: []
 --- !u!4 &1103613577
 Transform:
   m_ObjectHideFlags: 0
