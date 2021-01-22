@@ -31,9 +31,9 @@ public class DungeonGeneratorV5 : MonoBehaviour
 
    IEnumerator createMaze()
     {  
-         for (int x = 1; x<gridSizeX; x += 15)
+         for (int x = 1; x<gridSizeX; x += 2)
         {
-            for (int y = 1; y<gridSizeY; y += 15)
+            for (int y = 1; y<gridSizeY; y += 2)
             {
                 
                 var pos = new Vector2(x, y);
@@ -81,22 +81,10 @@ public class DungeonGeneratorV5 : MonoBehaviour
 
                         AddTile(cell + dir);
                         AddTile(cell + 2 * dir);
-                        AddTile(cell + 3 * dir);
-                        AddTile(cell + 4 * dir);
-                        AddTile(cell + 5 * dir);
-                        AddTile(cell + 6 * dir);
-                        AddTile(cell + 7 * dir);
-                        AddTile(cell + 8 * dir);
-                        AddTile(cell + 9 * dir);
-                        AddTile(cell + 10 * dir);
-                        AddTile(cell + 11* dir);
-                        AddTile(cell + 12 * dir);
-                        AddTile(cell + 13* dir);
-                        AddTile(cell + 14 * dir);
-                        AddTile(cell + 15* dir);
+                       
 
                      
-                        cells.Add(cell + 15 * dir);
+                        cells.Add(cell + 2 * dir);
                         lastDir = dir;
 
                     }
@@ -118,9 +106,9 @@ public class DungeonGeneratorV5 : MonoBehaviour
 
      bool _canAddTile(Vector2 pos, Vector2 dir)
     {
-        if (pos.x + dir.x * 15 >= gridSizeX || pos.x + dir.x * 15 <= 0 || pos.y + dir.y * 15 >= gridSizeY || pos.y + dir.y * 15 <= 0) return false;
+        if (pos.x + dir.x * 3 >= gridSizeX || pos.x + dir.x * 3 <= 0 || pos.y + dir.y * 3 >= gridSizeY || pos.y + dir.y * 3 <= 0) return false;
         
-        return grid[Mathf.RoundToInt(pos.x + dir.x * 15), Mathf.RoundToInt(pos.y + dir.y * 15)] == gridSpace.empty;
+        return grid[Mathf.RoundToInt(pos.x + dir.x * 2), Mathf.RoundToInt(pos.y + dir.y * 2)] == gridSpace.empty;
     }
 
     void AddTile(Vector2 pos)
@@ -128,14 +116,14 @@ public class DungeonGeneratorV5 : MonoBehaviour
         if (grid[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y)] == gridSpace.empty)
         {
             Vector3Int tilePos = GetComponentInChildren<Tilemap>().WorldToCell(pos);
-            Vector3Int tilePos2 = GetComponentInChildren<Tilemap>().WorldToCell(pos+ Vector2.up);
+          /*  Vector3Int tilePos2 = GetComponentInChildren<Tilemap>().WorldToCell(pos+ Vector2.up);
             Vector3Int tilePos3= GetComponentInChildren<Tilemap>().WorldToCell(pos+ Vector2.down);
             Vector3Int tilePos4 = GetComponentInChildren<Tilemap>().WorldToCell(pos+ Vector2.left);
             Vector3Int tilePos5 = GetComponentInChildren<Tilemap>().WorldToCell(pos +Vector2.right + Vector2.up);
             Vector3Int tilePos6 = GetComponentInChildren<Tilemap>().WorldToCell(pos +Vector2.right + Vector2.down);
             Vector3Int tilePos7 = GetComponentInChildren<Tilemap>().WorldToCell(pos +Vector2.left + Vector2.up);
             Vector3Int tilePos8 = GetComponentInChildren<Tilemap>().WorldToCell(pos +Vector2.left +  Vector2.down);
-
+          */
             grid[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y)] = gridSpace.connections;
            GetComponentInChildren<Tilemap>().SetTile(tilePos, tile);
             /* GetComponentInChildren<Tilemap>().SetTile(tilePos2, tile);
