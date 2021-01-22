@@ -21,6 +21,17 @@ public class PlayerAttack : Player
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
         inventory = GetComponentInChildren<Inventory>();
     }
+
+    protected void Update()
+    {
+        switch (currentEtat)
+        {
+            case EtatJoueur.AFK:
+                isShooting = true;
+                break;
+        }
+    }
+
     public void OnShoot()
     {
         if (!isShooting)

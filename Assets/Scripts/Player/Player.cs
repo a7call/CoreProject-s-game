@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
         shopping,
         Grapping,
         Dashing,
+        AFK,
     }
 
     [HideInInspector]
