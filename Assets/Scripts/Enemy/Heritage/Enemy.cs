@@ -140,8 +140,6 @@ public class Enemy : MonoBehaviour
         {
             animator.SetFloat("LastMoveX", targetSetter.target.position.x - rb.position.x);
             animator.SetFloat("LastMoveY", targetSetter.target.position.y - rb.position.y);
-            
-
         }
     }
 

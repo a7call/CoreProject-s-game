@@ -407,12 +407,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8083269702268414288, guid: b2df4ce273068584198558496ae78a47, type: 3}
+  m_Sprite: {fileID: -453214881329608378, guid: 3411d62c72790914b9a586533aa29534, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.4375, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -435,16 +435,11 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
   currentEtat: 0
   maxHealth: 0
-  maxEnergy: 0
+  maxStacks: 0
   mooveSpeed: 0
   dashForce: 0
-  damage: 0
-  energyReloadNumber: 0
-  currentEnergy: 0
-  energyBar: {fileID: 0}
-  energyBarGFX: {fileID: 0}
+  stacksReloadTime: 0
   energyIsReloading: 0
-  maxStackNumber: 3
   currentStack: 3
 --- !u!114 &101717229859328979
 MonoBehaviour:
@@ -463,11 +458,10 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
   currentEtat: 0
   maxHealth: 0
-  maxEnergy: 0
+  maxStacks: 0
   mooveSpeed: 0
   dashForce: 0
-  damage: 0
-  energyReloadNumber: 0
+  stacksReloadTime: 0
   currentHealth: 3
   currentArmor: 0
   InvincibilityFlashDelay: 0.1
@@ -490,15 +484,15 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
   currentEtat: 0
   maxHealth: 0
-  maxEnergy: 0
+  maxStacks: 0
   mooveSpeed: 0
   dashForce: 0
-  damage: 0
-  energyReloadNumber: 0
-  canDash: 1
+  stacksReloadTime: 0
   velocity: {x: 0, y: 0, z: 0}
   StartSmoothTime: 0.2
   StopSmoothTime: 0.3
+  canDash: 1
+  timeBetweenDashes: 0.5
 --- !u!95 &101717229859328981
 Animator:
   serializedVersion: 3
@@ -535,8 +529,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 1.4375, y: 2}
+    newSize: {x: 1.4375, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -591,11 +585,10 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
   currentEtat: 0
   maxHealth: 0
-  maxEnergy: 0
+  maxStacks: 0
   mooveSpeed: 0
   dashForce: 0
-  damage: 0
-  energyReloadNumber: 0
+  stacksReloadTime: 0
   playerInput: {fileID: 1133958349}
 --- !u!1 &7031026118287547503
 GameObject:
@@ -639,12 +632,16 @@ PrefabInstance:
       value: Inventory
       objectReference: {fileID: 0}
     - target: {fileID: 1974594031020841854, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
-      propertyPath: goldText
+      propertyPath: keyText
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1974594031020841854, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
-      propertyPath: keyText
+      propertyPath: goldText
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
       propertyPath: m_LocalPosition.x
@@ -659,6 +656,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -669,14 +670,6 @@ PrefabInstance:
     - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1974594031020841855, guid: 6ba043694a62d29418b5cdaeaf144871, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
