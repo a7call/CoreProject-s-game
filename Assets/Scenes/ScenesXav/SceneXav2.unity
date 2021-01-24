@@ -509,30 +509,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8813852824240993518, guid: cd037361c9dd4c64888cdffa2ed48f94, type: 3}
   m_PrefabInstance: {fileID: 1045315626}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &136017438 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2238292797670557172, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
-  m_PrefabInstance: {fileID: 1989903982}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &136017446
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136017438}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 99c45321c2b98dc4192822b3538d302e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &143695853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5872468965858429560, guid: 766b499c41b4b4c0a80a2951225fdad2, type: 3}
@@ -693,11 +669,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 577309146241068898, guid: 8a10e79d716325442b16b41544864cbd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.3
+      value: 3.14
       objectReference: {fileID: 0}
     - target: {fileID: 577309146241068898, guid: 8a10e79d716325442b16b41544864cbd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.23
+      value: -6.91
       objectReference: {fileID: 0}
     - target: {fileID: 577309146241068898, guid: 8a10e79d716325442b16b41544864cbd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -951,7 +927,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8.595437
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1332,10 +1308,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EyeTentacleAstronauteLaser
       objectReference: {fileID: 0}
-    - target: {fileID: 7291090580177061496, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7291090580177061500, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1382,7 +1354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7291090581151313963, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
@@ -3553,6 +3525,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LanceRoquetteTeteChercheuse
       objectReference: {fileID: 0}
+    - target: {fileID: 427524047627084328, guid: da3e6b7e40eb77041889fbff1f5fa2e9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da3e6b7e40eb77041889fbff1f5fa2e9, type: 3}
 --- !u!4 &1421239426 stripped
@@ -3680,7 +3656,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4222710106289304435, guid: 20d00fc34690b664b9905b49177f9728, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4222710106289304436, guid: 20d00fc34690b664b9905b49177f9728, type: 3}
       propertyPath: m_RootOrder
@@ -4153,14 +4129,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 35170083}
     m_Modifications:
+    - target: {fileID: 136017446, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 99c45321c2b98dc4192822b3538d302e, type: 2}
     - target: {fileID: 2238292797627956260, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2238292797670557168, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 136017446}
     - target: {fileID: 2238292797670557169, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -4206,32 +4182,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2238292797670557172, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238292797670557172, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
       propertyPath: m_Name
       value: AlienHeadAstronautPM 1
       objectReference: {fileID: 0}
     - target: {fileID: 2238292797670557172, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238292797670557173, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
-      propertyPath: m_Size.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238292797670557173, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
-      propertyPath: m_Size.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238292797670557173, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -942716869964131065, guid: 98b44ad3e4b374c4883a953eaa9ed9c9, type: 3}
-    - target: {fileID: 2238292797670557173, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
