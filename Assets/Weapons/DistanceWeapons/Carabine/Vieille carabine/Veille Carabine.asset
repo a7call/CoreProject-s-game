@@ -9,15 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e111cd77f1ca0c94bb357cd9316c435d, type: 3}
-  m_Name: LaserSaber
+  m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
+  m_Name: Veille Carabine
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 1.5
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 520
-  AttackDelay: 0.55
+    m_Bits: 512
+  AttackDelay: 0.8
   image: {fileID: 0}
-  attackRadius: 1.2
-  knockBackForce: 150
-  knockBackTime: 0.15
+  projectile: {fileID: 5004741095190017796, guid: 5a59345ec69f842f891e1685848d0664, type: 3}
+  Dispersion: 1
+  MagSize: 10
+  ReloadDelay: 2
+  AmmoStock: 150
