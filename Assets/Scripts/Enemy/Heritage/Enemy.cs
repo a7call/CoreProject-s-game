@@ -133,6 +133,14 @@ public class Enemy : MonoBehaviour
             animator.SetBool("IsAttacking", false);
         }
         
+        if(currentState == State.KnockedBack)
+        {
+            animator.SetBool("isTakingDamage", true);
+        }
+        else
+        {
+            animator.SetBool("isTakingDamage", false);
+        }
     }
     protected virtual void GetLastDirection()
     {
@@ -255,6 +263,8 @@ public class Enemy : MonoBehaviour
     {
         if (isDying)
         {
+            // Animator
+            animator.SetBool("isDying", true);
             isDying = false;
             SpawnRewards();
             nanoRobot();
