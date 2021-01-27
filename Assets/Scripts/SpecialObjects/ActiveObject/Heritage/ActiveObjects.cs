@@ -5,10 +5,9 @@ using UnityEngine.InputSystem;
 
 public class ActiveObjects : MonoBehaviour
 {
-    // Xavier a passé UseModule en public (est-ce dérangeant?)
     public bool UseModule = false;
     protected bool ModuleAlreadyUse = false;
-    protected bool readyToUse = true;
+    [SerializeField] protected bool readyToUse = true;
     public float range;
     protected Vector3 MousePos;
     protected Camera Cam;
@@ -19,8 +18,6 @@ public class ActiveObjects : MonoBehaviour
     {
         Cam = Camera.main;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMouvement>();
-       
-
     }
 
     // Update is called once per frame

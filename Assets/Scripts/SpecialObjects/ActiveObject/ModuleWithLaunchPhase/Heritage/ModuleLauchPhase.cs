@@ -80,9 +80,6 @@ public class ModuleLauchPhase : MonoBehaviour
         {
             transBomb.position = transform.position;
         }
-        
-
-
     }
 
     private void GetDatas()

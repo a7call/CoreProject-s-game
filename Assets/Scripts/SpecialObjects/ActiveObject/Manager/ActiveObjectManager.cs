@@ -2,8 +2,6 @@
 
 public class ActiveObjectManager : MonoBehaviour
 {
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("ActiveObject"))
