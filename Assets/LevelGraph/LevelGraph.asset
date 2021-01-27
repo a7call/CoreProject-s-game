@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4887776983082617747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8074dc491ddc34f4e83332d9eae76980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: -1151.0319, y: 140.08693}
+  Name: Room
+  IndividualRoomTemplates: []
+  RoomTemplateSets: []
 --- !u!114 &-262660343940839186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,10 +56,12 @@ MonoBehaviour:
   Rooms:
   - {fileID: 4501470395140716227}
   - {fileID: -262660343940839186}
+  - {fileID: -4887776983082617747}
+  - {fileID: 7284656932258839879}
   EditorData:
     PanOffset: {x: 1610.095, y: 37.928234}
     Zoom: 0.8556032
-  RoomType: Edgar.Unity.Room
+  RoomType: WandererRoom
   ConnectionType: Edgar.Unity.Connection
 --- !u!114 &4501470395140716227
 MonoBehaviour:
@@ -75,3 +93,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   From: {fileID: 4501470395140716227}
   To: {fileID: -262660343940839186}
+--- !u!114 &7284656932258839879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: -1160.382, y: 230.08191}
+  Type: 3
