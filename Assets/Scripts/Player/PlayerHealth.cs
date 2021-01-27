@@ -18,9 +18,6 @@ public class PlayerHealth : Player
 
     public SpriteRenderer graphics;
 
-   
-
-
     public static bool isLastChanceModule = false;
 
     // Lié aux modules du PowerUp

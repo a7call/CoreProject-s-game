@@ -9,16 +9,26 @@ public class PlayerEnergy : Player
     public bool energyIsReloading = false;
     public int currentStack;
 
+    private EnergyBar energyBar;
+
     protected override void Awake()
     {
         base.Awake();
         SetMaxEnergy();
     }
+
+    private void Start()
+    {
+        energyBar = FindObjectOfType<EnergyBar>();
+        energyBar.SetMaxEnergy(maxStacks);
+    }
+
     private void Update()
     {
         StartCoroutine(EnergyReloading());
         if(currentStack  > maxStacks)
         {
+            energyBar.SetEnergy(maxStacks);
             currentStack = maxStacks;
             energyIsReloading = false;
             StopAllCoroutines();
@@ -29,8 +39,8 @@ public class PlayerEnergy : Player
     // Si module redbull présent, il a son énergie au max!
     public void SpendEnergy(int stackSpend)
     {
-       currentStack -= stackSpend;
-
+        currentStack -= stackSpend;
+        energyBar.SetEnergy(currentStack);
     }
 
 
@@ -47,6 +57,7 @@ public class PlayerEnergy : Player
             energyIsReloading = true;
             yield return new WaitForSeconds(stacksReloadTime);
             currentStack++;
+            energyBar.SetEnergy(currentStack);
             energyIsReloading = false;
         }
 
