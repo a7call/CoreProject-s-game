@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackHole : MonoBehaviour
+public class BlackHole : ModuleLauchPhase
 {
     private Collider2D[] hits;
     [SerializeField] private float range;
     [SerializeField] private float speed;
     [SerializeField] private float radiusSpeed;
+    [SerializeField] protected float timeBeforDesactivation;
     [SerializeField] private float timeToExplod;
     [SerializeField] private LayerMask hitLayer;
     List<GameObject> hitsList = new List<GameObject>();
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         StartCoroutine(DestroyAll());
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         GetAllEnemies();
-        if (hitsList.Count > 1) AttractAllEnemies();
+        if (hitsList.Count > 1) AttractAllEnemies(); //StartCoroutine(AttractAllEnemies());
     }
 
     private void GetAllEnemies()
@@ -38,7 +42,7 @@ public class BlackHole : MonoBehaviour
         }
     }
 
-    void AttractAllEnemies()
+    private void AttractAllEnemies()
     {
         foreach(GameObject hit in hitsList)
         {
@@ -63,16 +67,9 @@ public class BlackHole : MonoBehaviour
         foreach (GameObject hit in hitsList)
         {
             Destroy(hit);
-            
         }
         hitsList.Clear();
-        Destroy(gameObject);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
-    }
 }
 
