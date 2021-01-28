@@ -58,14 +58,14 @@ namespace Edgar.Unity.Examples.EnterTheGungeon
             }
 
             // Go through individual connections between basic rooms to add corridor rooms
-          /*  foreach (var connection in LevelGraph.Connections.Cast<GungeonConnection>())
+            foreach (var connection in LevelGraph.Connections.Cast<WandererConnection>())
             {
-                var corridorRoom = ScriptableObject.CreateInstance<GungeonRoom>();
-                corridorRoom.Type = GungeonRoomType.Corridor;
+                var corridorRoom = ScriptableObject.CreateInstance<WandererRoom>();
+                corridorRoom.Type = RoomType.Corridor;
 
                 levelDescription.AddCorridorConnection(connection, corridorRoom, RoomTemplates.CorridorRoomTemplates.ToList());
             }
-          */
+          
             // Add secret rooms
            // AddSecretRoom(levelDescription);
 

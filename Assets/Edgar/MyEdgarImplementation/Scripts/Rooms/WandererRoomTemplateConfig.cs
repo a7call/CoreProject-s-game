@@ -21,6 +21,8 @@ namespace Edgar.Unity
 
         public GameObject[] SecretRoomTemplates;
 
+        public GameObject[] CorridorRoomTemplates;
+
         /// <summary>
         /// Get room templates for a given room.
         /// </summary>
@@ -46,6 +48,9 @@ namespace Edgar.Unity
                     return SpawnRoomTemplates;
 
                 case RoomType.Normal:
+                    return BasicRoomTemplates;
+
+                case RoomType.Corridor:
                     return BasicRoomTemplates;
 
                 default:

@@ -12,11 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc93ec7dbd17ed479aca6f794503726, type: 3}
   m_Name: Wanderer Input Setup
   m_EditorClassIdentifier: 
-  LevelGraph: {fileID: 0}
+  LevelGraph: {fileID: 11400000, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
   UseRandomLevelGraph: 0
   Stage: 1
   Stage1LevelGraphs: []
   Stage2LevelGraphs: []
-  RoomTemplates: {fileID: 0}
+  RoomTemplates:
+    BasicRoomTemplates:
+    - {fileID: 475210616087253470, guid: 837cc849261224d49b7a081227a8b866, type: 3}
+    - {fileID: 5945546349781449153, guid: 0e86fdae0aa5aaf4fb5d701d5a28693e, type: 3}
+    BossRoomTemplates: []
+    SpawnRoomTemplates:
+    - {fileID: 5945546349781449153, guid: c322a8f3ac76d094ebee370d7be9afd8, type: 3}
+    HubRoomTemplates: []
+    RewardRoomTemplates: []
+    ShopRoomTemplates: []
+    SecretRoomTemplates: []
+    CorridorRoomTemplates:
+    - {fileID: 3559113929631548473, guid: efe520a88507d6449a3a7f15ce188fde, type: 3}
+    - {fileID: 2575767481118213129, guid: bb3e28c876cc5894e8eceb5de1def0f2, type: 3}
   SecretRoomChance: 0.9
   SecretRoomDeadEndChance: 0.5

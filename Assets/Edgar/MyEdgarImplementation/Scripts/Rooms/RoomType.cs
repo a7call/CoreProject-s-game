@@ -9,5 +9,7 @@ public enum RoomType
     Hub,
     Spawn,
     Shop,
-    Reward
+    Reward,
+    Corridor
+
 }
