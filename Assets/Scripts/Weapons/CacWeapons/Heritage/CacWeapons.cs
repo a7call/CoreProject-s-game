@@ -121,7 +121,7 @@ public class CacWeapons : Weapons
     }
 
 
-    protected void AttackAppliedOnEnemy(Collider2D [] enemyHit)
+    protected virtual void AttackAppliedOnEnemy(Collider2D [] enemyHit)
     {
         foreach (Collider2D enemy in enemyHit)
         {
