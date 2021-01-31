@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     public static bool isPerturbateurIEM = false;
     public static bool isArretTemporel = false;
 
+    public bool isOnFire = false;
+
     public bool isreadyToAttack = true;
    
     public Animator animator;
