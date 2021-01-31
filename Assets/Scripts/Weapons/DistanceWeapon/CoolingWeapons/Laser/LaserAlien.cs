@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserWeapon : CollingWeapons
+public class LaserAlien : CollingWeapons
 {
 
     Vector3 dir;
@@ -18,17 +18,19 @@ public class LaserWeapon : CollingWeapons
         {
             dir = (attackPoint.position - transform.position).normalized;
 
-            RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, dir, Mathf.Infinity, enemyLayer);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(attackPoint.position, dir, Mathf.Infinity, enemyLayer);
 
             Debug.DrawRay(attackPoint.position, dir * 20, Color.red);
 
-            if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy")) 
+            foreach (RaycastHit2D hit in hits)
             {
-                Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
-                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
-                enemyScript.GetComponent<Enemy>().TakeDamage(damage);
+                if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy"))
+                {
+                    Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
+                    CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
+                    enemyScript.GetComponent<Enemy>().TakeDamage(damage);
+                }
             }
-
 
         }
     }
@@ -46,7 +48,7 @@ public class LaserWeapon : CollingWeapons
             IsToHot = true;
             CoroutineManager.Instance.StartCoroutine(LaserCooling());
         }
-       
+
     }
 
     protected IEnumerator LaserCooling()
@@ -65,7 +67,7 @@ public class LaserWeapon : CollingWeapons
             count--;
             IsCooling = false;
         }
-        
+
     }
 
 
