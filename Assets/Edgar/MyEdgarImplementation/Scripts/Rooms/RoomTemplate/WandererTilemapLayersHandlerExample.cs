@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace Edgar.Unity
 {
-    [CreateAssetMenu(menuName = "Edgar/Wanderer layers handler", fileName = "CustomTilemapLayersHandler")]
+    [CreateAssetMenu(menuName = "Edgar/Wanderer/WandererTilemapLayersHandler", fileName = "WandererTilemapLayersHandler")]
     public class WandererTilemapLayersHandlerExample : TilemapLayersHandlerBase
     {
         public override void InitializeTilemaps(GameObject gameObject)
