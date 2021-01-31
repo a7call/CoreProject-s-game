@@ -3,7 +3,7 @@ using System.Linq;
 using Edgar.Legacy.Utils;
 using UnityEngine;
 
-namespace Edgar.Unity.Examples.EnterTheGungeon
+namespace Edgar.Unity.Examples
 {
 
     [CreateAssetMenu(menuName = "Edgar/Wanderer/InputSet", fileName = "Wanderer Input Setup")]
@@ -43,12 +43,12 @@ namespace Edgar.Unity.Examples.EnterTheGungeon
                 throw new InvalidOperationException("The level graph must not be null if UseRandomLevelGraph is set to false");
             }
 
-            // The instance of the game manager will not exist in Editor
-         /*   if (GungeonGameManager.Instance != null)
+           // The instance of the game manager will not exist in Editor
+            if (WandererGameManager.Instance != null)
             {
-                GungeonGameManager.Instance.CurrentLevelGraph = LevelGraph;
+                WandererGameManager.Instance.CurrentLevelGraph = LevelGraph;
             }
-         */
+         
             var levelDescription = new LevelDescription();
 
             // Manually add all the rooms to the level description
