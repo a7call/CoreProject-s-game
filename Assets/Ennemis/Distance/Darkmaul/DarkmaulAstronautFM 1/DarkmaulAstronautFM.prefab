@@ -119,11 +119,11 @@ GameObject:
   - component: {fileID: -6473047134103198571}
   - component: {fileID: 59079782021703779}
   - component: {fileID: 2574804100447772040}
-  - component: {fileID: 646953602}
+  - component: {fileID: 981878992}
   m_Layer: 9
   m_Name: DarkmaulAstronautFM
   m_TagString: Enemy
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -154,11 +154,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aeb14dbad633470bbbcd2b4713badc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOnFire: 0
   isreadyToAttack: 1
-  animator: {fileID: 646953602}
+  animator: {fileID: 981878992}
   isInvokedInBossRoom: 0
-  currentState: 1
   isAlreadyElectrified: 0
+  currentState: 1
   nextWayPointDistance: 3
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
@@ -266,15 +267,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 0.9339623, g: 0.074893214, b: 0.074893214, a: 1}
+  m_Sprite: {fileID: 3619179865228833501, guid: 742450a4c87df5947a1381531cc16268, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &-6473047134103198571
@@ -293,10 +294,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -353,7 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
---- !u!95 &646953602
+--- !u!95 &981878992
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -363,7 +364,7 @@ Animator:
   m_GameObject: {fileID: 2463838739638309393}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 740aeb4eff05eea4bb6f9e30f2ce57b7, type: 2}
+  m_Controller: {fileID: 9100000, guid: ee8b1917e1fc31a40a9b0b73b7e71611, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -529,7 +530,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2463838740075002700
 MonoBehaviour:
   m_ObjectHideFlags: 0
