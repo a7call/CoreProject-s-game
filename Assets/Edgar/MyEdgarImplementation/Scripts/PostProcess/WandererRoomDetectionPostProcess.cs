@@ -12,6 +12,8 @@ namespace Edgar.Unity.Examples
         public GameObject[] Enemies;
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
+            MovePlayerToSpawn(level);
+
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;
@@ -90,6 +92,23 @@ namespace Edgar.Unity.Examples
             compositeCollider2d.isTrigger = true;
             compositeCollider2d.generationType = CompositeCollider2D.GenerationType.Manual;
             floor.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        }
+
+        private void MovePlayerToSpawn(GeneratedLevel level)
+        {
+            foreach (var roomInstance in level.GetRoomInstances())
+            {
+                var room = (WandererRoom)roomInstance.Room;
+                var roomTemplateInstance = roomInstance.RoomTemplateInstance;
+
+                // Get spawn position if Entrance
+                if (room.Type == RoomType.Spawn)
+                {
+                    var spawnPosition = roomTemplateInstance.transform.Find("SpawnPosition");
+                    var player = GameObject.FindWithTag("Player");
+                    player.transform.position = spawnPosition.position;
+                }
+            }
         }
     }
 }
