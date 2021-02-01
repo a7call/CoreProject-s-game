@@ -13,21 +13,28 @@ namespace Edgar.Unity.Examples
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
             MovePlayerToSpawn(level);
-
+            Debug.Log(level.RootGameObject);
+            var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
+            Debug.Log(tilemapss);
+            var walls = tilemapss.transform.Find("Walls").gameObject;
+            AddLayerToWall(walls);
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;
                 // Find floor tilemap layer
                 var room = (WandererRoom)roomInstance.Room;
                 var tilemaps = RoomTemplateUtils.GetTilemaps(roomTemplateInstance);
+               
+                
+                
                 var floor = tilemaps.Single(x => x.name == "Floor").gameObject;
                 // Add floor collider
-
+                AddFloorCollider(floor);
                 // Add the room manager component
                 var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
                 roomManager.RoomInstance = roomInstance;
 
-                AddFloorCollider(floor);
+               
                 // Add current room detection handler
                 floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
 
@@ -109,6 +116,12 @@ namespace Edgar.Unity.Examples
                     player.transform.position = spawnPosition.position;
                 }
             }
+        }
+
+        protected void AddLayerToWall(GameObject wall)
+        {
+            wall.layer = 10;
+            Debug.Log(wall.layer);
         }
     }
 }

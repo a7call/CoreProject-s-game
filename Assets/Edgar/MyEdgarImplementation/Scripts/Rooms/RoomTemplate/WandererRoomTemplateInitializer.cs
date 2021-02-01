@@ -13,6 +13,7 @@ using UnityEditor;
         {
             // Call the default initialization
             base.Initialize();
+            
             // Place your custom logic after initialization here
             // This script is attached to the room template game object that is being created (and this component is later removed)
             // So you can access the gameObject field and add e.g. additional game object
