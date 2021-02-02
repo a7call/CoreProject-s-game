@@ -53,18 +53,7 @@ public class Projectile : MonoBehaviour
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         transform.parent = null;
-
-        foreach (Transform child in playerHealth.transform)
-        {
-            if (child.GetComponent<BoxCollider2D>() != null)
-            {
-                Physics2D.IgnoreCollision(child.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            }
-        }
-        foreach (GameObject enemy in enemies)
-        {
-            Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        }
+       
     }
     protected virtual void Update()
     {
@@ -113,7 +102,9 @@ public class Projectile : MonoBehaviour
         {
             collision.GetComponent<Enemy>().TakeDamage(1);
         }
-        if (!collision.CompareTag("DontDestroy")) Destroy(gameObject);
+        if (collision.gameObject.layer == 10) Destroy(gameObject);
+        
+        
     }
 }
 
