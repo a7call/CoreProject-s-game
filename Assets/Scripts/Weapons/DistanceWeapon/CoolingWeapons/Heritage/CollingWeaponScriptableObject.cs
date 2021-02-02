@@ -10,5 +10,4 @@ public class CollingWeaponScriptableObject : WeaponScriptableObject
     public int countMax = 6;
     public float knockBackforce = 15f;
     public float knockBackTime = 0.1f;
-
 }
