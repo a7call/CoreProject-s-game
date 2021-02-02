@@ -6,6 +6,7 @@ public class LaserAlien : CollingWeapons
 {
 
     Vector3 dir;
+    [SerializeField] protected float range;
 
     protected override void Update()
     {
@@ -18,9 +19,9 @@ public class LaserAlien : CollingWeapons
         {
             dir = (attackPoint.position - transform.position).normalized;
 
-            RaycastHit2D[] hits = Physics2D.RaycastAll(attackPoint.position, dir, Mathf.Infinity, enemyLayer);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(attackPoint.position, dir, range, enemyLayer);
 
-            Debug.DrawRay(attackPoint.position, dir * 20, Color.red);
+            Debug.DrawRay(attackPoint.position, dir * range, Color.red);
 
             foreach (RaycastHit2D hit in hits)
             {
