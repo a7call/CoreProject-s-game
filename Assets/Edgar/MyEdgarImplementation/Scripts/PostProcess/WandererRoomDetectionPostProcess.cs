@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
 namespace Edgar.Unity.Examples
 {
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
@@ -10,8 +11,11 @@ namespace Edgar.Unity.Examples
     {
 
         public GameObject[] Enemies;
+        
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
+
+
             
             MovePlayerToSpawn(level);
             Debug.Log(level.RootGameObject);
@@ -92,6 +96,7 @@ namespace Edgar.Unity.Examples
                     }
                 }
             }
+            AstarPath.active.Scan();
         }
         protected void AddFloorCollider(GameObject floor)
         {
