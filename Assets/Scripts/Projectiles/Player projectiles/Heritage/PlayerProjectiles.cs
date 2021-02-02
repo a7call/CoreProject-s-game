@@ -67,7 +67,6 @@ public class PlayerProjectiles : MonoBehaviour
     {
         
         SetData();
-        LayerSettings();
         player = GameObject.FindGameObjectWithTag("Player");
         weapon = GameObject.FindGameObjectWithTag("WeaponManager");
         weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
@@ -115,15 +114,8 @@ public class PlayerProjectiles : MonoBehaviour
         knockBackTime = PlayerProjectileData.knockBackTime;
     }
 
-    LayerMask ignoreLayerProjectile = 3;
-    LayerMask ignoreLayerObject = 7;
-    void LayerSettings()
-    {
-        gameObject.layer = 6;
-        Physics2D.IgnoreLayerCollision(gameObject.layer, ignoreLayerProjectile, true);
-        Physics2D.IgnoreLayerCollision(gameObject.layer, ignoreLayerObject, true);
 
-    }
+ 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -134,8 +126,10 @@ public class PlayerProjectiles : MonoBehaviour
             //Modules
             ModuleProcs(enemy);
         }
- 
-    }
+        if (collision.gameObject.layer == 10) Destroy(gameObject);
+    
+
+}
 
      protected virtual void ModuleProcs(Enemy enemy)
     {

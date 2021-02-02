@@ -39,11 +39,7 @@ public class LaserSaber : CacWeapons
             if (hit.gameObject.CompareTag("EnemyProjectil"))
             {
                 Projectile enemyProj = hit.GetComponent<Projectile>();
-                GameObject[] enemis = GameObject.FindGameObjectsWithTag("Enemy");
-                foreach(GameObject enemy in enemis)
-                {
-                    Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), hit.GetComponent<Collider2D>(), false);
-                }
+                enemyProj.gameObject.layer = 6;
                 enemyProj.isConverted = true;
                 enemyProj.dir = dir;
             }

@@ -12,6 +12,7 @@ namespace Edgar.Unity.Examples
         public GameObject[] Enemies;
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
+            
             MovePlayerToSpawn(level);
             Debug.Log(level.RootGameObject);
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");

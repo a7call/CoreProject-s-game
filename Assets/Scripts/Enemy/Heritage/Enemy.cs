@@ -80,8 +80,12 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
+        
         switch (currentState)
         {
+            default:
+                rb.velocity = Vector2.zero;
+                break;
             case State.Paralysed:
                 // Animation
                 aIPath.canMove = false;
@@ -156,8 +160,8 @@ public class Enemy : MonoBehaviour
     {
         if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
         {
-            animator.SetFloat("LastMoveX", targetSetter.target.position.x - rb.position.x);
-            animator.SetFloat("LastMoveY", targetSetter.target.position.y - rb.position.y);
+            animator.SetFloat("LastMoveX", targetSetter.target.position.x - gameObject.transform.position.x);
+            animator.SetFloat("LastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
         }
     }
 
@@ -360,7 +364,13 @@ public class Enemy : MonoBehaviour
         if (enemy.currentHealth <= 0) currentState = State.Death;
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            
+        }
+    }
 
 
 }
