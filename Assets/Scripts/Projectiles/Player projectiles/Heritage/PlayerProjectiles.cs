@@ -131,7 +131,7 @@ public class PlayerProjectiles : MonoBehaviour
 
 }
 
-     protected virtual void ModuleProcs(Enemy enemy)
+     protected void ModuleProcs(Enemy enemy)
     {
         if (isExplosiveAmo)
         {
