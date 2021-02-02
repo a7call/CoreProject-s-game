@@ -6,6 +6,7 @@ public class LaserWeapon : CollingWeapons
 {
 
     Vector3 dir;
+    [SerializeField] protected float range;
 
     protected override void Update()
     {
@@ -18,9 +19,9 @@ public class LaserWeapon : CollingWeapons
         {
             dir = (attackPoint.position - transform.position).normalized;
 
-            RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, dir, Mathf.Infinity, enemyLayer);
+            RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, dir, range, enemyLayer);
 
-            Debug.DrawRay(attackPoint.position, dir * 20, Color.red);
+            Debug.DrawRay(attackPoint.position, dir * range, Color.red);
 
             if (hit.collider != null && hit.collider.gameObject.CompareTag("Enemy")) 
             {
