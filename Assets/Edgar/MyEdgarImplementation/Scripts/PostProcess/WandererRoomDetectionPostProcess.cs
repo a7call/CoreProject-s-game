@@ -18,13 +18,15 @@ namespace Edgar.Unity.Examples
 
             
             MovePlayerToSpawn(level);
-            Debug.Log(level.RootGameObject);
+            
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
-            Debug.Log(tilemapss);
+            
             var walls = tilemapss.transform.Find("Walls").gameObject;
+            var floors = tilemapss.transform.Find("Floor").gameObject;
             var wallsDown = tilemapss.transform.Find("WallsDown").gameObject;
             AddLayerToWall(walls);
             AddLayerToWall(wallsDown);
+            AddLayerToFloor(floors);
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;
@@ -130,6 +132,10 @@ namespace Edgar.Unity.Examples
         {
             wall.layer = 10;
             Debug.Log(wall.layer);
+        }
+        protected void AddLayerToFloor(GameObject floor)
+        {
+            floor.layer = 14;
         }
     }
 }

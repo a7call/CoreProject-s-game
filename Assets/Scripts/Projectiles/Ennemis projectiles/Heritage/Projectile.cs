@@ -97,14 +97,19 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Player"))
         { 
             playerHealth.TakeDamage(1);
+            Destroy(gameObject);
         }
         if (collision.CompareTag("Enemy") &&  isConverted)
         {
             collision.GetComponent<Enemy>().TakeDamage(1);
+            Destroy(gameObject);
         }
+        
         if (collision.gameObject.layer == 10) Destroy(gameObject);
-        
-        
+
+
+
+
     }
 }
 
