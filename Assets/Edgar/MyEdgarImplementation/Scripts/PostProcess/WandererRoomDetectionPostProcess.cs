@@ -17,7 +17,9 @@ namespace Edgar.Unity.Examples
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
             Debug.Log(tilemapss);
             var walls = tilemapss.transform.Find("Walls").gameObject;
+            var wallsDown = tilemapss.transform.Find("WallsDown").gameObject;
             AddLayerToWall(walls);
+            AddLayerToWall(wallsDown);
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;

@@ -29,7 +29,7 @@ using UnityEditor;
             tilemapLayersHandler.InitializeTilemaps(tilemapsRoot);
         }
 #if UNITY_EDITOR
-        [MenuItem("Assets/Create/Edgar/Wanderer room template")]
+        [MenuItem("Assets/Create/Edgar/Wanderer/Wanderer room template")]
         public static void CreateRoomTemplatePrefab()
         {
             // Make sure to use the correct generic parameter - it should be the type of this class
