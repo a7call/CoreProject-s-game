@@ -1,4 +1,5 @@
 using System.Linq;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -38,7 +39,7 @@ namespace Edgar.Unity.Examples
                 
                 var floor = tilemaps.Single(x => x.name == "Floor").gameObject;
                 // Add floor collider
-                AddFloorCollider(floor);
+              
                 // Add the room manager component
                 var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
                 roomManager.RoomInstance = roomInstance;
@@ -99,16 +100,40 @@ namespace Edgar.Unity.Examples
                 }
             }
             AstarPath.active.Scan();
+            SetupFogOfWar(level);
         }
-        protected void AddFloorCollider(GameObject floor)
+       
+
+
+        private void SetupFogOfWar(GeneratedLevel level)
         {
-            var tilemapCollider2D = floor.AddComponent<TilemapCollider2D>();
-            tilemapCollider2D.usedByComposite = true;
-            var compositeCollider2d = floor.AddComponent<CompositeCollider2D>();
-            compositeCollider2d.geometryType = CompositeCollider2D.GeometryType.Polygons;
-            compositeCollider2d.isTrigger = true;
-            compositeCollider2d.generationType = CompositeCollider2D.GenerationType.Manual;
-            floor.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            // To setup the FogOfWar component, we need to get the root game object that holds the level.
+            var generatedLevelRoot = level.RootGameObject;
+
+            // If we use the Wave mode, we must specify the point from which the wave spreads as we reveal a room.
+            // The easiest way to do so is to get the player game object and use its transform as the wave origin.
+            // Change this line if your player game object does not have the "Player" tag.
+            var player = GameObject.FindGameObjectWithTag("Player");
+
+            // Now we can setup the FogOfWar component.
+            // To make it easier to work with the component, the class is a singleton and provides the Instance property.
+            FogOfWar.Instance?.Setup(generatedLevelRoot, player.transform);
+
+            // After the level is generated, we usually want to reveal the spawn room.
+            // To do that, we have to find the room instance that corresponds to the Spawn room.
+            // In this example, the spawn room has the GungeonRoomType.Entrance type.
+            var spawnRoom = level
+                .GetRoomInstances()
+                .SingleOrDefault(x => ((WandererRoom)x.Room).Type == RoomType.Spawn);
+
+            if (spawnRoom == null)
+            {
+                throw new InvalidOperationException("There must be exactly one room with the name 'Spawn' for this example to work.");
+            }
+            // When we have the spawn room instance, we can reveal the room from the fog.
+            // We use revealImmediately: true so that the first room is revealed instantly,
+            // but it is optional.
+            FogOfWar.Instance?.RevealRoom(spawnRoom, revealImmediately: true);
         }
 
         private void MovePlayerToSpawn(GeneratedLevel level)
