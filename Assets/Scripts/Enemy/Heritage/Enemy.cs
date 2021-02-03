@@ -284,7 +284,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(float _damage)
     {
         currentHealth -= _damage;
-        StartCoroutine(WhiteFlash());
+        //StartCoroutine(WhiteFlash());
         if (currentHealth <= 0)
         {
             isDying = true;
