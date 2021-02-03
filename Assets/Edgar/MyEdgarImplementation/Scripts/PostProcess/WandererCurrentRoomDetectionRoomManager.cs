@@ -10,7 +10,7 @@ namespace Edgar.Unity.Examples
         /// <summary>
         /// Whether the room was cleared from all the enemies.
         /// </summary>
-        public bool Cleared;
+        public bool Cleared = false;
 
         /// <summary>
         /// Whether the room was visited by the player.
@@ -71,9 +71,6 @@ namespace Edgar.Unity.Examples
                 // Spawn enemies
                 SpawnEnemies();
 
-                // Wait 3 seconds before opening doors
-                // We would normally open doors after all the enemies are defeated but combat is not implemented yet
-                StartCoroutine(WaitBeforeOpeningDoors(3));
             }
         }
         /// <summary>
@@ -92,13 +89,17 @@ namespace Edgar.Unity.Examples
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
             room = roomInstance?.Room as WandererRoom;
         }
+        public void Update()
+        {
+           
+        }
 
-
+        public List<GameObject> enemies;
         private void SpawnEnemies()
         {
             EnemiesSpawned = true;
 
-            var enemies = new List<GameObject>();
+             enemies = new List<GameObject>();
 
             var totalEnemiesCount = WandererGameManager.Instance.Random.Next(4, 8);
             
@@ -129,16 +130,31 @@ namespace Edgar.Unity.Examples
                 enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
                 enemies.Add(enemy);
             }
+            StartCoroutine(OpeningDoors(enemies));
         }
         /// <summary>
         /// Wait some time before before opening doors.
         /// </summary>
-        private IEnumerator WaitBeforeOpeningDoors(int seconds)
+        private IEnumerator OpeningDoors(List<GameObject> ennemies)
         {
-            yield return new WaitForSeconds(seconds);
+            do
+            {
+                yield return new WaitForEndOfFrame();
+                int count = 0;
+                foreach(GameObject enemy in ennemies)
+                {
+                    if (enemy == null) count++;  
+                }
+                print(ennemies.Count);
+                print(count);
+                if (count >= ennemies.Count)
+                {
+                    Cleared = true;
+                    OpenDoors();
+                }   
+            }while ( !Cleared) ;
 
-            Cleared = true;
-            OpenDoors();
+          
         }
 
         /// <summary>
@@ -160,6 +176,7 @@ namespace Edgar.Unity.Examples
         /// </summary>
         private void OpenDoors()
         {
+            print("Doors are openned");
             foreach (var door in Doors)
             {
                 if (door.GetComponent<WandererDoors>().State == WandererDoors.DoorState.EnemyLocked)

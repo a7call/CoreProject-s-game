@@ -107,7 +107,6 @@ public class PlayerMouvement : Player
                 break;
 
             case EtatJoueur.Dashing:
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 PiercedPocketActivation();
                 break;
         }
@@ -182,8 +181,10 @@ public class PlayerMouvement : Player
                 playerEnergy.SpendEnergy(1);
                 canDash = false;
                 rb.AddForce(dir * dashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                LayerMask projectilLayerMask = 3;
+                Physics2D.IgnoreLayerCollision(gameObject.layer, projectilLayerMask);
                 yield return new WaitForSeconds(DashTime);
-                gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                Physics2D.IgnoreLayerCollision(gameObject.layer, projectilLayerMask, false);
                 currentEtat = EtatJoueur.normal;
                 yield return new WaitForSeconds(timeBetweenDashes);
                 canDash = true;
