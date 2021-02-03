@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8399999305006020208}
-  - component: {fileID: 447874545833512403}
   - component: {fileID: -1722993414655278476}
   - component: {fileID: 2988306102921513881}
+  - component: {fileID: 8652139255966259784}
+  - component: {fileID: 3781285152726610234}
   m_Layer: 0
-  m_Name: SniperProj
-  m_TagString: Untagged
+  m_Name: SniperAlienProj
+  m_TagString: TraversProj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,22 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &447874545833512403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5004741095190017796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  knockBackForce: 0
-  knockBackTime: 0
-  PlayerProjectileData: {fileID: 11400000, guid: 26eff1b7047fe42939f9fd4d90168b4b, type: 2}
-  Dispersion: -7.5646095
 --- !u!212 &-1722993414655278476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -126,3 +111,43 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
+--- !u!114 &8652139255966259784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6b26c394166478a9e14f0687b5f956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackForce: 0
+  knockBackTime: 0
+  PlayerProjectileData: {fileID: 11400000, guid: 4acde241f2d3c417fa97d221b4d27ce2, type: 2}
+  Dispersion: 0
+  nbTraversAuthorized: 10
+  Timer: 1
+  KryptoDamage: 1
+--- !u!50 &3781285152726610234
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

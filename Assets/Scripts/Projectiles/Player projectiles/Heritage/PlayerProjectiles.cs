@@ -129,7 +129,7 @@ public class PlayerProjectiles : MonoBehaviour
         if (collision.gameObject.layer == 10) Destroy(gameObject);
     
 
-}
+    }
 
      protected virtual void ModuleProcs(Enemy enemy)
     {
