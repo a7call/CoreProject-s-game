@@ -8,6 +8,8 @@ public class BouleEnergie : PlayerProjectiles
     [SerializeField] protected float ExplosionRadius;
     [SerializeField] protected float ExploDamage;
     [SerializeField] protected float Force;
+    [SerializeField] protected float KnockBackExploForce;
+    [SerializeField] protected float KnockBackExploTime;
     [SerializeField] protected LayerMask hit;
 
     [HideInInspector]
@@ -39,28 +41,7 @@ public class BouleEnergie : PlayerProjectiles
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.CompareTag("Enemy"))
-        //{
-        //    Enemy enemy = collision.GetComponent<Enemy>();
-        //    enemy.TakeDamage(weaponDamage);
-        //    CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
-        //    //Modules
-        //    ModuleProcs(enemy);
-        //    Explosion();
-        //}
-
-        //else if (collision.CompareTag("WallHautBas"))
-        //{
-        //    directionTir = new Vector3(directionTir.x, -directionTir.y, directionTir.z);
-        //    transform.Translate(directionTir * speed * Time.deltaTime, Space.World);
-        //}
-
-        //else if (collision.CompareTag("WallLateral"))
-        //{
-        //    directionTir = new Vector3(-directionTir.x, directionTir.y, directionTir.z);
-        //    transform.Translate(directionTir * speed * Time.deltaTime, Space.World);
-        //}
-
+        
     }
     protected override void ModuleProcs(Enemy enemy)
     {
@@ -104,12 +85,7 @@ public class BouleEnergie : PlayerProjectiles
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
                 ExplosionEffects(enemy);
             }
-            //if (hit.gameObject.GetComponent<PlayerHealth>())
-            //{
-            //    PlayerHealth player = hit.gameObject.GetComponent<PlayerHealth>();
-            //    player.TakeDamage(1);
-            //}
-
+            
         }
 
         Destroy(gameObject);
@@ -119,7 +95,7 @@ public class BouleEnergie : PlayerProjectiles
     protected virtual void ExplosionEffects(Enemy enemy)
     {
         Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
-        CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
+        CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(KnockBackExploForce, Direction, KnockBackExploTime, enemy));
         if (PlayerProjectiles.isNuclearExplosionModule)
         {
             CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemy));
