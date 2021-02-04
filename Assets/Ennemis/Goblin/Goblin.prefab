@@ -356,7 +356,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -385,7 +385,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &631071272144048669
@@ -504,14 +504,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b022c4e64b709c24c95329ce8ccd3e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOnFire: 0
   isreadyToAttack: 1
-  currentState: 1
+  animator: {fileID: 0}
+  isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
+  currentState: 1
   nextWayPointDistance: 0.05
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -521,7 +525,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4929151439778916331}
   healthBarGFX: {fileID: 2085182840170495285}
   timeBeforeDesactive: 0
-  isTakingDot: 0
   enemyData: {fileID: 11400000, guid: d239f86b37122784b9550faba2005fee, type: 2}
 --- !u!1 &4613079181162265054
 GameObject:

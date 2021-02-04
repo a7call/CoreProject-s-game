@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -1722993414655278476}
   - component: {fileID: 2988306102921513881}
   m_Layer: 0
-  m_Name: Gros Pistolet Proj
+  m_Name: Gros Pistolet Proj 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackForce: 0
+  knockBackTime: 0
   PlayerProjectileData: {fileID: 11400000, guid: 758f1c3eea0734981832364d6d829b9a, type: 2}
   Dispersion: -7.5646095
 --- !u!212 &-1722993414655278476
@@ -66,7 +68,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

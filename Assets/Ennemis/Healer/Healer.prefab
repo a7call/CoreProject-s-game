@@ -153,7 +153,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -301,10 +301,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9126d017e872fa418b1639e887d1532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOnFire: 0
   isreadyToAttack: 1
   animator: {fileID: 0}
-  currentState: 1
+  isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
+  currentState: 1
   nextWayPointDistance: 0.05
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
@@ -320,7 +322,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4743294213122643223}
   healthBarGFX: {fileID: 4743294213319850977}
   timeBeforeDesactive: 2
-  isTakingDot: 0
   enemyInRoom: []
   EnemyData: {fileID: 11400000, guid: 6d7f3d00f3a891f40ad17051aa99afaa, type: 2}
   enemyLayer:

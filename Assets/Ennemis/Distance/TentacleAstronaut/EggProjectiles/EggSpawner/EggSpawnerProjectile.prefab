@@ -197,19 +197,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274ef828d05897a4ea1df4e1c01608a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  isOnFire: 0
+  isreadyToAttack: 1
+  animator: {fileID: 0}
+  isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
+  currentState: 0
   nextWayPointDistance: 3
+  aIPath: {fileID: 0}
+  targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  isBurned: 0
+  target: {fileID: 0}
   rb: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   currentHealth: 0
   maxHealth: 4
   healthBar: {fileID: 2945482746682547660}
   spriteRenderer: {fileID: 884338300730864256}
   healthBarGFX: {fileID: 7619958256995032295}
   timeBeforeDesactive: 0
-  isTakingDot: 0
   mobs: {fileID: 3612759245202818942, guid: d2e90ac52b7c4004f94e6a4fc42b44bc, type: 3}
   spawnCd: 3
   SpawnerData: {fileID: 11400000, guid: e746085080d157b4fa8425c612f1e41e, type: 2}
@@ -232,7 +240,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -393,6 +401,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8578840437748386050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,6 +472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}

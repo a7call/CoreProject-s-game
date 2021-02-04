@@ -157,6 +157,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2504597958869829944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,13 +300,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aeb14dbad633470bbbcd2b4713badc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 1
+  isOnFire: 0
+  isreadyToAttack: 1
+  animator: {fileID: 0}
+  isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
+  currentState: 1
   nextWayPointDistance: 3
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -315,9 +321,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2504597959319101540}
   healthBarGFX: {fileID: 2504597959454823518}
   timeBeforeDesactive: 0
-  isTakingDot: 0
   DistanceData: {fileID: 11400000, guid: 9c06d2bd554074701bfc432b3dfb59fb, type: 2}
   isShooting: 0
+  Dispersion: 0
 --- !u!50 &2504597959319101542
 Rigidbody2D:
   serializedVersion: 4
@@ -386,7 +392,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -547,6 +553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}

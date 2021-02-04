@@ -232,6 +232,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8629470301294089184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -460,7 +462,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -532,13 +534,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed49792e5c14d542aef1625852382f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 1
+  isOnFire: 0
+  isreadyToAttack: 1
+  animator: {fileID: 0}
+  isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
+  currentState: 1
   nextWayPointDistance: 3
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
   moveSpeed: 0
   isSlowed: 0
+  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -548,7 +555,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4404332232014567163}
   healthBarGFX: {fileID: 4702924856761543090}
   timeBeforeDesactive: 0
-  isTakingDot: 0
   CacDatas: {fileID: 11400000, guid: 4288b4cb0c11c78488f457a701dd5f20, type: 2}
   attackPoint: {fileID: 56112217458810673}
   loadDelay: 20

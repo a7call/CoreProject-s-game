@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d23b29c6b87d943852e9575a3eabf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackForce: 0
+  knockBackTime: 0
   PlayerProjectileData: {fileID: 11400000, guid: d1fad217cfec04a40b8d00fafe64e965, type: 2}
   Dispersion: 0
   explosionRadius: 1.5
