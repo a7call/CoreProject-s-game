@@ -62,9 +62,9 @@ namespace Edgar.Unity.Examples
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
 
-                
-            
-            
+
+
+           
             if (!Visited && roomInstance != null)
             {
                 Visited = true;
@@ -80,7 +80,7 @@ namespace Edgar.Unity.Examples
                 SpawnEnemies();
 
             }
-            //ExploreRoom();
+            ExploreRoom();
         }
         /// <summary>
         /// Gets called when a player leaves the room.
@@ -92,43 +92,65 @@ namespace Edgar.Unity.Examples
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
         }
 
-        public GameObject FloorTileMap;
+        public Transform FloorTileMap;
         public List<Vector2Int> test;
+        public List<Vector3> test2 = new List<Vector3>();
         void ExploreRoom()
         {
             if (!explored)
             {
                
                 explored = true;
-                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(FloorTileMap);
-                var outlineTilemapGlobal = RoomTemplateUtils.GetTilemapsForOutline(tilemapGoblal);
                 
+                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(FloorTileMap.gameObject);
+                var floorGlobal = tilemapGoblal.Single(x => x.name == "Floor");
                 var tilemapsRoom = RoomTemplateUtils.GetTilemaps(roomInstance.RoomTemplateInstance);
-                var floor = tilemapsRoom.Single(x => x.name == "Floor"); 
-                test = RoomTemplateUtils.GetUsedTilesV2(outlineTilemapGlobal);
-               
-                foreach (Vector2Int tileGlobal in test)
-                {
-
-                    foreach (Tilemap tilemapRoom in tilemapsRoom)
-                    {
+                var floorRoom = tilemapsRoom.Single(x => x.name == "Floor");
 
 
-                        if (tilemapRoom.GetTile((Vector3Int)tileGlobal) != null)
-                        {
-                            print(tileGlobal);
-                            foreach (Tilemap tilemapGlobal in tilemapGoblal)
-                            {
+                foreach (Vector3 tileGlobal in getTheTiles(floorGlobal))
+                { 
+                       foreach (Vector3 tileRoom in getTheTiles(floorRoom))
+                       {
+                                    if(tileRoom == tileGlobal)
+                                    {
+                                        
+                                        floorGlobal.SetTileFlags(floorGlobal.WorldToCell(tileGlobal), TileFlags.None);
+                                        floorGlobal.SetColor(floorGlobal.WorldToCell(tileGlobal), Color.white);
+                                        Debug.LogWarning(floorGlobal.GetColor(floorGlobal.WorldToCell(tileGlobal)));
+                                    }
+                       }
 
-                                tilemapGlobal.SetColor((Vector3Int)tileGlobal, Color.white);
-                            }
-
-                        }
+                            
                     }
-                }
+                
             }
         }
        
+       public List<Vector3> getTheTiles(Tilemap tileMap)
+        {
+
+           List<Vector3> availablePlaces = new List<Vector3>();
+            for (int n = tileMap.cellBounds.xMin; n < tileMap.cellBounds.xMax; n++)
+            {
+                for (int p = tileMap.cellBounds.yMin; p < tileMap.cellBounds.yMax; p++)
+                {
+                    Vector3Int localPlace = (new Vector3Int(n, p, 0));
+                    Vector3 place = tileMap.CellToWorld(localPlace);
+                    if (tileMap.HasTile(localPlace))
+                    {
+                        //Tile at "place"
+                        availablePlaces.Add(place);
+                    }
+                    else
+                    {
+                        //No tile at "place"
+                    }
+                }
+            }
+
+            return availablePlaces;
+        }
 
         public void Start()
         {

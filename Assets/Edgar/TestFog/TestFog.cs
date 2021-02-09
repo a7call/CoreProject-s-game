@@ -19,6 +19,7 @@ public class TestFog : MonoBehaviour
 	{
 		Initialize();
 		print("tes");
+
 	}
 
 	// Update is called once per frame

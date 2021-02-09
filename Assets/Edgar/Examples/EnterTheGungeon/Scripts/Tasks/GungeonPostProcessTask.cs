@@ -12,6 +12,7 @@ namespace Edgar.Unity.Examples.EnterTheGungeon
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
             MovePlayerToSpawn(level);
+           
 
             // The instance of the game manager will not exist in Editor
             if (GungeonGameManager.Instance != null)

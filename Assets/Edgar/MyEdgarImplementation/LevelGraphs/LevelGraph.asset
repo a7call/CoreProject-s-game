@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9210636931134382566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 608b3e92561274e4685b11b79263f337, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  From: {fileID: 8213702936320035091}
-  To: {fileID: -6279488598292185759}
-  IsLocked: 0
 --- !u!114 &-8121719124923575822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,20 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: -1342.7239, y: 161.5143}
   Type: 3
---- !u!114 &-6279488598292185759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Position: {x: -1326.0125, y: 330.19754}
-  Type: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,7 +28,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Connections:
   - {fileID: 8664711812443869660}
-  - {fileID: -9210636931134382566}
   CorridorIndividualRoomTemplates:
   - {fileID: 3559113929631548473, guid: efe520a88507d6449a3a7f15ce188fde, type: 3}
   - {fileID: 2575767481118213129, guid: bb3e28c876cc5894e8eceb5de1def0f2, type: 3}
@@ -69,10 +39,9 @@ MonoBehaviour:
   Rooms:
   - {fileID: -8121719124923575822}
   - {fileID: 8213702936320035091}
-  - {fileID: -6279488598292185759}
   EditorData:
-    PanOffset: {x: 1557.6519, y: -82.99892}
-    Zoom: 1.3031983
+    PanOffset: {x: 1673.2594, y: -73.29489}
+    Zoom: 0.8766365
   RoomType: WandererRoom
   ConnectionType: Edgar.Unity.WandererConnection
 --- !u!114 &8213702936320035091
@@ -87,7 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: -1341.424, y: 269.15723}
+  Position: {x: -1339.1425, y: 230.37262}
   Type: 1
 --- !u!114 &8664711812443869660
 MonoBehaviour:

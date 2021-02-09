@@ -12,14 +12,10 @@ namespace Edgar.Unity.Examples
     {
 
         public GameObject[] Enemies;
-        
+
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
-
-
-            
             MovePlayerToSpawn(level);
-            
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
             
             var walls = tilemapss.transform.Find("Walls").gameObject;
@@ -28,10 +24,7 @@ namespace Edgar.Unity.Examples
             AddLayerToWall(walls);
             AddLayerToWall(wallsDown);
             AddLayerToFloor(floors);
-            foreach (Transform tilemap in tilemapss)
-            {
-                
-            }
+           
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;
@@ -48,10 +41,18 @@ namespace Edgar.Unity.Examples
                 var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
                 roomManager.RoomInstance = roomInstance;
                 
+                roomManager.FloorTileMap = tilemapss;
+                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(tilemapss.gameObject);
+                var floorGlobal = tilemapGoblal.Single(x => x.name == "Floor");
+                foreach (Vector3 tileGlobal in roomManager.getTheTiles(floorGlobal))
+                {
 
-               
-                // Add current room detection handler
-                floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
+                    floorGlobal.SetTileFlags(floorGlobal.WorldToCell(tileGlobal), TileFlags.None);
+                    floorGlobal.SetColor(floorGlobal.WorldToCell(tileGlobal), Color.black);
+
+                }
+                    // Add current room detection handler
+                    floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
 
                 if (WandererGameManager.Instance != null)
                 {
@@ -59,7 +60,7 @@ namespace Edgar.Unity.Examples
                     WandererGameManager.Instance.Random = Random;
                 }
                 
-                roomManager.FloorTileMap = roomTemplateInstance;
+                
                 if (room.Type != RoomType.Corridor)
                 {
                     // Set enemies and floor collider to the room manager
@@ -152,6 +153,7 @@ namespace Edgar.Unity.Examples
                 // Get spawn position if Entrance
                 if (room.Type == RoomType.Spawn)
                 {
+
                     var spawnPosition = roomTemplateInstance.transform.Find("SpawnPosition");
                     var player = GameObject.FindWithTag("Player");
                     player.transform.position = spawnPosition.position;
