@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using System.Linq;
 
 namespace Edgar.Unity.Examples
@@ -16,6 +17,8 @@ namespace Edgar.Unity.Examples
         /// Whether the room was visited by the player.
         /// </summary>
         public bool Visited;
+
+        public bool explored;
 
         /// <summary>
         /// Doors of neighboring corridors.
@@ -37,6 +40,8 @@ namespace Edgar.Unity.Examples
         /// </summary>
         public Collider2D FloorCollider;
 
+        
+
         /// <summary>
         /// Room instance of the corresponding room.
         /// </summary>
@@ -57,6 +62,9 @@ namespace Edgar.Unity.Examples
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
 
+                
+            
+            
             if (!Visited && roomInstance != null)
             {
                 Visited = true;
@@ -72,6 +80,7 @@ namespace Edgar.Unity.Examples
                 SpawnEnemies();
 
             }
+            //ExploreRoom();
         }
         /// <summary>
         /// Gets called when a player leaves the room.
@@ -83,6 +92,43 @@ namespace Edgar.Unity.Examples
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
         }
 
+        public GameObject FloorTileMap;
+        public List<Vector2Int> test;
+        void ExploreRoom()
+        {
+            if (!explored)
+            {
+               
+                explored = true;
+                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(FloorTileMap);
+                var outlineTilemapGlobal = RoomTemplateUtils.GetTilemapsForOutline(tilemapGoblal);
+                
+                var tilemapsRoom = RoomTemplateUtils.GetTilemaps(roomInstance.RoomTemplateInstance);
+                var floor = tilemapsRoom.Single(x => x.name == "Floor"); 
+                test = RoomTemplateUtils.GetUsedTilesV2(outlineTilemapGlobal);
+               
+                foreach (Vector2Int tileGlobal in test)
+                {
+
+                    foreach (Tilemap tilemapRoom in tilemapsRoom)
+                    {
+
+
+                        if (tilemapRoom.GetTile((Vector3Int)tileGlobal) != null)
+                        {
+                            print(tileGlobal);
+                            foreach (Tilemap tilemapGlobal in tilemapGoblal)
+                            {
+
+                                tilemapGlobal.SetColor((Vector3Int)tileGlobal, Color.white);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+       
 
         public void Start()
         {
@@ -176,7 +222,6 @@ namespace Edgar.Unity.Examples
         /// </summary>
         private void OpenDoors()
         {
-            print("Doors are openned");
             foreach (var door in Doors)
             {
                 if (door.GetComponent<WandererDoors>().State == WandererDoors.DoorState.EnemyLocked)

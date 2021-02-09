@@ -28,6 +28,10 @@ namespace Edgar.Unity.Examples
             AddLayerToWall(walls);
             AddLayerToWall(wallsDown);
             AddLayerToFloor(floors);
+            foreach (Transform tilemap in tilemapss)
+            {
+                
+            }
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;
@@ -43,6 +47,7 @@ namespace Edgar.Unity.Examples
                 // Add the room manager component
                 var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
                 roomManager.RoomInstance = roomInstance;
+                
 
                
                 // Add current room detection handler
@@ -53,7 +58,8 @@ namespace Edgar.Unity.Examples
                     // Set the Random instance of the GameManager to be the same instance as we use in the generator
                     WandererGameManager.Instance.Random = Random;
                 }
-
+                
+                roomManager.FloorTileMap = roomTemplateInstance;
                 if (room.Type != RoomType.Corridor)
                 {
                     // Set enemies and floor collider to the room manager

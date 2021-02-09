@@ -113,5 +113,27 @@ namespace Edgar.Unity
 
             return usedTiles;
         }
+
+        public static List<Vector2Int> GetUsedTilesV2(IEnumerable<Tilemap> tilemaps)
+        {
+            var usedTiles = new List<Vector2Int>();
+
+            foreach (var tilemap in tilemaps)
+            {
+                foreach (var position in tilemap.cellBounds.allPositionsWithin)
+                {
+                    var tile = tilemap.GetTile(position);
+
+                    if (tile == null)
+                    {
+                        continue;
+                    }
+
+                    usedTiles.Add((Vector2Int)position);
+                }
+            }
+
+            return usedTiles;
+        }
     }
 }
