@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2023128672656592645}
   - component: {fileID: 2023128672656592646}
-  - component: {fileID: 2023128672656592647}
+  - component: {fileID: 5678803172989055621}
   m_Layer: 0
-  m_Name: Sniper
+  m_Name: Fusil Alien
   m_TagString: DistanceWeapon
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2023128672656592647
+--- !u!114 &5678803172989055621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2023128672656592648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef35ea606f1d3bd488f3585124cd6604, type: 3}
+  m_Script: {fileID: 11500000, guid: 146992944f1b842e7b46fcc44918b768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
@@ -77,12 +77,12 @@ MonoBehaviour:
     m_Bits: 0
   attackPoint: {fileID: 2023128673275008546}
   isAttacking: 0
-  DistanceWeaponData: {fileID: 11400000, guid: f1370b77ea77c0a4c95860e2af6ec5f4, type: 2}
+  DistanceWeaponData: {fileID: 11400000, guid: ced62b4239b1e473fa9c466f2dca0b9c, type: 2}
   OkToShoot: 0
   BulletInMag: 0
-  InfiniteAmmo: 0
-  AmmoStock: 130
+  AmmoStock: 0
   image: {fileID: 0}
+  LoadingTime: 2
 --- !u!1 &2023128673275008547
 GameObject:
   m_ObjectHideFlags: 0

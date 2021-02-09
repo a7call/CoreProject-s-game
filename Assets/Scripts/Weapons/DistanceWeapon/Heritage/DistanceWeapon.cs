@@ -114,7 +114,7 @@ public class DistanceWeapon : Weapons
             Instantiate(projectile, attackPoint.position, Quaternion.identity);
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;
-            if (BulletInMag <= 0)
+            if (BulletInMag <= 0 && !IsReloading)
             {
                 CoroutineManager.Instance.StartCoroutine(Reload());
             }
@@ -147,8 +147,8 @@ public class DistanceWeapon : Weapons
 
     protected IEnumerator Reload()
     {
-        if (BulletInMag != MagSize && (AmmoStock != 0 | InfiniteAmmo))
-        {
+        //if (BulletInMag != MagSize && !IsReloading && (AmmoStock != 0 | InfiniteAmmo))
+        //{
 
             IsReloading = true;
             yield return new WaitForSeconds(ReloadDelay);
@@ -170,12 +170,12 @@ public class DistanceWeapon : Weapons
             }
 
             IsReloading = false;
-        }
+        //}
     }
 
     public void toReload()
     {
-        if (BulletInMag != MagSize && (AmmoStock != 0 | InfiniteAmmo))
+        if (BulletInMag != MagSize && !IsReloading && (AmmoStock != 0 | InfiniteAmmo))
         {
             StartCoroutine(Reload());
         }
