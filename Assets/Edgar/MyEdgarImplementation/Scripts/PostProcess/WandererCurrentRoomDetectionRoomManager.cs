@@ -57,14 +57,12 @@ namespace Edgar.Unity.Examples
         /// Gets called when a player enters the room.
         /// </summary>
         /// <param name="player"></param>
+        
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
 
-
-
-           
             if (!Visited && roomInstance != null)
             {
                 Visited = true;
@@ -80,7 +78,7 @@ namespace Edgar.Unity.Examples
                 SpawnEnemies();
 
             }
-            ExploreRoom();
+           StartCoroutine(ExploreRoom());
         }
         /// <summary>
         /// Gets called when a player leaves the room.
@@ -88,42 +86,67 @@ namespace Edgar.Unity.Examples
         /// <param name="player"></param>
         public void OnRoomLeave(GameObject player)
         {
-            Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
+            //Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
         }
+     
 
-        public Transform FloorTileMap;
-        public List<Vector2Int> test;
-        public List<Vector3> test2 = new List<Vector3>();
-        void ExploreRoom()
+        public Transform TileMap;
+        private IEnumerator ExploreRoom()
         {
+            List<Vector3Int> direction = new List<Vector3Int>();
+            direction.Add(new Vector3Int(1, 0, 0));
+            direction.Add(new Vector3Int(-1, 0, 0));
+            direction.Add(new Vector3Int(0, 1, 0));
+            direction.Add(new Vector3Int(0, -1, 0));
+            direction.Add(new Vector3Int(-1, -1, 0));
+            direction.Add(new Vector3Int(1, -1, 0));
+            direction.Add(new Vector3Int(1, 1, 0));
+            direction.Add(new Vector3Int(-1, 1, 0));
+
             if (!explored)
             {
-               
                 explored = true;
-                
-                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(FloorTileMap.gameObject);
-                var floorGlobal = tilemapGoblal.Single(x => x.name == "Floor");
+                GameObject TilMapObj = TileMap.gameObject;
+                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(TilMapObj);
+               
                 var tilemapsRoom = RoomTemplateUtils.GetTilemaps(roomInstance.RoomTemplateInstance);
-                var floorRoom = tilemapsRoom.Single(x => x.name == "Floor");
+                foreach (Tilemap tilemapG in tilemapGoblal)
+                {
+                    foreach (Tilemap tilemapR in tilemapsRoom)
+                    {
+                        if (tilemapG.ToString() != tilemapR.ToString()) continue;
+                        yield return new WaitForSeconds(0.001f);
 
-
-                foreach (Vector3 tileGlobal in getTheTiles(floorGlobal))
-                { 
-                       foreach (Vector3 tileRoom in getTheTiles(floorRoom))
-                       {
-                                    if(tileRoom == tileGlobal)
+                        foreach (Vector3 tileGlobal in getTheTiles(tilemapG))
+                        {
+                            foreach (Vector3 tileRoom in getTheTiles(tilemapR))
+                            {
+                                if (tileRoom == tileGlobal)
+                                {
+                                    tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal), TileFlags.None);
+                                    tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal), Color.white);
+                                    
+                                    
+                                    foreach(Vector3Int dir in direction)
                                     {
-                                        
-                                        floorGlobal.SetTileFlags(floorGlobal.WorldToCell(tileGlobal), TileFlags.None);
-                                        floorGlobal.SetColor(floorGlobal.WorldToCell(tileGlobal), Color.white);
-                                        Debug.LogWarning(floorGlobal.GetColor(floorGlobal.WorldToCell(tileGlobal)));
+                                        if (!tilemapR.HasTile(tilemapR.WorldToCell(tileGlobal) + dir) && tilemapG.GetColor(tilemapG.WorldToCell(tileGlobal) + dir) != Color.white)
+                                        {
+                                            tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal + dir), TileFlags.None);
+                                            tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal + dir),new Color(0.35f,0.35f,0.35f,1) );
+                                        }
+                                         
                                     }
-                       }
+                                    
+                                }
 
-                            
+
+                            }
+                        }
+
                     }
-                
+                }
+
             }
         }
        
@@ -156,7 +179,14 @@ namespace Edgar.Unity.Examples
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
             room = roomInstance?.Room as WandererRoom;
+            if(room.Type == RoomType.Spawn && TileMap != null)
+            {
+                StartCoroutine(ExploreRoom());
+            }
+            
         }
+
+       
         public void Update()
         {
            
@@ -213,8 +243,6 @@ namespace Edgar.Unity.Examples
                 {
                     if (enemy == null) count++;  
                 }
-                print(ennemies.Count);
-                print(count);
                 if (count >= ennemies.Count)
                 {
                     Cleared = true;

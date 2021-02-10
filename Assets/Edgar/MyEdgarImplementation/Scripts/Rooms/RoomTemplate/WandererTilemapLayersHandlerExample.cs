@@ -19,11 +19,9 @@ namespace Edgar.Unity
             AddCompositeCollider(floorTilemapObject, true);
             var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1);
             AddCompositeCollider(wallsTilemapObject);
-            var wallsTilemapDown =  CreateTilemapGameObject("WallsDown", gameObject, 25);
-            AddCompositeCollider(wallsTilemapDown);
             var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 3);
             AddCompositeCollider(CollideObject);
-            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1);
+            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 0);
             CreateTilemapGameObject("Additionnal Layer 2", gameObject, 3);
         }
         /// <summary>

@@ -20,9 +20,7 @@ namespace Edgar.Unity.Examples
             
             var walls = tilemapss.transform.Find("Walls").gameObject;
             var floors = tilemapss.transform.Find("Floor").gameObject;
-            var wallsDown = tilemapss.transform.Find("WallsDown").gameObject;
             AddLayerToWall(walls);
-            AddLayerToWall(wallsDown);
             AddLayerToFloor(floors);
            
             foreach (var roomInstance in level.GetRoomInstances())
@@ -39,18 +37,13 @@ namespace Edgar.Unity.Examples
               
                 // Add the room manager component
                 var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
+                roomManager.TileMap = tilemapss;
+                
+                BlackenMap(tilemapss, roomInstance);
                 roomManager.RoomInstance = roomInstance;
                 
-                roomManager.FloorTileMap = tilemapss;
-                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(tilemapss.gameObject);
-                var floorGlobal = tilemapGoblal.Single(x => x.name == "Floor");
-                foreach (Vector3 tileGlobal in roomManager.getTheTiles(floorGlobal))
-                {
-
-                    floorGlobal.SetTileFlags(floorGlobal.WorldToCell(tileGlobal), TileFlags.None);
-                    floorGlobal.SetColor(floorGlobal.WorldToCell(tileGlobal), Color.black);
-
-                }
+               
+                     
                     // Add current room detection handler
                     floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
 
@@ -59,8 +52,10 @@ namespace Edgar.Unity.Examples
                     // Set the Random instance of the GameManager to be the same instance as we use in the generator
                     WandererGameManager.Instance.Random = Random;
                 }
+               
                 
-                
+               
+
                 if (room.Type != RoomType.Corridor)
                 {
                     // Set enemies and floor collider to the room manager
@@ -108,9 +103,30 @@ namespace Edgar.Unity.Examples
             }
             AstarPath.active.Scan();
             SetupFogOfWar(level);
+           
         }
        
 
+        void BlackenMap(Transform tilemaps, RoomInstance roomInstance)
+        {
+            var room = (WandererRoom)roomInstance.Room;
+            var roomTemplateInstance = roomInstance.RoomTemplateInstance;
+            var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
+          
+
+            var tilemapGoblal = RoomTemplateUtils.GetTilemaps(tilemaps.gameObject);
+            foreach (Tilemap tilemap in tilemapGoblal)
+            {
+
+                foreach (Vector3 tileGlobal in roomManager.getTheTiles(tilemap))
+                {
+
+                    tilemap.SetTileFlags(tilemap.WorldToCell(tileGlobal), TileFlags.None);
+                    tilemap.SetColor(tilemap.WorldToCell(tileGlobal), Color.black);
+
+                }
+            }
+        }
 
         private void SetupFogOfWar(GeneratedLevel level)
         {
