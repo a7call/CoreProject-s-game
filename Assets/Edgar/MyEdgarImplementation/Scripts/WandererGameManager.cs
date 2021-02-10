@@ -64,11 +64,12 @@ namespace Edgar.Unity.Examples
         private IEnumerator GeneratorCoroutine(DungeonGenerator generator)
         {
             var stopwatch = new Stopwatch();
-
+            print("test");
             stopwatch.Start();
 
             // Configure the generator with the current stage number
             var inputTask = (WandererInputSetUp)generator.CustomInputTask;
+            print("test2");
             inputTask.Stage = Stage;
 
             var generatorCoroutine = this.StartSmartCoroutine(generator.GenerateCoroutine());
@@ -78,11 +79,11 @@ namespace Edgar.Unity.Examples
             yield return null;
 
             stopwatch.Stop();
-
+            print("test3");
             isGenerating = false;
 
             generatorCoroutine.ThrowIfNotSuccessful();
-
+            print("test4");
             generatorElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
             RefreshLevelInfo();
             HideLoadingScreen();

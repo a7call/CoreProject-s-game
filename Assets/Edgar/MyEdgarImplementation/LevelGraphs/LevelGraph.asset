@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: -1342.7239, y: 161.5143}
+  Position: {x: -1331.3167, y: 152.3885}
   Type: 3
 --- !u!114 &11400000
 MonoBehaviour:
@@ -27,7 +27,7 @@ MonoBehaviour:
   m_Name: LevelGraph
   m_EditorClassIdentifier: 
   Connections:
-  - {fileID: 8664711812443869660}
+  - {fileID: 224379891586793708}
   CorridorIndividualRoomTemplates:
   - {fileID: 3559113929631548473, guid: efe520a88507d6449a3a7f15ce188fde, type: 3}
   - {fileID: 2575767481118213129, guid: bb3e28c876cc5894e8eceb5de1def0f2, type: 3}
@@ -38,27 +38,13 @@ MonoBehaviour:
   DefaultRoomTemplateSets: []
   Rooms:
   - {fileID: -8121719124923575822}
-  - {fileID: 8213702936320035091}
+  - {fileID: 6366544641711966003}
   EditorData:
     PanOffset: {x: 1673.2594, y: -73.29489}
     Zoom: 0.8766365
   RoomType: WandererRoom
   ConnectionType: Edgar.Unity.WandererConnection
---- !u!114 &8213702936320035091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Position: {x: -1339.1425, y: 230.37262}
-  Type: 1
---- !u!114 &8664711812443869660
+--- !u!114 &224379891586793708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,5 +57,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   From: {fileID: -8121719124923575822}
-  To: {fileID: 8213702936320035091}
+  To: {fileID: 6366544641711966003}
   IsLocked: 0
+--- !u!114 &6366544641711966003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: -1329.9763, y: 231.8256}
+  Type: 1
