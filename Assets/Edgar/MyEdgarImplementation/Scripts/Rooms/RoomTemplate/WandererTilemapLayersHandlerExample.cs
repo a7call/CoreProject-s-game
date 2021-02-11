@@ -15,21 +15,20 @@ namespace Edgar.Unity
             // If we want a different cell size, we can configure that here
             // grid.cellSize = new Vector3(1, 2, 1);
             // And now we create individual tilemap layers
-            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, 0, "Default");
+            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, 0, "Default", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(floorTilemapObject, true);
-            var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1, "Default");
+            var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(wallsTilemapObject);
-            var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "CollideObjects");
+            var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "CollideObjects", TilemapRenderer.Mode.Individual) ;
             AddCompositeCollider(CollideObject);
-            CreateTilemapGameObject("Shadows Floor", gameObject, 0, "Shadow");
-            CreateTilemapGameObject("Shadows Wall", gameObject, 1, "Shadow");
-            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Props 1");
-            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Props 2");
+            CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Props 1", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Props 2", TilemapRenderer.Mode.Individual);
         }
         /// <summary>
         /// Helper to create a tilemap layer
         /// </summary>
-        protected GameObject CreateTilemapGameObject(string name, GameObject parentObject, int sortingOrder, string sortingLayer)
+        protected GameObject CreateTilemapGameObject(string name, GameObject parentObject, int sortingOrder, string sortingLayer, TilemapRenderer.Mode Mode )
         {
             // Create a new game object that will hold our tilemap layer
             var tilemapObject = new GameObject(name);
@@ -38,6 +37,7 @@ namespace Edgar.Unity
             var tilemap = tilemapObject.AddComponent<Tilemap>();
             var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
             tilemapRenderer.sortingOrder = sortingOrder;
+            tilemapRenderer.mode = Mode;
             tilemapRenderer.sortingLayerName = sortingLayer;
             return tilemapObject;
         }

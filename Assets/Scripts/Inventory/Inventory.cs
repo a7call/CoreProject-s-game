@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
 
     private void UpdateUIGold()
     {
-        goldText.text = goldPlayer.ToString();
+
     }
 
     private void UpdateUIKey()

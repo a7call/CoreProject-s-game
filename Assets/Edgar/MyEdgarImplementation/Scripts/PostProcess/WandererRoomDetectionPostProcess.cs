@@ -19,12 +19,15 @@ namespace Edgar.Unity.Examples
             
             MovePlayerToSpawn(level);
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
-            
+            var Rooms = level.RootGameObject.transform.Find("Rooms");
+
             var walls = tilemapss.transform.Find("Walls").gameObject;
             var floors = tilemapss.transform.Find("Floor").gameObject;
             AddLayerToWall(walls);
             AddLayerToFloor(floors);
-           
+            
+            
+
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;

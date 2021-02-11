@@ -63,6 +63,8 @@ namespace Edgar.Unity.Examples
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
 
+           
+
             if (!Visited && roomInstance != null)
             {
                 Visited = true;
@@ -99,10 +101,7 @@ namespace Edgar.Unity.Examples
             direction.Add(new Vector3Int(-1, 0, 0));
             direction.Add(new Vector3Int(0, 1, 0));
             direction.Add(new Vector3Int(0, -1, 0));
-            direction.Add(new Vector3Int(-1, -1, 0));
-            direction.Add(new Vector3Int(1, -1, 0));
-            direction.Add(new Vector3Int(1, 1, 0));
-            direction.Add(new Vector3Int(-1, 1, 0));
+           
 
             if (!explored)
             {
