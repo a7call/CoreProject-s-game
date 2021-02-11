@@ -15,15 +15,15 @@ namespace Edgar.Unity
             // If we want a different cell size, we can configure that here
             // grid.cellSize = new Vector3(1, 2, 1);
             // And now we create individual tilemap layers
-            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, 0, "Default", TilemapRenderer.Mode.Individual);
+            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, 0, "Floor", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(floorTilemapObject, true);
             var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(wallsTilemapObject);
-            var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "CollideObjects", TilemapRenderer.Mode.Individual) ;
+            var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "Default", TilemapRenderer.Mode.Individual) ;
             AddCompositeCollider(CollideObject);
-            CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
-            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Props 1", TilemapRenderer.Mode.Individual);
-            CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Props 2", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
         }
         /// <summary>
         /// Helper to create a tilemap layer
