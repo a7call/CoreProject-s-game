@@ -23,20 +23,20 @@ public class FusilAlien : DistanceWeapon
         {
             IsLoading = true;
             StartCoroutine("LoadingTimer");
-            print("starCo");
+            
         }
         if (!OkToShoot && IsLoading)
         {
             IsLoading = false;
             StopCoroutine("LoadingTimer");
-            print("stopCo");
+            
         }
 
         if (IsWeaponLoad && !OkToShoot)
         {
             CoroutineManager.Instance.StartCoroutine(Shoot());
             IsWeaponLoad = false;
-            print("Shoot");
+            
         }
 
 
@@ -66,18 +66,8 @@ public class FusilAlien : DistanceWeapon
          
         yield return new WaitForSeconds(LoadingTime);
         IsWeaponLoad = true;
-        print("weaponLoad");
+        
     }
 
-    //protected void Loading()
-    //{
-    //    while (OkToShoot)
-    //    {
-
-    //    }
-    //    if (IsWeaponLoad)
-    //    {
-    //        CoroutineManager.Instance.StartCoroutine(Shoot());
-    //    }
-    //}
+   
 }
