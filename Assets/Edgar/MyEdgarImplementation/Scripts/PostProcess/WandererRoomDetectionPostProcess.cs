@@ -30,11 +30,12 @@ namespace Edgar.Unity.Examples
 
             foreach (var roomInstance in level.GetRoomInstances())
             {
+                
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;
                 // Find floor tilemap layer
                 var room = (WandererRoom)roomInstance.Room;
                 var tilemaps = RoomTemplateUtils.GetTilemaps(roomTemplateInstance);
-               
+                roomInstance.RoomTemplateInstance.layer = 19;
                 
                 
                 var floor = tilemaps.Single(x => x.name == "Floor").gameObject;

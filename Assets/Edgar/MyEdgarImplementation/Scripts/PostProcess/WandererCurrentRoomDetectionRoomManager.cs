@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using System;
+
 
 namespace Edgar.Unity.Examples
 {
@@ -103,9 +105,11 @@ namespace Edgar.Unity.Examples
             direction.Add(new Vector3Int(0, -1, 0));
            
 
-            if (!explored)
+            if (!roomInstance.isExplored)
             {
-                explored = true;
+                roomInstance.isExplored = true;
+                roomInstance.RoomTemplateInstance.layer = 18;
+
                 GameObject TilMapObj = TileMap.gameObject;
                 var tilemapGoblal = RoomTemplateUtils.GetTilemaps(TilMapObj);
                
@@ -125,14 +129,20 @@ namespace Edgar.Unity.Examples
                                 {
                                     tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal), TileFlags.None);
                                     tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal), Color.white);
-                                    
-                                    
-                                    foreach(Vector3Int dir in direction)
+                                   
+                                    MiniMapGestion(tilemapG, tilemapG.WorldToCell(tileGlobal));
+
+
+                                    foreach (Vector3Int dir in direction)
                                     {
                                         if (!tilemapR.HasTile(tilemapR.WorldToCell(tileGlobal) + dir) && tilemapG.GetColor(tilemapG.WorldToCell(tileGlobal) + dir) != Color.white)
                                         {
                                             tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal + dir), TileFlags.None);
                                             tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal + dir),new Color(0.35f,0.35f,0.35f,1) );
+                                            
+                                               
+                                            
+                                           
                                         }
                                          
                                     }
@@ -148,8 +158,94 @@ namespace Edgar.Unity.Examples
 
             }
         }
-       
-       public List<Vector3> getTheTiles(Tilemap tileMap)
+        public string WallsTilemaps = "Walls";
+
+        public string FloorTilemaps = "Floor";
+        [Range(0, 1)]
+        public float WallSize = 0.5f;
+        public Color WallsColor = new Color(0.72f, 0.72f, 0.72f);
+
+        public Color FloorColor = new Color(0.18f, 0.2f, 0.34f);
+        Tilemap MinimapInit()
+        {
+            var tilemapsRoot = TileMap;
+            var tilemapObject = new GameObject("Minimap");
+            tilemapObject.transform.SetParent(tilemapsRoot);
+            tilemapObject.transform.localPosition = Vector3.zero;
+            var tilemap = tilemapObject.AddComponent<Tilemap>();
+            var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
+            tilemapRenderer.sortingOrder = 20;
+
+            // TODO: check that the layer exists
+            // Assign special layer
+
+
+            tilemapObject.layer = 17;
+            return tilemap;
+        }
+
+        void MiniMapGestion(Tilemap sourceTilemap, Vector3Int tilemapPosition)
+        {
+            
+          
+                print("test");
+                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, MinimapInit(), CreateTileFromColor(WallsColor));
+            
+           
+                var floorPpu = 1 / (1 + (1 - WallSize) * 2);
+                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, MinimapInit(), CreateTileFromColor(FloorColor, floorPpu));
+           
+        }
+
+        private TileBase CreateTileFromColor(Color color, float pixelsPerUnit = 1)
+        {
+            var tile = ScriptableObject.CreateInstance<Tile>();
+
+            var texture = new Texture2D(1, 1);
+            texture.SetPixel(0, 0, color);
+            texture.Apply();
+
+            var sprite = Sprite.Create(texture, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f), pixelsPerUnit);
+            tile.sprite = sprite;
+
+            return tile;
+        }
+
+        /// <summary>
+        /// Copy tiles from given source tilemaps to the level map tilemap.
+        /// Instead of using the original tiles, we use a given level map tile (which is usually only a single color).
+        /// If we want to copy only some of the tiles, we can provide a tile filter function.
+        /// </summary>
+        private void CopyTilesToLevelMap( Tilemap sourceTilemap, Vector3Int tilemapPosition ,  Tilemap levelMapTilemap, TileBase levelMapTile, Predicate<TileBase> tileFilter = null)
+        {
+            // Go through the tilemaps with the correct name
+           
+        
+
+                    // Check if there is a tile at a given position
+                    var originalTile = sourceTilemap.GetTile(tilemapPosition);
+                     
+                    if (originalTile != null)
+                    {
+                        // If a tile filter is provided, use it to check if the predicate holds
+                        if (tileFilter != null)
+                        {
+                            if (tileFilter(originalTile))
+                            {
+                                levelMapTilemap.SetTile(tilemapPosition, levelMapTile);
+                            }
+                        }
+                        // Otherwise set the levelMapTile to the correct position
+                        else
+                        {
+                            levelMapTilemap.SetTile(tilemapPosition, levelMapTile);
+                        }
+                    }
+        }
+
+
+
+        public List<Vector3> getTheTiles(Tilemap tileMap)
         {
 
            List<Vector3> availablePlaces = new List<Vector3>();
@@ -219,7 +315,7 @@ namespace Edgar.Unity.Examples
                 }
 
                 // Pick random enemy prefab
-                var enemyPrefab = Enemies[Random.Range(0, Enemies.Length)];
+                var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
 
                 // Create an instance of the enemy and set position and parent
                 var enemy = Instantiate(enemyPrefab);
@@ -307,9 +403,9 @@ namespace Edgar.Unity.Examples
             var random = WandererGameManager.Instance.Random;
 
             return new Vector3(
-                Random.Range(bounds.min.x + margin, bounds.max.x - margin),
-                Random.Range(bounds.min.y + margin, bounds.max.y - margin),
-                Random.Range(bounds.min.z + margin, bounds.max.z - margin)
+               UnityEngine.Random.Range(bounds.min.x + margin, bounds.max.x - margin),
+                UnityEngine.Random.Range(bounds.min.y + margin, bounds.max.y - margin),
+                UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
             );
         }
 

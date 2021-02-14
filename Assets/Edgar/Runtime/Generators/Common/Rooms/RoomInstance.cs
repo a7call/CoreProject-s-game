@@ -81,7 +81,11 @@ namespace Edgar.Unity
         public Polygon2D OutlinePolygon => outlinePolygon;
         [SerializeField] private Polygon2D outlinePolygon;
 
-        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon)
+
+        public bool isExplored;
+        
+
+        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon, bool isExplored)
         {
             this.room = room;
             this.connection = connection;
@@ -90,6 +94,7 @@ namespace Edgar.Unity
             this.position = position;
             this.outlinePolygon = outlinePolygon;
             this.isCorridor = isCorridor;
+            this.isExplored = isExplored;
         }
 
         /// <summary>

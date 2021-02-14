@@ -42,7 +42,7 @@ namespace Edgar.Unity
                 var polygon = new Polygon2D(layoutRoom.Outline + layoutRoom.Position);
 
                 var connection = layoutRoom.IsCorridor ? corridorToConnectionMapping[layoutRoom.Room] : null;
-                var roomInstance = new RoomInstance(layoutRoom.Room, layoutRoom.IsCorridor, connection, roomTemplatePrefab, roomTemplateInstance, position, polygon);
+                var roomInstance = new RoomInstance(layoutRoom.Room, layoutRoom.IsCorridor, connection, roomTemplatePrefab, roomTemplateInstance, position, polygon, false);
 
                 // Add room info to the GameObject
                 var roomInfo = roomTemplateInstance.GetComponent<RoomInfo>();
