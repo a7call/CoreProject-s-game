@@ -45,6 +45,14 @@ namespace Edgar.Unity.Examples
             HideText();
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player") && State == DoorState.Unlocked)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
         public enum DoorState
         {
             Unlocked, // The door is unlocked and can be opened

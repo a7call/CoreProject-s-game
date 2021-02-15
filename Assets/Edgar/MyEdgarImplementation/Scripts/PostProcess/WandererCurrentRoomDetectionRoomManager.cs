@@ -82,6 +82,11 @@ namespace Edgar.Unity.Examples
                 StartCoroutine(SpawnEnemies());
 
             }
+            else if(room.Type != RoomType.Spawn)
+            {
+                CloseDoors();
+                OpeningDoors(enemies);
+            }
            StartCoroutine(ExploreRoom());
         }
         /// <summary>
@@ -140,23 +145,13 @@ namespace Edgar.Unity.Examples
                                         {
                                             tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal + dir), TileFlags.None);
                                             tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal + dir),new Color(0.35f,0.35f,0.35f,1) );
-                                            
-                                               
-                                            
-                                           
-                                        }
-                                         
-                                    }
-                                    
+                                        }   
+                                    }    
                                 }
-
-
                             }
                         }
-
                     }
                 }
-
             }
         }
         
@@ -254,6 +249,15 @@ namespace Edgar.Unity.Examples
             {
                 StartCoroutine(ExploreRoom());
             }
+            GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach(GameObject enemy in enemys)
+            {
+                enemies.Add(enemy);
+            }
+
+            
+            
+
             
         }
 
@@ -392,7 +396,7 @@ namespace Edgar.Unity.Examples
         /// <returns></returns>
         private bool ShouldSpawnEnemies()
         {
-            return Cleared == false && EnemiesSpawned == false && (room.Type == RoomType.Normal || room.Type == RoomType.Hub || room.Type == RoomType.Boss);
+            return Cleared == false && EnemiesSpawned == false && room.Type == RoomType.Hub ;
         }
     }
 }
