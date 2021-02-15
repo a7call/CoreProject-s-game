@@ -114,9 +114,7 @@ namespace Edgar.Unity.Examples
         }
        
         Tilemap MinimapInit(GeneratedLevel level)
-        {
-           
-                
+        {       
                 var tilemapsRoot = level.RootGameObject.transform.Find(GeneratorConstants.TilemapsRootName);
                 var tilemapObject = new GameObject("Minimap");
                 tilemapObject.transform.SetParent(tilemapsRoot);
@@ -125,17 +123,14 @@ namespace Edgar.Unity.Examples
                 var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
                 tilemapRenderer.sortingOrder = 20;
                 tilemapMiniMap = tilemap;
-                Debug.LogWarning(tilemapMiniMap);
+
 
                 // TODO: check that the layer exists
                 // Assign special layer
 
 
                 tilemapObject.layer = 17;
-                return tilemap;
-               
-                
-         
+                return tilemap; 
         }
 
 
@@ -212,7 +207,7 @@ namespace Edgar.Unity.Examples
         protected void AddLayerToWall(GameObject wall)
         {
             wall.layer = 10;
-            Debug.Log(wall.layer);
+
         }
         protected void AddLayerToFloor(GameObject floor)
         {

@@ -79,7 +79,7 @@ namespace Edgar.Unity.Examples
                 CloseDoors();
 
                 // Spawn enemies
-                SpawnEnemies();
+                StartCoroutine(SpawnEnemies());
 
             }
            StartCoroutine(ExploreRoom());
@@ -96,6 +96,8 @@ namespace Edgar.Unity.Examples
      
 
         public Transform TileMap;
+        
+      
         private IEnumerator ExploreRoom()
         {
             List<Vector3Int> direction = new List<Vector3Int>();
@@ -103,7 +105,6 @@ namespace Edgar.Unity.Examples
             direction.Add(new Vector3Int(-1, 0, 0));
             direction.Add(new Vector3Int(0, 1, 0));
             direction.Add(new Vector3Int(0, -1, 0));
-           
 
             if (!roomInstance.isExplored)
             {
@@ -118,7 +119,7 @@ namespace Edgar.Unity.Examples
                 {
                     foreach (Tilemap tilemapR in tilemapsRoom)
                     {
-                        if (tilemapG.ToString() != tilemapR.ToString()) continue;
+                        if (tilemapG.name != tilemapR.name) continue;
                         yield return new WaitForSeconds(0.001f);
 
                         foreach (Vector3 tileGlobal in getTheTiles(tilemapG))
@@ -130,7 +131,7 @@ namespace Edgar.Unity.Examples
                                     tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal), TileFlags.None);
                                     tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal), Color.white);
                                    
-                                    MiniMapGestion(tilemapG, tilemapG.WorldToCell(tileGlobal));
+                                    StartCoroutine(MiniMapGestion(tilemapG, tilemapG.WorldToCell(tileGlobal)));
 
 
                                     foreach (Vector3Int dir in direction)
@@ -158,32 +159,23 @@ namespace Edgar.Unity.Examples
 
             }
         }
-        public string WallsTilemaps = "Walls";
-
-        public string FloorTilemaps = "Floor";
-        [Range(0, 1)]
-        public float WallSize = 0.5f;
+        
         public Color WallsColor = new Color(0.72f, 0.72f, 0.72f);
 
         public Color FloorColor = new Color(0.18f, 0.2f, 0.34f);
 
         
         public Tilemap tilemapMiniMap;
-        
 
-        void MiniMapGestion(Tilemap sourceTilemap, Vector3Int tilemapPosition)
+        private List<Vector3Int> WallstilesPos = new List<Vector3Int>();
+        IEnumerator MiniMapGestion(Tilemap sourceTilemap, Vector3Int tilemapPosition)
         {
-            
-           
-            if (sourceTilemap.name == "Walls")
+            yield return new WaitForEndOfFrame();
+            if (sourceTilemap.name == "Floor")
             {
-                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, tilemapMiniMap, CreateTileFromColor(WallsColor));
-            }
-            else if(sourceTilemap.name == "Floor")
-            {
-                //var floorPpu = 1 / (1 + (1 - WallSize) * 2);
                 CopyTilesToLevelMap(sourceTilemap, tilemapPosition, tilemapMiniMap, CreateTileFromColor(FloorColor));
             }
+
         }
 
         private TileBase CreateTileFromColor(Color color, float pixelsPerUnit = 1)
@@ -272,17 +264,18 @@ namespace Edgar.Unity.Examples
         }
 
         public List<GameObject> enemies;
-        private void SpawnEnemies()
+        private IEnumerator SpawnEnemies()
         {
             EnemiesSpawned = true;
 
              enemies = new List<GameObject>();
 
             var totalEnemiesCount = WandererGameManager.Instance.Random.Next(4, 8);
-            
+            yield return new WaitForSeconds(1f);
 
             while (enemies.Count < totalEnemiesCount)
             {
+                yield return new WaitForSeconds (0.001f);
                 // Find random position inside floor collider bounds
                 var position = RandomPointInBounds(FloorCollider.bounds, 1f);
 
