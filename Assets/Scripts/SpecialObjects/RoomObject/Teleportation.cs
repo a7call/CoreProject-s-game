@@ -17,10 +17,6 @@ public class Teleportation : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
 
-    private void Update()
-    {
-        print(canTp);
-    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
