@@ -13,7 +13,7 @@ namespace Edgar.Unity.Examples
 
 
         public GameObject[] Enemies;
-
+        Tilemap tilemapMiniMap;
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
             
@@ -25,9 +25,7 @@ namespace Edgar.Unity.Examples
             var floors = tilemapss.transform.Find("Floor").gameObject;
             AddLayerToWall(walls);
             AddLayerToFloor(floors);
-            
-            
-
+            tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 
@@ -43,15 +41,18 @@ namespace Edgar.Unity.Examples
               
                 // Add the room manager component
                 var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
+
                 roomManager.TileMap = tilemapss;
                 
                 BlackenMap(tilemapss, roomInstance);
                 roomManager.RoomInstance = roomInstance;
                 
-               
-                     
+                roomManager.tilemapMiniMap = tilemapMiniMap;
+
+
+
                     // Add current room detection handler
-                    floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
+                floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
 
                 if (WandererGameManager.Instance != null)
                 {
@@ -112,6 +113,31 @@ namespace Edgar.Unity.Examples
            
         }
        
+        Tilemap MinimapInit(GeneratedLevel level)
+        {
+           
+                
+                var tilemapsRoot = level.RootGameObject.transform.Find(GeneratorConstants.TilemapsRootName);
+                var tilemapObject = new GameObject("Minimap");
+                tilemapObject.transform.SetParent(tilemapsRoot);
+                tilemapObject.transform.localPosition = Vector3.zero;
+                var tilemap = tilemapObject.AddComponent<Tilemap>();
+                var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
+                tilemapRenderer.sortingOrder = 20;
+                tilemapMiniMap = tilemap;
+                Debug.LogWarning(tilemapMiniMap);
+
+                // TODO: check that the layer exists
+                // Assign special layer
+
+
+                tilemapObject.layer = 17;
+                return tilemap;
+               
+                
+         
+        }
+
 
         void BlackenMap(Transform tilemaps, RoomInstance roomInstance)
         {

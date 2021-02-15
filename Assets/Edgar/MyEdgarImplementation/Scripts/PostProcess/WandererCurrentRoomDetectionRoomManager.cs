@@ -166,35 +166,24 @@ namespace Edgar.Unity.Examples
         public Color WallsColor = new Color(0.72f, 0.72f, 0.72f);
 
         public Color FloorColor = new Color(0.18f, 0.2f, 0.34f);
-        Tilemap MinimapInit()
-        {
-            var tilemapsRoot = TileMap;
-            var tilemapObject = new GameObject("Minimap");
-            tilemapObject.transform.SetParent(tilemapsRoot);
-            tilemapObject.transform.localPosition = Vector3.zero;
-            var tilemap = tilemapObject.AddComponent<Tilemap>();
-            var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
-            tilemapRenderer.sortingOrder = 20;
 
-            // TODO: check that the layer exists
-            // Assign special layer
-
-
-            tilemapObject.layer = 17;
-            return tilemap;
-        }
+        
+        public Tilemap tilemapMiniMap;
+        
 
         void MiniMapGestion(Tilemap sourceTilemap, Vector3Int tilemapPosition)
         {
             
-          
-                print("test");
-                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, MinimapInit(), CreateTileFromColor(WallsColor));
-            
            
-                var floorPpu = 1 / (1 + (1 - WallSize) * 2);
-                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, MinimapInit(), CreateTileFromColor(FloorColor, floorPpu));
-           
+            if (sourceTilemap.name == "Walls")
+            {
+                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, tilemapMiniMap, CreateTileFromColor(WallsColor));
+            }
+            else if(sourceTilemap.name == "Floor")
+            {
+                //var floorPpu = 1 / (1 + (1 - WallSize) * 2);
+                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, tilemapMiniMap, CreateTileFromColor(FloorColor));
+            }
         }
 
         private TileBase CreateTileFromColor(Color color, float pixelsPerUnit = 1)
@@ -219,9 +208,6 @@ namespace Edgar.Unity.Examples
         private void CopyTilesToLevelMap( Tilemap sourceTilemap, Vector3Int tilemapPosition ,  Tilemap levelMapTilemap, TileBase levelMapTile, Predicate<TileBase> tileFilter = null)
         {
             // Go through the tilemaps with the correct name
-           
-        
-
                     // Check if there is a tile at a given position
                     var originalTile = sourceTilemap.GetTile(tilemapPosition);
                      
@@ -242,8 +228,6 @@ namespace Edgar.Unity.Examples
                         }
                     }
         }
-
-
 
         public List<Vector3> getTheTiles(Tilemap tileMap)
         {
