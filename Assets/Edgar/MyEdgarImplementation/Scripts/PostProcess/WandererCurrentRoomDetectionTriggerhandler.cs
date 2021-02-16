@@ -21,11 +21,11 @@ namespace Edgar.Unity.Examples
                 roomManager?.OnRoomEnter(otherCollider.gameObject);
 
                 // Handle Fog of War
-              /*  if (roomInstance.IsCorridor)
-                {
+              // if (roomInstance.IsCorridor)
+                //{
                     FogOfWar.Instance?.RevealRoomAndNeighbors(roomInstance);
-                }
-              */
+                //}
+             
             }
         }
         public void OnTriggerExit2D(Collider2D otherCollider)

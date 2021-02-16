@@ -87,7 +87,7 @@ namespace Edgar.Unity.Examples
                 CloseDoors();
                 OpeningDoors(enemies);
             }
-            StartCoroutine(ExploreRoom());
+          //  StartCoroutine(ExploreRoom());
         }
         /// <summary>
         /// Gets called when a player leaves the room.

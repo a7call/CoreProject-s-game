@@ -44,7 +44,7 @@ namespace Edgar.Unity.Examples
 
                 roomManager.TileMap = tilemapss;
                 
-                BlackenMap(tilemapss, roomInstance);
+               // BlackenMap(tilemapss, roomInstance);
                 roomManager.RoomInstance = roomInstance;
                 
                 roomManager.tilemapMiniMap = tilemapMiniMap;

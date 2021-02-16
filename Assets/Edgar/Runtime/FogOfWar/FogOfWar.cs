@@ -204,10 +204,11 @@ namespace Edgar.Unity
                 room
             };
 
-            foreach (var roomToExplore in room.Doors.Select(x => x.ConnectedRoomInstance))
+           /* foreach (var roomToExplore in room.Doors.Select(x => x.ConnectedRoomInstance))
             {
                 roomsToExplore.Add(roomToExplore);
             }
+           */
 
             RevealRooms(roomsToExplore, waveOrigin, revealImmediately);
         }
@@ -281,10 +282,11 @@ namespace Edgar.Unity
                         var neighbor = door.ConnectedRoomInstance;
 
                         // We only need corridors that should not be completely revealed
-                        if (!neighbor.IsCorridor || roomsToReveal.Contains(neighbor))
+                      if (roomsToReveal.Contains(neighbor))
                         {
                             continue;
                         }
+                      
 
                         var neighborOutline = GetPolygonPoints(neighbor.OutlinePolygon);
 
@@ -296,11 +298,25 @@ namespace Edgar.Unity
                             ? (Func<Vector2Int, float>) (x => Mathf.Abs(x.y - doorPoint.y)) 
                             : x => Mathf.Abs(x.x - doorPoint.x);
 
+                        var getSideDistance = door.IsHorizontal ? (Func<Vector2Int,float>) (x=> x.x-1 -doorPoint.x) : x => x.y-1 - doorPoint.y;
+
                         // Using the getDistance() function compute whit corridor tiles should be revealed
-                        var closeTiles = neighborOutline
-                            .Where(x => getDistance(x) >= 1 && getDistance(x) <= RevealCorridorsTiles)
-                            .Where(x => !visionGrid.GetTile(x).IsRevealed)
-                            .ToList();
+                        var closeTiles = new List<Vector2Int>();
+                        if (!neighbor.IsCorridor)
+                        {
+                            closeTiles = neighborOutline
+                           .Where(x => getDistance(x) >= 1 && getDistance(x) <= RevealCorridorsTiles && getSideDistance(x) >= -2 && getSideDistance(x) <= 1)
+                           .Where(x => !visionGrid.GetTile(x).IsRevealed)
+                           .ToList();
+                        }
+                        else
+                        {
+                            closeTiles = neighborOutline
+                          .Where(x => getDistance(x) >= 1 && getDistance(x) <= RevealCorridorsTiles)
+                          .Where(x => !visionGrid.GetTile(x).IsRevealed)
+                          .ToList();
+                        }
+                        
 
                         var extendedCloseTiles = TransitionMode == FogOfWarTransitionMode.Smooth 
                             ? GetExtendedOutline(new HashSet<Vector2Int>(closeTiles))
@@ -354,6 +370,7 @@ namespace Edgar.Unity
 
             return tiles;
         }
+        
 
         private IEnumerator RevealRoomCoroutine(List<RoomInstance> rooms, Vector2 playerPosition, bool revealImmediately = false)
         {
