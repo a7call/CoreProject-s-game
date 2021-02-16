@@ -25,9 +25,12 @@ public class WeaponsManagerSelected : MonoBehaviour
     public Sprite distanceSprite;
     public string ammoText;
 
+    //protected Player player;
+
     private void Start()
     {
         SelectWeapon();
+        //player = GetComponentInParent<Player>();
     }
 
     private void Update()
@@ -37,6 +40,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         ChangeWeapons();
         //WhichWeaponScroll();
         UpdateUIWeapon();
+        MoveWeapon();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -290,4 +294,64 @@ public class WeaponsManagerSelected : MonoBehaviour
             }
         }
     }
+
+
+    protected Weapons weapons;
+    protected SpriteRenderer spriteRenderer;
+    protected Vector3 rotationVector;
+    //[SerializeField]protected Vector3 OffSetPositionArme;
+
+    protected void MoveWeapon()
+    {
+        if (isPlayingCac)
+        {
+            Vector3 PositionArme = cacWeaponsList[selectedCacWeapon].transform.position - transform.position;
+
+            weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
+            spriteRenderer = weapons.GetComponent<SpriteRenderer>();
+
+            Vector3 dir = (weapons.posOfPoint - transform.position).normalized;
+
+            if (dir.x <= 0)
+            {
+                spriteRenderer.flipX = true;
+                transform.position = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z) + transform.position;
+            }
+            else if (dir.x > 0)
+            {
+                spriteRenderer.flipX = false;
+                transform.position = PositionArme + transform.position;
+            }
+
+            rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.Euler(rotationVector);
+        }
+        if (isPlayingDistance)
+        {
+            Vector3 PositionArme = distanceWeaponsList[selectedDistanceWeapon].transform.position - transform.position;
+
+            weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
+            spriteRenderer = weapons.GetComponent<SpriteRenderer>();
+
+            Vector3 dir = (weapons.posOfPoint - transform.position).normalized;
+
+            if (dir.x <= 0)
+            {
+                spriteRenderer.flipX = true;
+                transform.position = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z) + transform.position;
+            }
+            else if (dir.x > 0)
+            {
+                spriteRenderer.flipX = false;
+                transform.position = PositionArme + transform.position;
+            }
+
+            rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.Euler(rotationVector);
+        }
+        
+    }
+    
 }

@@ -17,6 +17,7 @@ using UnityEngine;
 public class Cac : Enemy
 {
     [SerializeField] protected CacScriptableObject CacDatas;
+    public Vector3 attackDir;
 
     //DontFuckModule
     public static bool IsDontFuckWithMe = false;
@@ -94,8 +95,8 @@ public class Cac : Enemy
     //Get the player postion at all time
     protected virtual void GetPlayerPos()
     {
-        Vector2 attackDir = target.position - transform.position;
-        attackPoint.position = new Vector2(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
+        attackDir = target.position - transform.position;
+        attackPoint.position = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
     }
 
 

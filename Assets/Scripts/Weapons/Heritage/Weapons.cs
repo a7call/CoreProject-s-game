@@ -26,6 +26,7 @@ public class Weapons : MonoBehaviour
     public bool isAttacking = false;
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;
+    public Vector3 posOfPoint;
 
     protected virtual void Awake()
     {
@@ -41,7 +42,7 @@ public class Weapons : MonoBehaviour
         screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
 
-        Vector2 posOfPoint = new Vector2(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
+        posOfPoint = new Vector3(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
         attackPoint.position = posOfPoint;
     }
 
