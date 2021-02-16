@@ -12,8 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: -1331.3167, y: 152.3885}
+  Position: {x: -1327.8945, y: 150.10706}
   Type: 3
+--- !u!114 &-7516211885239612365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: -1327.6947, y: 237.52922}
+  Type: 2
+--- !u!114 &-6120936905286053302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608b3e92561274e4685b11b79263f337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  From: {fileID: -8121719124923575822}
+  To: {fileID: -7516211885239612365}
+  IsLocked: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +56,8 @@ MonoBehaviour:
   m_Name: LevelGraph
   m_EditorClassIdentifier: 
   Connections:
-  - {fileID: 224379891586793708}
+  - {fileID: -6120936905286053302}
+  - {fileID: 4973872512235283182}
   CorridorIndividualRoomTemplates:
   - {fileID: 3559113929631548473, guid: efe520a88507d6449a3a7f15ce188fde, type: 3}
   - {fileID: 2575767481118213129, guid: bb3e28c876cc5894e8eceb5de1def0f2, type: 3}
@@ -39,12 +69,13 @@ MonoBehaviour:
   Rooms:
   - {fileID: -8121719124923575822}
   - {fileID: 6366544641711966003}
+  - {fileID: -7516211885239612365}
   EditorData:
-    PanOffset: {x: 1673.2594, y: -73.29489}
+    PanOffset: {x: 1668.6964, y: -71.01344}
     Zoom: 0.8766365
   RoomType: WandererRoom
   ConnectionType: Edgar.Unity.WandererConnection
---- !u!114 &224379891586793708
+--- !u!114 &4973872512235283182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 608b3e92561274e4685b11b79263f337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  From: {fileID: -8121719124923575822}
+  From: {fileID: -7516211885239612365}
   To: {fileID: 6366544641711966003}
   IsLocked: 0
 --- !u!114 &6366544641711966003
@@ -71,5 +102,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: -1329.9763, y: 231.8256}
+  Position: {x: -1329.9763, y: 301.40976}
   Type: 1

@@ -42,7 +42,7 @@ namespace Edgar.Unity.Examples
         /// </summary>
         public Collider2D FloorCollider;
 
-        
+
 
         /// <summary>
         /// Room instance of the corresponding room.
@@ -59,13 +59,13 @@ namespace Edgar.Unity.Examples
         /// Gets called when a player enters the room.
         /// </summary>
         /// <param name="player"></param>
-        
+
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
 
-           
+
 
             if (!Visited && roomInstance != null)
             {
@@ -82,12 +82,12 @@ namespace Edgar.Unity.Examples
                 StartCoroutine(SpawnEnemies());
 
             }
-            else if(room.Type != RoomType.Spawn)
+            else if (room.Type != RoomType.Spawn)
             {
                 CloseDoors();
                 OpeningDoors(enemies);
             }
-           StartCoroutine(ExploreRoom());
+            StartCoroutine(ExploreRoom());
         }
         /// <summary>
         /// Gets called when a player leaves the room.
@@ -98,13 +98,14 @@ namespace Edgar.Unity.Examples
             //Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
         }
-     
+
 
         public Transform TileMap;
-        
-      
+
+
         private IEnumerator ExploreRoom()
         {
+            yield return new WaitForSeconds(0.0001f);
             List<Vector3Int> direction = new List<Vector3Int>();
             direction.Add(new Vector3Int(1, 0, 0));
             direction.Add(new Vector3Int(-1, 0, 0));
@@ -118,42 +119,41 @@ namespace Edgar.Unity.Examples
 
                 GameObject TilMapObj = TileMap.gameObject;
                 var tilemapGoblal = RoomTemplateUtils.GetTilemaps(TilMapObj);
-               
+
                 var tilemapsRoom = RoomTemplateUtils.GetTilemaps(roomInstance.RoomTemplateInstance);
                 foreach (Tilemap tilemapG in tilemapGoblal)
                 {
                     foreach (Tilemap tilemapR in tilemapsRoom)
                     {
                         if (tilemapG.name != tilemapR.name) continue;
-                        yield return new WaitForSeconds(0.001f);
 
-                        foreach (Vector3 tileGlobal in getTheTiles(tilemapG))
+                        foreach (Vector3 tileRoom in getTheTiles(tilemapR))
                         {
-                            foreach (Vector3 tileRoom in getTheTiles(tilemapR))
+
+
+                            
+                            tilemapG.SetTileFlags(tilemapG.WorldToCell(tileRoom), TileFlags.None);
+                            tilemapG.SetColor(tilemapG.WorldToCell(tileRoom), Color.white);
+
+                            StartCoroutine(MiniMapGestion(tilemapG, tilemapG.WorldToCell(tileRoom)));
+
+
+                            foreach (Vector3Int dir in direction)
                             {
-                                if (tileRoom == tileGlobal)
+                                if (!tilemapR.HasTile(tilemapR.WorldToCell(tileRoom) + dir) && tilemapG.GetColor(tilemapG.WorldToCell(tileRoom) + dir) != Color.white)
                                 {
-                                    tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal), TileFlags.None);
-                                    tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal), Color.white);
-                                   
-                                    StartCoroutine(MiniMapGestion(tilemapG, tilemapG.WorldToCell(tileGlobal)));
-
-
-                                    foreach (Vector3Int dir in direction)
-                                    {
-                                        if (!tilemapR.HasTile(tilemapR.WorldToCell(tileGlobal) + dir) && tilemapG.GetColor(tilemapG.WorldToCell(tileGlobal) + dir) != Color.white)
-                                        {
-                                            tilemapG.SetTileFlags(tilemapG.WorldToCell(tileGlobal + dir), TileFlags.None);
-                                            tilemapG.SetColor(tilemapG.WorldToCell(tileGlobal + dir),new Color(0.35f,0.35f,0.35f,1) );
-                                        }   
-                                    }    
+                                    tilemapG.SetTileFlags(tilemapG.WorldToCell(tileRoom + dir), TileFlags.None);
+                                    tilemapG.SetColor(tilemapG.WorldToCell(tileRoom + dir), new Color(0.35f, 0.35f, 0.35f, 1));
                                 }
                             }
                         }
                     }
+
                 }
             }
         }
+    
+
         
         public Color WallsColor = new Color(0.72f, 0.72f, 0.72f);
 

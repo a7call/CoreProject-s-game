@@ -24,6 +24,7 @@ namespace Edgar.Unity
             CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual);
             CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+           
         }
         /// <summary>
         /// Helper to create a tilemap layer
@@ -41,6 +42,16 @@ namespace Edgar.Unity
             tilemapRenderer.sortingLayerName = sortingLayer;
             return tilemapObject;
         }
+
+        protected GameObject ObjectContainer(string name, GameObject parentObject)
+        {
+            // Create a new game object that will hold our tilemap layer
+            var ObjectContainer = new GameObject(name);
+            // Make sure to correctly set the parent
+            ObjectContainer.transform.SetParent(parentObject.transform.parent.transform);
+            return ObjectContainer;
+        }
+
         /// <summary>
         /// Helper to add a collider to a given tilemap game object.
         /// </summary>
