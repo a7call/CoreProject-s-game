@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DistorsionTemporelle : CdObjects
 {
-     private float currentSlowMotion = 0f;
+    private float currentSlowMotion = 0f;
     [SerializeField] private float slowTimeAllowed = 3f;
     private float newTime = 0.5f; // En mettant 0.5, le jeu va deux fois moins vite
 
