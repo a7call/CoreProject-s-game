@@ -574,10 +574,13 @@ namespace Edgar.Unity
         {
             if (visionTextures == null)
             {
+               
                 return null;
+                
             }
 
             materialRetrieved = true;
+
 
             if (camera == null)
             {
