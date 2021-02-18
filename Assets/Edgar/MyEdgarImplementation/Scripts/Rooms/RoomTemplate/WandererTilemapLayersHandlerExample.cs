@@ -25,7 +25,7 @@ namespace Edgar.Unity
             CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual, diffuseMaterial);
             CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual, diffuseMaterial);
             CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual, diffuseMaterial);
-           
+            CreateObjectContainer("LightContainer", gameObject);
         }
         /// <summary>
         /// Helper to create a tilemap layer
@@ -45,7 +45,7 @@ namespace Edgar.Unity
             return tilemapObject;
         }
 
-        protected GameObject ObjectContainer(string name, GameObject parentObject)
+        protected GameObject CreateObjectContainer(string name, GameObject parentObject)
         {
             // Create a new game object that will hold our tilemap layer
             var ObjectContainer = new GameObject(name);
