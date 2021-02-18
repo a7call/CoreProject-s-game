@@ -55,6 +55,8 @@ namespace Edgar.Unity.Examples
         private WandererRoom room;
 
         public RoomInstance RoomInstance;
+        public static RoomInstance previousRoom;
+        public static RoomInstance previousCorridor;
         /// <summary>
         /// Gets called when a player enters the room.
         /// </summary>
@@ -64,22 +66,22 @@ namespace Edgar.Unity.Examples
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
+            lightGestion();
 
-           
 
             if (!Visited && roomInstance != null)
             {
                 Visited = true;
                 UnlockDoors();
             }
-            GetLigthSwitchOn();
+           
             if (ShouldSpawnEnemies())
             {
                 // Close all neighboring doors
                 CloseDoors();
 
                 // Spawn enemies
-                //StartCoroutine(SpawnEnemies());
+                StartCoroutine(SpawnEnemies());
 
             }
             else if (room.Type != RoomType.Spawn)
@@ -97,32 +99,49 @@ namespace Edgar.Unity.Examples
         {
             //Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
-            GetLigthSwitchOFF();
+            if(!roomInstance.IsCorridor) previousRoom = roomInstance;
+            if(roomInstance.IsCorridor) previousCorridor = roomInstance;
+
         }
 
-        
-        private void GetLigthSwitchOn()
+        void lightGestion()
         {
-            print(roomInstance.RoomTemplateInstance.transform.Find("LightContainer"));
+            if (!roomInstance.IsCorridor && previousRoom != null)
+            {
+                if (previousRoom == roomInstance)
+                {
+                    foreach (RoomInstance room in roomInstance.Doors.Select(x => x.ConnectedRoomInstance))
+                    {
+                        foreach (RoomInstance roomInstance in room.Doors.Select(x => x.ConnectedRoomInstance))
+                        {
+                            if (roomInstance != previousRoom)
+                            {
+                                GetLigthSwitchOFF(roomInstance);
+                            }
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    GetLigthSwitchOFF(previousRoom);
+                }
+
+            }
+            if (roomInstance.IsCorridor && previousCorridor != null && previousCorridor != roomInstance)
+            {
+                GetLigthSwitchOFF(previousCorridor);
+            }
+        }
+        
+        private void GetLigthSwitchOFF(RoomInstance roomInstance)
+        {
+           
             if(roomInstance.RoomTemplateInstance.transform.Find("LightContainer") != null)
             {
                 Transform LigthContainerObject = roomInstance.RoomTemplateInstance.transform.Find("LightContainer");
 
-                foreach (Transform child in LigthContainerObject.transform)
-                {
-                    if (!child.gameObject.activeSelf)
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-                }
-            } 
-           
-        }
-        private void GetLigthSwitchOFF()
-        {
-            if (roomInstance.RoomTemplateInstance.transform.Find("LightContainer") != null)
-            {
-                Transform LigthContainerObject = roomInstance.RoomTemplateInstance.transform.Find("LightContainer");
                 foreach (Transform child in LigthContainerObject.transform)
                 {
                     if (child.gameObject.activeSelf)
@@ -130,9 +149,10 @@ namespace Edgar.Unity.Examples
                         child.gameObject.SetActive(false);
                     }
                 }
-            }
-
+            } 
+           
         }
+       
 
         public Transform TileMap;
 
@@ -281,7 +301,7 @@ namespace Edgar.Unity.Examples
             room = roomInstance?.Room as WandererRoom;
             if(room.Type == RoomType.Spawn)
             {
-                GetLigthSwitchOn();
+                
             }
             GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
             foreach(GameObject enemy in enemys)

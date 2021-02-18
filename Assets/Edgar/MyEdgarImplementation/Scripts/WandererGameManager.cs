@@ -106,6 +106,7 @@ namespace Edgar.Unity.Examples
             {
                 currentRoom = nextCurrentRoom;
                 nextCurrentRoom = null;
+                
                 RefreshLevelInfo();
             }
         }

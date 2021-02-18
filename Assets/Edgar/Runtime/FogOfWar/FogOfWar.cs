@@ -204,11 +204,11 @@ namespace Edgar.Unity
                 room
             };
 
-           /* foreach (var roomToExplore in room.Doors.Select(x => x.ConnectedRoomInstance))
+            foreach (var roomToExplore in room.Doors.Select(x => x.ConnectedRoomInstance))
             {
                 roomsToExplore.Add(roomToExplore);
             }
-           */
+           
 
             RevealRooms(roomsToExplore, waveOrigin, revealImmediately);
         }
@@ -282,7 +282,7 @@ namespace Edgar.Unity
                         var neighbor = door.ConnectedRoomInstance;
 
                         // We only need corridors that should not be completely revealed
-                      if (roomsToReveal.Contains(neighbor))
+                      if (!neighbor.IsCorridor && roomsToReveal.Contains(neighbor))
                         {
                             continue;
                         }
@@ -302,20 +302,12 @@ namespace Edgar.Unity
 
                         // Using the getDistance() function compute whit corridor tiles should be revealed
                         var closeTiles = new List<Vector2Int>();
-                        if (!neighbor.IsCorridor)
-                        {
-                            closeTiles = neighborOutline
-                           .Where(x => getDistance(x) >= 1 && getDistance(x) <= RevealCorridorsTiles && getSideDistance(x) >= -2 && getSideDistance(x) <= 1)
-                           .Where(x => !visionGrid.GetTile(x).IsRevealed)
-                           .ToList();
-                        }
-                        else
-                        {
-                            closeTiles = neighborOutline
+                       
+                           closeTiles = neighborOutline
                           .Where(x => getDistance(x) >= 1 && getDistance(x) <= RevealCorridorsTiles)
                           .Where(x => !visionGrid.GetTile(x).IsRevealed)
                           .ToList();
-                        }
+                       
                         
 
                         var extendedCloseTiles = TransitionMode == FogOfWarTransitionMode.Smooth 
