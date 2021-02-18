@@ -16,7 +16,6 @@ using UnityEngine.EventSystems;
 public class Teleportation : MonoBehaviour
 {
     // Joueur
-    private Player player;
     private PlayerHealth playerHealth;
     //public GameObject portal;
 
@@ -30,26 +29,34 @@ public class Teleportation : MonoBehaviour
     [SerializeField] private GameObject[] teleporteurs;
 
     // Taille des TP
-    private float initialTpSize;
-    private float bigTpSize = 10;
+    private Vector2 initialTpScale;
+    private float scaleUpTpSize = 20f;
+    private float smooth = 5f;
 
     // Timer
-    private bool isTimerStarted = false;
+    private ScaleOverTime scaleOverTime;
+    public bool isTimerStarted = false;
     private float timer;
-    private float maxTimer = 2f;
+
+    // TP Color
+    private Color activeColor = Color.white;
+    private Color disableColor = Color.black ; 
 
     private float reloadDelay = 3f;
-    [SerializeField] private static bool canTp = true;
+    //[SerializeField] private static bool canTp = true;
 
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        // Joueur
         playerHealth = FindObjectOfType<PlayerHealth>();
 
+        // TP
         teleporteurs = GameObject.FindGameObjectsWithTag("TP");
-        initialTpSize = transform.localScale.x;
+        scaleOverTime = FindObjectOfType<ScaleOverTime>();
+        initialTpScale = transform.localScale;
 
+        // TimeManager & Camera
         timeManager = FindObjectOfType<TimeManager>();
         cameraUnzoom = FindObjectOfType<CameraZoom>();
     }
@@ -72,16 +79,19 @@ public class Teleportation : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            this.gameObject.GetComponent<SpriteRenderer>().color = disableColor;
+            this.gameObject.GetComponent<ScaleOverTime>().enabled = true;
             isTimerStarted = true;
             cameraUnzoom.isUnzoomed = true;
-            IncreaseTpSize();
+            //IncreaseTpSize();
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && canTp)
+        if (collision.CompareTag("Player") && isTimerStarted)
         {
+            //IncreaseTpSize();
             timeManager.DoSlowMotion();
         }
     }
@@ -90,6 +100,9 @@ public class Teleportation : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            // A mettre ailleurs, test;
+            this.gameObject.GetComponent<SpriteRenderer>().color = activeColor;
+            scaleOverTime.timer = 0f;
             isTimerStarted = false;
             timer = 0;
             cameraUnzoom.isUnzoomed = false;
@@ -99,7 +112,7 @@ public class Teleportation : MonoBehaviour
 
     private void DisableTp()
     {
-        if (timer > maxTimer)
+        if (timer > scaleOverTime.growTime)
         {
             isTimerStarted = false;
             timer = 0;
@@ -114,7 +127,9 @@ public class Teleportation : MonoBehaviour
         {
             if(tp.name != this.gameObject.name)
             {
-                tp.transform.localScale = new Vector2(bigTpSize, bigTpSize);
+                Vector2 scaleUpTp = new Vector2(scaleUpTpSize, scaleUpTpSize);
+                tp.transform.localScale = Vector2.Lerp(initialTpScale, scaleUpTp, smooth*Time.deltaTime);
+                print(tp.transform.localScale);
             }
         }
     }
@@ -125,7 +140,7 @@ public class Teleportation : MonoBehaviour
         {
             if(tp.name != this.gameObject.name)
             {
-                tp.transform.localScale = new Vector2(initialTpSize, initialTpSize);
+                tp.transform.localScale = initialTpScale;
             }
         }
     }

@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
-    private int normal = 5; // Taille classique
-    // Dézoomer sur la salle pendant que le joueur utilisera le TP (Récupérer la taille de la salle)
-    private int unZoom = 15;
+    private float normal; // Taille classique de la caméra
+    private int unZoom = 15; // Taille de la caméra lorsqu'on dézoom (A definir -> taille d'une room)
     private float smooth = 5;
 
-    // Permet de savoir si elle est unZoomed
+    // Permet de savoir si la caméra est dézoomée ou non 
     public bool isUnzoomed = false;
+
+    private void Start()
+    {
+        normal = GetComponent<Camera>().orthographicSize;
+    }
 
     private void Update()
     {

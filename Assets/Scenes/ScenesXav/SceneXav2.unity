@@ -223,7 +223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &35170083
 Transform:
   m_ObjectHideFlags: 0
@@ -575,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 250186850263559010, guid: 755a3bf6a529d4cbdbfe26deb53ed1c1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 250186850614968442, guid: 755a3bf6a529d4cbdbfe26deb53ed1c1, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -859,7 +859,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.8951597
+  orthographic size: 6.769581
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -976,6 +976,7 @@ GameObject:
   - component: {fileID: 314318348}
   - component: {fileID: 314318349}
   - component: {fileID: 314318347}
+  - component: {fileID: 314318350}
   m_Layer: 0
   m_Name: Spawn1
   m_TagString: TP
@@ -1026,6 +1027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleporteurs: []
+  isTimerStarted: 0
 --- !u!212 &314318349
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1077,6 +1079,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &314318350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314318345}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d762380beb5df2041a48f2bd9c0f0f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
+  growTime: 2
 --- !u!4 &321193681 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2023128672656592645, guid: 8831dd808e48436409b2df5d9ea64eab, type: 3}
@@ -2014,7 +2030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2463838739678964673, guid: 46e9ada170e594d2f98ce9836788bbac, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46e9ada170e594d2f98ce9836788bbac, type: 3}
@@ -3159,6 +3175,7 @@ GameObject:
   - component: {fileID: 1233890133}
   - component: {fileID: 1233890134}
   - component: {fileID: 1233890132}
+  - component: {fileID: 1233890135}
   m_Layer: 0
   m_Name: Spawn3
   m_TagString: TP
@@ -3209,6 +3226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleporteurs: []
+  isTimerStarted: 0
 --- !u!212 &1233890134
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3260,6 +3278,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1233890135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233890130}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d762380beb5df2041a48f2bd9c0f0f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
+  growTime: 2
 --- !u!114 &1270314911 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2247567197216936043, guid: d2e90ac52b7c4004f94e6a4fc42b44bc, type: 3}
@@ -3340,6 +3372,7 @@ GameObject:
   - component: {fileID: 1315908568}
   - component: {fileID: 1315908569}
   - component: {fileID: 1315908567}
+  - component: {fileID: 1315908570}
   m_Layer: 0
   m_Name: Spawn2
   m_TagString: TP
@@ -3390,6 +3423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleporteurs: []
+  isTimerStarted: 0
 --- !u!212 &1315908569
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3441,6 +3475,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1315908570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315908565}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d762380beb5df2041a48f2bd9c0f0f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
+  growTime: 2
 --- !u!4 &1326611187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4798076891483016962, guid: 926569acdce9b429c8b9e515e79e2091, type: 3}
@@ -4707,6 +4755,10 @@ PrefabInstance:
     - target: {fileID: 3877161239218046810, guid: 6a0e5c8f17317d3408fc53d155b0e407, type: 3}
       propertyPath: portal
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877161239218046810, guid: 6a0e5c8f17317d3408fc53d155b0e407, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3942279940566694858, guid: 6a0e5c8f17317d3408fc53d155b0e407, type: 3}
       propertyPath: m_RootOrder
