@@ -8,7 +8,7 @@ namespace Edgar.Unity
     [CreateAssetMenu(menuName = "Edgar/Wanderer/WandererTilemapLayersHandler", fileName = "WandererTilemapLayersHandler")]
     public class WandererTilemapLayersHandlerExample : TilemapLayersHandlerBase
     {
-        public Material diffuseMaterial;
+   
         public override void InitializeTilemaps(GameObject gameObject)
         {
             // First make sure that you add the grid component
@@ -16,21 +16,21 @@ namespace Edgar.Unity
             // If we want a different cell size, we can configure that here
             // grid.cellSize = new Vector3(1, 2, 1);
             // And now we create individual tilemap layers
-            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, 0, "Floor", TilemapRenderer.Mode.Individual, diffuseMaterial);
+            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, 0, "Floor", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(floorTilemapObject, true);
-            var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1, "Default", TilemapRenderer.Mode.Individual, diffuseMaterial);
+            var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(wallsTilemapObject);
-            var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "Default", TilemapRenderer.Mode.Individual, diffuseMaterial) ;
+            var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "Default", TilemapRenderer.Mode.Individual) ;
             AddCompositeCollider(CollideObject);
-            CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual, diffuseMaterial);
-            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual, diffuseMaterial);
-            CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual, diffuseMaterial);
+            CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             CreateObjectContainer("LightContainer", gameObject);
         }
         /// <summary>
         /// Helper to create a tilemap layer
         /// </summary>
-        protected GameObject CreateTilemapGameObject(string name, GameObject parentObject, int sortingOrder, string sortingLayer, TilemapRenderer.Mode Mode, Material material)
+        protected GameObject CreateTilemapGameObject(string name, GameObject parentObject, int sortingOrder, string sortingLayer, TilemapRenderer.Mode Mode)
         {
             // Create a new game object that will hold our tilemap layer
             var tilemapObject = new GameObject(name);
@@ -40,7 +40,7 @@ namespace Edgar.Unity
             var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
             tilemapRenderer.sortingOrder = sortingOrder;
             tilemapRenderer.mode = Mode;
-            tilemapRenderer.material = material;
+           
             tilemapRenderer.sortingLayerName = sortingLayer;
             return tilemapObject;
         }
