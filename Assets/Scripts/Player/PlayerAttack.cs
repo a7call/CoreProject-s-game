@@ -146,4 +146,14 @@ public class PlayerAttack : Player
     {
         return playerInput;
     }
+
+    public void OnSwitchToCac()
+    {
+        weaponManager.SwitchDistanceToCac();
+    }
+
+    public void OnSwitchToDistance()
+    {
+        weaponManager.SwitchCacToDistance();
+    }
 }

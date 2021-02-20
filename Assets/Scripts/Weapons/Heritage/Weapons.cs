@@ -28,6 +28,8 @@ public class Weapons : MonoBehaviour
     protected Vector3 screenPlayerPos;
     public Vector3 posOfPoint;
 
+    public Vector3 OffPositionArme;
+
     protected virtual void Awake()
     {
         this.enabled = false;
