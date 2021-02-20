@@ -25,6 +25,7 @@ namespace Edgar.Unity
             CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual);
             CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+            CreateTilemapGameObject("Grid", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             CreateObjectContainer("LightContainer", gameObject);
         }
         /// <summary>
