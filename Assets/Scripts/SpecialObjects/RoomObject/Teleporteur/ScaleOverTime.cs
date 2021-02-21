@@ -29,7 +29,7 @@ public class ScaleOverTime : MonoBehaviour
 
             yield return null;
         }
-        while (timer < growTime);
+        while (timer <= growTime);
 
         timer = 0f;
     }
@@ -44,7 +44,7 @@ public class ScaleOverTime : MonoBehaviour
 
             yield return null;
         }
-        while (timer < growTime);
+        while (timer <= growTime);
 
         timer = 0f;
     }
