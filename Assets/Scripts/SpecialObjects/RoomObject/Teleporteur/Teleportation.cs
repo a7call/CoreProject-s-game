@@ -16,6 +16,7 @@ using UnityEngine.EventSystems;
 public class Teleportation : MonoBehaviour
 {
     // Joueur
+    private Player player;
     private PlayerHealth playerHealth;
 
     // Caméra
@@ -38,15 +39,17 @@ public class Teleportation : MonoBehaviour
 
     // TP Color
     private Color activeColor = Color.white;
-    private Color disableColor = Color.black ; 
+    private Color disableColor = Color.black ;
 
+    [SerializeField] private LayerMask layer;
+    private static bool canTp = true;
     private float reloadDelay = 3f;
-    //[SerializeField] private static bool canTp = true;
 
 
     private void Start()
     {
         // Joueur
+        player = FindObjectOfType<Player>();
         playerHealth = FindObjectOfType<PlayerHealth>();
 
         // TP
@@ -62,6 +65,7 @@ public class Teleportation : MonoBehaviour
     {
         if(isInRange && isContact) EnableTp();
         if(!isInRange && isContact) DisableTp();
+        Test();
     }
 
     private void EnableTp()
@@ -82,8 +86,16 @@ public class Teleportation : MonoBehaviour
     {
         if (!isInRange && isContact)
         {
+            isContact = false;
             this.gameObject.GetComponent<SpriteRenderer>().color = activeColor;
-            //StartCoroutine(scaleOverTime.Decrease());
+
+            foreach (GameObject tp in teleporteurs)
+            {
+                if (tp.name != this.gameObject.name)
+                {
+                    StartCoroutine(tp.GetComponent<ScaleOverTime>().Decrease());
+                }
+            }
         }
     }
 
@@ -96,19 +108,6 @@ public class Teleportation : MonoBehaviour
             cameraUnzoom.isUnzoomed = true;
         }
     }
-    private IEnumerator TemporisationCoroutine()
-    {
-        yield return new WaitForEndOfFrame();
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            //IncreaseTpSize();
-            timeManager.DoSlowMotion();
-        }
-    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -116,47 +115,65 @@ public class Teleportation : MonoBehaviour
         {
             isInRange = false;
             isContact = true;
-            //scaleOverTime.timer = 0f;
             cameraUnzoom.isUnzoomed = false;
-           // RenitializeTpSize();
         }
     }
 
-    //private void DisableTp()
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            timeManager.DoSlowMotion();
+        }
+    }
+
+    //void Test()
     //{
-    //    if (timer > scaleOverTime.growTime)
+    //    if (isInRange && canTp && Input.GetMouseButtonDown(0))
     //    {
-    //        isTimerStarted = false;
-    //        timer = 0;
-    //        playerHealth.currentHealth -= 1;
+    //        RaycastHit hit;
+    //        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+    //        Vector2 maPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //        print(maPos);
+    //        Debug.DrawRay(player.transform.position, maPos, Color.yellow, 10f);
+
+    //        if (Physics2D.Raycast(player.transform.position, maPos, layer))
+    //        //if(Physics.Raycast(ray, out hit))
+    //        {
+    //            print("marche");
+    //            //if (hit.transform.CompareTag("TP"))
+    //            //{
+    //            //    print("Hello");
+    //            //}
+    //        }
     //    }
     //}
-
-
-    private void IncreaseTpSize()
+    void Test()
     {
-        foreach (GameObject tp in teleporteurs)
+        if (isInRange && canTp && Input.GetMouseButtonDown(0))
         {
-            if(tp.name != this.gameObject.name)
+            Vector3 mousePos = Input.mousePosition;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            mousePos.z = 0;+
+            print(mousePos);
+            Debug.DrawRay(player.transform.position, mousePos, Color.yellow, 10f);
+
+            if(Physics2D.Raycast(player.transform.position, (mousePos-player.transform.position).normalized, layer))
             {
-                Vector2 scaleUpTp = new Vector2(scaleUpTpSize, scaleUpTpSize);
-                tp.transform.localScale = Vector2.Lerp(initialTpScale, scaleUpTp, smooth*Time.deltaTime);
-                print(tp.transform.localScale);
+                print("hello");
             }
         }
     }
 
-    //private void RenitializeTpSize()
+    //void OnMouseDown()
     //{
-    //    foreach(GameObject tp in teleporteurs)
+    //    if (isInRange)
     //    {
-    //        if(tp.name != this.gameObject.name)
-    //        {
-    //            tp.transform.localScale = initialTpScale;
-    //        }
+    //        Debug.Log(gameObject.name);
     //    }
     //}
-    
+
     //private IEnumerator Teleporte()
     //{
     //    Teleportation.canTp = false;

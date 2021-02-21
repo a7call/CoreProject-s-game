@@ -17,7 +17,7 @@ public class ArmeEnemy : MonoBehaviour
         spriteRenderer = GetComponent <SpriteRenderer>();
         enemy = GetComponentInParent<Enemy>();
 
-        PositionArme = transform.position - enemy.transform.position;
+        PositionArme = transform.localPosition;
 
     }
 
@@ -30,12 +30,12 @@ public class ArmeEnemy : MonoBehaviour
         if (dir.x <= 0)
         {
             spriteRenderer.flipX = true;
-            transform.position = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z) + enemy.transform.position;
+            transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z);
         }
         else if (dir.x > 0)
         {
             spriteRenderer.flipX = false;
-            transform.position = PositionArme + enemy.transform.position;
+            transform.localPosition = PositionArme;
         }
 
         rotationVector.z = Mathf.Atan(dir.y / dir.x)*Mathf.Rad2Deg;

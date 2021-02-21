@@ -35,8 +35,8 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     private void Update()
     {
-        SwitchCacToDistance();
-        SwitchDistanceToCac();
+        //SwitchCacToDistance();
+        //SwitchDistanceToCac();
         ChangeWeapons();
         //WhichWeaponScroll();
         UpdateUIWeapon();
@@ -49,7 +49,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         {
             collision.transform.parent = gameObject.transform;
             collision.GetComponent<Weapons>().enabled = true;
-            collision.transform.position = gameObject.transform.position;
+            collision.transform.position = gameObject.transform.localPosition;
             collision.transform.gameObject.SetActive(false);
             collision.GetComponent<Collider2D>().enabled = false;
 
@@ -130,10 +130,8 @@ public class WeaponsManagerSelected : MonoBehaviour
     }
 
     // Actuellement, il appuie sur deux touches différentes pour choisir le mode
-    private void SwitchCacToDistance()
+    public void SwitchCacToDistance()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
             isPlayingCac = false;
             isPlayingDistance = true;
 
@@ -147,13 +145,11 @@ public class WeaponsManagerSelected : MonoBehaviour
                 {
                     cacWeapon.gameObject.SetActive(false);
                 }
-        }
     }
 
-    private void SwitchDistanceToCac()
+    public void SwitchDistanceToCac()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
+      
             isPlayingCac = true;
             isPlayingDistance = false;
 
@@ -167,7 +163,7 @@ public class WeaponsManagerSelected : MonoBehaviour
                 {
                     distanceWeapon.gameObject.SetActive(false);
                 }
-        }
+     
     }
 
     private void ChangeWeapons()
@@ -299,52 +295,60 @@ public class WeaponsManagerSelected : MonoBehaviour
     protected Weapons weapons;
     protected SpriteRenderer spriteRenderer;
     protected Vector3 rotationVector;
-    //[SerializeField]protected Vector3 OffSetPositionArme;
+
+    protected Vector3 screenMousePos;
+    protected Vector3 screenPlayerPos;
 
     protected void MoveWeapon()
     {
+
+        // position de la souris sur l'écran 
+        screenMousePos = Input.mousePosition;
+        // position du player en pixel sur l'écran 
+        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+        // position du point d'attaque 
+        Vector3 dir = new Vector3(-transform.position.x + (screenMousePos - screenPlayerPos).x, -transform.position.y + (screenMousePos - screenPlayerPos).y);
+        
+
         if (isPlayingCac)
         {
-            Vector3 PositionArme = cacWeaponsList[selectedCacWeapon].transform.position - transform.position;
-
+            
             weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
             spriteRenderer = weapons.GetComponent<SpriteRenderer>();
-
-            Vector3 dir = (weapons.posOfPoint - transform.position).normalized;
-
+            Vector3 PositionArme = weapons.OffPositionArme;
+           
             if (dir.x <= 0)
             {
                 spriteRenderer.flipX = true;
-                transform.position = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z) + transform.position;
+                cacWeaponsList[selectedCacWeapon].transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z);
             }
             else if (dir.x > 0)
             {
                 spriteRenderer.flipX = false;
-                transform.position = PositionArme + transform.position;
+                cacWeaponsList[selectedCacWeapon].transform.localPosition = PositionArme;
             }
 
             rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
 
-            transform.rotation = Quaternion.Euler(rotationVector);
+            cacWeaponsList[selectedCacWeapon].transform.rotation = Quaternion.Euler(rotationVector);
         }
         if (isPlayingDistance)
         {
-            Vector3 PositionArme = distanceWeaponsList[selectedDistanceWeapon].transform.position - transform.position;
-
+           
             weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
             spriteRenderer = weapons.GetComponent<SpriteRenderer>();
-
-            Vector3 dir = (weapons.posOfPoint - transform.position).normalized;
+            Vector3 PositionArme = weapons.OffPositionArme;
+            
 
             if (dir.x <= 0)
             {
                 spriteRenderer.flipX = true;
-                transform.position = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z) + transform.position;
+                distanceWeaponsList[selectedDistanceWeapon].transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z);
             }
             else if (dir.x > 0)
             {
                 spriteRenderer.flipX = false;
-                transform.position = PositionArme + transform.position;
+                distanceWeaponsList[selectedDistanceWeapon].transform.localPosition = PositionArme;
             }
 
             rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;

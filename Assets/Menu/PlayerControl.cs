@@ -97,6 +97,22 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchToCac"",
+                    ""type"": ""Button"",
+                    ""id"": ""58de9341-b276-4c63-8c27-4e12af4cb2d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchToDistance"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e13a650-9ab1-4291-bb92-5bd9a34fe637"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -253,6 +269,28 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75cb10c0-71e3-4a08-a7d0-51fc5e95b483"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""SwitchToCac"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""753d8b56-aa4d-40d5-8e0b-a81b1bf4c28a"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""SwitchToDistance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -294,6 +332,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_OpenCoffre = m_Player.FindAction("OpenCoffre", throwIfNotFound: true);
         m_Player_OpenShop = m_Player.FindAction("OpenShop", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_SwitchToCac = m_Player.FindAction("SwitchToCac", throwIfNotFound: true);
+        m_Player_SwitchToDistance = m_Player.FindAction("SwitchToDistance", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -355,6 +395,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_OpenCoffre;
     private readonly InputAction m_Player_OpenShop;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_SwitchToCac;
+    private readonly InputAction m_Player_SwitchToDistance;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -369,6 +411,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @OpenCoffre => m_Wrapper.m_Player_OpenCoffre;
         public InputAction @OpenShop => m_Wrapper.m_Player_OpenShop;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @SwitchToCac => m_Wrapper.m_Player_SwitchToCac;
+        public InputAction @SwitchToDistance => m_Wrapper.m_Player_SwitchToDistance;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -408,6 +452,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @SwitchToCac.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToCac;
+                @SwitchToCac.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToCac;
+                @SwitchToCac.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToCac;
+                @SwitchToDistance.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToDistance;
+                @SwitchToDistance.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToDistance;
+                @SwitchToDistance.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToDistance;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -442,6 +492,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @SwitchToCac.started += instance.OnSwitchToCac;
+                @SwitchToCac.performed += instance.OnSwitchToCac;
+                @SwitchToCac.canceled += instance.OnSwitchToCac;
+                @SwitchToDistance.started += instance.OnSwitchToDistance;
+                @SwitchToDistance.performed += instance.OnSwitchToDistance;
+                @SwitchToDistance.canceled += instance.OnSwitchToDistance;
             }
         }
     }
@@ -492,6 +548,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnOpenCoffre(InputAction.CallbackContext context);
         void OnOpenShop(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnSwitchToCac(InputAction.CallbackContext context);
+        void OnSwitchToDistance(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
