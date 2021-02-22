@@ -24,7 +24,7 @@ public class Laser : Projectile
     }
 
     // Update is called once per frame
-    protected override void Update()
+    protected override void FixedUpdate()
     {
        
         

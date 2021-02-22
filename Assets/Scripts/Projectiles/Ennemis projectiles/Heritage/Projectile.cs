@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour
         transform.parent = null;
        
     }
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if (!isDisabled)
         {

@@ -18,20 +18,26 @@ public class Distance : Enemy
     public bool isShooting;
     [HideInInspector]
     public float Dispersion;
+  
 
+    protected override void Awake()
+    {
+        base.Awake();
+       
+    }
     protected virtual void SetData()
     {
-        moveSpeed = DistanceData.moveSpeed;
+        
 
 
         maxHealth = DistanceData.maxHealth;
         whiteMat = DistanceData.whiteMat;
         defaultMat = DistanceData.defaultMat;
 
-
+        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed2);
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
-        attackRange = DistanceData.attackRange;
+        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange2);
         timeToSwitch = DistanceData.timeToSwich;
         Dispersion = DistanceData.Dispersion;
     }
@@ -47,7 +53,7 @@ public class Distance : Enemy
             }
             else
             {
-                if (currentState == State.Attacking && !isInTransition && isreadyToAttack ) StartCoroutine(transiChasing());
+                if (currentState == State.Attacking && !isInTransition ) StartCoroutine(transiChasing());
                 if (isReadyToSwitchState)
                 {
                     currentState = State.Chasing;
@@ -79,11 +85,24 @@ public class Distance : Enemy
     protected virtual void Shoot()
     {
         float decalage = Random.Range(-Dispersion, Dispersion);
-
-        GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
-        myProjectile.transform.parent = gameObject.transform;
-        Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
-        ScriptProj.Dispersion = decalage;
+        Transform weapon = transform.Find("Weapon");
+        Transform attackPoint = weapon.Find("attackPoint");
+        if (attackPoint!= null)
+        {
+            GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);
+            myProjectile.transform.parent = gameObject.transform;
+            Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
+            ScriptProj.Dispersion = decalage;
+        }
+        else
+        {
+            GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
+            myProjectile.transform.parent = gameObject.transform;
+            Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
+            ScriptProj.Dispersion = decalage;
+        }
+       
+        
         //ScriptProj.dir =
         ////directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
 
