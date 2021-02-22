@@ -50,7 +50,7 @@ GameObject:
   m_Layer: 9
   m_Name: Parasite rampant
   m_TagString: Enemy
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -153,6 +153,7 @@ MonoBehaviour:
   healthBarGFX: {fileID: 8222165712135075358}
   timeBeforeDesactive: 2
   CacDatas: {fileID: 11400000, guid: f6eefc7057f2fe245a62d819c9b6c619, type: 2}
+  attackDir: {x: 0, y: 0, z: 0}
   attackPoint: {fileID: 3612759243388555237}
 --- !u!61 &2016863281
 BoxCollider2D:
@@ -170,10 +171,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.9375, y: 1.03125}
+    newSize: {x: 0.9375, y: 1.03125}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 1
@@ -220,15 +221,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -5484685849299552976, guid: 69edcaafd17a42e438a05fcf54472815, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.1428572, y: 1.1428572}
+  m_Size: {x: 0.9375, y: 1.03125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1470527738
@@ -291,7 +292,7 @@ Animator:
   m_GameObject: {fileID: 3612759245202818942}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bbf0d7588d087ec48870fdb7c278efd6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
