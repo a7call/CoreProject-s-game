@@ -43,6 +43,36 @@ MonoBehaviour:
   From: {fileID: -8121719124923575822}
   To: {fileID: -7516211885239612365}
   IsLocked: 0
+--- !u!114 &-3199666551871780659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608b3e92561274e4685b11b79263f337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  From: {fileID: 6673377212593299740}
+  To: {fileID: 1009481200292129783}
+  IsLocked: 0
+--- !u!114 &-2820418959940214527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608b3e92561274e4685b11b79263f337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  From: {fileID: 6366544641711966003}
+  To: {fileID: 6673377212593299740}
+  IsLocked: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,6 +88,8 @@ MonoBehaviour:
   Connections:
   - {fileID: -6120936905286053302}
   - {fileID: 4973872512235283182}
+  - {fileID: -2820418959940214527}
+  - {fileID: -3199666551871780659}
   CorridorIndividualRoomTemplates:
   - {fileID: 3559113929631548473, guid: efe520a88507d6449a3a7f15ce188fde, type: 3}
   - {fileID: 2575767481118213129, guid: bb3e28c876cc5894e8eceb5de1def0f2, type: 3}
@@ -70,11 +102,27 @@ MonoBehaviour:
   - {fileID: -8121719124923575822}
   - {fileID: 6366544641711966003}
   - {fileID: -7516211885239612365}
+  - {fileID: 6673377212593299740}
+  - {fileID: 1009481200292129783}
   EditorData:
-    PanOffset: {x: 1668.6964, y: -71.01344}
-    Zoom: 0.8766365
+    PanOffset: {x: 1458.6624, y: -285.52588}
+    Zoom: 1.9266378
   RoomType: WandererRoom
   ConnectionType: Edgar.Unity.WandererConnection
+--- !u!114 &1009481200292129783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: -1326.3414, y: 413.29965}
+  Type: 1
 --- !u!114 &4973872512235283182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,5 +150,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: -1329.9763, y: 301.40976}
+  Position: {x: -1328.8356, y: 312.817}
+  Type: 1
+--- !u!114 &6673377212593299740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: -1327.284, y: 365.27863}
   Type: 1

@@ -23,9 +23,10 @@ namespace Edgar.Unity
             var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "Default", TilemapRenderer.Mode.Individual) ;
             AddCompositeCollider(CollideObject);
             CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual);
-            CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+           GameObject AdditionnalTilmap1 = CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
-            CreateTilemapGameObject("Grid", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+           GameObject gridTilemap = CreateTilemapGameObject("Grid", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
+            gridTilemap.transform.parent = AdditionnalTilmap1.transform;
             CreateObjectContainer("LightContainer", gameObject);
         }
         /// <summary>
