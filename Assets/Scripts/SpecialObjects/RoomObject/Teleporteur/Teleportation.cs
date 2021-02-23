@@ -18,6 +18,8 @@ using UnityEngine.EventSystems;
 // A LIRE : Vrai PROBLEME => Quand tu restes dans le TP avec le ontriggerStay2D
 // Faire une fonction test qui l'oblige l'utilisateur à sortir du TP
 
+// A LIRE IMPERATIVEMENT : QUAND ON EST EN ONTRIGGER STAY PUIS QU ON PASSE EN EXIT, LA COROUTINE DE DISABLE SE LANCE DEUX FOIS
+
 public class Teleportation : MonoBehaviour
 {
     // Joueur
@@ -34,12 +36,9 @@ public class Teleportation : MonoBehaviour
     // Contient les différents TP de la map
     [SerializeField] private GameObject[] teleporteurs;
 
-    // Taille des TP [JE CROIS QUE J EN AI PLUS BESOIN, géré depuis scaleOverTime]
-    private Vector2 initialTpScale;
-    private float scaleUpTpSize = 20f;
-    private float smooth = 5f; // A voir
-
     // Timer
+    private float maxTime;
+    private Vector2 maxVector;
     [SerializeField] private bool isInRange = false;
     [SerializeField] private bool isContact = false;
 
@@ -49,6 +48,7 @@ public class Teleportation : MonoBehaviour
 
     [SerializeField] private LayerMask layer;
     private static bool canTp;
+    private bool isPrio = false;
     private float reloadDelay = 5f;
 
 
@@ -60,23 +60,34 @@ public class Teleportation : MonoBehaviour
 
         // TP
         teleporteurs = GameObject.FindGameObjectsWithTag("TP");
-        initialTpScale = transform.localScale;
+        maxTime = FindObjectOfType<ScaleOverTime>().growTime;
+        maxVector = FindObjectOfType<ScaleOverTime>().maxScale;
 
         // TimeManager & Camera
         timeManager = FindObjectOfType<TimeManager>();
         cameraUnzoom = FindObjectOfType<CameraZoom>();
+
+        // Initilisation canTp
+        canTp = true;
     }
 
     private void Update()
     {
-        if(canTp && isInRange && isContact) EnableTp();
-        if(!canTp && !isInRange && isContact) StartCoroutine(DisableTp());
-        Test();
+        if(canTp && isInRange && isContact) StartCoroutine(EnableTp());
+        if(!canTp && !isInRange && isContact &&!isPrio) StartCoroutine(DisableTp());
+        
+        //if (isContact)
+        //{
+        //    print("isContact true at " + Time.deltaTime);
+        //}
+        //Test();
     }
 
-    private void EnableTp()
+    private IEnumerator EnableTp()
     {
+        print("EnableTp");
         isContact = false;
+        canTp = true;
         this.gameObject.GetComponent<SpriteRenderer>().color = disableColor;
 
         foreach (GameObject tp in teleporteurs)
@@ -85,14 +96,18 @@ public class Teleportation : MonoBehaviour
             {
                 StartCoroutine(tp.GetComponent<ScaleOverTime>().Grow());
             }
+
         }
+
+        yield return new WaitForSeconds(GetComponent<ScaleOverTime>().growTime);
+        canTp = false;
     }
 
     private IEnumerator DisableTp()
     {
-        canTp = false;
+        print("DisableTp");
         isContact = false;
-        this.gameObject.GetComponent<Collider2D>().enabled = false;
+        //this.gameObject.GetComponent<Collider2D>().enabled = false;
 
         foreach (GameObject tp in teleporteurs)
         {
@@ -110,44 +125,47 @@ public class Teleportation : MonoBehaviour
         foreach (GameObject tp in teleporteurs)
         {
             tp.GetComponent<SpriteRenderer>().color = activeColor;
+            tp.GetComponent<ScaleOverTime>().growTime = maxTime;
+            tp.GetComponent<ScaleOverTime>().maxScale = maxVector;
         }
 
-        this.gameObject.GetComponent<Collider2D>().enabled = true;
+        //this.gameObject.GetComponent<Collider2D>().enabled = true;
         canTp = true;
     }
 
-    private IEnumerator DisableAllTp()
-    {
-        if (canTp)
-        {
-            canTp = false;
-            foreach (GameObject tp in teleporteurs)
-            {
-                tp.GetComponent<SpriteRenderer>().color = disableColor;
-                tp.GetComponent<Collider2D>().enabled = false;
-            }
+    //private IEnumerator DisableAllTp()
+    //{
+    //    print("DisableAllTp");
+    //    if (canTp)
+    //    {
+    //        canTp = false;
+    //        foreach (GameObject tp in teleporteurs)
+    //        {
+    //            tp.GetComponent<SpriteRenderer>().color = disableColor;
+    //            tp.GetComponent<Collider2D>().enabled = false;
+    //        }
 
-            yield return new WaitForSeconds(reloadDelay);
+    //        yield return new WaitForSeconds(reloadDelay);
 
-            foreach (GameObject tp in teleporteurs)
-            {
-                tp.GetComponent<SpriteRenderer>().color = activeColor;
-                tp.GetComponent<Collider2D>().enabled = true;
-            }
+    //        foreach (GameObject tp in teleporteurs)
+    //        {
+    //            tp.GetComponent<SpriteRenderer>().color = activeColor;
+    //            tp.GetComponent<Collider2D>().enabled = true;
+    //        }
 
-            isLoosingHp = false;
-            canTp = true;
-        }
-        yield return null;
-    }
+    //        isLoosingHp = false;
+    //        canTp = true;
+    //    }
+    //    yield return null;
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            canTp = true;
-            isInRange = true;
             isContact = true;
+            print("isContact doit être true et il est : " + isContact);
+            isInRange = true;
             cameraUnzoom.isUnzoomed = true;
         }
     }
@@ -156,10 +174,20 @@ public class Teleportation : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            canTp = false;
+            Debug.LogWarning("OnTriggerExit");
+            //canTp = false;
             isInRange = false;
             isContact = true;
             cameraUnzoom.isUnzoomed = false;
+
+            foreach (GameObject tp in teleporteurs)
+            {
+                if(tp.GetComponent<ScaleOverTime>().timer <= tp.GetComponent<ScaleOverTime>().growTime && tp.name != this.gameObject.name)
+                {
+                    tp.GetComponent<ScaleOverTime>().growTime = tp.GetComponent<ScaleOverTime>().timer;
+                    tp.GetComponent<ScaleOverTime>().maxScale = tp.transform.localScale;
+                }
+            }
         }
     }
 
@@ -167,20 +195,22 @@ public class Teleportation : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            Debug.LogWarning("OnTriggerStay");
             timeManager.DoSlowMotion();
+            //gameObject.GetComponent<ScaleOverTime>().growTime += Time.unscaledDeltaTime;
 
             for (int i = 0; i < teleporteurs.Length; i++)
             {
                 float timer = teleporteurs[i].GetComponent<ScaleOverTime>().timer;
                 float growTime = teleporteurs[i].GetComponent<ScaleOverTime>().growTime;
-                print(timer);
 
                 if (!isLoosingHp && timer > growTime - 0.02f)
                 {
+                    isPrio = true;
                     isLoosingHp = true;
                     playerHealth.currentHealth -= 1;
-                    StartCoroutine(DisableAllTp());
-                    Debug.LogWarning("Lance DisabelAllTp");
+                    StartCoroutine(DisableTp());
+                    isPrio = false;
                 }
             }
         }

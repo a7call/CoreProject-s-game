@@ -6,11 +6,11 @@ public class ScaleOverTime : MonoBehaviour
 {
     public float timer = 0f; // Timer
     private float maxSize = 20f; // Taille max du TP (à définir)
-    public float growTime = 2f; // Temps pendant lequel il grandit (à définir)
+    [HideInInspector] public float growTime = 2f; // Temps pendant lequel il grandit (à définir)
 
     // Vector contenant les tailles de TP
     private Vector2 startScale; // Taille initiale
-    private Vector2 maxScale; // Taille max
+    [HideInInspector] public Vector2 maxScale; // Taille max
 
     private void Start()
     {
