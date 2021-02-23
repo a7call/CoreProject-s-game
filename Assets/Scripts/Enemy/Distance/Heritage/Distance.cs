@@ -27,13 +27,11 @@ public class Distance : Enemy
     }
     protected virtual void SetData()
     {
-        
-
-
         maxHealth = DistanceData.maxHealth;
         whiteMat = DistanceData.whiteMat;
         defaultMat = DistanceData.defaultMat;
-
+        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime2);
+        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint2);
         aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed2);
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
@@ -101,10 +99,7 @@ public class Distance : Enemy
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
             ScriptProj.Dispersion = decalage;
         }
-       
-        
-        //ScriptProj.dir =
-        ////directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
+      
 
     }
 

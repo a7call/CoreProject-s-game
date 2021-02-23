@@ -40,7 +40,7 @@ public class ArmeEnemy : MonoBehaviour
          }
          else
          {
-             spriteRenderer.sortingOrder = 2;
+             spriteRenderer.sortingOrder = 1;
          }
 
          if (dir.x <= 0 && !spriteRenderer.flipX)
