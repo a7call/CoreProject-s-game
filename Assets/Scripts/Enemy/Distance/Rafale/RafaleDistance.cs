@@ -20,9 +20,9 @@ public class RafaleDistance : Distance
         timeIntervale = DistanceData.timeIntervale;
         nbTir = DistanceData.nbTir;
     }
-    
-
    
+
+
 
     void Start()
     {

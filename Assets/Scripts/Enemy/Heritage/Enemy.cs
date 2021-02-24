@@ -58,19 +58,22 @@ public class Enemy : MonoBehaviour
     public AIDestinationSetter targetSetter;
     // end of Pathfinding variable
 
-
     protected virtual void Awake()
     {
         GetReference();
     }
 
     // Permet de récupérer toutes les références utiles
+    
     protected virtual void GetReference()
     {
         healthBarGFX.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         aIPath = GetComponent<AIPath>();
+       
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        
         targetSetter = GetComponent<AIDestinationSetter>();
         targetSetter.target = target;
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -80,7 +83,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        
         switch (currentState)
         {
             default:

@@ -18,12 +18,28 @@ public class Distance : Enemy
     public bool isShooting;
     [HideInInspector]
     public float Dispersion;
-  
+    Transform randomTargetPointTransform;
+    Vector3 randomPoint;
 
     protected override void Awake()
     {
         base.Awake();
        
+    }
+    protected override void Update()
+    {
+        randomTargetPointTransform.position = target.position + randomPoint;
+        base.Update();
+    }
+    protected override void GetReference()
+    {
+        base.GetReference();
+        GameObject randomTargetPoint = new GameObject();
+        randomTargetPoint.name = "targetMouvePoint";
+        randomTargetPoint.transform.parent = gameObject.transform;
+        randomTargetPointTransform = randomTargetPoint.transform;
+        randomPoint = (Vector3)Random.insideUnitCircle * 3;
+        targetSetter.target = randomTargetPointTransform;
     }
     protected virtual void SetData()
     {
