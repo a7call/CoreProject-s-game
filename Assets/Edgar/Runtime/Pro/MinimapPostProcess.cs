@@ -87,11 +87,10 @@ namespace Edgar.Unity
                 // Go through positions inside the bounds of the tilemap
                 foreach (var tilemapPosition in sourceTilemap.cellBounds.allPositionsWithin)
                 {
-                    
                     // Check if there is a tile at a given position
                     var originalTile = sourceTilemap.GetTile(tilemapPosition);
 
-                    if (originalTile != null )
+                    if (originalTile != null)
                     {
                         // If a tile filter is provided, use it to check if the predicate holds
                         if (tileFilter != null)

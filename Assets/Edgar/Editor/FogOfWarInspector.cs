@@ -22,6 +22,13 @@ namespace Edgar.Unity.Editor
             }
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(FogOfWar.TransitionMode)));
+
+            if (fogOfWar.TransitionMode == FogOfWarTransitionMode.Custom)
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(FogOfWar.TileGranularity)));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(FogOfWar.FogSmoothness)));
+            }
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(FogOfWar.Mode)));
 
             if (fogOfWar.Mode == FogOfWarMode.Wave)
@@ -42,6 +49,8 @@ namespace Edgar.Unity.Editor
                 EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(FogOfWar.RevealCorridorsTiles)));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(FogOfWar.RevealCorridorsGradually)));
             }
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(FogOfWar.InitialFogTransparency)));
 
             EditorGUIUtility.labelWidth = 0;
             EditorGUIUtility.fieldWidth = 0;

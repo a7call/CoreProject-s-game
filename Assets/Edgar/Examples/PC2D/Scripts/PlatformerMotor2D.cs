@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using System.Collections;
 
 namespace Edgar.Unity.Examples.PC2D.Scripts
 {

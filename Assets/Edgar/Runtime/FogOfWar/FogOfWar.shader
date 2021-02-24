@@ -6,6 +6,9 @@
 		_VisionTexOffset("Vision texture offset", Vector) = (.0, .0, .0)
 		_VisionTexSize("Vision texture size", Vector) = (.0, .0, .0)
 		_FogColor ("Fog Color", Color) = (1,1,1,1)
+		_TileGranularity("Number of sub-tiles", Float) = 2
+		_FogSmoothness ("Fog value precision", Float) = 20
+		_InitialFogTransparency ("Initial fog transparence", Float) = 0
 	}
 	SubShader {
 	    Tags
@@ -15,9 +18,11 @@
         }
 
 		Pass {
+			ZTest Always
 			CGPROGRAM
 			#pragma vertex vert_img
 			#pragma fragment frag
+			#pragma multi_compile __ FOG_CUSTOM_MODE
 			#include "UnityCG.cginc"
 
 			uniform sampler2D _CameraDepthTexture;
@@ -29,6 +34,9 @@
 			uniform float2 _VisionTexOffset;
 			uniform float2 _VisionTexSize;
 			uniform float4 _FogColor;
+			uniform float _TileGranularity;
+			uniform float _FogSmoothness;
+			uniform float _InitialFogTransparency;
 
 			float4 GetWorldPositionFromDepth( float2 uv_depth )
 			{    
@@ -44,10 +52,15 @@
 				float4 worldpos = GetWorldPositionFromDepth(i.uv);
 				
 				// Compute world position rounded to whole tiles
-				float floorX = floor(- _VisionTexOffset.x + worldpos.x + 0.5) - 1;
-				float floorY = floor(- _VisionTexOffset.y + worldpos.y) - 0.5;
-				floorX = - _VisionTexOffset.x + worldpos.x - 1;
-				floorY = - _VisionTexOffset.y + worldpos.y - 1;
+				float floorX = - _VisionTexOffset.x + worldpos.x - 1;
+				float floorY = - _VisionTexOffset.y + worldpos.y - 1;
+
+				#if defined(FOG_CUSTOM_MODE)
+					float p = 0.5 / _TileGranularity;
+					floorX = floor((floorX) * _TileGranularity) / _TileGranularity + p;
+					floorY = floor((floorY) * _TileGranularity) / _TileGranularity + p;
+				#endif
+
 				float2 floorWorldpos = float2(floorX, floorY);
 
 				// Check if the tile is covered by the Fog of War texture
@@ -60,7 +73,12 @@
 					float isInterpolated = color.g;
 
 					if (isInterpolated > 0.5) {
-						result.rgba = lerp(_FogColor, c.rgba, colorInterpolated.r);
+						#if defined(FOG_CUSTOM_MODE)
+							float g = ceil(colorInterpolated.r * _FogSmoothness) / _FogSmoothness;
+							result.rgba = lerp(_FogColor, c.rgba, g);
+						#else
+							result.rgba = lerp(_FogColor, c.rgba, colorInterpolated.r);
+						#endif
 					} else {
 						result.rgba = lerp(_FogColor, c.rgba, color.r);
 					}
@@ -69,7 +87,7 @@
 					// result.rgba = lerp(colorInterpolated.rgba, c.rgba, 0.2);
 				// Otherwise, show the tile as completely hidden in the fog
 				} else {
-					result.rgba = lerp(_FogColor, c.rgba, 0);
+					result.rgba = lerp(_FogColor, c.rgba, _InitialFogTransparency);
 				}
 
 				return result;

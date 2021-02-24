@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Random = System.Random;
 
 namespace Edgar.Unity

@@ -26,9 +26,12 @@ namespace Edgar.Unity
 
         private readonly int bytesPerColor = 4;
         private readonly int bytesPerColorInterpolated = 4;
+        private readonly float initialFogValue;
 
-        public FogOfWarVisionGrid()
+        public FogOfWarVisionGrid(float initialFogValue = 0)
         {
+            this.initialFogValue = initialFogValue;
+
             // Save some CPU time by using smaller texture formats if possible
             if (SystemInfo.SupportsTextureFormat(TextureFormat.RGB24))
             {
@@ -85,7 +88,7 @@ namespace Edgar.Unity
                 return info;
             }
 
-            return new TileInfo();
+            return GetNewTileInfo();
         }
 
         private Texture2D CreateMainTexture(int width, int height)
@@ -130,10 +133,15 @@ namespace Edgar.Unity
             var colors = new Color[width * height];
             var colorsInterpolated = new Color[width * height];
 
+            // Get an initial tile info and colors
+            var tileInfo = GetNewTileInfo();
+            var initialColor = GetColor(tileInfo);
+            var initialColorInterpolated = GetColorInterpolated(tileInfo);
+
             for (int i = 0; i < width * height; i++)
             {
-                colors[i] = Color.black;
-                colorsInterpolated[i] = Color.black;
+                colors[i] = initialColor;
+                colorsInterpolated[i] = initialColorInterpolated;
             }
 
             var newTexture = CreateMainTexture(width, height);
@@ -206,15 +214,14 @@ namespace Edgar.Unity
                 var x = (pos.x - boundingRectangle.xMin);
                 var y = (pos.y - boundingRectangle.yMin);
 
-                var color = new Color(value.Value, value.IsInterpolated ? 1 : 0, 0);
-                var colorInterpolated = new Color(value.ValueInterpolated, 0, 0);
+                var color = GetColor(value);
+                var colorInterpolated = GetColorInterpolated(value);
                 
                 textureData[bytesPerColor * (y * boundingRectangle.width + x)] = (byte) (color.r * 255);
                 textureData[bytesPerColor * (y * boundingRectangle.width + x) + 1] = (byte) (color.g * 255);
 
                 textureInterpolatedData[bytesPerColorInterpolated * (y * boundingRectangle.width + x)] = (byte) (colorInterpolated.r * 255);
             }
-
 
             // Apply new changes
             texture.Apply();
@@ -226,6 +233,21 @@ namespace Edgar.Unity
                 Texture = texture,
                 TextureInterpolated = textureInterpolated,
             };
+        }
+
+        private Color GetColor(TileInfo tileInfo)
+        {
+            return new Color(tileInfo.Value, tileInfo.IsInterpolated ? 1 : 0, 0);
+        }
+
+        private Color GetColorInterpolated(TileInfo tileInfo)
+        {
+            return new Color(tileInfo.ValueInterpolated, 0, 0);
+        }
+
+        private TileInfo GetNewTileInfo()
+        {
+            return new TileInfo(value: initialFogValue, valueInterpolated: initialFogValue);
         }
 
         /// <summary>

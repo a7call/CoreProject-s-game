@@ -25,7 +25,7 @@ namespace Edgar.Unity.Examples.Scripts
                     // Remove all the wall tiles from door positions
                     foreach (var point in doorInstance.DoorLine.GetPoints())
                     {
-                        walls.SetTile(point, null);
+                        walls.SetTile(point + roomInstance.Position, null);
                     }
                 }
             }

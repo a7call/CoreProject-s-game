@@ -24,7 +24,6 @@ namespace Edgar.Unity
         {
             this.roomInstances = roomInstances;
             this.mapLayout = mapLayout;
-            
             RootGameObject = rootGameObject;
         }
 

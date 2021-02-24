@@ -39,9 +39,19 @@ namespace Edgar.Unity
         /// Transition mode of the effect.
         /// </summary>
         /// <remarks>
-        /// The Smooth mode interpolates  values between neighboring tiles while the TileBased mode does not.
+        /// The Smooth mode interpolates values between neighboring tiles while the TileBased mode does not.
         /// </remarks>
         public FogOfWarTransitionMode TransitionMode = FogOfWarTransitionMode.Smooth;
+
+        /// <summary>
+        /// Controls into how many pixel chunks is each tile divided. 
+        /// </summary>
+        public int TileGranularity = 2;
+
+        /// <summary>
+        /// Controls how many possible fog values there are for every pixel.
+        /// </summary>
+        public int FogSmoothness = 20;
 
         /// <summary>
         /// Speed of the wave (tiles per second) when in Wave mode. 
@@ -76,6 +86,9 @@ namespace Edgar.Unity
         /// </summary>
         public bool RevealCorridorsGradually = true;
 
+        [Range(0, 1)]
+        public float InitialFogTransparency = 0;
+
         [SerializeField, HideInInspector]
         private Transform WaveOrigin;
 
@@ -101,9 +114,13 @@ namespace Edgar.Unity
         private static readonly int VisionTexOffset = Shader.PropertyToID("_VisionTexOffset");
         private static readonly int VisionTexSize = Shader.PropertyToID("_VisionTexSize");
         private static readonly int Color = Shader.PropertyToID("_FogColor");
+        private static readonly int TileGranularityProperty = Shader.PropertyToID("_TileGranularity");
+        private static readonly int FogSmoothnessProperty = Shader.PropertyToID("_FogSmoothness");
+        private static readonly int InitialFogTransparencyProperty = Shader.PropertyToID("_InitialFogTransparency");
 
         private int stepsSinceSetup = 0;
         private bool materialRetrieved = false;
+        private FogOfWarTransitionMode? lastTransitionMode;
 
         /// <summary>
         /// Instance of the Fog of War script. The class is a singleton.
@@ -152,7 +169,7 @@ namespace Edgar.Unity
             RevealedRooms = new List<RoomInstance>();
             tilesLocks = new Dictionary<Vector2Int, int>();
             GeneratedLevelRoot = generatedLevelRoot;
-            visionGrid = new FogOfWarVisionGrid();
+            visionGrid = new FogOfWarVisionGrid(InitialFogTransparency);
             WaveOrigin = waveOrigin;
             material = new Material(Shader.Find("Edgar/FogOfWar"));
             visionTextures = visionGrid.GetVisionTextures();
@@ -162,6 +179,8 @@ namespace Edgar.Unity
 
         private void Update()
         {
+            CheckTransitionMode();
+
             if (visionGrid != null && visionGrid.HasChanges())
             {
                 visionTextures = visionGrid.GetVisionTextures();
@@ -175,6 +194,23 @@ namespace Edgar.Unity
                 if (stepsSinceSetup % 5000 == 10 && !materialRetrieved)
                 {
                     Debug.LogWarning("The Fog of War feature is enabled but the shader was not yet applied. It seems like you are using URP or LWRP and did not add the custom render feature. Please visit the documentation to see which additional steps are needed to enable this feature in URP and LWRP.");
+                }
+            }
+        }
+
+        private void CheckTransitionMode()
+        {
+            if (material != null && (lastTransitionMode == null || lastTransitionMode.Value != TransitionMode))
+            {
+                lastTransitionMode = TransitionMode;
+
+                if (TransitionMode == FogOfWarTransitionMode.Custom)
+                {
+                    Shader.EnableKeyword("FOG_CUSTOM_MODE");
+                }
+                else
+                {
+                    Shader.DisableKeyword("FOG_CUSTOM_MODE");
                 }
             }
         }
@@ -208,7 +244,6 @@ namespace Edgar.Unity
             {
                 roomsToExplore.Add(roomToExplore);
             }
-           
 
             RevealRooms(roomsToExplore, waveOrigin, revealImmediately);
         }
@@ -261,7 +296,7 @@ namespace Edgar.Unity
             //
             // The solution to this problem is to add an additional row of tiles next to the outline tiles. These tiles will be
             // hidden in the fog but we will treat them as if we wanted to reveal them to trick the interpolation mechanism.
-            if (TransitionMode == FogOfWarTransitionMode.Smooth)
+            if (TransitionMode == FogOfWarTransitionMode.Smooth || TransitionMode == FogOfWarTransitionMode.Custom)
             {
                 var extendedOutline = GetExtendedOutline(new HashSet<Vector2Int>(tiles.Keys));
                 var interpolationHelperPoints = extendedOutline.Where(x => visionGrid.GetTile(x).IsRevealed == false).ToList();
@@ -282,11 +317,10 @@ namespace Edgar.Unity
                         var neighbor = door.ConnectedRoomInstance;
 
                         // We only need corridors that should not be completely revealed
-                      if (!neighbor.IsCorridor && roomsToReveal.Contains(neighbor))
+                        if (!neighbor.IsCorridor || roomsToReveal.Contains(neighbor))
                         {
                             continue;
                         }
-                      
 
                         var neighborOutline = GetPolygonPoints(neighbor.OutlinePolygon);
 
@@ -298,19 +332,13 @@ namespace Edgar.Unity
                             ? (Func<Vector2Int, float>) (x => Mathf.Abs(x.y - doorPoint.y)) 
                             : x => Mathf.Abs(x.x - doorPoint.x);
 
-                        var getSideDistance = door.IsHorizontal ? (Func<Vector2Int,float>) (x=> x.x-1 -doorPoint.x) : x => x.y-1 - doorPoint.y;
-
                         // Using the getDistance() function compute whit corridor tiles should be revealed
-                        var closeTiles = new List<Vector2Int>();
-                       
-                           closeTiles = neighborOutline
-                          .Where(x => getDistance(x) >= 1 && getDistance(x) <= RevealCorridorsTiles)
-                          .Where(x => !visionGrid.GetTile(x).IsRevealed)
-                          .ToList();
-                       
-                        
+                        var closeTiles = neighborOutline
+                            .Where(x => getDistance(x) >= 1 && getDistance(x) <= RevealCorridorsTiles)
+                            .Where(x => !visionGrid.GetTile(x).IsRevealed)
+                            .ToList();
 
-                        var extendedCloseTiles = TransitionMode == FogOfWarTransitionMode.Smooth 
+                        var extendedCloseTiles = TransitionMode == FogOfWarTransitionMode.Smooth || TransitionMode == FogOfWarTransitionMode.Custom
                             ? GetExtendedOutline(new HashSet<Vector2Int>(closeTiles))
                                 .Where(x => !visionGrid.GetTile(x).IsRevealed)
                                 .ToList()
@@ -327,7 +355,7 @@ namespace Edgar.Unity
                         {
                             var distance = getDistance(closeTile);
 
-                            if (TransitionMode == FogOfWarTransitionMode.Smooth )
+                            if (TransitionMode == FogOfWarTransitionMode.Smooth || TransitionMode == FogOfWarTransitionMode.Custom)
                             {
                                 distance += 0.5f;
                             }
@@ -339,11 +367,12 @@ namespace Edgar.Unity
                             }
 
                             var ratio = distance / maxDistance;
-                            var minimumFogValue = TransitionMode == FogOfWarTransitionMode.Smooth  ? 0f : 0.15f;
+                            var minimumFogValue = (TransitionMode == FogOfWarTransitionMode.Smooth || TransitionMode == FogOfWarTransitionMode.Custom) ? 0f : 0.15f;
+                            minimumFogValue = Math.Max(InitialFogTransparency, minimumFogValue);
 
                             var targetFogValue = RevealCorridorsGradually ? Mathf.Lerp(0.7f, minimumFogValue, ratio) : revealedFogValue;
 
-                            if (RevealCorridorsTiles == 1 && TransitionMode != FogOfWarTransitionMode.Smooth  && RevealCorridorsGradually)
+                            if (RevealCorridorsTiles == 1 && TransitionMode == FogOfWarTransitionMode.TileBased  && RevealCorridorsGradually)
                             {
                                 targetFogValue = 0.5f;
                             }
@@ -362,7 +391,6 @@ namespace Edgar.Unity
 
             return tiles;
         }
-        
 
         private IEnumerator RevealRoomCoroutine(List<RoomInstance> rooms, Vector2 playerPosition, bool revealImmediately = false)
         {
@@ -476,11 +504,11 @@ namespace Edgar.Unity
                         throw new ArgumentOutOfRangeException(nameof(Mode));
                     }
 
-                    if (TransitionMode == FogOfWarTransitionMode.Smooth)
+                    if (TransitionMode == FogOfWarTransitionMode.Smooth || TransitionMode == FogOfWarTransitionMode.Custom)
                     {
                         visionGrid.SetTile(point, new FogOfWarVisionGrid.TileInfo(
                             isInterpolated: !tileInfo.IsInterpolationHelper,
-                            value: tileInfo.IsInterpolationHelper ? 0 : targetFogValue,
+                            value: tileInfo.IsInterpolationHelper ? initialFogValue : targetFogValue,
                             valueInterpolated: fogValue,
                             isRevealed: !tileInfo.IsInterpolationHelper
                         ));
@@ -566,13 +594,10 @@ namespace Edgar.Unity
         {
             if (visionTextures == null)
             {
-               
                 return null;
-                
             }
 
             materialRetrieved = true;
-
 
             if (camera == null)
             {
@@ -602,6 +627,9 @@ namespace Edgar.Unity
             material.SetVector(VisionTexOffset, offset);
             material.SetVector(VisionTexSize, new Vector4(visionTextures.Texture.width, visionTextures.Texture.height));
             material.SetColor(Color, ColorMode == FogOfWarColorMode.CameraColor ? camera.backgroundColor : FogColor);
+            material.SetFloat(TileGranularityProperty, TileGranularity);
+            material.SetFloat(FogSmoothnessProperty, FogSmoothness);
+            material.SetFloat(InitialFogTransparencyProperty, InitialFogTransparency);
 
             return material;
         }
@@ -627,6 +655,8 @@ namespace Edgar.Unity
             WaveSpeed = Mathf.Max(0.001f, WaveSpeed);
             RevealCorridorsTiles = Math.Max(0, RevealCorridorsTiles);
             FadeInDuration = Math.Max(0, FadeInDuration);
+            TileGranularity = Mathf.Clamp(TileGranularity, 1, 1000);
+            FogSmoothness = Mathf.Clamp(FogSmoothness, 1, 1000);
         }
 
         private class TileInfo

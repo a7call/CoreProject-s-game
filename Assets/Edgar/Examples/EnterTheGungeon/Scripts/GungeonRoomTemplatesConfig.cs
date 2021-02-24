@@ -62,7 +62,6 @@ namespace Edgar.Unity.Examples.EnterTheGungeon
                 case GungeonRoomType.Normal:
                     return BasicRoomTemplates;
 
-
                 default:
                     return BasicRoomTemplates;
             }

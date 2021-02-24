@@ -17,8 +17,9 @@ namespace Edgar.Unity
 
         protected readonly PipelineRunner<TPayload> PipelineRunner = new PipelineRunner<TPayload>();
 
-        // TODO: Not ideal
         protected abstract bool ThrowExceptionImmediately { get; }
+
+        public bool EnableDiagnostics = false;
 
         protected virtual Random GetRandomNumbersGenerator(bool useRandomSeed, int seed)
         {
@@ -41,7 +42,7 @@ namespace Edgar.Unity
 
             var (pipelineItems, payload) = GetPipelineItemsAndPayload();
 
-            PipelineRunner.Run(pipelineItems, payload);
+            PipelineRunner.Run(pipelineItems, payload, EnableDiagnostics);
 
             Debug.Log($"--- Level generated in {stopwatch.ElapsedMilliseconds / 1000f:F}s ---");
 
@@ -56,7 +57,7 @@ namespace Edgar.Unity
 
             var (pipelineItems, payload) = GetPipelineItemsAndPayload();
 
-            var pipelineIterator = PipelineRunner.GetEnumerator(pipelineItems, payload);
+            var pipelineIterator = PipelineRunner.GetEnumerator(pipelineItems, payload, EnableDiagnostics);
             
             if (Application.isPlaying)
             {
