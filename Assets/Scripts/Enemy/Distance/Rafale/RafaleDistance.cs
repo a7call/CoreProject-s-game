@@ -20,7 +20,6 @@ public class RafaleDistance : Distance
         timeIntervale = DistanceData.timeIntervale;
         nbTir = DistanceData.nbTir;
     }
-   
 
 
 
@@ -37,6 +36,7 @@ public class RafaleDistance : Distance
         switch (currentState)
         {
             case State.Patrolling:
+
                 break;
             case State.Chasing:
                 isInRange();

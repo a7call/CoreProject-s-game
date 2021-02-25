@@ -59,15 +59,16 @@ namespace Edgar.Unity.Examples
                     // Set the Random instance of the GameManager to be the same instance as we use in the generator
                     WandererGameManager.Instance.Random = Random;
                 }
-               
-                
-               
+
+
+
+                roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
 
                 if (room.Type != RoomType.Corridor)
                 {
                     // Set enemies and floor collider to the room manager
                     roomManager.Enemies = Enemies;
-                    roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
+                  //  roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
 
                     // Find all the doors of neighboring corridors and save them in the room manager
                     // The term "door" has two different meanings here:
@@ -107,6 +108,13 @@ namespace Edgar.Unity.Examples
                         }
                     }
                 }
+                if (ShouldSpawnEnemy(roomInstance))
+                {
+                   
+                    SpawnEnemy(roomInstance);
+                    
+                }
+                Debug.LogWarning("je Peux etre la ");
             }
             AstarPath.active.Scan();
             SetupFogOfWar(level);
@@ -201,6 +209,50 @@ namespace Edgar.Unity.Examples
                     var player = GameObject.FindWithTag("Player");
                     player.transform.position = spawnPosition.position;
                 }
+            }
+        }
+        
+        private bool ShouldSpawnEnemy(RoomInstance roomInstance)
+        {
+            var room = (WandererRoom)roomInstance.Room;
+            return roomInstance.IsEnemyAlreadySpawned == false && (room.Type == RoomType.Hub || room.Type == RoomType.Corridor || room.Type == RoomType.Normal);
+        }
+
+        private void SpawnEnemy(RoomInstance roomInstance)
+        {
+            roomInstance.isEnemyAlreadySpawned = true;
+            var totalEnemiesCount = WandererGameManager.Instance.Random.Next(4, 8);
+          
+           
+            var room = roomInstance.RoomTemplateInstance;
+            
+            WandererCurrentRoomDetectionRoomManager roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
+            
+            while (totalEnemiesCount > roomInstance.Enemies.Count)
+            {
+               
+                var position = WandererCurrentRoomDetectionRoomManager.RandomPointInBounds(roomManager.FloorCollider.bounds, 1f);
+                
+                if (!WandererCurrentRoomDetectionRoomManager.IsPointWithinCollider(roomManager.FloorCollider, position))
+                {
+                    continue;
+                }
+
+                if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
+                {
+                    continue;
+                }
+                
+                var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
+               
+                var enemy = Instantiate(enemyPrefab);
+                enemy.transform.position = position;
+                enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
+                Enemy enemyComp = enemy.GetComponent<Enemy>();
+                enemyComp.currentState = Enemy.State.Patrolling;
+               
+                roomInstance.Enemies.Add(enemy);
+                
             }
         }
 

@@ -298,19 +298,6 @@ namespace Edgar.Unity.Examples
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
             room = roomInstance?.Room as WandererRoom;
-            if(room.Type == RoomType.Spawn)
-            {
-                
-            }
-            GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach(GameObject enemy in enemys)
-            {
-                enemies.Add(enemy);
-            }
-
-            
-            
-
             
         }
 
@@ -427,12 +414,12 @@ namespace Edgar.Unity.Examples
             }
         }
 
-        private static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
+        public static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
         {
             return collider.OverlapPoint(point);
         }
 
-        private static Vector3 RandomPointInBounds(Bounds bounds, float margin = 0)
+        public static Vector3 RandomPointInBounds(Bounds bounds, float margin = 0)
         {
             var random = WandererGameManager.Instance.Random;
 

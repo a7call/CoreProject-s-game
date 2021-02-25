@@ -68,7 +68,7 @@ public class Distance : Enemy
             else
             {
                 if (currentState == State.Attacking && !isInTransition ) StartCoroutine(transiChasing());
-                if (isReadyToSwitchState)
+                if (isReadyToSwitchState && currentState != State.Chasing)
                 {
                     currentState = State.Chasing;
                     isShooting = false;

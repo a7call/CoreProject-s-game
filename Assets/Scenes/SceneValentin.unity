@@ -480,6 +480,8 @@ MonoBehaviour:
   RoomInstances:
   - room: {fileID: -8121719124923575822, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
     isCorridor: 0
+    isEnemyAlreadySpawned: 0
+    enemies: []
     connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 5395073468646727418, guid: 1f5b0be975c2d224697bd66c1dd25c12, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -503,6 +505,8 @@ MonoBehaviour:
       - {x: 0, y: 0}
   - room: {fileID: 6366544641711966003, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
     isCorridor: 0
+    isEnemyAlreadySpawned: 0
+    enemies: []
     connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 5395073468646727418, guid: 1fe0736721465de4e9bef4afeac764b1, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -526,6 +530,8 @@ MonoBehaviour:
       - {x: -34, y: 0}
   - room: {fileID: -7516211885239612365, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
     isCorridor: 0
+    isEnemyAlreadySpawned: 0
+    enemies: []
     connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 5395073468646727418, guid: 1fe0736721465de4e9bef4afeac764b1, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -559,6 +565,8 @@ MonoBehaviour:
       - {x: -17, y: 0}
   - room: {fileID: 994224240}
     isCorridor: 1
+    isEnemyAlreadySpawned: 0
+    enemies: []
     connection: {fileID: -6120936905286053302, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
     roomTemplatePrefab: {fileID: 2167591645475645086, guid: 669b08d4746c3434c8d7646c1fc5f42f, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -592,6 +600,8 @@ MonoBehaviour:
       - {x: -4, y: 2}
   - room: {fileID: 509518368}
     isCorridor: 1
+    isEnemyAlreadySpawned: 0
+    enemies: []
     connection: {fileID: 4973872512235283182, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
     roomTemplatePrefab: {fileID: 2167591645475645086, guid: 669b08d4746c3434c8d7646c1fc5f42f, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -1372,18 +1382,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 59079782021703779, guid: 46e9ada170e594d2f98ce9836788bbac, type: 3}
-      propertyPath: orientation
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 59079782021703779, guid: 46e9ada170e594d2f98ce9836788bbac, type: 3}
-      propertyPath: enableRotation
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 59079782021703779, guid: 46e9ada170e594d2f98ce9836788bbac, type: 3}
-      propertyPath: constrainInsideGraph
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2463838739638309393, guid: 46e9ada170e594d2f98ce9836788bbac, type: 3}
       propertyPath: m_Name
       value: DarkmaulAstronautFM
