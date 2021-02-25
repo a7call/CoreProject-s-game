@@ -18,5 +18,6 @@ public class EnemyScriptableObject : ScriptableObject
     public float nextWayPoint2;
     public float refreshPathTime;
     public float refreshPathTime2;
+   
 
 }

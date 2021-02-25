@@ -17,7 +17,6 @@ public class SpeDistance2 : Distance
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        currentState = State.Patrolling;
         SetData();
         SetMaxHealth();
     }
@@ -27,9 +26,6 @@ public class SpeDistance2 : Distance
         base.Update();
         switch (currentState)
         {
-            case State.Patrolling:
-                PlayerInSight();
-                break;
             case State.Chasing:
                 isInRange();
                 break;

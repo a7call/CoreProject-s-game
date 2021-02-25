@@ -34,15 +34,7 @@ public class ArmeEnemy : MonoBehaviour
 
 
         
-         if(dir.y >= 0)
-         {
-             spriteRenderer.sortingOrder = 0;
-         }
-         else
-         {
-             spriteRenderer.sortingOrder = 1;
-         }
-
+        
          if (dir.x <= 0 && !spriteRenderer.flipX)
          {
              spriteRenderer.flipX = true;

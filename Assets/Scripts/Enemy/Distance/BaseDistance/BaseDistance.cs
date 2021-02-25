@@ -20,8 +20,7 @@ public class BaseDistance : Distance
         base.Update();
         switch (currentState)
         {
-            case State.Patrolling:
-                break;
+          
             case State.Chasing:
                 isInRange();
                 // suit le path créé et s'arrête pour tirer

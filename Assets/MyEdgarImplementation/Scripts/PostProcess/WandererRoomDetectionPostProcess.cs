@@ -215,6 +215,19 @@ namespace Edgar.Unity.Examples
         private bool ShouldSpawnEnemy(RoomInstance roomInstance)
         {
             var room = (WandererRoom)roomInstance.Room;
+            if (roomInstance.IsCorridor)
+            {
+                foreach (var roomInstanceNextToSpawn in roomInstance.Doors.Select(x => x.ConnectedRoomInstance))
+                {
+                    var roomNextToSpawn= (WandererRoom)roomInstanceNextToSpawn.Room;
+                   if(roomNextToSpawn.Type == RoomType.Spawn)
+                    {
+                        return false;
+                    }
+                }
+            }
+               
+            
             return roomInstance.IsEnemyAlreadySpawned == false && (room.Type == RoomType.Hub || room.Type == RoomType.Corridor || room.Type == RoomType.Normal);
         }
 
@@ -249,7 +262,7 @@ namespace Edgar.Unity.Examples
                 enemy.transform.position = position;
                 enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
                 Enemy enemyComp = enemy.GetComponent<Enemy>();
-                enemyComp.currentState = Enemy.State.Patrolling;
+               
                
                 roomInstance.Enemies.Add(enemy);
                 

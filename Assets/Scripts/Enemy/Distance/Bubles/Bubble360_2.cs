@@ -14,7 +14,7 @@ public class Bubble360_2 : Distance
 
     protected void Start()
     {
-        currentState = State.Chasing;
+       
         // Set data
         SetData();
         SetMaxHealth();

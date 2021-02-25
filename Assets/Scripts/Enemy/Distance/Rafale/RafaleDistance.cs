@@ -25,7 +25,7 @@ public class RafaleDistance : Distance
 
     void Start()
     {
-        currentState = State.Chasing;
+        
         // Set data
         SetData();
         SetMaxHealth();
@@ -35,9 +35,6 @@ public class RafaleDistance : Distance
         base.Update();
         switch (currentState)
         {
-            case State.Patrolling:
-
-                break;
             case State.Chasing:
                 isInRange();
                 // suit le path créé et s'arrête pour tirer

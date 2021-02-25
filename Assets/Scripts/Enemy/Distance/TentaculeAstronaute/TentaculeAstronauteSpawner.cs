@@ -6,7 +6,6 @@ public class TentaculeAstronauteSpawner : Distance
 {
     void Start()
     {
-        currentState = State.Patrolling;
         // Set data
         SetData();
         SetMaxHealth();
@@ -17,9 +16,6 @@ public class TentaculeAstronauteSpawner : Distance
         base.Update();
         switch (currentState)
         {
-            case State.Patrolling:
-                PlayerInSight();
-                break;
             case State.Chasing:
                 isInRange();
                 // suit le path créé et s'arrête pour tirer

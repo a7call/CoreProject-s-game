@@ -26,8 +26,6 @@ public class BubbleMS : Distance
         EnabledRayon();
         switch (currentState)
         {
-            case State.Patrolling:
-                break;
             case State.Chasing:
                 isInRange();
                 if(!firstShoot) rb.velocity = Vector2.zero;

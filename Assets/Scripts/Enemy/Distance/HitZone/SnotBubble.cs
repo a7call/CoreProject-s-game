@@ -21,8 +21,6 @@ public class SnotBubble : Distance
         base.Update();
         switch (currentState)
         {
-            case State.Patrolling:
-                break;
             case State.Chasing:
                 StartCoroutine(ZoneCo());
                 // suit le path créé et s'arrête pour tirer

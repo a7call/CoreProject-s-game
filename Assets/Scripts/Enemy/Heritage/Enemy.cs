@@ -60,7 +60,9 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
+        currentState = Enemy.State.Patrolling;
         GetReference();
+        
     }
 
     // Permet de récupérer toutes les références utiles
@@ -109,6 +111,16 @@ public class Enemy : MonoBehaviour
 
             case State.Death:
                 EnemyDie();
+                break;
+            case State.Patrolling:
+                if (aIPath.canMove)
+                {
+                    aIPath.canMove = false;
+                    aIPath.canSearch = false;
+                }
+                PlayerInSight();
+                
+                
                 break;
         }
 
@@ -175,7 +187,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public bool isBurned = false;
     // Distance ou l'ennemi repère le joueur
-    protected float inSight;
+    protected float inSight1 = 12f;
+    protected float inSight2 = 14f;
     [HideInInspector]
     public Transform target;
     [HideInInspector]
@@ -184,9 +197,12 @@ public class Enemy : MonoBehaviour
     // Actualise le State en Chasing si le joueur est repéré
     protected virtual void PlayerInSight()
     {
-        if (Vector3.Distance(transform.position, target.position) < inSight)
+        if (Vector3.Distance(transform.position, target.position) < Random.Range(inSight1, inSight2))
         {
+           
             currentState = State.Chasing;
+            aIPath.canMove = true;
+            aIPath.canSearch = true;
         }
     }
     [HideInInspector]

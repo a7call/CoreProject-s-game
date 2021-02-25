@@ -11,7 +11,7 @@ public class Bubble360 : Distance
 
     void Start()
     {
-        currentState = State.Chasing;
+        
         // Set data
         SetData();
         SetMaxHealth();
@@ -21,9 +21,7 @@ public class Bubble360 : Distance
         base.Update();
         switch (currentState)
         {
-            case State.Patrolling:
-                PlayerInSight();
-                break;
+          
             case State.Chasing:
                 isInRange();
                 break;

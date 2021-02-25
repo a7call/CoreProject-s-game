@@ -15,7 +15,6 @@ public class PompeDistanceEnemy : Distance
     void Start()
     {
         GetProjectile();
-        currentState = State.Chasing;
         // Set data
         SetData();
         SetMaxHealth();
@@ -27,9 +26,6 @@ public class PompeDistanceEnemy : Distance
         base.Update();
         switch (currentState)
         {
-            case State.Patrolling:
-                PlayerInSight();
-                break;
             case State.Chasing:
                 isInRange();
                 ChargingMode();
