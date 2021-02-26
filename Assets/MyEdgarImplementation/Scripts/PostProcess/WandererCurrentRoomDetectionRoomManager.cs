@@ -61,13 +61,20 @@ namespace Edgar.Unity.Examples
         /// Gets called when a player enters the room.
         /// </summary>
         /// <param name="player"></param>
-
+        bool shouldSpawnEnemy = false;
+        bool alReadyChecked = false;
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
             lightGestion();
 
+            if(!alReadyChecked)
+            {
+                alReadyChecked = true;
+                shouldSpawnEnemy = ShouldSpawnEnemies();
+                print(shouldSpawnEnemy);
+            }
 
             if (!Visited && roomInstance != null)
             {
@@ -75,19 +82,12 @@ namespace Edgar.Unity.Examples
                 UnlockDoors();
             }
            
-            if (ShouldSpawnEnemies())
-            {
-                // Close all neighboring doors
-                CloseDoors();
-
-                // Spawn enemies
-                StartCoroutine(SpawnEnemies());
-
-            }
+           
+            
             else if (room.Type != RoomType.Spawn)
             {
                 CloseDoors();
-                OpeningDoors(enemies);
+               // OpeningDoors(enemies);
             }
           //  StartCoroutine(ExploreRoom());
         }
@@ -304,20 +304,25 @@ namespace Edgar.Unity.Examples
        
         public void Update()
         {
-           
+            if (shouldSpawnEnemy && !Cleared && !EnemiesSpawned)
+            {
+                if(roomInstance.Enemies.Count <= 2)
+                {
+                    SpawnEnemies();
+                }
+            }
         }
 
-        public List<GameObject> enemies;
+      
         private IEnumerator SpawnEnemies()
         {
             EnemiesSpawned = true;
 
-             enemies = new List<GameObject>();
 
             var totalEnemiesCount = WandererGameManager.Instance.Random.Next(4, 8);
             yield return new WaitForSeconds(1f);
 
-            while (enemies.Count < totalEnemiesCount)
+            while (roomInstance.Enemies.Count < totalEnemiesCount)
             {
                 yield return new WaitForSeconds (0.001f);
                 // Find random position inside floor collider bounds
@@ -342,9 +347,9 @@ namespace Edgar.Unity.Examples
                 var enemy = Instantiate(enemyPrefab);
                 enemy.transform.position = position;
                 enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                enemies.Add(enemy);
+                roomInstance.Enemies.Add(enemy);
             }
-            StartCoroutine(OpeningDoors(enemies));
+            StartCoroutine(OpeningDoors(roomInstance.Enemies));
         }
         /// <summary>
         /// Wait some time before before opening doors.
@@ -436,7 +441,7 @@ namespace Edgar.Unity.Examples
         /// <returns></returns>
         private bool ShouldSpawnEnemies()
         {
-            return Cleared == false && EnemiesSpawned == false && room.Type == RoomType.Hub ;
+            return Cleared == false && EnemiesSpawned == false && room.Type == RoomType.Hub && UnityEngine.Random.Range(0,1) >= 0f;
         }
     }
 }
