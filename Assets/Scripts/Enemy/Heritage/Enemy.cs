@@ -152,11 +152,11 @@ public class Enemy : MonoBehaviour
         //mettre d'autres conditions 
         if(currentState == State.Attacking )
         {
-           // animator.SetBool("IsAttacking", true);
+            // animator.SetBool("isAttacking", true);
         }
         else
         {
-           // animator.SetBool("IsAttacking", false);
+            // animator.SetBool("isAttacking", false);
         }
         
         if(currentState == State.KnockedBack)
