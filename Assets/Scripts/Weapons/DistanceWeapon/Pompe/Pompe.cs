@@ -32,7 +32,7 @@ public class Pompe : DistanceWeapon
             for (int i = 0; i < projectiles.Length; i++)
             {
                 PompeProjectile.angleDecalage = PompeProjectile.angleDecalage + decalage;
-                GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
+                GameObject.Instantiate(projectiles[i], attackPoint.position, Quaternion.identity);
             }
             BulletInMag--;
             if (BulletInMag <= 0)

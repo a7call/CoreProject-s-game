@@ -50,6 +50,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             collision.transform.parent = gameObject.transform;
             collision.GetComponent<Weapons>().enabled = true;
             collision.transform.position = gameObject.transform.localPosition;
+            collision.transform.localRotation = Quaternion.Euler(0,0,0);
             collision.transform.gameObject.SetActive(false);
             collision.GetComponent<Collider2D>().enabled = false;
 
@@ -329,8 +330,8 @@ public class WeaponsManagerSelected : MonoBehaviour
             }
 
             rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
-
-            cacWeaponsList[selectedCacWeapon].transform.rotation = Quaternion.Euler(rotationVector);
+            transform.localRotation = Quaternion.Euler(rotationVector);
+            //cacWeaponsList[selectedCacWeapon].transform.rotation = Quaternion.Euler(rotationVector);
         }
         if (isPlayingDistance)
         {
@@ -353,7 +354,8 @@ public class WeaponsManagerSelected : MonoBehaviour
 
             rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
 
-            transform.rotation = Quaternion.Euler(rotationVector);
+            transform.localRotation = Quaternion.Euler(rotationVector);
+            //distanceWeaponsList[selectedDistanceWeapon].transform.rotation = Quaternion.Euler(rotationVector);
         }
         
     }

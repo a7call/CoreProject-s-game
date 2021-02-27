@@ -23,6 +23,7 @@ public class ArmeEnemy : MonoBehaviour
         PositionArme = transform.localPosition;
         dirWep = (gameObject.transform.position - enemy.transform.position).normalized;
 
+       
     }
 
     // Update is called once per frame
@@ -31,11 +32,10 @@ public class ArmeEnemy : MonoBehaviour
         
         Vector3 dir = (enemy.target.position - enemy.transform.position).normalized;
 
+        
 
 
-        
-        
-         if (dir.x <= 0 && !spriteRenderer.flipX)
+        if (dir.x <= 0 && !spriteRenderer.flipX)
          {
              spriteRenderer.flipX = true;
              attackPoint = transform.Find("attackPoint");
