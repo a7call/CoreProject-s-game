@@ -38,7 +38,7 @@ public class Distance : Enemy
         randomTargetPoint.name = "targetMouvePoint";
         randomTargetPoint.transform.parent = gameObject.transform;
         randomTargetPointTransform = randomTargetPoint.transform;
-        randomPoint = (Vector3)Random.insideUnitCircle * 3;
+        randomPoint = (Vector3)Random.insideUnitCircle;
         targetSetter.target = randomTargetPointTransform;
     }
     protected virtual void SetData()
