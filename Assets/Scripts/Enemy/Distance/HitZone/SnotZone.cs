@@ -20,7 +20,7 @@ public class SnotZone : Enemy
 
     void SetData()
     {
-        moveSpeed = enemyScriptableObject.moveSpeed;
+        aIPath.maxSpeed = Random.Range(enemyScriptableObject.moveSpeed, enemyScriptableObject.moveSpeed2);
         maxHealth = enemyScriptableObject.maxHealth;
         whiteMat = enemyScriptableObject.whiteMat;
         defaultMat = enemyScriptableObject.defaultMat;

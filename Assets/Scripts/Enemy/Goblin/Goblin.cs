@@ -37,7 +37,7 @@ public class Goblin : Enemy
 
     private void SetData()
     {
-        moveSpeed = enemyData.moveSpeed;
+        aIPath.maxSpeed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed2);
 
         maxHealth = enemyData.maxHealth;
         whiteMat = enemyData.whiteMat;
@@ -103,6 +103,7 @@ public class Goblin : Enemy
 
     protected override void Fear()
     {
+        float moveSpeed = aIPath.maxSpeed * 100;
         direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }

@@ -24,7 +24,7 @@ public class GravityAcceleratorBomb : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().moveSpeed /= 2f;
+            collision.GetComponent<Enemy>().aIPath.maxSpeed /= 2f;
             enemiesSlowed.Add(collision.gameObject);
         }
         if (collision.CompareTag("Player"))
@@ -38,7 +38,7 @@ public class GravityAcceleratorBomb : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().moveSpeed *= 2f;
+            collision.GetComponent<Enemy>().aIPath.maxSpeed *= 2f;
             enemiesSlowed.Remove(collision.gameObject);
         }
         if (collision.CompareTag("Player"))

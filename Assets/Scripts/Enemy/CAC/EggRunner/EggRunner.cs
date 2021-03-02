@@ -37,10 +37,10 @@ public class EggRunner : Cac
     protected override void isInRange()
     {
         if (gameObject == null) return;
-        
-        if(Vector3.Distance(transform.position, randomPosition) >= agressiveDistance)
+        float moveSpeed = aIPath.maxSpeed * 100f;
+        if (Vector3.Distance(transform.position, randomPosition) >= agressiveDistance)
         {
-            // Va au point
+            
             rb.velocity = moveSpeed * direction * Time.fixedDeltaTime;
             currentState = State.Chasing;
         }
