@@ -32,17 +32,50 @@ public class Bubble360 : Distance
         }
     }
 
-   
 
+    protected override void SetAnimationVariable()
+    {
+
+        if (aIPath.canMove)
+        {
+            animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
+            animator.SetFloat("VerticalSpeed", aIPath.velocity.y);
+            float EnemySpeed = aIPath.velocity.sqrMagnitude;
+            animator.SetFloat("Speed", EnemySpeed);
+        }
+        else
+        {
+
+            animator.SetFloat("HorizontalSpeed", 0);
+            animator.SetFloat("VerticalSpeed", 0);
+            float EnemySpeed = 0;
+            animator.SetFloat("Speed", EnemySpeed);
+        }
+
+        //mettre d'autres conditions 
+        
+
+        if (currentState == State.KnockedBack)
+        {
+            //animator.SetBool("isTakingDamage", true);
+        }
+        else
+        {
+            //animator.SetBool("isTakingDamage", false);
+        }
+    }
 
     //Voir Enemy.cs(héritage)
     protected override IEnumerator CanShoot()
     {
         if (isReadytoShoot)
         {
+            animator.SetTrigger("isAttacking");
             isReadytoShoot = false;
             Shoot();
+            
             yield return new WaitForSeconds(restTime);
+           
             isReadytoShoot = true;
         }
     }
@@ -50,8 +83,10 @@ public class Bubble360 : Distance
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
     {
+       
         Instantiate(rayon, transform.position, Quaternion.identity);
         AddShoot();
+      
     }
 
     private void AddShoot()                     

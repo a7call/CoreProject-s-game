@@ -21,7 +21,7 @@ public class HealerEnemy : Enemy
     }
     void SetData()
     {
-        moveSpeed = EnemyData.moveSpeed;
+        aIPath.maxSpeed = Random.Range(EnemyData.moveSpeed, EnemyData.moveSpeed2);
         maxHealth = EnemyData.maxHealth;
         whiteMat = EnemyData.whiteMat;
         defaultMat = EnemyData.defaultMat;

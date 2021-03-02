@@ -134,6 +134,7 @@ public class Enemy : MonoBehaviour
     // Permet d'envoyer les variables gérant l'animator
     protected virtual void SetAnimationVariable()
     {
+        
         if (aIPath.canMove)
         {
             animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
@@ -143,6 +144,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            
             animator.SetFloat("HorizontalSpeed", 0);
             animator.SetFloat("VerticalSpeed", 0);
             float EnemySpeed = 0;
@@ -152,11 +154,11 @@ public class Enemy : MonoBehaviour
         //mettre d'autres conditions 
         if(currentState == State.Attacking )
         {
-            // animator.SetBool("isAttacking", true);
+             animator.SetBool("isAttacking", true);
         }
         else
         {
-            // animator.SetBool("isAttacking", false);
+            animator.SetBool("isAttacking", false);
         }
         
         if(currentState == State.KnockedBack)
@@ -180,9 +182,8 @@ public class Enemy : MonoBehaviour
     }
 
     // Mouvement
-    [HideInInspector]
-    public float moveSpeed;
-    [HideInInspector]
+    
+    
     public bool isSlowed = false;
     [HideInInspector]
     public bool isBurned = false;
@@ -211,7 +212,9 @@ public class Enemy : MonoBehaviour
     // Permet de fear
     protected virtual void Fear()
     {
-        if(direction == Vector3.zero) direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
+        float moveSpeed = aIPath.maxSpeed * 100;
+        if (direction == Vector3.zero) direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
+
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 

@@ -22,21 +22,23 @@ public class BubbleMS : Distance
     }
     protected override void Update()
     {
+        
         base.Update();
         EnabledRayon();
         switch (currentState)
         {
             case State.Chasing:
                 isInRange();
-                if(!firstShoot) rb.velocity = Vector2.zero;
+                if(!firstShoot) aIPath.canMove = false;
                 break;
             case State.Attacking:
-                isInRange();
+               
                 StartCoroutine(CanShoot());
                 break;
         }
 
     }
+   
     protected override void EnemyDie()
     {
         if (isDying)
