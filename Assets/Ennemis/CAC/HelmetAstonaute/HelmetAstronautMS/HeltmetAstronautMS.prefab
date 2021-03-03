@@ -46,10 +46,11 @@ GameObject:
   - component: {fileID: 8529353626898803446}
   - component: {fileID: 9214106796981837307}
   - component: {fileID: -3711496947009898128}
+  - component: {fileID: 1890073690}
   m_Layer: 9
   m_Name: HeltmetAstronautMS
   m_TagString: Enemy
-  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -130,15 +131,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -4024656534470950959, guid: 8f79a8421865eee4aabb459a4e3de05b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.84375, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &9149136851862666628
@@ -183,14 +184,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOnFire: 0
   isreadyToAttack: 1
-  animator: {fileID: 0}
+  animator: {fileID: 1890073690}
   isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
   currentState: 1
   nextWayPointDistance: 3
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
-  moveSpeed: 0
   isSlowed: 0
   isBurned: 0
   target: {fileID: 0}
@@ -203,6 +203,7 @@ MonoBehaviour:
   healthBarGFX: {fileID: 9149136852636655314}
   timeBeforeDesactive: 0
   CacDatas: {fileID: 11400000, guid: c06b49dc52aef264eaa09d5b520d69f1, type: 2}
+  attackDir: {x: 0, y: 0, z: 0}
   attackPoint: {fileID: 9149136851748265925}
   distanceEnemyAggressive: 5
   newSpeedEnemy: 5
@@ -223,10 +224,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.84375, y: 1}
+    newSize: {x: 0.84375, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -283,6 +284,25 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!95 &1890073690
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9149136851862666634}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b03146fd2611dee43b6f6b1d8201a9f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9149136851911328712
 GameObject:
   m_ObjectHideFlags: 0
