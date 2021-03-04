@@ -7,6 +7,7 @@ using System;
 
 
 namespace Edgar.Unity.Examples
+
 {
     public class WandererCurrentRoomDetectionRoomManager : MonoBehaviour
     {
@@ -323,16 +324,15 @@ namespace Edgar.Unity.Examples
             {
                 foreach (GameObject enemy in roomInstance.Enemies.ToArray())
                 {
+                    print(enemy);
                     if (enemy == null)
                     {
                         roomInstance.Enemies.Remove(enemy);
                     }
                 }
             }
-
             EnemyBasedSpawn();
-
-            if ((!shouldSpawnEnemy && roomInstance.Enemies.Count == 0 && !Cleared) || (shouldSpawnEnemy && EnemiesSpawned && roomInstance.Enemies.Count == 0 && !Cleared) )
+            if ((!shouldSpawnEnemy && roomInstance.Enemies.Count <= 0 && !Cleared && roomInstance.IsEnemyAlreadySpawned) || (shouldSpawnEnemy && EnemiesSpawned && roomInstance.Enemies.Count <= 0 && !Cleared &&  roomInstance.IsEnemyAlreadySpawned) )
             {
                 Cleared = true;
             }
