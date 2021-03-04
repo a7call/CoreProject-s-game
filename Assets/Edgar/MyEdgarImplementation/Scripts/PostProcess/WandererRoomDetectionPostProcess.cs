@@ -42,12 +42,10 @@ namespace Edgar.Unity.Examples
                 // Add the room manager component
                 var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
 
-                roomManager.TileMap = tilemapss;
                 
-               // BlackenMap(tilemapss, roomInstance);
                 roomManager.RoomInstance = roomInstance;
                 
-                roomManager.tilemapMiniMap = tilemapMiniMap;
+            
 
 
 
@@ -142,27 +140,7 @@ namespace Edgar.Unity.Examples
         }
 
 
-        void BlackenMap(Transform tilemaps, RoomInstance roomInstance)
-        {
-            var room = (WandererRoom)roomInstance.Room;
-            var roomTemplateInstance = roomInstance.RoomTemplateInstance;
-            var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
-          
-
-            var tilemapGoblal = RoomTemplateUtils.GetTilemaps(tilemaps.gameObject);
-            foreach (Tilemap tilemap in tilemapGoblal)
-            {
-
-                foreach (Vector3 tileGlobal in roomManager.getTheTiles(tilemap))
-                {
-
-                    tilemap.SetTileFlags(tilemap.WorldToCell(tileGlobal), TileFlags.None);
-                    tilemap.SetColor(tilemap.WorldToCell(tileGlobal), Color.black);
-
-                }
-            }
-        }
-
+      
         private void SetupFogOfWar(GeneratedLevel level)
         {
             // To setup the FogOfWar component, we need to get the root game object that holds the level.

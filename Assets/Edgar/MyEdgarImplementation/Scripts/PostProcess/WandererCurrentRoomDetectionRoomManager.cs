@@ -62,16 +62,21 @@ namespace Edgar.Unity.Examples
         /// Gets called when a player enters the room.
         /// </summary>
         /// <param name="player"></param>
+        /// 
+
+        //EnemySpawn Variable
+
         bool shouldSpawnEnemy = false;
         bool alReadyChecked = false;
-        bool EnemyBase;
-       
+        bool EnemyBaseSpawn;
+
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
             lightGestion();
           
+            // Calcule probability of 2nd Spawn
             if (!alReadyChecked)
             {
                 alReadyChecked = true;
@@ -81,16 +86,19 @@ namespace Edgar.Unity.Examples
                 {
                     float chanceToEnemyBase = UnityEngine.Random.Range(0.0f,1.0f);
                     print(chanceToEnemyBase);
-                    EnemyBase = chanceToEnemyBase >= 0.4f ?  EnemyBase = true :  EnemyBase = false;
-                    print(EnemyBase);
+                    EnemyBaseSpawn = chanceToEnemyBase >= 0.4f ? EnemyBaseSpawn = true : EnemyBaseSpawn = false;
                 }
               
             }
-           
-            if (shouldSpawnEnemy && !EnemyBase)
+
+
+            // Time Base Spawn
+            if (shouldSpawnEnemy && !EnemyBaseSpawn)
             {
                 StartCoroutine(TimeBaseSpawn());
             }
+
+
            
             if (!Visited && roomInstance != null)
             {
@@ -170,147 +178,6 @@ namespace Edgar.Unity.Examples
            
         }
        
-
-        public Transform TileMap;
-
-
-        private IEnumerator ExploreRoom()
-        {
-            yield return new WaitForSeconds(0.0001f);
-            List<Vector3Int> direction = new List<Vector3Int>();
-            direction.Add(new Vector3Int(1, 0, 0));
-            direction.Add(new Vector3Int(-1, 0, 0));
-            direction.Add(new Vector3Int(0, 1, 0));
-            direction.Add(new Vector3Int(0, -1, 0));
-
-        
-              
-                roomInstance.RoomTemplateInstance.layer = 18;
-
-                GameObject TilMapObj = TileMap.gameObject;
-                var tilemapGoblal = RoomTemplateUtils.GetTilemaps(TilMapObj);
-
-                var tilemapsRoom = RoomTemplateUtils.GetTilemaps(roomInstance.RoomTemplateInstance);
-                foreach (Tilemap tilemapG in tilemapGoblal)
-                {
-                    foreach (Tilemap tilemapR in tilemapsRoom)
-                    {
-                        if (tilemapG.name != tilemapR.name) continue;
-
-                        foreach (Vector3 tileRoom in getTheTiles(tilemapR))
-                        {
-
-
-                            
-                            tilemapG.SetTileFlags(tilemapG.WorldToCell(tileRoom), TileFlags.None);
-                            tilemapG.SetColor(tilemapG.WorldToCell(tileRoom), Color.white);
-
-                            StartCoroutine(MiniMapGestion(tilemapG, tilemapG.WorldToCell(tileRoom)));
-
-
-                            foreach (Vector3Int dir in direction)
-                            {
-                                if (!tilemapR.HasTile(tilemapR.WorldToCell(tileRoom) + dir) && tilemapG.GetColor(tilemapG.WorldToCell(tileRoom) + dir) != Color.white)
-                                {
-                                    tilemapG.SetTileFlags(tilemapG.WorldToCell(tileRoom + dir), TileFlags.None);
-                                    tilemapG.SetColor(tilemapG.WorldToCell(tileRoom + dir), new Color(0.35f, 0.35f, 0.35f, 1));
-                                }
-                            }
-                        }
-                    }
-
-                }
-            
-        }
-    
-
-        
-        public Color WallsColor = new Color(0.72f, 0.72f, 0.72f);
-
-        public Color FloorColor = new Color(0.18f, 0.2f, 0.34f);
-
-        
-        public Tilemap tilemapMiniMap;
-
-        private List<Vector3Int> WallstilesPos = new List<Vector3Int>();
-        IEnumerator MiniMapGestion(Tilemap sourceTilemap, Vector3Int tilemapPosition)
-        {
-            yield return new WaitForEndOfFrame();
-            if (sourceTilemap.name == "Floor")
-            {
-                CopyTilesToLevelMap(sourceTilemap, tilemapPosition, tilemapMiniMap, CreateTileFromColor(FloorColor));
-            }
-
-        }
-
-        private TileBase CreateTileFromColor(Color color, float pixelsPerUnit = 1)
-        {
-            var tile = ScriptableObject.CreateInstance<Tile>();
-
-            var texture = new Texture2D(1, 1);
-            texture.SetPixel(0, 0, color);
-            texture.Apply();
-
-            var sprite = Sprite.Create(texture, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f), pixelsPerUnit);
-            tile.sprite = sprite;
-
-            return tile;
-        }
-
-        /// <summary>
-        /// Copy tiles from given source tilemaps to the level map tilemap.
-        /// Instead of using the original tiles, we use a given level map tile (which is usually only a single color).
-        /// If we want to copy only some of the tiles, we can provide a tile filter function.
-        /// </summary>
-        private void CopyTilesToLevelMap( Tilemap sourceTilemap, Vector3Int tilemapPosition ,  Tilemap levelMapTilemap, TileBase levelMapTile, Predicate<TileBase> tileFilter = null)
-        {
-            // Go through the tilemaps with the correct name
-                    // Check if there is a tile at a given position
-                    var originalTile = sourceTilemap.GetTile(tilemapPosition);
-                     
-                    if (originalTile != null)
-                    {
-                        // If a tile filter is provided, use it to check if the predicate holds
-                        if (tileFilter != null)
-                        {
-                            if (tileFilter(originalTile))
-                            {
-                                levelMapTilemap.SetTile(tilemapPosition, levelMapTile);
-                            }
-                        }
-                        // Otherwise set the levelMapTile to the correct position
-                        else
-                        {
-                            levelMapTilemap.SetTile(tilemapPosition, levelMapTile);
-                        }
-                    }
-        }
-
-        public List<Vector3> getTheTiles(Tilemap tileMap)
-        {
-
-           List<Vector3> availablePlaces = new List<Vector3>();
-            for (int n = tileMap.cellBounds.xMin; n < tileMap.cellBounds.xMax; n++)
-            {
-                for (int p = tileMap.cellBounds.yMin; p < tileMap.cellBounds.yMax; p++)
-                {
-                    Vector3Int localPlace = (new Vector3Int(n, p, 0));
-                    Vector3 place = tileMap.CellToWorld(localPlace);
-                    if (tileMap.HasTile(localPlace))
-                    {
-                        //Tile at "place"
-                        availablePlaces.Add(place);
-                    }
-                    else
-                    {
-                        //No tile at "place"
-                    }
-                }
-            }
-
-            return availablePlaces;
-        }
-
         public void Start()
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
@@ -320,6 +187,28 @@ namespace Edgar.Unity.Examples
         float numberOfEnemyLeftInRoom = 2f;
         public void Update()
         {
+            // clean Enemy array when enely is killed;
+            CleanEnemyArray();
+            // If proba == EnemyBase Spawn
+            EnemyBasedSpawn();
+            // Check if all enemy are killed if true clear = true; (room is safe)
+            CheckIsRoomSafe();
+
+
+        }
+
+       private float timeBeforeBackUps =5f;
+        void CheckIsRoomSafe()
+        {
+            if ((!shouldSpawnEnemy && roomInstance.Enemies.Count <= 0 && !Cleared && roomInstance.IsEnemyAlreadySpawned) || (shouldSpawnEnemy && EnemiesSpawned && roomInstance.Enemies.Count <= 0 && !Cleared && roomInstance.IsEnemyAlreadySpawned))
+            {
+                Cleared = true;
+            }
+        }
+       // TimeBase Spawn
+       void CleanEnemyArray()
+        {
+
             if (!Cleared)
             {
                 foreach (GameObject enemy in roomInstance.Enemies.ToArray())
@@ -331,23 +220,17 @@ namespace Edgar.Unity.Examples
                     }
                 }
             }
-            EnemyBasedSpawn();
-            if ((!shouldSpawnEnemy && roomInstance.Enemies.Count <= 0 && !Cleared && roomInstance.IsEnemyAlreadySpawned) || (shouldSpawnEnemy && EnemiesSpawned && roomInstance.Enemies.Count <= 0 && !Cleared &&  roomInstance.IsEnemyAlreadySpawned) )
-            {
-                Cleared = true;
-            }
-           
         }
-
-       private float timeBeforeBackUps =5f;
        private IEnumerator TimeBaseSpawn()
         {
             yield return new WaitForSeconds(timeBeforeBackUps);
             StartCoroutine(SpawnEnemies());
         }
+
+        //EnemyBase Spawn
         void EnemyBasedSpawn()
         {
-            if (shouldSpawnEnemy && !Cleared && !EnemiesSpawned && EnemyBase)
+            if (shouldSpawnEnemy && !Cleared && !EnemiesSpawned && EnemyBaseSpawn)
             {
                 if (roomInstance.Enemies.Count <= numberOfEnemyLeftInRoom)
                 {
@@ -355,6 +238,8 @@ namespace Edgar.Unity.Examples
                 }
             }
         }
+
+        // Spawn Enemy function
         private IEnumerator SpawnEnemies()
         {
             EnemiesSpawned = true;
@@ -390,7 +275,7 @@ namespace Edgar.Unity.Examples
                 enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
                 roomInstance.Enemies.Add(enemy);
             }
-            StartCoroutine(OpeningDoors(roomInstance.Enemies));
+           // StartCoroutine(OpeningDoors(roomInstance.Enemies));
         }
         /// <summary>
         /// Wait some time before before opening doors.
