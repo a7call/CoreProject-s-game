@@ -22,25 +22,28 @@ public class HelmetAstronautExplose : Cac
             case State.Attacking:
                 GetPlayerPos();
                 StartCoroutine(Attack());
+                
                 break;
 
         }
 
     }
-   
-   
+
+
+
     private IEnumerator Attack()
     {
+       
         yield return new WaitForSeconds(timeToExplode);
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, hitLayers);
-
+        animator.SetBool("isDying", true);
         foreach (Collider2D h in hits)
         {
             if(h.CompareTag("Player")) h.GetComponent<PlayerHealth>().TakeDamage(1);
         }
 
-        Destroy(gameObject);
-       
+        
+
     }
     protected override void isInRange()
     {
@@ -51,5 +54,13 @@ public class HelmetAstronautExplose : Cac
         }
     }
 
+    public void DestroyGO()
+    {
+        Destroy(gameObject);
+    }
+    public void PrintEvent(string s)
+    {
+        Debug.Log("PrintEvent: " + s + " called at: " + Time.time);
+    }
 
 }

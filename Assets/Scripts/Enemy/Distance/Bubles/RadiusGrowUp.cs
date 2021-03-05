@@ -45,10 +45,12 @@ public class RadiusGrowUp : MonoBehaviour
         hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
         foreach (RaycastHit2D hit in hits)
         {
+          
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                if (Vector3.Distance(transform.position, hit.transform.position) >= Mathf.Abs(RadiusGrowByTime() - 0.01f) && Vector3.Distance(transform.position, hit.transform.position) <= Mathf.Abs(RadiusGrowByTime() + 0.01f))
+                if (Vector3.Distance(transform.position, hit.transform.position) >= Mathf.Abs(RadiusGrowByTime() - 0.1f) && Vector3.Distance(transform.position, hit.transform.position) <= Mathf.Abs(RadiusGrowByTime() + 0.1f))
                 {
+                   
                     hit.transform.GetComponent<PlayerHealth>().TakeDamage(1);
                 }
             }
