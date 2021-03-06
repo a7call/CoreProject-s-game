@@ -20,8 +20,9 @@ public class HelmetAstronautExplose : Cac
                 break;
 
             case State.Attacking:
-                GetPlayerPos();
-                StartCoroutine(Attack());
+                GetPlayerPos(); 
+                animator.SetBool("isDying", true);
+                
                 
                 break;
 
@@ -36,7 +37,7 @@ public class HelmetAstronautExplose : Cac
        
         yield return new WaitForSeconds(timeToExplode);
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, hitLayers);
-        animator.SetBool("isDying", true);
+        
         foreach (Collider2D h in hits)
         {
             if(h.CompareTag("Player")) h.GetComponent<PlayerHealth>().TakeDamage(1);
