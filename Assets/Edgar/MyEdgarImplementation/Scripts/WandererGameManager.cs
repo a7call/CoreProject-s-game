@@ -48,7 +48,7 @@ namespace Edgar.Unity.Examples
             ShowLoadingScreen("Enter the Gungeon", $"Stage {Stage}");
 
             // Find the generator runner
-            var generator = GameObject.Find("DUNGEONGEN").GetComponent<DungeonGenerator>();
+            var generator = GameObject.FindGameObjectWithTag("DUNGEONGEN").GetComponent<DungeonGenerator>();
 
             // Start the generator coroutine
             StartCoroutine(GeneratorCoroutine(generator));

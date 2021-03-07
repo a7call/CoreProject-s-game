@@ -213,7 +213,7 @@ namespace Edgar.Unity.Examples
             {
                 foreach (GameObject enemy in roomInstance.Enemies.ToArray())
                 {
-                    print(enemy);
+
                     if (enemy == null)
                     {
                         roomInstance.Enemies.Remove(enemy);

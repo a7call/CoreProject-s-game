@@ -110,7 +110,13 @@ public class Enemy : MonoBehaviour
                 break;
 
             case State.Death:
-                EnemyDie();
+                 aIPath.canMove = false;
+                if (GetComponent<Collider2D>().enabled)
+                {
+                    GetComponent<Collider2D>().enabled = false;
+                    animator.SetTrigger("isDying");
+                   
+                }
                 break;
             case State.Patrolling:
                 if (aIPath.canMove)
@@ -297,8 +303,6 @@ public class Enemy : MonoBehaviour
     {
         if (isDying)
         {
-            // Animator
-            animator.SetBool("isDying", true);
             isDying = false;
             SpawnRewards();
             nanoRobot();
