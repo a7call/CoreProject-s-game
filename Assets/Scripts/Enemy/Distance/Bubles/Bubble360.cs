@@ -30,6 +30,10 @@ public class Bubble360 : Distance
                 StartCoroutine(CanShoot());
                 break;
         }
+        if (isDying)
+        {
+           GetComponent<SpriteRenderer>().material.SetColor("_Color", new Color(192, 2, 0, 1));
+        }
     }
 
 
