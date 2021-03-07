@@ -68,23 +68,28 @@ public class Cac : Enemy
     {
         if (isreadyToAttack)
         {
+            animator.SetTrigger("isAttacking");
             isreadyToAttack = false;
-            Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
-
-            foreach (Collider2D h in hits)
-            {
-
-                if (h.CompareTag("Player"))
-                {
-                    h.GetComponent<PlayerHealth>().TakeDamage(1);
-                }
-               
-            }
+            //ApplyDamage();
             yield return new WaitForSeconds(attackDelay);
             isreadyToAttack = true;
         }
     }
 
+    void ApplyDamage()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
+
+        foreach (Collider2D h in hits)
+        {
+
+            if (h.CompareTag("Player"))
+            {
+                h.GetComponent<PlayerHealth>().TakeDamage(1);
+            }
+
+        }
+    }
 
     // Gizmos
     private void OnDrawGizmosSelected()
@@ -99,6 +104,36 @@ public class Cac : Enemy
         attackPoint.position = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
     }
 
+    protected override void SetAnimationVariable()
+    {
 
-    
+        if (aIPath.canMove)
+        {
+            animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
+            animator.SetFloat("VerticalSpeed", aIPath.velocity.y);
+            float EnemySpeed = aIPath.velocity.sqrMagnitude;
+            animator.SetFloat("Speed", EnemySpeed);
+        }
+        else
+        {
+
+            animator.SetFloat("HorizontalSpeed", 0);
+            animator.SetFloat("VerticalSpeed", 0);
+            float EnemySpeed = 0;
+            animator.SetFloat("Speed", EnemySpeed);
+        }
+
+        //mettre d'autres conditions 
+      
+
+        if (currentState == State.KnockedBack)
+        {
+            //animator.SetBool("isTakingDamage", true);
+        }
+        else
+        {
+            //animator.SetBool("isTakingDamage", false);
+        }
+    }
+
 }

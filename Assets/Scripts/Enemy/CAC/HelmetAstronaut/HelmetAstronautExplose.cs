@@ -20,9 +20,9 @@ public class HelmetAstronautExplose : Cac
                 break;
 
             case State.Attacking:
-                GetPlayerPos(); 
-                animator.SetBool("isDying", true);
+                GetPlayerPos();
                 
+                StartCoroutine(TriggerExplosion());
                 
                 break;
 
@@ -31,11 +31,19 @@ public class HelmetAstronautExplose : Cac
     }
 
 
-
-    private IEnumerator Attack()
+    IEnumerator TriggerExplosion()
     {
-       
         yield return new WaitForSeconds(timeToExplode);
+        aIPath.canMove = false;
+        animator.SetBool("isDying", true);
+    }
+
+
+    private void Attack()
+    {
+        
+       
+        print("test");
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, hitLayers);
         
         foreach (Collider2D h in hits)
