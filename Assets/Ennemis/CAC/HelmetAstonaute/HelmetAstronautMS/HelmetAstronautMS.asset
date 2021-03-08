@@ -15,10 +15,17 @@ MonoBehaviour:
   maxHealth: 4
   whiteMat: {fileID: 2100000, guid: 8da5fd2a7428c604c9a942d71eace545, type: 2}
   defaultMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  moveSpeed: 150
-  aggroDistance: 4
+  moveSpeed: 2
+  moveSpeed2: 3
   attackRange: 1
+  attackRange2: 0
+  nextWayPoint: 1
+  nextWayPoint2: 3
+  refreshPathTime: 0.3
+  refreshPathTime2: 0.5
   attackRadius: 0.3
   hitLayers:
     serializedVersion: 2
     m_Bits: 256
+  timeToSwich: 1
+  attackDelay: 0

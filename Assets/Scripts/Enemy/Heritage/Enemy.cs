@@ -180,16 +180,12 @@ public class Enemy : MonoBehaviour
     // Permet de récuperer la dernière direction
     protected virtual void GetLastDirection()
     {
-        if(currentState != State.Attacking)
-        {
+       
             if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
             {
                 animator.SetFloat("lastMoveX", targetSetter.target.position.x - gameObject.transform.position.x);
                 animator.SetFloat("lastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
-            }
-        }
-        
-       
+            } 
     }
 
     // Mouvement
