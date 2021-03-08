@@ -322,6 +322,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             {
                 spriteRenderer.flipX = true;
                 cacWeaponsList[selectedCacWeapon].transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z);
+                //cacWeaponsList[selectedCacWeapon]
             }
             else if (dir.x > 0)
             {
@@ -330,8 +331,8 @@ public class WeaponsManagerSelected : MonoBehaviour
             }
 
             rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
-            transform.localRotation = Quaternion.Euler(rotationVector);
-            //cacWeaponsList[selectedCacWeapon].transform.rotation = Quaternion.Euler(rotationVector);
+            //transform.localRotation = Quaternion.Euler(rotationVector);
+            cacWeaponsList[selectedCacWeapon].transform.rotation = Quaternion.Euler(rotationVector);
         }
         if (isPlayingDistance)
         {
@@ -345,6 +346,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             {
                 spriteRenderer.flipX = true;
                 distanceWeaponsList[selectedDistanceWeapon].transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z);
+               //distanceWeaponsList[selectedDistanceWeapon].
             }
             else if (dir.x > 0)
             {
@@ -354,8 +356,8 @@ public class WeaponsManagerSelected : MonoBehaviour
 
             rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
 
-            transform.localRotation = Quaternion.Euler(rotationVector);
-            //distanceWeaponsList[selectedDistanceWeapon].transform.rotation = Quaternion.Euler(rotationVector);
+            //transform.localRotation = Quaternion.Euler(rotationVector);
+            distanceWeaponsList[selectedDistanceWeapon].transform.rotation = Quaternion.Euler(rotationVector);
         }
         
     }
