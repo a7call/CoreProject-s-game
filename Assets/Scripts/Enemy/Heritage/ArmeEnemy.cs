@@ -32,8 +32,6 @@ public class ArmeEnemy : MonoBehaviour
         
         Vector3 dir = (enemy.target.position - enemy.transform.position).normalized;
 
-        
-
 
         if (dir.x <= 0 && !spriteRenderer.flipX)
          {
