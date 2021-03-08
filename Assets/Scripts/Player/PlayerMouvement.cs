@@ -146,15 +146,30 @@ public class PlayerMouvement : Player
     //    mouvement.y = Input.GetAxisRaw("Vertical");
 
     //}
-
+    protected Vector3 screenMousePos;
+    protected Vector3 screenPlayerPos;
+    Vector3 horizon = new Vector3(1, 0, 0);
     // Get last Direction for Idle
     void GetLastDirection()
     {
-        if (mouvement.x == 1 || mouvement.x == -1 || mouvement.y == -1 || mouvement.y == 1)
-        {
-            animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
-            animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
+        //if (mouvement.x == 1 || mouvement.x == -1 || mouvement.y == -1 || mouvement.y == 1)
+        //{
+        //    animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
+        //    animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
 
+        //}
+
+        // position de la souris sur l'écran 
+        screenMousePos = Input.mousePosition;
+        // position du player en pixel sur l'écran 
+        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+        // position du point d'attaque 
+        Vector3 dir = new Vector3(-transform.position.x + (screenMousePos - screenPlayerPos).x, -transform.position.y + (screenMousePos - screenPlayerPos).y);
+        float angle = Vector3.Angle(horizon, dir);
+
+        if(angle < 45 && angle > 315)
+        {
+            //animator.SetFloat("");
         }
     }
 

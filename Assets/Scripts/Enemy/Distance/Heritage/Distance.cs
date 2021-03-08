@@ -99,7 +99,8 @@ public class Distance : Enemy
     protected virtual void Shoot()
     {
         float decalage = Random.Range(-Dispersion, Dispersion);
-        Transform weapon = transform.Find("Weapon");
+        Transform supportArme = transform.Find("SupportArme");
+        Transform weapon = supportArme.Find("Weapon");
         Transform attackPoint = weapon.Find("attackPoint");
         if (attackPoint!= null)
         {
