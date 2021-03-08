@@ -42,6 +42,7 @@ public class PlayerMouvement : Player
     }
     protected  void Update()
     {
+        Animation();
 
         if (isSpeedShoesModule && !SpeedAlreadyUp)
         {
@@ -58,8 +59,7 @@ public class PlayerMouvement : Player
                 CheckInputs();
                 //GetInputAxis();
                 ClampMouvement(mouvement);
-                GetLastDirection();
-                SetAnimationVariable();
+                
                 break;
 
             case EtatJoueur.fear:
@@ -130,34 +130,16 @@ public class PlayerMouvement : Player
        mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
     }
 
-    // Animation Variable
-    void SetAnimationVariable()
-    {
-        animator.SetFloat("HorizontalSpeed", mouvement.x);
-        animator.SetFloat("VerticalSpeed", mouvement.y);
-        float playerSpeed = mouvement.sqrMagnitude;
-        animator.SetFloat("Speed", playerSpeed);
-    }
-
-    // Get Input
-    //void GetInputAxis()
-    //{
-    //    mouvement.x = Input.GetAxisRaw("Horizontal");
-    //    mouvement.y = Input.GetAxisRaw("Vertical");
-
-    //}
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;
     Vector3 horizon = new Vector3(1, 0, 0);
-    // Get last Direction for Idle
-    void GetLastDirection()
-    {
-        //if (mouvement.x == 1 || mouvement.x == -1 || mouvement.y == -1 || mouvement.y == 1)
-        //{
-        //    animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
-        //    animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
 
-        //}
+    // Animation Variable
+    void Animation()
+    {
+        
+        float playerSpeed = mouvement.sqrMagnitude;
+        animator.SetFloat("Speed", playerSpeed);
 
         // position de la souris sur l'écran 
         screenMousePos = Input.mousePosition;
@@ -165,13 +147,34 @@ public class PlayerMouvement : Player
         screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
         Vector3 dir = new Vector3(-transform.position.x + (screenMousePos - screenPlayerPos).x, -transform.position.y + (screenMousePos - screenPlayerPos).y);
-        float angle = Vector3.Angle(horizon, dir);
 
-        if(angle < 45 && angle > 315)
+        float angle = Quaternion.FromToRotation(Vector3.left, horizon - dir).eulerAngles.z;
+
+        
+        if (angle > 45 && angle <= 135)
         {
-            //animator.SetFloat("");
+            animator.SetFloat("VerticalSpeed", 1);
+            animator.SetFloat("HorizontalSpeed", 0);
         }
+        else if (angle > 135 && angle <= 225)
+        {
+            animator.SetFloat("HorizontalSpeed", -1);
+            animator.SetFloat("VerticalSpeed", 0);
+        }
+        else if (angle > 225 && angle <= 315)
+        {
+            animator.SetFloat("VerticalSpeed", -1);
+            animator.SetFloat("HorizontalSpeed", 0);
+        }
+        else
+        {
+            animator.SetFloat("HorizontalSpeed", 1);
+            animator.SetFloat("VerticalSpeed", 0);
+        }
+
     }
+
+   
 
     // Check If Player released Inputs
     void CheckInputs()
