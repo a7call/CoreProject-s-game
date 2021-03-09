@@ -28,9 +28,7 @@ public class HelmetAstronautMS : Cac
         base.Update();
         switch (currentState)
         {
-            default:
-            case State.Patrolling:
-                break;
+         
             case State.Chasing:
                 if (canPowerMode) StartCoroutine(PowerMode());
                 if (isPowerMode) StartCoroutine(IncreaseSpeed());
