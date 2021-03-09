@@ -72,7 +72,7 @@ public class DistanceWeapon : Weapons
     {
         base.Update();
         InfiniteAmmo = isUnlimitedAmmoModule;
-        GetAttackDirection();
+        //GetAttackDirection();
         if (OkToShoot)
         {
             CoroutineManager.Instance.StartCoroutine(Shoot());

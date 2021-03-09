@@ -26,7 +26,7 @@ public class Weapons : MonoBehaviour
     public bool isAttacking = false;
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;
-    public Vector3 posOfPoint;
+    //public Vector3 posOfPoint;
 
     public Vector3 OffPositionArme;
 
@@ -38,17 +38,17 @@ public class Weapons : MonoBehaviour
     protected virtual void GetAttackDirection()
     {
 
-        // position de la souris sur l'écran 
-        screenMousePos = Input.mousePosition;
-        // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
-        // position du point d'attaque 
+        //// position de la souris sur l'écran 
+        //screenMousePos = Input.mousePosition;
+        //// position du player en pixel sur l'écran 
+        //screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+        //// position du point d'attaque 
 
-        posOfPoint = new Vector3(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
-        attackPoint.position = posOfPoint;
+        //posOfPoint = new Vector3(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
+        //attackPoint.position = posOfPoint;
     }
 
-    protected virtual void Update()
+protected virtual void Update()
     {
         if (isTotalDestructionModule && !damagealReadyMult)
         {

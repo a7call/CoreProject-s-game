@@ -18,7 +18,7 @@ public class FusilAlien : DistanceWeapon
         }
 
         InfiniteAmmo = isUnlimitedAmmoModule;
-        GetAttackDirection();
+        //GetAttackDirection();
         if (OkToShoot && !IsLoading)
         {
             IsLoading = true;

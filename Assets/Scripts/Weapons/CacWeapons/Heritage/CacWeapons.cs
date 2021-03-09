@@ -71,7 +71,7 @@ public class CacWeapons : Weapons
 
 
         base.Update();
-        GetAttackDirection();
+        //GetAttackDirection();
         GetKnockBackDir();
         if (Input.GetMouseButton(0))
         {

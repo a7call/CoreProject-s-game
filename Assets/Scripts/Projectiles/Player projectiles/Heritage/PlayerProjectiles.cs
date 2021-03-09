@@ -62,9 +62,14 @@ public class PlayerProjectiles : MonoBehaviour
     [HideInInspector]
     public float Dispersion;
     private Rigidbody2D projectileRB;
-  
+
+    protected Vector3 screenMousePos;
+    protected Vector3 screenPlayerPos;
+    protected Vector3 screenArmePos;
+
     protected virtual void Awake()
     {
+        
         
         SetData();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -74,7 +79,26 @@ public class PlayerProjectiles : MonoBehaviour
         weaponDamage = weaponAttackP.damage;
         weaponLayer = weaponAttackP.enemyLayer;
         playerTransform = player.GetComponent<Transform>();
-        dir = (weaponAttackP.attackPoint.position - playerTransform.position).normalized;
+
+        // position de la souris sur l'écran 
+        screenMousePos = Input.mousePosition;
+        // position du player en pixel sur l'écran 
+        screenPlayerPos = Camera.main.WorldToScreenPoint(player.transform.position);
+        screenArmePos = Camera.main.WorldToScreenPoint(transform.position);
+        // position du point d'attaque
+        
+        float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
+        if (distSP < 100)
+        {
+            dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
+            
+        }
+        else
+        {
+            
+            dir = new Vector3((screenMousePos - screenArmePos).x - weaponAttackP.attackPoint.position.x, (screenMousePos - screenArmePos).y - weaponAttackP.attackPoint.position.y).normalized;
+
+        }
         ConeShoot();
     }
     
@@ -99,7 +123,7 @@ public class PlayerProjectiles : MonoBehaviour
 
        
     }
-   
+
 
     protected virtual void Launch()
     {
@@ -163,7 +187,7 @@ public class PlayerProjectiles : MonoBehaviour
         directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
     }
 
-
+    
     //IntelligentAmoModule
     private float angulSpeed = 200f;
     private GameObject lockEnemy;
