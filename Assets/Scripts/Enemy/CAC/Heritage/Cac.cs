@@ -31,7 +31,6 @@ public class Cac : Enemy
 
     protected virtual void Start()
     {
-        currentState = State.Chasing;
         SetMaxHealth();
     }
 
