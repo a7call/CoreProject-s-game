@@ -12,9 +12,6 @@ public class HelmetAstronautExplose : Cac
         switch (currentState)
         {
 
-            case State.Patrolling:
-                PlayerInSight();
-                break;
             case State.Chasing:
                 isInRange();
                 break;

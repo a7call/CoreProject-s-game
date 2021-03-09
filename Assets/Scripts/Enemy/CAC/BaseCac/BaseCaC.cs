@@ -11,8 +11,6 @@ public class BaseCaC : Cac
         base.Update();
         switch (currentState) {
 
-        case State.Patrolling:
-            break;
         case State.Chasing:
                 isInRange();
             break;
