@@ -7,6 +7,9 @@ public class LaserWeapon : CollingWeapons
 
     Vector3 dir;
     [SerializeField] protected float range;
+    
+
+    
 
     protected override void Update()
     {
@@ -17,7 +20,21 @@ public class LaserWeapon : CollingWeapons
         }
         if (OkToShoot && !IsToHot)
         {
-            dir = (attackPoint.position - transform.position).normalized;
+            GetAttackDirection();
+            
+
+            float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
+            if (distSP < 100)
+            {
+                dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
+
+            }
+            else
+            {
+
+                dir = dir = (posSouris - attackPoint.position).normalized;
+            }
+
 
             RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, dir, range, enemyLayer);
 

@@ -26,26 +26,34 @@ public class Weapons : MonoBehaviour
     public bool isAttacking = false;
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;
-    //public Vector3 posOfPoint;
+    protected Vector3 screenArmePos;
+    public Vector3 posSouris;
 
     public Vector3 OffPositionArme;
+
+    protected GameObject player;
 
     protected virtual void Awake()
     {
         this.enabled = false;
     }
+
+    protected void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     // recupère en temps réel la position de la souris et associe cette position au point d'attaque du Player
     protected virtual void GetAttackDirection()
     {
 
-        //// position de la souris sur l'écran 
-        //screenMousePos = Input.mousePosition;
-        //// position du player en pixel sur l'écran 
-        //screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
-        //// position du point d'attaque 
+        // position de la souris sur l'écran 
+        screenMousePos = Input.mousePosition;
+        // position du player en pixel sur l'écran 
+        screenPlayerPos = Camera.main.WorldToScreenPoint(player.transform.position);
+        // position du point d'attaque
+        screenArmePos = Camera.main.WorldToScreenPoint(attackPoint.transform.position);
 
-        //posOfPoint = new Vector3(transform.position.x + (screenMousePos - screenPlayerPos).normalized.x, transform.position.y + (screenMousePos - screenPlayerPos).normalized.y);
-        //attackPoint.position = posOfPoint;
+        posSouris = new Vector3((screenMousePos - screenArmePos).x , (screenMousePos - screenArmePos).y);
     }
 
 protected virtual void Update()

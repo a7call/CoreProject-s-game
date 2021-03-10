@@ -299,6 +299,7 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;
+    protected Vector3 screenWeaponPos;
 
     protected void MoveWeapon()
     {
@@ -319,8 +320,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             Vector3 PosAttackPoint = weapons.attackPoint.localPosition; 
             Vector3 PositionArme = weapons.OffPositionArme;
 
-            //Vector3 dir = new Vector3(weapons.transform.position.x + (screenMousePos - screenPlayerPos).x, weapons.transform.position.y + (screenMousePos - screenPlayerPos).y);
-
+           
             if (dir.x <= 0 && !spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = true;
@@ -347,9 +347,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             Vector3 PositionArme = weapons.OffPositionArme;
             Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
 
-            //Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x - weapons.attackPoint.transform.position.x, (screenMousePos - screenPlayerPos).y - weapons.attackPoint.transform.position.y);
-
-
+            
             if (dir.x < 0 && !spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = true;
