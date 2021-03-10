@@ -111,8 +111,16 @@ public class Enemy : MonoBehaviour
 
             case State.Death:
                  aIPath.canMove = false;
+                rb.velocity = Vector2.zero;
                 if (GetComponent<Collider2D>().enabled)
                 {
+                    foreach(Transform child in transform)
+                    {
+                        if (child.gameObject.GetComponent<Collider2D>())
+                        {
+                            child.gameObject.GetComponent<Collider2D>().enabled = false;
+                        }
+                    }
                     GetComponent<Collider2D>().enabled = false;
                     animator.SetTrigger("isDying");
                    
