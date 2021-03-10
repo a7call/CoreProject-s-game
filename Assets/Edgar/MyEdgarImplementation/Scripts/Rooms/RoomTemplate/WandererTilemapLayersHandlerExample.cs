@@ -16,7 +16,7 @@ namespace Edgar.Unity
             // If we want a different cell size, we can configure that here
             // grid.cellSize = new Vector3(1, 2, 1);
             // And now we create individual tilemap layers
-            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, 0, "Floor", TilemapRenderer.Mode.Individual);
+            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, -1, "Floor", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(floorTilemapObject, true);
             var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
             AddCompositeCollider(wallsTilemapObject);
