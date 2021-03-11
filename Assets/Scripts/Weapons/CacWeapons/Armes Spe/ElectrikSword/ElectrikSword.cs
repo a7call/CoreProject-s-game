@@ -5,10 +5,7 @@ using UnityEngine;
 public class ElectrikSword : CacWeapons
 {
     [SerializeField] protected float electrificationRadius;
-    protected void Start()
-    {
 
-    }
     protected override IEnumerator Attack()
     {
 

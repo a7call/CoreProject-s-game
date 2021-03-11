@@ -5,10 +5,7 @@ using UnityEngine;
 public class Taser : CacWeapons
 {
     [SerializeField] protected float paralysedTime;
-    void Start()
-    {
-        
-    }
+
 
     protected override IEnumerator Attack()
     {

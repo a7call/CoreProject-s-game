@@ -12,11 +12,9 @@ public class CacWeapons : Weapons
     public static bool isAntiEmeuteModule;
     public static float knockBackForceMultiplier;
     private bool alreadyMultiplied;
-
     [SerializeField] protected CaCWeaponScriptableObject WeaponData;
     protected float knockBackForce;
     protected float knockBackTime;
-    protected GameObject player;
     protected Vector3 dir;
 
     //Vampirisme
@@ -45,7 +43,6 @@ public class CacWeapons : Weapons
     protected override void Awake()
     {
         base.Awake();
-        player = GameObject.FindGameObjectWithTag("Player");
         SetData();
 
     }
