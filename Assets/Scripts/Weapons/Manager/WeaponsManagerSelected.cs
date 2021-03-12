@@ -338,7 +338,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
 
         }
-        else if (dir.x > 1 && spriteRenderer.flipX)
+        else if (dir.x > 0 && spriteRenderer.flipX)
         {
             spriteRenderer.flipX = false;
             weapons.transform.localPosition = PositionArme;
