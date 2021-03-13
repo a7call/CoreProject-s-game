@@ -55,9 +55,9 @@ public class Cac : Enemy
     // Centre du rayon de l'attaque de l'ennemi
     [SerializeField] protected Transform attackPoint;
     // Rayon d'attaque de l'ennemi
-    protected float attackRadius;
+    public float attackRadius;
     // Layers subissant l'attaque de l'ennemi
-    protected LayerMask hitLayers;
+    public LayerMask hitLayers;
     // Check si l'ennemi est en range d'attaque
     protected bool isInAttackRange;
     protected bool isAttacking;

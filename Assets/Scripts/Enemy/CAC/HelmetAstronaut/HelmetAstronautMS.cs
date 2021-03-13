@@ -72,6 +72,7 @@ public class HelmetAstronautMS : Cac
      
         isPowerMode = false;
         float baseMoveSpeed = aIPath.maxSpeed;
+        newSpeedEnemy = 2 * baseMoveSpeed;
         aIPath.maxSpeed = newSpeedEnemy;
         yield return new WaitForSeconds(speedDuration);
         aIPath.maxSpeed = baseMoveSpeed;

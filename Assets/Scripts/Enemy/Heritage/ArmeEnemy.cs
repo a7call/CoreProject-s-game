@@ -9,17 +9,17 @@ public class ArmeEnemy : MonoBehaviour
     protected Vector3 rotationVector;
     protected Vector3 PositionArme;
     protected Vector3 posAttackPoint;
-    Transform attackPoint;
+    protected Transform attackPoint;
     protected Enemy enemy;
     Vector3 dirWep;
 
 
     // Start is called before the first frame update
-    void Start()
+     protected virtual void Start()
     {
         spriteRenderer = GetComponent <SpriteRenderer>();
         enemy = GetComponentInParent<Enemy>();
-
+        attackPoint = transform.Find("attackPoint");
         PositionArme = transform.localPosition;
         dirWep = (gameObject.transform.position - enemy.transform.position).normalized;
 
@@ -27,7 +27,7 @@ public class ArmeEnemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
         Vector3 dir = (enemy.target.position - enemy.transform.position).normalized;
@@ -36,7 +36,6 @@ public class ArmeEnemy : MonoBehaviour
         if (dir.x <= 0 && !spriteRenderer.flipX)
          {
              spriteRenderer.flipX = true;
-             attackPoint = transform.Find("attackPoint");
              posAttackPoint = attackPoint.localPosition ;
              attackPoint.localPosition = new Vector3(-posAttackPoint.x, posAttackPoint.y, posAttackPoint.z);
              transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y, PositionArme.z);
@@ -52,7 +51,7 @@ public class ArmeEnemy : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(rotationVector);
 
-
+        
 
 
     }
