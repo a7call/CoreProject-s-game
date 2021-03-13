@@ -88,10 +88,11 @@ public class PlayerProjectiles : MonoBehaviour
         // position du point d'attaque
         
         float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
-        if (distSP < 100)
+        if (distSP < 200)
         {
             dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
-            
+            //dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);
+
         }
         else
         {

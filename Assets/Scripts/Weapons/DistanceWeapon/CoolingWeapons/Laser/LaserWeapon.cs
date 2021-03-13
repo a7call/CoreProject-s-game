@@ -24,7 +24,7 @@ public class LaserWeapon : CollingWeapons
             
 
             float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
-            if (distSP < 100)
+            if (distSP < 300)
             {
                 dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
 

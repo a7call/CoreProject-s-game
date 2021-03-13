@@ -300,6 +300,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;
     protected Vector3 screenWeaponPos;
+    private float angle;
 
     protected void MoveWeapon()
     {
@@ -309,64 +310,59 @@ public class WeaponsManagerSelected : MonoBehaviour
         // position du player en pixel sur l'écran 
         screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
-        Vector3 dir = new Vector3(-transform.position.x + (screenMousePos - screenPlayerPos).x, -transform.position.y + (screenMousePos - screenPlayerPos).y);
         
 
         if (isPlayingCac)
         {
             
             weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
-            spriteRenderer = weapons.GetComponent<SpriteRenderer>();
-            Vector3 PosAttackPoint = weapons.attackPoint.localPosition; 
-            Vector3 PositionArme = weapons.OffPositionArme;
-
-           
-            if (dir.x <= 0 && !spriteRenderer.flipX)
-            {
-                spriteRenderer.flipX = true;
-                weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
-                weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
-            }
-            else if (dir.x > 0 && spriteRenderer.flipX)
-            {
-                spriteRenderer.flipX = false;
-                weapons.transform.localPosition = PositionArme;
-                weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
-            }
-
-            rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
-            weapons.transform.rotation = Quaternion.Euler(rotationVector);
-
-            //transform.localRotation = Quaternion.Euler(rotationVector);
+            
         }
         if (isPlayingDistance)
         {
-           
             weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
-            spriteRenderer = weapons.GetComponent<SpriteRenderer>();
-            Vector3 PositionArme = weapons.OffPositionArme;
-            Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
-
             
-            if (dir.x < 0 && !spriteRenderer.flipX)
-            {
-                spriteRenderer.flipX = true;
-                weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
-                weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
-            }
-            else if (dir.x >= 0 && spriteRenderer.flipX)
-            {
-                spriteRenderer.flipX = false;
-                weapons.transform.localPosition = PositionArme;
-                weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
-            }
-
-            rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
-            weapons.transform.rotation = Quaternion.Euler(rotationVector);
-
-            //transform.localRotation = Quaternion.Euler(rotationVector);
         }
 
+        spriteRenderer = weapons.GetComponent<SpriteRenderer>();
+
+        Vector3 PositionArme = weapons.OffPositionArme;
+        Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
+
+        Vector3 dir = new Vector3(-weapons.transform.position.x + (screenMousePos - screenPlayerPos).x, -weapons.transform.position.y + (screenMousePos - screenPlayerPos).y);
+
+        if (dir.x < 0 && !spriteRenderer.flipX)
+        {
+            spriteRenderer.flipX = true;
+            weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
+            weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
+
+        }
+        else if (dir.x > 0 && spriteRenderer.flipX)
+        {
+            spriteRenderer.flipX = false;
+            weapons.transform.localPosition = PositionArme;
+            weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
+
+        }
+
+        if (spriteRenderer.flipX)
+        {
+            angle = Quaternion.FromToRotation(Vector3.left, dir).eulerAngles.z;
+        }
+        else
+        {
+            angle = Quaternion.FromToRotation(Vector3.right, dir).eulerAngles.z;
+
+        }
+
+        if (Quaternion.Euler(0, 0, angle).z > 0.85)
+        {
+            angle = 100;
+        }
+
+        weapons.transform.rotation = Quaternion.Euler(0, 0, angle);
+
     }
-    
+
 }
