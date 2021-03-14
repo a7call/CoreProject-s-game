@@ -311,7 +311,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         screenMousePos = Input.mousePosition;
         Vector3 screenMousePos2 = Camera.main.ScreenToWorldPoint(screenMousePos);
         // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.parent.transform.position);
         // position du point d'attaque 
 
      
@@ -335,7 +335,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
             
 
-            Vector3 dir = new Vector3(-weapons.transform.position.x + (screenMousePos - screenPlayerPos).x, -weapons.transform.position.y + (screenMousePos - screenPlayerPos).y);
+            Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
            // print(weapons.transform.position);
 
             if (dir.x < -2 && !spriteRenderer.flipX)

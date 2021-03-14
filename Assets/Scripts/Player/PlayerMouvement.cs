@@ -146,7 +146,7 @@ public class PlayerMouvement : Player
         // position du player en pixel sur l'écran 
         screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
-        Vector3 dir = new Vector3(-transform.position.x + (screenMousePos - screenPlayerPos).x, -transform.position.y + (screenMousePos - screenPlayerPos).y);
+        Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
 
         float angle = Quaternion.FromToRotation(Vector3.left, horizon - dir).eulerAngles.z;
 
