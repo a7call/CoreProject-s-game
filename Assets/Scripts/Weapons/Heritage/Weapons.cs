@@ -33,7 +33,8 @@ public class Weapons : MonoBehaviour
 
     protected GameObject player;
 
-    protected float RangeMiniChangementTir = 15;
+    public float RangeMiniChangementTir = 5;
+    [SerializeField] public float RangeChangementTir;
 
     protected virtual void Awake()
     {

@@ -25,7 +25,22 @@ public class ParticuleWeapon : CollingWeapons
         if (OkToShoot && !IsToHot)
         {
             if (!GetComponentInChildren<ParticleSystem>().isPlaying) GetComponentInChildren<ParticleSystem>().Play();
-            dir = (attackPoint.position - transform.position).normalized;
+            float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
+            if (distSP < RangeMiniChangementTir)
+            {
+                dir = new Vector3(attackPoint.transform.position.x - transform.position.x, attackPoint.transform.position.y - transform.position.y);
+
+            }
+            else if (distSP < RangeChangementTir && distSP > RangeMiniChangementTir)
+            {
+                dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
+
+            }
+            else
+            {
+
+                dir = (posSouris).normalized;
+            }
 
             RaycastHit2D[] hits = Physics2D.CircleCastAll(attackPoint.position, radius, Vector2.zero);
 

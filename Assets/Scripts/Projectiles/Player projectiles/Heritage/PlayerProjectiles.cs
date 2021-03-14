@@ -67,7 +67,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected Vector3 screenPlayerPos;
     protected Vector3 screenArmePos;
 
-    protected float RangeChangementTir = 100;
+    protected float RangeChangementTir;
 
     protected virtual void Awake()
     {
@@ -82,21 +82,23 @@ public class PlayerProjectiles : MonoBehaviour
         weaponLayer = weaponAttackP.enemyLayer;
         playerTransform = player.GetComponent<Transform>();
 
+        
+
         // position de la souris sur l'écran 
         screenMousePos = Input.mousePosition;
         // position du player en pixel sur l'écran 
         screenPlayerPos = Camera.main.WorldToScreenPoint(player.transform.position);
-        screenArmePos = Camera.main.WorldToScreenPoint(transform.position);
+        screenArmePos = Camera.main.WorldToScreenPoint(weaponAttackP.attackPoint.position);
         // position du point d'attaque
         
         float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
 
-        if(distSP < 15)
+        if(distSP < weaponAttackP.RangeMiniChangementTir)
         {
             dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);
 
         }
-        else if (distSP < RangeChangementTir && distSP > 15)
+        else if (distSP < weaponAttackP.RangeChangementTir && distSP > weaponAttackP.RangeMiniChangementTir)
         {
             dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
             //dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);
@@ -105,7 +107,7 @@ public class PlayerProjectiles : MonoBehaviour
         else
         {
             
-            dir = new Vector3((screenMousePos - screenArmePos).x - weaponAttackP.attackPoint.position.x, (screenMousePos - screenArmePos).y - weaponAttackP.attackPoint.position.y).normalized;
+            dir = new Vector3((screenMousePos - screenArmePos).x , (screenMousePos - screenArmePos).y).normalized;
 
         }
         ConeShoot();

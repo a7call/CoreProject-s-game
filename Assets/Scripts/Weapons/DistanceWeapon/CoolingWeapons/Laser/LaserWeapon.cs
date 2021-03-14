@@ -7,7 +7,7 @@ public class LaserWeapon : CollingWeapons
 
     Vector3 dir;
     [SerializeField] protected float range;
-    [SerializeField] protected float RangeChangementTir;
+    
 
     protected override void Update()
     {
@@ -34,7 +34,7 @@ public class LaserWeapon : CollingWeapons
             else
             {
 
-                dir = dir = (posSouris - attackPoint.position).normalized;
+                dir = (posSouris).normalized;
             }
 
 
