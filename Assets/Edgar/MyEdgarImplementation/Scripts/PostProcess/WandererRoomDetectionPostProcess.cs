@@ -17,7 +17,7 @@ namespace Edgar.Unity.Examples
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
             
-            MovePlayerToSpawn(level);
+           
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
             var Rooms = level.RootGameObject.transform.Find("Rooms");
 
@@ -115,6 +115,7 @@ namespace Edgar.Unity.Examples
                 Debug.LogWarning("je Peux etre la ");
             }
             AstarPath.active.Scan();
+            MovePlayerToSpawn(level);
             SetupFogOfWar(level);
            
         }
@@ -183,9 +184,11 @@ namespace Edgar.Unity.Examples
                 if (room.Type == RoomType.Spawn)
                 {
 
-                    var spawnPosition = roomTemplateInstance.transform.Find("SpawnPosition");
-                    var player = GameObject.FindWithTag("Player");
-                    player.transform.position = spawnPosition.position;
+                    var spawnPosition = GameObject.FindGameObjectWithTag("SpawnPosition");
+                    var player = GameObject.FindGameObjectWithTag("Player");
+                    Debug.Log(player.transform.position);
+                    player.transform.position = spawnPosition.transform.position;
+                    Debug.Log(player.transform.position);
                 }
             }
         }

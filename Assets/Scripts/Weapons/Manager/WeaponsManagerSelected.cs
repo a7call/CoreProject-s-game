@@ -30,6 +30,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     private void Start()
     {
         SelectWeapon();
+       
         //player = GetComponentInParent<Player>();
     }
 
@@ -308,11 +309,12 @@ public class WeaponsManagerSelected : MonoBehaviour
 
         // position de la souris sur l'écran 
         screenMousePos = Input.mousePosition;
+        Vector3 screenMousePos2 = Camera.main.ScreenToWorldPoint(screenMousePos);
         // position du player en pixel sur l'écran 
         screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
-        
 
+     
         if (isPlayingCac)
         {
             
@@ -333,6 +335,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
 
             Vector3 dir = new Vector3(-weapons.transform.position.x + (screenMousePos - screenPlayerPos).x, -weapons.transform.position.y + (screenMousePos - screenPlayerPos).y);
+           // print(weapons.transform.position);
 
             if (dir.x < -5 && !spriteRenderer.flipX)
             {
