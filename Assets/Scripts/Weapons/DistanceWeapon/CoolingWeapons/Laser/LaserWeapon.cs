@@ -7,9 +7,7 @@ public class LaserWeapon : CollingWeapons
 
     Vector3 dir;
     [SerializeField] protected float range;
-    
-
-    
+    [SerializeField] protected float RangeChangementTir;
 
     protected override void Update()
     {
@@ -22,9 +20,13 @@ public class LaserWeapon : CollingWeapons
         {
             GetAttackDirection();
             
-
             float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
-            if (distSP < 300)
+            if (distSP < RangeMiniChangementTir)
+            {
+                dir = new Vector3(attackPoint.transform.position.x - transform.position.x, attackPoint.transform.position.y - transform.position.y);
+
+            }
+            else if (distSP < RangeChangementTir && distSP > RangeMiniChangementTir)
             {
                 dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
 

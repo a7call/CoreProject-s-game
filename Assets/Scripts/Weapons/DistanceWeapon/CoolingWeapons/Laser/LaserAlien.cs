@@ -7,6 +7,7 @@ public class LaserAlien : CollingWeapons
 
     Vector3 dir;
     [SerializeField] protected float range;
+    [SerializeField] protected float RangeChangementTir;
 
     protected override void Update()
     {
@@ -17,7 +18,26 @@ public class LaserAlien : CollingWeapons
         }
         if (OkToShoot && !IsToHot)
         {
-            dir = (attackPoint.position - transform.position).normalized;
+            GetAttackDirection();
+
+            float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
+            if (distSP < RangeMiniChangementTir)
+            {
+                dir = new Vector3(attackPoint.transform.position.x - transform.position.x, attackPoint.transform.position.y - transform.position.y);
+
+            }
+            else if (distSP < RangeChangementTir && distSP > RangeMiniChangementTir)
+            {
+                dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
+
+            }
+            else
+            {
+
+                dir = dir = (posSouris - attackPoint.position).normalized;
+            }
+
+
 
             RaycastHit2D[] hits = Physics2D.RaycastAll(attackPoint.position, dir, range, enemyLayer);
 
