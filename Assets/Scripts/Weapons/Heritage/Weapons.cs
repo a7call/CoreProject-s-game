@@ -33,6 +33,8 @@ public class Weapons : MonoBehaviour
 
     protected GameObject player;
 
+    protected float RangeMiniChangementTir = 15;
+
     protected virtual void Awake()
     {
         this.enabled = false;

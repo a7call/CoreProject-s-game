@@ -67,6 +67,8 @@ public class PlayerProjectiles : MonoBehaviour
     protected Vector3 screenPlayerPos;
     protected Vector3 screenArmePos;
 
+    protected float RangeChangementTir = 100;
+
     protected virtual void Awake()
     {
         
@@ -88,7 +90,13 @@ public class PlayerProjectiles : MonoBehaviour
         // position du point d'attaque
         
         float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
-        if (distSP < 200)
+
+        if(distSP < 15)
+        {
+            dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);
+
+        }
+        else if (distSP < RangeChangementTir && distSP > 15)
         {
             dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
             //dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);

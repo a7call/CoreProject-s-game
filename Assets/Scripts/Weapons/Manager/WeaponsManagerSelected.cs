@@ -49,7 +49,8 @@ public class WeaponsManagerSelected : MonoBehaviour
         {
             collision.transform.parent = gameObject.transform;
             collision.GetComponent<Weapons>().enabled = true;
-            collision.transform.position = gameObject.transform.localPosition;
+            Weapons weapons = collision.GetComponent<Weapons>();
+            collision.transform.localPosition = weapons.OffPositionArme;
             collision.transform.localRotation = Quaternion.Euler(0,0,0);
             collision.transform.gameObject.SetActive(false);
             collision.GetComponent<Collider2D>().enabled = false;
@@ -333,14 +334,14 @@ public class WeaponsManagerSelected : MonoBehaviour
 
             Vector3 dir = new Vector3(-weapons.transform.position.x + (screenMousePos - screenPlayerPos).x, -weapons.transform.position.y + (screenMousePos - screenPlayerPos).y);
 
-            if (dir.x < 0 && !spriteRenderer.flipX)
+            if (dir.x < -5 && !spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = true;
                 weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
                 weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
 
             }
-            else if (dir.x > 0 && spriteRenderer.flipX)
+            else if (dir.x > 5 && spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = false;
                 weapons.transform.localPosition = PositionArme;
