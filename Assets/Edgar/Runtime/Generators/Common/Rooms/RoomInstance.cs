@@ -32,6 +32,9 @@ namespace Edgar.Unity
         public List<GameObject> Enemies => enemies;
         [SerializeField] private List<GameObject> enemies;
 
+        public int EnemyPointsAvailable => enemyPointsAvailable;
+        [SerializeField] public int enemyPointsAvailable;
+
         /// <summary>
         ///     If this is a corridor room, this property contains the corresponding connection.
         ///     Otherwise it is null.
@@ -90,7 +93,7 @@ namespace Edgar.Unity
         public Polygon2D OutlinePolygon => outlinePolygon;
         [SerializeField] private Polygon2D outlinePolygon;
 
-        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon, List<GameObject> enemies, bool isEnemyAlreadySpawned)
+        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon, List<GameObject> enemies, bool isEnemyAlreadySpawned, int enemyPointsAvailable)
         {
             this.room = room;
             this.connection = connection;
@@ -101,6 +104,7 @@ namespace Edgar.Unity
             this.isCorridor = isCorridor;
             this.enemies = enemies;
             this.isEnemyAlreadySpawned = isEnemyAlreadySpawned;
+            this.enemyPointsAvailable = enemyPointsAvailable;
         }
 
         /// <summary>

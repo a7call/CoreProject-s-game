@@ -7,13 +7,15 @@ namespace Edgar.Unity
     [Serializable]
     public class WandererRoomTemplateConfig
     {
-        public GameObject[] BasicRoomTemplates;
+        public GameObject[] MediumRoomTemplates;
 
         public GameObject[] BossRoomTemplates;
 
         public GameObject[] SpawnRoomTemplates;
 
-        public GameObject[] HubRoomTemplates;
+        public GameObject[] LargeRoomTemplates;
+
+        public GameObject[] SmallRoomTemplates;
 
         public GameObject[] RewardRoomTemplates;
 
@@ -41,20 +43,23 @@ namespace Edgar.Unity
                 case RoomType.Reward:
                     return RewardRoomTemplates;
 
-                case RoomType.Hub:
-                    return HubRoomTemplates;
+                case RoomType.Small:
+                    return SmallRoomTemplates;
+
+                case RoomType.Large:
+                    return LargeRoomTemplates;
 
                 case RoomType.Spawn:
                     return SpawnRoomTemplates;
 
-                case RoomType.Normal:
-                    return BasicRoomTemplates;
+                case RoomType.Medium:
+                    return MediumRoomTemplates;
 
                 case RoomType.Corridor:
-                    return BasicRoomTemplates;
+                    return CorridorRoomTemplates;
 
                 default:
-                    return BasicRoomTemplates;
+                    return LargeRoomTemplates;
             }
         }
     }

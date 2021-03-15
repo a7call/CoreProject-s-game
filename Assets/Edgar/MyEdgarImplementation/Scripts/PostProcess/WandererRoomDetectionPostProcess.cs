@@ -10,9 +10,14 @@ namespace Edgar.Unity.Examples
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
     public class WandererRoomDetectionPostProcess : DungeonGeneratorPostProcessBase
     {
-
-
-        public GameObject[] Enemies;
+        [Serializable]
+       
+        public struct Enemy
+        {
+            public GameObject enemy;
+            public int EnemyPoint;
+        }
+        public Enemy[] Enemies;
         Tilemap tilemapMiniMap;
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
@@ -44,8 +49,20 @@ namespace Edgar.Unity.Examples
 
                 
                 roomManager.RoomInstance = roomInstance;
-                
-            
+
+                if(room.Type == RoomType.Large)
+                {
+                    roomInstance.enemyPointsAvailable = 15;
+                }
+                else if(room.Type == RoomType.Medium)
+                {
+                    roomInstance.enemyPointsAvailable = 10;
+                }
+                else if(room.Type == RoomType.Small)
+                {
+                    roomInstance.enemyPointsAvailable = 5;
+                }
+               
 
 
 
@@ -65,7 +82,7 @@ namespace Edgar.Unity.Examples
                 if (room.Type != RoomType.Corridor)
                 {
                     // Set enemies and floor collider to the room manager
-                    roomManager.Enemies = Enemies;
+                    //roomManager.Enemies = Enemies;
                   //  roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
 
                     // Find all the doors of neighboring corridors and save them in the room manager
@@ -209,22 +226,22 @@ namespace Edgar.Unity.Examples
             }
                
             
-            return roomInstance.IsEnemyAlreadySpawned == false && (room.Type == RoomType.Hub || room.Type == RoomType.Corridor || room.Type == RoomType.Normal);
+            return roomInstance.IsEnemyAlreadySpawned == false && (room.Type == RoomType.Large || room.Type == RoomType.Corridor || room.Type == RoomType.Small || room.Type == RoomType.Medium);
         }
 
         private void SpawnEnemy(RoomInstance roomInstance)
         {
             roomInstance.isEnemyAlreadySpawned = true;
-            var totalEnemiesCount = WandererGameManager.Instance.Random.Next(4, 8);
-          
-           
+
+            int iteration = 0;
             var room = roomInstance.RoomTemplateInstance;
+            int currentRoomPoint = 0;
             
             WandererCurrentRoomDetectionRoomManager roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
             
-            while (totalEnemiesCount > roomInstance.Enemies.Count)
+            do
             {
-               
+                iteration++;
                 var position = WandererCurrentRoomDetectionRoomManager.RandomPointInBounds(roomManager.FloorCollider.bounds, 1f);
                 
                 if (!WandererCurrentRoomDetectionRoomManager.IsPointWithinCollider(roomManager.FloorCollider, position))
@@ -238,16 +255,25 @@ namespace Edgar.Unity.Examples
                 }
                 
                 var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
-               
-                var enemy = Instantiate(enemyPrefab);
+                Enemy enemyComp = enemyPrefab.enemy.GetComponent<Enemy>();
+                var enemy = Instantiate(enemyPrefab.enemy);
                 enemy.transform.position = position;
                 enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                Enemy enemyComp = enemy.GetComponent<Enemy>();
-               
-               
-                roomInstance.Enemies.Add(enemy);
                 
-            }
+                if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomInstance.EnemyPointsAvailable)
+                {
+                    roomInstance.Enemies.Add(enemy);
+                    currentRoomPoint += enemyPrefab.EnemyPoint;
+                }
+                else
+                {
+                    Destroy(enemy);
+                    continue;
+                }
+                
+
+
+            } while (iteration < 10) ;
         }
 
         protected void AddLayerToWall(GameObject wall)

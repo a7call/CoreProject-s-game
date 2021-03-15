@@ -367,7 +367,7 @@ namespace Edgar.Unity.Examples
         /// <returns></returns>
         private bool ShouldSpawnEnemies()
         {
-            return Cleared == false && EnemiesSpawned == false && room.Type == RoomType.Hub && UnityEngine.Random.Range(0.0f,1.0f) >= 0.5f;
+            return Cleared == false && EnemiesSpawned == false && room.Type == RoomType.Large && UnityEngine.Random.Range(0.0f,1.0f) >= 0.5f;
         }
     }
 }

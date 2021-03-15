@@ -19,7 +19,7 @@ public class EnemyScriptableObject : ScriptableObject
     public float refreshPathTime;
     public float refreshPathTime2;
 
-    public float enemyPoints;
+    public int enemyPoints;
    
 
 }

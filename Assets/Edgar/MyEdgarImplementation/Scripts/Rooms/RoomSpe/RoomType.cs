@@ -5,8 +5,9 @@ using UnityEngine;
 public enum RoomType 
 {
     Boss,
-    Normal,
-    Hub,
+    Medium,
+    Large, 
+    Small,
     Spawn,
     Shop,
     Reward,

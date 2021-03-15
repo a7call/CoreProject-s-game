@@ -27,6 +27,7 @@ public class Cac : Enemy
     {
         base.Awake();
         SetData();
+        print(EnemyPoint);
     }
 
     protected virtual void Start()
@@ -49,6 +50,7 @@ public class Cac : Enemy
         defaultMat = CacDatas.defaultMat;
         timeToSwitch = CacDatas.timeToSwich;
         attackDelay = CacDatas.attackDelay;
+        EnemyPoint = CacDatas.enemyPoints;
     }
 
 

@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     public bool isreadyToAttack = true;
    
     public Animator animator;
+    public int EnemyPoint = 0;
 
     // Permet de vérifier si le monstre est dans la BossRoom
     [HideInInspector]
