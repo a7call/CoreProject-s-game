@@ -59,6 +59,31 @@ public class Weapons : MonoBehaviour
         posSouris = new Vector3((screenMousePos - screenArmePos).x , (screenMousePos - screenArmePos).y);
     }
 
+    protected Vector3 dirProj;
+
+    protected virtual void GetDirProj()
+    {
+        GetAttackDirection();
+
+        float distSP = new Vector3((screenMousePos - screenPlayerPos).x , (screenMousePos - screenPlayerPos).y ).magnitude;
+
+        if (distSP < RangeMiniChangementTir)
+        {
+            dirProj = new Vector3(attackPoint.transform.position.x - transform.position.x, attackPoint.transform.position.y - transform.position.y);
+
+        }
+        else if (distSP < RangeChangementTir && distSP > RangeMiniChangementTir)
+        {
+            dirProj = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
+
+        }
+        else
+        {
+
+            dirProj = (posSouris).normalized;
+        }
+    }
+
 protected virtual void Update()
     {
         if (isTotalDestructionModule && !damagealReadyMult)

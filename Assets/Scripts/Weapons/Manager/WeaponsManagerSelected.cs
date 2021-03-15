@@ -338,14 +338,14 @@ public class WeaponsManagerSelected : MonoBehaviour
             Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
            // print(weapons.transform.position);
 
-            if (dir.x < -2 && !spriteRenderer.flipX)
+            if (dir.x < -5 && !spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = true;
                 weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
                 weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
 
             }
-            else if (dir.x > 2 && spriteRenderer.flipX)
+            else if (dir.x > 5 && spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = false;
                 weapons.transform.localPosition = PositionArme;

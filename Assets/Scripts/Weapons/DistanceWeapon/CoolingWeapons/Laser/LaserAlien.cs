@@ -18,30 +18,13 @@ public class LaserAlien : CollingWeapons
         }
         if (OkToShoot && !IsToHot)
         {
-            GetAttackDirection();
-
-            float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
-            if (distSP < RangeMiniChangementTir)
-            {
-                dir = new Vector3(attackPoint.transform.position.x - transform.position.x, attackPoint.transform.position.y - transform.position.y);
-
-            }
-            else if (distSP < RangeChangementTir && distSP > RangeMiniChangementTir)
-            {
-                dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
-
-            }
-            else
-            {
-
-                dir = (posSouris).normalized;
-            }
+            GetDirProj();
 
 
 
-            RaycastHit2D[] hits = Physics2D.RaycastAll(attackPoint.position, dir, range, enemyLayer);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(attackPoint.position, dirProj, range, enemyLayer);
 
-            Debug.DrawRay(attackPoint.position, dir * range, Color.red);
+            Debug.DrawRay(attackPoint.position, dirProj * range, Color.red);
 
             foreach (RaycastHit2D hit in hits)
             {
