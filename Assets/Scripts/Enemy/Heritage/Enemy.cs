@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
                 break;
 
             case State.Death:
-                 aIPath.canMove = false;
+                aIPath.canMove = false;
                 rb.velocity = Vector2.zero;
                 if (GetComponent<Collider2D>().enabled)
                 {
