@@ -31,7 +31,7 @@ namespace Edgar.Unity.Examples
         /// <summary>
         /// Enemies that can spawn inside the room.
         /// </summary>
-        public GameObject[] Enemies;
+        public enemyStruct[] Enemies;
 
         /// <summary>
         /// Whether enemies were spawned.
@@ -70,12 +70,13 @@ namespace Edgar.Unity.Examples
         bool alReadyChecked = false;
         bool EnemyBaseSpawn;
 
+
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
             lightGestion();
-          
+            SetEnemyPoints();
             // Calcule probability of 2nd Spawn
             if (!alReadyChecked)
             {
@@ -85,7 +86,7 @@ namespace Edgar.Unity.Examples
                 if (shouldSpawnEnemy)
                 {
                     float chanceToEnemyBase = UnityEngine.Random.Range(0.0f,1.0f);
-                    print(chanceToEnemyBase);
+
                     EnemyBaseSpawn = chanceToEnemyBase >= 0.4f ? EnemyBaseSpawn = true : EnemyBaseSpawn = false;
                 }
               
@@ -128,6 +129,8 @@ namespace Edgar.Unity.Examples
             if(roomInstance.IsCorridor) previousCorridor = roomInstance;
 
         }
+
+      
 
         void lightGestion()
         {
@@ -239,16 +242,33 @@ namespace Edgar.Unity.Examples
             }
         }
 
-        // Spawn Enemy function
+        private void SetEnemyPoints()
+        {
+           if(room.Type == RoomType.Large)
+            {
+                roomInstance.enemyPointsAvailable = 15;
+            }
+                else if (room.Type == RoomType.Medium)
+            {
+                roomInstance.enemyPointsAvailable = 10;
+            }
+            else if (room.Type == RoomType.Small)
+            {
+                roomInstance.enemyPointsAvailable = 5;
+            }
+        }
+
+        // Spawn Enemy function voir DetectionPostProcess pour comment 
         private IEnumerator SpawnEnemies()
         {
             EnemiesSpawned = true;
-
+            // PointsInTheCurrentRoom
+            int currentRoomPoint = 0;
 
             var totalEnemiesCount = WandererGameManager.Instance.Random.Next(4, 8);
             yield return new WaitForSeconds(1f);
 
-            while (roomInstance.Enemies.Count < totalEnemiesCount + numberOfEnemyLeftInRoom)
+            do
             {
                 yield return new WaitForSeconds (0.001f);
                 // Find random position inside floor collider bounds
@@ -270,12 +290,16 @@ namespace Edgar.Unity.Examples
                 var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
 
                 // Create an instance of the enemy and set position and parent
-                var enemy = Instantiate(enemyPrefab);
-                enemy.transform.position = position;
-                enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                roomInstance.Enemies.Add(enemy);
-            }
-           // StartCoroutine(OpeningDoors(roomInstance.Enemies));
+                if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomInstance.EnemyPointsAvailable)
+                {
+                    var enemyGO = Instantiate(enemyPrefab.enemy);
+                    enemyGO.transform.position = position;
+                    enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
+                    roomInstance.Enemies.Add(enemyGO);
+                    currentRoomPoint += enemyPrefab.EnemyPoint;
+                }
+            } while (currentRoomPoint < roomInstance.EnemyPointsAvailable);
+            // StartCoroutine(OpeningDoors(roomInstance.Enemies));
         }
         /// <summary>
         /// Wait some time before before opening doors.
@@ -367,7 +391,7 @@ namespace Edgar.Unity.Examples
         /// <returns></returns>
         private bool ShouldSpawnEnemies()
         {
-            return Cleared == false && EnemiesSpawned == false && room.Type == RoomType.Large && UnityEngine.Random.Range(0.0f,1.0f) >= 0.5f;
+            return Cleared == false && EnemiesSpawned == false &&( room.Type == RoomType.Large ||room.Type == RoomType.Medium )&& UnityEngine.Random.Range(0.0f,1.0f) >= 0.5f;
         }
     }
 }
