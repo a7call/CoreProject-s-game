@@ -7,22 +7,23 @@ using UnityEngine.Tilemaps;
 
 namespace Edgar.Unity.Examples
 {
+    [Serializable]
+    public struct enemyStruct
+    {
+        public GameObject enemy;
+        public int EnemyPoint;
+    }
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
     public class WandererRoomDetectionPostProcess : DungeonGeneratorPostProcessBase
     {
-        [Serializable]
        
-        public struct enemyStuct
-        {
-            public GameObject enemy;
-            public int EnemyPoint;
-        }
-        public enemyStuct[] Enemies;
+       
+      
+        public enemyStruct[] Enemies;
         Tilemap tilemapMiniMap;
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
             
-           
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
             var Rooms = level.RootGameObject.transform.Find("Rooms");
 
@@ -33,10 +34,11 @@ namespace Edgar.Unity.Examples
             tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
             {
-                
+               
                 var roomTemplateInstance = roomInstance.RoomTemplateInstance;
                 // Find floor tilemap layer
                 var room = (WandererRoom)roomInstance.Room;
+                
                 var tilemaps = RoomTemplateUtils.GetTilemaps(roomTemplateInstance);
                 roomInstance.RoomTemplateInstance.layer = 19;
                 
@@ -49,6 +51,7 @@ namespace Edgar.Unity.Examples
 
                 
                 roomManager.RoomInstance = roomInstance;
+                roomManager.Enemies = Enemies;
 
                 if(room.Type == RoomType.Large)
                 {
@@ -231,10 +234,16 @@ namespace Edgar.Unity.Examples
 
         private void SpawnEnemy(RoomInstance roomInstance)
         {
+
+            // Enemy are set to already spawned
             roomInstance.isEnemyAlreadySpawned = true;
 
+            // sécurité si boucle infini
             int iteration = 0;
+
             var room = roomInstance.RoomTemplateInstance;
+
+            // PointsInTheCurrentRoom
             int currentRoomPoint = 0;
             
             WandererCurrentRoomDetectionRoomManager roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
@@ -242,6 +251,8 @@ namespace Edgar.Unity.Examples
             do
             {
                 iteration++;
+
+                // check if enemyPos is in bounds
                 var position = WandererCurrentRoomDetectionRoomManager.RandomPointInBounds(roomManager.FloorCollider.bounds, 1f);
                 
                 if (!WandererCurrentRoomDetectionRoomManager.IsPointWithinCollider(roomManager.FloorCollider, position))
@@ -254,22 +265,19 @@ namespace Edgar.Unity.Examples
                     continue;
                 }
                 
+                // Get Random Enemy in Array
                 var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
-                Enemy enemyComp = enemyPrefab.enemy.GetComponent<Enemy>();
-                var enemy = Instantiate(enemyPrefab.enemy);
-                enemy.transform.position = position;
-                enemy.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                
+               
+                // spawn enemy if points are available 
                 if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomInstance.EnemyPointsAvailable)
                 {
-                    roomInstance.Enemies.Add(enemy);
+                    var enemyGO = Instantiate(enemyPrefab.enemy);
+                    enemyGO.transform.position = position;
+                    enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
+                    roomInstance.Enemies.Add(enemyGO);
                     currentRoomPoint += enemyPrefab.EnemyPoint;
                 }
-                else
-                {
-                    Destroy(enemy);
-                    continue;
-                }
+              
                 
 
 

@@ -54,7 +54,7 @@ public class Distance : Enemy
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange2);
         timeToSwitch = DistanceData.timeToSwich;
         Dispersion = DistanceData.Dispersion;
-        EnemyPoint = DistanceData.enemyPoints;
+
     }
 
     protected override void isInRange()
