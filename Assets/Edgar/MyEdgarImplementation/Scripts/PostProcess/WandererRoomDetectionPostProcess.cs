@@ -12,12 +12,12 @@ namespace Edgar.Unity.Examples
     {
         [Serializable]
        
-        public struct Enemy
+        public struct enemyStuct
         {
             public GameObject enemy;
             public int EnemyPoint;
         }
-        public Enemy[] Enemies;
+        public enemyStuct[] Enemies;
         Tilemap tilemapMiniMap;
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
@@ -273,7 +273,7 @@ namespace Edgar.Unity.Examples
                 
 
 
-            } while (iteration < 10) ;
+            } while (iteration < 100 || currentRoomPoint < roomInstance.EnemyPointsAvailable ) ;
         }
 
         protected void AddLayerToWall(GameObject wall)
