@@ -49,11 +49,11 @@ public class PlayerProjectiles : MonoBehaviour
 
 
     protected GameObject player;
-    protected GameObject weapon;
+    protected GameObject weaponManager;
     protected Vector3 dir;
     protected Transform playerTransform;
     protected float speed;
-    protected Weapons weaponAttackP;
+    protected Weapons weapon;
     protected LayerMask weaponLayer;
     protected float weaponDamage;
     [SerializeField]
@@ -75,11 +75,11 @@ public class PlayerProjectiles : MonoBehaviour
         
         SetData();
         player = GameObject.FindGameObjectWithTag("Player");
-        weapon = GameObject.FindGameObjectWithTag("WeaponManager");
-        weaponAttackP = weapon.transform.GetComponentInChildren<Weapons>();
+        weaponManager = GameObject.FindGameObjectWithTag("WeaponManager");
+        weapon = weaponManager.transform.GetComponentInChildren<Weapons>();
         projectileRB = GetComponent<Rigidbody2D>();
-        weaponDamage = weaponAttackP.damage;
-        weaponLayer = weaponAttackP.enemyLayer;
+        weaponDamage = weapon.damage;
+        weaponLayer = weapon.enemyLayer;
         playerTransform = player.GetComponent<Transform>();
 
         
@@ -88,19 +88,19 @@ public class PlayerProjectiles : MonoBehaviour
         screenMousePos = Input.mousePosition;
         // position du player en pixel sur l'écran 
         screenPlayerPos = Camera.main.WorldToScreenPoint(player.transform.position);
-        screenArmePos = Camera.main.WorldToScreenPoint(weaponAttackP.attackPoint.position);
+        screenArmePos = Camera.main.WorldToScreenPoint(weapon.attackPoint.position);
         // position du point d'attaque
         
-        float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
+        float distSP = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y).magnitude;
 
-        if(distSP < weaponAttackP.RangeMiniChangementTir)
+        if(distSP < weapon.RangeMiniChangementTir)
         {
-            dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);
+            dir = new Vector3(weapon.attackPoint.transform.position.x - weapon.transform.position.x, weapon.attackPoint.transform.position.y - weapon.transform.position.y);
 
         }
-        else if (distSP < weaponAttackP.RangeChangementTir && distSP > weaponAttackP.RangeMiniChangementTir)
+        else if (distSP < weapon.RangeChangementTir && distSP > weapon.RangeMiniChangementTir)
         {
-            dir = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
+            dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y).normalized;
             //dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);
 
         }

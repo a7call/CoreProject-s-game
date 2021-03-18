@@ -132,7 +132,6 @@ namespace Edgar.Unity.Examples
                     SpawnEnemy(roomInstance);
                     
                 }
-                Debug.LogWarning("je Peux etre la ");
             }
             AstarPath.active.Scan();
             MovePlayerToSpawn(level);
