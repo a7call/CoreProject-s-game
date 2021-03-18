@@ -13,6 +13,7 @@ public class DistanceLaser : Distance
     protected float durationOfShoot = 1f;
     protected int damage = 1;
     protected bool isShootingLasers;
+    protected GameObject laserBeam;
 
 
 
@@ -21,6 +22,24 @@ public class DistanceLaser : Distance
         // Set data
         SetData();
         SetMaxHealth();
+        GetLaserComp();
+    }
+
+    protected override void GetReference()
+    {
+        base.GetReference();
+        targetSetter.target = target;
+    }
+    void GetLaserComp()
+    {
+        foreach(Transform child in transform)
+        {
+            if (child.GetComponent<LineRenderer>())
+            {
+                laserBeam = child.gameObject;
+                laserBeam.GetComponent<LineRenderer>().enabled = false;
+            }
+        }
     }
 
    
@@ -32,6 +51,9 @@ public class DistanceLaser : Distance
 
         switch (currentState)
         {
+            case State.Patrolling:
+                PlayerInSight();
+                break;
             case State.Chasing:
                 isInRange();
                 // suit le path créé et s'arrête pour tirer
@@ -50,19 +72,25 @@ public class DistanceLaser : Distance
     }
 
 
- 
+
 
     // Voir Enemy.cs (héritage)
+    public LayerMask testsLayer;
     protected override void Shoot()
     {
              
         if(isShootingLasers)
-        { 
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, Mathf.Infinity);
+        {
+            
 
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, Mathf.Infinity, testsLayer);
+            laserBeam.GetComponent<LineRenderer>().SetPosition(1, laserBeam.transform.InverseTransformPoint(hits[0].point));
+            
             Debug.DrawRay(transform.position, dir*10, Color.red);
             foreach (RaycastHit2D hit in hits)
             {
+               
+               
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
                     PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
@@ -80,9 +108,14 @@ public class DistanceLaser : Distance
         {
 
             dir = (targetSetter.target.position - transform.position).normalized;
+
             yield return new WaitForSeconds(timeBeforeShoot);
+            laserBeam.GetComponent<LineRenderer>().SetPosition(0, Vector2.zero);
+            enableLaser();
             isShootingLasers = true;
             yield return new WaitForSeconds(durationOfShoot);
+            laserBeam.GetComponent<LineRenderer>().SetPosition(1, Vector2.zero);
+            disableLaser();
             isShootingLasers = false;
         }   
     }
@@ -97,4 +130,16 @@ public class DistanceLaser : Distance
             isreadyToAttack = true;
         }
     }
+
+
+    protected void enableLaser()
+    {
+        laserBeam.GetComponent<LineRenderer>().enabled = true;
+    }
+
+    protected void disableLaser()
+    {
+        laserBeam.GetComponent<LineRenderer>().enabled = false;
+    }
 }
+
