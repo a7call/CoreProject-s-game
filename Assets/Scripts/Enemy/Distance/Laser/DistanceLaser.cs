@@ -59,7 +59,7 @@ public class DistanceLaser : Distance
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:
-                
+                aIPath.canMove = false;
                 isInRange();
                 StartCoroutine("CanShoot");
                 Shoot();
@@ -71,6 +71,26 @@ public class DistanceLaser : Distance
 
     }
 
+    protected override void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange )
+        { 
+            currentState = State.Attacking;
+            isShooting = true;
+            isReadyToSwitchState = false;
+            aIPath.canMove = false;
+        }
+        else
+        {
+            if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
+            if (isReadyToSwitchState && currentState != State.Chasing && !isreadyToAttack)
+            {
+                currentState = State.Chasing;
+                isShooting = false;
+            }
+
+        }
+    }
 
 
 
@@ -81,8 +101,8 @@ public class DistanceLaser : Distance
              
         if(isShootingLasers)
         {
-            
 
+            
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, Mathf.Infinity, testsLayer);
             laserBeam.GetComponent<LineRenderer>().SetPosition(1, laserBeam.transform.InverseTransformPoint(hits[0].point));
             
@@ -93,6 +113,7 @@ public class DistanceLaser : Distance
                
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
+                    laserBeam.GetComponent<LineRenderer>().SetPosition(1, laserBeam.transform.InverseTransformPoint(hit.point));
                     PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
                     player.TakeDamage(damage);
                 }
@@ -104,7 +125,7 @@ public class DistanceLaser : Distance
 
     protected virtual IEnumerator ShootLasersCo()
     {
-        if(!isShootingLasers )
+        if(!isShootingLasers)
         {
 
             dir = (targetSetter.target.position - transform.position).normalized;
@@ -114,8 +135,9 @@ public class DistanceLaser : Distance
             enableLaser();
             isShootingLasers = true;
             yield return new WaitForSeconds(durationOfShoot);
-            laserBeam.GetComponent<LineRenderer>().SetPosition(1, Vector2.zero);
             disableLaser();
+            laserBeam.GetComponent<LineRenderer>().SetPosition(1, Vector2.zero);
+            
             isShootingLasers = false;
         }   
     }
