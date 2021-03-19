@@ -15,68 +15,96 @@ public class Distance : Enemy
     [SerializeField] protected DistanceScriptableObject DistanceData;
     // Check si tire
     [HideInInspector]
-    public bool isShooting;
+    public bool isShooting = false; 
     [HideInInspector]
     public float Dispersion;
     Transform randomTargetPointTransform;
     Vector3 randomPoint;
+    protected Transform attackPoint;
 
-    protected override void Awake()
-    {
-        base.Awake();
-       
-    }
+
     protected override void Update()
     {
-        randomTargetPointTransform.position = target.position + randomPoint;
+        
         base.Update();
     }
     protected override void GetReference()
     {
         base.GetReference();
+        CreatEnemyTargetGo();
+        GetAttackPointGO();
+    }
+
+
+    protected void CreatEnemyTargetGo()
+    {
         GameObject randomTargetPoint = new GameObject();
         randomTargetPoint.name = "targetMouvePoint";
-        randomTargetPoint.transform.parent = gameObject.transform;
+        randomTargetPoint.transform.parent = target.transform.GetChild(target.transform.childCount-1);
         randomTargetPointTransform = randomTargetPoint.transform;
         randomPoint = (Vector3)Random.insideUnitCircle;
+        randomTargetPointTransform.position = target.position + randomPoint;
         targetSetter.target = randomTargetPointTransform;
     }
+    void GetAttackPointGO()
+    {
+        if (transform.Find("SupportArme"))
+        {
+            Transform supportArme = transform.Find("SupportArme");
+            Transform weapon = supportArme.Find("Weapon");
+            attackPoint = weapon.Find("attackPoint");
+        }
+    }
+
     protected virtual void SetData()
     {
+        // ScriptableObject Datas
         maxHealth = DistanceData.maxHealth;
         whiteMat = DistanceData.whiteMat;
         defaultMat = DistanceData.defaultMat;
-        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime2);
-        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint2);
-        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed2);
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange2);
         timeToSwitch = DistanceData.timeToSwich;
         Dispersion = DistanceData.Dispersion;
 
+
+        // PathFinding Variable
+        aIPath.endReachedDistance = attackRange *2/3;
+        aIPath.slowdownDistance = aIPath.endReachedDistance + 0.5f;
+        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime2);
+        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint2);
+        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed2);
     }
 
     protected override void isInRange()
     {
-            if (Vector3.Distance(transform.position, target.position) < attackRange  )
+            if (Vector3.Distance(transform.position, target.position) < attackRange)
             {
                 currentState = State.Attacking;
-                isShooting = true;
-                isReadyToSwitchState = false;
-                aIPath.canMove = false;
+                //isReadyToSwitchState = false;
             }
             else
             {
-                if (currentState == State.Attacking && !isInTransition ) StartCoroutine(transiChasing());
-                if (isReadyToSwitchState && currentState != State.Chasing)
+                //if (currentState == State.Attacking && !isInTransition ) StartCoroutine(transiChasing());
+                if (currentState != State.Chasing && !isShooting)
                 {
                     currentState = State.Chasing;
-                    isShooting = false;
                 }
 
             }
        
+    }
+
+   protected void ShouldNotMoveDuringShooting()
+    {
+        if (currentState == State.Chasing && !aIPath.canMove)
+        {
+            aIPath.canMove = true;
+        }else if(currentState == State.Attacking && aIPath.canMove)
+        {
+            aIPath.canMove = false;
+        }
     }
 
     
@@ -88,21 +116,21 @@ public class Distance : Enemy
     protected GameObject projetile;
     protected virtual IEnumerator CanShoot()
     {
-        if (isShooting && isreadyToAttack)
+        if (isReadytoShoot)
         {
-            isreadyToAttack = false;
+            isReadytoShoot = false;
             Shoot();
             yield return new WaitForSeconds(restTime);
-            isreadyToAttack = true;
+            isReadytoShoot = true;
         }
     }
+    
+   
     // Instansiate projectiles
     protected virtual void Shoot()
     {
         float decalage = Random.Range(-Dispersion, Dispersion);
-        Transform supportArme = transform.Find("SupportArme");
-        Transform weapon = supportArme.Find("Weapon");
-        Transform attackPoint = weapon.Find("attackPoint");
+       
         if (attackPoint!= null)
         {
             GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);

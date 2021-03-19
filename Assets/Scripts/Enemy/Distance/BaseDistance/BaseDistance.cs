@@ -7,14 +7,14 @@ using UnityEngine;
 /// </summary>
 public class BaseDistance : Distance
 {
-
-    void Start()
+    protected override void Awake()
     {
-        
         // Set data
+        base.Awake();
         SetData();
         SetMaxHealth();
     }
+
     protected override void Update()
     {
         base.Update();

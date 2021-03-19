@@ -14,6 +14,12 @@ public class RafaleDistance : Distance
 
     private int n = 0; //compteur pour le while
 
+    protected override void Awake()
+    {
+        base.Awake();
+        SetData();
+        SetMaxHealth();
+    }
     protected override void SetData()
     {
         base.SetData();
@@ -21,15 +27,6 @@ public class RafaleDistance : Distance
         nbTir = DistanceData.nbTir;
     }
 
-
-
-    void Start()
-    {
-        
-        // Set data
-        SetData();
-        SetMaxHealth();
-    }
     protected override void Update()
     {
         base.Update();
@@ -45,9 +42,9 @@ public class RafaleDistance : Distance
                 StartCoroutine("CanShoot");
                 break;
         }
-
+        ShouldNotMoveDuringShooting();
     }
-
+    
 
     // Voir Enemy.cs (héritage)
     protected override void Shoot()
@@ -60,6 +57,7 @@ public class RafaleDistance : Distance
         
         while (n < nbTir && !isArretTemporel)
         {
+            isShooting = true;
             base.Shoot();
             yield return new WaitForSeconds(timeIntervale);
             n++;

@@ -13,13 +13,13 @@ public class BubbleMS : Distance
     
     private bool firstShoot = true;
 
-
-    void Start()
+    protected override void Awake()
     {
-        // Set data
+        base.Awake();
         SetData();
         SetMaxHealth();
     }
+
     protected override void Update()
     {
         
@@ -29,13 +29,12 @@ public class BubbleMS : Distance
         {
             case State.Chasing:
                 isInRange();
-                if(!firstShoot) aIPath.canMove = false;
                 break;
             case State.Attacking:
-               
                 StartCoroutine(CanShoot());
                 break;
         }
+        ShouldNotMoveDuringShooting();
 
     }
    
@@ -57,7 +56,6 @@ public class BubbleMS : Distance
         {
             isReadytoShoot = false;
             firstShoot = false;
-            rb.velocity = Vector2.zero;
             Shoot();
             yield return new WaitForSeconds(restTime);
         }

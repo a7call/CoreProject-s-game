@@ -9,13 +9,13 @@ public class Bubble360 : Distance
 
     [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();
 
-    void Start()
+    protected override void Awake()
     {
-        
-        // Set data
+        base.Awake();
         SetData();
         SetMaxHealth();
     }
+
     protected override void Update()
     {
         base.Update();

@@ -12,16 +12,18 @@ public class DistanceLaser : Distance
     protected float timeBeforeShoot = 0.25f;
     protected float durationOfShoot = 1f;
     protected int damage = 1;
-    protected bool isShootingLasers;
+    protected bool isShootingLasers; // à remplacer
     protected GameObject laserBeam;
 
-
-
-    void Start()
+    protected override void Awake()
     {
-        // Set data
+        base.Awake();
         SetData();
         SetMaxHealth();
+    }
+
+    void Start()
+    {   
         GetLaserComp();
     }
 
@@ -59,58 +61,49 @@ public class DistanceLaser : Distance
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:
-                aIPath.canMove = false;
                 isInRange();
                 StartCoroutine("CanShoot");
                 Shoot();
                 break;
         }
-
-
-       
-
+        ShouldNotMoveDuringShooting();
     }
+
 
     protected override void isInRange()
     {
-        if (Vector3.Distance(transform.position, target.position) < attackRange )
-        { 
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
             currentState = State.Attacking;
             isShooting = true;
-            isReadyToSwitchState = false;
-            aIPath.canMove = false;
+            //isReadyToSwitchState = false;
         }
         else
         {
-            if (currentState == State.Attacking && !isInTransition) StartCoroutine(transiChasing());
-            if (isReadyToSwitchState && currentState != State.Chasing && !isreadyToAttack)
+            //if (currentState == State.Attacking && !isInTransition ) StartCoroutine(transiChasing());
+            if (currentState != State.Chasing && !isShooting)
             {
                 currentState = State.Chasing;
                 isShooting = false;
             }
 
         }
+
     }
-
-
 
     // Voir Enemy.cs (héritage)
     public LayerMask testsLayer;
     protected override void Shoot()
     {
              
-        if(isShootingLasers)
+        if(isShooting)
         {
-
-            
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, Mathf.Infinity, testsLayer);
             laserBeam.GetComponent<LineRenderer>().SetPosition(1, laserBeam.transform.InverseTransformPoint(hits[0].point));
             
             Debug.DrawRay(transform.position, dir*10, Color.red);
             foreach (RaycastHit2D hit in hits)
             {
-               
-               
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
                     laserBeam.GetComponent<LineRenderer>().SetPosition(1, laserBeam.transform.InverseTransformPoint(hit.point));
@@ -118,38 +111,35 @@ public class DistanceLaser : Distance
                     player.TakeDamage(damage);
                 }
             }
-        }
-       
+        } 
     }
 
 
     protected virtual IEnumerator ShootLasersCo()
     {
-        if(!isShootingLasers)
+        if(!isShooting)
         {
 
             dir = (targetSetter.target.position - transform.position).normalized;
-
             yield return new WaitForSeconds(timeBeforeShoot);
             laserBeam.GetComponent<LineRenderer>().SetPosition(0, Vector2.zero);
             enableLaser();
-            isShootingLasers = true;
+            isShooting = true;
             yield return new WaitForSeconds(durationOfShoot);
             disableLaser();
             laserBeam.GetComponent<LineRenderer>().SetPosition(1, Vector2.zero);
-            
-            isShootingLasers = false;
+            isShooting = false;
         }   
     }
 
     protected override IEnumerator CanShoot()
     {
-        if (isShooting && isreadyToAttack && !isPerturbateurIEM)
-        {   
-            isreadyToAttack = false;
+        if (isReadytoShoot && !isPerturbateurIEM)
+        {
+            isReadytoShoot = false;
             StartCoroutine(ShootLasersCo());
             yield return new WaitForSeconds(restTime);
-            isreadyToAttack = true;
+            isReadytoShoot = true;
         }
     }
 
