@@ -42,7 +42,7 @@ public class Cac : Enemy
         attackRadius = CacDatas.attackRadius;
         hitLayers = CacDatas.hitLayers;
 
-        aIPath.maxSpeed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed2);
+        aIPath.maxSpeed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed +1f);
 
 
         maxHealth = CacDatas.maxHealth;

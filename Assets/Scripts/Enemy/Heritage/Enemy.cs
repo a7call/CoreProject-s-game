@@ -169,11 +169,11 @@ public class Enemy : MonoBehaviour
         //mettre d'autres conditions 
         if(currentState == State.Attacking )
         {
-             animator.SetBool("isAttacking", true);
+            // animator.SetBool("isAttacking", true);
         }
         else
         {
-            animator.SetBool("isAttacking", false);
+            //animator.SetBool("isAttacking", false);
         }
         
         if(currentState == State.KnockedBack)
@@ -192,6 +192,7 @@ public class Enemy : MonoBehaviour
        
             if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
             {
+
                 animator.SetFloat("lastMoveX", targetSetter.target.position.x - gameObject.transform.position.x);
                 animator.SetFloat("lastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
             } 

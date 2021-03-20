@@ -62,7 +62,8 @@ public class DistanceLaser : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                StartCoroutine(CanShootCO());
+                PlayAttackAnim();
+               // StartCoroutine(CanShootCO());
                 LaserFiring();
                 break;
         }
@@ -109,12 +110,18 @@ public class DistanceLaser : Distance
 
     protected override IEnumerator CanShootCO()
     {
-        if (isReadytoShoot && !isPerturbateurIEM)
-        {
-            isReadytoShoot = false;
+            
             yield return StartCoroutine(ShootCo());
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
+    }
+    void PlayAttackAnim()
+    {
+        
+        if (isReadytoShoot && !isPerturbateurIEM)
+        {
+            isReadytoShoot = false;
+            animator.SetTrigger("isAttacking");
         }
     }
 

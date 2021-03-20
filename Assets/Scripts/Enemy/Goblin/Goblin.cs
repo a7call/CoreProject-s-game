@@ -37,7 +37,7 @@ public class Goblin : Enemy
 
     private void SetData()
     {
-        aIPath.maxSpeed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed2);
+        aIPath.maxSpeed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
 
         maxHealth = enemyData.maxHealth;
         whiteMat = enemyData.whiteMat;

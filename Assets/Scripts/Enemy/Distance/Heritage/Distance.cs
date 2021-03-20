@@ -23,6 +23,8 @@ public class Distance : Enemy
     Transform randomTargetPointTransform;
     Vector3 randomPoint;
     protected Transform attackPoint;
+    protected float attackModeRange;
+    protected float coefAttackModeRange;
 
     protected override void Awake()
     {
@@ -71,33 +73,34 @@ public class Distance : Enemy
         defaultMat = DistanceData.defaultMat;
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
-        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange2);
+        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + 2);
         timeToSwitch = DistanceData.timeToSwich;
         Dispersion = DistanceData.Dispersion;
+
+
+        //Chiffre arbitraire à modifier 
+        coefAttackModeRange = Random.Range(1.2f, 1.5f);
+        attackModeRange = attackRange * coefAttackModeRange;
 
 
         // PathFinding Variable
         aIPath.endReachedDistance = attackRange *2/3;
         aIPath.slowdownDistance = aIPath.endReachedDistance + 0.5f;
-        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime2);
-        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint2);
-        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed2);
+        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime + 0.5f);
+        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + 1f);
+        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + 1);
     }
 
     protected override void isInRange()
     {
+       
             if (Vector3.Distance(transform.position, target.position) < attackRange)
             {
-                currentState = State.Attacking;
-                //isReadyToSwitchState = false;
+            currentState = State.Attacking;
             }
-            else
+            else if(currentState != State.Chasing && !isShooting && (Vector3.Distance(transform.position, target.position) > attackModeRange))
             {
-                //if (currentState == State.Attacking && !isInTransition ) StartCoroutine(transiChasing());
-                if (currentState != State.Chasing && !isShooting)
-                {
-                    currentState = State.Chasing;
-                }
+            currentState = State.Chasing;
 
             }
        
@@ -187,7 +190,7 @@ public class Distance : Enemy
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
             ScriptProj.Dispersion = decalage;
         }
-        yield return null;
+        yield return new WaitForEndOfFrame();
     }
 
 
