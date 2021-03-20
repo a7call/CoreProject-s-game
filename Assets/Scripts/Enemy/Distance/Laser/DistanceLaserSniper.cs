@@ -32,7 +32,7 @@ public class DistanceLaserSniper : DistanceLaser
     }
 
 
-    protected override IEnumerator ShootLasersCo()
+    protected override IEnumerator ShootCo()
     {
         if (!isShootingLasers)
         {
@@ -51,7 +51,7 @@ public class DistanceLaserSniper : DistanceLaser
         if (isShooting && isreadyToAttack && !isPerturbateurIEM)
         {   
             isreadyToAttack = false;
-            StartCoroutine(ShootLasersCo());
+            StartCoroutine(ShootCo());
             yield return new WaitForSeconds(restTime);
             isreadyToAttack = true;  
         }

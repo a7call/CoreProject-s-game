@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
+
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -22,6 +24,11 @@ public class Distance : Enemy
     Vector3 randomPoint;
     protected Transform attackPoint;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+    }
 
     protected override void Update()
     {
@@ -112,6 +119,7 @@ public class Distance : Enemy
     protected bool isReadytoShoot = true;
     // Repos après tire
     protected float restTime;
+    protected int restTime2 = 3000;
     // Projectile to instantiate
     protected GameObject projetile;
     protected virtual IEnumerator CanShoot()
@@ -124,13 +132,23 @@ public class Distance : Enemy
             isReadytoShoot = true;
         }
     }
-    
-   
+    protected virtual IEnumerator CanShootCO()
+    {
+        if (isReadytoShoot)
+        {
+            isReadytoShoot = false;
+            yield return StartCoroutine(ShootCO());
+            yield return new WaitForSeconds(3f);
+            isReadytoShoot = true;
+        }
+    }
+
+
     // Instansiate projectiles
     protected virtual void Shoot()
     {
         float decalage = Random.Range(-Dispersion, Dispersion);
-       
+            
         if (attackPoint!= null)
         {
             GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);
@@ -147,6 +165,29 @@ public class Distance : Enemy
         }
       
 
+    }
+    protected virtual IEnumerator ShootCO()
+    {
+
+        
+        float decalage = Random.Range(-Dispersion, Dispersion);
+
+        if (attackPoint != null)
+        {
+            GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);
+            myProjectile.transform.parent = gameObject.transform;
+            Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
+            ScriptProj.Dispersion = decalage;
+
+        }
+        else
+        {
+            GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
+            myProjectile.transform.parent = gameObject.transform;
+            Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
+            ScriptProj.Dispersion = decalage;
+        }
+        yield return null;
     }
 
 

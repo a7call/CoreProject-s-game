@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 /// <summary>
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
@@ -27,7 +28,7 @@ public class RafaleDistance : Distance
         nbTir = DistanceData.nbTir;
     }
 
-    protected override void Update()
+    protected override  void Update()
     {
         base.Update();
         switch (currentState)
@@ -39,7 +40,7 @@ public class RafaleDistance : Distance
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
-                StartCoroutine("CanShoot");
+                StartCoroutine (CanShootCO());
                 break;
         }
         ShouldNotMoveDuringShooting();
@@ -47,14 +48,15 @@ public class RafaleDistance : Distance
     
 
     // Voir Enemy.cs (héritage)
-    protected override void Shoot()
+    protected override IEnumerator ShootCO()
     {
-        StartCoroutine(intervalleTir());
+
+        yield return StartCoroutine(intervalleTir());
+        isShooting = false;
     }
 
-    protected virtual IEnumerator intervalleTir()
-    {
-        
+    protected virtual  IEnumerator intervalleTir()
+    { 
         while (n < nbTir && !isArretTemporel)
         {
             isShooting = true;

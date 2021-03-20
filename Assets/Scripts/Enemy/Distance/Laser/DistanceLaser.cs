@@ -62,38 +62,17 @@ public class DistanceLaser : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                StartCoroutine("CanShoot");
-                Shoot();
+                StartCoroutine(CanShootCO());
+                LaserFiring();
                 break;
         }
         ShouldNotMoveDuringShooting();
     }
 
 
-    protected override void isInRange()
-    {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            isShooting = true;
-            //isReadyToSwitchState = false;
-        }
-        else
-        {
-            //if (currentState == State.Attacking && !isInTransition ) StartCoroutine(transiChasing());
-            if (currentState != State.Chasing && !isShooting)
-            {
-                currentState = State.Chasing;
-                isShooting = false;
-            }
-
-        }
-
-    }
-
     // Voir Enemy.cs (héritage)
-    public LayerMask testsLayer;
-    protected override void Shoot()
+    public LayerMask testsLayer; // à remplacer !
+    protected  void LaserFiring()
     {
              
         if(isShooting)
@@ -115,11 +94,8 @@ public class DistanceLaser : Distance
     }
 
 
-    protected virtual IEnumerator ShootLasersCo()
+    protected virtual IEnumerator ShootCo()
     {
-        if(!isShooting)
-        {
-
             dir = (targetSetter.target.position - transform.position).normalized;
             yield return new WaitForSeconds(timeBeforeShoot);
             laserBeam.GetComponent<LineRenderer>().SetPosition(0, Vector2.zero);
@@ -128,16 +104,15 @@ public class DistanceLaser : Distance
             yield return new WaitForSeconds(durationOfShoot);
             disableLaser();
             laserBeam.GetComponent<LineRenderer>().SetPosition(1, Vector2.zero);
-            isShooting = false;
-        }   
+            isShooting = false;     
     }
 
-    protected override IEnumerator CanShoot()
+    protected override IEnumerator CanShootCO()
     {
         if (isReadytoShoot && !isPerturbateurIEM)
         {
             isReadytoShoot = false;
-            StartCoroutine(ShootLasersCo());
+            yield return StartCoroutine(ShootCo());
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
         }

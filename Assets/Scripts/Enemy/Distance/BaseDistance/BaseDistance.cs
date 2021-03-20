@@ -15,7 +15,7 @@ public class BaseDistance : Distance
         SetMaxHealth();
     }
 
-    protected override void Update()
+    protected override async void Update()
     {
         base.Update();
         switch (currentState)
@@ -28,7 +28,7 @@ public class BaseDistance : Distance
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
-                StartCoroutine("CanShoot");
+                StartCoroutine(CanShootCO());
                 break;
         }
 
