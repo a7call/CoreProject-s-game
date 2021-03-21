@@ -119,6 +119,7 @@ public class Distance : Enemy
 
     
     // Check si prêt à tirer
+    [SerializeField]
     protected bool isReadytoShoot = true;
     // Repos après tire
     protected float restTime;
