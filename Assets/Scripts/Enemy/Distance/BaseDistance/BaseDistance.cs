@@ -15,7 +15,7 @@ public class BaseDistance : Distance
         SetMaxHealth();
     }
 
-    protected override async void Update()
+    protected override void Update()
     {
         base.Update();
         switch (currentState)

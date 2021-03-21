@@ -16,9 +16,6 @@ namespace Edgar.Unity.Examples
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
     public class WandererRoomDetectionPostProcess : DungeonGeneratorPostProcessBase
     {
-       
-       
-      
         public enemyStruct[] Enemies;
         Tilemap tilemapMiniMap;
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
@@ -270,6 +267,7 @@ namespace Edgar.Unity.Examples
                 // spawn enemy if points are available 
                 if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomInstance.EnemyPointsAvailable)
                 {
+                  
                     var enemyGO = Instantiate(enemyPrefab.enemy);
                     enemyGO.transform.position = position;
                     enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
