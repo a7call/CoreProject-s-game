@@ -25,54 +25,54 @@ public class DistanceLaserDecalage : DistanceLaser
     }
 
     // Voir Enemy.cs (héritage)
-    protected override void Shoot()
-    {
-        if (isShootingLasers)
-        { 
-            for(int i=0; i < projectiles ; i++)
-            {
-                float angleDecalage = offset - decalage * (i) ;
-                directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
-                RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionTir, Mathf.Infinity);
-                Debug.DrawRay(transform.position, directionTir * 10, Color.red);
-                foreach (RaycastHit2D hit in hits)
-                {
-                    if (hit.transform.gameObject.CompareTag("Player"))
-                    {
-                        PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
-                        player.TakeDamage(damage);
-                    }
-                }
-            } 
-        }
+    //protected override void Shoot()
+    //{
+    //    if (isShootingLasers)
+    //    { 
+    //        for(int i=0; i < projectiles ; i++)
+    //        {
+    //            float angleDecalage = offset - decalage * (i) ;
+    //            directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
+    //            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionTir, Mathf.Infinity);
+    //            Debug.DrawRay(transform.position, directionTir * 10, Color.red);
+    //            foreach (RaycastHit2D hit in hits)
+    //            {
+    //                if (hit.transform.gameObject.CompareTag("Player"))
+    //                {
+    //                    PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
+    //                    player.TakeDamage(damage);
+    //                }
+    //            }
+    //        } 
+    //    }
 
-    }
+    //}
 
 
-    protected override IEnumerator ShootCo()
-    {
-        if (!isShootingLasers )
-        {
+    //protected override IEnumerator ShootCO()
+    //{
+    //    if (!isShootingLasers )
+    //    {
 
-            decalage = angleTir / (projectiles);  
-            dir = (targetSetter.target.position - transform.position).normalized;
-            yield return new WaitForSeconds(timeBeforeShoot);
-            isShootingLasers = true;
-            yield return new WaitForSeconds(durationOfShoot);
-            isShootingLasers = false;
-        }
-    }
+    //        decalage = angleTir / (projectiles);  
+    //        dir = (targetSetter.target.position - transform.position).normalized;
+    //        yield return new WaitForSeconds(timeBeforeShoot);
+    //        isShootingLasers = true;
+    //        yield return new WaitForSeconds(durationOfShoot);
+    //        isShootingLasers = false;
+    //    }
+    //}
 
-    protected override IEnumerator CanShoot()
-    {
-        if (isShooting && isreadyToAttack && !isPerturbateurIEM)
-        {   
-            isreadyToAttack = false;
-            StartCoroutine(ShootCo());
-            yield return new WaitForSeconds(restTime);
-            isreadyToAttack = true;
-        }
-    }
+    //protected override IEnumerator CanShoot()
+    //{
+    //    if (isShooting && isreadyToAttack && !isPerturbateurIEM)
+    //    {   
+    //        isreadyToAttack = false;
+    //        StartCoroutine(ShootCO());
+    //        yield return new WaitForSeconds(restTime);
+    //        isreadyToAttack = true;
+    //    }
+    //}
 
 
 

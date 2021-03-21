@@ -142,7 +142,7 @@ public class Distance : Enemy
         {
             isReadytoShoot = false;
             yield return StartCoroutine(ShootCO());
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
         }
     }
