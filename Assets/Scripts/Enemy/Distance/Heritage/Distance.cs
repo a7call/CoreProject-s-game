@@ -73,6 +73,10 @@ public class Distance : Enemy
         }
     }
 
+    private float RandomizeParams(float min, float max)
+    {
+        return Random.Range(min, max);
+    }
     protected virtual void SetData()
     {
         // ScriptableObject Datas
@@ -81,22 +85,22 @@ public class Distance : Enemy
         defaultMat = DistanceData.defaultMat;
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
-        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + 2);
+        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + RandomizeParams(-1, 2));
         timeToSwitch = DistanceData.timeToSwich;
         Dispersion = DistanceData.Dispersion;
         isSupposedToMoveShooting = DistanceData.isSupposedToMoveShooting;
 
         //Chiffre arbitraire à modifier 
-        coefAttackModeRange = Random.Range(1.2f, 1.5f);
+        coefAttackModeRange = RandomizeParams(1.2f, 1.5f);
         attackModeRange = attackRange * coefAttackModeRange;
 
 
         // PathFinding Variable
         aIPath.endReachedDistance = attackRange *2/3;
         aIPath.slowdownDistance = aIPath.endReachedDistance + 0.5f;
-        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime + 0.5f);
-        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + 1f);
-        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + 1);
+        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime + RandomizeParams(-0.5f, 0.5f));
+        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + RandomizeParams(-1, 1));
+        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + RandomizeParams(-1, 1));
     }
 
     protected override void isInRange()
