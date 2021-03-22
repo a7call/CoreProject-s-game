@@ -42,14 +42,14 @@ public class SpeDistanceHitZone : Distance
     [SerializeField] protected float reloadSpe;
 
     // Couroutine du shoot
-    protected override IEnumerator CanShoot()
+    protected override IEnumerator CanShootCO()
     {
         if (isShooting && isReadytoShoot && !isSpeRdy)
         {
             // Ne peut plus tirer car déjà entrain de tirer
             isReadytoShoot = false;
             // Tire
-            Shoot();
+            StartCoroutine(ShootCO());
             // Repos entre deux tires
             yield return new WaitForSeconds(restTime);
             // Peut tirer de nouveau

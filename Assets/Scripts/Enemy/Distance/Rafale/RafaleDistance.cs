@@ -43,10 +43,8 @@ public class RafaleDistance : Distance
                 StartCoroutine (CanShootCO());
                 break;
         }
-        ShouldNotMoveDuringShooting();
     }
     
-
     // Voir Enemy.cs (héritage)
     protected override IEnumerator ShootCO()
     {
@@ -60,7 +58,7 @@ public class RafaleDistance : Distance
         while (n < nbTir && !isArretTemporel)
         {
             isShooting = true;
-            base.Shoot();
+            yield return StartCoroutine(base.ShootCO());
             yield return new WaitForSeconds(timeIntervale);
             n++;
         }

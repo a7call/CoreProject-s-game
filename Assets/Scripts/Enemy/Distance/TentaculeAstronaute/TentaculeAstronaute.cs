@@ -29,33 +29,11 @@ public class TentaculeAstronaute : Distance
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
-                StartCoroutine("CanShoot");
+                StartCoroutine(CanShootCO());
                 break;
         }
     }
 
-    // Couroutine du shoot
-    protected override IEnumerator CanShoot()
-    {
-        if (isShooting && isReadytoShoot)
-        {
-            // Ne peut plus tirer car déjà entrain de tirer
-            isReadytoShoot = false;
-            // Tire
-            Shoot();
-            // Repos entre deux tires
-            yield return new WaitForSeconds(restTime);
-            // Peut tirer de nouveau
-            isReadytoShoot = true;
-        }
-    }
-
-
-    // Voir Distance.cs (héritage)
-    protected override void Shoot()
-    {
-        base.Shoot();
-    }
 
 
 }
