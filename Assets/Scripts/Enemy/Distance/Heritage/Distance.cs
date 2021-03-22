@@ -1,13 +1,9 @@
 ﻿using System.Collections;
-using System.Threading.Tasks;
-
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// Classe mère des Distance et héritière de Enemy.cs
 /// Elle contient une fonction setData permettant de récupérer les données du scriptable object 
-/// Une fonction aggro permettant de commencer à suivre l'ennemi si le joueur est à porté
-/// Une fonction permettant de savoir si le joueur est en range de shoot
 /// Une coroutine de shoot
 /// Une fonction de shoot qui instansiate le projectile
 /// </summary>
@@ -20,11 +16,24 @@ public class Distance : Enemy
     public bool isShooting = false; 
     [HideInInspector]
     public float Dispersion;
+    // Variables afin de définir un point arbitraire au tour du joueur comme la target  : à pour but de randomiser le déplacement.
     Transform randomTargetPointTransform;
     Vector3 randomPoint;
+    // attackPoint : where projectile should start
     protected Transform attackPoint;
+    // attackModeRange : range ou l'ennemi passe en mode chaising  != attackRange  : range ou l'ennemi passe en mode attaque. 
     protected float attackModeRange;
     protected float coefAttackModeRange;
+    //Bool to Check If ready to start an another attack sequence
+    protected bool attackAnimationPlaying = false;
+ // Check si prêt à tirer
+    [SerializeField]
+    protected bool isReadytoShoot = true;
+    // Repos après tire
+    protected float restTime;
+    // Projectile to instantiate
+    protected GameObject projetile;
+    protected bool isSupposedToMoveShooting = false;
 
     protected override void Awake()
     {
@@ -34,8 +43,8 @@ public class Distance : Enemy
 
     protected override void Update()
     {
-        
         base.Update();
+        ShouldNotMoveDuringShooting(isSupposedToMoveShooting);
     }
     protected override void GetReference()
     {
@@ -43,7 +52,6 @@ public class Distance : Enemy
         CreatEnemyTargetGo();
         GetAttackPointGO();
     }
-
 
     protected void CreatEnemyTargetGo()
     {
@@ -76,7 +84,7 @@ public class Distance : Enemy
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + 2);
         timeToSwitch = DistanceData.timeToSwich;
         Dispersion = DistanceData.Dispersion;
-
+        isSupposedToMoveShooting = DistanceData.isSupposedToMoveShooting;
 
         //Chiffre arbitraire à modifier 
         coefAttackModeRange = Random.Range(1.2f, 1.5f);
@@ -105,71 +113,52 @@ public class Distance : Enemy
             }
        
     }
-
-   protected void ShouldNotMoveDuringShooting()
+   
+    //Methode permetant de lancer la séquence de tir via l'animation
+    protected virtual void PlayAttackAnim()
     {
-        if (currentState == State.Chasing && !aIPath.canMove)
+        if (!attackAnimationPlaying && !isPerturbateurIEM)
         {
-            aIPath.canMove = true;
-        }else if(currentState == State.Attacking && aIPath.canMove)
-        {
-            aIPath.canMove = false;
+            attackAnimationPlaying = true;
+            animator.SetTrigger("isAttacking");
         }
     }
 
-    
-    // Check si prêt à tirer
-    [SerializeField]
-    protected bool isReadytoShoot = true;
-    // Repos après tire
-    protected float restTime;
-    protected int restTime2 = 3000;
-    // Projectile to instantiate
-    protected GameObject projetile;
-    protected virtual IEnumerator CanShoot()
+    protected void ShouldNotMoveDuringShooting(bool isSupposedToMoveShooting)
     {
-        if (isReadytoShoot)
+        if (!isSupposedToMoveShooting)
         {
-            isReadytoShoot = false;
-            Shoot();
-            yield return new WaitForSeconds(restTime);
-            isReadytoShoot = true;
+            if (currentState == State.Chasing && !aIPath.canMove)
+            {
+                aIPath.canMove = true;
+            }
+            else if (currentState == State.Attacking && aIPath.canMove)
+            {
+                aIPath.canMove = false;
+            }
         }
+       
     }
+  
+    // Start Shoot Sequence
     protected virtual IEnumerator CanShootCO()
     {
         if (isReadytoShoot)
         {
             isReadytoShoot = false;
+            // Wait for coroutine shoot to end
             yield return StartCoroutine(ShootCO());
+            // delay before next Shoot
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
+            // gestion de l'animation d'attaque
+            attackAnimationPlaying = false;
+
         }
     }
 
 
     // Instansiate projectiles
-    protected virtual void Shoot()
-    {
-        float decalage = Random.Range(-Dispersion, Dispersion);
-            
-        if (attackPoint!= null)
-        {
-            GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);
-            myProjectile.transform.parent = gameObject.transform;
-            Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
-            ScriptProj.Dispersion = decalage;
-        }
-        else
-        {
-            GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
-            myProjectile.transform.parent = gameObject.transform;
-            Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
-            ScriptProj.Dispersion = decalage;
-        }
-      
-
-    }
     protected virtual IEnumerator ShootCO()
     {
 

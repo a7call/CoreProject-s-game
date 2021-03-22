@@ -16,6 +16,7 @@ public class DistanceScriptableObject : EnemyScriptableObject
     public float timeIntervale;
     public int nbTir;
     public float Dispersion;
+    public bool isSupposedToMoveShooting;
     
 
 }

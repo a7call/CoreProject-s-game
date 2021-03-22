@@ -30,7 +30,7 @@ public class TentacleAstronautEggPopMother : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                StartCoroutine(CanShoot());
+                StartCoroutine(CanShootCO());
                 break;
         }
     }

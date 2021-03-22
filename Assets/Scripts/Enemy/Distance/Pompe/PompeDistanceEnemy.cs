@@ -34,7 +34,7 @@ public class PompeDistanceEnemy : Distance
             case State.Attacking:
                 isInRange();
                 // Couroutine gérant les shoots 
-                StartCoroutine("CanShoot");
+                StartCoroutine(CanShootCO());
                 break;
             case State.Charging:
                 ChargeToAttack();
@@ -44,7 +44,7 @@ public class PompeDistanceEnemy : Distance
 
     }
     // Voir Enemy.cs (héritage)
-    protected override void Shoot()
+    protected override IEnumerator ShootCO()
     {
         float decalage = angleTir / (projectiles.Length - 1);
         AngleProjectile.angleDecalage = - decalage * (projectiles.Length + 1) / 2;
@@ -56,7 +56,7 @@ public class PompeDistanceEnemy : Distance
                 GameObject myProjectile = GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
                 myProjectile.transform.parent = gameObject.transform;
         }
-
+        yield return new WaitForEndOfFrame();
     }
 
     private void ChargeToAttack()

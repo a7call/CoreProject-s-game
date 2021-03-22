@@ -31,10 +31,10 @@ public class BubbleMS : Distance
                 isInRange();
                 break;
             case State.Attacking:
-                StartCoroutine(CanShoot());
+                PlayAttackAnim();
                 break;
         }
-        ShouldNotMoveDuringShooting();
+
 
     }
    
@@ -50,23 +50,25 @@ public class BubbleMS : Distance
         }
     }
 
-    protected override IEnumerator CanShoot()
+    protected override IEnumerator CanShootCO()
     {
         if (isReadytoShoot && firstShoot)
         {
             isReadytoShoot = false;
             firstShoot = false;
-            Shoot();
+            yield return StartCoroutine(ShootCO());
             yield return new WaitForSeconds(restTime);
         }
     }
 
     // Voir Enemy.cs (héritage)
-    protected override void Shoot()
+    protected override IEnumerator ShootCO()
     {
+       
         GameObject monRayon = Instantiate(rayon, transform.position, Quaternion.identity);
         monRayon.transform.parent = gameObject.transform;
         AddShoot();
+        yield return new WaitForEndOfFrame();
     }
 
     private void AddShoot()

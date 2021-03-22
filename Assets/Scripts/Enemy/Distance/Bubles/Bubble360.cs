@@ -27,7 +27,7 @@ public class Bubble360 : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                StartCoroutine(CanShoot());
+                PlayAttackAnim();
                 break;
         }
         if (isDying)
@@ -69,25 +69,11 @@ public class Bubble360 : Distance
         }
     }
 
-    //Voir Enemy.cs(héritage)
-    protected override IEnumerator CanShoot()
-    {
-        if (isReadytoShoot)
-        {
-            animator.SetTrigger("isAttacking");
-            isReadytoShoot = false;
-            Shoot();
-            
-            yield return new WaitForSeconds(restTime);
-           
-            isReadytoShoot = true;
-        }
-    }
 
     // Voir Enemy.cs (héritage)
-    protected override void Shoot()
+    protected override IEnumerator ShootCO()
     {
-       
+        yield return new WaitForEndOfFrame();
         Instantiate(rayon, transform.position, Quaternion.identity);
         AddShoot();
       

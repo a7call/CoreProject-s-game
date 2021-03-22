@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public class DistanceLaser : Distance
 {
-    private bool attackAnimationPlaying = false;
+   
     private Transform attackPointFrontGO;
     private Transform attackPointBackGO;
     private Transform attackPointLeftGO;
@@ -50,36 +50,13 @@ public class DistanceLaser : Distance
                 PlayAttackAnim();
                 break;
         }
-        ShouldNotMoveDuringShooting();
        
     }
 
     // Methode lergerement modifié pour permettre la mise en place des animations d'attaque
-    protected override IEnumerator CanShootCO()
-    {
-        if (isReadytoShoot)
-        {
-            isReadytoShoot = false;
-            // Wait for coroutine shoot to end
-            yield return StartCoroutine(ShootCO());
-            // delay before next Shoot
-            yield return new WaitForSeconds(restTime);
-            isReadytoShoot = true;
-            // gestion de l'animation d'attaque
-            attackAnimationPlaying = false;
-        }
-    }
 
-   //Methode permetant de lancer la séquence de tir via l'animation
-    void PlayAttackAnim()
-    {
-        if (!attackAnimationPlaying && !isPerturbateurIEM)
-        {
-            attackAnimationPlaying = true;
-            animator.SetTrigger("isAttacking");
-        }
-    }
-    
+
+   
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
     public void SetInitialLaserPosition()
     {

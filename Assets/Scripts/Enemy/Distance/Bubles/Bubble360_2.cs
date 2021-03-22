@@ -29,7 +29,7 @@ public class Bubble360_2 : Distance
                 break;
             case State.Attacking:
                 isInRange();
-                StartCoroutine(CanShoot());
+                StartCoroutine(CanShootCO());
                 break;
         }
     }
@@ -37,17 +37,17 @@ public class Bubble360_2 : Distance
 
 
     //Voir Enemy.cs(héritage)
-    protected override IEnumerator CanShoot()
+    protected override IEnumerator CanShootCO()
     {
         if (isReadytoShoot)
         {
             isReadytoShoot = false;
-            StartCoroutine("Tir");
+            StartCoroutine(ShootCO());
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
         }
     }
-    private IEnumerator Tir()
+    protected override  IEnumerator ShootCO()
     {
         Instantiate(rayon, transform.position, Quaternion.identity);
         AddShoot();
