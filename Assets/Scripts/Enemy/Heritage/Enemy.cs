@@ -391,22 +391,21 @@ public class Enemy : MonoBehaviour
     {
         rb.AddForce(dir * knockBackForce);
         currentState = State.KnockedBack;
-        yield return new WaitForSeconds(knockBackTime);
-        if (enemy == null) yield break;  
+        yield return new WaitForSeconds(knockBackTime);  
         currentState = State.Chasing;
-        if (enemy == null) yield break;
         rb.velocity = Vector2.zero;
         aIPath.canMove = true;
         if (enemy.currentHealth <= 0) currentState = State.Death;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnDestroy()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            
-        }
+        StopAllCoroutines();
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }

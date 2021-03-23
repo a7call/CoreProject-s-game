@@ -86,7 +86,6 @@ public class Distance : Enemy
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + RandomizeParams(-1, 2));
-        timeToSwitch = DistanceData.timeToSwich;
         Dispersion = DistanceData.Dispersion;
         isSupposedToMoveShooting = DistanceData.isSupposedToMoveShooting;
 
@@ -99,8 +98,8 @@ public class Distance : Enemy
         aIPath.endReachedDistance = attackRange *2/3;
         aIPath.slowdownDistance = aIPath.endReachedDistance + 0.5f;
         aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime + RandomizeParams(-0.5f, 0.5f));
-        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + RandomizeParams(-1, 1));
-        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + RandomizeParams(-1, 1));
+        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + RandomizeParams(-0.2f, 0.2f));
+        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + RandomizeParams(-0.1f, 0.1f));
     }
 
     protected override void isInRange()
