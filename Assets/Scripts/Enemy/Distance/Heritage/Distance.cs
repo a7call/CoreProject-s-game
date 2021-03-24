@@ -45,12 +45,24 @@ public class Distance : Enemy
     {
         base.Update();
         ShouldNotMoveDuringShooting(isSupposedToMoveShooting);
+        SetTargetToRandomPoint();
     }
     protected override void GetReference()
     {
         base.GetReference();
         CreatEnemyTargetGo();
         GetAttackPointGO();
+    }
+    protected void SetTargetToRandomPoint()
+    {
+        if (currentState == State.Chasing && targetSetter.target != randomTargetPointTransform)
+        {
+            targetSetter.target = randomTargetPointTransform;
+        }
+        else if(targetSetter.target == randomTargetPointTransform)
+        {
+            targetSetter.target = target;
+        }
     }
 
     protected void CreatEnemyTargetGo()

@@ -37,9 +37,12 @@ public class PompeDistanceEnemy : Distance
                 StartCoroutine(CanShootCO());
                 break;
             case State.Charging:
-                // ChargeToAttack();
                 StartCoroutine(ChargingCoroutine());
                 break;
+        }
+        if(isCharging)
+        {
+            currentState = State.Charging;
         }
 
     }
@@ -59,24 +62,6 @@ public class PompeDistanceEnemy : Distance
         yield return new WaitForEndOfFrame();
     }
 
-    private void ChargeToAttack()
-    {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            // A changer par la suite
-            aIPath.maxSpeed = 2f;
-        }
-    }
-
-    private void ChargingMode()
-    {
-        if (canCharge)
-        {
-            currentState = State.Charging;
-        }
-    }
-
     private void GetProjectile()
     {
         foreach (GameObject projectile in projectiles)
@@ -88,90 +73,97 @@ public class PompeDistanceEnemy : Distance
     /// Fonctionnement du charging
     /// S'arrête quelques secondes
     /// Accélère lorsqu'il charge
-    /// Charge et s'arrête légèrement avant l'ennemi
-    /// Passe en state attacking car il est en range
     /// Il peut charger toutes les x secondes
     /// La première charge doit être réalisée quelques secondes après le pop du mob
 
-    // Délai entre deux charges
-    [SerializeField] private float chargeDelay = 10f;
-    // Temps de la charge
-    private float chargeTime = 4f;
-    // Temps d'attente avant la première charge
-    private float delayToFirstCharge = 2f;
-    // Temps pendant lequel le personnage ne bouge pas
-    private float waitingTime = 1f;
 
-    [SerializeField] private bool canCharge = false;
+    [SerializeField] private float chargeDelay = 5f, chargeTime = 3f, delayToFirstCharge = 2f, waitingTime = 1f;
+    [SerializeField] float newSlowDownDistance = 0.3f, newEndReachedDistance = 0.2f, newMoveSpeed = 6, newNextWayPointDist = 20, chargeDistance = 20;
+    float initialMoveSpeed, initialSlowDownDistance, initialEndReachedDistance, initialNextWayPointDist;
+    GameObject ChargePoint;
+
+    private bool canCharge = false;
     [SerializeField] private bool isCharging = false;
 
+    private void ChargingMode()
+    {
+        if (canCharge)
+        {
+            currentState = State.Charging;
+        }
+    }
     private IEnumerator ChargeLoading()
     {
         yield return new WaitForSeconds(1);
         canCharge = true;
     }
-    [SerializeField] 
-    float newSlowDownDistance = 0.3f,  newEndReachedDistance = 0.2f,  newMoveSpeed = 6;
-
-    /// <summary>
-    /// Faire la charge s'arreter à quand il touche un truc 
-    /// Faire la Charge en ligne droite
-    /// Faire le script de collision avec joueur / mur
-    /// </summary>
 
     private IEnumerator ChargingCoroutine()
     {
-        if (canCharge && !isCharging)
+        if (canCharge)
         {
-            float initialMoveSpeed = aIPath.maxSpeed;
-            float initialSlowDownDistance = aIPath.slowdownDistance;
-            float initialEndReachedDistance = aIPath.endReachedDistance;
-            
-            InitiateChargeMode(newSlowDownDistance, newEndReachedDistance, newMoveSpeed);
+            canCharge = false;
+            isCharging = true;
+            //Get Initial pathfinding parameters
+            initialMoveSpeed = aIPath.maxSpeed;
+            initialSlowDownDistance = aIPath.slowdownDistance;
+            initialEndReachedDistance = aIPath.endReachedDistance;
+            initialNextWayPointDist = aIPath.pickNextWaypointDist;
+            // Init ChargePoint
+            ChargePoint = new GameObject();
+            //Init all variable for charge
+            InitiateChargeMode(newSlowDownDistance, newEndReachedDistance, newMoveSpeed, newNextWayPointDist, ChargePoint, chargeDistance);
             yield return new WaitForSeconds(waitingTime);
+            // CHARGE !!!!
             aIPath.canMove = true;
             yield return new WaitForSeconds(chargeTime);
-            EndChargeMode(initialSlowDownDistance, initialEndReachedDistance, initialMoveSpeed);
+            //kill chargeMode, go back to normal
+            EndChargeMode(initialSlowDownDistance, initialEndReachedDistance, initialMoveSpeed, initialNextWayPointDist, ChargePoint);
+            //CD before next charge
             yield return new WaitForSeconds(chargeDelay);
+            isCharging = false;
+            currentState = State.Chasing;
             canCharge = true;
         }
     }
-    void InitiateChargeMode(float newSlowDownDistance, float newEndReachedDistance, float newMoveSpeed)
+    void InitiateChargeMode( float _newSlowDownDistance, float _newEndReachedDistance, float _newMoveSpeed, float _newNextWayPointDist, GameObject _ChargePoint, float _chargeDistance)
     {
-        canCharge = false;
+        //Set up pathfinfing variable
         aIPath.canMove = false;
-        isCharging = true;
-
-        // new target for Charge
-        GameObject ChargePoint = new GameObject();
-        ChargePoint.transform.position  = target.position;
+        aIPath.pickNextWaypointDist = _newNextWayPointDist;
+        aIPath.slowdownDistance = _newSlowDownDistance;
+        aIPath.endReachedDistance = _newEndReachedDistance;
+        aIPath.maxSpeed = _newMoveSpeed;
+        
         // Get dir of charge
-        Vector2 ChargeDir = (ChargePoint.transform.position - transform.position).normalized;
-        // Set new Charge point (far away in the direction)
-        ChargePoint.transform.position = ChargeDir * 20;
-        targetSetter.target = ChargePoint.transform;
+        Vector3 DirectionCharge  = target.position - transform.position;
+        _ChargePoint.transform.position = transform.TransformPoint(DirectionCharge * _chargeDistance);
+        targetSetter.target = _ChargePoint.transform;
 
-        // Dont slow down or stop unless touch player
-        aIPath.slowdownDistance = newSlowDownDistance;
-        aIPath.endReachedDistance = newEndReachedDistance;
-        // Set new moveSpeed
-        aIPath.maxSpeed = newMoveSpeed;
-        isCharging = true;
     }
 
-    void EndChargeMode(float initialSlowDownDistance, float initialEndReachedDistance, float initialMoveSpeed)
+    void EndChargeMode(float _initialSlowDownDistance, float _initialEndReachedDistance, float _initialMoveSpeed, float _initialNextWayPointDist , GameObject _ChargePoint)
     {
-        aIPath.slowdownDistance = initialSlowDownDistance;
-        aIPath.endReachedDistance = initialEndReachedDistance;
-        aIPath.maxSpeed = initialMoveSpeed;
+        aIPath.slowdownDistance = _initialSlowDownDistance;
+        aIPath.endReachedDistance = _initialEndReachedDistance;
+        aIPath.maxSpeed = _initialMoveSpeed;
+        aIPath.pickNextWaypointDist = _initialNextWayPointDist;
         targetSetter.target = target;
         isCharging = false;
         currentState = State.Chasing;
-
+        Destroy(_ChargePoint);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // SCRIPT DE COLLISION
+       
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
+            }
+           
+                StopCoroutine(ChargingCoroutine());
+                EndChargeMode(initialSlowDownDistance, initialEndReachedDistance, initialMoveSpeed, initialNextWayPointDist, ChargePoint);
+          
     }
 }

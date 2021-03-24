@@ -185,8 +185,15 @@ MonoBehaviour:
   - {fileID: 3809135497528977688, guid: a07ade24506d547a6b73db8e77b56933, type: 3}
   angleTir: 50
   chargeDelay: 10
-  canCharge: 0
+  chargeTime: 3
+  delayToFirstCharge: 2
+  waitingTime: 1
   isCharging: 0
+  newSlowDownDistance: 0.3
+  newEndReachedDistance: 0.2
+  newMoveSpeed: 10
+  newNextWayPointDist: 20
+  chargeDistance: 2
 --- !u!61 &-5163349306312838963
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -243,7 +250,7 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 2
+  pickNextWaypointDist: 10
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1

@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
-        currentState = Enemy.State.Patrolling;
+        currentState = State.Patrolling;
         GetReference();
         
     }
