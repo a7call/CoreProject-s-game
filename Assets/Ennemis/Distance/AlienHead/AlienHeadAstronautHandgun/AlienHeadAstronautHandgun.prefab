@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1604353010610551733}
   m_Layer: 21
   m_Name: PropCollider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 5621933898684787513}
   m_Layer: 9
   m_Name: SupportArme
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,6 +339,7 @@ MonoBehaviour:
   DistanceData: {fileID: 11400000, guid: 60dcea9e92d954565a87716c1c152f8f, type: 2}
   isShooting: 0
   Dispersion: 0
+  isReadytoShoot: 1
 --- !u!61 &225107268850530463
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -551,7 +552,7 @@ GameObject:
   - component: {fileID: 9185998607239046203}
   m_Layer: 5
   m_Name: EnnemiCanvas (3)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

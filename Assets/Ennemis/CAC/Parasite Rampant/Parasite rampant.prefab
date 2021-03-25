@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3612759243388555237}
   m_Layer: 0
   m_Name: 'attackPoint '
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +155,10 @@ MonoBehaviour:
   CacDatas: {fileID: 11400000, guid: f6eefc7057f2fe245a62d819c9b6c619, type: 2}
   attackDir: {x: 0, y: 0, z: 0}
   attackPoint: {fileID: 3612759243388555237}
+  attackRadius: 0
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!61 &2016863281
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -390,7 +394,7 @@ GameObject:
   - component: {fileID: 4418831381369116302}
   m_Layer: 5
   m_Name: 'EnnemiCanvas '
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -458,7 +462,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &4418831381369116302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,7 +492,7 @@ GameObject:
   - component: {fileID: 4500675455833698906}
   m_Layer: 21
   m_Name: PropCollider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

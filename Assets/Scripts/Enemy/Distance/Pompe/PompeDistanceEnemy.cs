@@ -19,6 +19,7 @@ public class PompeDistanceEnemy : Distance
         SetData();
         SetMaxHealth();
         StartCoroutine(ChargeLoading());
+
     }
 
     protected override void Update()
@@ -82,8 +83,11 @@ public class PompeDistanceEnemy : Distance
     float initialMoveSpeed, initialSlowDownDistance, initialEndReachedDistance, initialNextWayPointDist;
     GameObject ChargePoint;
 
+   
+
     private bool canCharge = false;
     [SerializeField] private bool isCharging = false;
+
 
     private void ChargingMode()
     {
@@ -156,14 +160,16 @@ public class PompeDistanceEnemy : Distance
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       
+        if(!collision.gameObject.CompareTag("Enemy"))
+        {
             if (collision.gameObject.CompareTag("Player"))
             {
                 collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
             }
-           
-                StopCoroutine(ChargingCoroutine());
-                EndChargeMode(initialSlowDownDistance, initialEndReachedDistance, initialMoveSpeed, initialNextWayPointDist, ChargePoint);
-          
+
+            StopCoroutine(ChargingCoroutine());
+            EndChargeMode(initialSlowDownDistance, initialEndReachedDistance, initialMoveSpeed, initialNextWayPointDist, ChargePoint);
+        }         
     }
+
 }
