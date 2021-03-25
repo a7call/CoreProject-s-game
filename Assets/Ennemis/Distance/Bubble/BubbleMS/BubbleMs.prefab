@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2664990586667072025}
   m_Layer: 21
   m_Name: PropCollider
-  m_TagString: propColliderEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 5985980063024395459}
   m_Layer: 5
   m_Name: EnnemiCanvas
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5985980063024395459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,6 +510,7 @@ MonoBehaviour:
   DistanceData: {fileID: 11400000, guid: 921e86c1082a22c4bb742bbc8d43a589, type: 2}
   isShooting: 0
   Dispersion: 0
+  isReadytoShoot: 1
   rayon: {fileID: 4234345229324104036, guid: 411ecaa5d9a3b054dbc6ff8f2f30aa71, type: 3}
   differentRadius: []
   deathObject: {fileID: 9101718514024973742, guid: 062f83e279486684a8a396df2a7f8ff0, type: 3}

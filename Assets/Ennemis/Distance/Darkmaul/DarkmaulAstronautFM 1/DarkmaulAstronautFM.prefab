@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6268066837871998821}
   m_Layer: 21
   m_Name: PropCollider (1)
-  m_TagString: propColliderEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,6 +236,7 @@ MonoBehaviour:
   DistanceData: {fileID: 11400000, guid: 9ca88a69ce723459f9b0f48c4813c2d5, type: 2}
   isShooting: 0
   Dispersion: 0
+  isReadytoShoot: 1
 --- !u!50 &2463838739638309394
 Rigidbody2D:
   serializedVersion: 4
@@ -520,7 +521,7 @@ GameObject:
   - component: {fileID: 2463838740075002700}
   m_Layer: 5
   m_Name: EnnemiCanvas (4)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -692,7 +693,7 @@ GameObject:
   - component: {fileID: 7089723217972889566}
   m_Layer: 9
   m_Name: SupportArme
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

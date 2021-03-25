@@ -188,12 +188,12 @@ MonoBehaviour:
   chargeTime: 3
   delayToFirstCharge: 2
   waitingTime: 1
-  isCharging: 0
   newSlowDownDistance: 0.3
   newEndReachedDistance: 0.2
   newMoveSpeed: 10
   newNextWayPointDist: 20
   chargeDistance: 2
+  isCharging: 0
 --- !u!61 &-5163349306312838963
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 250186850614968443}
   m_Layer: 5
   m_Name: EnnemiCanvas (5)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -654,7 +654,7 @@ GameObject:
   - component: {fileID: 4301813746351864729}
   m_Layer: 21
   m_Name: PropCollider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 5242391222252966518}
   m_Layer: 9
   m_Name: SupportArme
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
