@@ -79,8 +79,8 @@ public class Enemy : MonoBehaviour
         
         targetSetter = GetComponent<AIDestinationSetter>();
         targetSetter.target = target;
-        playerHealth = FindObjectOfType<PlayerHealth>();
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        playerHealth = target.GetComponent<PlayerHealth>();
+        playerMouvement = target.GetComponent<PlayerMouvement>();
     }
 
 
@@ -389,6 +389,7 @@ public class Enemy : MonoBehaviour
     // Coroutine qui knockBack l'ennemi
     public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
+        if (currentState == State.Charging) yield break;
         rb.AddForce(dir * knockBackForce);
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);  
