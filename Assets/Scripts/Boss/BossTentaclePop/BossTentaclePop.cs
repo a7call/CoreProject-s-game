@@ -198,7 +198,7 @@ public class BossTentaclePop : Enemy
         }
 
         healthBar.SetHealth(currentHealth);
-        SetAnimationVariable();
+        SetMouvementAnimationVariable();
         GetLastDirection();
     }
 

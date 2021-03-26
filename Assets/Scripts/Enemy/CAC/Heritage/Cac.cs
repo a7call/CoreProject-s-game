@@ -68,10 +68,10 @@ public class Cac : Enemy
     {
         if (isreadyToAttack)
         {
-            animator.SetTrigger("isAttacking");
             isreadyToAttack = false;
-            //ApplyDamage();
+            ApplyDamage();
             yield return new WaitForSeconds(attackDelay);
+            attackAnimationPlaying = false;
             isreadyToAttack = true;
         }
     }
@@ -115,38 +115,6 @@ public class Cac : Enemy
     {
         attackDir = target.position - transform.position;
         attackPoint.position = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
-    }
-
-    protected override void SetAnimationVariable()
-    {
-
-        if (aIPath.canMove)
-        {
-            animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
-            animator.SetFloat("VerticalSpeed", aIPath.velocity.y);
-            float EnemySpeed = aIPath.velocity.sqrMagnitude;
-            animator.SetFloat("Speed", EnemySpeed);
-        }
-        else
-        {
-
-            animator.SetFloat("HorizontalSpeed", 0);
-            animator.SetFloat("VerticalSpeed", 0);
-            float EnemySpeed = 0;
-            animator.SetFloat("Speed", EnemySpeed);
-        }
-
-        //mettre d'autres conditions 
-      
-
-        if (currentState == State.KnockedBack)
-        {
-            //animator.SetBool("isTakingDamage", true);
-        }
-        else
-        {
-            //animator.SetBool("isTakingDamage", false);
-        }
     }
 
 }

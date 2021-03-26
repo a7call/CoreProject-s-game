@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
     public bool isreadyToAttack = true;
    
     public Animator animator;
+    //Bool to Check If ready to start an another attack sequence
+    protected bool attackAnimationPlaying = false;
 
 
     // Permet de vérifier si le monstre est dans la BossRoom
@@ -142,12 +144,12 @@ public class Enemy : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         DisplayBar();
 
-        SetAnimationVariable();
+        SetMouvementAnimationVariable();
         GetLastDirection();
     }
-
+   
     // Permet d'envoyer les variables gérant l'animator
-    protected virtual void SetAnimationVariable()
+    protected virtual void SetMouvementAnimationVariable()
     {
         
         if (aIPath.canMove)
@@ -166,16 +168,6 @@ public class Enemy : MonoBehaviour
             animator.SetFloat("Speed", EnemySpeed);
         }
 
-        //mettre d'autres conditions 
-        if(currentState == State.Attacking )
-        {
-            // animator.SetBool("isAttacking", true);
-        }
-        else
-        {
-            //animator.SetBool("isAttacking", false);
-        }
-        
         if(currentState == State.KnockedBack)
         {
             //animator.SetBool("isTakingDamage", true);
@@ -198,9 +190,20 @@ public class Enemy : MonoBehaviour
             } 
     }
 
+
+    //Methode permetant de lancer la séquence de tir via l'animation
+    protected virtual void PlayAttackAnim()
+    {
+        if (!attackAnimationPlaying && !isPerturbateurIEM)
+        {
+            attackAnimationPlaying = true;
+            animator.SetTrigger("isAttacking");
+        }
+    }
+
     // Mouvement
-    
-    
+
+
     public bool isSlowed = false;
     [HideInInspector]
     public bool isBurned = false;

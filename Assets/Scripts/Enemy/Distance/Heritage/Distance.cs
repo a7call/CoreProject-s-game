@@ -24,8 +24,6 @@ public class Distance : Enemy
     // attackModeRange : range ou l'ennemi passe en mode chaising  != attackRange  : range ou l'ennemi passe en mode attaque. 
     protected float attackModeRange;
     protected float coefAttackModeRange;
-    //Bool to Check If ready to start an another attack sequence
-    protected bool attackAnimationPlaying = false;
  // Check si prêt à tirer
     [SerializeField]
     protected bool isReadytoShoot = true;
@@ -129,15 +127,7 @@ public class Distance : Enemy
        
     }
    
-    //Methode permetant de lancer la séquence de tir via l'animation
-    protected virtual void PlayAttackAnim()
-    {
-        if (!attackAnimationPlaying && !isPerturbateurIEM)
-        {
-            attackAnimationPlaying = true;
-            animator.SetTrigger("isAttacking");
-        }
-    }
+   
 
     protected void ShouldNotMoveDuringShooting(bool isSupposedToMoveShooting)
     {
