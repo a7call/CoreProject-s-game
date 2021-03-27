@@ -91,6 +91,7 @@ public class Enemy : MonoBehaviour
         if (!attackAnimationPlaying && !isPerturbateurIEM)
         {
             attackAnimationPlaying = true;
+            isAttacking = true;
             animator.SetTrigger("isAttacking");
         }
     }
@@ -118,7 +119,6 @@ public class Enemy : MonoBehaviour
     protected void DisableEnemyMouvement()
     {
         aIPath.canMove = false;
-        aIPath.canSearch = false;
     }
     #endregion
 
@@ -285,8 +285,11 @@ public class Enemy : MonoBehaviour
     // Distance ou l'ennemi repère le joueur
     protected float inSight = 10f;
     public bool isreadyToAttack = true;
+    protected float attackDelay;
+    protected bool isAttacking;
     protected float attackRange;
     protected bool isReadyToSwitchState;
+    protected bool isSupposedToMoveAttacking = false;
     public State currentState;
     public enum State
     {
@@ -311,9 +314,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected void ShouldNotMoveDuringAttacking(bool isSupposedToMoveAttacking)
+    {
+        if (!isSupposedToMoveAttacking)
+        {
+            if (currentState == State.Chasing && !aIPath.canMove)
+            {
+                aIPath.canMove = true;
+            }
+            else if (currentState == State.Attacking && aIPath.canMove)
+            {
+                aIPath.canMove = false;
+            }
+        }
 
-
-
+    }
 
     // Permet de savoir si il est en state Chase ou Attacking
     protected virtual void isInRange()
@@ -322,12 +337,9 @@ public class Enemy : MonoBehaviour
         {
             currentState = State.Attacking;
         }
-        else
+        else 
         {
-            if (isReadyToSwitchState)
-            {
                 currentState = State.Chasing;
-            }
         }
     }
 
@@ -403,9 +415,9 @@ public class Enemy : MonoBehaviour
                 
                 break;
         }
-
         healthBar.SetHealth(currentHealth);
         DisplayBar();
+        ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
 
         SetMouvementAnimationVariable();
         GetLastDirection();

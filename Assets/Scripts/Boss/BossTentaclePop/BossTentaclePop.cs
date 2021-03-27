@@ -446,7 +446,7 @@ public class BossTentaclePop : Enemy
         }
     }
 
-    // Permet de gérer les tirs
+    
     private IEnumerator CanShoot()
     {
         if (isShooting && isreadyToAttack)

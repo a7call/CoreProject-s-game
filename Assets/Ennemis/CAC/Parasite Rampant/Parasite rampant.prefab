@@ -132,17 +132,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914328e5cd73d7b41bfcb41e388228e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnFire: 0
-  isreadyToAttack: 1
-  animator: {fileID: 6795443994441172330}
   isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
-  currentState: 1
+  isOnFire: 0
+  isSlowed: 0
+  isBurned: 0
+  animator: {fileID: 6795443994441172330}
   nextWayPointDistance: 3
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
-  isSlowed: 0
-  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -152,13 +150,15 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5408923339075209902}
   healthBarGFX: {fileID: 8222165712135075358}
   timeBeforeDesactive: 2
+  isreadyToAttack: 1
+  currentState: 1
   CacDatas: {fileID: 11400000, guid: f6eefc7057f2fe245a62d819c9b6c619, type: 2}
-  attackDir: {x: 0, y: 0, z: 0}
   attackPoint: {fileID: 3612759243388555237}
   attackRadius: 0
   hitLayers:
     serializedVersion: 2
     m_Bits: 0
+  attackDir: {x: 0, y: 0, z: 0}
 --- !u!61 &2016863281
 BoxCollider2D:
   m_ObjectHideFlags: 0

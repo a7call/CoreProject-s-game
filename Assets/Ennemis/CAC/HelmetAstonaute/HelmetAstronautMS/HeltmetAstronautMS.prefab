@@ -387,17 +387,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4378bbe7b21ee26468837b0a99caead3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnFire: 0
-  isreadyToAttack: 1
-  animator: {fileID: 1890073690}
   isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
-  currentState: 1
+  isOnFire: 0
+  isSlowed: 0
+  isBurned: 0
+  animator: {fileID: 1890073690}
   nextWayPointDistance: 3
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
-  isSlowed: 0
-  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -407,14 +405,17 @@ MonoBehaviour:
   spriteRenderer: {fileID: 9149136851862666629}
   healthBarGFX: {fileID: 9149136852636655314}
   timeBeforeDesactive: 0
+  isreadyToAttack: 1
+  currentState: 1
   CacDatas: {fileID: 11400000, guid: c06b49dc52aef264eaa09d5b520d69f1, type: 2}
-  attackDir: {x: 0, y: 0, z: 0}
   attackPoint: {fileID: 9149136851748265925}
   attackRadius: 0
   hitLayers:
     serializedVersion: 2
     m_Bits: 0
+  attackDir: {x: 0, y: 0, z: 0}
   distanceEnemyAggressive: 5
+  powerModeCd: 10
   newSpeedEnemy: 5
   speedDuration: 1.75
 --- !u!61 &8529353626898803446

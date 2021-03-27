@@ -487,17 +487,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d72179ad7ee85548b479ffa082cfacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnFire: 0
-  isreadyToAttack: 1
-  animator: {fileID: 3676043907959493840}
   isInvokedInBossRoom: 0
   isAlreadyElectrified: 0
-  currentState: 1
+  isOnFire: 0
+  isSlowed: 0
+  isBurned: 0
+  animator: {fileID: 3676043907959493840}
   nextWayPointDistance: 3
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
-  isSlowed: 0
-  isBurned: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
@@ -507,6 +505,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 569720359484089730}
   healthBarGFX: {fileID: 6881462876022898524}
   timeBeforeDesactive: 0
+  isreadyToAttack: 1
+  currentState: 1
   DistanceData: {fileID: 11400000, guid: 921e86c1082a22c4bb742bbc8d43a589, type: 2}
   isShooting: 0
   Dispersion: 0

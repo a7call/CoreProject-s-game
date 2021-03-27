@@ -12,4 +12,5 @@ public class CacScriptableObject : EnemyScriptableObject
     public LayerMask hitLayers;
     public float timeToSwich;
     public float attackDelay;
+  
 }

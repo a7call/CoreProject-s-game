@@ -15,6 +15,6 @@ public class EnemyScriptableObject : ScriptableObject
     public float nextWayPoint;
     public float refreshPathTime;
     public float InSight;
-
+    public bool isSupposedToMoveAttacking = true;
 
 }

@@ -26,6 +26,23 @@ public class Cac : Enemy
         SetData();
     }
 
+    #region State Management
+    protected override void isInRange()
+    {
+
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+        }
+        else if (currentState != State.Chasing && !isAttacking )
+        {
+            currentState = State.Chasing;
+
+        }
+
+    }
+    #endregion
+
     #region Datas
     [SerializeField] protected CacScriptableObject CacDatas;
     protected virtual void SetData()
@@ -41,6 +58,7 @@ public class Cac : Enemy
         whiteMat = CacDatas.whiteMat;
         defaultMat = CacDatas.defaultMat;
         attackDelay = CacDatas.attackDelay;
+        isSupposedToMoveAttacking = CacDatas.isSupposedToMoveAttacking;
     }
     #endregion
 
@@ -51,20 +69,14 @@ public class Cac : Enemy
     public float attackRadius;
     // Layers subissant l'attaque de l'ennemi
     public LayerMask hitLayers;
-    // Check si l'ennemi est en range d'attaque
-    protected float attackDelay;
     public Vector3 attackDir;
 
     protected virtual IEnumerator BaseAttack()
     {
-        if (isreadyToAttack)
-        {
-            isreadyToAttack = false;
-            ApplyDamage();
-            yield return new WaitForSeconds(attackDelay);
-            attackAnimationPlaying = false;
-            isreadyToAttack = true;
-        }
+        ApplyDamage();
+        isAttacking = false;
+        yield return new WaitForSeconds(attackDelay);
+        attackAnimationPlaying = false;
     }
 
     void ApplyDamage()

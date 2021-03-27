@@ -11,9 +11,6 @@ public class Distance : Enemy
 {
     // Scriptable Object
     [SerializeField] protected DistanceScriptableObject DistanceData;
-    // Check si tire
-    [HideInInspector]
-    public bool isShooting = false; 
     [HideInInspector]
     public float Dispersion;
     // Variables afin de définir un point arbitraire au tour du joueur comme la target  : à pour but de randomiser le déplacement.
@@ -31,7 +28,7 @@ public class Distance : Enemy
     protected float restTime;
     // Projectile to instantiate
     protected GameObject projetile;
-    protected bool isSupposedToMoveShooting = false;
+   
 
     protected override void Awake()
     {
@@ -42,7 +39,6 @@ public class Distance : Enemy
     protected override void Update()
     {
         base.Update();
-        ShouldNotMoveDuringShooting(isSupposedToMoveShooting);
         SetTargetToRandomPoint();
     }
     protected override void GetReference()
@@ -98,7 +94,7 @@ public class Distance : Enemy
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + RandomizeParams(-1, 2));
         Dispersion = DistanceData.Dispersion;
         inSight = DistanceData.InSight;
-        isSupposedToMoveShooting = DistanceData.isSupposedToMoveShooting;
+        isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
 
         //Chiffre arbitraire à modifier 
         coefAttackModeRange = RandomizeParams(1.2f, 1.5f);
@@ -120,7 +116,7 @@ public class Distance : Enemy
             {
             currentState = State.Attacking;
             }
-            else if(currentState != State.Chasing && !isShooting && (Vector3.Distance(transform.position, target.position) > attackModeRange))
+            else if(currentState != State.Chasing && !isAttacking && (Vector3.Distance(transform.position, target.position) > attackModeRange))
             {
             currentState = State.Chasing;
 
@@ -130,7 +126,7 @@ public class Distance : Enemy
    
    
 
-    protected void ShouldNotMoveDuringShooting(bool isSupposedToMoveShooting)
+    protected void ShouldNotMoveDuringAttacking(bool isSupposedToMoveShooting)
     {
         if (!isSupposedToMoveShooting)
         {

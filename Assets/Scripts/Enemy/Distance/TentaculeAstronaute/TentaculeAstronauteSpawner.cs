@@ -40,7 +40,7 @@ public class TentaculeAstronauteSpawner : Distance
     // Couroutine du shoot
     protected override IEnumerator CanShootCO()
     {
-        if (isShooting && isReadytoShoot && !isSpeRdy)
+        if (isAttacking && isReadytoShoot && !isSpeRdy)
         {
             // Ne peut plus tirer car déjà entrain de tirer
             isReadytoShoot = false;
@@ -52,7 +52,7 @@ public class TentaculeAstronauteSpawner : Distance
             isReadytoShoot = true;
         }
 
-          else if (isSpeRdy && isShooting && isReadytoShoot)
+          else if (isSpeRdy && isAttacking && isReadytoShoot)
           {
               // Ne peut plus tirer car déjà entrain de tirer spé + normal
               isSpeRdy = false;

@@ -50,14 +50,14 @@ public class RafaleDistance : Distance
     {
 
         yield return StartCoroutine(intervalleTir());
-        isShooting = false;
+        isAttacking = false;
     }
 
     protected virtual  IEnumerator intervalleTir()
     { 
         while (n < nbTir && !isArretTemporel)
         {
-            isShooting = true;
+            isAttacking = true;
             yield return StartCoroutine(base.ShootCO());
             yield return new WaitForSeconds(timeIntervale);
             n++;
