@@ -16,54 +16,45 @@ using UnityEngine;
 
 public class Cac : Enemy
 {
-    [SerializeField] protected CacScriptableObject CacDatas;
-    public Vector3 attackDir;
-
     //DontFuckModule
     public static bool IsDontFuckWithMe = false;
-    protected float attackDelay;
+
 
     protected override void Awake()
     {
         base.Awake();
         SetData();
-
     }
 
-    protected virtual void Start()
-    {
-        SetMaxHealth();
-    }
-
-    // Set data du scriptable object Type1Data
+    #region Datas
+    [SerializeField] protected CacScriptableObject CacDatas;
     protected virtual void SetData()
     {
         attackRange = CacDatas.attackRange;
         attackRadius = CacDatas.attackRadius;
         hitLayers = CacDatas.hitLayers;
 
-        aIPath.maxSpeed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed +1f);
+        aIPath.maxSpeed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
 
-
+        inSight = CacDatas.InSight;
         maxHealth = CacDatas.maxHealth;
         whiteMat = CacDatas.whiteMat;
         defaultMat = CacDatas.defaultMat;
-        timeToSwitch = CacDatas.timeToSwich;
         attackDelay = CacDatas.attackDelay;
     }
+    #endregion
 
 
-    // Centre du rayon de l'attaque de l'ennemi
+    #region Attack Code
     [SerializeField] protected Transform attackPoint;
     // Rayon d'attaque de l'ennemi
     public float attackRadius;
     // Layers subissant l'attaque de l'ennemi
     public LayerMask hitLayers;
     // Check si l'ennemi est en range d'attaque
-    protected bool isInAttackRange;
-    protected bool isAttacking;
+    protected float attackDelay;
+    public Vector3 attackDir;
 
-    // CAC attack (TK enable or disable)
     protected virtual IEnumerator BaseAttack()
     {
         if (isreadyToAttack)
@@ -90,6 +81,18 @@ public class Cac : Enemy
 
         }
     }
+
+    protected virtual void GetPlayerPos()
+    {
+        attackDir = target.position - transform.position;
+        attackPoint.position = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
+    }
+
+
+    #endregion
+
+
+    #region Animation
     protected override void GetLastDirection()
     {
         if (currentState != State.Attacking)
@@ -100,21 +103,7 @@ public class Cac : Enemy
                 animator.SetFloat("lastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
             }
         }
-
-
     }
-
-    // Gizmos
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
-
-    //Get the player postion at all time
-    protected virtual void GetPlayerPos()
-    {
-        attackDir = target.position - transform.position;
-        attackPoint.position = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
-    }
-
+    #endregion
+   
 }

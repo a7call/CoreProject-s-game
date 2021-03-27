@@ -97,6 +97,7 @@ public class Distance : Enemy
         projetile = DistanceData.projetile;
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + RandomizeParams(-1, 2));
         Dispersion = DistanceData.Dispersion;
+        inSight = DistanceData.InSight;
         isSupposedToMoveShooting = DistanceData.isSupposedToMoveShooting;
 
         //Chiffre arbitraire à modifier 

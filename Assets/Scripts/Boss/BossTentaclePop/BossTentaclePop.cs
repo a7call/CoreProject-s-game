@@ -225,7 +225,7 @@ public class BossTentaclePop : Enemy
 
         attackRange = BossData.attackRange;
         restTime = BossData.restTime;
-        timeToSwitch = BossData.timeToSwich;
+       // timeToSwitch = BossData.timeToSwich;
 
         projectile = BossData.projectile;
         eggProjectile = BossData.eggProjectile;
@@ -332,7 +332,7 @@ public class BossTentaclePop : Enemy
         }
         else
         {
-            if (currentState == State.Attacking && !isInTransition && isreadyToAttack) StartCoroutine(transiChasing());
+         //   if (currentState == State.Attacking && !isInTransition && isreadyToAttack) StartCoroutine(transiChasing());
             if (isReadyToSwitchState)
             {
                 currentState = State.Chasing;

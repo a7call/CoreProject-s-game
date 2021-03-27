@@ -14,6 +14,7 @@ public class EnemyScriptableObject : ScriptableObject
     public float attackRange;
     public float nextWayPoint;
     public float refreshPathTime;
+    public float InSight;
 
 
 }
