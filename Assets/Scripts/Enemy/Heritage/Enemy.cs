@@ -14,144 +14,39 @@ using Pathfinding;
 /// </summary>
 public class Enemy : MonoBehaviour
 {
+    [HideInInspector]
+    public bool isInvokedInBossRoom = false;
+
+    #region Player Variable
     protected PlayerHealth playerHealth;
     protected PlayerMouvement playerMouvement;
+    #endregion
+
+
+    # region Armes and special effect variable
 
     public static bool isPerturbateurIEM = false;
     public static bool isArretTemporel = false;
-
+    // pour l'épée electrique
+    [HideInInspector]
+    public bool isAlreadyElectrified;
     public bool isOnFire = false;
+    public bool isSlowed = false;
+    [HideInInspector]
+    public bool isBurned = false;
+    #endregion
 
-    public bool isreadyToAttack = true;
-   
+
+    #region  Animation 
+    //Animator variable 
     public Animator animator;
     //Bool to Check If ready to start an another attack sequence
     protected bool attackAnimationPlaying = false;
 
 
-    // Permet de vérifier si le monstre est dans la BossRoom
-    [HideInInspector]
-    public bool isInvokedInBossRoom = false;
-
-    // pour l'épée electrique
-    [HideInInspector]
-    public bool isAlreadyElectrified;
-
-    public State currentState;
-    public enum State
-    {
-        Patrolling,
-        Chasing,
-        Attacking,
-        Death,
-        ShootingLaser,
-        Paralysed,
-        KnockedBack,
-        Freeze,
-        Feared,
-        Charging,
-    }
-
-    // PathFinding variable
-    [HideInInspector]
-    public float nextWayPointDistance = 0.05f;
-    [HideInInspector]
-    public AIPath aIPath;
-    [HideInInspector]
-    public AIDestinationSetter targetSetter;
-    // end of Pathfinding variable
-
-    protected virtual void Awake()
-    {
-        currentState = State.Patrolling;
-        GetReference();
-        
-    }
-
-    // Permet de récupérer toutes les références utiles
-    
-    protected virtual void GetReference()
-    {
-        healthBarGFX.SetActive(false);
-        rb = GetComponent<Rigidbody2D>();
-        aIPath = GetComponent<AIPath>();
-       
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        
-        targetSetter = GetComponent<AIDestinationSetter>();
-        targetSetter.target = target;
-        playerHealth = target.GetComponent<PlayerHealth>();
-        playerMouvement = target.GetComponent<PlayerMouvement>();
-    }
-
-
-    protected virtual void Update()
-    {
-        switch (currentState)
-        {
-            default:
-                rb.velocity = Vector2.zero;
-                break;
-            case State.Paralysed:
-                // Animation
-                aIPath.canMove = false;
-                break;
-
-            case State.KnockedBack:
-                aIPath.canMove = false;
-                break;
-
-            case State.Freeze:
-                // Animation
-                aIPath.canMove = false;
-                break;
-
-            case State.Feared:
-                aIPath.canMove = false;
-                Fear();
-                break;
-
-            case State.Death:
-                aIPath.canMove = false;
-                rb.velocity = Vector2.zero;
-                if (GetComponent<Collider2D>().enabled)
-                {
-                    foreach(Transform child in transform)
-                    {
-                        if (child.gameObject.GetComponent<Collider2D>())
-                        {
-                            child.gameObject.GetComponent<Collider2D>().enabled = false;
-                        }
-                    }
-                    GetComponent<Collider2D>().enabled = false;
-                    animator.SetTrigger("isDying");
-                   
-                }
-                break;
-            case State.Patrolling:
-                if (aIPath.canMove)
-                {
-                    aIPath.canMove = false;
-                    aIPath.canSearch = false;
-                }
-                PlayerInSight();
-                
-                
-                break;
-        }
-
-        healthBar.SetHealth(currentHealth);
-        DisplayBar();
-
-        SetMouvementAnimationVariable();
-        GetLastDirection();
-    }
-   
-    // Permet d'envoyer les variables gérant l'animator
     protected virtual void SetMouvementAnimationVariable()
     {
-        
+
         if (aIPath.canMove)
         {
             animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
@@ -161,14 +56,14 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            
+
             animator.SetFloat("HorizontalSpeed", 0);
             animator.SetFloat("VerticalSpeed", 0);
             float EnemySpeed = 0;
             animator.SetFloat("Speed", EnemySpeed);
         }
 
-        if(currentState == State.KnockedBack)
+        if (currentState == State.KnockedBack)
         {
             //animator.SetBool("isTakingDamage", true);
         }
@@ -181,17 +76,16 @@ public class Enemy : MonoBehaviour
     // Permet de récuperer la dernière direction
     protected virtual void GetLastDirection()
     {
-       
-            if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
-            {
 
-                animator.SetFloat("lastMoveX", targetSetter.target.position.x - gameObject.transform.position.x);
-                animator.SetFloat("lastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
-            } 
+        if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
+        {
+
+            animator.SetFloat("lastMoveX", targetSetter.target.position.x - gameObject.transform.position.x);
+            animator.SetFloat("lastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
+        }
     }
 
-
-    //Methode permetant de lancer la séquence de tir via l'animation
+    //Methode permetant de lancer la séquence de d'attaque via l'animation
     protected virtual void PlayAttackAnim()
     {
         if (!attackAnimationPlaying && !isPerturbateurIEM)
@@ -201,31 +95,38 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Mouvement
+    #endregion
 
 
-    public bool isSlowed = false;
+    #region  PathFinding 
+
     [HideInInspector]
-    public bool isBurned = false;
-    // Distance ou l'ennemi repère le joueur
-    protected float inSight1 = 12f;
-    protected float inSight2 = 14f;
+    public float nextWayPointDistance = 0.05f;
+    [HideInInspector]
+    public AIPath aIPath;
+    [HideInInspector]
+    public AIDestinationSetter targetSetter;
     [HideInInspector]
     public Transform target;
+
+    protected void EnableEnemyMouvement()
+    {
+        aIPath.canMove = true;
+        aIPath.canSearch = true;
+    }
+
+    protected void DisableEnemyMouvement()
+    {
+        aIPath.canMove = false;
+        aIPath.canSearch = false;
+    }
+    #endregion
+
+
+    #region Physics 
     [HideInInspector]
     public Rigidbody2D rb;
 
-    // Actualise le State en Chasing si le joueur est repéré
-    protected virtual void PlayerInSight()
-    {
-        if (Vector3.Distance(transform.position, target.position) < Random.Range(inSight1, inSight2))
-        {
-           
-            currentState = State.Chasing;
-            aIPath.canMove = true;
-            aIPath.canSearch = true;
-        }
-    }
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
 
@@ -238,45 +139,24 @@ public class Enemy : MonoBehaviour
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 
-    // Attack
-    protected float attackRange;
-    protected bool isReadyToSwitchState;
-    protected float timeToSwitch;
-    protected bool isInTransition;
-
-    // Couroutine qui laisse du temps entre les changements d'état
-    protected IEnumerator transiChasing()
+    // Coroutine qui knockBack l'ennemi
+    public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
-        isInTransition = true;
-        yield return new WaitForSeconds(timeToSwitch);
+        if (currentState == State.Charging) yield break;
+        rb.AddForce(dir * knockBackForce);
+        currentState = State.KnockedBack;
+        yield return new WaitForSeconds(knockBackTime);
+        currentState = State.Chasing;
+        rb.velocity = Vector2.zero;
         aIPath.canMove = true;
-        isReadyToSwitchState = true;
-        isInTransition = false;
+        if (enemy.currentHealth <= 0) currentState = State.Death;
     }
 
-    // Permet de savoir si il est en state Chase ou Attacking
-    protected virtual void isInRange()
-    {
-        if (gameObject == null) return;
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            isReadyToSwitchState = false;
-            aIPath.canMove = false;
-        }
-        else
-        {
-            if (currentState == State.Attacking) StartCoroutine(transiChasing());
-            if (isReadyToSwitchState)
-            {
-                currentState = State.Chasing;
-            }
+    // Attack
+    #endregion
 
-        }
-    }
 
-    // Health
-
+    #region Health and Death
     // Vie actuelle
     [HideInInspector]
     public float currentHealth;
@@ -296,6 +176,9 @@ public class Enemy : MonoBehaviour
     protected bool isHealthBarActive;
     [SerializeField]
     protected float timeBeforeDesactive;
+    protected bool isDying = false;
+
+
 
     // Set health to maximum
     protected virtual void SetMaxHealth()
@@ -304,10 +187,45 @@ public class Enemy : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    protected bool isDying = false;
 
+    // Prends les dégats
+    public virtual void TakeDamage(float _damage)
+    {
+        currentHealth -= _damage;
+        if (currentHealth <= 0)
+        {
+            isDying = true;
+            StartCoroutine(DeathSate());
 
-    // Mort de l'ennemi
+        }
+    }
+
+    // DeathCODE
+    private IEnumerator DeathSate()
+    {
+        yield return new WaitForEndOfFrame();
+        currentState = State.Death;
+    }
+
+    private void HasEnterDyingState()
+    {
+        DisableEnemyMouvement();
+        rb.velocity = Vector2.zero;
+        if (GetComponent<Collider2D>().enabled)
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.GetComponent<Collider2D>())
+                {
+                    child.gameObject.GetComponent<Collider2D>().enabled = false;
+                }
+            }
+            GetComponent<Collider2D>().enabled = false;
+            animator.SetTrigger("isDying");
+
+        }
+    }
+
     protected virtual void EnemyDie()
     {
         if (isDying)
@@ -315,30 +233,9 @@ public class Enemy : MonoBehaviour
             isDying = false;
             SpawnRewards();
             nanoRobot();
-            Destroy(gameObject);    
+            Destroy(gameObject);
         }
     }
-
-    // Prends les dégats
-    public virtual void TakeDamage(float _damage)
-    {
-        currentHealth -= _damage;
-        //StartCoroutine(WhiteFlash());
-        if (currentHealth <= 0)
-        {
-            isDying = true;
-            StartCoroutine(DeathSate());
-            
-        }
-    }
-
-    // Passe en state de Death
-    private IEnumerator DeathSate()
-    {
-       yield return new WaitForEndOfFrame();
-       currentState = State.Death;
-    }
-
     protected void nanoRobot()
     {
         if (PlayerProjectiles.isNanoRobotModule)
@@ -347,7 +244,7 @@ public class Enemy : MonoBehaviour
             nanoRobotModule.NanoRobotExplosion(gameObject.transform);
         }
     }
-	
+
     protected void SpawnRewards()
     {
         if (!isInvokedInBossRoom)
@@ -362,20 +259,13 @@ public class Enemy : MonoBehaviour
             rewardSpawner.SpawnArmorReward(this.gameObject);
         }
     }
+    // END DeathCode
 
-    // Couroutine white flash on hit
-    protected virtual IEnumerator WhiteFlash()
-    {
-        spriteRenderer.material = whiteMat;
-        yield return new WaitForSeconds(0.2f);
-        spriteRenderer.material = defaultMat;
-    }
-   
     // Affiche la barre de vie
     protected void DisplayBar()
     {
         if (currentHealth < maxHealth && !isHealthBarActive)
-        { 
+        {
             healthBarGFX.SetActive(true);
             isHealthBarActive = true;
         }
@@ -388,20 +278,138 @@ public class Enemy : MonoBehaviour
         healthBarGFX.SetActive(false);
         isHealthBarActive = false;
     }
+    #endregion
 
-    // Coroutine qui knockBack l'ennemi
-    public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
+
+    #region State && Transition
+    // Distance ou l'ennemi repère le joueur
+    protected float inSight = 10f;
+    public bool isreadyToAttack = true;
+    protected float attackRange;
+    protected bool isReadyToSwitchState;
+    public State currentState;
+    public enum State
     {
-        if (currentState == State.Charging) yield break;
-        rb.AddForce(dir * knockBackForce);
-        currentState = State.KnockedBack;
-        yield return new WaitForSeconds(knockBackTime);  
-        currentState = State.Chasing;
-        rb.velocity = Vector2.zero;
-        aIPath.canMove = true;
-        if (enemy.currentHealth <= 0) currentState = State.Death;
+        Patrolling,
+        Chasing,
+        Attacking,
+        Death,
+        ShootingLaser,
+        Paralysed,
+        KnockedBack,
+        Freeze,
+        Feared,
+        Charging,
     }
 
+    protected virtual void PlayerInSight()
+    {
+        if (Vector3.Distance(transform.position, target.position) < inSight)
+        {
+            currentState = State.Chasing;
+            EnableEnemyMouvement();
+        }
+    }
+
+
+
+
+
+    // Permet de savoir si il est en state Chase ou Attacking
+    protected virtual void isInRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+        }
+        else
+        {
+            if (isReadyToSwitchState)
+            {
+                currentState = State.Chasing;
+            }
+        }
+    }
+
+
+    #endregion
+
+  
+
+    #region Unity Mono
+
+    protected virtual void Awake()
+    {
+        GetReference();
+    }
+
+    protected virtual void Start()
+    {
+        SetMaxHealth();
+    }
+    protected virtual void GetReference()
+    {
+        healthBarGFX.SetActive(false);
+        rb = GetComponent<Rigidbody2D>();
+        aIPath = GetComponent<AIPath>();
+        currentState = State.Patrolling;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        
+        targetSetter = GetComponent<AIDestinationSetter>();
+        targetSetter.target = target;
+        playerHealth = target.GetComponent<PlayerHealth>();
+        playerMouvement = target.GetComponent<PlayerMouvement>();
+    }
+
+
+    protected virtual void Update()
+    {
+        switch (currentState)
+        {
+            default:
+                rb.velocity = Vector2.zero;
+                break;
+            case State.Paralysed:
+                // Animation
+                DisableEnemyMouvement();
+                break;
+
+            case State.KnockedBack:
+                DisableEnemyMouvement();
+                break;
+
+            case State.Freeze:
+                // Animation
+                DisableEnemyMouvement();
+                break;
+
+            case State.Feared:
+                DisableEnemyMouvement();
+                Fear();
+                break;
+
+            case State.Death:
+                HasEnterDyingState();
+                
+                break;
+            case State.Patrolling:
+                if (aIPath.canMove)
+                {
+                    DisableEnemyMouvement();
+                }
+                PlayerInSight();
+                
+                
+                break;
+        }
+
+        healthBar.SetHealth(currentHealth);
+        DisplayBar();
+
+        SetMouvementAnimationVariable();
+        GetLastDirection();
+    }
 
     private void OnDestroy()
     {
@@ -412,4 +420,8 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
+    #endregion
+
+
 }
