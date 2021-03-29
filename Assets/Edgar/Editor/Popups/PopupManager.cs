@@ -31,6 +31,9 @@ namespace Edgar.Unity.Editor
         {
             scenePopups.Add(PopupDatabasePro.GetFogOfWarPopup());
             scenePopups.Add(PopupDatabasePro.GetMinimapPopup());
+            scenePopups.Add(PopupDatabasePro.GetDoorSocketsPopup());
+            scenePopups.Add(PopupDatabasePro.GetDirectedLevelGraphsPopup());
+            scenePopups.Add(PopupDatabasePro.GetMinimap2Popup());
             scenePopups.Add(PopupDatabasePro.GetDeadCellsRooftopPopup());
             scenePopups.Add(PopupDatabasePro.GetDeadCellsUndergroundPopup());
             scenePopups.Add(PopupDatabasePro.GetGungeonPopup());

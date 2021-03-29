@@ -12,6 +12,7 @@
   <a href="https://github.com/OndrejNepozitek/Edgar-Unity/releases/tag/v2.0.0-alpha.5"><img src="https://img.shields.io/github/v/release/OndrejNepozitek/Edgar-Unity" /></a>
   <a href="https://ondrejnepozitek.itch.io/edgar-pro"><img src="https://img.shields.io/badge/itch.io-PRO%20version-important" /></a>
   <a href="https://img.shields.io/badge/Unity-%3E%3D%202018.4-blue"><img src="https://img.shields.io/badge/Unity-%3E%3D%202018.4-blue" /></a>
+  <a href="https://discord.gg/syktZ6VWq9"><img src="https://img.shields.io/discord/795301453131415554?label=discord" /></a>
 </p>
 
 <p align="center">
@@ -82,6 +83,8 @@ There are two versions of this asset - free version and PRO version. The free ve
 - Custom input - Modify a level graph before it is used in the generator (e.g. add a random secret room) ([docs](https://ondrejnepozitek.github.io/Edgar-Unity/docs/generators/custom-input))
 - Fog of War - Hide rooms in a fog until they are explored by the player ([docs](https://ondrejnepozitek.github.io/Edgar-Unity/docs/guides/fog-of-war))
 - Minimap support ([docs](https://ondrejnepozitek.github.io/Edgar-Unity/docs/guides/minimap))
+- Door sockets - Use door sockets to specify which doors are compatible ([docs](https://ondrejnepozitek.github.io/Edgar-Unity/docs/guides/door-sockets))
+- Directed level graphs - Use directed level graphs together with entrance-only and exit-only doors to have better control over generated levels ([docs](https://ondrejnepozitek.github.io/Edgar-Unity/docs/guides/directed-level-graphs))
 
 ## Limitations
 
@@ -98,10 +101,19 @@ Install the asset (instructions are below) and head to the [documentation](https
 
 There are several ways of installing the plugin:
 
+### via .unitypackage
+
+Go to Releases and download the unitypackage that's included in every release. Then import the package to Unity project (*Assets -> Import package -> Custom package*).
+
+#### How to update
+In order to be able to download a new version of the plugin, **we recommend to not change anything inside the Assets/ProceduralLevelGenerator folder**. At this stage of the project, files are often moved, renamed or deleted, and Unity does not handle that very well.
+
+The safest way to update to the new version is to completely remove the old version (*Assets/ProceduralLevelGenerator* directory) and then import the new version. (Make sure to backup your project before deleting anything.)      
+
 ### via Package Manager
 Add the following line to the `packages/manifest.json` file under the `dependencies` section (you must have git installed):
 ```
- "com.ondrejnepozitek.procedurallevelgenerator": "https://github.com/OndrejNepozitek/ProceduralLevelGenerator-Unity.git#upm"
+ "com.ondrejnepozitek.edgar.unity": "https://github.com/OndrejNepozitek/Edgar-Unity.git#upm"
 ```
 To try the examples, go to the Package Manager, find this plugin in the list of installed assets and import examples.
 
@@ -112,7 +124,7 @@ After installing the package, Unity adds something like this to your `manifest.j
 
 ```
   "lock": {
-    "com.ondrejnepozitek.procedurallevelgenerator": {
+    "com.ondrejnepozitek.edgar.unity": {
       "hash": "fc2e2ea5a50ec4d1d23806e30b87d13cf74af04e",
       "revision": "upm"
     }
@@ -120,15 +132,6 @@ After installing the package, Unity adds something like this to your `manifest.j
 ```
 
 Remove it to let Unity download a new version of the plugin.
-
-### via .unitypackage
-
-Go to Releases and download the unitypackage that's included in every release. Then import the package to Unity project (*Assets -> Import package -> Custom package*).
-
-#### How to update
-In order to be able to download a new version of the plugin, **we recommend to not change anything inside the Assets/ProceduralLevelGenerator folder**. At this stage of the project, files are often moved, renamed or deleted, and Unity does not handle that very well.
-
-The safest way to update to the new version is to completely remove the old version (*Assets/ProceduralLevelGenerator* directory) and then import the new version. (Make sure to backup your project before deleting anything.)                                                         
                                                              
 ## Workflow 
 
@@ -156,7 +159,7 @@ The safest way to update to the new version is to completely remove the old vers
 
 ## Get in touch
 
-If you have any questions, let me know at ondra-at-nepozitek.cz or create an issue here on github.
+If you have any questions or want to show off what you created with Edgar, come chat with us in our [discord server](https://discord.gg/syktZ6VWq9). Or if you want to contact me personally, use my email ondra-at-nepozitek.cz or send me a message on Twitter at @OndrejNepozitek.
 
 ## Terms of use
 

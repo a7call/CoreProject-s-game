@@ -314,7 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11725bdbb93631241b38951f78cae60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 2
+  version: 3
+  EnableDiagnostics: 0
   InputType: 0
   CustomInputTask: {fileID: 0}
   FixedLevelGraphConfig:
@@ -326,7 +327,10 @@ MonoBehaviour:
     RepeatModeOverride: 0
   PostProcessConfig:
     InitializeSharedTilemaps: 1
+    TilemapLayersStructure: 0
     TilemapLayersHandler: {fileID: 0}
+    TilemapLayersExample: {fileID: 0}
+    TilemapMaterial: {fileID: 0}
     CopyTilesToSharedTilemaps: 1
     CenterGrid: 1
     DisableRoomTemplatesRenderers: 1
@@ -345,6 +349,7 @@ MonoBehaviour:
   RandomGeneratorSeed: 0
   GenerateOnStart: 0
   ThrowExceptionsImmediately: 0
+  DisableCustomPostProcessing: 0
 --- !u!4 &381014981
 Transform:
   m_ObjectHideFlags: 0
@@ -656,12 +661,15 @@ MonoBehaviour:
   FogColor: {r: 0.14509805, g: 0.07450981, b: 0.101960786, a: 1}
   Mode: 0
   TransitionMode: 0
+  TileGranularity: 2
+  FogSmoothness: 20
   WaveSpeed: 10
   WaveRevealThreshold: 0.5
   FadeInDuration: 1
   RevealCorridors: 1
   RevealCorridorsTiles: 2
   RevealCorridorsGradually: 1
+  InitialFogTransparency: 0
   WaveOrigin: {fileID: 0}
   GeneratedLevelRoot: {fileID: 0}
   RevealedRooms: []

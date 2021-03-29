@@ -36,7 +36,7 @@ namespace Edgar.Unity.Editor
             var gameObject = prefabStage.prefabContentsRoot;
 
             var name = gameObject.name;
-            name = name.Replace(" ", "");
+            name = name.Replace(" ", "_");
             name = name.ToLower();
             
             var position = sw.position;
@@ -61,7 +61,7 @@ namespace Edgar.Unity.Editor
 
             byte[] pngData = result.EncodeToPNG();
             var path =
-                "C:\\Users\\ondra\\OneDrive\\Dokumenty\\VS_Projects\\ProceduralLevelGenerator-Unity\\static\\img\\v2\\examples\\gungeon\\room_templates\\";
+                "C:\\Users\\ondrej.nepozitek\\OneDrive\\Dokumenty\\VS_Projects\\Edgar-Unity\\static\\img\\v2\\guides\\directed_level_graphs\\";
  
             FileStream file = File.Create($"{path}{name}.png");
  

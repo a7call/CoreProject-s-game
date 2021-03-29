@@ -6,8 +6,8 @@ using UnityEngine.Tilemaps;
 
 namespace Edgar.Unity
 {
-    [CreateAssetMenu(menuName = "Edgar/Features/Minimap post-process", fileName = "MinimapPostProcess")]
-    public class MinimapPostProcess : DungeonGeneratorPostProcessBase
+    [CreateAssetMenu(menuName = "Edgar/Features/Minimap post-process (legacy)", fileName = "MinimapPostProcess")]
+    public class MinimapPostProcessLegacy : DungeonGeneratorPostProcessBase
     {
         [Layer] 
         public int Layer = 0;

@@ -49,11 +49,12 @@ namespace Edgar.Unity
 
                 // Compute outline polygon
                 var polygon = new Polygon2D(layoutRoom.Outline + layoutRoom.Position);
-                var enemies = new List<GameObject>();
-                var isEnemyAlreadySpawned = false;
-                var enemyPointAvailable = 0;
+                bool isEnemyAlreadySpawn = false;
+                List<GameObject> enemies = new List<GameObject>();
+                int enemyPointsAvailable = 0;
+
                 var connection = layoutRoom.IsCorridor ? corridorToConnectionMapping[layoutRoom.Room] : null;
-                var roomInstance = new RoomInstance(layoutRoom.Room, layoutRoom.IsCorridor, connection, roomTemplatePrefab, roomTemplateInstance, position, polygon, enemies, isEnemyAlreadySpawned, enemyPointAvailable);
+                var roomInstance = new RoomInstance(layoutRoom.Room, layoutRoom.IsCorridor, connection, roomTemplatePrefab, roomTemplateInstance, position, polygon, isEnemyAlreadySpawn, enemies, enemyPointsAvailable);
 
                 // Add room info to the GameObject
                 var roomInfo = roomTemplateInstance.GetComponent<RoomInfo>();

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Edgar.GraphBasedGenerator.Grid2D;
 using UnityEngine;
 
 namespace Edgar.Unity
@@ -63,14 +64,42 @@ namespace Edgar.Unity
                 }
             }
 
+            CheckIfDirected(levelDescription);
+                
             Payload.LevelDescription = levelDescription;
 
             yield return null;
         }
 
+        private void CheckIfDirected(LevelDescription levelDescription)
+        {
+            if (config.LevelGraph.IsDirected)
+            {
+                return;
+            }
+
+            foreach (var roomTemplate in levelDescription.GetPrefabToRoomTemplateMapping().Values)
+            {
+                if (roomTemplate.Doors is ManualDoorModeGrid2D doorMode)
+                {
+                    if (doorMode.Doors.Any(x => x.Type != GraphBasedGenerator.Common.Doors.DoorType.Undirected))
+                    {
+                        throw new ArgumentException(
+                            $"LevelGraph.IsDirected must be enabled when using entrance-only or exit-only doors.");
+                    }
+                }
+            }
+        }
+
         private List<GameObject> GetRoomTemplates(List<RoomTemplatesSet> roomTemplatesSets, List<GameObject> individualRoomTemplates)
         {
-            return individualRoomTemplates.Union(roomTemplatesSets.SelectMany(x => x.RoomTemplates)).ToList();
+            return individualRoomTemplates
+                .Where(x => x != null)
+                .Union(roomTemplatesSets
+                    .Where(x => x != null)
+                    .SelectMany(x => x.RoomTemplates))
+                .Distinct()
+                .ToList();
         }
 
         /// <summary>

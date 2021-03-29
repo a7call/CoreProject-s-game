@@ -4,8 +4,9 @@ using Edgar.Unity.Examples.PC2D.Scripts;
 using UnityEditor;
 using UnityEngine;
 
-namespace Edgar.Unity.Editor
+namespace Edgar.Unity.Examples.PC2D
 {
+#if UNITY_EDITOR
     [CustomEditor(typeof(PlatformerMotor2D))]
     [CanEditMultipleObjects]
     public class PlatformerMotor2DEditor : UnityEditor.Editor
@@ -567,4 +568,5 @@ namespace Edgar.Unity.Editor
             return Mathf.Sqrt(2 * distance / deceleration);
         }
     }
+#endif
 }

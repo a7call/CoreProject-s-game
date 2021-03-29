@@ -90,7 +90,7 @@ namespace Edgar.Unity
         public float InitialFogTransparency = 0;
 
         [SerializeField, HideInInspector]
-        private Transform WaveOrigin;
+        public Transform WaveOrigin;
 
         [SerializeField, HideInInspector]
         private GameObject GeneratedLevelRoot;
@@ -551,9 +551,6 @@ namespace Edgar.Unity
             foreach (var point in polygon.GetAllPoints())
             {
                 points.Add(point);
-                points.Add(point + Vector2Int.up);
-                points.Add(point + Vector2Int.right);
-                points.Add(point + Vector2Int.up + Vector2Int.right);
             }
 
             return points;

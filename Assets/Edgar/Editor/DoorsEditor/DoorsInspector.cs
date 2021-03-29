@@ -63,8 +63,9 @@ namespace Edgar.Unity.Editor
 					var doorLine = line.Shrink(doors.DistanceFromCorners);
                     var from = doorLine.From;
                     var to = doorLine.To;
+                    var color = doors.Socket != null ? doors.Socket.GetColor() : Color.red;
 
-					GridUtils.DrawRectangleOutline(grid, from.ToUnityIntVector3(), to.ToUnityIntVector3(), Color.red, new Vector2(0.1f, 0.1f));
+                    GridUtils.DrawRectangleOutline(grid, from.ToUnityIntVector3(), to.ToUnityIntVector3(), color, new Vector2(0.1f, 0.1f));
 				}
 			}
 			catch (ArgumentException)
@@ -79,10 +80,19 @@ namespace Edgar.Unity.Editor
             var grid = doors.gameObject.GetComponentInChildren<Grid>();
 
             // Draw all doors
-			foreach (var door in doors.DoorsList)
-			{
-                GridUtils.DrawRectangleOutline(grid, door.From.RoundToUnityIntVector3(), door.To.RoundToUnityIntVector3(), Color.red, new Vector2(0.1f, 0.1f), true);
-			}
+            for (var i = 0; i < doors.DoorsList.Count; i++)
+            {
+                var door = doors.DoorsList[i];
+                var color = door.Socket != null ? door.Socket.GetColor() : Color.red;
+                var label = $"{i}";
+
+                if (door.Direction != DoorDirection.Undirected)
+                {
+                    label += door.Direction == DoorDirection.Entrance ? " - In" : " - Out";
+                }
+
+                GridUtils.DrawRectangleOutline(grid, door.From.RoundToUnityIntVector3(), door.To.RoundToUnityIntVector3(), color, new Vector2(0.1f, 0.1f), true, label);
+            }
 
             switch (currentMode)
             {
@@ -195,10 +205,12 @@ namespace Edgar.Unity.Editor
 					hasFirstTile = false;
 					hasSecondTile = false;
 
-					var newDoorInfo = new DoorInfoEditor()
+					var newDoorInfo = new Door()
 					{
 						From = from,
 						To = to,
+                        Socket = doors.DefaultSocket,
+                        Direction = doors.DefaultDirection,
 					};
 
 					if (!doors.DoorsList.Contains(newDoorInfo))
@@ -257,10 +269,13 @@ namespace Edgar.Unity.Editor
         {
             EditorGUILayout.IntSlider(serializedObject.FindProperty(nameof(Doors.DoorLength)), 1, 10, "Door length");
             EditorGUILayout.IntSlider(serializedObject.FindProperty(nameof(Doors.DistanceFromCorners)), 0, 10, "Corner distance");
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(Doors.Socket)));
         }
 
         private void HandleManualModeInspector()
         {
+            serializedObject.Update();
+
             var doors = target as Doors;
 
             var addDoorsNew = GUILayout.Toggle(currentMode == Mode.AddDoors, "Add door positions", GUI.skin.button);
@@ -288,8 +303,6 @@ namespace Edgar.Unity.Editor
                 EditorUtility.SetDirty(target);
             }
 
-            // DrawDoorsList();
-
             try
             {
                 var polygon = RoomTemplatesLoader.GetPolygonFromRoomTemplate(doors.gameObject);
@@ -308,6 +321,53 @@ namespace Edgar.Unity.Editor
             }
 
             EditorGUILayout.HelpBox("The visualization of manual doors works differently than that of simple doors. If you want to add, for example, 5 doors of length 1, you have to manually add all 5 doors - not a single door with length 5.", MessageType.Warning);
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(Doors.DefaultSocket)), new GUIContent("Default socket for new doors"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(Doors.DefaultDirection)), new GUIContent("Default direction for new doors"));
+            ShowList(serializedObject.FindProperty(nameof(Doors.DoorsList)));
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        private void ShowList(SerializedProperty list)
+        {
+            EditorGUILayout.PropertyField(list);
+            // EditorGUI.indentLevel += 1;
+            if (list.isExpanded)
+            {
+                GUILayout.BeginVertical(EditorStyles.helpBox);
+
+                for (int i = 0; i < list.arraySize; i++)
+                {
+                    GUILayout.BeginVertical(EditorStyles.helpBox);
+                    
+                    EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i), new GUIContent($"Door {i}"));
+
+                    GUILayout.BeginHorizontal();
+
+                    //if (GUILayout.Button("Highlight", EditorStyles.miniButton))
+                    //{
+
+                    //}
+
+                    if (GUILayout.Button("Remove", EditorStyles.miniButton))
+                    {
+                        var oldSize = list.arraySize;
+                        list.DeleteArrayElementAtIndex(i);
+                        if (list.arraySize == oldSize)
+                        {
+                            list.DeleteArrayElementAtIndex(i);
+                        }
+                    }
+
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.EndVertical();
+                }
+
+                GUILayout.EndVertical();
+            }
+            // EditorGUI.indentLevel -= 1;
         }
 
         private enum Mode

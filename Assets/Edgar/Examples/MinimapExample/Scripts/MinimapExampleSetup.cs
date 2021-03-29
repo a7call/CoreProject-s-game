@@ -32,7 +32,7 @@ namespace Edgar.Unity.Examples.MinimapExample
                 camera.cullingMask = LayerMask.GetMask(MinimapLayer);
             }
 
-            Camera.main.cullingMask =~ LayerMask.GetMask(MinimapLayer);
+            Camera.main.cullingMask = ~LayerMask.GetMask(MinimapLayer);
         }
     }
 }

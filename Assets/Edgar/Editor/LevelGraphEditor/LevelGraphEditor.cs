@@ -253,7 +253,7 @@ namespace Edgar.Unity.Editor
         {
             foreach (var connectionNode in connectionNodes)
             {
-                connectionNode.Draw(zoom, panOffset);
+                connectionNode.Draw(zoom, panOffset, LevelGraph.IsDirected);
             }
         }
 

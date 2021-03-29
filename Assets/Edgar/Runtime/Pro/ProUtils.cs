@@ -52,55 +52,5 @@ namespace Edgar.Unity
                 .Where(x => baseType.IsAssignableFrom(x) && !x.IsAbstract)
                 .ToList(); 
         }
-
-        // TODO: move somewhere else
-        public static List<Tilemap> GetRoomTemplateTilemaps(GameObject roomTemplate)
-        {
-            var tilemapsHolder = roomTemplate.transform.Find(GeneratorConstants.TilemapsRootName)?.gameObject ?? roomTemplate;
-            var tilemaps = new List<Tilemap>();
-
-            foreach (var childTransform in tilemapsHolder.transform.Cast<Transform>())
-            {
-                var tilemap = childTransform.gameObject.GetComponent<Tilemap>();
-
-                if (tilemap != null)
-                {
-                    tilemaps.Add(tilemap);
-                }
-            }
-
-            // TODO: return tilemaps or GameObjects?
-            return tilemaps;
-        }
-
-        // TODO: move somewhere else
-        public static void InitializeSharedTilemaps(GeneratedLevel level, ITilemapLayersHandler tilemapLayersHandler)
-        {
-            // Initialize GameObject that will hold tilemaps
-            var tilemapsRoot = new GameObject(GeneratorConstants.TilemapsRootName);
-            tilemapsRoot.transform.parent = level.RootGameObject.transform;
-
-            // Create individual tilemaps
-            tilemapLayersHandler.InitializeTilemaps(tilemapsRoot);
-        }
-
-        // TODO: move somewhere else
-        public static void CopyTilesToSharedTilemaps(GeneratedLevel level)
-        {
-            foreach (var roomInstance in level.GetRoomInstances().OrderBy(x => x.IsCorridor))
-            {
-                CopyTilesToSharedTilemaps(level, roomInstance);
-            }
-        }
-
-        // TODO: move somewhere else
-        public static void CopyTilesToSharedTilemaps(GeneratedLevel level, RoomInstance roomInstance)
-        {
-            var tilemapsRoot = level.RootGameObject.transform.Find(GeneratorConstants.TilemapsRootName).gameObject;
-            var destinationTilemaps = RoomTemplateUtils.GetTilemaps(tilemapsRoot);
-            var sourceTilemaps = RoomTemplateUtils.GetTilemaps(roomInstance.RoomTemplateInstance);
-
-            PostProcessUtils.CopyTiles(sourceTilemaps, destinationTilemaps, roomInstance.Position);
-        }
     }
 }

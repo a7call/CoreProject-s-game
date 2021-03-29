@@ -26,7 +26,7 @@ namespace Edgar.Unity
         public List<RoomTemplatesSet> CorridorRoomTemplateSets = new List<RoomTemplatesSet>();
 
         /// <summary>
-        ///     Set of room templates that is used for room thah do not have any room templates assigned.
+        ///     Set of room templates that is used for room that do not have any room templates assigned.
         /// </summary>
         public List<GameObject> DefaultIndividualRoomTemplates = new List<GameObject>();
 
@@ -49,5 +49,8 @@ namespace Edgar.Unity
         public string RoomType = typeof(Room).FullName;
 
         public string ConnectionType = typeof(Connection).FullName;
+
+
+        public bool IsDirected = false;
     }
 }

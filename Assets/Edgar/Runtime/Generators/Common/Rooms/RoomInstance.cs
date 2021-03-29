@@ -27,14 +27,6 @@ namespace Edgar.Unity
         public bool IsCorridor => isCorridor;
         [SerializeField] private bool isCorridor;
 
-        public bool IsEnemyAlreadySpawned => isEnemyAlreadySpawned;
-        [SerializeField] public bool isEnemyAlreadySpawned;
-        public List<GameObject> Enemies => enemies;
-        [SerializeField] private List<GameObject> enemies;
-
-        public int EnemyPointsAvailable => enemyPointsAvailable;
-        [SerializeField] public int enemyPointsAvailable;
-
         /// <summary>
         ///     If this is a corridor room, this property contains the corresponding connection.
         ///     Otherwise it is null.
@@ -93,7 +85,14 @@ namespace Edgar.Unity
         public Polygon2D OutlinePolygon => outlinePolygon;
         [SerializeField] private Polygon2D outlinePolygon;
 
-        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon, List<GameObject> enemies, bool isEnemyAlreadySpawned, int enemyPointsAvailable)
+        public bool IsEnemyAlreadySpawned => isEnemyAlreadySpawned;
+        [SerializeField] public bool isEnemyAlreadySpawned;
+        public List<GameObject> Enemies => enemies;
+        [SerializeField] private List<GameObject> enemies;
+
+        public int EnemyPointsAvailable => enemyPointsAvailable;
+        [SerializeField] public int enemyPointsAvailable;
+        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon, bool isEnemyAlreadySpawned, List<GameObject> enemies, int enemyPointsAvailable)
         {
             this.room = room;
             this.connection = connection;
@@ -102,9 +101,9 @@ namespace Edgar.Unity
             this.position = position;
             this.outlinePolygon = outlinePolygon;
             this.isCorridor = isCorridor;
+            this.enemyPointsAvailable = enemyPointsAvailable;
             this.enemies = enemies;
             this.isEnemyAlreadySpawned = isEnemyAlreadySpawned;
-            this.enemyPointsAvailable = enemyPointsAvailable;
         }
 
         /// <summary>

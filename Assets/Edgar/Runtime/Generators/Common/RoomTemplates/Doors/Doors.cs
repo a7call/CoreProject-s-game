@@ -17,8 +17,13 @@ namespace Edgar.Unity
         [HideInInspector]
         public int DoorLength = 1;
 
-        [HideInInspector]
-        public List<DoorInfoEditor> DoorsList = new List<DoorInfoEditor>();
+        public DoorSocketBase Socket;
+
+        public DoorSocketBase DefaultSocket;
+
+        public DoorDirection DefaultDirection = DoorDirection.Undirected;
+
+        public List<Door> DoorsList = new List<Door>();
 
         [HideInInspector]
         public DoorMode SelectedMode;
@@ -31,8 +36,18 @@ namespace Edgar.Unity
 
                 foreach (var door in DoorsList)
                 {
+                    var type = GraphBasedGenerator.Common.Doors.DoorType.Undirected;
+
+                    if (door.Direction == DoorDirection.Entrance)
+                    {
+                        type = GraphBasedGenerator.Common.Doors.DoorType.Entrance;
+                    } else if (door.Direction == DoorDirection.Exit)
+                    {
+                        type = GraphBasedGenerator.Common.Doors.DoorType.Exit;
+                    }
+
                     var doorLine = new DoorGrid2D(door.From.RoundToUnityIntVector3().ToCustomIntVector2(),
-                        door.To.RoundToUnityIntVector3().ToCustomIntVector2()); // TODO: ugly
+                        door.To.RoundToUnityIntVector3().ToCustomIntVector2(), door.Socket, type); // TODO: ugly
 
                     doors.Add(doorLine);
                 }
@@ -42,7 +57,7 @@ namespace Edgar.Unity
 
             if (SelectedMode == DoorMode.Simple)
             {
-                return new SimpleDoorModeGrid2D(DoorLength - 1, DistanceFromCorners);
+                return new SimpleDoorModeGrid2D(DoorLength - 1, DistanceFromCorners, Socket);
             }
 
             throw new ArgumentException("Invalid door mode selected");

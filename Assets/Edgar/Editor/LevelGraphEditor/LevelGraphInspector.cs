@@ -48,8 +48,14 @@ namespace Edgar.Unity.Editor
                     true);
 				EditorGUI.indentLevel--;
 			}
-            
-			EditorGUILayout.Space();
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.PropertyField(
+                serializedObject.FindProperty(nameof(LevelGraph.IsDirected)),
+                new GUIContent("Is Directed"),
+                true);
+
 			EditorGUILayout.LabelField("Custom room and connection types", EditorStyles.boldLabel);
 
             var derivedRoomTypes = ProUtils.FindDerivedTypes(typeof(RoomBase));
@@ -70,8 +76,9 @@ namespace Edgar.Unity.Editor
 
             if (derivedRoomTypes[selectedRoomIndex] == typeof(Room) && derivedConnectionTypes[selectedConnectionIndex] == typeof(Connection))
             {
-                var warningStyle = new GUIStyle(EditorStyles.boldLabel) {wordWrap = true};
-                EditorGUILayout.LabelField("Warning! Default room or connection types are selected. It's not possible to change this easily after you add rooms and connections to the graph.", warningStyle);
+                EditorGUILayout.HelpBox(
+                    "Default room or connection types are selected. It is not possible to change this easily after you add rooms and connections to the graph.",
+                    MessageType.Warning); 
             }
 
             EditorGUILayout.Space();
