@@ -72,39 +72,42 @@ namespace Edgar.Unity.Examples
             return levelDescription;
         }
 
-      /*  private void AddSecretRoom(LevelDescription levelDescription)
-        {
-            // Return early if no secret room should be added to the level
-            if (Payload.Random.NextDouble() > SecretRoomChance) return;
+        #region Secret Room
 
-            // Get the graphs of rooms
-            var graph = levelDescription.GetGraph();
+        /*  private void AddSecretRoom(LevelDescription levelDescription)
+          {
+              // Return early if no secret room should be added to the level
+              if (Payload.Random.NextDouble() > SecretRoomChance) return;
 
-            // Decide whether to attach the secret room to a dead end room or not
-            var attachToDeadEnd = Payload.Random.NextDouble() < SecretRoomDeadEndChance;
+              // Get the graphs of rooms
+              var graph = levelDescription.GetGraph();
 
-            // Find all the possible rooms to attach to and choose a random one
-            var possibleRoomsToAttachTo = graph.Vertices.Cast<GungeonRoom>().Where(x =>
-                (!attachToDeadEnd || graph.GetNeighbours(x).Count() == 1) && x.Type != GungeonRoomType.Entrance
-            ).ToList();
-            var roomToAttachTo = possibleRoomsToAttachTo[Payload.Random.Next(possibleRoomsToAttachTo.Count)];
+              // Decide whether to attach the secret room to a dead end room or not
+              var attachToDeadEnd = Payload.Random.NextDouble() < SecretRoomDeadEndChance;
 
-            // Create secret room
-            var secretRoom = ScriptableObject.CreateInstance<GungeonRoom>();
-            secretRoom.Type = GungeonRoomType.Secret;
-            levelDescription.AddRoom(secretRoom, RoomTemplates.GetRoomTemplates(secretRoom).ToList());
+              // Find all the possible rooms to attach to and choose a random one
+              var possibleRoomsToAttachTo = graph.Vertices.Cast<GungeonRoom>().Where(x =>
+                  (!attachToDeadEnd || graph.GetNeighbours(x).Count() == 1) && x.Type != GungeonRoomType.Entrance
+              ).ToList();
+              var roomToAttachTo = possibleRoomsToAttachTo[Payload.Random.Next(possibleRoomsToAttachTo.Count)];
 
-            // Prepare the connection between secretRoom and roomToAttachTo
-            var connection = ScriptableObject.CreateInstance<GungeonConnection>();
-            connection.From = roomToAttachTo;
-            connection.To = secretRoom;
+              // Create secret room
+              var secretRoom = ScriptableObject.CreateInstance<GungeonRoom>();
+              secretRoom.Type = GungeonRoomType.Secret;
+              levelDescription.AddRoom(secretRoom, RoomTemplates.GetRoomTemplates(secretRoom).ToList());
 
-            // Connect the two rooms with a corridor
-            var corridorRoom = ScriptableObject.CreateInstance<GungeonRoom>();
-            corridorRoom.Type = GungeonRoomType.Corridor;
-            levelDescription.AddCorridorConnection(connection, corridorRoom, RoomTemplates.CorridorRoomTemplates.ToList());
-        }
-      */
+              // Prepare the connection between secretRoom and roomToAttachTo
+              var connection = ScriptableObject.CreateInstance<GungeonConnection>();
+              connection.From = roomToAttachTo;
+              connection.To = secretRoom;
+
+              // Connect the two rooms with a corridor
+              var corridorRoom = ScriptableObject.CreateInstance<GungeonRoom>();
+              corridorRoom.Type = GungeonRoomType.Corridor;
+              levelDescription.AddCorridorConnection(connection, corridorRoom, RoomTemplates.CorridorRoomTemplates.ToList());
+          }
+        */
+        #endregion
     }
 
 }

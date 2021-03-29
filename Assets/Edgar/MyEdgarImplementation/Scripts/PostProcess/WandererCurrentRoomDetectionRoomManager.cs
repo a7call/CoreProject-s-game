@@ -50,6 +50,8 @@ namespace Edgar.Unity.Examples
         /// </summary>
         private RoomInstance roomInstance;
 
+        
+
         /// <summary>
         /// Room info.
         /// </summary>

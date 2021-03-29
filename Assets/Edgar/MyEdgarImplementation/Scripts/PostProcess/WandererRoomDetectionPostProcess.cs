@@ -13,11 +13,19 @@ namespace Edgar.Unity.Examples
         public GameObject enemy;
         public int EnemyPoint;
     }
+    public struct RoomStruct
+    {
+        public List<GameObject> ennemies;
+        public int numberOfPoints;
+        public bool isEnemyAlreadySpawned;
+    }
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
     public class WandererRoomDetectionPostProcess : DungeonGeneratorPostProcessBase
     {
+        public Dictionary<RoomInstance, RoomStruct> roomDictionary = new Dictionary<RoomInstance, RoomStruct>();
         public enemyStruct[] Enemies;
         Tilemap tilemapMiniMap;
+     
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
             
@@ -26,114 +34,63 @@ namespace Edgar.Unity.Examples
 
             var walls = tilemapss.transform.Find("Walls").gameObject;
             var floors = tilemapss.transform.Find("Floor").gameObject;
-            AddLayerToWall(walls);
-            AddLayerToFloor(floors);
-            tilemapMiniMap = MinimapInit(level);
+            UpdateLayer(walls, 10);
+            UpdateLayer(floors , 14);
+            Tilemap tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
             {
-               
-                var roomTemplateInstance = roomInstance.RoomTemplateInstance;
-                // Find floor tilemap layer
-                var room = (WandererRoom)roomInstance.Room;
-                
-                var tilemaps = RoomTemplateUtils.GetTilemaps(roomTemplateInstance);
-                roomInstance.RoomTemplateInstance.layer = 19;
-                
-                
-                var floor = tilemaps.Single(x => x.name == "Floor").gameObject;
-                // Add floor collider
-              
-                // Add the room manager component
-                var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
-
-                
-                roomManager.RoomInstance = roomInstance;
-                roomManager.Enemies = Enemies;
-
-                if(room.Type == RoomType.Large)
-                {
-                    roomInstance.enemyPointsAvailable = 15;
-                }
-                else if(room.Type == RoomType.Medium)
-                {
-                    roomInstance.enemyPointsAvailable = 10;
-                }
-                else if(room.Type == RoomType.Small)
-                {
-                    roomInstance.enemyPointsAvailable = 5;
-                }
-               
-
-
-
-                    // Add current room detection handler
-                floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
-
-                if (WandererGameManager.Instance != null)
-                {
-                    // Set the Random instance of the GameManager to be the same instance as we use in the generator
+                // Set the Random instance of the GameManager to be the same instance as we use in the generator
+                if (WandererGameManager.Instance != null) 
                     WandererGameManager.Instance.Random = Random;
-                }
 
+                var roomManager = AssignRoomComponents(roomInstance);
+                AssignPointToRooms(roomInstance, roomManager);
 
-
-                roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
-
-                if (room.Type != RoomType.Corridor)
-                {
-                    // Set enemies and floor collider to the room manager
-                    //roomManager.Enemies = Enemies;
-                  //  roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
-
-                    // Find all the doors of neighboring corridors and save them in the room manager
-                    // The term "door" has two different meanings here:
-                    //   1. it represents the connection point between two rooms in the level
-                    //   2. it represents the door game object that we have inside each corridor
-                    foreach (var door in roomInstance.Doors)
-                    {
-                        // Get the room instance of the room that is connected via this door
-                        var corridorRoom = door.ConnectedRoomInstance;
-
-                        // Get the room template instance of the corridor room
-                        var corridorGameObject = corridorRoom.RoomTemplateInstance;
-
-                        // Find the door game object by its name
-                        var doorsGameObject = corridorGameObject.transform.Find("Door")?.gameObject;
-
-                        // Each corridor room instance has a connection that represents the edge in the level graph
-                        // We use the connection object to check if the corridor should be locked or not
-                        var connection = (WandererConnection)corridorRoom.Connection;
-
-                        if (doorsGameObject != null)
-                        {
-                            // If the connection is locked, we set the Locked state and keep the game object active
-                            // Otherwise we set the EnemyLocked state and deactivate the door. That means that the door is active and locked
-                            // only when there are enemies in the room.
-                            if (connection.IsLocked)
-                            {
-                                doorsGameObject.GetComponent<WandererDoors>().State = WandererDoors.DoorState.Locked;
-                            }
-                            else
-                            {
-                                doorsGameObject.GetComponent<WandererDoors>().State = WandererDoors.DoorState.EnemyLocked;
-                                doorsGameObject.SetActive(false);
-                            }
-
-                            roomManager.Doors.Add(doorsGameObject);
-                        }
-                    }
-                }
                 if (ShouldSpawnEnemy(roomInstance))
-                {
-                   
-                    SpawnEnemy(roomInstance);
-                    
-                }
+                    SpawnEnemy(roomInstance, roomManager);
             }
             AstarPath.active.Scan();
             MovePlayerToSpawn(level);
-            SetupFogOfWar(level);
-           
+        }
+
+        protected void AssignPointToRooms(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager)
+        {
+            roomManager.RoomInstance = roomInstance;
+            roomManager.Enemies = Enemies;
+            var room = (WandererRoom)roomInstance.Room;
+
+            if (room.Type == RoomType.Large)
+            {
+                roomInstance.enemyPointsAvailable = 15;
+            }
+            else if (room.Type == RoomType.Medium)
+            {
+                roomInstance.enemyPointsAvailable = 10;
+            }
+            else if (room.Type == RoomType.Small)
+            {
+                roomInstance.enemyPointsAvailable = 5;
+            }
+        }
+
+        protected WandererCurrentRoomDetectionRoomManager AssignRoomComponents(RoomInstance roomInstance)
+        {
+            var roomTemplateInstance = roomInstance.RoomTemplateInstance;
+            // Find floor tilemap layer
+            var room = (WandererRoom)roomInstance.Room;
+
+            var tilemaps = RoomTemplateUtils.GetTilemaps(roomTemplateInstance);
+            roomInstance.RoomTemplateInstance.layer = 19;
+
+            var floor = tilemaps.Single(x => x.name == "Floor").gameObject;
+            // Add floor collider
+
+            // Add the room manager component
+            var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
+
+            roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
+
+            return roomManager;
         }
        
         Tilemap MinimapInit(GeneratedLevel level)
@@ -199,7 +156,6 @@ namespace Edgar.Unity.Examples
                 // Get spawn position if Entrance
                 if (room.Type == RoomType.Spawn)
                 {
-
                     var spawnPosition = GameObject.FindGameObjectWithTag("SpawnPosition");
                     var player = GameObject.FindGameObjectWithTag("Player");
                     Debug.Log(player.transform.position);
@@ -214,25 +170,23 @@ namespace Edgar.Unity.Examples
             var room = (WandererRoom)roomInstance.Room;
             if (roomInstance.IsCorridor)
             {
-                foreach (var roomInstanceNextToSpawn in roomInstance.Doors.Select(x => x.ConnectedRoomInstance))
+                foreach (var roomInstanceNextToAcualRoom in roomInstance.Doors.Select(x => x.ConnectedRoomInstance))
                 {
-                    var roomNextToSpawn= (WandererRoom)roomInstanceNextToSpawn.Room;
-                   if(roomNextToSpawn.Type == RoomType.Spawn)
-                    {
-                        return false;
-                    }
+                   var roomNextToAcualRoom = (WandererRoom)roomInstanceNextToAcualRoom.Room;
+                   if(roomNextToAcualRoom.Type == RoomType.Spawn)
+                        return false;   
                 }
             }
                
-            
-            return roomInstance.IsEnemyAlreadySpawned == false && (room.Type == RoomType.Large || room.Type == RoomType.Corridor || room.Type == RoomType.Small || room.Type == RoomType.Medium);
+            return roomInstance.isEnemyAlreadySpawned == false && room.Type != RoomType.Spawn;
         }
 
-        private void SpawnEnemy(RoomInstance roomInstance)
+        private void SpawnEnemy(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager)
         {
 
             // Enemy are set to already spawned
             roomInstance.isEnemyAlreadySpawned = true;
+           
 
             // sécurité si boucle infini
             int iteration = 0;
@@ -242,7 +196,7 @@ namespace Edgar.Unity.Examples
             // PointsInTheCurrentRoom
             int currentRoomPoint = 0;
             
-            WandererCurrentRoomDetectionRoomManager roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
+             roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
             
             do
             {
@@ -281,14 +235,9 @@ namespace Edgar.Unity.Examples
             } while (iteration < 100 || currentRoomPoint < roomInstance.EnemyPointsAvailable ) ;
         }
 
-        protected void AddLayerToWall(GameObject wall)
+        protected void UpdateLayer(GameObject map, int layer)
         {
-            wall.layer = 10;
-
-        }
-        protected void AddLayerToFloor(GameObject floor)
-        {
-            floor.layer = 14;
+            map.layer = layer;
         }
     }
 }
