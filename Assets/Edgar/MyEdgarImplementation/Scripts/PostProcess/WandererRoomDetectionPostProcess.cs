@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 namespace Edgar.Unity.Examples
 {
     [Serializable]
-    public struct enemyStruct
+    public struct EnemyStruct
     {
         public GameObject enemy;
         public int EnemyPoint;
@@ -18,14 +18,17 @@ namespace Edgar.Unity.Examples
         public List<GameObject> ennemies;
         public int enemyPointsAvailable;
         public bool isEnemyAlreadySpawned;
+        public bool shouldHaveSecondSpawn;
     }
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
     public class WandererRoomDetectionPostProcess : DungeonGeneratorPostProcessBase
     {
-        public static Dictionary<RoomInstance, RoomStruct> roomDictionary = new Dictionary<RoomInstance, RoomStruct>();
-        public enemyStruct[] Enemies;
-        Tilemap tilemapMiniMap;
 
+        #region MainBoucle
+
+        public EnemyStruct[] Enemies;
+
+        public static Dictionary<RoomInstance, RoomStruct> roomDictionary = new Dictionary<RoomInstance, RoomStruct>();
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
 
@@ -42,6 +45,7 @@ namespace Edgar.Unity.Examples
 
                 RoomStruct roomStruct = new RoomStruct();
                 RoomStructInitializer(ref roomStruct);
+                SetSecondSpawn(ref roomStruct);
                 // Set the Random instance of the GameManager to be the same instance as we use in the generator
                 if (WandererGameManager.Instance != null)
                     WandererGameManager.Instance.Random = Random;
@@ -50,16 +54,16 @@ namespace Edgar.Unity.Examples
                 AssignPointToRooms(roomInstance, roomManager, ref roomStruct);
 
                 if (ShouldSpawnEnemy(roomInstance, roomStruct))
-                    SpawnEnemy(roomInstance, roomManager, ref roomStruct);
+                    SpawnEnemy(roomInstance, roomManager, ref roomStruct, Enemies);
 
                 roomDictionary.Add(roomInstance, roomStruct);
-
                 roomManager.roomStruct = roomStruct;
                 roomManager.Enemies = Enemies;
             }
             AstarPath.active.Scan();
             MovePlayerToSpawn(level);
         }
+        
 
         protected void AssignPointToRooms(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager, ref RoomStruct roomStruct)
         {
@@ -81,13 +85,6 @@ namespace Edgar.Unity.Examples
             }
         }
 
-        protected void RoomStructInitializer(ref RoomStruct roomStruct)
-        {
-            roomStruct.isEnemyAlreadySpawned = false;
-            roomStruct.ennemies = new List<GameObject>();
-            roomStruct.enemyPointsAvailable = 0;
-        }
-
         protected WandererCurrentRoomDetectionRoomManager AssignRoomComponents(RoomInstance roomInstance)
         {
             var roomTemplateInstance = roomInstance.RoomTemplateInstance;
@@ -95,7 +92,7 @@ namespace Edgar.Unity.Examples
             var room = (WandererRoom)roomInstance.Room;
 
             var tilemaps = RoomTemplateUtils.GetTilemaps(roomTemplateInstance);
-            roomInstance.RoomTemplateInstance.layer = 19;
+            UpdateLayer(roomInstance.RoomTemplateInstance, 19);
 
             var floor = tilemaps.Single(x => x.name == "Floor").gameObject;
             // Add floor collider
@@ -110,27 +107,17 @@ namespace Edgar.Unity.Examples
             return roomManager;
         }
 
-
-
-        private void MovePlayerToSpawn(GeneratedLevel level)
+        protected void RoomStructInitializer(ref RoomStruct roomStruct)
         {
-            foreach (var roomInstance in level.GetRoomInstances())
-            {
-                var room = (WandererRoom)roomInstance.Room;
-                var roomTemplateInstance = roomInstance.RoomTemplateInstance;
-
-                // Get spawn position if Entrance
-                if (room.Type == RoomType.Spawn)
-                {
-                    var spawnPosition = GameObject.FindGameObjectWithTag("SpawnPosition");
-                    var player = GameObject.FindGameObjectWithTag("Player");
-                    Debug.Log(player.transform.position);
-                    player.transform.position = spawnPosition.transform.position;
-                    Debug.Log(player.transform.position);
-                }
-            }
+            roomStruct.isEnemyAlreadySpawned = false;
+            roomStruct.ennemies = new List<GameObject>();
+            roomStruct.enemyPointsAvailable = 0;
+            roomStruct.shouldHaveSecondSpawn = false;
         }
+        #endregion
 
+
+        #region EnemySpawn
         private bool ShouldSpawnEnemy(RoomInstance roomInstance, RoomStruct roomStruct)
         {
             var room = (WandererRoom)roomInstance.Room;
@@ -147,10 +134,21 @@ namespace Edgar.Unity.Examples
             return roomStruct.isEnemyAlreadySpawned == false && room.Type != RoomType.Spawn;
         }
 
-        private void SpawnEnemy(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager, ref RoomStruct roomStruct)
+        private void SetSecondSpawn(ref RoomStruct roomStruct)
         {
-            // Enemy are set to already spawned
-            roomStruct.isEnemyAlreadySpawned = true;
+            roomStruct.shouldHaveSecondSpawn = UnityEngine.Random.Range(0f, 1f) >= 0.9f? true : false; 
+        }
+
+        public static void SpawnEnemy(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager, ref RoomStruct roomStruct, EnemyStruct[] Enemies, bool isSecondSpawn = false)
+        {
+            if (isSecondSpawn)
+            {
+                roomStruct.shouldHaveSecondSpawn = false;
+            }
+            else
+            {
+                roomStruct.isEnemyAlreadySpawned = true;
+            }
             // sécurité si boucle infini
             int iteration = 0;
             var room = roomInstance.RoomTemplateInstance;
@@ -190,13 +188,37 @@ namespace Edgar.Unity.Examples
             } while (iteration < 100 || currentRoomPoint < roomStruct.enemyPointsAvailable);
         }
 
+        #endregion
+
+
+        #region Player
+        private void MovePlayerToSpawn(GeneratedLevel level)
+        {
+            foreach (var roomInstance in level.GetRoomInstances())
+            {
+                var room = (WandererRoom)roomInstance.Room;
+                // Get spawn position if Entrance
+                if (room.Type == RoomType.Spawn)
+                {
+                    var spawnPosition = GameObject.FindGameObjectWithTag("SpawnPosition");
+                    var player = GameObject.FindGameObjectWithTag("Player");
+                    player.transform.position = spawnPosition.transform.position;
+                }
+            }
+        }
+        #endregion
+
+
+        #region Utiles
         protected void UpdateLayer(GameObject map, int layer)
         {
             map.layer = layer;
         }
+        #endregion
 
 
-
+        #region MiniMap
+        Tilemap tilemapMiniMap;
         Tilemap MinimapInit(GeneratedLevel level)
         {
             var tilemapsRoot = level.RootGameObject.transform.Find(GeneratorConstants.TilemapsRootName);
@@ -216,40 +238,6 @@ namespace Edgar.Unity.Examples
             tilemapObject.layer = 17;
             return tilemap;
         }
-
-
-
-        private void SetupFogOfWar(GeneratedLevel level)
-        {
-            // To setup the FogOfWar component, we need to get the root game object that holds the level.
-            var generatedLevelRoot = level.RootGameObject;
-
-            // If we use the Wave mode, we must specify the point from which the wave spreads as we reveal a room.
-            // The easiest way to do so is to get the player game object and use its transform as the wave origin.
-            // Change this line if your player game object does not have the "Player" tag.
-            var player = GameObject.FindGameObjectWithTag("Player");
-
-            // Now we can setup the FogOfWar component.
-            // To make it easier to work with the component, the class is a singleton and provides the Instance property.
-            FogOfWar.Instance?.Setup(generatedLevelRoot, player.transform);
-
-            // After the level is generated, we usually want to reveal the spawn room.
-            // To do that, we have to find the room instance that corresponds to the Spawn room.
-            // In this example, the spawn room has the GungeonRoomType.Entrance type.
-            var spawnRoom = level
-                .GetRoomInstances()
-                .SingleOrDefault(x => ((WandererRoom)x.Room).Type == RoomType.Spawn);
-
-            if (spawnRoom == null)
-            {
-                throw new InvalidOperationException("There must be exactly one room with the name 'Spawn' for this example to work.");
-            }
-            // When we have the spawn room instance, we can reveal the room from the fog.
-            // We use revealImmediately: true so that the first room is revealed instantly,
-            // but it is optional.
-            FogOfWar.Instance?.RevealRoom(spawnRoom, revealImmediately: true);
-        }
-
-
+        #endregion
     }
 }

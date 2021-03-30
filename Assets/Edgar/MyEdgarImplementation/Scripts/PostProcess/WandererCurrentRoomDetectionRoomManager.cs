@@ -17,13 +17,6 @@ namespace Edgar.Unity.Examples
         public bool Cleared = false;
 
         /// <summary>
-        /// Whether the room was visited by the player.
-        /// </summary>
-        public bool Visited;
-
-        public bool explored;
-
-        /// <summary>
         /// Doors of neighboring corridors.
         /// </summary>
         public List<GameObject> Doors = new List<GameObject>();
@@ -31,28 +24,22 @@ namespace Edgar.Unity.Examples
         /// <summary>
         /// Enemies that can spawn inside the room.
         /// </summary>
-        public enemyStruct[] Enemies;
-
-        public RoomStruct roomStruct;
+        public EnemyStruct[] Enemies;
 
         /// <summary>
-        /// Whether enemies were spawned.
+        /// room structure
         /// </summary>
-        public bool EnemiesSpawned;
+        public RoomStruct roomStruct;
 
         /// <summary>
         /// Collider of the floor tilemap layer.
         /// </summary>
         public Collider2D FloorCollider;
 
-
-
         /// <summary>
         /// Room instance of the corresponding room.
         /// </summary>
         private RoomInstance roomInstance;
-
-        
 
         /// <summary>
         /// Room info.
@@ -62,64 +49,36 @@ namespace Edgar.Unity.Examples
         public RoomInstance RoomInstance;
         public static RoomInstance previousRoom;
         public static RoomInstance previousCorridor;
+
+        
+
+        public void Start()
+        {
+            roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
+            room = roomInstance?.Room as WandererRoom;
+        }
+
+        
+        public void Update()
+        {
+            // clean Enemy array when enemy is killed;
+            CleanEnemyArray();
+            // If proba == EnemyBase Spawn
+            SecondSpawn();
+            // Check if all enemy are killed if true clear = true; (room is safe)
+            CheckIsRoomSafe();
+        }
+
+        #region RoomEnter && RoomLeave
         /// <summary>
         /// Gets called when a player enters the room.
         /// </summary>
         /// <param name="player"></param>
         /// 
-
-        //EnemySpawn Variable
-
-        bool shouldSpawnEnemy = false;
-        bool alReadyChecked = false;
-        bool EnemyBaseSpawn;
-
-
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
-           
-            // Calcule probability of 2nd Spawn
-            if (!alReadyChecked)
-            {
-                alReadyChecked = true;
-                shouldSpawnEnemy = ShouldSpawnEnemies();
-
-                if (shouldSpawnEnemy)
-                {
-                    float chanceToEnemyBase = UnityEngine.Random.Range(0.0f,1.0f);
-
-                    EnemyBaseSpawn = chanceToEnemyBase >= 0.4f ? EnemyBaseSpawn = true : EnemyBaseSpawn = false;
-                }
-              
-            }
-
-          
-
-            // Time Base Spawn
-            if (shouldSpawnEnemy && !EnemyBaseSpawn)
-            {
-                StartCoroutine(TimeBaseSpawn());
-            }
-
-
-           
-            if (!Visited && roomInstance != null)
-            {
-                Visited = true;
-                UnlockDoors();
-            }
-            
-
-
-
-            else if (room.Type != RoomType.Spawn)
-            {
-                CloseDoors();
-               // OpeningDoors(enemies);
-            }
-          //  StartCoroutine(ExploreRoom());
         }
         /// <summary>
         /// Gets called when a player leaves the room.
@@ -127,51 +86,34 @@ namespace Edgar.Unity.Examples
         /// <param name="player"></param>
         public void OnRoomLeave(GameObject player)
         {
-            //Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
-            if(!roomInstance.IsCorridor) previousRoom = roomInstance;
-            if(roomInstance.IsCorridor) previousCorridor = roomInstance;
+            if (!roomInstance.IsCorridor) previousRoom = roomInstance;
+            if (roomInstance.IsCorridor) previousCorridor = roomInstance;
 
         }
+        #endregion
 
-     
-       
-        public void Start()
-        {
-            roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
-            room = roomInstance?.Room as WandererRoom; 
-        }
+        #region Ennemies
 
         float numberOfEnemyLeftInRoom = 2f;
-        public void Update()
+        //EnemyBase Spawn
+        void SecondSpawn()
         {
-            // clean Enemy array when enely is killed;
-            CleanEnemyArray();
-            // If proba == EnemyBase Spawn
-            EnemyBasedSpawn();
-            // Check if all enemy are killed if true clear = true; (room is safe)
-            CheckIsRoomSafe();
-
-
-        }
-
-       private float timeBeforeBackUps =5f;
-        void CheckIsRoomSafe()
-        {
-            if ((!shouldSpawnEnemy && roomStruct.ennemies.Count <= 0 && !Cleared && roomStruct.isEnemyAlreadySpawned) || (shouldSpawnEnemy && EnemiesSpawned && roomStruct.ennemies.Count <= 0 && !Cleared && roomStruct.isEnemyAlreadySpawned))
+            if (roomStruct.shouldHaveSecondSpawn && !Cleared)
             {
-                Cleared = true;
+                if (roomStruct.ennemies.Count <= numberOfEnemyLeftInRoom)
+                {
+                    WandererRoomDetectionPostProcess.SpawnEnemy(RoomInstance, this, ref roomStruct, Enemies, true);
+                }
             }
         }
-       // TimeBase Spawn
-       void CleanEnemyArray()
-        {
 
+        void CleanEnemyArray()
+        {
             if (!Cleared)
             {
                 foreach (GameObject enemy in roomStruct.ennemies.ToArray())
                 {
-
                     if (enemy == null)
                     {
                         roomStruct.ennemies.Remove(enemy);
@@ -179,134 +121,17 @@ namespace Edgar.Unity.Examples
                 }
             }
         }
-       private IEnumerator TimeBaseSpawn()
-        {
-            yield return new WaitForSeconds(timeBeforeBackUps);
-            StartCoroutine(SpawnEnemies());
-        }
 
-        //EnemyBase Spawn
-        void EnemyBasedSpawn()
+        void CheckIsRoomSafe()
         {
-            if (shouldSpawnEnemy && !Cleared && !EnemiesSpawned && EnemyBaseSpawn)
+            if (!roomStruct.shouldHaveSecondSpawn && roomStruct.ennemies.Count <= 0 && !Cleared && roomStruct.isEnemyAlreadySpawned)
             {
-                if (roomStruct.ennemies.Count <= numberOfEnemyLeftInRoom)
-                {
-                    StartCoroutine(SpawnEnemies());
-                }
+                Cleared = true;
             }
         }
+        #endregion
 
-        // Spawn Enemy function voir DetectionPostProcess pour comment 
-        private IEnumerator SpawnEnemies()
-        {
-            EnemiesSpawned = true;
-            // PointsInTheCurrentRoom
-            int currentRoomPoint = 0;
-
-            var totalEnemiesCount = WandererGameManager.Instance.Random.Next(4, 8);
-            yield return new WaitForSeconds(1f);
-
-            do
-            {
-                yield return new WaitForSeconds (0.001f);
-                // Find random position inside floor collider bounds
-                var position = RandomPointInBounds(FloorCollider.bounds, 1f);
-
-                // Check if the point is actually inside the collider as there may be holes in the floor, etc.
-                if (!IsPointWithinCollider(FloorCollider, position))
-                {
-                    continue;
-                }
-
-                // We want to make sure that there is no other collider in the radius of 1
-                if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
-                {
-                    continue;
-                }
-
-                // Pick random enemy prefab
-                var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
-
-                // Create an instance of the enemy and set position and parent
-                if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomStruct.enemyPointsAvailable)
-                {
-                    var enemyGO = Instantiate(enemyPrefab.enemy);
-                    enemyGO.transform.position = position;
-                    enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                    roomStruct.ennemies.Add(enemyGO);
-                    currentRoomPoint += enemyPrefab.EnemyPoint;
-                }
-            } while (currentRoomPoint < roomStruct.enemyPointsAvailable);
-            // StartCoroutine(OpeningDoors(roomInstance.Enemies));
-        }
-        /// <summary>
-        /// Wait some time before before opening doors.
-        /// </summary>
-        private IEnumerator OpeningDoors(List<GameObject> ennemies)
-        {
-            do
-            {
-                yield return new WaitForEndOfFrame();
-                int count = 0;
-                foreach(GameObject enemy in ennemies)
-                {
-                    if (enemy == null) count++;  
-                }
-                if (count >= ennemies.Count)
-                {
-                    Cleared = true;
-                    OpenDoors();
-                }   
-            }while ( !Cleared) ;
-
-          
-        }
-
-        /// <summary>
-        /// Close doors before we spawn enemies.
-        /// </summary>
-        private void CloseDoors()
-        {
-            foreach (var door in Doors)
-            {
-                if (door.GetComponent<WandererDoors>().State == WandererDoors.DoorState.EnemyLocked)
-                {
-                    door.SetActive(true);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Open doors that were closed because of enemies.
-        /// </summary>
-        private void OpenDoors()
-        {
-            foreach (var door in Doors)
-            {
-                if (door.GetComponent<WandererDoors>().State == WandererDoors.DoorState.EnemyLocked)
-                {
-                    door.SetActive(false);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Unlock doors that were locked because there is a shop or reward room on the other end.
-        /// </summary>
-        private void UnlockDoors()
-        {
-            if (room.Type == RoomType.Reward || room.Type == RoomType.Shop)
-            {
-                foreach (var door in Doors)
-                {
-                    if (door.GetComponent<WandererDoors>().State == WandererDoors.DoorState.Locked)
-                    {
-                        door.GetComponent<WandererDoors>().State = WandererDoors.DoorState.Unlocked;
-                    }
-                }
-            }
-        }
+        #region Utiles
 
         public static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
         {
@@ -323,15 +148,7 @@ namespace Edgar.Unity.Examples
                 UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
             );
         }
-
-        /// <summary>
-        /// Check if we should spawn enemies based on the current state of the room and the type of the room.
-        /// </summary>
-        /// <returns></returns>
-        private bool ShouldSpawnEnemies()
-        {
-            return Cleared == false && EnemiesSpawned == false &&( room.Type == RoomType.Large ||room.Type == RoomType.Medium )&& UnityEngine.Random.Range(0.0f,1.0f) >= 0.5f;
-        }
+        #endregion
     }
 }
 
