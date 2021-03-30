@@ -84,15 +84,7 @@ namespace Edgar.Unity
         /// </remarks>
         public Polygon2D OutlinePolygon => outlinePolygon;
         [SerializeField] private Polygon2D outlinePolygon;
-
-        public bool IsEnemyAlreadySpawned => isEnemyAlreadySpawned;
-        [SerializeField] public bool isEnemyAlreadySpawned;
-        public List<GameObject> Enemies => enemies;
-        [SerializeField] private List<GameObject> enemies;
-
-        public int EnemyPointsAvailable => enemyPointsAvailable;
-        [SerializeField] public int enemyPointsAvailable;
-        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon, bool isEnemyAlreadySpawned, List<GameObject> enemies, int enemyPointsAvailable)
+        public RoomInstance(RoomBase room, bool isCorridor, ConnectionBase connection, GameObject roomTemplatePrefab, GameObject roomTemplateInstance, Vector3Int position, Polygon2D outlinePolygon)
         {
             this.room = room;
             this.connection = connection;
@@ -101,9 +93,6 @@ namespace Edgar.Unity
             this.position = position;
             this.outlinePolygon = outlinePolygon;
             this.isCorridor = isCorridor;
-            this.enemyPointsAvailable = enemyPointsAvailable;
-            this.enemies = enemies;
-            this.isEnemyAlreadySpawned = isEnemyAlreadySpawned;
         }
 
         /// <summary>

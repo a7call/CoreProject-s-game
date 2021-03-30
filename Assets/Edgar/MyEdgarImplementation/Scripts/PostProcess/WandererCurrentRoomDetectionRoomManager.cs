@@ -80,7 +80,6 @@ namespace Edgar.Unity.Examples
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
            
-            SetEnemyPoints();
             // Calcule probability of 2nd Spawn
             if (!alReadyChecked)
             {
@@ -159,7 +158,7 @@ namespace Edgar.Unity.Examples
        private float timeBeforeBackUps =5f;
         void CheckIsRoomSafe()
         {
-            if ((!shouldSpawnEnemy && roomInstance.Enemies.Count <= 0 && !Cleared && roomInstance.IsEnemyAlreadySpawned) || (shouldSpawnEnemy && EnemiesSpawned && roomInstance.Enemies.Count <= 0 && !Cleared && roomInstance.IsEnemyAlreadySpawned))
+            if ((!shouldSpawnEnemy && roomStruct.ennemies.Count <= 0 && !Cleared && roomStruct.isEnemyAlreadySpawned) || (shouldSpawnEnemy && EnemiesSpawned && roomStruct.ennemies.Count <= 0 && !Cleared && roomStruct.isEnemyAlreadySpawned))
             {
                 Cleared = true;
             }
@@ -170,12 +169,12 @@ namespace Edgar.Unity.Examples
 
             if (!Cleared)
             {
-                foreach (GameObject enemy in roomInstance.Enemies.ToArray())
+                foreach (GameObject enemy in roomStruct.ennemies.ToArray())
                 {
 
                     if (enemy == null)
                     {
-                        roomInstance.Enemies.Remove(enemy);
+                        roomStruct.ennemies.Remove(enemy);
                     }
                 }
             }
@@ -195,22 +194,6 @@ namespace Edgar.Unity.Examples
                 {
                     StartCoroutine(SpawnEnemies());
                 }
-            }
-        }
-
-        private void SetEnemyPoints()
-        {
-           if(room.Type == RoomType.Large)
-            {
-                roomStruct.enemyPointsAvailable = 15;
-            }
-                else if (room.Type == RoomType.Medium)
-            {
-                roomStruct.enemyPointsAvailable = 10;
-            }
-            else if (room.Type == RoomType.Small)
-            {
-                roomStruct.enemyPointsAvailable = 5;
             }
         }
 
@@ -246,7 +229,7 @@ namespace Edgar.Unity.Examples
                 var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
 
                 // Create an instance of the enemy and set position and parent
-                if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomInstance.EnemyPointsAvailable)
+                if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomStruct.enemyPointsAvailable)
                 {
                     var enemyGO = Instantiate(enemyPrefab.enemy);
                     enemyGO.transform.position = position;
@@ -254,7 +237,7 @@ namespace Edgar.Unity.Examples
                     roomStruct.ennemies.Add(enemyGO);
                     currentRoomPoint += enemyPrefab.EnemyPoint;
                 }
-            } while (currentRoomPoint < roomInstance.EnemyPointsAvailable);
+            } while (currentRoomPoint < roomStruct.enemyPointsAvailable);
             // StartCoroutine(OpeningDoors(roomInstance.Enemies));
         }
         /// <summary>

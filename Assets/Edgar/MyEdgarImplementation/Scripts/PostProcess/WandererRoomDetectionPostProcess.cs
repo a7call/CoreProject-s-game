@@ -25,17 +25,17 @@ namespace Edgar.Unity.Examples
         public static Dictionary<RoomInstance, RoomStruct> roomDictionary = new Dictionary<RoomInstance, RoomStruct>();
         public enemyStruct[] Enemies;
         Tilemap tilemapMiniMap;
-     
+
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
-            
+
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
             var Rooms = level.RootGameObject.transform.Find("Rooms");
 
             var walls = tilemapss.transform.Find("Walls").gameObject;
             var floors = tilemapss.transform.Find("Floor").gameObject;
             UpdateLayer(walls, 10);
-            UpdateLayer(floors , 14);
+            UpdateLayer(floors, 14);
             Tilemap tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
             {
@@ -43,13 +43,13 @@ namespace Edgar.Unity.Examples
                 RoomStruct roomStruct = new RoomStruct();
                 RoomStructInitializer(ref roomStruct);
                 // Set the Random instance of the GameManager to be the same instance as we use in the generator
-                if (WandererGameManager.Instance != null) 
+                if (WandererGameManager.Instance != null)
                     WandererGameManager.Instance.Random = Random;
 
                 var roomManager = AssignRoomComponents(roomInstance);
                 AssignPointToRooms(roomInstance, roomManager, ref roomStruct);
 
-                if (ShouldSpawnEnemy(roomInstance))
+                if (ShouldSpawnEnemy(roomInstance, roomStruct))
                     SpawnEnemy(roomInstance, roomManager, ref roomStruct);
 
                 roomDictionary.Add(roomInstance, roomStruct);
@@ -61,10 +61,10 @@ namespace Edgar.Unity.Examples
             MovePlayerToSpawn(level);
         }
 
-        protected void AssignPointToRooms(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager,ref RoomStruct roomStruct)
+        protected void AssignPointToRooms(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager, ref RoomStruct roomStruct)
         {
             roomManager.RoomInstance = roomInstance;
-            
+
             var room = (WandererRoom)roomInstance.Room;
 
             if (room.Type == RoomType.Large)
@@ -109,29 +109,116 @@ namespace Edgar.Unity.Examples
 
             return roomManager;
         }
-       
-        Tilemap MinimapInit(GeneratedLevel level)
-        {       
-                var tilemapsRoot = level.RootGameObject.transform.Find(GeneratorConstants.TilemapsRootName);
-                var tilemapObject = new GameObject("Minimap");
-                tilemapObject.transform.SetParent(tilemapsRoot);
-                tilemapObject.transform.localPosition = Vector3.zero;
-                var tilemap = tilemapObject.AddComponent<Tilemap>();
-                var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
-                tilemapRenderer.sortingOrder = 20;
-                tilemapMiniMap = tilemap;
 
 
-                // TODO: check that the layer exists
-                // Assign special layer
 
+        private void MovePlayerToSpawn(GeneratedLevel level)
+        {
+            foreach (var roomInstance in level.GetRoomInstances())
+            {
+                var room = (WandererRoom)roomInstance.Room;
+                var roomTemplateInstance = roomInstance.RoomTemplateInstance;
 
-                tilemapObject.layer = 17;
-                return tilemap; 
+                // Get spawn position if Entrance
+                if (room.Type == RoomType.Spawn)
+                {
+                    var spawnPosition = GameObject.FindGameObjectWithTag("SpawnPosition");
+                    var player = GameObject.FindGameObjectWithTag("Player");
+                    Debug.Log(player.transform.position);
+                    player.transform.position = spawnPosition.transform.position;
+                    Debug.Log(player.transform.position);
+                }
+            }
+        }
+
+        private bool ShouldSpawnEnemy(RoomInstance roomInstance, RoomStruct roomStruct)
+        {
+            var room = (WandererRoom)roomInstance.Room;
+            if (roomInstance.IsCorridor)
+            {
+                foreach (var roomInstanceNextToAcualRoom in roomInstance.Doors.Select(x => x.ConnectedRoomInstance))
+                {
+                    var roomNextToAcualRoom = (WandererRoom)roomInstanceNextToAcualRoom.Room;
+                    if (roomNextToAcualRoom.Type == RoomType.Spawn)
+                        return false;
+                }
+            }
+
+            return roomStruct.isEnemyAlreadySpawned == false && room.Type != RoomType.Spawn;
+        }
+
+        private void SpawnEnemy(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager, ref RoomStruct roomStruct)
+        {
+            // Enemy are set to already spawned
+            roomStruct.isEnemyAlreadySpawned = true;
+            // sécurité si boucle infini
+            int iteration = 0;
+            var room = roomInstance.RoomTemplateInstance;
+            // PointsInTheCurrentRoom
+            int currentRoomPoint = 0;
+            roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
+            do
+            {
+                iteration++;
+                // check if enemyPos is in bounds
+                var position = WandererCurrentRoomDetectionRoomManager.RandomPointInBounds(roomManager.FloorCollider.bounds, 1f);
+
+                if (!WandererCurrentRoomDetectionRoomManager.IsPointWithinCollider(roomManager.FloorCollider, position))
+                {
+                    continue;
+                }
+
+                if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
+                {
+                    continue;
+                }
+
+                // Get Random Enemy in Array
+                var enemyStruct = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
+
+                // spawn enemy if points are available 
+                if (currentRoomPoint + enemyStruct.EnemyPoint <= roomStruct.enemyPointsAvailable)
+                {
+
+                    var enemyGO = Instantiate(enemyStruct.enemy);
+                    enemyGO.transform.position = position;
+                    enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
+                    roomStruct.ennemies.Add(enemyGO);
+                    currentRoomPoint += enemyStruct.EnemyPoint;
+                }
+
+            } while (iteration < 100 || currentRoomPoint < roomStruct.enemyPointsAvailable);
+        }
+
+        protected void UpdateLayer(GameObject map, int layer)
+        {
+            map.layer = layer;
         }
 
 
-      
+
+        Tilemap MinimapInit(GeneratedLevel level)
+        {
+            var tilemapsRoot = level.RootGameObject.transform.Find(GeneratorConstants.TilemapsRootName);
+            var tilemapObject = new GameObject("Minimap");
+            tilemapObject.transform.SetParent(tilemapsRoot);
+            tilemapObject.transform.localPosition = Vector3.zero;
+            var tilemap = tilemapObject.AddComponent<Tilemap>();
+            var tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
+            tilemapRenderer.sortingOrder = 20;
+            tilemapMiniMap = tilemap;
+
+
+            // TODO: check that the layer exists
+            // Assign special layer
+
+
+            tilemapObject.layer = 17;
+            return tilemap;
+        }
+
+
+
         private void SetupFogOfWar(GeneratedLevel level)
         {
             // To setup the FogOfWar component, we need to get the root game object that holds the level.
@@ -163,88 +250,6 @@ namespace Edgar.Unity.Examples
             FogOfWar.Instance?.RevealRoom(spawnRoom, revealImmediately: true);
         }
 
-        private void MovePlayerToSpawn(GeneratedLevel level)
-        {
-            foreach (var roomInstance in level.GetRoomInstances())
-            {
-                var room = (WandererRoom)roomInstance.Room;
-                var roomTemplateInstance = roomInstance.RoomTemplateInstance;
 
-                // Get spawn position if Entrance
-                if (room.Type == RoomType.Spawn)
-                {
-                    var spawnPosition = GameObject.FindGameObjectWithTag("SpawnPosition");
-                    var player = GameObject.FindGameObjectWithTag("Player");
-                    Debug.Log(player.transform.position);
-                    player.transform.position = spawnPosition.transform.position;
-                    Debug.Log(player.transform.position);
-                }
-            }
-        }
-        
-        private bool ShouldSpawnEnemy(RoomInstance roomInstance)
-        {
-            var room = (WandererRoom)roomInstance.Room;
-            if (roomInstance.IsCorridor)
-            {
-                foreach (var roomInstanceNextToAcualRoom in roomInstance.Doors.Select(x => x.ConnectedRoomInstance))
-                {
-                   var roomNextToAcualRoom = (WandererRoom)roomInstanceNextToAcualRoom.Room;
-                   if(roomNextToAcualRoom.Type == RoomType.Spawn)
-                        return false;   
-                }
-            }
-               
-            return roomInstance.isEnemyAlreadySpawned == false && room.Type != RoomType.Spawn;
-        }
-
-        private void SpawnEnemy(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager, ref RoomStruct roomStruct)
-        {
-            // Enemy are set to already spawned
-            roomStruct.isEnemyAlreadySpawned = true;
-            // sécurité si boucle infini
-            int iteration = 0;
-            var room = roomInstance.RoomTemplateInstance;
-            // PointsInTheCurrentRoom
-            int currentRoomPoint = 0;
-            roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
-            do
-            {
-                iteration++;
-                // check if enemyPos is in bounds
-                var position = WandererCurrentRoomDetectionRoomManager.RandomPointInBounds(roomManager.FloorCollider.bounds, 1f);
-                
-                if (!WandererCurrentRoomDetectionRoomManager.IsPointWithinCollider(roomManager.FloorCollider, position))
-                {
-                    continue;
-                }
-
-                if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
-                {
-                    continue;
-                }
-                
-                // Get Random Enemy in Array
-                var enemyStruct= Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
-                
-                // spawn enemy if points are available 
-                if (currentRoomPoint + enemyStruct.EnemyPoint <= roomStruct.enemyPointsAvailable)
-                {
-                  
-                    var enemyGO = Instantiate(enemyStruct.enemy);
-                    enemyGO.transform.position = position;
-                    enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                    roomStruct.ennemies.Add(enemyGO);
-                    currentRoomPoint += enemyStruct.EnemyPoint;
-                }
-
-            } while (iteration < 100 || currentRoomPoint < roomStruct.enemyPointsAvailable ) ;
-        }
-
-        protected void UpdateLayer(GameObject map, int layer)
-        {
-            map.layer = layer;
-        }
     }
 }
-
