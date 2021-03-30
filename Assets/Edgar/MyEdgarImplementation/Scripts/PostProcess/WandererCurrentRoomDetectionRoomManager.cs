@@ -33,6 +33,8 @@ namespace Edgar.Unity.Examples
         /// </summary>
         public enemyStruct[] Enemies;
 
+        public RoomStruct roomStruct;
+
         /// <summary>
         /// Whether enemies were spawned.
         /// </summary>
@@ -77,7 +79,7 @@ namespace Edgar.Unity.Examples
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
-            lightGestion();
+           
             SetEnemyPoints();
             // Calcule probability of 2nd Spawn
             if (!alReadyChecked)
@@ -94,6 +96,7 @@ namespace Edgar.Unity.Examples
               
             }
 
+          
 
             // Time Base Spawn
             if (shouldSpawnEnemy && !EnemyBaseSpawn)
@@ -132,56 +135,7 @@ namespace Edgar.Unity.Examples
 
         }
 
-      
-
-        void lightGestion()
-        {
-            if (!roomInstance.IsCorridor && previousRoom != null)
-            {
-                if (previousRoom == roomInstance)
-                {
-                    foreach (RoomInstance room in roomInstance.Doors.Select(x => x.ConnectedRoomInstance))
-                    {
-                        foreach (RoomInstance roomInstance in room.Doors.Select(x => x.ConnectedRoomInstance))
-                        {
-                            if (roomInstance != previousRoom)
-                            {
-                                GetLigthSwitchOFF(roomInstance);
-                            }
-
-                        }
-                    }
-
-                }
-                else
-                {
-                    GetLigthSwitchOFF(previousRoom);
-                }
-
-            }
-            if (roomInstance.IsCorridor && previousCorridor != null && previousCorridor != roomInstance)
-            {
-                GetLigthSwitchOFF(previousCorridor);
-            }
-        }
-        
-        private void GetLigthSwitchOFF(RoomInstance roomInstance)
-        {
-           
-            if(roomInstance.RoomTemplateInstance.transform.Find("LightContainer") != null)
-            {
-                Transform LigthContainerObject = roomInstance.RoomTemplateInstance.transform.Find("LightContainer");
-
-                foreach (Transform child in LigthContainerObject.transform)
-                {
-                    if (child.gameObject.activeSelf)
-                    {
-                        child.gameObject.SetActive(false);
-                    }
-                }
-            } 
-           
-        }
+     
        
         public void Start()
         {
@@ -237,7 +191,7 @@ namespace Edgar.Unity.Examples
         {
             if (shouldSpawnEnemy && !Cleared && !EnemiesSpawned && EnemyBaseSpawn)
             {
-                if (roomInstance.Enemies.Count <= numberOfEnemyLeftInRoom)
+                if (roomStruct.ennemies.Count <= numberOfEnemyLeftInRoom)
                 {
                     StartCoroutine(SpawnEnemies());
                 }
@@ -248,15 +202,15 @@ namespace Edgar.Unity.Examples
         {
            if(room.Type == RoomType.Large)
             {
-                roomInstance.enemyPointsAvailable = 15;
+                roomStruct.enemyPointsAvailable = 15;
             }
                 else if (room.Type == RoomType.Medium)
             {
-                roomInstance.enemyPointsAvailable = 10;
+                roomStruct.enemyPointsAvailable = 10;
             }
             else if (room.Type == RoomType.Small)
             {
-                roomInstance.enemyPointsAvailable = 5;
+                roomStruct.enemyPointsAvailable = 5;
             }
         }
 
@@ -297,7 +251,7 @@ namespace Edgar.Unity.Examples
                     var enemyGO = Instantiate(enemyPrefab.enemy);
                     enemyGO.transform.position = position;
                     enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                    roomInstance.Enemies.Add(enemyGO);
+                    roomStruct.ennemies.Add(enemyGO);
                     currentRoomPoint += enemyPrefab.EnemyPoint;
                 }
             } while (currentRoomPoint < roomInstance.EnemyPointsAvailable);

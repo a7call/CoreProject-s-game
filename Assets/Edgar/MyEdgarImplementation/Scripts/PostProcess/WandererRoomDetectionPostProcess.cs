@@ -16,13 +16,13 @@ namespace Edgar.Unity.Examples
     public struct RoomStruct
     {
         public List<GameObject> ennemies;
-        public int numberOfPoints;
+        public int enemyPointsAvailable;
         public bool isEnemyAlreadySpawned;
     }
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
     public class WandererRoomDetectionPostProcess : DungeonGeneratorPostProcessBase
     {
-        public Dictionary<RoomInstance, RoomStruct> roomDictionary = new Dictionary<RoomInstance, RoomStruct>();
+        public static Dictionary<RoomInstance, RoomStruct> roomDictionary = new Dictionary<RoomInstance, RoomStruct>();
         public enemyStruct[] Enemies;
         Tilemap tilemapMiniMap;
      
@@ -39,38 +39,53 @@ namespace Edgar.Unity.Examples
             Tilemap tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
             {
+
+                RoomStruct roomStruct = new RoomStruct();
+                RoomStructInitializer(ref roomStruct);
                 // Set the Random instance of the GameManager to be the same instance as we use in the generator
                 if (WandererGameManager.Instance != null) 
                     WandererGameManager.Instance.Random = Random;
 
                 var roomManager = AssignRoomComponents(roomInstance);
-                AssignPointToRooms(roomInstance, roomManager);
+                AssignPointToRooms(roomInstance, roomManager, ref roomStruct);
 
                 if (ShouldSpawnEnemy(roomInstance))
-                    SpawnEnemy(roomInstance, roomManager);
+                    SpawnEnemy(roomInstance, roomManager, ref roomStruct);
+
+                roomDictionary.Add(roomInstance, roomStruct);
+
+                roomManager.roomStruct = roomStruct;
+                roomManager.Enemies = Enemies;
             }
             AstarPath.active.Scan();
             MovePlayerToSpawn(level);
         }
 
-        protected void AssignPointToRooms(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager)
+        protected void AssignPointToRooms(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager,ref RoomStruct roomStruct)
         {
             roomManager.RoomInstance = roomInstance;
-            roomManager.Enemies = Enemies;
+            
             var room = (WandererRoom)roomInstance.Room;
 
             if (room.Type == RoomType.Large)
             {
-                roomInstance.enemyPointsAvailable = 15;
+                roomStruct.enemyPointsAvailable = 15;
             }
             else if (room.Type == RoomType.Medium)
             {
-                roomInstance.enemyPointsAvailable = 10;
+                roomStruct.enemyPointsAvailable = 10;
             }
             else if (room.Type == RoomType.Small)
             {
-                roomInstance.enemyPointsAvailable = 5;
+                roomStruct.enemyPointsAvailable = 5;
             }
+        }
+
+        protected void RoomStructInitializer(ref RoomStruct roomStruct)
+        {
+            roomStruct.isEnemyAlreadySpawned = false;
+            roomStruct.ennemies = new List<GameObject>();
+            roomStruct.enemyPointsAvailable = 0;
         }
 
         protected WandererCurrentRoomDetectionRoomManager AssignRoomComponents(RoomInstance roomInstance)
@@ -89,6 +104,8 @@ namespace Edgar.Unity.Examples
             var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
 
             roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
+
+            floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
 
             return roomManager;
         }
@@ -181,27 +198,19 @@ namespace Edgar.Unity.Examples
             return roomInstance.isEnemyAlreadySpawned == false && room.Type != RoomType.Spawn;
         }
 
-        private void SpawnEnemy(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager)
+        private void SpawnEnemy(RoomInstance roomInstance, WandererCurrentRoomDetectionRoomManager roomManager, ref RoomStruct roomStruct)
         {
-
             // Enemy are set to already spawned
-            roomInstance.isEnemyAlreadySpawned = true;
-           
-
+            roomStruct.isEnemyAlreadySpawned = true;
             // sécurité si boucle infini
             int iteration = 0;
-
             var room = roomInstance.RoomTemplateInstance;
-
             // PointsInTheCurrentRoom
             int currentRoomPoint = 0;
-            
-             roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
-            
+            roomManager = room.GetComponent<WandererCurrentRoomDetectionRoomManager>();
             do
             {
                 iteration++;
-
                 // check if enemyPos is in bounds
                 var position = WandererCurrentRoomDetectionRoomManager.RandomPointInBounds(roomManager.FloorCollider.bounds, 1f);
                 
@@ -216,23 +225,20 @@ namespace Edgar.Unity.Examples
                 }
                 
                 // Get Random Enemy in Array
-                var enemyPrefab = Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
-               
+                var enemyStruct= Enemies[UnityEngine.Random.Range(0, Enemies.Length)];
+                
                 // spawn enemy if points are available 
-                if (currentRoomPoint + enemyPrefab.EnemyPoint <= roomInstance.EnemyPointsAvailable)
+                if (currentRoomPoint + enemyStruct.EnemyPoint <= roomStruct.enemyPointsAvailable)
                 {
                   
-                    var enemyGO = Instantiate(enemyPrefab.enemy);
+                    var enemyGO = Instantiate(enemyStruct.enemy);
                     enemyGO.transform.position = position;
                     enemyGO.transform.parent = roomInstance.RoomTemplateInstance.transform;
-                    roomInstance.Enemies.Add(enemyGO);
-                    currentRoomPoint += enemyPrefab.EnemyPoint;
+                    roomStruct.ennemies.Add(enemyGO);
+                    currentRoomPoint += enemyStruct.EnemyPoint;
                 }
-              
-                
 
-
-            } while (iteration < 100 || currentRoomPoint < roomInstance.EnemyPointsAvailable ) ;
+            } while (iteration < 100 || currentRoomPoint < roomStruct.enemyPointsAvailable ) ;
         }
 
         protected void UpdateLayer(GameObject map, int layer)
