@@ -55,32 +55,42 @@ public class DistanceWeapon : Weapons
     [HideInInspector]
     public Sprite image;
 
+
+    #region Unity Mono
     protected override void Awake()
     {
         base.Awake();
         SetData();
-        AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
-        AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
-        Proj = projectile.GetComponent<PlayerProjectiles>();
-
-
-
+        InitializeMag();
+        GetReferences();
     }
 
+
+    private void OnEnable()
+    {
+        IsReloading = false;
+        isAttacking = false;
+    }
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
         InfiniteAmmo = isUnlimitedAmmoModule;
-        //GetAttackDirection();
-        if (OkToShoot)
-        {
-            CoroutineManager.Instance.StartCoroutine(Shoot());
-            
-        }
-       
-
         DisplayAmmo();
+
+        if (IsReloading)
+            return;
+
+        if (BulletInMag <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
+            
+
+        StartShootingProcess();
+
+        
 
         if (isCanonRapideModule && !CadenceAlreadyUp)
         {
@@ -101,28 +111,25 @@ public class DistanceWeapon : Weapons
 
     }
 
-   protected virtual IEnumerator Shoot()
+    private void OnDrawGizmosSelected()
     {
-
-        if (!isAttacking && BulletInMag > 0 && !IsReloading && !PauseMenu.isGamePaused)
-        {
-            
-            float decalage = Random.Range(-Dispersion, Dispersion);
-            isAttacking = true;
-            animator.SetTrigger("isAttacking");
-            Proj.Dispersion = decalage;
-            BulletInMag--;
-            Instantiate(projectile, attackPoint.position, Quaternion.identity);
-            yield return new WaitForSeconds(attackDelay);
-            isAttacking = false;
-            if (BulletInMag <= 0 && !IsReloading)
-            {
-                CoroutineManager.Instance.StartCoroutine(Reload());
-            }
-        }
-       
+        Gizmos.DrawWireSphere(attackPoint.position, 0.4f);
+        Gizmos.color = Color.red;
     }
 
+    #endregion
+
+    #region Datas && References 
+    private void GetReferences()
+    {
+        AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
+        AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
+        Proj = projectile.GetComponent<PlayerProjectiles>();
+    }
+    private void InitializeMag()
+    {
+        BulletInMag = MagSize;
+    }
 
     protected virtual void SetData()
     {
@@ -134,44 +141,77 @@ public class DistanceWeapon : Weapons
         MagSize = DistanceWeaponData.MagSize;
         ReloadDelay = DistanceWeaponData.ReloadDelay;
         AmmoStock = DistanceWeaponData.AmmoStock;
-
-        BulletInMag = MagSize;
         image = DistanceWeaponData.image;
-        
+
     }
 
-    private void OnDrawGizmosSelected()
+
+    #endregion
+
+
+    #region Shoot logic
+    protected virtual IEnumerator Shoot()
     {
-        Gizmos.DrawWireSphere(attackPoint.position, 0.4f);
-        Gizmos.color = Color.red;
+        float decalage = Random.Range(-Dispersion, Dispersion);      
+        Proj.Dispersion = decalage;
+        BulletInMag--;
+        Instantiate(projectile, attackPoint.position, Quaternion.identity);
+        yield return new WaitForSeconds(attackDelay);
+        isAttacking = false;
     }
 
+    private bool IsAbleToShoot()
+    {
+        return OkToShoot && !isAttacking  && BulletInMag > 0 && !PauseMenu.isGamePaused;
+    }
+
+    private void StartShootingProcess()
+    {
+        if (IsAbleToShoot())
+        {
+            isAttacking = true;
+            if (animator)
+            {
+                animator.SetTrigger("isAttacking");
+            }
+            else
+            {
+                StartCoroutine(Shoot());
+            }
+           
+        }
+    }
+
+
+    #endregion
+
+
+    #region Reload logic
     protected IEnumerator Reload()
     {
         //if (BulletInMag != MagSize && !IsReloading && (AmmoStock != 0 | InfiniteAmmo))
         //{
 
-            IsReloading = true;
-            yield return new WaitForSeconds(ReloadDelay);
-            if (AmmoStock + BulletInMag >= MagSize && !InfiniteAmmo)
-            {
-                AmmoStock = AmmoStock + BulletInMag;
-                AmmoStock = AmmoStock - MagSize;
-                BulletInMag = MagSize;
-            }
-            else if (AmmoStock + BulletInMag <= MagSize && !InfiniteAmmo)
-            {
-                AmmoStock = AmmoStock + BulletInMag;
-                BulletInMag = AmmoStock;
-                AmmoStock = AmmoStock - BulletInMag;
-            }
-            else if (isUnlimitedAmmoModule)
-            {
-                BulletInMag = MagSize;
-            }
+        IsReloading = true;
+        yield return new WaitForSeconds(ReloadDelay);
+        if (AmmoStock + BulletInMag >= MagSize && !InfiniteAmmo)
+        {
+            AmmoStock = AmmoStock + BulletInMag;
+            AmmoStock = AmmoStock - MagSize;
+            BulletInMag = MagSize;
+        }
+        else if (AmmoStock + BulletInMag <= MagSize && !InfiniteAmmo)
+        {
+            AmmoStock = AmmoStock + BulletInMag;
+            BulletInMag = AmmoStock;
+            AmmoStock = AmmoStock - BulletInMag;
+        }
+        else if (isUnlimitedAmmoModule)
+        {
+            BulletInMag = MagSize;
+        }
 
-            IsReloading = false;
-        //}
+        IsReloading = false;
     }
 
     public void toReload()
@@ -181,7 +221,12 @@ public class DistanceWeapon : Weapons
             StartCoroutine(Reload());
         }
     }
-  
+
+    #endregion
+
+    
+
+    #region UI
 
     protected void DisplayAmmo()
     {
@@ -197,5 +242,6 @@ public class DistanceWeapon : Weapons
             AmmoStockText.text = "Infini";
         }
     }
+    #endregion
 
 }

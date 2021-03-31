@@ -114,7 +114,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         if (isPlayingDistance == true)
         {
             foreach (GameObject weapon in distanceWeaponsList)
-            {
+            {  
                 if (j == selectedDistanceWeapon)
                 {
                     weapon.gameObject.SetActive(true);
