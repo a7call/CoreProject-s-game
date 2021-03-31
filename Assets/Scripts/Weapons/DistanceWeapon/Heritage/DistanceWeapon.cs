@@ -109,6 +109,7 @@ public class DistanceWeapon : Weapons
             
             float decalage = Random.Range(-Dispersion, Dispersion);
             isAttacking = true;
+            animator.SetTrigger("isAttacking");
             Proj.Dispersion = decalage;
             BulletInMag--;
             Instantiate(projectile, attackPoint.position, Quaternion.identity);

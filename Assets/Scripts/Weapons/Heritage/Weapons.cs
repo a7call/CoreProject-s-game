@@ -36,9 +36,14 @@ public class Weapons : MonoBehaviour
     public float RangeMiniChangementTir = 5;
     [SerializeField] public float RangeChangementTir;
 
+    // Animator
+    protected Animator animator;
+
+
     protected virtual void Awake()
     {
         this.enabled = false;
+        animator = gameObject.GetComponent<Animator>();
     }
 
     protected void Start()
