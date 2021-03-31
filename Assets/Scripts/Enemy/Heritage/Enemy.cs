@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Coroutine qui knockBack l'ennemi
-    public IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
+    public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
         if (currentState == State.Charging) yield break;
         rb.AddForce(dir * knockBackForce);
@@ -291,6 +291,8 @@ public class Enemy : MonoBehaviour
     protected bool isReadyToSwitchState;
     protected bool isSupposedToMoveAttacking = false;
     public State currentState;
+
+   
     public enum State
     {
         Patrolling,
@@ -303,6 +305,47 @@ public class Enemy : MonoBehaviour
         Freeze,
         Feared,
         Charging,
+    }
+    void SwitchBasicStates(State currentState)
+    {
+        switch(currentState)
+        {
+            default:
+                rb.velocity = Vector2.zero;
+            break;
+            case State.Paralysed:
+                // Animation
+                DisableEnemyMouvement();
+            break;
+
+            case State.KnockedBack:
+                DisableEnemyMouvement();
+            break;
+
+            case State.Freeze:
+                // Animation
+                DisableEnemyMouvement();
+            break;
+
+            case State.Feared:
+                DisableEnemyMouvement();
+            Fear();
+            break;
+
+            case State.Death:
+                HasEnterDyingState();
+
+            break;
+            case State.Patrolling:
+                if (aIPath.canMove)
+            {
+                DisableEnemyMouvement();
+            }
+            PlayerInSight();
+
+
+            break;
+        }
     }
 
     protected virtual void PlayerInSight()
@@ -377,44 +420,9 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        switch (currentState)
-        {
-            default:
-                rb.velocity = Vector2.zero;
-                break;
-            case State.Paralysed:
-                // Animation
-                DisableEnemyMouvement();
-                break;
 
-            case State.KnockedBack:
-                DisableEnemyMouvement();
-                break;
+        SwitchBasicStates(currentState);
 
-            case State.Freeze:
-                // Animation
-                DisableEnemyMouvement();
-                break;
-
-            case State.Feared:
-                DisableEnemyMouvement();
-                Fear();
-                break;
-
-            case State.Death:
-                HasEnterDyingState();
-                
-                break;
-            case State.Patrolling:
-                if (aIPath.canMove)
-                {
-                    DisableEnemyMouvement();
-                }
-                PlayerInSight();
-                
-                
-                break;
-        }
         healthBar.SetHealth(currentHealth);
         DisplayBar();
         ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
