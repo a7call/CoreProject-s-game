@@ -116,6 +116,10 @@ public class DistanceWeapon : Weapons
         Gizmos.DrawWireSphere(attackPoint.position, 0.4f);
         Gizmos.color = Color.red;
     }
+    private void OnDisable()
+    {
+        GetComponent<SpriteRenderer>().sprite = image;
+    }
 
     #endregion
 
