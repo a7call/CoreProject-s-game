@@ -29,7 +29,11 @@ public class Weapons : MonoBehaviour
     protected Vector3 screenArmePos;
     public Vector3 posSouris;
 
+    // Offset de la postion de l'arme
     public Vector3 OffPositionArme;
+    [SerializeField] private Vector3 topOffSet;
+    [SerializeField] private Vector3 otherOffset;
+
 
     protected GameObject player;
 
@@ -39,6 +43,8 @@ public class Weapons : MonoBehaviour
     // Animator
     protected Animator animator;
 
+    // Sprite Renderer
+    private SpriteRenderer spriteRenderer;
 
     protected virtual void Awake()
     {
@@ -49,11 +55,11 @@ public class Weapons : MonoBehaviour
     protected void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     // recupère en temps réel la position de la souris et associe cette position au point d'attaque du Player
     protected virtual void GetAttackDirection()
     {
-
         // position de la souris sur l'écran 
         screenMousePos = Input.mousePosition;
         // position du player en pixel sur l'écran 
@@ -61,7 +67,31 @@ public class Weapons : MonoBehaviour
         // position du point d'attaque
         screenArmePos = Camera.main.WorldToScreenPoint(attackPoint.transform.position);
 
-        posSouris = new Vector3((screenMousePos - screenArmePos).x , (screenMousePos - screenArmePos).y);
+        posSouris = new Vector3((screenMousePos - screenArmePos).x , (screenMousePos - screenArmePos).y).normalized;
+    }
+
+    protected virtual void ChangeLayer()
+    {
+        // Pour récuperer la position de la souris
+        GetAttackDirection();
+
+        // On change de layer pour des lorsque le joueur regarde en haut
+        // C'est-à-dire, lorsque y > 0 et x < cos(45)
+        float angle45 = Mathf.Sqrt(2) / 2;
+        print(Mathf.Abs(posSouris.x));
+        if (posSouris.y > 0 && Mathf.Abs(posSouris.x) <= angle45)
+        {
+            print("A");
+            OffPositionArme = topOffSet;
+            spriteRenderer.sortingOrder = 0;
+        }
+        else
+        {
+            print("B");
+            OffPositionArme = otherOffset;
+            spriteRenderer.sortingOrder = 2;
+        }
+
     }
 
     protected Vector3 dirProj;
@@ -91,6 +121,7 @@ public class Weapons : MonoBehaviour
 
 protected virtual void Update()
     {
+        ChangeLayer();
         if (isTotalDestructionModule && !damagealReadyMult)
         {
             damagealReadyMult = true;
