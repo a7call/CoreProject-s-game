@@ -49,6 +49,8 @@ public class WeaponsManagerSelected : MonoBehaviour
         if (collision.CompareTag("CacWeapon") || collision.CompareTag("DistanceWeapon"))
         {
             collision.transform.parent = gameObject.transform;
+            if (collision.GetComponent<distanceWeaponTest>())
+                collision.GetComponent<distanceWeaponTest>().enabled = true;
             collision.GetComponent<Weapons>().enabled = true;
             Weapons weapons = collision.GetComponent<Weapons>();
             collision.transform.localPosition = weapons.OffPositionArme;

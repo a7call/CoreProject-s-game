@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Wanderer.CharacterStats;
 
-
-
     public class Character
     {
         public CharacterStats Strength;
     }
-    public class Item
+    public class Item : ScriptableObject
     {
         public void Equip(Character c)
         {
