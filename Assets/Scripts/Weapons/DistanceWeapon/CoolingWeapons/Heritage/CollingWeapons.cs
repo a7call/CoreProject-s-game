@@ -27,7 +27,7 @@ public class CollingWeapons : DistanceWeapon
     {
         enemyLayer = CollingWeaponScriptable.enemyLayer;
         damage = CollingWeaponScriptable.damage;
-        attackDelay = CollingWeaponScriptable.AttackDelay;
+        attackDelay = CollingWeaponScriptable.delayBetweenAttack;
         image = CollingWeaponScriptable.image;
         coolingDelay = CollingWeaponScriptable.coolingDelay;
         coolingTime = CollingWeaponScriptable.coolingTime;

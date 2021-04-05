@@ -32,6 +32,7 @@ namespace Wanderer.CharacterStats
 
         public virtual float Value
         {
+            
             get
             {
                 if (isDirty || lastBaseValue != BaseValue)
@@ -46,6 +47,7 @@ namespace Wanderer.CharacterStats
 
         public virtual void AddModifier(StatModifier mod)
         {
+            
             isDirty = true;
             statModifiers.Add(mod);
             statModifiers.Sort(CompareModifierOrder);
@@ -78,6 +80,7 @@ namespace Wanderer.CharacterStats
             {
                 if (statModifiers[i].Source == source)
                 {
+                   
                     isDirty = true;
                     didRemove = true;
                     statModifiers.RemoveAt(i);

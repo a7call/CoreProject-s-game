@@ -7,13 +7,13 @@ using UnityEngine.InputSystem;
 public class DistanceWeapon : Weapons
 {
     
-    [SerializeField] protected DistanceWeaponScriptableObject DistanceWeaponData;
+    public DistanceWeaponScriptableObject DistanceWeaponData;
     protected GameObject projectile;
     protected PlayerProjectiles Proj;
     protected float Dispersion;
     protected bool IsReloading;
     [HideInInspector]
-    public bool OkToShoot;
+    public bool OkToShoot = true;
     [HideInInspector]
     public int BulletInMag;
     protected float ReloadDelay;
@@ -23,7 +23,7 @@ public class DistanceWeapon : Weapons
     protected bool InfiniteAmmo;
     [HideInInspector]
     public int AmmoStock;
-
+    #region Module Et des betises
     //CanonRapideModule
     [HideInInspector]
     protected bool CadenceAlreadyUp = false;
@@ -51,7 +51,7 @@ public class DistanceWeapon : Weapons
     //UnlimitedAmmoModule
     [HideInInspector]
     public static bool isUnlimitedAmmoModule;
-
+    #endregion
     [HideInInspector]
     public Sprite image;
 
@@ -66,11 +66,14 @@ public class DistanceWeapon : Weapons
     }
 
 
-    private void OnEnable()
+
+    protected override  void OnEnable()
     {
+        base.OnEnable();
         IsReloading = false;
-        isAttacking = false;
+        isAttacking = false;  
     }
+
     // Update is called once per frame
     protected override void Update()
     {
@@ -90,8 +93,8 @@ public class DistanceWeapon : Weapons
 
         StartShootingProcess();
 
-        
 
+        #region Module et des betises
         if (isCanonRapideModule && !CadenceAlreadyUp)
         {
             CadenceAlreadyUp = true;
@@ -108,6 +111,7 @@ public class DistanceWeapon : Weapons
             FastReloadAlreadyActive = true;
             ReloadDelay /= ReloadSpeedMultiplier;
         }
+        #endregion
 
     }
 
@@ -116,6 +120,7 @@ public class DistanceWeapon : Weapons
         Gizmos.DrawWireSphere(attackPoint.position, 0.4f);
         Gizmos.color = Color.red;
     }
+     bool isalreadyDisable = false;
     private void OnDisable()
     {
         GetComponent<SpriteRenderer>().sprite = image;
@@ -140,7 +145,7 @@ public class DistanceWeapon : Weapons
         projectile = DistanceWeaponData.projectile;
         enemyLayer = DistanceWeaponData.enemyLayer;
         damage = DistanceWeaponData.damage;
-        attackDelay = DistanceWeaponData.AttackDelay;
+        attackDelay = DistanceWeaponData.delayBetweenAttack;
         Dispersion = DistanceWeaponData.Dispersion;
         MagSize = DistanceWeaponData.MagSize;
         ReloadDelay = DistanceWeaponData.ReloadDelay;
@@ -160,7 +165,8 @@ public class DistanceWeapon : Weapons
         Proj.Dispersion = decalage;
         BulletInMag--;
         Instantiate(projectile, attackPoint.position, Quaternion.identity);
-        yield return new WaitForSeconds(attackDelay);
+        print(playerMouv.attackSpeed.Value);
+        yield return new WaitForSeconds(playerMouv.attackSpeed.Value);
         isAttacking = false;
     }
 

@@ -49,26 +49,26 @@ public class WeaponsManagerSelected : MonoBehaviour
         if (collision.CompareTag("CacWeapon") || collision.CompareTag("DistanceWeapon"))
         {
             collision.transform.parent = gameObject.transform;
-            if (collision.GetComponent<distanceWeaponTest>())
-                collision.GetComponent<distanceWeaponTest>().enabled = true;
             collision.GetComponent<Weapons>().enabled = true;
             Weapons weapons = collision.GetComponent<Weapons>();
             collision.transform.localPosition = weapons.OffPositionArme;
-            collision.transform.localRotation = Quaternion.Euler(0,0,0);
+            collision.transform.localRotation = Quaternion.Euler(0, 0, 0);
             collision.transform.gameObject.SetActive(false);
             collision.GetComponent<Collider2D>().enabled = false;
+            
+        
 
             if (transform.childCount == 1)
             {
-                transform.GetChild(0).gameObject.SetActive(true);
+                EquipeWeapon(transform.GetChild(0).gameObject);
             }
             else
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    transform.GetChild(i).gameObject.SetActive(false);
+                    UnEquipWeapon(transform.GetChild(i).gameObject);
                 }
-                transform.GetChild(transform.childCount-1).gameObject.SetActive(true);
+                EquipeWeapon(transform.GetChild(transform.childCount - 1).gameObject);
             }
 
             if (collision.CompareTag("CacWeapon"))
@@ -99,17 +99,17 @@ public class WeaponsManagerSelected : MonoBehaviour
             {
                 if (i == selectedCacWeapon)
                 {
-                    weapon.gameObject.SetActive(true);
+                    EquipeWeapon(weapon);
                 }
                 else
                 {
-                    weapon.gameObject.SetActive(false);
+                    EquipeWeapon(weapon);
                 }
                 i++;
             }
             foreach(GameObject weapon in distanceWeaponsList)
             {
-                weapon.gameObject.SetActive(false);
+                UnEquipWeapon(weapon);
             }
         }
 
@@ -119,17 +119,17 @@ public class WeaponsManagerSelected : MonoBehaviour
             {  
                 if (j == selectedDistanceWeapon)
                 {
-                    weapon.gameObject.SetActive(true);
+                    EquipeWeapon(weapon);
                 }
                 else
                 {
-                    weapon.gameObject.SetActive(false);
+                    UnEquipWeapon(weapon);
                 }
                 j++;
             }
             foreach (GameObject weapon in cacWeaponsList)
             {
-                weapon.gameObject.SetActive(false);
+                UnEquipWeapon(weapon);
             }
         }
     }
@@ -170,6 +170,20 @@ public class WeaponsManagerSelected : MonoBehaviour
                 }
      
     }
+
+
+    private void EquipeWeapon(GameObject weapon)
+    {
+        weapon.gameObject.SetActive(true);
+        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<PlayerMouvement>());
+    }
+
+    private void UnEquipWeapon(GameObject weapon)
+    {
+        weapon.gameObject.SetActive(false);
+        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<PlayerMouvement>());
+    }
+
 
     private void ChangeWeapons()
     {

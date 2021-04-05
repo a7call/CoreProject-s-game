@@ -18,7 +18,7 @@ public class CanonZeus : DistanceWeapon
     {
         enemyLayer = DistanceWeaponData.enemyLayer;
         damage = DistanceWeaponData.damage;
-        attackDelay = DistanceWeaponData.AttackDelay;
+        attackDelay = DistanceWeaponData.delayBetweenAttack;
         Dispersion = DistanceWeaponData.Dispersion;
         MagSize = DistanceWeaponData.MagSize;
         ReloadDelay = DistanceWeaponData.ReloadDelay;

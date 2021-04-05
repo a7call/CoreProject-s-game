@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using UnityEngine.InputSystem;
+using Wanderer.CharacterStats;
 
 /// <summary>
 /// Classe gérant les mouvements du joueur (se référer à Lopez)
@@ -12,6 +13,35 @@ public class PlayerMouvement : Player
     public static bool isModuleInertie;
 
     private Vector2 mouvement;
+   
+    
+    [Header("Projectile")]
+    public CharacterStats damage;
+    public CharacterStats projectileSpeed;
+    public CharacterStats dispersion;
+    public CharacterStats knockBackForce;
+    public CharacterStats explosionDamage;
+    public CharacterStats imolationDamage;
+    public CharacterStats slow;
+
+    [Header("Chance of drops")]
+    public CharacterStats chanceToDropCoins;
+    public CharacterStats chanceToDropObjects;
+    public CharacterStats chanceToDropAmmos;
+    public CharacterStats chanceToDropHeart;
+
+    [Header("Weapon")]
+    public CharacterStats reloadSpeed;
+    public CharacterStats cadence;
+    public CharacterStats range;
+    public CharacterStats attackSpeed;
+
+
+    [Header("Player")]
+    public CharacterStats mHealth;
+    public CharacterStats moveSpeed;
+
+
 
 
     //Changement de velocity de privée à public
@@ -110,7 +140,7 @@ public class PlayerMouvement : Player
                 PiercedPocketActivation();
                 break;
         }
-        
+
     }
 
 

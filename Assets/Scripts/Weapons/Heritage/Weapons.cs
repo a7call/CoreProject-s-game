@@ -36,6 +36,7 @@ public class Weapons : MonoBehaviour
 
 
     protected GameObject player;
+    protected PlayerMouvement playerMouv;
 
     public float RangeMiniChangementTir = 5;
     [SerializeField] public float RangeChangementTir;
@@ -56,6 +57,11 @@ public class Weapons : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+    }
+    protected virtual void OnEnable()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerMouv = player.GetComponent<PlayerMouvement>();
     }
     // recupère en temps réel la position de la souris et associe cette position au point d'attaque du Player
     protected virtual void GetAttackDirection()
@@ -78,16 +84,14 @@ public class Weapons : MonoBehaviour
         // On change de layer pour des lorsque le joueur regarde en haut
         // C'est-à-dire, lorsque y > 0 et x < cos(45)
         float angle45 = Mathf.Sqrt(2) / 2;
-        print(Mathf.Abs(posSouris.x));
+
         if (posSouris.y > 0 && Mathf.Abs(posSouris.x) <= angle45)
         {
-            print("A");
             OffPositionArme = topOffSet;
             spriteRenderer.sortingOrder = 0;
         }
         else
         {
-            print("B");
             OffPositionArme = otherOffset;
             spriteRenderer.sortingOrder = 2;
         }

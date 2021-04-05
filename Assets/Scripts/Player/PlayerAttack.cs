@@ -40,9 +40,10 @@ public class PlayerAttack : Player
 
             if (weaponManager.isPlayingDistance)
             {
+           
                 //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
                 weaponManager.GetComponentInChildren<DistanceWeapon>().OkToShoot = true;
-                
+
             }
             else if (weaponManager.isPlayingCac)
             {
@@ -55,6 +56,7 @@ public class PlayerAttack : Player
             {
                 //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
                 weaponManager.GetComponentInChildren<DistanceWeapon>().OkToShoot = false;
+
                 
             }
 

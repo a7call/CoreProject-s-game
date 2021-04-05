@@ -91,7 +91,7 @@ public class CacWeapons : Weapons
         enemyLayer = WeaponData.enemyLayer;
         damage = WeaponData.damage;
         knockBackForce = WeaponData.knockBackForce;
-        attackDelay = WeaponData.AttackDelay;
+        attackDelay = WeaponData.delayBetweenAttack;
         knockBackTime = WeaponData.knockBackTime;
         image = WeaponData.image;
     }
