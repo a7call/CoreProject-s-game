@@ -15,7 +15,7 @@ public class WeaponScriptableObject : Item
     public float ReloadDelay;
     public int AmmoStock;
 
-    public override void Equip(PlayerMouvement p)
+    public override void Equip(Player p)
     {
         if (delayBetweenAttack != 0)
             p.attackSpeed.AddModifier(new StatModifier(delayBetweenAttack, StatModType.Flat, this));
@@ -24,7 +24,7 @@ public class WeaponScriptableObject : Item
 
     }
 
-    public override void Unequip(PlayerMouvement p)
+    public override void Unequip(Player p)
     {
         p.attackSpeed.RemoveAllModifiersFromSource(this);
         p.damage.RemoveAllModifiersFromSource(this);

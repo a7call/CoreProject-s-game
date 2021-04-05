@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Redbull : StacksObjects
 {
-
-    private PlayerMouvement playerMouvement;
     // Variables pour la vitesse de déplacements
     [SerializeField] private float newMoveSpeed = 300f;
     [SerializeField] private float timeMoveSpeed = 10f;
@@ -15,7 +13,7 @@ public class Redbull : StacksObjects
         base.Start();
         // pas cumulable (c'est chiant)
         timeMoveSpeed = cd + 1;
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        player = FindObjectOfType<Player>();
     }
 
     protected override void Update()
@@ -30,10 +28,10 @@ public class Redbull : StacksObjects
 
     private IEnumerator MoveCoroutine()
     {
-        float moveSpeed = playerMouvement.mooveSpeed;
-        playerMouvement.mooveSpeed = newMoveSpeed;
+        float moveSpeed = player.mooveSpeed;
+        player.mooveSpeed = newMoveSpeed;
         yield return new WaitForSeconds(timeMoveSpeed);
-        playerMouvement.mooveSpeed = moveSpeed;
+        player.mooveSpeed = moveSpeed;
     }
 
 }

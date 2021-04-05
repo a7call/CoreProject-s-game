@@ -29,7 +29,7 @@ public class GravityAcceleratorBomb : MonoBehaviour
         }
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerMouvement>().mooveSpeed /= 2f;
+            collision.GetComponent<Player>().mooveSpeed /= 2f;
            
         }
     }
@@ -43,7 +43,7 @@ public class GravityAcceleratorBomb : MonoBehaviour
         }
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerMouvement>().mooveSpeed *= 2f;
+            collision.GetComponent<Player>().mooveSpeed *= 2f;
 
         }
     }

@@ -44,7 +44,7 @@ public class ArmeCacEnemy : ArmeEnemy
 
             if (h.CompareTag("Player"))
             {
-                h.GetComponent<PlayerHealth>().TakeDamage(1);
+                h.GetComponent<Player>().TakeDamage(1);
             }
 
         }

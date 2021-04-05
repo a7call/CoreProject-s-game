@@ -34,12 +34,12 @@ public class PassiveObjectsDatas : Item
 
 
   
-    public override void Equip(PlayerMouvement p) 
+    public override void Equip(Player p) 
     {
         if (damage != 0)
             p.damage.AddModifier(new StatModifier(damage, StatModType.PercentMult, this));
     }
-    public override void Unequip(PlayerMouvement p)
+    public override void Unequip(Player p)
     {
         p.damage.RemoveAllModifiersFromSource(this);
     }

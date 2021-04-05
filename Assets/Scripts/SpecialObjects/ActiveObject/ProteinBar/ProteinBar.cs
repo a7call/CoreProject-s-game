@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class ProteinBar : StacksObjects
 {
-
-    private PlayerHealth playerHealth;
-
     protected override void Start()
     {
         base.Start();
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
     }
 
     protected override void Update()
@@ -26,7 +23,7 @@ public class ProteinBar : StacksObjects
     private void TakeProteinBar()
     {
         int gainHp = 2;
-        playerHealth.currentHealth += gainHp;
+        player.currentHealth += gainHp;
     }
 
 }

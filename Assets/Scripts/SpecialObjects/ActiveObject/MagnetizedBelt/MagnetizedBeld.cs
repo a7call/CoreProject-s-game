@@ -8,7 +8,6 @@ public class MagnetizedBeld : CdObjects
     protected RaycastHit2D hit;
     protected RaycastHit2D hitMemory;
     private bool isGoingToWall;
-    private PlayerMouvement playerMouv;
     [SerializeField]  protected LayerMask hitLayer;
     [SerializeField] protected float speed;
     protected override void Start()
@@ -18,7 +17,7 @@ public class MagnetizedBeld : CdObjects
     }
     private void GetDatas()
     {
-        playerMouv = player.GetComponent<PlayerMouvement>();
+        player = player.GetComponent<Player>();
     }
     protected override void Update()
     {
@@ -54,15 +53,14 @@ public class MagnetizedBeld : CdObjects
 
         if (isGoingToWall)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-            playerMouv.currentEtat = Player.EtatJoueur.Grapping;
-            playerMouv.rb.AddForce(GetDirection() * speed * Time.deltaTime);
+            player.currentEtat = Player.EtatJoueur.Grapping;
+            player.rb.AddForce(GetDirection() * speed * Time.deltaTime);
             if (Vector3.Distance(hitMemory.collider.transform.position, player.transform.position) < 0.5f)
             {
-                playerMouv.rb.velocity = Vector2.zero;
+                player.rb.velocity = Vector2.zero;
                 isGoingToWall = false;
-                playerMouv.currentEtat = Player.EtatJoueur.normal;
+                player.currentEtat = Player.EtatJoueur.normal;
             }
           
         }

@@ -16,7 +16,7 @@ public class EggProjectile : Projectile
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        foreach (Transform child in playerHealth.transform)
+        foreach (Transform child in player.transform)
         {
             if (child.GetComponent<BoxCollider2D>() != null)
             {

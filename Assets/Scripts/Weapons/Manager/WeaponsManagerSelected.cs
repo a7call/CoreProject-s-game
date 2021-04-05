@@ -175,13 +175,13 @@ public class WeaponsManagerSelected : MonoBehaviour
     private void EquipeWeapon(GameObject weapon)
     {
         weapon.gameObject.SetActive(true);
-        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<PlayerMouvement>());
+        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<Player>());
     }
 
     private void UnEquipWeapon(GameObject weapon)
     {
         weapon.gameObject.SetActive(false);
-        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<PlayerMouvement>());
+        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<Player>());
     }
 
 

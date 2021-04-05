@@ -31,9 +31,9 @@ public class ExplosivesModule : ModuleLauchPhase
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
                 ExplosionEffects(enemy);
             }
-            if (hit.gameObject.GetComponent<PlayerHealth>())
+            if (hit.gameObject.GetComponent<Player>())
             {
-                PlayerHealth player = hit.gameObject.GetComponent<PlayerHealth>();
+                Player player = hit.gameObject.GetComponent<Player>();
                 player.TakeDamage(1);
             }
             

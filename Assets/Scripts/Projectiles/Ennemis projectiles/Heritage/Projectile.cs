@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
     public Vector3 dir;
     // distance entre le player et le projectile
     protected float distance;
-    protected PlayerHealth playerHealth;
+    protected Player player;
 
     [HideInInspector]
     public float Dispersion=0;
@@ -42,7 +42,7 @@ public class Projectile : MonoBehaviour
     
     protected virtual void Awake()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
     }
 
     protected virtual void Start()
@@ -96,7 +96,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         { 
-            playerHealth.TakeDamage(1);
+            player.TakeDamage(1);
             Destroy(gameObject);
         }
         if (collision.CompareTag("Enemy") &&  isConverted)

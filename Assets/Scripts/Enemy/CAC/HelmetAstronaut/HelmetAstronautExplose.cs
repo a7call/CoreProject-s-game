@@ -45,7 +45,7 @@ public class HelmetAstronautExplose : Cac
         
         foreach (Collider2D h in hits)
         {
-            if(h.CompareTag("Player")) h.GetComponent<PlayerHealth>().TakeDamage(1);
+            if(h.CompareTag("Player")) h.GetComponent<Player>().TakeDamage(1);
         }
 
         

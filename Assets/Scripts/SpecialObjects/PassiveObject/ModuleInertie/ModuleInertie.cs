@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ModuleInertie : PassiveObjects
 {
-    public static PlayerEnergy player;
+    public static Player player;
     private void Awake()
     {
-        player = FindObjectOfType<PlayerEnergy>();
+        player = FindObjectOfType<Player>();
     }
     void Start()
     {

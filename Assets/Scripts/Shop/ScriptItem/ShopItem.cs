@@ -23,7 +23,7 @@ public class ShopItem : MonoBehaviour
     private float newPrice;
 
     // Afin de modifier les caractéristiques du joueur après son achat
-    private PlayerHealth playerHealth;
+    private Player player;
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class ShopItem : MonoBehaviour
 
         button = gameObject.GetComponent<Button>();
 
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
     }
 
     private void Update()
@@ -137,7 +137,7 @@ public class ShopItem : MonoBehaviour
             inventory.itemInventory.Add(gameObject);
         }
 
-        playerHealth.AddLifePlayer(shopItemButton.itemHealth);
-        playerHealth.AddArmorPlayer(shopItemButton.itemArmor);
+        player.AddLifePlayer(shopItemButton.itemHealth);
+        player.AddArmorPlayer(shopItemButton.itemArmor);
     }
 }

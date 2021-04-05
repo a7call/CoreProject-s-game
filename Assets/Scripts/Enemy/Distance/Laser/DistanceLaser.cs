@@ -185,7 +185,7 @@ public class DistanceLaser : Distance
 //            if (hit.transform.gameObject.CompareTag("Player"))
 //            {
 //                laserBeam.GetComponent<LineRenderer>().SetPosition(1, laserBeam.transform.InverseTransformPoint(hit.point));
-//                PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
+//                Player player = hit.transform.gameObject.GetComponent<Player>();
 //                player.TakeDamage(damage);
 //            }
 //        }

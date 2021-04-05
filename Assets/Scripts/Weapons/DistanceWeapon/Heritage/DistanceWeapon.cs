@@ -165,8 +165,8 @@ public class DistanceWeapon : Weapons
         Proj.Dispersion = decalage;
         BulletInMag--;
         Instantiate(projectile, attackPoint.position, Quaternion.identity);
-        print(playerMouv.attackSpeed.Value);
-        yield return new WaitForSeconds(playerMouv.attackSpeed.Value);
+        print(player.attackSpeed.Value);
+        yield return new WaitForSeconds(player.attackSpeed.Value);
         isAttacking = false;
     }
 

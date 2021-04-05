@@ -212,8 +212,8 @@ public class BossTentaclePop : Enemy
         targetSetter = GetComponent<AIDestinationSetter>();
         targetSetter.target = target;
         player = FindObjectOfType<Player>();
-        playerHealth = FindObjectOfType<PlayerHealth>();
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        player = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();
     }
     
     // Permet de Set les Data

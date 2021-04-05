@@ -35,8 +35,8 @@ public class Weapons : MonoBehaviour
     [SerializeField] private Vector3 otherOffset;
 
 
-    protected GameObject player;
-    protected PlayerMouvement playerMouv;
+    protected GameObject playerGO;
+    protected Player player;
 
     public float RangeMiniChangementTir = 5;
     [SerializeField] public float RangeChangementTir;
@@ -55,13 +55,13 @@ public class Weapons : MonoBehaviour
 
     protected void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerGO = GameObject.FindGameObjectWithTag("Player");
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     protected virtual void OnEnable()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerMouv = player.GetComponent<PlayerMouvement>();
+        playerGO = GameObject.FindGameObjectWithTag("Player");
+        player = playerGO.GetComponent<Player>();
     }
     // recupère en temps réel la position de la souris et associe cette position au point d'attaque du Player
     protected virtual void GetAttackDirection()
@@ -69,7 +69,7 @@ public class Weapons : MonoBehaviour
         // position de la souris sur l'écran 
         screenMousePos = Input.mousePosition;
         // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(player.transform.position);
+        screenPlayerPos = Camera.main.WorldToScreenPoint(playerGO.transform.position);
         // position du point d'attaque
         screenArmePos = Camera.main.WorldToScreenPoint(attackPoint.transform.position);
 

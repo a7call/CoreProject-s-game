@@ -10,7 +10,7 @@ public class PiercedPocketModule : PassiveObjects
 
     void Start()
     {
-        PlayerMouvement.isPiercedPocketModule = true;
+        Player.isPiercedPocketModule = true;
     }
 
     // Update is called once per frame

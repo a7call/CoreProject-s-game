@@ -39,7 +39,7 @@ public class DistanceLaserDecalage : DistanceLaser
     //            {
     //                if (hit.transform.gameObject.CompareTag("Player"))
     //                {
-    //                    PlayerHealth player = hit.transform.gameObject.GetComponent<PlayerHealth>();
+    //                    Player player = hit.transform.gameObject.GetComponent<Player>();
     //                    player.TakeDamage(damage);
     //                }
     //            }

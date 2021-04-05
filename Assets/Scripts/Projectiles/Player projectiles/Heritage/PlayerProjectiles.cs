@@ -48,8 +48,8 @@ public class PlayerProjectiles : MonoBehaviour
 
 
 
-    protected GameObject player;
-    protected PlayerMouvement playerMouv;
+    protected GameObject playerGO;
+    protected Player player;
     protected GameObject weaponManager;
     protected Vector3 dir;
     protected Transform playerTransform;
@@ -75,8 +75,8 @@ public class PlayerProjectiles : MonoBehaviour
         
         
         SetData();
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerMouv = player.GetComponent<PlayerMouvement>();
+        playerGO = GameObject.FindGameObjectWithTag("Player");
+        player = playerGO.GetComponent<Player>();
         weaponManager = GameObject.FindGameObjectWithTag("WeaponManager");
         weapon = weaponManager.transform.GetComponentInChildren<Weapons>();
         projectileRB = GetComponent<Rigidbody2D>();
@@ -158,8 +158,8 @@ public class PlayerProjectiles : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            print(playerMouv.damage.Value);
-            enemy.TakeDamage(playerMouv.damage.Value);
+            print(player.damage.Value);
+            enemy.TakeDamage(player.damage.Value);
             CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
             //Modules
             ModuleProcs(enemy);

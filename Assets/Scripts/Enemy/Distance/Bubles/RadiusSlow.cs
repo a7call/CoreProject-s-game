@@ -9,12 +9,11 @@ public class RadiusSlow : RadiusGrowUp
 
     [SerializeField] private float maxRadius = 5f;
     [SerializeField] private float newPlayerMoveSpeed = 100f;
-    private PlayerMouvement playerMouvement;
     float realMoveSpeed;
 
     protected override void Start()
     {
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        player = FindObjectOfType<Player>();
         base.Start();
     }
 
@@ -39,7 +38,7 @@ public class RadiusSlow : RadiusGrowUp
 
     protected override void ShootRadius()
     {
-        realMoveSpeed = playerMouvement.playerData.mooveSpeed;
+        realMoveSpeed = player.playerData.mooveSpeed;
         hits = Physics2D.CircleCastAll(transform.position, RadiusGrowByTime(), Vector2.zero, Mathf.Infinity, hitLayer);
         foreach (RaycastHit2D hit in hits)
         {
@@ -48,11 +47,11 @@ public class RadiusSlow : RadiusGrowUp
                 if (Vector3.Distance(transform.position, hit.transform.position) <= RadiusGrowByTime())
                 {
 
-                    playerMouvement.mooveSpeed = newPlayerMoveSpeed;
+                    player.mooveSpeed = newPlayerMoveSpeed;
                 }
                 else
                 {
-                    playerMouvement.mooveSpeed = realMoveSpeed;
+                    player.mooveSpeed = realMoveSpeed;
                 }
                 // Détruire les objets qui sont destructibles
             }
@@ -62,6 +61,6 @@ public class RadiusSlow : RadiusGrowUp
 
     private void OnDestroy()
     {
-        playerMouvement.mooveSpeed = realMoveSpeed;
+        player.mooveSpeed = realMoveSpeed;
     }
 }
