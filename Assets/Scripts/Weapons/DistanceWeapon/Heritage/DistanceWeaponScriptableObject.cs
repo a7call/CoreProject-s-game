@@ -8,9 +8,5 @@ public class DistanceWeaponScriptableObject : WeaponScriptableObject
 {
    
     public GameObject projectile;
-    public float Dispersion;
-    public int MagSize;
-    public float ReloadDelay;
-    public int AmmoStock;
-   
+  
 }
