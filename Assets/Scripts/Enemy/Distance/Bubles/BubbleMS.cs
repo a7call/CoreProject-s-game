@@ -5,14 +5,8 @@ using UnityEditor;
 
 public class BubbleMS : Distance
 {
-    [SerializeField] protected GameObject rayon;
 
-    [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();
-
-    public GameObject deathObject;
-    
-    private bool firstShoot = true;
-
+    #region Unity Mono
     protected override void Awake()
     {
         base.Awake();
@@ -37,19 +31,30 @@ public class BubbleMS : Distance
 
 
     }
-   
+    #endregion
+
+    #region DeathObject
+    public GameObject deathObject;
     protected override void EnemyDie()
     {
+        base.EnemyDie();
         if (isDying)
         {
-            isDying = false;
-            SpawnRewards();
-            Instantiate(deathObject, transform.position, Quaternion.identity);
-            nanoRobot();
-            Destroy(gameObject);
+           Instantiate(deathObject, transform.position, Quaternion.identity);
         }
     }
+    #endregion
 
+    #region Physics
+    public override IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
+    {
+        yield return null;
+        // pas de knockBack
+    }
+    #endregion
+
+    #region Shoot
+    private bool firstShoot = true;
     protected override IEnumerator CanShootCO()
     {
         if (isReadytoShoot && firstShoot)
@@ -70,7 +75,12 @@ public class BubbleMS : Distance
         AddShoot();
         yield return new WaitForEndOfFrame();
     }
+    #endregion
 
+    #region Rayon
+    [SerializeField] protected GameObject rayon;
+
+    [SerializeField] private List<GameObject> differentRadius = new List<GameObject>();
     private void AddShoot()
     {
         differentRadius.Insert(0, rayon);
@@ -91,5 +101,6 @@ public class BubbleMS : Distance
             isReadytoShoot = true;
         }
     }
+    #endregion
 
 }

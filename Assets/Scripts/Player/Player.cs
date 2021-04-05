@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Wanderer.CharacterStats;
 
 public class Player : MonoBehaviour
 {
+
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
     public PlayerScriptableObjectScript playerData;
@@ -91,5 +93,9 @@ public class Player : MonoBehaviour
         Transform ArmorContent = canvas.transform.Find("ArmorContent");
         imageArmor = ArmorContent.Find("ImageArmor").GetComponent<Image>();
     }
-   
+    private void Update()
+    {
+       
+    }
+
 }
