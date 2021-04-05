@@ -61,7 +61,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected PlayerProjectileScriptableObject PlayerProjectileData;
     protected Vector3 directionTir;
     [HideInInspector]
-    public float Dispersion;
+    public float dispersion;
     private Rigidbody2D projectileRB;
 
     protected Vector3 screenMousePos;
@@ -198,7 +198,7 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected void ConeShoot()
     {
-        directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
+        directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * dir;
     }
 
     

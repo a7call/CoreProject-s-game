@@ -21,9 +21,9 @@ public class PaintBall : DistanceWeapon
     {
         if (!isAttacking && BulletInMag > 0 && !IsReloading)
         {
-            float decalage = Random.Range(-Dispersion, Dispersion + 1);
+            float decalage = Random.Range(-dispersion, dispersion + 1);
             i = Random.Range(0, projectiles.Length);
-            ScriptProj.Dispersion = decalage;
+            ScriptProj.dispersion = decalage;
             isAttacking = true;
             GameObject.Instantiate(projectiles[i], transform.position, Quaternion.identity);
             BulletInMag--;

@@ -51,12 +51,12 @@ public class FusilAlien : DistanceWeapon
         if (isPrecisionModule && !PrecisionAlreadyUp)
         {
             PrecisionAlreadyUp = true;
-            Dispersion /= PrecisionMultiplier;
+            dispersion /= PrecisionMultiplier;
         }
         if (isFastReloadModule && !FastReloadAlreadyActive)
         {
             FastReloadAlreadyActive = true;
-            ReloadDelay /= ReloadSpeedMultiplier;
+            reloadDelay /= ReloadSpeedMultiplier;
         }
 
     }

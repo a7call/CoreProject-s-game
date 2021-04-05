@@ -1,28 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
 public class DistanceWeapon : Weapons
 {
     
     public DistanceWeaponScriptableObject DistanceWeaponData;
-    protected GameObject projectile;
-    protected PlayerProjectiles Proj;
-    protected float Dispersion;
-    protected bool IsReloading;
-    [HideInInspector]
-    public bool OkToShoot = true;
-    [HideInInspector]
-    public int BulletInMag;
-    protected float ReloadDelay;
-    protected int MagSize;
-    protected Text AmmoText;
-    protected Text AmmoStockText;
-    protected bool InfiniteAmmo;
-    [HideInInspector]
-    public int AmmoStock;
+
     #region Module Et des betises
     //CanonRapideModule
     [HideInInspector]
@@ -52,10 +36,7 @@ public class DistanceWeapon : Weapons
     [HideInInspector]
     public static bool isUnlimitedAmmoModule;
     #endregion
-    [HideInInspector]
-    public Sprite image;
-
-
+  
     #region Unity Mono
     protected override void Awake()
     {
@@ -104,12 +85,12 @@ public class DistanceWeapon : Weapons
         if (isPrecisionModule && !PrecisionAlreadyUp)
         {
             PrecisionAlreadyUp = true;
-            Dispersion /= PrecisionMultiplier;
+            dispersion /= PrecisionMultiplier;
         }
         if (isFastReloadModule && !FastReloadAlreadyActive)
         {
             FastReloadAlreadyActive = true;
-            ReloadDelay /= ReloadSpeedMultiplier;
+            reloadDelay /= ReloadSpeedMultiplier;
         }
         #endregion
 
@@ -120,7 +101,8 @@ public class DistanceWeapon : Weapons
         Gizmos.DrawWireSphere(attackPoint.position, 0.4f);
         Gizmos.color = Color.red;
     }
-     bool isalreadyDisable = false;
+
+    public Sprite image;
     private void OnDisable()
     {
         GetComponent<SpriteRenderer>().sprite = image;
@@ -137,7 +119,7 @@ public class DistanceWeapon : Weapons
     }
     private void InitializeMag()
     {
-        BulletInMag = MagSize;
+        BulletInMag = magSize;
     }
 
     protected virtual void SetData()
@@ -146,10 +128,10 @@ public class DistanceWeapon : Weapons
         enemyLayer = DistanceWeaponData.enemyLayer;
         damage = DistanceWeaponData.damage;
         attackDelay = DistanceWeaponData.delayBetweenAttack;
-        Dispersion = DistanceWeaponData.Dispersion;
-        MagSize = DistanceWeaponData.MagSize;
-        ReloadDelay = DistanceWeaponData.ReloadDelay;
-        AmmoStock = DistanceWeaponData.AmmoStock;
+        dispersion = DistanceWeaponData.dispersion;
+        magSize = DistanceWeaponData.magSize;
+        reloadDelay = DistanceWeaponData.reloadDelay;
+        ammoStock = DistanceWeaponData.ammoStock;
         image = DistanceWeaponData.image;
 
     }
@@ -157,12 +139,19 @@ public class DistanceWeapon : Weapons
 
     #endregion
 
-
     #region Shoot logic
+
+    protected GameObject projectile;
+    protected PlayerProjectiles Proj;
+    protected float dispersion;
+
+    [HideInInspector]
+    public bool OkToShoot = true;
+
     protected virtual IEnumerator Shoot()
     {
-        float decalage = Random.Range(-Dispersion, Dispersion);      
-        Proj.Dispersion = decalage;
+        float decalage = Random.Range(-dispersion, dispersion);      
+        Proj.dispersion = decalage;
         BulletInMag--;
         Instantiate(projectile, attackPoint.position, Quaternion.identity);
         print(player.attackSpeed.Value);
@@ -195,30 +184,36 @@ public class DistanceWeapon : Weapons
 
     #endregion
 
-
     #region Reload logic
+
+    public int BulletInMag;
+    protected float reloadDelay;
+    protected int magSize;
+    protected bool IsReloading;
+    [HideInInspector]
+    public int ammoStock;
     protected IEnumerator Reload()
     {
-        //if (BulletInMag != MagSize && !IsReloading && (AmmoStock != 0 | InfiniteAmmo))
+        //if (BulletInMag != magSize && !IsReloading && (ammoStock != 0 | InfiniteAmmo))
         //{
 
         IsReloading = true;
-        yield return new WaitForSeconds(ReloadDelay);
-        if (AmmoStock + BulletInMag >= MagSize && !InfiniteAmmo)
+        yield return new WaitForSeconds(reloadDelay);
+        if (ammoStock + BulletInMag >= magSize && !InfiniteAmmo)
         {
-            AmmoStock = AmmoStock + BulletInMag;
-            AmmoStock = AmmoStock - MagSize;
-            BulletInMag = MagSize;
+            ammoStock = ammoStock + BulletInMag;
+            ammoStock = ammoStock - magSize;
+            BulletInMag = magSize;
         }
-        else if (AmmoStock + BulletInMag <= MagSize && !InfiniteAmmo)
+        else if (ammoStock + BulletInMag <= magSize && !InfiniteAmmo)
         {
-            AmmoStock = AmmoStock + BulletInMag;
-            BulletInMag = AmmoStock;
-            AmmoStock = AmmoStock - BulletInMag;
+            ammoStock = ammoStock + BulletInMag;
+            BulletInMag = ammoStock;
+            ammoStock = ammoStock - BulletInMag;
         }
         else if (isUnlimitedAmmoModule)
         {
-            BulletInMag = MagSize;
+            BulletInMag = magSize;
         }
 
         IsReloading = false;
@@ -226,7 +221,7 @@ public class DistanceWeapon : Weapons
 
     public void toReload()
     {
-        if (BulletInMag != MagSize && !IsReloading && (AmmoStock != 0 | InfiniteAmmo))
+        if (BulletInMag != magSize && !IsReloading && (ammoStock != 0 | InfiniteAmmo))
         {
             StartCoroutine(Reload());
         }
@@ -234,16 +229,17 @@ public class DistanceWeapon : Weapons
 
     #endregion
 
-    
-
     #region UI
-
+    protected Text AmmoText, AmmoStockText;
+    protected bool InfiniteAmmo;
+    [HideInInspector]
+   
     protected void DisplayAmmo()
     {
         if (!InfiniteAmmo)
         {
             AmmoText.text = BulletInMag.ToString();
-            AmmoStockText.text = AmmoStock.ToString();
+            AmmoStockText.text = ammoStock.ToString();
         }
 
         else

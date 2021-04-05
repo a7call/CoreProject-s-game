@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
     protected Player player;
 
     [HideInInspector]
-    public float Dispersion=0;
+    public float dispersion=0;
 
     //TacticVisionModule
     [HideInInspector]
@@ -70,13 +70,13 @@ public class Projectile : MonoBehaviour
     }
     //protected void ConeShoot()
     //{
-    //    directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
+    //    directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * dir;
     //}
 
     // recupère la direction à prendre
     protected virtual void GetDirection()
     {
-        dir = Quaternion.AngleAxis(Dispersion, Vector3.forward)*(target.position - transform.position).normalized;
+        dir = Quaternion.AngleAxis(dispersion, Vector3.forward)*(target.position - transform.position).normalized;
     }
     
     //envoie le projectile

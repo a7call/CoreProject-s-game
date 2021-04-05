@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     public CharacterStats cadence;
     public CharacterStats range;
     public CharacterStats attackSpeed;
+    public CharacterStats ammoStock;
 
 
     [Header("Player")]
