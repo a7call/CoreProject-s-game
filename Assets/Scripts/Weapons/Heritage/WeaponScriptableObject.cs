@@ -10,6 +10,10 @@ public class WeaponScriptableObject : Item
     public float delayBetweenAttack;
     public LayerMask enemyLayer;
     public Sprite image;
+    public float Dispersion;
+    public int MagSize;
+    public float ReloadDelay;
+    public int AmmoStock;
 
     public override void Equip(PlayerMouvement p)
     {
