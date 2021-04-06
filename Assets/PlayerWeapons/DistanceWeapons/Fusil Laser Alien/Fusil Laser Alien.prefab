@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1091258886180555128
 Transform:
   m_ObjectHideFlags: 0
@@ -108,9 +108,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   attackPoint: {fileID: 5470897830796558698}
+  attackDelay: 0
   isAttacking: 0
   posSouris: {x: 0, y: 0, z: 0}
   OffPositionArme: {x: 0, y: 0, z: 0}
+  topOffSet: {x: 0, y: 0, z: 0}
+  otherOffset: {x: 0, y: 0, z: 0}
   RangeMiniChangementTir: 5
   RangeChangementTir: 0
   DistanceWeaponData: {fileID: 0}
