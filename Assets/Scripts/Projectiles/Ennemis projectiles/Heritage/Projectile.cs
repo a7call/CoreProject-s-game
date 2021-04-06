@@ -24,10 +24,10 @@ public class Projectile : MonoBehaviour
     public Vector3 dir;
     // distance entre le player et le projectile
     protected float distance;
-    protected PlayerHealth playerHealth;
+    protected Player player;
 
     [HideInInspector]
-    public float Dispersion=0;
+    public float dispersion=0;
 
     //TacticVisionModule
     [HideInInspector]
@@ -42,7 +42,7 @@ public class Projectile : MonoBehaviour
     
     protected virtual void Awake()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
     }
 
     protected virtual void Start()
@@ -70,13 +70,13 @@ public class Projectile : MonoBehaviour
     }
     //protected void ConeShoot()
     //{
-    //    directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
+    //    directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * dir;
     //}
 
     // recupère la direction à prendre
     protected virtual void GetDirection()
     {
-        dir = Quaternion.AngleAxis(Dispersion, Vector3.forward)*(target.position - transform.position).normalized;
+        dir = Quaternion.AngleAxis(dispersion, Vector3.forward)*(target.position - transform.position).normalized;
     }
     
     //envoie le projectile
@@ -96,7 +96,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         { 
-            playerHealth.TakeDamage(1);
+            player.TakeDamage(1);
             Destroy(gameObject);
         }
         if (collision.CompareTag("Enemy") &&  isConverted)

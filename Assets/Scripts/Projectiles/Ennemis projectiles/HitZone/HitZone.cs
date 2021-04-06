@@ -29,7 +29,7 @@ public class HitZone : MonoBehaviour
             {
                 if (hit.CompareTag("Player"))
                 {
-                    PlayerHealth playerHealthScript = hit.GetComponent<PlayerHealth>();
+                    Player playerHealthScript = hit.GetComponent<Player>();
                     playerHealthScript.TakeDamage(ZoneDamage);
                 }
 

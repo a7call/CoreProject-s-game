@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class BaroudHonneur : StacksObjects
 {
-    private PlayerHealth playerHealth;
-
     protected override void Start()
     {
         base.Start();
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
     }
 
     protected override void Update()
     {
         
-        if (playerHealth.currentHealth==0)
+        if (player.currentHealth==0)
         {
             AutoBaroudHonneur();
             Destroy(gameObject);
@@ -38,13 +36,13 @@ public class BaroudHonneur : StacksObjects
     {
 
         GainHp();
-        CoroutineManager.Instance.StartCoroutine(playerHealth.InvincibilityDelay());
-        CoroutineManager.Instance.StartCoroutine(playerHealth.InvincibilityFlash());
+        CoroutineManager.Instance.StartCoroutine(player.InvincibilityDelay());
+        CoroutineManager.Instance.StartCoroutine(player.InvincibilityFlash());
     }
 
     private void GainHp()
     {
         int gainHp = 2;
-        playerHealth.currentHealth += gainHp;
+        player.currentHealth += gainHp;
     }
 }

@@ -16,7 +16,7 @@ public class SpeDistance2 : Distance
 
     void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
         SetData();
         SetMaxHealth();
     }
@@ -45,7 +45,7 @@ public class SpeDistance2 : Distance
     {
         for (int i = 0; i <= dotNumber; i++)
         {
-            playerHealth.currentHealth -= _dotDamages;
+            player.currentHealth -= _dotDamages;
             yield return new WaitForSeconds(timeDot);
         }
         isFirstAttack = false;

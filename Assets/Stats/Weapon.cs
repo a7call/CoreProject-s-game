@@ -9,7 +9,7 @@ public class Weapon : Item
     public float delayBetweenAttack = 2;
     public float damage = 1;
 
-    public override void Equip(PlayerMouvement p)
+    public override void Equip(Player p)
     {
         if (delayBetweenAttack != 0)
             p.attackSpeed.AddModifier(new StatModifier(delayBetweenAttack, StatModType.Flat));
@@ -20,7 +20,7 @@ public class Weapon : Item
         
     }
 
-    public override void Unequip(PlayerMouvement p)
+    public override void Unequip(Player p)
     {
         p.attackSpeed.RemoveAllModifiersFromSource(this);
         p.damage.RemoveAllModifiersFromSource(this);

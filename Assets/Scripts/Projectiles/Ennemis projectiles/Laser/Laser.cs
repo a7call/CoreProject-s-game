@@ -39,7 +39,7 @@ public class Laser : Projectile
 
             if (hit.collider != null)
             {
-                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
+                hit.collider.gameObject.GetComponent<Player>().TakeDamage(1);
             }
             destroy();
 

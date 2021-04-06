@@ -59,7 +59,7 @@ public class HelmetAstronautFear : Cac
     // Point dans lequel on va fear
     public void positionFearPoint()
     {
-        playerTransform = playerMouvement.GetComponent<Transform>();
+        playerTransform = player.GetComponent<Transform>();
         enemyTransform = gameObject.transform;
 
         vecEnemyPlayer = (enemyTransform.position - playerTransform.position).normalized;
@@ -71,7 +71,7 @@ public class HelmetAstronautFear : Cac
     private void DistancePlayerFearPoint()
     {
         float distance = Vector3.Distance(target.position, pointPos);
-        if (distance <= 0.2) playerMouvement.rb.velocity = Vector3.zero;
+        if (distance <= 0.2) player.rb.velocity = Vector3.zero;
     }
 
     private IEnumerator FearMode()
@@ -79,13 +79,13 @@ public class HelmetAstronautFear : Cac
         positionFearPoint();
         isFear = true;
         isFearCdEnd = false;
-        playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.fear;
+        player.currentEtat = Player.EtatJoueur.fear;
         yield return new WaitForSeconds(fearTime);
         if (IsDontFuckWithMe)
         {
             Destroy(gameObject);
         }
-        playerMouvement.currentEtat = PlayerMouvement.EtatJoueur.normal;
+        player.currentEtat = Player.EtatJoueur.normal;
         isFear = false;
         isFearCdEnd = true;
     }
@@ -97,7 +97,7 @@ public class HelmetAstronautFear : Cac
         Vector3 pos = pointPos;
         Vector3 targetPos = target.position;
         Vector3 direction = (pos - targetPos).normalized;
-        playerMouvement.rb.velocity = direction * playerMouvement.mooveSpeed * Time.fixedDeltaTime;
+        player.rb.velocity = direction * player.mooveSpeed * Time.fixedDeltaTime;
         yield return new WaitForSeconds(loadDelay);
         isFirstAttack = true;
     }

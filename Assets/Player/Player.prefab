@@ -351,6 +351,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a407ae694b0ab94d9bd30667507ef7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1974484174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1974484175}
+  m_Layer: 8
+  m_Name: TargetPointList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1974484175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974484174}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 101717229859328977}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2119372095
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,13 +471,10 @@ GameObject:
   - component: {fileID: 101717229859328977}
   - component: {fileID: 101717229859328976}
   - component: {fileID: 101717229859328978}
-  - component: {fileID: 101717229859328980}
-  - component: {fileID: 101717229859328979}
-  - component: {fileID: 101717229859328990}
   - component: {fileID: 101717229859328981}
   - component: {fileID: 101717229859328991}
   - component: {fileID: 1133958349}
-  - component: {fileID: 1840749865}
+  - component: {fileID: 9256770}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -474,6 +501,7 @@ Transform:
   - {fileID: 289828501}
   - {fileID: 238920902}
   - {fileID: 1003208959}
+  - {fileID: 1974484175}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -549,81 +577,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &101717229859328980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101717229859328989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c65f8e8811ac9d49ad0c88e319721c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 101717229859328976}
-  animator: {fileID: 101717229859328981}
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
-  currentEtat: 0
-  maxHealth: 0
-  maxStacks: 0
-  mooveSpeed: 0
-  dashForce: 0
-  stacksReloadTime: 0
-  energyIsReloading: 0
-  currentStack: 3
---- !u!114 &101717229859328979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101717229859328989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ccfb8a40725aa8489bd8ac681bedbb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 101717229859328976}
-  animator: {fileID: 101717229859328981}
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
-  currentEtat: 0
-  maxHealth: 0
-  maxStacks: 0
-  mooveSpeed: 0
-  dashForce: 0
-  stacksReloadTime: 0
-  currentHealth: 3
-  currentArmor: 0
-  InvincibilityFlashDelay: 0.1
-  InvincibleDelay: 3
-  graphics: {fileID: 101717229859328978}
---- !u!114 &101717229859328990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101717229859328989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b20869189151c674ca6a7e93ec313747, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 101717229859328976}
-  animator: {fileID: 101717229859328981}
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
-  currentEtat: 0
-  maxHealth: 0
-  maxStacks: 0
-  mooveSpeed: 0
-  dashForce: 0
-  stacksReloadTime: 0
-  velocity: {x: 0, y: 0, z: 0}
-  StartSmoothTime: 0.2
-  StopSmoothTime: 0.3
-  canDash: 1
-  timeBetweenDashes: 0.5
 --- !u!95 &101717229859328981
 Animator:
   serializedVersion: 3
@@ -656,7 +609,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.019214392, y: 0.068413496}
+  m_Offset: {x: -0.0030429363, y: -0.0039224476}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -667,7 +620,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5772815, y: 0.8806329}
+  m_Size: {x: 0.50309086, y: 0.7804754}
   m_EdgeRadius: 0
 --- !u!114 &1133958349
 MonoBehaviour:
@@ -699,7 +652,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1840749865
+--- !u!114 &9256770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -708,19 +661,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 101717229859328989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58abd1e7bc09d442b8947bcb57635c3, type: 3}
+  m_Script: {fileID: 11500000, guid: f2fc2829a031cec4facec61ab273cf83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
+  damage:
+    BaseValue: 0
+  projectileSpeed:
+    BaseValue: 0
+  dispersion:
+    BaseValue: 0
+  knockBackForce:
+    BaseValue: 0
+  explosionDamage:
+    BaseValue: 0
+  imolationDamage:
+    BaseValue: 0
+  slow:
+    BaseValue: 0
+  chanceToDropCoins:
+    BaseValue: 0
+  chanceToDropObjects:
+    BaseValue: 0
+  chanceToDropAmmos:
+    BaseValue: 0
+  chanceToDropHeart:
+    BaseValue: 0
+  reloadSpeed:
+    BaseValue: 0
+  cadence:
+    BaseValue: 0
+  range:
+    BaseValue: 0
+  attackSpeed:
+    BaseValue: 0
+  mHealth:
+    BaseValue: 0
+  moveSpeed:
+    BaseValue: 0
+  currentEtat: 0
   rb: {fileID: 0}
   animator: {fileID: 0}
-  playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
-  currentEtat: 0
-  maxHealth: 0
-  maxStacks: 0
   mooveSpeed: 0
-  dashForce: 1
+  velocity: {x: 0, y: 0, z: 0}
+  StartSmoothTime: 0
+  StopSmoothTime: 0
+  maxStacks: 0
+  energyIsReloading: 0
+  currentStack: 0
   stacksReloadTime: 0
-  playerInput: {fileID: 1133958349}
+  dashForce: 0
+  canDash: 1
+  timeBetweenDashes: 0.5
+  graphics: {fileID: 101717229859328978}
+  InvincibilityFlashDelay: 0
+  InvincibleDelay: 0
+  maxHealth: 0
+  currentHealth: 0
+  currentArmor: 0
+  playerInput: {fileID: 0}
 --- !u!1 &7031026118287547503
 GameObject:
   m_ObjectHideFlags: 0

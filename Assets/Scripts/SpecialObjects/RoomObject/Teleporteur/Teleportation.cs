@@ -24,7 +24,6 @@ public class Teleportation : MonoBehaviour
 {
     // Joueur
     private Player player;
-    private PlayerHealth playerHealth;
     private bool isLoosingHp = false;
 
     // Caméra
@@ -56,7 +55,7 @@ public class Teleportation : MonoBehaviour
     {
         // Joueur
         player = FindObjectOfType<Player>();
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
 
         // TP
         teleporteurs = GameObject.FindGameObjectsWithTag("TP");
@@ -208,7 +207,7 @@ public class Teleportation : MonoBehaviour
                 {
                     isPrio = true;
                     isLoosingHp = true;
-                    playerHealth.currentHealth -= 1;
+                    player.currentHealth -= 1;
                     StartCoroutine(DisableTp());
                     isPrio = false;
                 }

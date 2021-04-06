@@ -64,7 +64,7 @@ public class EggRunner : Cac
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, zoneExplose, layer);
             foreach (Collider2D hit in hits)
             {
-                if (hit.CompareTag("Player")) hit.GetComponent<PlayerHealth>().TakeDamage(1);
+                if (hit.CompareTag("Player")) hit.GetComponent<Player>().TakeDamage(1);
             }
         Destroy(gameObject);
     }

@@ -26,7 +26,7 @@ public class EnergyDrink : StacksObjects
     private void RefillEnergy()
     {
         
-        PlayerEnergy energy = player.gameObject.GetComponent<PlayerEnergy>();
+        Player energy = player.gameObject.GetComponent<Player>();
         if(energy.currentStack != energy.maxStacks)
         {
             energy.currentStack++;

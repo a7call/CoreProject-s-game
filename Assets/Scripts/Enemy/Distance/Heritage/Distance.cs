@@ -12,7 +12,7 @@ public class Distance : Enemy
     // Scriptable Object
     [SerializeField] protected DistanceScriptableObject DistanceData;
     [HideInInspector]
-    public float Dispersion;
+    public float dispersion;
     // Variables afin de définir un point arbitraire au tour du joueur comme la target  : à pour but de randomiser le déplacement.
     Transform randomTargetPointTransform;
     Vector3 randomPoint;
@@ -92,7 +92,7 @@ public class Distance : Enemy
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + RandomizeParams(-1, 2));
-        Dispersion = DistanceData.Dispersion;
+        dispersion = DistanceData.dispersion;
         inSight = DistanceData.InSight;
         isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
 
@@ -165,14 +165,14 @@ public class Distance : Enemy
     {
 
         
-        float decalage = Random.Range(-Dispersion, Dispersion);
+        float decalage = Random.Range(-dispersion, dispersion);
 
         if (attackPoint != null)
         {
             GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);
             myProjectile.transform.parent = gameObject.transform;
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
-            ScriptProj.Dispersion = decalage;
+            ScriptProj.dispersion = decalage;
 
         }
         else
@@ -180,7 +180,7 @@ public class Distance : Enemy
             GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
             myProjectile.transform.parent = gameObject.transform;
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
-            ScriptProj.Dispersion = decalage;
+            ScriptProj.dispersion = decalage;
         }
         yield return new WaitForEndOfFrame();
     }

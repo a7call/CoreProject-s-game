@@ -12,7 +12,7 @@ public class PassiveObjectManager : MonoBehaviour
             collision.GetComponent<PassiveObjects>().enabled = true;
             collision.transform.position = gameObject.transform.position;
             collision.GetComponent<Collider2D>().enabled = false;
-            collision.GetComponent<PassiveObjects>().passiveObjectsDatas.Equip(transform.parent.GetComponent<PlayerMouvement>());
+            collision.GetComponent<PassiveObjects>().passiveObjectsDatas.Equip(transform.parent.GetComponent<Player>());
         }
     }
 

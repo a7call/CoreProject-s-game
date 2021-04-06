@@ -9,8 +9,8 @@ using System.Collections;
 public class UsingItems : MonoBehaviour
 {
     // Déclarations des variables
-    private PlayerHealth playerHealth;
-    private PlayerMouvement playerMouvement;
+    private Player player;
+
 
 
     public PlayerScriptableObjectScript playerData;
@@ -19,24 +19,24 @@ public class UsingItems : MonoBehaviour
     //Je crois que c'est pas opti de faire un FindObjectOfType<> dans le Start
     private void Start()
     {
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        player = FindObjectOfType<Player>();
 
-        //playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
     }
 
     // Ajoute des Hp
     public void AddHp()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
             
-            if (playerData.maxHealth <= playerHealth.currentHealth + ItemsData.hpGiven)
+            if (playerData.maxHealth <= player.currentHealth + ItemsData.hpGiven)
             {
-                playerHealth.currentHealth += ItemsData.hpGiven;
+                player.currentHealth += ItemsData.hpGiven;
             }
             else
             {
-                playerHealth.currentHealth = playerData.maxHealth;
+                player.currentHealth = playerData.maxHealth;
             }
     }
 
@@ -44,13 +44,13 @@ public class UsingItems : MonoBehaviour
     private void AddShield()
     {
         ItemsData.pointShield = playerData.maxHealth / 2;
-        playerHealth.currentHealth += ItemsData.pointShield;
+        player.currentHealth += ItemsData.pointShield;
     }
 
     //// Ajoute de la MS
     //private void AddMs()
     //{
-    //    //playerMouvement.
+    //    //player.
     //}
 
     ////
@@ -62,7 +62,7 @@ public class UsingItems : MonoBehaviour
     ////Coroutine
     //private void ConsumeMSPotion()
     //{
-    //    playerMouvement.speed 
+    //    player.speed 
     //}
 
     //private void ConsumeASPotion()

@@ -164,7 +164,7 @@ public class PompeDistanceEnemy : Distance
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
+                collision.gameObject.GetComponent<Player>().TakeDamage(1);
             }
 
             StopCoroutine(ChargingCoroutine());

@@ -5,16 +5,10 @@ using UnityEngine;
 public class Medkit : StacksObjects
 {
 
-    private PlayerHealth playerHealth;
-
-    private float timeCantMoove = 1.5f;
-    private bool canWalk = true;
-
-
     protected override void Start()
     {
         base.Start();
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
     }
     protected override void Update()
     {
@@ -27,7 +21,7 @@ public class Medkit : StacksObjects
     }
     protected override IEnumerator WayToReUse()
     {
-        if(playerHealth.currentHealth != playerHealth.maxHealth)
+        if(player.currentHealth != player.maxHealth)
         {
             numberOfUse--;
         }
@@ -45,7 +39,7 @@ public class Medkit : StacksObjects
 
     private void SoinFull()
     {
-        playerHealth.currentHealth = playerHealth.maxHealth;
+        player.currentHealth = player.maxHealth;
     }
 
 }

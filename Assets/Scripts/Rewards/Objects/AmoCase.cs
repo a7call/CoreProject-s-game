@@ -12,7 +12,7 @@ public class AmoCase : Rewards
             if (collision.GetComponentInChildren<WeaponsManagerSelected>().GetComponentInChildren<DistanceWeapon>())
                 {
                 DistanceWeapon weapon = collision.GetComponentInChildren<WeaponsManagerSelected>().GetComponentInChildren<DistanceWeapon>();
-                weapon.AmmoStock += numberOfAmoInCase;
+                weapon.ammoStock += numberOfAmoInCase;
 
                  }
             if (collision.GetComponentInChildren<WeaponsManagerSelected>().GetComponentInChildren<CacWeapons>())

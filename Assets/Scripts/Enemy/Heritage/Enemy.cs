@@ -18,8 +18,7 @@ public class Enemy : MonoBehaviour
     public bool isInvokedInBossRoom = false;
 
     #region Player Variable
-    protected PlayerHealth playerHealth;
-    protected PlayerMouvement playerMouvement;
+    protected Player player;
     #endregion
 
 
@@ -134,7 +133,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Fear()
     {
         float moveSpeed = aIPath.maxSpeed * 100;
-        if (direction == Vector3.zero) direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
+        if (direction == Vector3.zero) direction = (player.transform.position - gameObject.transform.position).normalized;
 
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
@@ -413,8 +412,8 @@ public class Enemy : MonoBehaviour
         
         targetSetter = GetComponent<AIDestinationSetter>();
         targetSetter.target = target;
-        playerHealth = target.GetComponent<PlayerHealth>();
-        playerMouvement = target.GetComponent<PlayerMouvement>();
+        player = target.GetComponent<Player>();
+        player = target.GetComponent<Player>();
     }
 
 

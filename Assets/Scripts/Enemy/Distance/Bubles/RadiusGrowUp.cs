@@ -10,7 +10,7 @@ public class RadiusGrowUp : MonoBehaviour
     protected float initialRadius = 0.2f;
     protected float time;
 
-    private PlayerHealth playerHealth;
+    protected Player player;
 
     protected RaycastHit2D[] hits;
 
@@ -18,7 +18,7 @@ public class RadiusGrowUp : MonoBehaviour
 
     protected virtual void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class RadiusGrowUp : MonoBehaviour
                 if (Vector3.Distance(transform.position, hit.transform.position) >= Mathf.Abs(RadiusGrowByTime() - 0.1f) && Vector3.Distance(transform.position, hit.transform.position) <= Mathf.Abs(RadiusGrowByTime() + 0.1f))
                 {
                    
-                    hit.transform.GetComponent<PlayerHealth>().TakeDamage(1);
+                    hit.transform.GetComponent<Player>().TakeDamage(1);
                 }
             }
             else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))

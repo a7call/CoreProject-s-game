@@ -20,7 +20,7 @@ public class EggProjectileExplosion : Projectile
             Collider2D[] playerHit = Physics2D.OverlapCircleAll(transform.position, explosionRadius, playerLayer);
             foreach (Collider2D hit in playerHit)
             {
-                hit.gameObject.GetComponent<PlayerHealth>().TakeDamage(explosionDamage);
+                hit.gameObject.GetComponent<Player>().TakeDamage(explosionDamage);
             }
              base.OnTriggerEnter2D(collision);
     }

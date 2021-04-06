@@ -7,7 +7,7 @@ public class LastChanceModule : PassiveObjects
     
     void Start()
     {
-        PlayerHealth.isLastChanceModule = true;
+        Player.isLastChanceModule = true;
     }
 
 

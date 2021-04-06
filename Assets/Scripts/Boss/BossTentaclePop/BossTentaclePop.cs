@@ -53,7 +53,7 @@ public class BossTentaclePop : Enemy
 
     // Tous les delay des différentes coroutines
     [HideInInspector]
-    [Header("ReloadDelay")]
+    [Header("reloadDelay")]
     private float reloadDelayFirstAbility; // Delay de chargement de la première compétence
     private float reloadDelayThirdAbility; // Delay de chargement de la seconde compétence
 
@@ -212,8 +212,8 @@ public class BossTentaclePop : Enemy
         targetSetter = GetComponent<AIDestinationSetter>();
         targetSetter.target = target;
         player = FindObjectOfType<Player>();
-        playerHealth = FindObjectOfType<PlayerHealth>();
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        player = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();
     }
     
     // Permet de Set les Data

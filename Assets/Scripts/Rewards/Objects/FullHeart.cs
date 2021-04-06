@@ -6,7 +6,7 @@ public class FullHeart : Rewards
 {
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) collision.GetComponent<PlayerHealth>().AddLifePlayer(2);
+        if (collision.CompareTag("Player")) collision.GetComponent<Player>().AddLifePlayer(2);
         base.OnTriggerEnter2D(collision);
     }
 }

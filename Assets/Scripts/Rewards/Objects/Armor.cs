@@ -8,7 +8,7 @@ public class Armor : Rewards
     {
         if (collision.CompareTag("Player"))
         {
-          collision.GetComponent<PlayerHealth>().AddArmorPlayer(1);
+          collision.GetComponent<Player>().AddArmorPlayer(1);
         }
         base.OnTriggerEnter2D(collision);
     }

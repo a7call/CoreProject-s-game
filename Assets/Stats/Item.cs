@@ -6,7 +6,7 @@ using Wanderer.CharacterStats;
 
     public abstract class Item : ScriptableObject
     {
-        public virtual void Equip(PlayerMouvement p) { }
-        public virtual void Unequip(PlayerMouvement p){}
+        public virtual void Equip(Player p) { }
+        public virtual void Unequip(Player p){}
     }
 

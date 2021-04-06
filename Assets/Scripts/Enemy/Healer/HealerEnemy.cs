@@ -35,8 +35,8 @@ public class HealerEnemy : Enemy
         target = GameObject.FindGameObjectWithTag("Player").transform;
         targetSetter = GetComponent<AIDestinationSetter>();
         targetSetter.target = transform;
-        playerHealth = FindObjectOfType<PlayerHealth>();
-        playerMouvement = FindObjectOfType<PlayerMouvement>();
+        player = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();
     }
 
     protected override void Update()

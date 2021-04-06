@@ -56,7 +56,7 @@ public class AmmoConverter : CdObjects
             if(weaponManager.GetComponentInChildren<DistanceWeapon>())
             {
                 DistanceWeapon distanceWeapon = weaponManager.GetComponentInChildren<DistanceWeapon>();
-                distanceWeapon.AmmoStock++;
+                distanceWeapon.ammoStock++;
                 
 
             }

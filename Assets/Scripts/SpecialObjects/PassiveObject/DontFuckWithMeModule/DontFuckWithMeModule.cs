@@ -13,7 +13,7 @@ public class DontFuckWithMeModule : PassiveObjects
     void Start()
     {
         
-        PlayerHealth.IsDontFuckWithMe = true;
+        Player.IsDontFuckWithMe = true;
         EnemyLayer = enemyLayer;
         Range = range;
         

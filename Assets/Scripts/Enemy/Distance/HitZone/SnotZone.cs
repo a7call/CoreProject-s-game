@@ -55,7 +55,7 @@ public class SnotZone : Enemy
 
             foreach (Collider2D hit in hits)
             {
-                hit.GetComponent<PlayerHealth>().TakeDamage(1);
+                hit.GetComponent<Player>().TakeDamage(1);
 
             }
             yield return new WaitForSeconds(1f);

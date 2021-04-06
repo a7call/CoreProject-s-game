@@ -104,7 +104,7 @@ public class Goblin : Enemy
     protected override void Fear()
     {
         float moveSpeed = aIPath.maxSpeed * 100;
-        direction = (playerMouvement.transform.position - gameObject.transform.position).normalized;
+        direction = (player.transform.position - gameObject.transform.position).normalized;
         rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 
