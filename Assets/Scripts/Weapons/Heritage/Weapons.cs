@@ -7,6 +7,7 @@ using UnityEngine;
 public class Weapons : MonoBehaviour
 {
 
+    #region Module
     [HideInInspector]
     public float damage;
     [HideInInspector]
@@ -15,7 +16,8 @@ public class Weapons : MonoBehaviour
     public static float damageMultiplier;
     [HideInInspector]
     protected bool damagealReadyMult;
-    
+    #endregion
+
     public LayerMask enemyLayer;
     protected bool readyToAttack;
 
@@ -125,7 +127,7 @@ public class Weapons : MonoBehaviour
 
 protected virtual void Update()
     {
-        ChangeLayer();
+        //ChangeLayer();
         if (isTotalDestructionModule && !damagealReadyMult)
         {
             damagealReadyMult = true;

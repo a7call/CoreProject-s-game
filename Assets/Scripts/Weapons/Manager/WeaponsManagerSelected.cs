@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Wanderer.Utils;
 /// <summary>
 /// Weapon manager, gére le script actif en fontion de l'arme ramassé
 /// </summary>
@@ -21,25 +22,14 @@ public class WeaponsManagerSelected : MonoBehaviour
     [HideInInspector]
     public bool isPlayingDistance=false;
 
-    public Sprite cacSprite;
-    public Sprite distanceSprite;
-    public string ammoText;
-
-    //protected Player player;
-
     private void Start()
     {
         SelectWeapon();
-       
-        //player = GetComponentInParent<Player>();
     }
 
     private void Update()
     {
-        //SwitchCacToDistance();
-        //SwitchDistanceToCac();
         ChangeWeapons();
-        //WhichWeaponScroll();
         UpdateUIWeapon();
         MoveWeapon();
     }
@@ -88,6 +78,8 @@ public class WeaponsManagerSelected : MonoBehaviour
         }
     }
 
+
+    #region Select and equip Weapon
     private void SelectWeapon()
     {
         int i = 0;
@@ -133,58 +125,6 @@ public class WeaponsManagerSelected : MonoBehaviour
             }
         }
     }
-
-    // Actuellement, il appuie sur deux touches différentes pour choisir le mode
-    public void SwitchCacToDistance()
-    {
-            isPlayingCac = false;
-            isPlayingDistance = true;
-
-                for (int i = 0; i < distanceWeaponsList.Count; i++)
-                {
-                    if (i == selectedDistanceWeapon) distanceWeaponsList[i].gameObject.SetActive(true);
-                    else distanceWeaponsList[i].gameObject.SetActive(false);
-                }
-
-                foreach (GameObject cacWeapon in cacWeaponsList)
-                {
-                    cacWeapon.gameObject.SetActive(false);
-                }
-    }
-
-    public void SwitchDistanceToCac()
-    {
-      
-            isPlayingCac = true;
-            isPlayingDistance = false;
-
-                for (int i = 0; i < cacWeaponsList.Count; i++)
-                {
-                    if (i == selectedCacWeapon) cacWeaponsList[i].gameObject.SetActive(true);
-                    else cacWeaponsList[i].gameObject.SetActive(false);
-                }
-
-                foreach (GameObject distanceWeapon in distanceWeaponsList)
-                {
-                    distanceWeapon.gameObject.SetActive(false);
-                }
-     
-    }
-
-
-    private void EquipeWeapon(GameObject weapon)
-    {
-        weapon.gameObject.SetActive(true);
-        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<Player>());
-    }
-
-    private void UnEquipWeapon(GameObject weapon)
-    {
-        weapon.gameObject.SetActive(false);
-        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<Player>());
-    }
-
-
     private void ChangeWeapons()
     {
         if (isPlayingCac == true)
@@ -249,6 +189,127 @@ public class WeaponsManagerSelected : MonoBehaviour
         }
     }
 
+    private void EquipeWeapon(GameObject weapon)
+    {
+        weapon.gameObject.SetActive(true);
+        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<Player>());
+    }
+
+    private void UnEquipWeapon(GameObject weapon)
+    {
+        weapon.gameObject.SetActive(false);
+        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<Player>());
+    }
+    #endregion
+
+
+    #region Switch CAC to Distance mode
+    // Actuellement, il appuie sur deux touches différentes pour choisir le mode
+    public void SwitchCacToDistance()
+    {
+            isPlayingCac = false;
+            isPlayingDistance = true;
+
+                for (int i = 0; i < distanceWeaponsList.Count; i++)
+                {
+                    if (i == selectedDistanceWeapon) distanceWeaponsList[i].gameObject.SetActive(true);
+                    else distanceWeaponsList[i].gameObject.SetActive(false);
+                }
+
+                foreach (GameObject cacWeapon in cacWeaponsList)
+                {
+                    cacWeapon.gameObject.SetActive(false);
+                }
+    }
+
+    public void SwitchDistanceToCac()
+    {
+      
+            isPlayingCac = true;
+            isPlayingDistance = false;
+
+                for (int i = 0; i < cacWeaponsList.Count; i++)
+                {
+                    if (i == selectedCacWeapon) cacWeaponsList[i].gameObject.SetActive(true);
+                    else cacWeaponsList[i].gameObject.SetActive(false);
+                }
+
+                foreach (GameObject distanceWeapon in distanceWeaponsList)
+                {
+                    distanceWeapon.gameObject.SetActive(false);
+                }
+     
+    }
+    #endregion
+
+
+    #region UI
+    public Sprite cacSprite;
+    public Sprite distanceSprite;
+    public string ammoText;
+    public void UpdateUIWeapon()
+    {
+        for (int i = 0; i < cacWeaponsList.Count; i++)
+        {
+            if (i == selectedCacWeapon)
+            {
+                cacSprite = cacWeaponsList[i].GetComponent<CacWeapons>().image;
+            }
+        }
+        for (int i = 0; i < distanceWeaponsList.Count; i++)
+        {
+            if (i == selectedDistanceWeapon)
+            {
+                distanceSprite = distanceWeaponsList[i].GetComponent<DistanceWeapon>().image;
+                ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
+            }
+        }
+    }
+    #endregion
+
+
+    #region Weapon rotation
+    protected Weapons weapons;
+    protected SpriteRenderer spriteRenderer;
+    protected void MoveWeapon()
+    {
+        if (isPlayingCac)
+        {
+            weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
+        }
+        if (isPlayingDistance)
+        {
+            weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
+        }
+        if (weapons != null)
+        {
+            Vector3 PositionArme = weapons.OffPositionArme;
+            Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
+            spriteRenderer = weapons.GetComponent<SpriteRenderer>();
+            Vector3 mousePosition = Utils.GetMouseWorldPosition();
+            Vector3 aimDirection = (mousePosition - weapons.transform.position).normalized;
+            float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            weapons.transform.eulerAngles = new Vector3(0, 0, angle);
+
+            if (aimDirection.x < -0.5f && !spriteRenderer.flipY)
+            {
+                spriteRenderer.flipY= true;
+                weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
+                weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+            }
+            else if (aimDirection.x > 0.5f && spriteRenderer.flipY)
+            {
+                spriteRenderer.flipY = false;
+                weapons.transform.localPosition = PositionArme;
+                weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+                weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+            }
+        }
+    }
+    #endregion
+
+
+
     // Méthode générique non utilisée mais conservée [A utiliser potentiellement si le code ci dessus est trop lourd]
     //private void ScrollWeapons(int _selectedWeapon, List<GameObject> _selectedWeaponList)
     //{
@@ -291,102 +352,79 @@ public class WeaponsManagerSelected : MonoBehaviour
     //    }
     //}
 
-    public void UpdateUIWeapon()
-    {
-        for (int i = 0; i < cacWeaponsList.Count; i++)
-        {
-            if (i == selectedCacWeapon)
-            {
-                cacSprite = cacWeaponsList[i].GetComponent<CacWeapons>().image;
-            }
-        }
-        for (int i = 0; i < distanceWeaponsList.Count; i++)
-        {
-            if (i == selectedDistanceWeapon)
-            {
-                distanceSprite = distanceWeaponsList[i].GetComponent<DistanceWeapon>().image;
-                ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
-            }
-        }
-    }
+    /* Ancien methode MoveWeapon
+   rotected Vector3 screenMousePos;
+   protected Vector3 screenPlayerPos;
+   protected Vector3 screenWeaponPos;
+   private float angle;
+
+   protected void MoveWeapon()
+   {
+
+       // position de la souris sur l'écran 
+       screenMousePos = Input.mousePosition;
+       Vector3 screenMousePos2 = Camera.main.ScreenToWorldPoint(screenMousePos);
+       // position du player en pixel sur l'écran 
+       screenPlayerPos = Camera.main.WorldToScreenPoint(transform.parent.transform.position);
+       // position du point d'attaque 
 
 
-    protected Weapons weapons;
-    protected SpriteRenderer spriteRenderer;
-    protected Vector3 rotationVector;
+       if (isPlayingCac)
+       {
 
-    protected Vector3 screenMousePos;
-    protected Vector3 screenPlayerPos;
-    protected Vector3 screenWeaponPos;
-    private float angle;
+           weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
 
-    protected void MoveWeapon()
-    {
+       }
+       if (isPlayingDistance)
+       {
+           weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
 
-        // position de la souris sur l'écran 
-        screenMousePos = Input.mousePosition;
-        Vector3 screenMousePos2 = Camera.main.ScreenToWorldPoint(screenMousePos);
-        // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.parent.transform.position);
-        // position du point d'attaque 
-
-     
-        if (isPlayingCac)
-        {
-            
-            weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
-            
-        }
-        if (isPlayingDistance)
-        {
-            weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
-            
-        }
-        if (weapons != null)
-        {
-            spriteRenderer = weapons.GetComponent<SpriteRenderer>();
+       }
+       if (weapons != null)
+       {
+           spriteRenderer = weapons.GetComponent<SpriteRenderer>();
 
 
-            Vector3 PositionArme = weapons.OffPositionArme;
-            Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
-            
+           Vector3 PositionArme = weapons.OffPositionArme;
+           Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
 
-            Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
-           // print(weapons.transform.position);
 
-            if (dir.x < -5 && !spriteRenderer.flipX)
-            {
-                spriteRenderer.flipX = true;
-                weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
-                weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
+           Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
+          // print(weapons.transform.position);
 
-            }
-            else if (dir.x > 5 && spriteRenderer.flipX)
-            {
-                spriteRenderer.flipX = false;
-                weapons.transform.localPosition = PositionArme;
-                weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
+           if (dir.x < -5 && !spriteRenderer.flipX)
+           {
+               spriteRenderer.flipX = true;
+               weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
+               weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
 
-            }
+           }
+           else if (dir.x > 5 && spriteRenderer.flipX)
+           {
+               spriteRenderer.flipX = false;
+               weapons.transform.localPosition = PositionArme;
+               weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
 
-            if (spriteRenderer.flipX)
-            {
-                angle = Quaternion.FromToRotation(Vector3.left, dir).eulerAngles.z;
-            }
-            else
-            {
-                angle = Quaternion.FromToRotation(Vector3.right, dir).eulerAngles.z;
+           }
 
-            }
+           if (spriteRenderer.flipX)
+           {
+               angle = Quaternion.FromToRotation(Vector3.left, dir).eulerAngles.z;
+           }
+           else
+           {
+               angle = Quaternion.FromToRotation(Vector3.right, dir).eulerAngles.z;
 
-            if (Quaternion.Euler(0, 0, angle).z > 0.85)
-            {
-                angle = 100;
-            }
+           }
 
-            weapons.transform.rotation = Quaternion.Euler(0, 0, angle);
-        }
+           if (Quaternion.Euler(0, 0, angle).z > 0.85)
+           {
+               angle = 100;
+           }
 
-    }
+           weapons.transform.rotation = Quaternion.Euler(0, 0, angle);
+       }
+
+   }*/
 
 }

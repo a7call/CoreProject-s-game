@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEditorInternal.VersionControl;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using Wanderer.Utils;
 
 public class ShopManager : MonoBehaviour
 {
@@ -128,7 +124,7 @@ public class ShopManager : MonoBehaviour
         {
             for (int column = 0; column < tableau.GetLength(1); column++)
             {
-                tableau[row, column] = RandomBoolean.RandomBool(consommablesChance);
+                tableau[row, column] = Utils.RandomBool(consommablesChance);
 
                 if (tableau[row, column] == false)
                 {
@@ -183,7 +179,7 @@ public class ShopManager : MonoBehaviour
         {
             for (int column = 0; column < tableau.GetLength(1); column++)
             {
-                tableau[row, column] = RandomBoolean.RandomBool(weaponsChance);
+                tableau[row, column] = Utils.RandomBool(weaponsChance);
             }
         }
     }

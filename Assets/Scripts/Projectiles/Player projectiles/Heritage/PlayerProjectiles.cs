@@ -112,8 +112,9 @@ public class PlayerProjectiles : MonoBehaviour
             dir = new Vector3((screenMousePos - screenArmePos).x , (screenMousePos - screenArmePos).y).normalized;
 
         }
-        ConeShoot();
+       //ConeShoot();
     }
+
     
 
     protected virtual void Update()
@@ -122,10 +123,6 @@ public class PlayerProjectiles : MonoBehaviour
         if (isInteligentAmmoModule)
         {
             getNewDir(this.gameObject);
-        }
-        else
-        {
-            Launch();
         }
 
         if (isRocketAmmoModule && !AmmoSpeedAlreadyUp)
@@ -137,12 +134,20 @@ public class PlayerProjectiles : MonoBehaviour
        
     }
 
+    private void Start()
+    {
+        Launch();
+    }
+
 
     protected virtual void Launch()
     {
+        if(!weapon.GetComponent<SpriteRenderer>().flipX)
+            projectileRB.velocity = transform.right * speed;
+        if (weapon.GetComponent<SpriteRenderer>().flipX)
+            projectileRB.velocity = -transform.right * speed;
 
-        transform.Translate(directionTir * speed * Time.deltaTime, Space.World) ;
-        
+
     }
     void SetData()
     {

@@ -153,7 +153,7 @@ public class DistanceWeapon : Weapons
         float decalage = Random.Range(-dispersion, dispersion);      
         Proj.dispersion = decalage;
         BulletInMag--;
-        Instantiate(projectile, attackPoint.position, Quaternion.identity);
+        Instantiate(projectile, attackPoint.position, transform.rotation);
         print(player.attackSpeed.Value);
         yield return new WaitForSeconds(player.attackSpeed.Value);
         isAttacking = false;
