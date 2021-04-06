@@ -16,7 +16,7 @@ GameObject:
   m_Layer: 0
   m_Name: Petit pistolet
   m_TagString: DistanceWeapon
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -78,16 +78,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   attackPoint: {fileID: 1467171556792787327}
+  attackDelay: 0
   isAttacking: 0
   posSouris: {x: 0, y: 0, z: 0}
   OffPositionArme: {x: 0, y: 0, z: 0}
+  topOffSet: {x: 0, y: 0, z: 0}
+  otherOffset: {x: 0, y: 0, z: 0}
   RangeMiniChangementTir: 5
   RangeChangementTir: 0
   DistanceWeaponData: {fileID: 11400000, guid: 6b7ef2be3c511412e9c2bcd763f76785, type: 2}
+  image: {fileID: 0}
   OkToShoot: 0
   BulletInMag: 0
-  AmmoStock: 120
-  image: {fileID: 0}
+  ammoStock: 0
 --- !u!212 &1888638776734150820
 SpriteRenderer:
   m_ObjectHideFlags: 0
