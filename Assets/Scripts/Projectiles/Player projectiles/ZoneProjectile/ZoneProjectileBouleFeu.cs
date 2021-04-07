@@ -34,7 +34,7 @@ public class ZoneProjectileBouleFeu : PlayerProjectiles
             {
                 if (enemyCol == null) continue;
                 Enemy enemy  = enemyCol.GetComponent<Enemy>();
-                enemy.TakeDamage(weaponDamage);
+                enemy.TakeDamage(damage);
             }
            
         }

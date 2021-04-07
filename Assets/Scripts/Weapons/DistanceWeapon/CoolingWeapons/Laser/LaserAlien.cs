@@ -18,7 +18,7 @@ public class LaserAlien : CollingWeapons
         }
         if (OkToShoot && !IsToHot)
         {
-            GetDirProj();
+            //GetDirProj();
 
 
 

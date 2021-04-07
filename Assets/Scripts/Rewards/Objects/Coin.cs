@@ -5,7 +5,7 @@ using UnityEngine;
 public class Coin : Rewards
 {
     protected bool isRoomClear = true;
-    protected float speed = 4;
+    protected float projectileSpeed = 4;
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -23,7 +23,7 @@ public class Coin : Rewards
         {
             Player player = FindObjectOfType<Player>();
             Vector3 direction = (player.transform.position - transform.position).normalized;
-            transform.Translate(direction * speed * Time.deltaTime, Space.World);
+            transform.Translate(direction * projectileSpeed * Time.deltaTime, Space.World);
         }
     }
 }

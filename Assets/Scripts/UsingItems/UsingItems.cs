@@ -62,7 +62,7 @@ public class UsingItems : MonoBehaviour
     ////Coroutine
     //private void ConsumeMSPotion()
     //{
-    //    player.speed 
+    //    player.projectileSpeed 
     //}
 
     //private void ConsumeASPotion()

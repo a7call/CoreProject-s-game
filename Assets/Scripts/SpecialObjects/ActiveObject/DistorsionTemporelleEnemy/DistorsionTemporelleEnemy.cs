@@ -42,7 +42,7 @@ public class DistorsionTemporelleEnemy : CdObjects
                 if (!projectilsEnemy.Contains(hit.gameObject))
                 {
                     projectilsEnemy.Add(hit.gameObject);
-                    hit.GetComponent<Projectile>().speed /= 2;
+                    hit.GetComponent<Projectile>().projectileSpeed /= 2;
                 }
             }
         }
@@ -76,7 +76,7 @@ public class DistorsionTemporelleEnemy : CdObjects
             {
                 continue;
             }
-            projectil.GetComponent<Projectile>().speed *= 2;
+            projectil.GetComponent<Projectile>().projectileSpeed *= 2;
         }
 
 

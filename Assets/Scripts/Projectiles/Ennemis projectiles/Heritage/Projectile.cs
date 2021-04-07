@@ -13,7 +13,7 @@ using UnityEngine.WSA;
 public class Projectile : MonoBehaviour
 {
     // vitesse des projectiles
-    public float speed;
+    public float projectileSpeed;
     public bool isDisabled;
     
     // cible des projectiles (Player)
@@ -65,7 +65,7 @@ public class Projectile : MonoBehaviour
         if (isTacticVisionModule && !AmmoSpeedAlreadyDown)
         {
             AmmoSpeedAlreadyDown = true;
-            speed /= SpeedDiviser;
+            projectileSpeed /= SpeedDiviser;
         }
     }
     //protected void ConeShoot()
@@ -83,7 +83,7 @@ public class Projectile : MonoBehaviour
     protected virtual void Lauch()
     {
 
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(dir * projectileSpeed * Time.deltaTime);
     }
 
     // Calcul la distance à laquelle se situe le projectile du joueur

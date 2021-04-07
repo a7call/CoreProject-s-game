@@ -30,12 +30,12 @@ public class ExplosionProjectileTeteChercheuse : ExplosionProjectile
             direction.Normalize();
             float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
             rb.angularVelocity = -rotationAmount * angularSpeed;
-            rb.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * speed;
+            rb.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * projectileSpeed;
             angularSpeed++;
         }
         else
         {
-            transform.Translate(directionTir * speed * Time.deltaTime, Space.World);
+            transform.Translate(directionTir * projectileSpeed * Time.deltaTime, Space.World);
         }
     }
 

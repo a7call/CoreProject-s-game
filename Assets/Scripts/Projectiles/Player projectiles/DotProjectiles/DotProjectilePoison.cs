@@ -29,7 +29,7 @@ public class DotProjectilePoison : PlayerProjectiles
             
             yield return new WaitForSeconds(timeBetweenHits);
             if (enemy == null) break;
-            enemy.TakeDamage(weaponDamage);              
+            enemy.TakeDamage(damage);              
         }
       
         

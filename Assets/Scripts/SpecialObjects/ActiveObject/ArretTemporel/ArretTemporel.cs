@@ -37,8 +37,8 @@ public class ArretTemporel : CdObjects
         foreach (GameObject proj in projectiles)
         {
             Projectile projScript = proj.GetComponent<Projectile>();
-            ProjSpeed = projScript.speed;
-            projScript.speed = 0;
+            ProjSpeed = projScript.projectileSpeed;
+            projScript.projectileSpeed = 0;
 
         }
 
@@ -66,7 +66,7 @@ public class ArretTemporel : CdObjects
                 continue;
             }
             Projectile projScript = proj.GetComponent<Projectile>();
-            projScript.speed = ProjSpeed;
+            projScript.projectileSpeed = ProjSpeed;
 
         }
     }

@@ -9,7 +9,7 @@ public class MagnetizedBeld : CdObjects
     protected RaycastHit2D hitMemory;
     private bool isGoingToWall;
     [SerializeField]  protected LayerMask hitLayer;
-    [SerializeField] protected float speed;
+    [SerializeField] protected float projectileSpeed;
     protected override void Start()
     {
         base.Start();
@@ -55,7 +55,7 @@ public class MagnetizedBeld : CdObjects
         {
 
             player.currentEtat = Player.EtatJoueur.Grapping;
-            player.rb.AddForce(GetDirection() * speed * Time.deltaTime);
+            player.rb.AddForce(GetDirection() * projectileSpeed * Time.deltaTime);
             if (Vector3.Distance(hitMemory.collider.transform.position, player.transform.position) < 0.5f)
             {
                 player.rb.velocity = Vector2.zero;

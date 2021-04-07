@@ -31,8 +31,8 @@ public class BouleEnergie : PlayerProjectiles
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.TakeDamage(weaponDamage);
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
+            enemy.TakeDamage(damage);
+            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
             //Modules
             ModuleProcs(enemy);
             Explosion();

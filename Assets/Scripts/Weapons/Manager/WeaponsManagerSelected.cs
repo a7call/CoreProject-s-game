@@ -31,7 +31,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     {
         ChangeWeapons();
         UpdateUIWeapon();
-        MoveWeapon();
+        MoveWeapon2();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -283,7 +283,61 @@ public class WeaponsManagerSelected : MonoBehaviour
         }
         if (weapons != null)
         {
-            Vector3 PositionArme = weapons.OffPositionArme;
+            Vector3 PositionArme;
+            Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
+            spriteRenderer = weapons.GetComponent<SpriteRenderer>();
+            Vector3 mousePosition = Utils.GetMouseWorldPosition();
+            Vector3 aimDirection = (mousePosition - weapons.transform.position).normalized;
+            float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            weapons.transform.eulerAngles = new Vector3(0, 0, angle);
+            if (aimDirection.y > 0)
+            {
+                PositionArme = weapons.topOffSet;
+            }
+            else
+            {
+                PositionArme = weapons.otherOffset;
+            }
+              
+
+            if (aimDirection.x < -0.5f && !spriteRenderer.flipY)
+            {
+                spriteRenderer.flipY= true;
+                weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
+                weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+                           
+
+            }
+            else if (aimDirection.x > 0.5f && spriteRenderer.flipY)
+            {
+                spriteRenderer.flipY = false;
+                weapons.transform.localPosition = PositionArme;
+                weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+                weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+            }
+        }
+    }
+    bool changed = false;
+    Vector3 PositionArme;
+    bool added = false;
+    protected void MoveWeapon2()
+    {
+        if (isPlayingCac)
+        {
+            weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
+        }
+        if (isPlayingDistance)
+        {
+            weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
+        }
+        if (weapons != null)
+        {
+            if (!changed)
+            {
+                PositionArme = weapons.OffPositionArme;
+                changed = true;
+            }
+           
             Vector3 PosAttackPoint = weapons.attackPoint.localPosition;
             spriteRenderer = weapons.GetComponent<SpriteRenderer>();
             Vector3 mousePosition = Utils.GetMouseWorldPosition();
@@ -291,15 +345,33 @@ public class WeaponsManagerSelected : MonoBehaviour
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
             weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
+            if (aimDirection.y > 0)
+            {
+                added = false;
+                PositionArme.y = weapons.topOffSet.y;
+                weapons.transform.localPosition = PositionArme;
+
+            }
+            else if( aimDirection.y < 0)
+            {
+                added = true;
+                PositionArme.y = weapons.otherOffset.y;
+                weapons.transform.localPosition = PositionArme;
+            }
+            
             if (aimDirection.x < -0.5f && !spriteRenderer.flipY)
             {
-                spriteRenderer.flipY= true;
-                weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
+                spriteRenderer.flipY = true;
+                PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
+                weapons.transform.localPosition = PositionArme;
                 weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+
+
             }
             else if (aimDirection.x > 0.5f && spriteRenderer.flipY)
             {
                 spriteRenderer.flipY = false;
+                PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 weapons.transform.localPosition = PositionArme;
                 weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
                 weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);

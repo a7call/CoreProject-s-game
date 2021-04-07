@@ -25,10 +25,10 @@ public class Boomerang : PlayerProjectiles
     protected override void Update()
     {
         
-       distance = Vector3.Distance(transform.position, playerTransform.position);
+       //distance = Vector3.Distance(transform.position, playerTransform.position);
        Launch();
        if(distance > backDistance) isComingBack = true;
-       if (isComingBack) dir = (playerTransform.position - transform.position).normalized;
+      // if (isComingBack) dir = (playerTransform.position - transform.position).normalized;
         if (distance < 0.2f)
         {
             isAlreadyFired = false;

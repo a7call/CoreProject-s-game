@@ -5,7 +5,7 @@ using UnityEngine;
 public class RobotProjectile : MonoBehaviour
 {
     private assitantRobot robot;
-    [SerializeField] float speed = 0f;
+    [SerializeField] float projectileSpeed = 0f;
     private Vector2 dir;
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class RobotProjectile : MonoBehaviour
     }
     private void Launch()
     {
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(dir * projectileSpeed * Time.deltaTime);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

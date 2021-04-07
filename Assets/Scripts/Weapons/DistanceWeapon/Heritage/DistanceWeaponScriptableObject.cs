@@ -24,6 +24,9 @@ public class DistanceWeaponScriptableObject : WeaponScriptableObject
             p.reloadSpeed.AddModifier(new StatModifier(reloadDelay, StatModType.Flat, this));
         if (ammoStock != 0)
             p.ammoStock.AddModifier(new StatModifier(ammoStock, StatModType.Flat, this));
+        if (magSize != 0)
+            p.magSize.AddModifier(new StatModifier(magSize, StatModType.Flat, this));
+
     }
     public override void Unequip(Player p)
     {
@@ -31,6 +34,7 @@ public class DistanceWeaponScriptableObject : WeaponScriptableObject
         p.dispersion.RemoveAllModifiersFromSource(this);
         p.reloadSpeed.RemoveAllModifiersFromSource(this);
         p.ammoStock.RemoveAllModifiersFromSource(this);
+        p.magSize.RemoveAllModifiersFromSource(this);
     }
 
 

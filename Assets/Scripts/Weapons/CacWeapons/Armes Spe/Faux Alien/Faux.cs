@@ -24,7 +24,7 @@ public class Faux : CacWeapons
             Cleave();
             EnnemiDectectionCleave();
         }
-        if (!isCleaving) GetAttackDirection();
+       // if (!isCleaving) GetAttackDirection();
     }
 
     [SerializeField]
