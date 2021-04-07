@@ -319,7 +319,6 @@ public class WeaponsManagerSelected : MonoBehaviour
     }
     bool changed = false;
     Vector3 PositionArme;
-    bool added = false;
     protected void MoveWeapon2()
     {
         if (isPlayingCac)
@@ -347,14 +346,12 @@ public class WeaponsManagerSelected : MonoBehaviour
 
             if (aimDirection.y > 0)
             {
-                added = false;
                 PositionArme.y = weapons.topOffSet.y;
                 weapons.transform.localPosition = PositionArme;
 
             }
             else if( aimDirection.y < 0)
             {
-                added = true;
                 PositionArme.y = weapons.otherOffset.y;
                 weapons.transform.localPosition = PositionArme;
             }
