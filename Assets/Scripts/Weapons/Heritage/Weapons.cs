@@ -13,6 +13,11 @@ public class Weapons : MonoBehaviour
     public Transform attackPoint;
     public bool isAttacking = false;
 
+    // Offset de la postion de l'arme
+    public float offSetX;
+    public float topOffSetY;
+    public float otherOffsetY;
+
     #region Module
     [HideInInspector]
     public float damage;
@@ -42,45 +47,21 @@ public class Weapons : MonoBehaviour
        // ChangeLayer();
     }
 
+    protected virtual void OnEnable()
+    {
+        GetComponent<SpriteRenderer>().flipY = false;
+    }
+
     #region References 
     protected virtual void GetReferences()
     {
         animator = gameObject.GetComponent<Animator>();
         playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<Player>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     #endregion
 
-    // Offset de la postion de l'arme
-    public Vector3 OffPositionArme;
-    public Vector3 topOffSet;
-    public Vector3 otherOffset;
-    public Vector3 posSouris;
-
-    private SpriteRenderer spriteRenderer;
-    protected virtual void ChangeLayer()
-    {
-       
-        Vector3 mousePos = Utils.GetMouseWorldPosition();
-        Vector3 dirPlayerMouse = mousePos - player.transform.position;
-        if (dirPlayerMouse.y > 0 )
-        {
-            spriteRenderer.sortingOrder = 0;
-        }
-        else
-        {
-            spriteRenderer.sortingOrder = 2;
-        }
-
-    }
-
-
-
    
-
-
-
 
     /* ANCIENNE METHODE GETDIRPROJ
     *  
