@@ -313,16 +313,15 @@ public class WeaponsManagerSelected : MonoBehaviour
         }
     }
 
-    float PosAttackPointYFlip = 0;
-    float PosAttackPointYNoFlip = 0;
+
+    
     private void GetReferences(GameObject weapon)
     {
         _weapons = weapon.GetComponent<Weapons>();
         spriteRenderer = _weapons.GetComponent<SpriteRenderer>();
-        PosAttackPoint = _weapons.attackPoint.localPosition;
-       
-        
+        PosAttackPoint = _weapons.attackPointPos;
     }
+
     private void SetUpWeaponForUse(Weapons weapons)
     {
         

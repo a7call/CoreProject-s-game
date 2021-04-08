@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Wanderer.Utils;
+﻿using UnityEngine;
 /// <summary>
 /// Classe mère des armes 
 /// </summary>
@@ -17,6 +14,7 @@ public class Weapons : MonoBehaviour
     public float offSetX;
     public float topOffSetY;
     public float otherOffsetY;
+    public Vector3 attackPointPos;
 
     #region Module
     [HideInInspector]
@@ -58,6 +56,7 @@ public class Weapons : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<Player>();
+        attackPointPos = attackPoint.transform.localPosition;
     }
     #endregion
 
