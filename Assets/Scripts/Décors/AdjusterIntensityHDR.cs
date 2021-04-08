@@ -6,6 +6,11 @@ public class AdjusterIntensityHDR : MonoBehaviour
 {
 
     public Material textureMaterial;
+    [SerializeField] private float intensitySpeed = 1f;
+    [SerializeField] private float minIntensity = 5f;
+    [SerializeField] private float maxIntensity = 5f;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -16,8 +21,7 @@ public class AdjusterIntensityHDR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float intensityValue = 0;
-        print(textureMaterial.GetColor("_Color"));
-        // textureMaterial.SetVector("_Color", new Vector4(0, 96, 191, intensityValue));
+        float intensity = Mathf.PingPong(Time.time * intensitySpeed, maxIntensity) + minIntensity;
+        textureMaterial.SetFloat("_Intensity", intensity);
     }
 }
