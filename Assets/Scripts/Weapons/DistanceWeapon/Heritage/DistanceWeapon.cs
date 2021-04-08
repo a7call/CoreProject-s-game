@@ -50,10 +50,11 @@ public class DistanceWeapon : Weapons
         InitializeMag();
     }
 
-    protected  void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         IsReloading = false;
-        isAttacking = false;  
+        isAttacking = false;
     }
 
     // Update is called once per frame
