@@ -10,7 +10,7 @@ public class ExplosionProjectile : PlayerProjectiles
     {
         if (isNuclearExplosionModule || isAtomiqueExplosionModule)
         {
-            weaponDamage *= explosionDamageMultiplier;
+
         }
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -32,7 +32,7 @@ public class ExplosionProjectile : PlayerProjectiles
                 CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
             }
             if (enemy == null || enemy == collision) continue;
-            enemyScript.TakeDamage(weaponDamage);
+            enemyScript.TakeDamage(damage);
         }
     }
 }

@@ -22,7 +22,7 @@ public class AngleProjectile : Projectile
 
     protected override void Lauch()
     {
-        transform.Translate(directionTir * base.speed * Time.deltaTime);
+        transform.Translate(directionTir * base.projectileSpeed * Time.deltaTime);
     }
 
     protected void ConeShoot()

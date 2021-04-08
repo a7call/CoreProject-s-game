@@ -19,7 +19,7 @@ public class LaserWeapon : CollingWeapons
         if (OkToShoot && !IsToHot)
         {
             
-            GetDirProj();
+            //GetDirProj();
             
             //float distSP = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).magnitude;
             //if (distSP < RangeMiniChangementTir)

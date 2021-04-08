@@ -18,7 +18,7 @@ public class ItemScriptableObject : ScriptableObject
     public int hpGiven;
 
     //Potion de MS
-    public float speed;
+    public float projectileSpeed;
     public float speedDuration;
 
     //Potions d'AS/UpAttack

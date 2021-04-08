@@ -23,7 +23,7 @@ public class CanonZeus : DistanceWeapon
         magSize = DistanceWeaponData.magSize;
         reloadDelay = DistanceWeaponData.reloadDelay;
 
-        BulletInMag = magSize;
+        BulletInMag = (int)magSize;
         image = DistanceWeaponData.image;
     }
 

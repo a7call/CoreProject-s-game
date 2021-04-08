@@ -16,11 +16,11 @@ public class PompeProjectiles : PlayerProjectiles
 
     protected override void Launch()
     {
-        transform.Translate(dirTir * speed * Time.deltaTime);
+        transform.Translate(dirTir * projectileSpeed * Time.deltaTime);
     }
     protected void Cone()
     {
-        dirTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
+        dirTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * directionTir;
     }
 
 }

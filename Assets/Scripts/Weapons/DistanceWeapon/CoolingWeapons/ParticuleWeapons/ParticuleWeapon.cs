@@ -26,7 +26,7 @@ public class ParticuleWeapon : CollingWeapons
         {
             if (!GetComponentInChildren<ParticleSystem>().isPlaying) GetComponentInChildren<ParticleSystem>().Play();
 
-            GetDirProj();
+            //GetDirProj();
 
             RaycastHit2D[] hits = Physics2D.CircleCastAll(attackPoint.position, radius, Vector2.zero);
 

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public CharacterStats projectileSpeed;
     public CharacterStats dispersion;
     public CharacterStats knockBackForce;
+    public CharacterStats knockBackTime;
     public CharacterStats explosionDamage;
     public CharacterStats imolationDamage;
     public CharacterStats slow;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
 
     [Header("Weapon")]
     public CharacterStats reloadSpeed;
+    public CharacterStats magSize;
     public CharacterStats cadence;
     public CharacterStats range;
     public CharacterStats attackSpeed;

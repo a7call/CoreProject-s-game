@@ -6,7 +6,7 @@ public class BlackHole : ModuleLauchPhase
 {
     private Collider2D[] hits;
     [SerializeField] private float range;
-    [SerializeField] private float speed;
+    [SerializeField] private float projectileSpeed;
     [SerializeField] private float radiusSpeed;
     [SerializeField] protected float timeBeforDesactivation;
     [SerializeField] private float timeToExplod;
@@ -52,7 +52,7 @@ public class BlackHole : ModuleLauchPhase
                 Transform hitTrans = hit.GetComponent<Transform>();
                 Vector2 dir = (hitTrans.position - transform.position).normalized;
                 hitTrans.Translate(-dir * radiusSpeed * Time.deltaTime, Space.World); ;
-                hit.transform.RotateAround(transform.position, Vector3.forward, speed * Time.deltaTime);
+                hit.transform.RotateAround(transform.position, Vector3.forward, projectileSpeed * Time.deltaTime);
                 hit.GetComponent<Enemy>().currentState = Enemy.State.Paralysed;
                 hit.GetComponent<Enemy>().aIPath.canMove = false;
                 hit.GetComponent<BoxCollider2D>().enabled = false;

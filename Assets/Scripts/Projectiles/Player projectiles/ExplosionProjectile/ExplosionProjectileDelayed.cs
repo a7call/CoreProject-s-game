@@ -17,8 +17,8 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.TakeDamage(weaponDamage);
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
+            enemy.TakeDamage(damage);
+            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
             //Modules
             ModuleProcs(enemy);
         }
@@ -47,7 +47,7 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
                     CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
                 }
                 if (enemy == null || enemy == collision) continue;
-                enemyScript.TakeDamage(weaponDamage);
+                enemyScript.TakeDamage(damage);
                
             }
         }

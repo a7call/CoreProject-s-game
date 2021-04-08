@@ -5,12 +5,105 @@ using UnityEngine.PlayerLoop;
 
 public class PlayerProjectiles : MonoBehaviour
 {
+
+    protected GameObject playerGO;
+    protected Player player;
+    protected WeaponsManagerSelected weaponManager;
+    protected Weapons weapon;
+    private Rigidbody2D rb;
+
+    #region Stats
+    protected float damage;
+    protected float knockBackForce;
+    protected float knockBackTime;
+    protected float projectileSpeed;
+    public float dispersion;
+    protected LayerMask weaponLayer;
+    #endregion
+
+
+    protected virtual void Awake()
+    {
+        GetReferences();
+        SetData();
+        
+    }
+    private void Start()
+    {
+        Launch();
+    }
+
+    protected virtual void Update()
+    {
+
+        if (isInteligentAmmoModule)
+        {
+            getNewDir(this.gameObject);
+        }
+
+
+    }
+
+
+    #region Datas && reférences
+
+    protected void GetReferences()
+    {
+        playerGO = GameObject.FindGameObjectWithTag("Player");
+        player = playerGO.GetComponent<Player>();
+        weaponManager = playerGO.transform.GetComponentInChildren<WeaponsManagerSelected>();
+        weapon = weaponManager.gameObject.transform.GetComponentInChildren<Weapons>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void SetData()
+    {
+        knockBackTime = player.knockBackTime.Value;
+        projectileSpeed = player.projectileSpeed.Value;
+        knockBackForce = player.knockBackForce.Value;
+        dispersion = player.dispersion.Value;
+        weaponLayer = weapon.enemyLayer;
+    }
+    #endregion
+
+   
+    #region Move logic
+    protected Vector3 directionTir;
+    protected virtual void Launch()
+    {
+        directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
+        rb.velocity = directionTir * projectileSpeed;
+    }
+    #endregion
+
+
+    #region Collision logic
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            print(player.damage.Value);
+            enemy.TakeDamage(player.damage.Value);
+            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
+            //Modules
+            ModuleProcs(enemy);
+        }
+        if (collision.gameObject.layer == 10) Destroy(gameObject);
+    
+
+    }
+    #endregion
+
+
+    #region Module
     public static bool isNuclearExplosionModule;
     public static bool isAtomiqueExplosionModule;
     public static float explosionDamageMultiplier;
 
     // ExplosionModule
-    public static bool isExplosiveAmo = false; 
+    public static bool isExplosiveAmo = false;
     public static float explosiveRadius;
     public static LayerMask hitLayer;
     public static int explosionDamage;
@@ -36,145 +129,7 @@ public class PlayerProjectiles : MonoBehaviour
     public static bool isRocketAmmoModule;
     [HideInInspector]
     public static float SpeedMultiplier;
-
-
-    //Knoclback
-    [HideInInspector]
-     public float knockBackForce;
-    [HideInInspector]
-    public float knockBackTime;
-
-
-
-
-
-    protected GameObject playerGO;
-    protected Player player;
-    protected GameObject weaponManager;
-    protected Vector3 dir;
-    protected Transform playerTransform;
-    protected float speed;
-    protected Weapons weapon;
-    protected LayerMask weaponLayer;
-    protected float weaponDamage;
-    [SerializeField]
-    protected PlayerProjectileScriptableObject PlayerProjectileData;
-    protected Vector3 directionTir;
-    [HideInInspector]
-    public float dispersion;
-    private Rigidbody2D projectileRB;
-
-    protected Vector3 screenMousePos;
-    protected Vector3 screenPlayerPos;
-    protected Vector3 screenArmePos;
-
-    protected float RangeChangementTir;
-
-    protected virtual void Awake()
-    {
-        
-        
-        SetData();
-        playerGO = GameObject.FindGameObjectWithTag("Player");
-        player = playerGO.GetComponent<Player>();
-        weaponManager = GameObject.FindGameObjectWithTag("WeaponManager");
-        weapon = weaponManager.transform.GetComponentInChildren<Weapons>();
-        projectileRB = GetComponent<Rigidbody2D>();
-        weaponDamage = weapon.damage;
-        weaponLayer = weapon.enemyLayer;
-        playerTransform = player.GetComponent<Transform>();
-
-        
-
-        // position de la souris sur l'écran 
-        screenMousePos = Input.mousePosition;
-        // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(player.transform.position);
-        screenArmePos = Camera.main.WorldToScreenPoint(weapon.attackPoint.position);
-        // position du point d'attaque
-        
-        float distSP = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y).magnitude;
-
-        if(distSP < weapon.RangeMiniChangementTir)
-        {
-            dir = new Vector3(weapon.attackPoint.transform.position.x - weapon.transform.position.x, weapon.attackPoint.transform.position.y - weapon.transform.position.y);
-
-        }
-        else if (distSP < weapon.RangeChangementTir && distSP > weapon.RangeMiniChangementTir)
-        {
-            dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y).normalized;
-            //dir = new Vector3(weaponAttackP.attackPoint.transform.position.x - weaponAttackP.transform.position.x, weaponAttackP.attackPoint.transform.position.y - weaponAttackP.transform.position.y);
-
-        }
-        else
-        {
-            
-            dir = new Vector3((screenMousePos - screenArmePos).x , (screenMousePos - screenArmePos).y).normalized;
-
-        }
-       //ConeShoot();
-    }
-
-    
-
-    protected virtual void Update()
-    {
-        
-        if (isInteligentAmmoModule)
-        {
-            getNewDir(this.gameObject);
-        }
-
-        if (isRocketAmmoModule && !AmmoSpeedAlreadyUp)
-        {
-            AmmoSpeedAlreadyUp = true;
-            speed *= SpeedMultiplier;
-        }
-
-       
-    }
-
-    private void Start()
-    {
-        Launch();
-    }
-
-
-    protected virtual void Launch()
-    {
-        if(!weapon.GetComponent<SpriteRenderer>().flipX)
-            projectileRB.velocity = transform.right * speed;
-        if (weapon.GetComponent<SpriteRenderer>().flipX)
-            projectileRB.velocity = -transform.right * speed;
-
-
-    }
-    void SetData()
-    {
-        speed = PlayerProjectileData.speed;
-        knockBackForce = PlayerProjectileData.knockBackForce;
-        knockBackTime = PlayerProjectileData.knockBackTime;
-    }
-
-
- 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            Enemy enemy = collision.GetComponent<Enemy>();
-            print(player.damage.Value);
-            enemy.TakeDamage(player.damage.Value);
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, dir, knockBackTime, enemy));
-            //Modules
-            ModuleProcs(enemy);
-        }
-        if (collision.gameObject.layer == 10) Destroy(gameObject);
-    
-
-    }
-
-     protected virtual void ModuleProcs(Enemy enemy)
+    protected virtual void ModuleProcs(Enemy enemy)
     {
         if (isExplosiveAmo)
         {
@@ -200,27 +155,20 @@ public class PlayerProjectiles : MonoBehaviour
 
     }
 
-
-    protected void ConeShoot()
-    {
-        directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * dir;
-    }
-
-    
     //IntelligentAmoModule
     private float angulSpeed = 200f;
     private GameObject lockEnemy;
-    public  void getNewDir(GameObject proj)
+    public void getNewDir(GameObject proj)
     {
         if (InteligentAmmoModule.LockEnemy(proj) != null) lockEnemy = InteligentAmmoModule.LockEnemy(proj);
-        if (lockEnemy != null )
+        if (lockEnemy != null)
         {
             if (lockEnemy == null) return;
             Vector2 direction = (lockEnemy.transform.position - proj.transform.position);
             direction.Normalize();
             float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
-            projectileRB.angularVelocity = -rotationAmount * angulSpeed;
-            projectileRB.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * speed;
+            rb.angularVelocity = -rotationAmount * angulSpeed;
+            rb.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * projectileSpeed;
             angulSpeed += 2;
         }
         else
@@ -230,4 +178,9 @@ public class PlayerProjectiles : MonoBehaviour
 
 
     }
+    #endregion
+
+
+
+
 }
