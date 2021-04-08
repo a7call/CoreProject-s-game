@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Wanderer.Utils
 {
-    public static class Utils
+    public class Utils
     {
         public static Vector3 GetWorldPositionWithZ(Vector3 screenPos, Camera worldCamera)
         {
