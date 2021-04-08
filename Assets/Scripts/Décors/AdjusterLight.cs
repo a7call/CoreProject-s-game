@@ -11,6 +11,7 @@ public class AdjusterLight : MonoBehaviour
     // Intensity variables
     [SerializeField] private bool isChangeIntensity = false;
     [SerializeField] private float maxIntensity;
+    [SerializeField] private float minIntensity;
     [SerializeField] private float intensitySpeed;
 
     // Color variables
@@ -34,7 +35,7 @@ public class AdjusterLight : MonoBehaviour
     {
         if (isChangeIntensity)
         {
-            myLight.intensity = Mathf.PingPong(Time.time * intensitySpeed, maxIntensity);
+            myLight.intensity = Mathf.PingPong(Time.time * intensitySpeed, maxIntensity) + minIntensity;
         }
 
         if (isChangeColor)

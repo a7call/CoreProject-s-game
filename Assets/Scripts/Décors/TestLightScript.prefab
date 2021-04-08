@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2240646739874610674
 Transform:
   m_ObjectHideFlags: 0
@@ -86,10 +86,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLight: {fileID: 2361031585893417694}
-  isChangeIntensity: 0
-  maxIntensity: 3
-  intensitySpeed: 1
+  isChangeIntensity: 1
+  maxIntensity: 0.5
+  minIntensity: 0.75
+  intensitySpeed: 0.25
   isChangeColor: 0
   colorSpeed: 1
-  startColor: {r: 0.6415094, g: 0.09925235, b: 0.18424737, a: 1}
-  endColor: {r: 0.23268066, g: 0.25631338, b: 0.7169812, a: 0}
+  startColor: {r: 0.21176471, g: 0.3882353, b: 0.9607843, a: 1}
+  endColor: {r: 0.12079027, g: 0.15055116, b: 0.735849, a: 0}
