@@ -31,7 +31,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     {
         ChangeWeapons();
         UpdateUIWeapon();
-        MoveWeapon2();
+        MoveWeapon();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -275,7 +275,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     Vector3 PositionArme = Vector3.zero;
     Vector3 PosAttackPoint = Vector3.zero;
 
-    protected void MoveWeapon2()
+    protected void MoveWeapon()
     {
         
         if (_weapons != null)
@@ -358,8 +358,6 @@ public class WeaponsManagerSelected : MonoBehaviour
     
 
     #endregion
-
-
 
     // Méthode générique non utilisée mais conservée [A utiliser potentiellement si le code ci dessus est trop lourd]
     //private void ScrollWeapons(int _selectedWeapon, List<GameObject> _selectedWeaponList)
