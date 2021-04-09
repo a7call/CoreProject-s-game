@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: Ak47
   m_EditorClassIdentifier: 
   damage: 1.5
-  delayBetweenAttack: 0
+  delayBetweenAttack: 0.15
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: 8445732923359781466, guid: 4558f7ff8fb8655469118a6b57933bbc, type: 3}
+  knockBackForce: 200
+  knockBackTime: 0.3
+  projectileSpeed: 0
   projectile: {fileID: 5004741095190017796, guid: be59b9def4e5c49a7b89e6048a073e34, type: 3}
-  dispersion: 0
-  magSize: 0
-  reloadDelay: 0
-  ammoStock: 0
+  dispersion: 10
+  magSize: 300
+  reloadDelay: 2
+  ammoStock: 300
