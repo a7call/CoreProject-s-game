@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Extincteur
   m_EditorClassIdentifier: 
   damage: 0.01
+  delayBetweenAttack: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  AttackDelay: 0
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 69b4cc36e67b487488a5d418867fc92e, type: 3}
+  knockBackForce: 0
+  knockBackTime: 0.1
+  projectileSpeed: 0
   coolingTime: 3
   coolingDelay: 0.5
   countMax: 6
