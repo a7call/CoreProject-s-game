@@ -26,11 +26,8 @@ public class Destructible : MonoBehaviour
 
     private IEnumerator ShouldStopMoving(Rigidbody2D rb)
     {
-
             yield return new WaitForSeconds(0.4f);
             rb.velocity = Vector2.zero;
-        
-        
     }
 
 
