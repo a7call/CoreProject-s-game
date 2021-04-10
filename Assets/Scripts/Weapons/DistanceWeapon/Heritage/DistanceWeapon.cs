@@ -189,6 +189,7 @@ public class DistanceWeapon : Weapons
 
     #region Reload logic
 
+    [HideInInspector]
     public int BulletInMag;
     protected float reloadDelay;
     protected float magSize;

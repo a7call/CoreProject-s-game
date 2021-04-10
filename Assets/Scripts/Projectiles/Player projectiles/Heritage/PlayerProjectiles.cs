@@ -61,7 +61,6 @@ public class PlayerProjectiles : MonoBehaviour
         knockBackTime = player.knockBackTime.Value;
         projectileSpeed = player.projectileSpeed.Value;
         knockBackForce = player.knockBackForce.Value;
-        dispersion = player.dispersion.Value;
         weaponLayer = weapon.enemyLayer;
     }
     #endregion
@@ -71,8 +70,10 @@ public class PlayerProjectiles : MonoBehaviour
     protected Vector3 directionTir;
     protected virtual void Launch()
     {
+        print(dispersion);
         directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
         rb.velocity = directionTir * projectileSpeed;
+        
     }
     #endregion
 
