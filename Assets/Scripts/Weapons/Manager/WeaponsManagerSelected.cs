@@ -280,7 +280,11 @@ public class WeaponsManagerSelected : MonoBehaviour
         
         if (_weapons != null)
         {
+
             Vector3 mousePosition = Utils.GetMouseWorldPosition();
+            Vector3 playerDirection = (mousePosition - transform.position);
+            if (playerDirection.magnitude < 1f)
+                return;
             Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
@@ -304,7 +308,7 @@ public class WeaponsManagerSelected : MonoBehaviour
 
 
             }
-            else if (aimDirection.x > 0.5f && spriteRenderer.flipY)
+            else if (aimDirection.x > 0.7f && spriteRenderer.flipY)
             {
                 spriteRenderer.flipY = false;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);

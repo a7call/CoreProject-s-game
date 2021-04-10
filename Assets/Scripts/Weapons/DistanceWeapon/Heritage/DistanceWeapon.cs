@@ -44,7 +44,7 @@ public class DistanceWeapon : Weapons
         base.Awake();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         SetStatDatas();
         InitializeMag();
