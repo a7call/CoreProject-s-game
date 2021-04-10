@@ -302,6 +302,7 @@ public class WeaponsManagerSelected : MonoBehaviour
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
 
 
+
             }
             else if (aimDirection.x > 0.5f && spriteRenderer.flipY)
             {
@@ -320,6 +321,15 @@ public class WeaponsManagerSelected : MonoBehaviour
         _weapons = weapon.GetComponent<Weapons>();
         spriteRenderer = _weapons.GetComponent<SpriteRenderer>();
         PosAttackPoint = _weapons.attackPointPos;
+        SetRightAttackPointPos();
+    }
+
+    private void SetRightAttackPointPos()
+    {
+        if (!spriteRenderer.flipY)
+            _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+        else
+            _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
     }
 
     private void SetUpWeaponForUse(Weapons weapons)

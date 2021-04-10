@@ -47,6 +47,7 @@ public class Weapons : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+       // attackPointPos = attackPoint.transform.localPosition;
         GetComponent<SpriteRenderer>().flipY = false;
     }
 
@@ -57,6 +58,7 @@ public class Weapons : MonoBehaviour
         playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<Player>();
         attackPointPos = attackPoint.transform.localPosition;
+       
     }
     #endregion
 

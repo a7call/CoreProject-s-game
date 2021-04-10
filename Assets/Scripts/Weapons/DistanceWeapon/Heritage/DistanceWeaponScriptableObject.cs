@@ -19,7 +19,7 @@ public class DistanceWeaponScriptableObject : WeaponScriptableObject
     {
         base.Equip(p);
         if (dispersion != 0)
-            p.dispersion.AddModifier(new StatModifier(dispersion, StatModType.PercentMult, this));
+            p.dispersion.AddModifier(new StatModifier(dispersion, StatModType.Flat, this));
         if(reloadDelay != 0)
             p.reloadSpeed.AddModifier(new StatModifier(reloadDelay, StatModType.Flat, this));
         if (ammoStock != 0)
