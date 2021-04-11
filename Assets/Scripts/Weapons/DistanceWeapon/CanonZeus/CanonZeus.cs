@@ -14,18 +14,18 @@ public class CanonZeus : DistanceWeapon
 
     protected RaycastHit2D[] hits;
 
-    protected override void SetData()
-    {
-        enemyLayer = DistanceWeaponData.enemyLayer;
-        damage = DistanceWeaponData.damage;
-        attackDelay = DistanceWeaponData.delayBetweenAttack;
-        dispersion = DistanceWeaponData.dispersion;
-        magSize = DistanceWeaponData.magSize;
-        reloadDelay = DistanceWeaponData.reloadDelay;
+    //protected override void SetData()
+    //{
+    //    enemyLayer = DistanceWeaponData.enemyLayer;
+    //    damage = DistanceWeaponData.damage;
+    //    attackDelay = DistanceWeaponData.delayBetweenAttack;
+    //    dispersion = DistanceWeaponData.dispersion;
+    //    magSize = DistanceWeaponData.magSize;
+    //    reloadDelay = DistanceWeaponData.reloadDelay;
 
-        BulletInMag = (int)magSize;
-        image = DistanceWeaponData.image;
-    }
+    //    BulletInMag = (int)magSize;
+    //    image = DistanceWeaponData.image;
+    //}
 
     protected override void Update()
     {

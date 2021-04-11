@@ -2,19 +2,18 @@
 using UnityEngine;
 using Wanderer.Utils;
 
-public class LaserGun : MonoBehaviour
+public class LaserGun : Weapons
 {
-
     public LineRenderer lineRenderer;
-    public Transform attackPoint;
     void Start()
     {
         DisableLaser();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (Input.GetMouseButtonDown(0))
         {
             EnableLaser();

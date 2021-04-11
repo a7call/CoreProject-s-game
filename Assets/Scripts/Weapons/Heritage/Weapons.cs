@@ -58,7 +58,6 @@ public class Weapons : MonoBehaviour
         playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<Player>();
         attackPointPos = attackPoint.transform.localPosition;
-       
     }
     #endregion
 

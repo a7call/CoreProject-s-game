@@ -192,13 +192,13 @@ public class WeaponsManagerSelected : MonoBehaviour
         weapon.gameObject.SetActive(true);
         GetReferences(weapon);
         SetUpWeaponForUse(_weapons);
-        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<Player>());
+        weapon.GetComponent<IShootableWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<Player>());
     }
 
     private void UnEquipWeapon(GameObject weapon)
     {
         weapon.gameObject.SetActive(false);
-        weapon.GetComponent<DistanceWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<Player>());
+        weapon.GetComponent<IShootableWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<Player>());
     }
     #endregion
 

@@ -2,14 +2,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DistanceWeapon : Weapons
+public class DistanceWeapon : Weapons, IShootableWeapon
 {
     
-    public DistanceWeaponScriptableObject DistanceWeaponData;
+    
+    public WeaponScriptableObject DistanceWeaponData
+    {
+        get
+        {
+            return DistanceWeaponDataCast;
+        }
+    }
+    public DistanceWeaponScriptableObject DistanceWeaponDataCast;
 
     #region Module Et des betises
-    //CanonRapideModule
-    [HideInInspector]
+   //CanonRapideModule
+   [HideInInspector]
     protected bool CadenceAlreadyUp = false;
     [HideInInspector]
     public static bool isCanonRapideModule;
@@ -95,7 +103,6 @@ public class DistanceWeapon : Weapons
             reloadDelay /= ReloadSpeedMultiplier;
         }
         #endregion
-
     }
 
     #region Bug de l'animation
@@ -123,7 +130,7 @@ public class DistanceWeapon : Weapons
 
     protected virtual void SetData()
     {
-        projectile = DistanceWeaponData.projectile;
+        projectile = DistanceWeaponDataCast.projectile;
         enemyLayer = DistanceWeaponData.enemyLayer;
         image = DistanceWeaponData.image;
     }
@@ -150,7 +157,7 @@ public class DistanceWeapon : Weapons
     protected float dispersion;
 
     [HideInInspector]
-    public bool OkToShoot = true;
+    public bool OkToShoot { get; set; }
 
     protected virtual IEnumerator Shoot()
     {
@@ -167,7 +174,7 @@ public class DistanceWeapon : Weapons
         return OkToShoot && !isAttacking  && BulletInMag > 0 && !PauseMenu.isGamePaused;
     }
 
-    private void StartShootingProcess()
+    public void StartShootingProcess()
     {
         if (IsAbleToShoot())
         {

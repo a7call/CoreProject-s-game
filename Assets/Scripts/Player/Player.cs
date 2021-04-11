@@ -637,6 +637,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Inputs attatck, coffre et interaction 
+
     #region Inputs
 
     WeaponsManagerSelected weaponManager;
@@ -655,7 +656,7 @@ public class Player : MonoBehaviour
             {
 
                 //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
-                weaponManager.GetComponentInChildren<DistanceWeapon>().OkToShoot = true;
+                weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = true;
 
             }
             else if (weaponManager.isPlayingCac)
@@ -668,7 +669,7 @@ public class Player : MonoBehaviour
             if (weaponManager.isPlayingDistance)
             {
                 //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
-                weaponManager.GetComponentInChildren<DistanceWeapon>().OkToShoot = false;
+                weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = false;
 
 
             }
