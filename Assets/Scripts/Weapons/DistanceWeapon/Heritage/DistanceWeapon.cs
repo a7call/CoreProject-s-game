@@ -106,11 +106,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     }
 
     #region Bug de l'animation
-    public Sprite image;
-    private void OnDisable()
-    {
-        GetComponent<SpriteRenderer>().sprite = image;
-    }
+   
     #endregion
 
     #endregion

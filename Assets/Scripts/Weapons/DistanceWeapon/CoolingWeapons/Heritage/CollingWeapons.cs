@@ -28,11 +28,11 @@ public class CollingWeapons : DistanceWeapon
         enemyLayer = CollingWeaponScriptable.enemyLayer;
         damage = CollingWeaponScriptable.damage;
         attackDelay = CollingWeaponScriptable.delayBetweenAttack;
-        image = CollingWeaponScriptable.image;
-        coolingDelay = CollingWeaponScriptable.coolingDelay;
-        coolingTime = CollingWeaponScriptable.coolingTime;
-        knockBackforce = CollingWeaponScriptable.knockBackforce;
-        knockBackTime = CollingWeaponScriptable.knockBackTime;
-        countMax = CollingWeaponScriptable.countMax;
+        //image = CollingWeaponScriptable.image;
+        //coolingDelay = CollingWeaponScriptable.coolingDelay;
+        //coolingTime = CollingWeaponScriptable.coolingTime;
+        //knockBackforce = CollingWeaponScriptable.knockBackforce;
+        //knockBackTime = CollingWeaponScriptable.knockBackTime;
+        //countMax = CollingWeaponScriptable.countMax;
     }
 }

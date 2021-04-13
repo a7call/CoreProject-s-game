@@ -253,15 +253,16 @@ public class WeaponsManagerSelected : MonoBehaviour
         {
             if (i == selectedCacWeapon)
             {
-                cacSprite = cacWeaponsList[i].GetComponent<CacWeapons>().image;
+                cacSprite = cacWeaponsList[i].GetComponent<Weapons>().image;
             }
         }
         for (int i = 0; i < distanceWeaponsList.Count; i++)
         {
             if (i == selectedDistanceWeapon)
             {
-                distanceSprite = distanceWeaponsList[i].GetComponent<DistanceWeapon>().image;
-                ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
+                distanceSprite = distanceWeaponsList[i].GetComponent<Weapons>().image;
+                if(distanceWeaponsList[i].GetComponent<DistanceWeapon>())
+                    ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
             }
         }
     }
