@@ -1,13 +1,10 @@
-
 using UnityEngine;
 using Wanderer.Utils;
 
 public class LaserGun : Weapons, IShootableWeapon
 {
-    private LineRenderer lineRenderer;
 
-    public bool OkToShoot { get; set;}
-
+    #region ScriptableObject
     public WeaponScriptableObject DistanceWeaponData
     {
         get
@@ -15,7 +12,11 @@ public class LaserGun : Weapons, IShootableWeapon
             return LaserDatas;
         }
     }
+
     public CollingWeaponScriptableObject LaserDatas;
+    #endregion
+
+    #region Unity Mono
     protected override void Awake()
     {
         SetData();
@@ -37,33 +38,28 @@ public class LaserGun : Weapons, IShootableWeapon
             DisableLaser();
             return;
         }
-           
 
         if (canDisplay)
         {
             UpdateLaser();
         }
-        
-
-      
 
         StartShootingProcess();
-
-
     }
+    #endregion
 
+    #region Datas
     protected virtual void SetData()
     {
         enemyLayer = DistanceWeaponData.enemyLayer;
         image = DistanceWeaponData.image;
     }
+    #endregion 
 
+    #region Shoot Logic
+    private LineRenderer lineRenderer;
 
-    void EnableLaser()
-    {
-        lineRenderer.enabled = true;
-    }
-
+    public bool OkToShoot { get; set; }
     void UpdateLaser()
     {
         lineRenderer.enabled = true;
@@ -73,8 +69,17 @@ public class LaserGun : Weapons, IShootableWeapon
 
         Vector2 direction = mousePos - (Vector2)transform.position;
         RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction.normalized, direction.magnitude);
-        //if (hit)
-        //    lineRenderer.SetPosition(1, hit.point);
+
+        if (hit)
+        { 
+            // Walls...
+           if(hit.collider.gameObject.CompareTag("Enemy"))
+           {
+                lineRenderer.SetPosition(1, hit.point);
+                //TakeDamage
+           }
+        }
+           
 
     }
 
@@ -107,5 +112,6 @@ public class LaserGun : Weapons, IShootableWeapon
     {
         return OkToShoot && !isAttacking  && !PauseMenu.isGamePaused;
     }
+    #endregion
 
 }
