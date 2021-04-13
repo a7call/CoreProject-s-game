@@ -2,9 +2,26 @@
 using UnityEngine;
 using Wanderer.Utils;
 
-public class LaserGun : Weapons
+public class LaserGun : Weapons, IShootableWeapon
 {
     public LineRenderer lineRenderer;
+
+    public bool OkToShoot { get; set;}
+
+    public WeaponScriptableObject DistanceWeaponData
+    {
+        get
+        {
+            return LaserDatas;
+        }
+    }
+    public CollingWeaponScriptableObject LaserDatas;
+    protected override void Awake()
+    {
+        SetData();
+        base.Awake();
+    }
+
     void Start()
     {
         DisableLaser();
@@ -32,6 +49,12 @@ public class LaserGun : Weapons
         
     }
 
+    protected virtual void SetData()
+    {
+        enemyLayer = DistanceWeaponData.enemyLayer;
+        image = DistanceWeaponData.image;
+    }
+
 
     void EnableLaser()
     {
@@ -42,12 +65,14 @@ public class LaserGun : Weapons
     {
         Vector2 mousePos = Utils.GetMouseWorldPosition();
         lineRenderer.SetPosition(0, attackPoint.position);
-        lineRenderer.SetPosition(1, mousePos);
+        lineRenderer.SetPosition(1, transform.right*50);
+        print(transform.right);
+        print(mousePos);
 
         Vector2 direction = mousePos - (Vector2)transform.position;
         RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction.normalized, direction.magnitude);
-        if (hit)
-            lineRenderer.SetPosition(1, hit.point);
+        //if (hit)
+        //    lineRenderer.SetPosition(1, hit.point);
 
     }
 
@@ -55,4 +80,10 @@ public class LaserGun : Weapons
     {
         lineRenderer.enabled = false;
     }
+
+    public void StartShootingProcess()
+    {
+        return;
+    }
+
 }

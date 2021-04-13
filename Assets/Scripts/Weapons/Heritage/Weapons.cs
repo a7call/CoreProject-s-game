@@ -42,13 +42,17 @@ public class Weapons : MonoBehaviour
     }
     protected virtual void Update()
     {
-       // ChangeLayer();
     }
 
     protected virtual void OnEnable()
-    {
-       // attackPointPos = attackPoint.transform.localPosition;
+    { 
         GetComponent<SpriteRenderer>().flipY = false;
+    }
+
+    public Sprite image { get;  set; }
+    private void OnDisable()
+    {
+        GetComponent<SpriteRenderer>().sprite = image;
     }
 
     #region References 
