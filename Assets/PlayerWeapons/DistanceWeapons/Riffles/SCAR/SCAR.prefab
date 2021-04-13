@@ -75,17 +75,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 880177909175018325}
   isAttacking: 0
+  offSetX: 0.4
+  topOffSetY: 0
+  otherOffsetY: -0.3
+  attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  OffPositionArme: {x: 0, y: 0, z: 0}
-  topOffSet: {x: 0, y: 0, z: 0}
-  otherOffset: {x: 0, y: 0, z: 0}
-  posSouris: {x: 0, y: 0, z: 0}
-  DistanceWeaponData: {fileID: 11400000, guid: d4c9d95ab79de468ca0860dd19d4025d, type: 2}
-  image: {fileID: 0}
-  OkToShoot: 0
+  DistanceWeaponDataCast: {fileID: 11400000, guid: d4c9d95ab79de468ca0860dd19d4025d, type: 2}
   BulletInMag: 0
   ammoStock: 0
 --- !u!212 &3672152753955662349
@@ -182,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7184066757132966126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.584, y: 0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5260032422402566983}
