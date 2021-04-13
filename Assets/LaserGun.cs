@@ -4,7 +4,7 @@ using Wanderer.Utils;
 
 public class LaserGun : Weapons, IShootableWeapon
 {
-    public LineRenderer lineRenderer;
+    private LineRenderer lineRenderer;
 
     public bool OkToShoot { get; set;}
 
@@ -24,6 +24,7 @@ public class LaserGun : Weapons, IShootableWeapon
 
     void Start()
     {
+        lineRenderer = GetComponentInChildren<LineRenderer>(); 
         DisableLaser();
     }
 
@@ -31,22 +32,24 @@ public class LaserGun : Weapons, IShootableWeapon
     protected override void Update()
     {
         base.Update();
-        if (Input.GetMouseButtonDown(0))
+        if (!OkToShoot)
         {
-            EnableLaser();
+            DisableLaser();
+            return;
         }
+           
 
-        if (Input.GetMouseButton(0))
+        if (canDisplay)
         {
             UpdateLaser();
         }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            DisableLaser();
-        }
-
         
+
+      
+
+        StartShootingProcess();
+
+
     }
 
     protected virtual void SetData()
@@ -63,11 +66,10 @@ public class LaserGun : Weapons, IShootableWeapon
 
     void UpdateLaser()
     {
+        lineRenderer.enabled = true;
         Vector2 mousePos = Utils.GetMouseWorldPosition();
         lineRenderer.SetPosition(0, attackPoint.position);
-        lineRenderer.SetPosition(1, transform.right*50);
-        print(transform.right);
-        print(mousePos);
+        lineRenderer.SetPosition(1, transform.right * 20  + transform.position);
 
         Vector2 direction = mousePos - (Vector2)transform.position;
         RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction.normalized, direction.magnitude);
@@ -78,12 +80,32 @@ public class LaserGun : Weapons, IShootableWeapon
 
     void DisableLaser()
     {
+        lineRenderer.SetPosition(1, Vector2.zero);
         lineRenderer.enabled = false;
+        isAttacking = false;
+        canDisplay = false;
     }
 
     public void StartShootingProcess()
     {
-        return;
+        if (IsAbleToShoot())
+        {
+            isAttacking = true;
+            if (animator)
+            {
+                animator.SetTrigger("isAttacking");
+            }
+        }
+        
+    }
+    bool canDisplay = false;
+    void DisplayLaser()
+    {
+        canDisplay = true;
+    }
+    public bool IsAbleToShoot()
+    {
+        return OkToShoot && !isAttacking  && !PauseMenu.isGamePaused;
     }
 
 }

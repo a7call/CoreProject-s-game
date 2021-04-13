@@ -165,7 +165,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         isAttacking = false;
     }
 
-    private bool IsAbleToShoot()
+    public bool IsAbleToShoot()
     {
         return OkToShoot && !isAttacking  && BulletInMag > 0 && !PauseMenu.isGamePaused;
     }

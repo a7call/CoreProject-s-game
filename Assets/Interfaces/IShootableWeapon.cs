@@ -6,6 +6,6 @@ interface IShootableWeapon
 {
     bool OkToShoot { get; set; }
     void StartShootingProcess();
-    
+    bool IsAbleToShoot();
     WeaponScriptableObject DistanceWeaponData { get; }
 }
