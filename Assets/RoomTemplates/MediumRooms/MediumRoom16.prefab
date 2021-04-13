@@ -61,11 +61,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceFromCorners: 1
   DoorLength: 1
+  Socket: {fileID: 0}
+  DefaultSocket: {fileID: 0}
+  DefaultDirection: 0
   DoorsList:
   - From: {x: 8, y: -13, z: 0}
     To: {x: 6, y: -13, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   - From: {x: 3, y: 2, z: 0}
     To: {x: 5, y: 2, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   SelectedMode: 1
 --- !u!1 &1890559619684161353
 GameObject:
@@ -20412,7 +20419,7 @@ MonoBehaviour:
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.6
+  m_ShapeLightFalloffSize: 0
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
   - {x: 0, y: 7, z: 0}
@@ -24064,11 +24071,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159507598212401537, guid: b047e181e065f7c41b3103522e0fe447, type: 3}
       propertyPath: m_PointLightInnerRadius
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2159507598212401537, guid: b047e181e065f7c41b3103522e0fe447, type: 3}
       propertyPath: m_PointLightOuterRadius
-      value: 3.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2159507598212401538, guid: b047e181e065f7c41b3103522e0fe447, type: 3}
       propertyPath: m_RootOrder
@@ -24150,11 +24157,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159507598212401537, guid: b047e181e065f7c41b3103522e0fe447, type: 3}
       propertyPath: m_PointLightInnerRadius
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2159507598212401537, guid: b047e181e065f7c41b3103522e0fe447, type: 3}
       propertyPath: m_PointLightOuterRadius
-      value: 3.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2159507598212401538, guid: b047e181e065f7c41b3103522e0fe447, type: 3}
       propertyPath: m_RootOrder

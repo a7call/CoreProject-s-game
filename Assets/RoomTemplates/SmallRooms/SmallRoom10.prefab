@@ -11536,11 +11536,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceFromCorners: 1
   DoorLength: 1
+  Socket: {fileID: 0}
+  DefaultSocket: {fileID: 0}
+  DefaultDirection: 0
   DoorsList:
   - From: {x: 6, y: -2, z: 0}
     To: {x: 6, y: 0, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   - From: {x: -8, y: -2, z: 0}
     To: {x: -8, y: 0, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   SelectedMode: 1
 --- !u!1 &3009944877505320752
 GameObject:
@@ -12688,7 +12695,7 @@ MonoBehaviour:
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffSize: 0
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
   - {x: -6, y: -5, z: 0}

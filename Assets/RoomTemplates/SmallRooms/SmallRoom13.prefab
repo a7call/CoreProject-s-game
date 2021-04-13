@@ -19026,15 +19026,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceFromCorners: 1
   DoorLength: 1
+  Socket: {fileID: 0}
+  DefaultSocket: {fileID: 0}
+  DefaultDirection: 0
   DoorsList:
   - From: {x: 4, y: 6, z: 0}
     To: {x: 2, y: 6, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   - From: {x: -6, y: 6, z: 0}
     To: {x: -4, y: 6, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   - From: {x: -6, y: -6, z: 0}
     To: {x: -4, y: -6, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   - From: {x: 4, y: -6, z: 0}
     To: {x: 2, y: -6, z: 0}
+    Direction: 0
+    Socket: {fileID: 0}
   SelectedMode: 1
 --- !u!1 &3009944877505320752
 GameObject:
@@ -19324,7 +19335,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 5
-      m_TileSpriteIndex: 5
+      m_TileSpriteIndex: 6
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -19394,7 +19405,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -19414,7 +19425,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -20045,20 +20056,20 @@ Tilemap:
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: a8cc134a8801ca644960606af4bd3f1c, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 2806882385454021304, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: -715985296070081529, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -6685786539080890927, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
+    m_Data: {fileID: 2806882385454021304, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -4151907413361692018, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 5304943068009598657, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
   - m_RefCount: 1
+    m_Data: {fileID: -6685786539080890927, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
+  - m_RefCount: 1
     m_Data: {fileID: 2681548465412135587, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -3256536511697690766, guid: 3ff35b56428a69a4697e1b0e3a62e44f, type: 3}
   - m_RefCount: 1
@@ -20436,7 +20447,7 @@ MonoBehaviour:
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffSize: 0
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
   - {x: -6, y: -5, z: 0}
@@ -20445,20 +20456,12 @@ MonoBehaviour:
   - {x: 2, y: -4, z: 0}
   - {x: 2, y: -5, z: 0}
   - {x: 5, y: -5, z: 0}
-  - {x: 5, y: -2, z: 0}
-  - {x: 7, y: -2, z: 0}
-  - {x: 7, y: 1, z: 0}
-  - {x: 5, y: 1, z: 0}
   - {x: 5, y: 5, z: 0}
   - {x: 2, y: 5, z: 0}
   - {x: 2, y: 4, z: 0}
   - {x: -3, y: 4, z: 0}
   - {x: -3, y: 5, z: 0}
   - {x: -6, y: 5, z: 0}
-  - {x: -6, y: 1, z: 0}
-  - {x: -8, y: 1, z: 0}
-  - {x: -8, y: -2, z: 0}
-  - {x: -6.0090976, y: -2, z: 0}
 --- !u!1 &3512586923133720854
 GameObject:
   m_ObjectHideFlags: 0
@@ -22540,6 +22543,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueSpotLightFace (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2234268238756466500, guid: 69c7ab3e203efff45bc7e39d050238d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2234268238756466501, guid: 69c7ab3e203efff45bc7e39d050238d4, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -23197,6 +23204,10 @@ PrefabInstance:
     - target: {fileID: 2234268238756466500, guid: 69c7ab3e203efff45bc7e39d050238d4, type: 3}
       propertyPath: m_Name
       value: BlueSpotLightFace
+      objectReference: {fileID: 0}
+    - target: {fileID: 2234268238756466500, guid: 69c7ab3e203efff45bc7e39d050238d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2234268238756466501, guid: 69c7ab3e203efff45bc7e39d050238d4, type: 3}
       propertyPath: m_RootOrder
