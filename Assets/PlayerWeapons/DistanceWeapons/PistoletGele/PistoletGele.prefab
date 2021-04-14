@@ -51,8 +51,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
+    pivot: {x: 0.35, y: 0.43}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 1.5, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -75,16 +75,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 1467171556792787327}
   isAttacking: 0
-  offSetX: 0
+  offSetX: 0.4
   topOffSetY: 0
-  otherOffsetY: 0
+  otherOffsetY: -0.3
   attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  DistanceWeaponDataCast: {fileID: 0}
-  image: {fileID: 0}
+  DistanceWeaponDataCast: {fileID: 11400000, guid: 3cca70a3b5d8c44469bff520001ab54d, type: 2}
   BulletInMag: 0
   ammoStock: 0
 --- !u!212 &2700758433955710623
@@ -127,7 +126,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 6572471203158257896, guid: 0ece854d415c72442bfb78685273c527, type: 3}
+  m_Sprite: {fileID: -7420992978983025675, guid: dec6924e12538b24e80e48d857d38c44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -181,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8924334852588657348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.905, y: 0.244, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5806290534857353581}
