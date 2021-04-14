@@ -70,7 +70,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected Vector3 directionTir;
     protected virtual void Launch()
     {
-        print(dispersion);
+
         directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
         rb.velocity = directionTir * projectileSpeed;
         
