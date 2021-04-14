@@ -73,15 +73,24 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 9.12, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.2195755
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
         value: 1
         inSlope: 0
         outSlope: 0
@@ -336,9 +345,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 5470897830796558698}
   isAttacking: 0
-  offSetX: 0
+  offSetX: 0.4
   topOffSetY: 0
-  otherOffsetY: 0
+  otherOffsetY: -0.3
   attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
