@@ -51,7 +51,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.41813335, y: 0.51949185}
     oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1.5, y: 1.5}
     adaptiveTilingThreshold: 0.5
@@ -73,22 +73,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef35ea606f1d3bd488f3585124cd6604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPoint: {fileID: 1467171556792787327}
+  isAttacking: 0
+  offSetX: 0.2
+  topOffSetY: 0.2
+  otherOffsetY: -0.3
+  attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 1467171556792787327}
-  attackDelay: 0
-  isAttacking: 0
-  posSouris: {x: 0, y: 0, z: 0}
-  OffPositionArme: {x: 0, y: 0, z: 0}
-  topOffSet: {x: 0, y: 0, z: 0}
-  otherOffset: {x: 0, y: 0, z: 0}
-  RangeMiniChangementTir: 5
-  RangeChangementTir: 0
-  DistanceWeaponData: {fileID: 11400000, guid: 6b7ef2be3c511412e9c2bcd763f76785, type: 2}
-  image: {fileID: 0}
-  OkToShoot: 0
+    m_Bits: 512
+  DistanceWeaponDataCast: {fileID: 11400000, guid: 6b7ef2be3c511412e9c2bcd763f76785, type: 2}
   BulletInMag: 0
   ammoStock: 0
 --- !u!212 &1888638776734150820
@@ -185,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8924334852588657348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.4039, y: 0.0805, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5806290534857353581}
