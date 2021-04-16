@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1328541858796086902}
   - component: {fileID: 4589407644236281478}
   m_Layer: 6
-  m_Name: FMProjectile
+  m_Name: SCAR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,10 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackForce: 0
-  knockBackTime: 0
-  PlayerProjectileData: {fileID: 11400000, guid: aa62de83d37b2458382ead3ee24c2664, type: 2}
-  Dispersion: 2
+  dispersion: 0
 --- !u!212 &-1722993414655278476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -89,8 +86,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
-  m_Sprite: {fileID: 1602524028580486789, guid: 4d5dfc92866b6824b94c03b106fca446, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 6104422626697872295, guid: d08bb28a93ac8a84993a92b889e39237, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,18 +111,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.16442308, y: -0.0006684065}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.53125, y: 0.375}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.19999999, y: 0.1906426}
   m_EdgeRadius: 0
 --- !u!50 &4589407644236281478
 Rigidbody2D:
