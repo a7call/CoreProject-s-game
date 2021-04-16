@@ -24,11 +24,12 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void Awake()
     {
+        
         GetReferences();
         SetData();
         
     }
-    private void Start()
+    protected virtual void Start()
     {
         Launch();
     }
@@ -58,6 +59,7 @@ public class PlayerProjectiles : MonoBehaviour
 
     void SetData()
     {
+        damage = player.damage.Value;
         knockBackTime = player.knockBackTime.Value;
         projectileSpeed = player.projectileSpeed.Value;
         knockBackForce = player.knockBackForce.Value;
@@ -85,8 +87,7 @@ public class PlayerProjectiles : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            print(player.damage.Value);
-            enemy.TakeDamage(player.damage.Value);
+            enemy.TakeDamage(damage);
             CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
             //Modules
             ModuleProcs(enemy);

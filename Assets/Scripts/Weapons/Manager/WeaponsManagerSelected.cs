@@ -29,9 +29,12 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     private void Update()
     {
+        MoveWeapon();
+
+
         ChangeWeapons();
         UpdateUIWeapon();
-        MoveWeapon();
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -81,6 +84,12 @@ public class WeaponsManagerSelected : MonoBehaviour
     #region Select and equip Weapon
     private void SelectWeapon()
     {
+      if (_weapons)
+        {
+            if (_weapons.isAttacking)
+                return;
+        }
+      
         int i = 0;
         int j = 0;
         if (isPlayingCac == true)
@@ -125,6 +134,12 @@ public class WeaponsManagerSelected : MonoBehaviour
     }
     private void ChangeWeapons()
     {
+        if (_weapons)
+        {
+            if (_weapons.isAttacking)
+                return;
+        }
+
         if (isPlayingCac == true)
         {
             int previousSelectedWeapon = selectedCacWeapon;

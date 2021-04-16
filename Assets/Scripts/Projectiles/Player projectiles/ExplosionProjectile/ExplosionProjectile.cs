@@ -6,12 +6,9 @@ public class ExplosionProjectile : PlayerProjectiles
 {
     [SerializeField] protected float explosionRadius;
 
-    private void Start()
+    protected override void Start()
     {
-        if (isNuclearExplosionModule || isAtomiqueExplosionModule)
-        {
-
-        }
+        base.Start();
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
