@@ -17,6 +17,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected float knockBackForce;
     protected float knockBackTime;
     protected float projectileSpeed;
+    [HideInInspector]
     public float dispersion;
     protected LayerMask weaponLayer;
     #endregion
