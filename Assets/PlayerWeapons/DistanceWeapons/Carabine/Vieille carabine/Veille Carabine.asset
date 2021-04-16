@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
   m_Name: Veille Carabine
   m_EditorClassIdentifier: 
-  damage: 1.5
-  delayBetweenAttack: 0
+  damage: 3.5
+  delayBetweenAttack: 1
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  image: {fileID: 8819734920327409905, guid: ad7b0cadfe88fe342bad49be27678921, type: 3}
+  image: {fileID: 4305360145916285605, guid: 3adfe969328550d428db3669a76fb58e, type: 3}
+  knockBackForce: 200
+  knockBackTime: 0.3
+  projectileSpeed: 16
   projectile: {fileID: 5004741095190017796, guid: 5a59345ec69f842f891e1685848d0664, type: 3}
-  dispersion: 0
-  magSize: 0
-  reloadDelay: 0
-  ammoStock: 0
+  dispersion: 2
+  magSize: 8
+  reloadDelay: 2
+  ammoStock: 32
