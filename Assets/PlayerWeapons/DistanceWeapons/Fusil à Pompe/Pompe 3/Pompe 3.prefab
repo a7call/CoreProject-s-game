@@ -73,22 +73,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a91775603dc4345a1b3c0673b0b2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPoint: {fileID: 4051430145788030816}
+  isAttacking: 0
+  offSetX: 0.2
+  topOffSetY: 0
+  otherOffsetY: -0.3
+  attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 4051430145788030816}
-  attackDelay: 0
-  isAttacking: 0
-  posSouris: {x: 0, y: 0, z: 0}
-  OffPositionArme: {x: 0, y: 0, z: 0}
-  topOffSet: {x: 0, y: 0, z: 0}
-  otherOffset: {x: 0, y: 0, z: 0}
-  RangeMiniChangementTir: 5
-  RangeChangementTir: 0
-  DistanceWeaponData: {fileID: 11400000, guid: 5d2d68dfbcb7e4fa882d16aac8cad260, type: 2}
-  image: {fileID: 0}
-  OkToShoot: 0
+    m_Bits: 512
+  DistanceWeaponDataCast: {fileID: 11400000, guid: 5d2d68dfbcb7e4fa882d16aac8cad260, type: 2}
   BulletInMag: 0
   ammoStock: 0
   projectiles:
@@ -135,7 +130,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 4416821416759985508, guid: ed9c50dac4d831647864a7d023947d49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -190,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6322061853503427803}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.48, y: 0.081, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9003246489028487026}
