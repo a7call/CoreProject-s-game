@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1765746572911547408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2503, y: 0.1256, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3732565030500853689}
@@ -58,7 +58,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5269822168119444613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.58, y: -1.95, z: -6.8075624}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8576219993092272043}
@@ -78,7 +78,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.09086084, y: 0.01556921}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -89,7 +89,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7154131, y: 0.57158756}
   m_EdgeRadius: 0
 --- !u!114 &3298253266032608859
 MonoBehaviour:
@@ -103,22 +103,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef35ea606f1d3bd488f3585124cd6604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPoint: {fileID: 8576219993092272043}
+  isAttacking: 0
+  offSetX: 0.25
+  topOffSetY: 0.1
+  otherOffsetY: -0.3
+  attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 8576219993092272043}
-  attackDelay: 0
-  isAttacking: 0
-  posSouris: {x: 0, y: 0, z: 0}
-  OffPositionArme: {x: 0, y: 0, z: 0}
-  RangeMiniChangementTir: 5
-  RangeChangementTir: 0
-  DistanceWeaponData: {fileID: 11400000, guid: 0bc8585ca963f4f96bfb74e9adc97c39, type: 2}
-  OkToShoot: 0
+    m_Bits: 512
+  DistanceWeaponDataCast: {fileID: 11400000, guid: 0bc8585ca963f4f96bfb74e9adc97c39, type: 2}
   BulletInMag: 0
-  AmmoStock: 300
-  image: {fileID: 0}
+  ammoStock: 0
 --- !u!212 &2514218785244329022
 SpriteRenderer:
   m_ObjectHideFlags: 0

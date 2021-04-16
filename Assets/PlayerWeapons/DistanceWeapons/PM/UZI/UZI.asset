@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
   m_Name: UZI
   m_EditorClassIdentifier: 
-  damage: 0.9
-  delayBetweenAttack: 0
+  damage: 1
+  delayBetweenAttack: 0.06
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  image: {fileID: 5765503296055257395, guid: 5f86c3ea4a7e54b4cbf9e4ea0005e3f3, type: 3}
+  image: {fileID: -6086134956035042923, guid: c6ad2427f504807429035b4b2040443c, type: 3}
+  knockBackForce: 100
+  knockBackTime: 0.2
+  projectileSpeed: 14
   projectile: {fileID: 5004741095190017796, guid: e5ec3f45f422d4d03ab898db549b11bc, type: 3}
-  dispersion: 0
-  magSize: 0
-  reloadDelay: 0
-  ammoStock: 0
+  dispersion: 10
+  magSize: 40
+  reloadDelay: 2
+  ammoStock: 200
