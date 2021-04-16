@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
   m_Name: MP5
   m_EditorClassIdentifier: 
-  damage: 0.9
-  delayBetweenAttack: 0
+  damage: 1.15
+  delayBetweenAttack: 0.06
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  image: {fileID: 1239498584054397382, guid: 82cbd4e1015e8424883bbc52bf78b117, type: 3}
-  projectile: {fileID: 5004741095190017796, guid: e5ec3f45f422d4d03ab898db549b11bc, type: 3}
-  dispersion: 0
-  magSize: 0
-  reloadDelay: 0
-  ammoStock: 0
+  image: {fileID: 4936067981747489776, guid: 1c5a177a992cb3f44b7b5f72c9aa4baa, type: 3}
+  knockBackForce: 100
+  knockBackTime: 0.2
+  projectileSpeed: 14
+  projectile: {fileID: 5004741095190017796, guid: 717629e050cb6ab4788c5f9762bf34a1, type: 3}
+  dispersion: 10
+  magSize: 35
+  reloadDelay: 1.5
+  ammoStock: 175

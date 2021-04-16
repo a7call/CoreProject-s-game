@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
   m_Name: P90
   m_EditorClassIdentifier: 
-  damage: 0.9
-  delayBetweenAttack: 0
+  damage: 1.5
+  delayBetweenAttack: 0.08
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  image: {fileID: 2128053962206355388, guid: 54a729325ce875f4dac0829383ff0ae0, type: 3}
-  projectile: {fileID: 5004741095190017796, guid: e5ec3f45f422d4d03ab898db549b11bc, type: 3}
-  dispersion: 0
-  magSize: 0
-  reloadDelay: 0
-  ammoStock: 0
+  image: {fileID: -4466750479404670164, guid: 06a53f687f599864188d9a7bd6cb9dd1, type: 3}
+  knockBackForce: 110
+  knockBackTime: 0.2
+  projectileSpeed: 14
+  projectile: {fileID: 5004741095190017796, guid: a480e6b85575431409f4cdea068282eb, type: 3}
+  dispersion: 9
+  magSize: 45
+  reloadDelay: 2
+  ammoStock: 225
