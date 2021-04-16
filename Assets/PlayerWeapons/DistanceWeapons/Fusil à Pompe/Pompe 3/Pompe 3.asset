@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
   m_Name: Pompe 3
   m_EditorClassIdentifier: 
-  damage: 1
-  delayBetweenAttack: 0
+  damage: 2
+  delayBetweenAttack: 0.32
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  image: {fileID: 5396309547427468507, guid: 7f9483f1975e99f42ba7533b9be5da56, type: 3}
+  image: {fileID: 4416821416759985508, guid: ed9c50dac4d831647864a7d023947d49, type: 3}
+  knockBackForce: 125
+  knockBackTime: 0.3
+  projectileSpeed: 10
   projectile: {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
   dispersion: 0
-  magSize: 0
-  reloadDelay: 0
-  ammoStock: 0
+  magSize: 6
+  reloadDelay: 2
+  ammoStock: 48
