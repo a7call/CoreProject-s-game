@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231826454265272035}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.408, y: 0.121, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 231826454766768069}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 231826454766768069}
-  - component: {fileID: 231826454766768070}
+  - component: {fileID: 9196809350461234375}
   - component: {fileID: 231826454766768071}
   - component: {fileID: 5610724337936572807}
   - component: {fileID: 5667281461421027329}
@@ -65,8 +65,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &231826454766768070
-BoxCollider2D:
+--- !u!60 &9196809350461234375
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -75,22 +75,27 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.34686065, y: 0.5084142}
     oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1.5, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5, y: 0.296875}
+      - {x: -0.5, y: -0.296875}
+      - {x: -0.03125, y: -0.296875}
+      - {x: 0.5, y: 0.015625}
+      - {x: 0.5, y: 0.203125}
+      - {x: 0.40625, y: 0.296875}
 --- !u!114 &231826454766768071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,17 +110,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 231826454265272034}
   isAttacking: 0
-  offSetX: 0
-  topOffSetY: 0
-  otherOffsetY: 0
+  offSetX: 0.2
+  topOffSetY: 0.2
+  otherOffsetY: -0.3
   attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  DistanceWeaponData: {fileID: 11400000, guid: 0a1431d64154e4342933041af0c0517c, type: 2}
-  image: {fileID: 0}
-  OkToShoot: 0
+    m_Bits: 512
+  DistanceWeaponDataCast: {fileID: 11400000, guid: 0a1431d64154e4342933041af0c0517c, type: 2}
   BulletInMag: 0
   ammoStock: 0
 --- !u!212 &5610724337936572807
