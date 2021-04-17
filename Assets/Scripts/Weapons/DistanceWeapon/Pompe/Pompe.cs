@@ -4,7 +4,7 @@ using UnityEngine;
 public class Pompe : DistanceWeapon
 {
 
-    private int numberOfProj = 3;
+    [SerializeField] private int numberOfProj = 3;
     [SerializeField] int angleTir = 0;
     private PompeProjectiles PompeProjectile;
     protected override void GetReferences()
