@@ -3,47 +3,36 @@ using UnityEngine;
 
 public class Pompe : DistanceWeapon
 {
-   
-    [SerializeField] GameObject[] projectiles = null;
+
+    private int numberOfProj = 3;
     [SerializeField] int angleTir = 0;
     private PompeProjectiles PompeProjectile;
-
-    private void Start()
+    protected override void GetReferences()
     {
-        foreach(GameObject projectile in projectiles)
-        {
-            PompeProjectile = projectile.GetComponent<PompeProjectiles>();
-        }
+        base.GetReferences();
+        PompeProjectile = projectile.GetComponent<PompeProjectiles>();
     }
-
 
     protected override IEnumerator Shoot()
     {
+        float decalage = angleTir / (numberOfProj - 1);
 
-        if (!isAttacking && BulletInMag > 0 && !IsReloading)
+        PompeProjectile.angleDecalage = -decalage * (numberOfProj + 1) / 2;
+
+        //base.Shoot();
+        for (int i = 0; i < numberOfProj; i++)
         {
-            
+            PompeProjectile.angleDecalage = PompeProjectile.angleDecalage + decalage;
+            Instantiate(projectile, attackPoint.position, transform.rotation);
 
-            isAttacking = true;
-            float decalage = angleTir / (projectiles.Length - 1);
-            PompeProjectile.angleDecalage = -decalage * (projectiles.Length + 1) / 2;
-
-            //base.Shoot();
-            for (int i = 0; i < projectiles.Length; i++)
-            {
-                PompeProjectile.angleDecalage = PompeProjectile.angleDecalage + decalage;
-                GameObject.Instantiate(projectiles[i], attackPoint.position, Quaternion.identity);
-            }
             BulletInMag--;
             if (BulletInMag <= 0)
             {
                 StartCoroutine(Reload());
             }
-            yield return new WaitForSeconds(attackDelay);
-            isAttacking = false;
         }
+        yield return new WaitForSeconds(attackDelay);
+        isAttacking = false;
 
     }
-
-  
 }

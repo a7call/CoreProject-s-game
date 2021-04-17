@@ -10,7 +10,7 @@ public class PlayerProjectiles : MonoBehaviour
     protected Player player;
     protected WeaponsManagerSelected weaponManager;
     protected Weapons weapon;
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     #region Stats
     protected float damage;

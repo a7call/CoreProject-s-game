@@ -178,6 +178,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
             if (animator)
             {
                 animator.SetTrigger("isAttacking");
+
             }
             else
             {
