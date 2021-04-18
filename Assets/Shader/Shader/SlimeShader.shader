@@ -59,6 +59,9 @@ ZWrite Off Blend SrcAlpha OneMinusSrcAlpha Cull Off Lighting Off
 
                 col.rgb = i.color.rgb * tex.rgb;
                 col.a = i.color.a * tex.a;
+                if (col.a == 0) {
+                    discard;
+                }
                 return col;
             }
             ENDCG

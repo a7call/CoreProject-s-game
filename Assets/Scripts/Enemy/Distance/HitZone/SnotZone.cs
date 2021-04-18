@@ -11,9 +11,10 @@ public class SnotZone : Enemy
     [SerializeField] private LayerMask hitLayer;
     private bool hasStartAttacking = true;
 
-    protected void Start()
+    protected override void Start()
     {
         // Set data
+        base.Start();
         SetData();
         SetMaxHealth();
     }
@@ -31,6 +32,8 @@ public class SnotZone : Enemy
     protected override void Update()
     {
         base.Update();
+        //getRota();
+        test();
         switch (currentState)
         {
             case State.Patrolling:
@@ -70,4 +73,42 @@ public class SnotZone : Enemy
         Gizmos.color = Color.red;
     }
 
+    public float RotateSpeed;
+    public Quaternion trun;
+    void getRota()
+    {
+            trun = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(aIPath.desiredVelocity.x, aIPath.desiredVelocity.y, 0 )), Time.deltaTime * RotateSpeed);
+    }
+
+    public GameObject zone;
+
+    bool isDOne;
+
+
+    void test()
+    {
+        if (!isDOne)
+        {
+
+           GameObject tureee =  Instantiate(zone, transform.position, transform.rotation);
+            float angle = Mathf.Atan2(aIPath.desiredVelocity.y, aIPath.desiredVelocity.x) * Mathf.Rad2Deg;
+            tureee.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        print("tes21");
+
+        if (collision.CompareTag("Finish"))
+        {
+            isDOne = true;
+            print("tes");
+        }
+        else
+        {
+            isDOne = false;
+        }
+    }
 }
