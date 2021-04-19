@@ -33,8 +33,7 @@ public class SnotZone : Enemy
     {
         base.Update();
         //getRota();
-        test();
-        switch (currentState)
+               switch (currentState)
         {
             case State.Patrolling:
                 PlayerInSight();
