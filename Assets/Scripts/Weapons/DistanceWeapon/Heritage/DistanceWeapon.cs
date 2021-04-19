@@ -155,6 +155,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     [HideInInspector]
     public bool OkToShoot { get; set; }
 
+    float force = 100;
     protected virtual IEnumerator Shoot()
     {
         float decalage = Random.Range(-dispersion, dispersion);      
