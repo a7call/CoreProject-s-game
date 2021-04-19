@@ -63,6 +63,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         base.OnEnable();
         IsReloading = false;
         isAttacking = false;
+        OkToShoot = false;
     }
 
     // Update is called once per frame

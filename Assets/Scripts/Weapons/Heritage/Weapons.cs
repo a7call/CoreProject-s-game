@@ -47,12 +47,14 @@ public class Weapons : MonoBehaviour
     protected virtual void OnEnable()
     { 
         GetComponent<SpriteRenderer>().flipY = false;
+        
     }
 
     public Sprite image { get;  set; }
     private void OnDisable()
     {
         GetComponent<SpriteRenderer>().sprite = image;
+        
     }
 
     #region References 
