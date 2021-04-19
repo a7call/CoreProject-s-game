@@ -44,7 +44,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.020920008, y: -0.12473214}
+  m_Offset: {x: 0.0032861233, y: -0.21983531}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -55,7 +55,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.71907467, y: 0.093051076}
+  m_Size: {x: 0.7008662, y: 0.28325742}
   m_EdgeRadius: 0
 --- !u!1 &289828500
 GameObject:
@@ -673,6 +673,8 @@ MonoBehaviour:
     BaseValue: 0
   knockBackForce:
     BaseValue: 0
+  knockBackTime:
+    BaseValue: 0
   explosionDamage:
     BaseValue: 0
   imolationDamage:
@@ -689,11 +691,15 @@ MonoBehaviour:
     BaseValue: 0
   reloadSpeed:
     BaseValue: 0
+  magSize:
+    BaseValue: 0
   cadence:
     BaseValue: 0
   range:
     BaseValue: 0
   attackSpeed:
+    BaseValue: 0
+  ammoStock:
     BaseValue: 0
   mHealth:
     BaseValue: 0
