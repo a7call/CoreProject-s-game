@@ -403,6 +403,81 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 780d8be2ee66cd1419b992b37b7665ec, type: 3}
+--- !u!1 &743628712 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8281438935766862942, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
+  m_PrefabInstance: {fileID: 1078511438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &743628713
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743628712}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5adb674e5103e0c45b514d80f48a7b5a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!212 &743628714
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743628712}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 2344770137217562159, guid: a5ab710eb9e64b54ca8d08977a3047aa, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 3, y: 3}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1001 &812592706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -608,11 +683,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 577309146241068898, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.72
+      value: 8.4
       objectReference: {fileID: 0}
     - target: {fileID: 577309146241068898, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.87
+      value: -2.32
       objectReference: {fileID: 0}
     - target: {fileID: 577309146241068898, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -646,10 +721,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1588082215053512320, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 2323773633798418091, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 36274dd04753fb84d84640fd5bc7758b, type: 2}
+    - target: {fileID: 8281438935766862942, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8281438935766862942, guid: 8dcb9a2aa7bc8453c98065e55ed6f8bf, type: 3}
       propertyPath: m_Name
       value: Lanceur d'energie alien
