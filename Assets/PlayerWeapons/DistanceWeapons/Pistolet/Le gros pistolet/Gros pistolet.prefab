@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5817553745842131940}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: attackPoint
   m_TagString: AttackPointPlayer
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4555938361381382239}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.345, y: 0.1362, z: 0}
+  m_LocalPosition: {x: 0.5828, y: 0.2814, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1473940368448527350}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 755900177613765140}
   - component: {fileID: -4536609065897985635}
   - component: {fileID: -1199978749911577411}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Gros pistolet
   m_TagString: DistanceWeapon
   m_Icon: {fileID: 0}
@@ -78,10 +78,10 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.013515949, y: 0.01351583}
+  m_Offset: {x: 0.21234274, y: 0.121233106}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.3541667, y: 0.4166667}
     oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1.5, y: 1.5}
     adaptiveTilingThreshold: 0.5
@@ -89,7 +89,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7837477, y: 0.57650495}
+  m_Size: {x: 0.804595, y: 0.54870677}
   m_EdgeRadius: 0
 --- !u!114 &755900177613765140
 MonoBehaviour:
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 5817553745842131940}
   isAttacking: 0
-  offSetX: 0.4
+  offSetX: 0.2
   topOffSetY: 0.3
   otherOffsetY: -0.3
   attackPointPos: {x: 0, y: 0, z: 0}
@@ -135,7 +135,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: d1d8da4bac1b5c64f9c6a8045105470b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,8 +153,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 299582325
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 498815208745022802, guid: 8fbf3f1da7c41e746bfdadb840b552c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

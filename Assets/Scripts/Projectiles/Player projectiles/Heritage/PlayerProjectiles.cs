@@ -89,6 +89,7 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();

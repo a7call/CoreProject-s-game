@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5557457044660018701}
   - component: {fileID: 6997095575247569748}
   - component: {fileID: 703793419251188675}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Pompe 3
   m_TagString: DistanceWeapon
   m_Icon: {fileID: 0}
@@ -86,10 +86,7 @@ MonoBehaviour:
   DistanceWeaponDataCast: {fileID: 11400000, guid: 5d2d68dfbcb7e4fa882d16aac8cad260, type: 2}
   BulletInMag: 0
   ammoStock: 0
-  projectiles:
-  - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
-  - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
-  - {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
+  numberOfProj: 3
   angleTir: 30
 --- !u!212 &6997095575247569748
 SpriteRenderer:
@@ -170,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4051430145788030816}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: attackPoint
   m_TagString: AttackPointPlayer
   m_Icon: {fileID: 0}

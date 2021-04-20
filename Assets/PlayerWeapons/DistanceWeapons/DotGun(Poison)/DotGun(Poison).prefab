@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 231826454265272034}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: attackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 231826454766768071}
   - component: {fileID: 5610724337936572807}
   - component: {fileID: 5667281461421027329}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: DotGun(Poison)
   m_TagString: DistanceWeapon
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.34686065, y: 0.5084142}
+    pivot: {x: 0.20833334, y: 0.4375}
     oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1.5, y: 1.5}
     adaptiveTilingThreshold: 0.5
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 231826454265272034}
   isAttacking: 0
-  offSetX: 0.2
+  offSetX: 0
   topOffSetY: 0.2
   otherOffsetY: -0.3
   attackPointPos: {x: 0, y: 0, z: 0}
@@ -140,7 +140,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 2804b3d0dfe4ce74eafc84accccbd9b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -158,8 +158,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 299582325
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 2379210057386899890, guid: bada1b826dfddec4f8ca04e9cfb825e6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
