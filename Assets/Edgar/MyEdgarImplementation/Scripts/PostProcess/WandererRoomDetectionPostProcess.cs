@@ -34,11 +34,14 @@ namespace Edgar.Unity.Examples
 
             var tilemapss = level.RootGameObject.transform.Find("Tilemaps");
             var Rooms = level.RootGameObject.transform.Find("Rooms");
-
-            var walls = tilemapss.transform.Find("Walls").gameObject;
+            #region SetLayers
+            var foreGroundWall = tilemapss.transform.Find("ForeGroundWall").gameObject;
+            var BackGroundWall = tilemapss.transform.Find("BackGroundWall").gameObject;
             var floors = tilemapss.transform.Find("Floor").gameObject;
-            UpdateLayer(walls, 10);
+            UpdateLayer(foreGroundWall, 10);
+            UpdateLayer(BackGroundWall, 10);
             UpdateLayer(floors, 14);
+            #endregion
             Tilemap tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
             {
@@ -194,6 +197,7 @@ namespace Edgar.Unity.Examples
         #region Player
         private void MovePlayerToSpawn(GeneratedLevel level)
         {
+            
             foreach (var roomInstance in level.GetRoomInstances())
             {
                 var room = (WandererRoom)roomInstance.Room;

@@ -4,41 +4,41 @@ using UnityEngine;
 
 public class DotProjectilePoison : PlayerProjectiles
 {
-    protected bool isPoisoned;
-    [SerializeField] protected float timeBetweenHits;
-    [SerializeField] protected float poisonedTimer;
+    [SerializeField] protected float damageAmount;
+    [SerializeField] protected float duration;
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
    
         if (collision.CompareTag("Enemy"))
         {
-            
             Enemy enemy = collision.GetComponent<Enemy>();
-            CoroutineManager.Instance.StartCoroutine(DotTimer());
-            CoroutineManager.Instance.StartCoroutine(DotCo(enemy));
+            if(!enemy.IsPoisoned)
+                 CoroutineManager.Instance.StartCoroutine(DotCo(enemy, damageAmount, duration));
         }
         base.OnTriggerEnter2D(collision);
         
 
     }
 
-    private IEnumerator DotCo(Enemy enemy)
+    private IEnumerator DotCo(Enemy enemy, float damageAmount, float duration)
     {
-        while (isPoisoned)
+        enemy.IsPoisoned = true;
+        float amountDamaged = 0;
+        float damagePerLoop = damageAmount / duration;
+        while (amountDamaged < damageAmount)
         {
             
-            yield return new WaitForSeconds(timeBetweenHits);
             if (enemy == null) break;
-            enemy.TakeDamage(damage);              
+            enemy.TakeDamage(damage);
+            print("dottt");
+            amountDamaged += damagePerLoop;
+            yield return new WaitForSeconds(1f);
         }
+        enemy.IsPoisoned = false;
+        
       
         
 
-    }
-    private IEnumerator DotTimer()
-    {
-        isPoisoned = true;
-        yield return new WaitForSeconds(poisonedTimer);
-        isPoisoned = false;
     }
 }
