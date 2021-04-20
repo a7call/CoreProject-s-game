@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &33191426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,7 +1684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8945299246766118457, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8945299246766118457, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
       propertyPath: m_TagString
@@ -1702,6 +1702,10 @@ PrefabInstance:
       propertyPath: CustomPostProcessTasks.Array.data[1]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8945299246766118458, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
+      propertyPath: PostProcessConfig.TilemapLayersHandler
+      value: 
+      objectReference: {fileID: 11400000, guid: b16ae9b5827c64642b5399485a0910c0, type: 2}
     - target: {fileID: 8945299246766118458, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
       propertyPath: PostProcessConfig.CopyTilesToSharedTilemaps
       value: 1
@@ -1871,10 +1875,6 @@ PrefabInstance:
     - target: {fileID: 7711158542265075775, guid: 49d4d100f9d9fe24b994791f5695f6b2, type: 3}
       propertyPath: m_Name
       value: Weapons
-      objectReference: {fileID: 0}
-    - target: {fileID: 7711158542265075775, guid: 49d4d100f9d9fe24b994791f5695f6b2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49d4d100f9d9fe24b994791f5695f6b2, type: 3}
