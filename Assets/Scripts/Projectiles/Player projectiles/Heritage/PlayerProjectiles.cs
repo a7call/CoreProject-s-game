@@ -33,6 +33,8 @@ public class PlayerProjectiles : MonoBehaviour
     protected virtual void Start()
     {
         Launch();
+
+        FindObjectOfType<AudioManager>().Play("Laser");
     }
 
     protected virtual void Update()

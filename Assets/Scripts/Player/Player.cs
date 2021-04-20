@@ -196,6 +196,16 @@ public class Player : MonoBehaviour
     {
         Vector3 targetVelocity = _mouvement;
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, StartSmoothTime);
+        //if (rb.velocity.magnitude > 0.1)
+        //{
+        //    FindObjectOfType<AudioManager>().Play("Walk");
+        //    print("walk");
+        //}
+        //else
+        //{
+        //    FindObjectOfType<AudioManager>().StopPlaying("Walk");
+        //    print("stop");
+        //}
     }
 
 
