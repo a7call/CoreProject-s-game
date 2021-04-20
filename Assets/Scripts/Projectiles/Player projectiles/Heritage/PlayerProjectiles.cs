@@ -97,9 +97,7 @@ public class PlayerProjectiles : MonoBehaviour
             //Modules
             ModuleProcs(enemy);
         }
-        if (collision.gameObject.layer == 10) Destroy(gameObject);
-    
-
+         Destroy(gameObject);
     }
     #endregion
 

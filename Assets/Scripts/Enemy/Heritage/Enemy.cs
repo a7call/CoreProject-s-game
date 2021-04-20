@@ -23,19 +23,18 @@ public class Enemy : MonoBehaviour
 
     #region State properties
     public bool IsPoisoned { get; set; }
+    public bool isSlowed { get; set; }
+    public bool isAlreadyElectrified;
+    public bool isOnFire = false;
+    
+    public bool isBurned = false;
     #endregion
 
     #region Armes and special effect variable
 
     public static bool isPerturbateurIEM = false;
     public static bool isArretTemporel = false;
-    // pour l'épée electrique
-    [HideInInspector]
-    public bool isAlreadyElectrified;
-    public bool isOnFire = false;
-    public bool isSlowed = false;
-    [HideInInspector]
-    public bool isBurned = false;
+    
     #endregion
 
 
