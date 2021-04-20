@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01298d42626a56647a7400f3498377a9, type: 3}
   m_Name: Lanceur d'energie alien
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 8
+  delayBetweenAttack: 1.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  AttackDelay: 0.5
-  image: {fileID: 0}
+  image: {fileID: 2344770137217562159, guid: a5ab710eb9e64b54ca8d08977a3047aa, type: 3}
+  knockBackForce: 300
+  knockBackTime: 0.3
+  projectileSpeed: 14
   projectile: {fileID: 5004741095190017796, guid: 11461dffb916143bdbd458be00db7521, type: 3}
-  Dispersion: 5
-  MagSize: 30
-  ReloadDelay: 2.5
-  AmmoStock: 300
+  dispersion: 0
+  magSize: 10
+  reloadDelay: 2
+  ammoStock: 100
