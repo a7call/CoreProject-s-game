@@ -10,30 +10,22 @@ public class BouleEnergie : PlayerProjectiles
     [SerializeField] protected float Force;
     [SerializeField] protected float KnockBackExploForce;
     [SerializeField] protected float KnockBackExploTime;
-    [SerializeField] protected LayerMask hit;
 
-    [HideInInspector]
-    public Rigidbody2D rb;
 
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(directionTir * Force);
-    }
+
     protected override void Launch()
     {
+        directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
+        rb.AddForce(directionTir * Force);
         StartCoroutine(ExplosionDelayCo());
         
     }
-
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             enemy.TakeDamage(damage);
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
-            //Modules
             ModuleProcs(enemy);
             Explosion();
         }
@@ -41,7 +33,7 @@ public class BouleEnergie : PlayerProjectiles
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        return; 
     }
     protected override void ModuleProcs(Enemy enemy)
     {
@@ -71,13 +63,13 @@ public class BouleEnergie : PlayerProjectiles
     {
         yield return new WaitForSeconds(ExplosionDelay);
         Explosion();
-
     }
 
     protected void Explosion()
     {
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius, hit);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius, weaponLayer);
+        
         foreach (Collider2D hit in hits)
         {
             if (hit.gameObject.GetComponent<Enemy>())
@@ -85,17 +77,15 @@ public class BouleEnergie : PlayerProjectiles
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
                 ExplosionEffects(enemy);
             }
-            
         }
-
         Destroy(gameObject);
     }
 
 
-    protected virtual void ExplosionEffects(Enemy enemy)
+    protected void ExplosionEffects(Enemy enemy)
     {
         Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
-        CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(KnockBackExploForce, Direction, KnockBackExploTime, enemy));
+        CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
         if (PlayerProjectiles.isNuclearExplosionModule)
         {
             CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemy));

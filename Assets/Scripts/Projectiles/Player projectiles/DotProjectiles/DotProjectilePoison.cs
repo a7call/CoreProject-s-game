@@ -31,7 +31,6 @@ public class DotProjectilePoison : PlayerProjectiles
             
             if (enemy == null) break;
             enemy.TakeDamage(damage);
-            print("dottt");
             amountDamaged += damagePerLoop;
             yield return new WaitForSeconds(1f);
         }
