@@ -13,24 +13,53 @@ namespace Edgar.Unity
         {
             // First make sure that you add the grid component
             var grid = gameObject.AddComponent<Grid>();
-            // If we want a different cell size, we can configure that here
-            // grid.cellSize = new Vector3(1, 2, 1);
-            // And now we create individual tilemap layers
-            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, -1, "Floor", TilemapRenderer.Mode.Individual);
-            AddCompositeCollider(floorTilemapObject, true);
-            var wallsTilemapObject = CreateTilemapGameObject("Walls", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
-            AddCompositeCollider(wallsTilemapObject);
-            var CollideObject = CreateTilemapGameObject("CollideObjects", gameObject, 1, "Default", TilemapRenderer.Mode.Individual) ;
-            AddCompositeCollider(CollideObject);
-            CreateTilemapGameObject("Shadows Floor", gameObject, 1, "Floor", TilemapRenderer.Mode.Individual);
-           GameObject AdditionnalTilmap1 = CreateTilemapGameObject("Additionnal Layer 1", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
-            CreateTilemapGameObject("Additionnal Layer 2", gameObject, 1, "Default", TilemapRenderer.Mode.Individual);
-           GameObject gridTilemap = CreateTilemapGameObject("Grid", gameObject, -1, "Default", TilemapRenderer.Mode.Individual);
-           GameObject BackGroudTilemap = CreateTilemapGameObject("Background", gameObject, -3, "Floor", TilemapRenderer.Mode.Individual);
-            gridTilemap.transform.parent = AdditionnalTilmap1.transform;
-            BackGroudTilemap.transform.parent = AdditionnalTilmap1.transform;
 
-            CreateObjectContainer("LightContainer", gameObject);
+            #region Floor
+            var floorTilemapObject = CreateTilemapGameObject("Floor", gameObject, -1, "BackGround", TilemapRenderer.Mode.Chunk);
+            AddCompositeCollider(floorTilemapObject, true);
+            #endregion
+
+            #region ForeGround Wall
+            var ForeGroundWall = CreateTilemapGameObject("ForeGroundWall", gameObject, 0, "ForeGround", TilemapRenderer.Mode.Chunk);
+            AddCompositeCollider(ForeGroundWall);
+            #endregion
+
+            #region BackGround Wall
+            var BackGroundWall = CreateTilemapGameObject("BackGroundWall", gameObject, 100, "BackGround", TilemapRenderer.Mode.Chunk) ;
+            AddCompositeCollider(BackGroundWall);
+            #endregion
+
+            #region Additionnal Layer 1 + children
+            GameObject AdditionnalLayer1 = CreateTilemapGameObject("Additionnal Layer 1", gameObject, 0, "Default", TilemapRenderer.Mode.Chunk);
+            CreateTilemapGameObject("Grid", AdditionnalLayer1, 50, "BackGround", TilemapRenderer.Mode.Chunk);
+            CreateTilemapGameObject("Background", AdditionnalLayer1, -100, "BackGround", TilemapRenderer.Mode.Chunk);
+            #region Neon
+            var NeonLayer = CreateObjectContainer("Neon", AdditionnalLayer1);
+            CreateObjectContainer("Neon Face", NeonLayer);
+            CreateObjectContainer("Neon Left", NeonLayer);
+            CreateObjectContainer("Neon Right", NeonLayer);
+            #endregion
+            #endregion
+
+            #region Props
+            CreateObjectContainer("Props", gameObject.transform.parent.gameObject);
+            #endregion
+
+            #region Lights
+            var LightContainerLayer = CreateObjectContainer("LightContainer", gameObject.transform.parent.gameObject);
+
+            #region NeonLight
+            var NeonLightLayer = CreateObjectContainer("NeonLights", LightContainerLayer);
+            CreateObjectContainer("NeonLights Face", NeonLightLayer);
+            CreateObjectContainer("NeonLights Left", NeonLightLayer);
+            CreateObjectContainer("NeonLights Right", NeonLightLayer);
+            #endregion
+
+            #region Freefrom
+            CreateObjectContainer("Freeform LightContainer", LightContainerLayer);
+            #endregion
+
+            #endregion
         }
         /// <summary>
         /// Helper to create a tilemap layer
@@ -55,7 +84,7 @@ namespace Edgar.Unity
             // Create a new game object that will hold our tilemap layer
             var ObjectContainer = new GameObject(name);
             // Make sure to correctly set the parent
-            ObjectContainer.transform.SetParent(parentObject.transform.parent.transform);
+            ObjectContainer.transform.SetParent(parentObject.transform);
             return ObjectContainer;
         }
 

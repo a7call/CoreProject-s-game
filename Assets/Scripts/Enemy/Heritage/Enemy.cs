@@ -21,8 +21,11 @@ public class Enemy : MonoBehaviour
     protected Player player;
     #endregion
 
+    #region State properties
+    public bool IsPoisoned { get; set; }
+    #endregion
 
-    # region Armes and special effect variable
+    #region Armes and special effect variable
 
     public static bool isPerturbateurIEM = false;
     public static bool isArretTemporel = false;
@@ -167,8 +170,7 @@ public class Enemy : MonoBehaviour
     protected Material defaultMat;
     [SerializeField]
     protected HealthBar healthBar;
-    // Sprite rendered de l'ennemi
-    [SerializeField] protected SpriteRenderer spriteRenderer;
+   
 
     // HealthBar
     public GameObject healthBarGFX;

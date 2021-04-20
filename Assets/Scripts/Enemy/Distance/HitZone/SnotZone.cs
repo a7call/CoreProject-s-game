@@ -98,7 +98,6 @@ public class SnotZone : Enemy
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        print("tes21");
 
         if (collision.CompareTag("Finish"))
         {

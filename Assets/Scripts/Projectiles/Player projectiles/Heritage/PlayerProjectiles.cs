@@ -34,7 +34,9 @@ public class PlayerProjectiles : MonoBehaviour
     {
         Launch();
 
-        FindObjectOfType<AudioManager>().Play("Laser");
+        var audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager != null)
+            audioManager.Play("Laser");
     }
 
     protected virtual void Update()
