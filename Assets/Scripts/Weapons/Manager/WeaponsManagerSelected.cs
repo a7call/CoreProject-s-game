@@ -223,6 +223,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         {
             if (previousDistanceWeap != null)
             {
+                UnEquipWeapon(previousCaCWeap);
                 isPlayingDistance = true;
                 isPlayingCac = false;
                 previousDistanceWeap.SetActive(true);
@@ -231,6 +232,7 @@ public class WeaponsManagerSelected : MonoBehaviour
                 foreach (GameObject weapon in cacWeaponsList)
                 {
                     weapon.SetActive(false);
+                    
                 }
             }
             else
@@ -244,6 +246,7 @@ public class WeaponsManagerSelected : MonoBehaviour
           
             if(previousCaCWeap != null)
             {
+                UnEquipWeapon(previousDistanceWeap);
                 isPlayingCac = true;
                 isPlayingDistance = false;
                 previousCaCWeap.SetActive(true);
@@ -251,6 +254,7 @@ public class WeaponsManagerSelected : MonoBehaviour
                 foreach (GameObject weapon in distanceWeaponsList)
                 {
                     weapon.SetActive(false);
+                    UnEquipWeapon(previousDistanceWeap);
                 }
             }
             else
