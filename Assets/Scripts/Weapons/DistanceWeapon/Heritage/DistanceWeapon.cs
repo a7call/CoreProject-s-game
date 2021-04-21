@@ -148,6 +148,9 @@ public class DistanceWeapon : Weapons, IShootableWeapon
 
     #region Shoot logic
 
+    
+   
+
     protected GameObject projectile;
     protected PlayerProjectiles Proj;
     protected float dispersion;
@@ -162,6 +165,10 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         Proj.dispersion = decalage;
         BulletInMag--;
         Instantiate(projectile, attackPoint.position, transform.rotation);
+
+
+        FireSound();
+
         yield return new WaitForSeconds(player.attackSpeed.Value);
         isAttacking = false;
     }
@@ -206,6 +213,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         //if (BulletInMag != magSize && !IsReloading && (ammoStock != 0 | InfiniteAmmo))
         //{
 
+        ReloadSound();
         IsReloading = true;
         yield return new WaitForSeconds(reloadDelay);
         if (ammoStock + BulletInMag >= magSize && !InfiniteAmmo)
@@ -259,4 +267,6 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     }
     #endregion
 
+
+    
 }

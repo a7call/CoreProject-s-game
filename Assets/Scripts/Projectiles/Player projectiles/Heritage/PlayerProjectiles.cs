@@ -12,6 +12,8 @@ public class PlayerProjectiles : MonoBehaviour
     protected Weapons weapon;
     protected Rigidbody2D rb;
 
+    
+
     #region Stats
     protected float damage;
     protected float knockBackForce;
@@ -21,6 +23,8 @@ public class PlayerProjectiles : MonoBehaviour
     public float dispersion;
     protected LayerMask weaponLayer;
     #endregion
+
+    
 
 
     protected virtual void Awake()
@@ -33,10 +37,8 @@ public class PlayerProjectiles : MonoBehaviour
     protected virtual void Start()
     {
         Launch();
+       
 
-        var audioManager = FindObjectOfType<AudioManager>();
-        if (audioManager != null)
-            audioManager.Play("Laser");
     }
 
     protected virtual void Update()
@@ -60,6 +62,7 @@ public class PlayerProjectiles : MonoBehaviour
         weaponManager = playerGO.transform.GetComponentInChildren<WeaponsManagerSelected>();
         weapon = weaponManager.gameObject.transform.GetComponentInChildren<Weapons>();
         rb = GetComponent<Rigidbody2D>();
+        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
 
     void SetData()
@@ -89,7 +92,7 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-
+        ImpactSound();
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
@@ -99,6 +102,19 @@ public class PlayerProjectiles : MonoBehaviour
             ModuleProcs(enemy);
         }
          Destroy(gameObject);
+    }
+    #endregion
+
+    #region Sound
+
+    protected AudioManagerEffect audioManagerEffect;
+    [SerializeField] protected string impactSound;
+
+    protected void ImpactSound()
+    {
+
+    if (audioManagerEffect != null)
+            audioManagerEffect.Play(impactSound);
     }
     #endregion
 

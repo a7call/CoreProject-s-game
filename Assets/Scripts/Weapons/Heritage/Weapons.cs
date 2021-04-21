@@ -16,6 +16,8 @@ public class Weapons : MonoBehaviour
     public float otherOffsetY;
     public Vector3 attackPointPos;
 
+   
+
     #region Module
     [HideInInspector]
     public float damage;
@@ -65,10 +67,31 @@ public class Weapons : MonoBehaviour
         playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<Player>();
         attackPointPos = attackPoint.transform.localPosition;
+        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
     #endregion
 
-   
+    #region Sound
+
+    //Sounds
+    protected AudioManagerEffect audioManagerEffect;
+    [SerializeField] protected string fireSound;
+    [SerializeField] protected string reloadSound;
+
+    protected void FireSound()
+    {
+        if (audioManagerEffect != null)
+            audioManagerEffect.Play(fireSound);
+    }
+
+    protected void ReloadSound()
+    {
+        if (audioManagerEffect != null)
+            audioManagerEffect.Play(reloadSound);
+    }
+
+    #endregion
+
 
     /* ANCIENNE METHODE GETDIRPROJ
     *  
