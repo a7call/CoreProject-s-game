@@ -186,6 +186,10 @@ public class Player : MonoBehaviour
 
     }
 
+    //Source sound
+
+    [SerializeField] AudioSource AudioSourceWalk;
+
     #region Mouvement physics
     public Vector3 velocity = Vector3.zero;
     public float StartSmoothTime;
@@ -196,16 +200,20 @@ public class Player : MonoBehaviour
     {
         Vector3 targetVelocity = _mouvement;
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, StartSmoothTime);
-        //if (rb.velocity.magnitude > 0.1)
-        //{
-        //    FindObjectOfType<AudioManager>().Play("Walk");
-        //    print("walk");
-        //}
-        //else
-        //{
-        //    FindObjectOfType<AudioManager>().StopPlaying("Walk");
-        //    print("stop");
-        //}
+
+        if (rb.velocity.magnitude > 0.1)
+        {
+            if (!AudioSourceWalk.isPlaying)
+            {
+                AudioSourceWalk.Play();
+            }
+           
+        }
+        else
+        {
+            AudioSourceWalk.Stop();
+        }
+       
     }
 
 

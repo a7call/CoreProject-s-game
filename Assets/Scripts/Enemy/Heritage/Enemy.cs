@@ -191,6 +191,7 @@ public class Enemy : MonoBehaviour
     // Prends les dégats
     public virtual void TakeDamage(float _damage)
     {
+        TakeDamageSound();
         currentHealth -= _damage;
         if (currentHealth <= 0)
         {
@@ -222,7 +223,7 @@ public class Enemy : MonoBehaviour
             }
             GetComponent<Collider2D>().enabled = false;
             animator.SetTrigger("isDying");
-
+            DieSound();
         }
     }
 
@@ -230,6 +231,7 @@ public class Enemy : MonoBehaviour
     {
         if (isDying)
         {
+            
             isDying = false;
             SpawnRewards();
             nanoRobot();
@@ -415,6 +417,8 @@ public class Enemy : MonoBehaviour
         targetSetter.target = target;
         player = target.GetComponent<Player>();
         player = target.GetComponent<Player>();
+
+        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
 
 
@@ -442,6 +446,35 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+
+
+    #region sound
+
+    protected AudioManagerEffect audioManagerEffect;
+    [SerializeField] protected string fireSound;
+    [SerializeField] protected string takeDamageSound;
+    [SerializeField] protected string dieSound;
+
+    protected void FireSound()
+    {
+        if (audioManagerEffect != null)
+            audioManagerEffect.Play(fireSound);
+    }
+
+    protected void TakeDamageSound()
+    {
+        if (audioManagerEffect != null)
+            audioManagerEffect.Play(takeDamageSound);
+    }
+
+    protected void DieSound()
+    {
+        if (audioManagerEffect != null)
+            audioManagerEffect.Play(dieSound);
+    }
+
+
+    #endregion 
 
 
 }

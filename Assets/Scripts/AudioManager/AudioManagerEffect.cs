@@ -2,10 +2,10 @@ using UnityEngine.Audio;
 using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManagerEffect : MonoBehaviour
 {
 
-	public static AudioManager instance;
+	public static AudioManagerEffect instance;
 
 	public AudioMixerGroup mixerGroup;
 
@@ -28,15 +28,11 @@ public class AudioManager : MonoBehaviour
 			s.source = gameObject.AddComponent<AudioSource>();
 			s.source.clip = s.clip;
 			s.source.loop = s.loop;
-
 			s.source.outputAudioMixerGroup = mixerGroup;
 		}
 	}
 
-    private void Start()
-    {
-		Play("Music1V2");
-    }
+    
 
     public void Play(string sound)
 	{
@@ -47,10 +43,10 @@ public class AudioManager : MonoBehaviour
 			return;
 		}
 
-		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
-		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+        s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+        s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
-		s.source.Play();
+        s.source.Play();
 
 		
 	}
@@ -64,10 +60,10 @@ public class AudioManager : MonoBehaviour
 			return;
 		}
 
-		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
-		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+        s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+        s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
-		s.source.Stop();
+        s.source.Stop();
 	}
 
 }

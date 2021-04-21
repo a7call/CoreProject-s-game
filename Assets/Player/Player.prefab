@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 101717229859328991}
   - component: {fileID: 1133958349}
   - component: {fileID: 9256770}
-  - component: {fileID: 6177273227512999909}
+  - component: {fileID: 481889754}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -710,6 +710,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   mooveSpeed: 0
+  AudioSourceWalk: {fileID: 481889754}
   velocity: {x: 0, y: 0, z: 0}
   StartSmoothTime: 0
   StopSmoothTime: 0
@@ -727,7 +728,7 @@ MonoBehaviour:
   currentHealth: 0
   currentArmor: 0
   playerInput: {fileID: 0}
---- !u!82 &6177273227512999909
+--- !u!82 &481889754
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -736,9 +737,9 @@ AudioSource:
   m_GameObject: {fileID: 101717229859328989}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -617432890886696895, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 25590ff1c249c41ceaa1858150ae287a, type: 3}
-  m_PlayOnAwake: 1
+  OutputAudioMixerGroup: {fileID: 6993978175035297508, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
+  m_audioClip: {fileID: 8300000, guid: ffc32f0cc0d50431da9420bd7bef06cd, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
