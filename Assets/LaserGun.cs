@@ -4,7 +4,7 @@ public class LaserGun : Weapons, IShootableWeapon
 {
 
     #region ScriptableObject
-    public WeaponScriptableObject DistanceWeaponData
+    public WeaponScriptableObject WeaponData
     {
         get
         {
@@ -50,8 +50,8 @@ public class LaserGun : Weapons, IShootableWeapon
     #region Datas
     protected virtual void SetData()
     {
-        enemyLayer = DistanceWeaponData.enemyLayer;
-        image = DistanceWeaponData.image;
+        enemyLayer = WeaponData.enemyLayer;
+        image = WeaponData.image;
     }
     #endregion 
 

@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     public CharacterStats attackSpeed;
     public CharacterStats ammoStock;
 
+    [Header("CacWeapon")]
+    public CharacterStats attackRadius;
 
     [Header("Player")]
     public CharacterStats mHealth;
@@ -665,6 +667,7 @@ public class Player : MonoBehaviour
             if (weaponManager.isPlayingDistance)
             {
 
+                
                 //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
                 weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = true;
 

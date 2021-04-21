@@ -14,6 +14,7 @@ public class DistanceWeaponScriptableObject : WeaponScriptableObject
     public int magSize;
     public float reloadDelay;
     public int ammoStock;
+    public float projectileSpeed;
 
     public override void Equip(Player p)
     {
@@ -26,6 +27,8 @@ public class DistanceWeaponScriptableObject : WeaponScriptableObject
             p.ammoStock.AddModifier(new StatModifier(ammoStock, StatModType.Flat, this));
         if (magSize != 0)
             p.magSize.AddModifier(new StatModifier(magSize, StatModType.Flat, this));
+        if (projectileSpeed != 0)
+            p.projectileSpeed.AddModifier(new StatModifier(projectileSpeed, StatModType.Flat, this));
 
     }
     public override void Unequip(Player p)

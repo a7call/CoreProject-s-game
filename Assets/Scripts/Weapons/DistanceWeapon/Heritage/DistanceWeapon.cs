@@ -6,7 +6,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
 {
     
     
-    public WeaponScriptableObject DistanceWeaponData
+    public WeaponScriptableObject WeaponData
     {
         get
         {
@@ -128,8 +128,8 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     protected virtual void SetData()
     {
         projectile = DistanceWeaponDataCast.projectile;
-        enemyLayer = DistanceWeaponData.enemyLayer;
-        image = DistanceWeaponData.image;
+        enemyLayer = WeaponData.enemyLayer;
+        image = WeaponData.image;
     }
 
     protected virtual void SetStatDatas()
