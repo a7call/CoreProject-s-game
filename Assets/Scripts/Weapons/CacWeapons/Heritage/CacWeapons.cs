@@ -101,7 +101,6 @@ public class CacWeapons : Weapons, IPlayerWeapon
         knockBackForce = player.knockBackForce.Value;
         attackDelay = player.attackSpeed.Value;
         knockBackTime = WeaponData.knockBackTime;
-        print(player.attackRadius.Value);
         attackRadius = player.attackRadius.Value;
     }
 

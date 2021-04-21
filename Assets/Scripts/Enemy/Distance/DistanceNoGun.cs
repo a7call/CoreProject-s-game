@@ -8,7 +8,7 @@ using UnityEngine;
 /// Cette variation (variation de base) ce comporte comme un distance de base mis à part la gestion des visuel (anim d'attaque + prpojectile différent)
 /// L'ancien code ce trouve en bas de page
 /// </summary>
-public class DistanceLaser : Distance
+public class DistanceNoGun : Distance
 {
    
     private Transform attackPointFrontGO;
@@ -45,7 +45,7 @@ public class DistanceLaser : Distance
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:
-                SetInitialLaserPosition();
+                SetInitialAttackPosition();
                 isInRange();
                 PlayAttackAnim();
                 break;
@@ -58,7 +58,7 @@ public class DistanceLaser : Distance
 
    
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
-    public void SetInitialLaserPosition()
+    public void SetInitialAttackPosition()
     {
         
         float lastMoveX = animator.GetFloat("lastMoveX");
