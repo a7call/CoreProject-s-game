@@ -62,7 +62,6 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     {
         base.OnEnable();
         IsReloading = false;
-        isAttacking = false;
         OkToShoot = false;
     }
 

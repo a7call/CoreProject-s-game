@@ -82,6 +82,9 @@ public class WeaponsManagerSelected : MonoBehaviour
     }
 
     #region Select and equip Weapon
+
+    GameObject previousDistanceWeap;
+    GameObject previousCaCWeap;
     private void SelectWeapon()
     {
       
@@ -197,6 +200,10 @@ public class WeaponsManagerSelected : MonoBehaviour
         GetReferences(weapon);
         SetUpWeaponForUse(_weapons);
         weapon.GetComponent<IPlayerWeapon>().WeaponData.Equip(transform.parent.GetComponent<Player>());
+        if(weapon.GetComponent<CacWeapons>())
+            previousCaCWeap = weapon;
+        if (weapon.GetComponent<DistanceWeapon>())
+            previousDistanceWeap = weapon;
     }
 
     private void UnEquipWeapon(GameObject weapon)
@@ -212,38 +219,47 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     public void SwitchAttackMode()
     {
-
-        if (!isPlayingCac)
+        if (isPlayingCac)
         {
-            isPlayingCac = true;
-            isPlayingDistance = false;
-            print(selectedCacWeapon);
-            for (int i = 0; i < cacWeaponsList.Count; i++)
+            if (previousDistanceWeap != null)
             {
-                if (i == selectedCacWeapon) cacWeaponsList[i].gameObject.SetActive(true);
-                else cacWeaponsList[i].gameObject.SetActive(false);
-            }
-            foreach (GameObject distanceWeapon in distanceWeaponsList)
-            {
-                distanceWeapon.gameObject.SetActive(false);
-            }
+                isPlayingDistance = true;
+                isPlayingCac = false;
+                previousDistanceWeap.SetActive(true);
 
-        }else
-        {
-            isPlayingCac = false;
-            isPlayingDistance = true;
-
-            for (int i = 0; i < distanceWeaponsList.Count; i++)
-            {
-                if (i == selectedDistanceWeapon) distanceWeaponsList[i].gameObject.SetActive(true);
-                else distanceWeaponsList[i].gameObject.SetActive(false);
+                EquipeWeapon(previousDistanceWeap);
+                foreach (GameObject weapon in cacWeaponsList)
+                {
+                    weapon.SetActive(false);
+                }
             }
-
-            foreach (GameObject cacWeapon in cacWeaponsList)
+            else
             {
-                cacWeapon.gameObject.SetActive(false);
+                return;
             }
+               
         }
+        else
+        {
+          
+            if(previousCaCWeap != null)
+            {
+                isPlayingCac = true;
+                isPlayingDistance = false;
+                previousCaCWeap.SetActive(true);
+                EquipeWeapon(previousCaCWeap);
+                foreach (GameObject weapon in distanceWeaponsList)
+                {
+                    weapon.SetActive(false);
+                }
+            }
+            else
+            {
+                return;
+            }
+           
+        }
+      
 
     }
     #endregion
@@ -268,7 +284,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             {
                 distanceSprite = distanceWeaponsList[i].GetComponent<Weapons>().image;
                 if(distanceWeaponsList[i].GetComponent<DistanceWeapon>())
-                    ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
+                ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
             }
         }
     }
