@@ -711,9 +711,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnBlackHole()
+    public void OnSwitchAttackMode()
     {
-        inventory.SpawnBlackHole();
+        weaponManager.SwitchAttackMode();
     }
 
     public void OnOpenCoffre()
@@ -754,15 +754,6 @@ public class Player : MonoBehaviour
         return playerInput;
     }
 
-    public void OnSwitchToCac()
-    {
-        weaponManager.SwitchDistanceToCac();
-    }
-
-    public void OnSwitchToDistance()
-    {
-        weaponManager.SwitchCacToDistance();
-    }
     #endregion
 
     #region Coffre

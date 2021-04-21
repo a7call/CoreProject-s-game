@@ -208,41 +208,43 @@ public class WeaponsManagerSelected : MonoBehaviour
 
 
     #region Switch CAC to Distance mode
-    // Actuellement, il appuie sur deux touches différentes pour choisir le mode
-    public void SwitchCacToDistance()
+  
+
+    public void SwitchAttackMode()
     {
+
+        if (!isPlayingCac)
+        {
+            isPlayingCac = true;
+            isPlayingDistance = false;
+            print(selectedCacWeapon);
+            for (int i = 0; i < cacWeaponsList.Count; i++)
+            {
+                if (i == selectedCacWeapon) cacWeaponsList[i].gameObject.SetActive(true);
+                else cacWeaponsList[i].gameObject.SetActive(false);
+            }
+            foreach (GameObject distanceWeapon in distanceWeaponsList)
+            {
+                distanceWeapon.gameObject.SetActive(false);
+            }
+
+        }else
+        {
             isPlayingCac = false;
             isPlayingDistance = true;
 
-                for (int i = 0; i < distanceWeaponsList.Count; i++)
-                {
-                    if (i == selectedDistanceWeapon) distanceWeaponsList[i].gameObject.SetActive(true);
-                    else distanceWeaponsList[i].gameObject.SetActive(false);
-                }
+            for (int i = 0; i < distanceWeaponsList.Count; i++)
+            {
+                if (i == selectedDistanceWeapon) distanceWeaponsList[i].gameObject.SetActive(true);
+                else distanceWeaponsList[i].gameObject.SetActive(false);
+            }
 
-                foreach (GameObject cacWeapon in cacWeaponsList)
-                {
-                    cacWeapon.gameObject.SetActive(false);
-                }
-    }
+            foreach (GameObject cacWeapon in cacWeaponsList)
+            {
+                cacWeapon.gameObject.SetActive(false);
+            }
+        }
 
-    public void SwitchDistanceToCac()
-    {
-      
-            isPlayingCac = true;
-            isPlayingDistance = false;
-
-                for (int i = 0; i < cacWeaponsList.Count; i++)
-                {
-                    if (i == selectedCacWeapon) cacWeaponsList[i].gameObject.SetActive(true);
-                    else cacWeaponsList[i].gameObject.SetActive(false);
-                }
-
-                foreach (GameObject distanceWeapon in distanceWeaponsList)
-                {
-                    distanceWeapon.gameObject.SetActive(false);
-                }
-     
     }
     #endregion
 
