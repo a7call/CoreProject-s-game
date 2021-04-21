@@ -5,7 +5,7 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class DistanceLaserDecalage : DistanceLaser
+public class DistanceLaserDecalage : DistanceNoGun
 {
     Vector3 directionTir;
 

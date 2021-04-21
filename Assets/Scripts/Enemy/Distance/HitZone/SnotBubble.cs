@@ -10,11 +10,12 @@ public class SnotBubble : Distance
 
     private bool alreadyActive;
 
-    void Start()
+    protected override void Start()
     {
-        // Set data
+        
         SetData();
-        SetMaxHealth();
+        base.Start();
+
     }
     protected override void Update()
     {
@@ -22,23 +23,23 @@ public class SnotBubble : Distance
         switch (currentState)
         {
             case State.Chasing:
-                StartCoroutine(ZoneCo());
+                //StartCoroutine(ZoneCo());
                 // suit le path créé et s'arrête pour tirer
                 break;
 
         }
 
     }
-    protected IEnumerator ZoneCo()
-    {
-        if (!alreadyActive)
-        {
-            alreadyActive = true;
-            yield return new WaitForSeconds(0.8f);
-            Instantiate(projetile, transform.position, Quaternion.identity);
-            alreadyActive = false;
-        }
-    }
+    //protected IEnumerator ZoneCo()
+    //{
+    //    if (!alreadyActive)
+    //    {
+    //        alreadyActive = true;
+    //        yield return new WaitForSeconds(0.8f);
+    //        Instantiate(projetile, transform.position, Quaternion.identity);
+    //        alreadyActive = false;
+    //    }
+    //}
 
 }
 

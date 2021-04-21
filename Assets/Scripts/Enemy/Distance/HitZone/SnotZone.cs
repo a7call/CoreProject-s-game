@@ -16,6 +16,7 @@ public class SnotZone : Enemy
         // Set data
         base.Start();
         SetData();
+        aIPath.slowdownDistance = aIPath.endReachedDistance;
         SetMaxHealth();
     }
 
@@ -39,7 +40,7 @@ public class SnotZone : Enemy
                 PlayerInSight();
                 break;
             case State.Chasing:
-                StartCoroutine(Zone());
+                //StartCoroutine(Zone());
                 // suit le path créé et s'arrête pour tirer
 
                 break;
@@ -48,23 +49,23 @@ public class SnotZone : Enemy
         }
 
     }
-    private IEnumerator Zone()
-    {
-        if (hasStartAttacking)
-        {
-            hasStartAttacking = false;
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, hitLayer);
+    //private IEnumerator Zone()
+    //{
+    //    if (hasStartAttacking)
+    //    {
+    //        hasStartAttacking = false;
+    //        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, hitLayer);
 
-            foreach (Collider2D hit in hits)
-            {
-                hit.GetComponent<Player>().TakeDamage(1);
+    //        foreach (Collider2D hit in hits)
+    //        {
+    //            hit.GetComponent<Player>().TakeDamage(1);
 
-            }
-            yield return new WaitForSeconds(1f);
-            hasStartAttacking = true;
-        }
+    //        }
+    //        yield return new WaitForSeconds(1f);
+    //        hasStartAttacking = true;
+    //    }
        
-    }
+    //}
 
     private void OnDrawGizmos()
     {
@@ -72,41 +73,7 @@ public class SnotZone : Enemy
         Gizmos.color = Color.red;
     }
 
-    public float RotateSpeed;
-    public Quaternion trun;
-    void getRota()
-    {
-            trun = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(aIPath.desiredVelocity.x, aIPath.desiredVelocity.y, 0 )), Time.deltaTime * RotateSpeed);
-    }
-
-    public GameObject zone;
-
-    bool isDOne;
 
 
-    void test()
-    {
-        if (!isDOne)
-        {
-
-           GameObject tureee =  Instantiate(zone, transform.position, transform.rotation);
-            float angle = Mathf.Atan2(aIPath.desiredVelocity.y, aIPath.desiredVelocity.x) * Mathf.Rad2Deg;
-            tureee.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-
-        if (collision.CompareTag("Finish"))
-        {
-            isDOne = true;
-            print("tes");
-        }
-        else
-        {
-            isDOne = false;
-        }
-    }
+    
 }
