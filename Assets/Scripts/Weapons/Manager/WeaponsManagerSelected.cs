@@ -82,6 +82,9 @@ public class WeaponsManagerSelected : MonoBehaviour
     }
 
     #region Select and equip Weapon
+
+    GameObject previousDistanceWeap;
+    GameObject previousCaCWeap;
     private void SelectWeapon()
     {
       
@@ -196,53 +199,72 @@ public class WeaponsManagerSelected : MonoBehaviour
         weapon.gameObject.SetActive(true);
         GetReferences(weapon);
         SetUpWeaponForUse(_weapons);
-        weapon.GetComponent<IShootableWeapon>().DistanceWeaponData.Equip(transform.parent.GetComponent<Player>());
+        weapon.GetComponent<IPlayerWeapon>().WeaponData.Equip(transform.parent.GetComponent<Player>());
+        if(weapon.GetComponent<CacWeapons>())
+            previousCaCWeap = weapon;
+        if (weapon.GetComponent<DistanceWeapon>())
+            previousDistanceWeap = weapon;
     }
 
     private void UnEquipWeapon(GameObject weapon)
     {
         weapon.gameObject.SetActive(false);
-        weapon.GetComponent<IShootableWeapon>().DistanceWeaponData.Unequip(transform.parent.GetComponent<Player>());
+        weapon.GetComponent<IPlayerWeapon>().WeaponData.Unequip(transform.parent.GetComponent<Player>());
     }
     #endregion
 
 
     #region Switch CAC to Distance mode
-    // Actuellement, il appuie sur deux touches différentes pour choisir le mode
-    public void SwitchCacToDistance()
+  
+
+    public void SwitchAttackMode()
     {
-            isPlayingCac = false;
-            isPlayingDistance = true;
+        if (isPlayingCac)
+        {
+            if (previousDistanceWeap != null)
+            {
+                UnEquipWeapon(previousCaCWeap);
+                isPlayingDistance = true;
+                isPlayingCac = false;
+                previousDistanceWeap.SetActive(true);
 
-                for (int i = 0; i < distanceWeaponsList.Count; i++)
+                EquipeWeapon(previousDistanceWeap);
+                foreach (GameObject weapon in cacWeaponsList)
                 {
-                    if (i == selectedDistanceWeapon) distanceWeaponsList[i].gameObject.SetActive(true);
-                    else distanceWeaponsList[i].gameObject.SetActive(false);
+                    weapon.SetActive(false);
+                    
                 }
-
-                foreach (GameObject cacWeapon in cacWeaponsList)
+            }
+            else
+            {
+                return;
+            }
+               
+        }
+        else
+        {
+          
+            if(previousCaCWeap != null)
+            {
+                UnEquipWeapon(previousDistanceWeap);
+                isPlayingCac = true;
+                isPlayingDistance = false;
+                previousCaCWeap.SetActive(true);
+                EquipeWeapon(previousCaCWeap);
+                foreach (GameObject weapon in distanceWeaponsList)
                 {
-                    cacWeapon.gameObject.SetActive(false);
+                    weapon.SetActive(false);
+                    UnEquipWeapon(previousDistanceWeap);
                 }
-    }
-
-    public void SwitchDistanceToCac()
-    {
+            }
+            else
+            {
+                return;
+            }
+           
+        }
       
-            isPlayingCac = true;
-            isPlayingDistance = false;
 
-                for (int i = 0; i < cacWeaponsList.Count; i++)
-                {
-                    if (i == selectedCacWeapon) cacWeaponsList[i].gameObject.SetActive(true);
-                    else cacWeaponsList[i].gameObject.SetActive(false);
-                }
-
-                foreach (GameObject distanceWeapon in distanceWeaponsList)
-                {
-                    distanceWeapon.gameObject.SetActive(false);
-                }
-     
     }
     #endregion
 
@@ -266,7 +288,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             {
                 distanceSprite = distanceWeaponsList[i].GetComponent<Weapons>().image;
                 if(distanceWeaponsList[i].GetComponent<DistanceWeapon>())
-                    ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
+                ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
             }
         }
     }
@@ -283,14 +305,18 @@ public class WeaponsManagerSelected : MonoBehaviour
     protected void MoveWeapon()
     {
         
+
         if (_weapons != null)
         {
+            if (isPlayingCac && _weapons.isAttacking)
+                return;
 
-            Vector3 mousePosition = Utils.GetMouseWorldPosition();
+                Vector3 mousePosition = Utils.GetMouseWorldPosition();
             Vector3 playerDirection = (mousePosition - transform.position);
             if (playerDirection.magnitude < 1f)
                 return;
             Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
+
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
@@ -308,7 +334,11 @@ public class WeaponsManagerSelected : MonoBehaviour
                 spriteRenderer.flipY = true;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
-                _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+                if(isPlayingDistance)
+                    _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+                else
+                    _weapons.attackPoint.position =  transform.position + aimDirection;
+                
 
 
 
@@ -318,7 +348,10 @@ public class WeaponsManagerSelected : MonoBehaviour
                 spriteRenderer.flipY = false;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
-                _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+                if (isPlayingDistance)
+                    _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+                else
+                    _weapons.attackPoint.position = transform.position + aimDirection;
             }
         }
     }

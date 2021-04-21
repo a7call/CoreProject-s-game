@@ -11,7 +11,7 @@ public abstract class WeaponScriptableObject : Item
     public Sprite image;
     public float knockBackForce;
     public float knockBackTime;
-    public float projectileSpeed;
+   
 
 
     public override void Equip(Player p)
@@ -25,8 +25,7 @@ public abstract class WeaponScriptableObject : Item
             p.knockBackForce.AddModifier(new StatModifier(knockBackForce, StatModType.Flat, this));
         if (knockBackTime != 0)
             p.knockBackTime.AddModifier(new StatModifier(knockBackTime, StatModType.Flat, this));
-        if (projectileSpeed != 0)
-            p.projectileSpeed.AddModifier(new StatModifier(projectileSpeed, StatModType.Flat, this));
+        
     }
 
     public override void Unequip(Player p)

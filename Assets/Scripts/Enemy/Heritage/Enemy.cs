@@ -410,6 +410,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         aIPath = GetComponent<AIPath>();
         currentState = State.Patrolling;
+        animator.GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         
         

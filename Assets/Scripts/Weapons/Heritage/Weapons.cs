@@ -49,7 +49,8 @@ public class Weapons : MonoBehaviour
     protected virtual void OnEnable()
     { 
         GetComponent<SpriteRenderer>().flipY = false;
-        
+        isAttacking = false;
+
     }
 
     public Sprite image { get;  set; }

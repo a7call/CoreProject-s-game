@@ -6,13 +6,19 @@ using UnityEngine.UI;
 /// Classe héritière de Weapons.cs et mère de toutes les armes CAC.
 /// Elle contient une fonction permettant de recupérer la direction de l'attaque
 /// </summary>
-public class CacWeapons : Weapons
+public class CacWeapons : Weapons, IPlayerWeapon
 {
 
     public static bool isAntiEmeuteModule;
     public static float knockBackForceMultiplier;
     private bool alreadyMultiplied;
-    [SerializeField] protected CaCWeaponScriptableObject WeaponData;
+    [SerializeField] protected CaCWeaponScriptableObject CacWeaponData;
+    public WeaponScriptableObject WeaponData {
+        get
+        {
+            return CacWeaponData;
+        }
+     }
     protected float knockBackForce;
     protected float knockBackTime;
     protected Vector3 dir;
@@ -37,14 +43,17 @@ public class CacWeapons : Weapons
     [HideInInspector]
     public static float RangeMultiplier;
 
-    [HideInInspector]
-    public Sprite image;
 
     protected override void Awake()
     {
         base.Awake();
         SetData();
 
+    }
+
+    private void Start()
+    {
+        SetStatDatas();
     }
     protected override void Update()
     {
@@ -70,11 +79,6 @@ public class CacWeapons : Weapons
         base.Update();
         //GetAttackDirection();
         GetKnockBackDir();
-        if (Input.GetMouseButton(0))
-        {
-            StartCoroutine(Attack());
-        }
-
 
     }
     private void OnDrawGizmosSelected()
@@ -87,29 +91,32 @@ public class CacWeapons : Weapons
 
     private void SetData()
     {
-        attackRadius = WeaponData.attackRadius;
         enemyLayer = WeaponData.enemyLayer;
-        damage = WeaponData.damage;
-        knockBackForce = WeaponData.knockBackForce;
-        attackDelay = WeaponData.delayBetweenAttack;
-        knockBackTime = WeaponData.knockBackTime;
         image = WeaponData.image;
+    }
+
+    private void SetStatDatas()
+    {
+        damage = player.damage.Value;
+        knockBackForce = player.knockBackForce.Value;
+        attackDelay = player.attackSpeed.Value;
+        knockBackTime = WeaponData.knockBackTime;
+        attackRadius = player.attackRadius.Value;
     }
 
     protected virtual IEnumerator Attack()
     {
-        if (!isAttacking && !PauseMenu.isGamePaused)
+        if (!PauseMenu.isGamePaused)
         {
-            isAttacking = true;
+            
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
-
+           
             if (isVampirismeModule)
             {
                 RewardSpawner.isAttackCAC = true;
             }
 
             AttackAppliedOnEnemy(enemyHit);
-
             yield return new WaitForSeconds(attackDelay);
             RewardSpawner.isAttackCAC = false;
             isAttacking = false;
@@ -124,6 +131,7 @@ public class CacWeapons : Weapons
         {
             if (enemy.gameObject.CompareTag("Enemy"))
             {
+                
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
                 CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
@@ -146,9 +154,17 @@ public class CacWeapons : Weapons
 
     public void ToAttack()
     {
-        CoroutineManager.Instance.StartCoroutine(Attack());
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            animator.SetTrigger("isAttacking");
+        }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    }
     private void GetKnockBackDir()
     {
         dir = (attackPoint.position - player.transform.position).normalized;

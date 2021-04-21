@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     public CharacterStats attackSpeed;
     public CharacterStats ammoStock;
 
+    [Header("CacWeapon")]
+    public CharacterStats attackRadius;
 
     [Header("Player")]
     public CharacterStats mHealth;
@@ -673,6 +675,7 @@ public class Player : MonoBehaviour
             if (weaponManager.isPlayingDistance)
             {
 
+                
                 //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
                 weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = true;
 
@@ -716,9 +719,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnBlackHole()
+    public void OnSwitchAttackMode()
     {
-        inventory.SpawnBlackHole();
+        weaponManager.SwitchAttackMode();
     }
 
     public void OnOpenCoffre()
@@ -759,15 +762,6 @@ public class Player : MonoBehaviour
         return playerInput;
     }
 
-    public void OnSwitchToCac()
-    {
-        weaponManager.SwitchDistanceToCac();
-    }
-
-    public void OnSwitchToDistance()
-    {
-        weaponManager.SwitchCacToDistance();
-    }
     #endregion
 
     #region Coffre

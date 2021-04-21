@@ -5,7 +5,7 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class DistanceLaserSniper : DistanceLaser
+public class DistanceLaserSniper : DistanceNoGun
 {
     float timeLocking = 3;
     private bool isLockingEnemy;

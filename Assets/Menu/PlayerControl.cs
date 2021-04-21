@@ -67,7 +67,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""BlackHole"",
+                    ""name"": ""SwitchAttackMode"",
                     ""type"": ""Button"",
                     ""id"": ""a9ed9a00-a03d-459d-ad15-4d21b5494e2d"",
                     ""expectedControlType"": ""Button"",
@@ -94,22 +94,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""9b7ef56f-c1eb-4e50-8e8d-47cd96d96e20"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""SwitchToCac"",
-                    ""type"": ""Button"",
-                    ""id"": ""58de9341-b276-4c63-8c27-4e12af4cb2d5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""SwitchToDistance"",
-                    ""type"": ""Button"",
-                    ""id"": ""1e13a650-9ab1-4291-bb92-5bd9a34fe637"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -233,7 +217,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""BlackHole"",
+                    ""action"": ""SwitchAttackMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -267,28 +251,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""75cb10c0-71e3-4a08-a7d0-51fc5e95b483"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""SwitchToCac"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""753d8b56-aa4d-40d5-8e0b-a81b1bf4c28a"",
-                    ""path"": ""<Keyboard>/v"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""SwitchToDistance"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -328,12 +290,10 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_Horizontal = m_Player.FindAction("Horizontal", throwIfNotFound: true);
         m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
         m_Player_UseObject = m_Player.FindAction("UseObject", throwIfNotFound: true);
-        m_Player_BlackHole = m_Player.FindAction("BlackHole", throwIfNotFound: true);
+        m_Player_SwitchAttackMode = m_Player.FindAction("SwitchAttackMode", throwIfNotFound: true);
         m_Player_OpenCoffre = m_Player.FindAction("OpenCoffre", throwIfNotFound: true);
         m_Player_OpenShop = m_Player.FindAction("OpenShop", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
-        m_Player_SwitchToCac = m_Player.FindAction("SwitchToCac", throwIfNotFound: true);
-        m_Player_SwitchToDistance = m_Player.FindAction("SwitchToDistance", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -391,12 +351,10 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Horizontal;
     private readonly InputAction m_Player_Vertical;
     private readonly InputAction m_Player_UseObject;
-    private readonly InputAction m_Player_BlackHole;
+    private readonly InputAction m_Player_SwitchAttackMode;
     private readonly InputAction m_Player_OpenCoffre;
     private readonly InputAction m_Player_OpenShop;
     private readonly InputAction m_Player_Pause;
-    private readonly InputAction m_Player_SwitchToCac;
-    private readonly InputAction m_Player_SwitchToDistance;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -407,12 +365,10 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @Horizontal => m_Wrapper.m_Player_Horizontal;
         public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
         public InputAction @UseObject => m_Wrapper.m_Player_UseObject;
-        public InputAction @BlackHole => m_Wrapper.m_Player_BlackHole;
+        public InputAction @SwitchAttackMode => m_Wrapper.m_Player_SwitchAttackMode;
         public InputAction @OpenCoffre => m_Wrapper.m_Player_OpenCoffre;
         public InputAction @OpenShop => m_Wrapper.m_Player_OpenShop;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
-        public InputAction @SwitchToCac => m_Wrapper.m_Player_SwitchToCac;
-        public InputAction @SwitchToDistance => m_Wrapper.m_Player_SwitchToDistance;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,9 +396,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @UseObject.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseObject;
                 @UseObject.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseObject;
                 @UseObject.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseObject;
-                @BlackHole.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlackHole;
-                @BlackHole.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlackHole;
-                @BlackHole.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlackHole;
+                @SwitchAttackMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchAttackMode;
+                @SwitchAttackMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchAttackMode;
+                @SwitchAttackMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchAttackMode;
                 @OpenCoffre.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCoffre;
                 @OpenCoffre.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCoffre;
                 @OpenCoffre.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenCoffre;
@@ -452,12 +408,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
-                @SwitchToCac.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToCac;
-                @SwitchToCac.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToCac;
-                @SwitchToCac.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToCac;
-                @SwitchToDistance.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToDistance;
-                @SwitchToDistance.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToDistance;
-                @SwitchToDistance.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchToDistance;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -480,9 +430,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @UseObject.started += instance.OnUseObject;
                 @UseObject.performed += instance.OnUseObject;
                 @UseObject.canceled += instance.OnUseObject;
-                @BlackHole.started += instance.OnBlackHole;
-                @BlackHole.performed += instance.OnBlackHole;
-                @BlackHole.canceled += instance.OnBlackHole;
+                @SwitchAttackMode.started += instance.OnSwitchAttackMode;
+                @SwitchAttackMode.performed += instance.OnSwitchAttackMode;
+                @SwitchAttackMode.canceled += instance.OnSwitchAttackMode;
                 @OpenCoffre.started += instance.OnOpenCoffre;
                 @OpenCoffre.performed += instance.OnOpenCoffre;
                 @OpenCoffre.canceled += instance.OnOpenCoffre;
@@ -492,12 +442,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @SwitchToCac.started += instance.OnSwitchToCac;
-                @SwitchToCac.performed += instance.OnSwitchToCac;
-                @SwitchToCac.canceled += instance.OnSwitchToCac;
-                @SwitchToDistance.started += instance.OnSwitchToDistance;
-                @SwitchToDistance.performed += instance.OnSwitchToDistance;
-                @SwitchToDistance.canceled += instance.OnSwitchToDistance;
             }
         }
     }
@@ -544,12 +488,10 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnHorizontal(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
         void OnUseObject(InputAction.CallbackContext context);
-        void OnBlackHole(InputAction.CallbackContext context);
+        void OnSwitchAttackMode(InputAction.CallbackContext context);
         void OnOpenCoffre(InputAction.CallbackContext context);
         void OnOpenShop(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnSwitchToCac(InputAction.CallbackContext context);
-        void OnSwitchToDistance(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
