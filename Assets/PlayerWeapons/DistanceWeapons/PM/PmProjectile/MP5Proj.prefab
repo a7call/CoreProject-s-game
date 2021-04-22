@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -1722993414655278476}
   - component: {fileID: 835267579499724916}
   - component: {fileID: 7166175691069538877}
+  - component: {fileID: 1675337450}
   m_Layer: 6
   m_Name: MP5Proj
   m_TagString: Untagged
@@ -46,7 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dispersion: 0
+  dispersion: -0.00028705597
+  impactSound: 
 --- !u!212 &-1722993414655278476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66,7 +68,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 27d59e5070751a54db1a6af021b56f76, type: 2}
+  - {fileID: 2100000, guid: 4f07f89fe04766f49bb77594b906cbed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,3 +137,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.140625
+--- !u!95 &1675337450
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4e9986a005cc04945a914cff5e718287, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

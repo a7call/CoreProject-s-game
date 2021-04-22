@@ -11,7 +11,6 @@ public class PlayerProjectiles : MonoBehaviour
     protected WeaponsManagerSelected weaponManager;
     protected Weapons weapon;
     protected Rigidbody2D rb;
-
     
 
     #region Stats
@@ -37,7 +36,6 @@ public class PlayerProjectiles : MonoBehaviour
     protected virtual void Start()
     {
         Launch();
-       
 
     }
 
