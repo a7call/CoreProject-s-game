@@ -62,20 +62,21 @@ public class WeaponsManagerSelected : MonoBehaviour
                     UnEquipWeapon(transform.GetChild(i).gameObject);
                 }
                 EquipeWeapon(transform.GetChild(transform.childCount - 1).gameObject);
+
             }
 
             if (collision.CompareTag("CacWeapon"))
             {
                 isPlayingCac = true;
                 isPlayingDistance = false;
-                selectedCacWeapon++;
+                selectedCacWeapon = transform.childCount - 1;
                 cacWeaponsList.Add(collision.gameObject);
             }
             else
             {
                 isPlayingDistance = true;
                 isPlayingCac = false;
-                selectedDistanceWeapon++;
+                selectedDistanceWeapon = transform.childCount - 1;
                 distanceWeaponsList.Add(collision.gameObject);
             } 
         }
