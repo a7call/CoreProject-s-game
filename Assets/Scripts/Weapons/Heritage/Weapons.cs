@@ -32,7 +32,6 @@ public class Weapons : MonoBehaviour
 
     #region Data variable
     public LayerMask enemyLayer;
-    protected float attackRadius;
     protected float attackDelay;
     #endregion
 

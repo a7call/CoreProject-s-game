@@ -8,17 +8,21 @@ using Wanderer.CharacterStats;
 public class CaCWeaponScriptableObject : WeaponScriptableObject
 {
     public float attackRadius;
+    public float attackRange;
     public override void Equip(Player p)
     {
         base.Equip(p);
         if (attackRadius != 0)
             p.attackRadius.AddModifier(new StatModifier(attackRadius, StatModType.Flat, this));
-        
+        if (attackRange != 0)
+            p.attackRange.AddModifier(new StatModifier(attackRange, StatModType.Flat, this));
+
 
     }
     public override void Unequip(Player p)
     {
         base.Unequip(p);
-        p.attackRadius.RemoveAllModifiersFromSource(this);;
+        p.attackRadius.RemoveAllModifiersFromSource(this);
+        p.attackRange.RemoveAllModifiersFromSource(this);
     }
 }
