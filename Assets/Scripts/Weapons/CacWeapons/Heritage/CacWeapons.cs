@@ -13,6 +13,7 @@ public class CacWeapons : Weapons, IPlayerWeapon
     public static float knockBackForceMultiplier;
     private bool alreadyMultiplied;
     [SerializeField] protected CaCWeaponScriptableObject CacWeaponData;
+
     public WeaponScriptableObject WeaponData {
         get
         {
@@ -22,6 +23,8 @@ public class CacWeapons : Weapons, IPlayerWeapon
     protected float knockBackForce;
     protected float knockBackTime;
     protected Vector3 dir;
+    protected float attackRadius;
+    public float attackRange;
 
     //Vampirisme
     [HideInInspector]
@@ -77,7 +80,6 @@ public class CacWeapons : Weapons, IPlayerWeapon
 
 
         base.Update();
-        //GetAttackDirection();
         GetKnockBackDir();
 
     }
@@ -97,11 +99,13 @@ public class CacWeapons : Weapons, IPlayerWeapon
 
     private void SetStatDatas()
     {
+        
         damage = player.damage.Value;
         knockBackForce = player.knockBackForce.Value;
         attackDelay = player.attackSpeed.Value;
         knockBackTime = WeaponData.knockBackTime;
         attackRadius = player.attackRadius.Value;
+        attackRange = player.attackRange.Value;
     }
 
     protected virtual IEnumerator Attack()
@@ -135,29 +139,36 @@ public class CacWeapons : Weapons, IPlayerWeapon
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
                 CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
-                if (PlayerProjectiles.isImolationModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
-                }
-                if (PlayerProjectiles.isCryoModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
-                }
-                if (PlayerProjectiles.isParaModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
-                }
+                //if (PlayerProjectiles.isImolationModule)
+                //{
+                //    CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
+                //}
+                //if (PlayerProjectiles.isCryoModule)
+                //{
+                //    CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
+                //}
+                //if (PlayerProjectiles.isParaModule)
+                //{
+                //    CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
+                //}
             }
+
+            if (enemy.gameObject.CompareTag("EnemyProjectil"))
+                Destroy(enemy.gameObject);
+
         }
            
     }
-
+    public GameObject SlashObj;
     public void ToAttack()
     {
         if (!isAttacking)
         {
             isAttacking = true;
-            animator.SetTrigger("isAttacking");
+            GetComponent<SpriteRenderer>().flipY = !GetComponent<SpriteRenderer>().flipY;
+            GameObject obj = Instantiate(SlashObj, attackPoint.position, transform.rotation);
+            obj.transform.parent = transform;
+            StartCoroutine(Attack());
         }
     }
 

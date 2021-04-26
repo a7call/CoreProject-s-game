@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
 
     [Header("CacWeapon")]
     public CharacterStats attackRadius;
+    public CharacterStats attackRange;
 
     [Header("Player")]
     public CharacterStats mHealth;

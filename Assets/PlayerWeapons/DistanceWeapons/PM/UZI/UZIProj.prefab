@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8399999305006020208}
   - component: {fileID: 447874545833512403}
   - component: {fileID: -1722993414655278476}
-  - component: {fileID: 1299607787280103548}
+  - component: {fileID: 3041180634410202189}
   - component: {fileID: 835267579499724916}
   - component: {fileID: 1093583575731587561}
   m_Layer: 6
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dispersion: 0
+  dispersion: -0.9204321
   impactSound: 
 --- !u!212 &-1722993414655278476
 SpriteRenderer:
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a249028e0573df40926ec61ed5877bf, type: 2}
+  - {fileID: 2100000, guid: 22e9fcdfba4fa604b940b34975f3bfff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,19 +89,19 @@ SpriteRenderer:
   m_SortingLayerID: 299582325
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7333948793602485674, guid: 9d69918126211014ca36b8b016cce814, type: 3}
+  m_Sprite: {fileID: 7775949760693568481, guid: ff9edbea43a1e114a8a435efe95e0cd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.64, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1299607787280103548
-CircleCollider2D:
+--- !u!61 &3041180634410202189
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -113,9 +113,19 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.034518436, y: 0}
+  m_Offset: {x: 0.00055265427, y: 0.00021614134}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.6875, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.64, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.09067719
+  m_Size: {x: 0.25109398, y: 0.24891692}
+  m_EdgeRadius: 0
 --- !u!50 &835267579499724916
 Rigidbody2D:
   serializedVersion: 4
@@ -147,7 +157,7 @@ Animator:
   m_GameObject: {fileID: 5004741095190017796}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4e92151dd5830b641b9b70ec694afc12, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9a056f77d3a63cb4b914caf8323cfd3a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

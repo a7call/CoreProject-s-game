@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -1722993414655278476}
   - component: {fileID: 4589407644236281478}
   - component: {fileID: 9094323812755578279}
+  - component: {fileID: 6874660365045174478}
   m_Layer: 6
   m_Name: SCARProj
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dispersion: 3.5190065
+  impactSound: 
 --- !u!212 &-1722993414655278476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66,7 +68,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 27d59e5070751a54db1a6af021b56f76, type: 2}
+  - {fileID: 2100000, guid: ea2e024e871414f41a3727a8a9508237, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,12 +89,12 @@ SpriteRenderer:
   m_SortingLayerID: 299582325
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6949972355775812543, guid: edf75fd11f177dc479caae2b3a969a4b, type: 3}
+  m_Sprite: {fileID: 1105981223302833512, guid: 026056246db3a544ab35835f5b9d6e05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -129,9 +131,28 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0011875331, y: 0}
   serializedVersion: 2
-  m_Radius: 0.140625
+  m_Radius: 0.15567315
+--- !u!95 &6874660365045174478
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91a556d6b9862af49bd1f4d2c2ad98b5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
