@@ -75,10 +75,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09086084, y: 0.01556921}
+  m_Offset: {x: 0.093393385, y: 0.115137905}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.375, y: 0.4375}
@@ -89,7 +89,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7154131, y: 0.57158756}
+  m_Size: {x: 0.7385913, y: 0.5845986}
   m_EdgeRadius: 0
 --- !u!114 &3298253266032608859
 MonoBehaviour:
@@ -113,6 +113,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
+  fireSound: 
+  reloadSound: 
   DistanceWeaponDataCast: {fileID: 11400000, guid: 0bc8585ca963f4f96bfb74e9adc97c39, type: 2}
   BulletInMag: 0
   ammoStock: 0
