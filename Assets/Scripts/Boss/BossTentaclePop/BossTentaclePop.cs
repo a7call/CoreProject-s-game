@@ -220,8 +220,6 @@ public class BossTentaclePop : Enemy
     private void SetData()
     {
         maxHealth = BossData.maxHealth;
-        whiteMat = BossData.whiteMat;
-        defaultMat = BossData.defaultMat;
 
         attackRange = BossData.attackRange;
         restTime = BossData.restTime;

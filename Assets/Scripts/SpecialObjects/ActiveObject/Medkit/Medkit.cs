@@ -21,7 +21,7 @@ public class Medkit : StacksObjects
     }
     protected override IEnumerator WayToReUse()
     {
-        if(player.currentHealth != player.maxHealth)
+        if(player.CurrentHealth != player.MaxHealth)
         {
             numberOfUse--;
         }
@@ -39,7 +39,7 @@ public class Medkit : StacksObjects
 
     private void SoinFull()
     {
-        player.currentHealth = player.maxHealth;
+        player.CurrentHealth = player.MaxHealth;
     }
 
 }

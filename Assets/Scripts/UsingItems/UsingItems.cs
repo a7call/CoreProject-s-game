@@ -30,13 +30,13 @@ public class UsingItems : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
             
-            if (playerData.maxHealth <= player.currentHealth + ItemsData.hpGiven)
+            if (playerData.maxHealth <= player.CurrentHealth + ItemsData.hpGiven)
             {
-                player.currentHealth += ItemsData.hpGiven;
+                player.CurrentHealth += ItemsData.hpGiven;
             }
             else
             {
-                player.currentHealth = playerData.maxHealth;
+                player.CurrentHealth = playerData.maxHealth;
             }
     }
 
@@ -44,7 +44,7 @@ public class UsingItems : MonoBehaviour
     private void AddShield()
     {
         ItemsData.pointShield = playerData.maxHealth / 2;
-        player.currentHealth += ItemsData.pointShield;
+        player.CurrentHealth += ItemsData.pointShield;
     }
 
     //// Ajoute de la MS

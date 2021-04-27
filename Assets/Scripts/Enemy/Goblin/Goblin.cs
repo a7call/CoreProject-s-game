@@ -40,8 +40,6 @@ public class Goblin : Enemy
         aIPath.maxSpeed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
 
         maxHealth = enemyData.maxHealth;
-        whiteMat = enemyData.whiteMat;
-        defaultMat = enemyData.defaultMat;
     }
 
     protected override void Update()

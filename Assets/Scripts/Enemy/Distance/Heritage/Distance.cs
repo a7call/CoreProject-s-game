@@ -87,8 +87,6 @@ public class Distance : Enemy
     {
         // ScriptableObject Datas
         maxHealth = DistanceData.maxHealth;
-        whiteMat = DistanceData.whiteMat;
-        defaultMat = DistanceData.defaultMat;
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + RandomizeParams(-1, 2));

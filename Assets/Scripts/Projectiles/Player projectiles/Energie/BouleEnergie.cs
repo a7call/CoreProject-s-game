@@ -37,26 +37,7 @@ public class BouleEnergie : PlayerProjectiles
     }
     protected override void ModuleProcs(Enemy enemy)
     {
-        //if (isExplosiveAmo)
-        //{
-        //    ExplosiveAmoModule.explosionFnc(this.gameObject);
-        //}
-        if (isNanoRobotModule)
-        {
-            NanoRobotModule.enemiesTouched.Add(enemy);
-        }
-        if (isImolationModule)
-        {
-            CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemy));
-        }
-        if (isCryoModule)
-        {
-            CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemy));
-        }
-        if (isParaModule)
-        {
-            CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemy));
-        }
+        
     }
 
     protected IEnumerator ExplosionDelayCo()
