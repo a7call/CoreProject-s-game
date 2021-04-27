@@ -23,8 +23,6 @@ public class HealerEnemy : Enemy
     {
         aIPath.maxSpeed = Random.Range(EnemyData.moveSpeed, EnemyData.moveSpeed + 1);
         maxHealth = EnemyData.maxHealth;
-        whiteMat = EnemyData.whiteMat;
-        defaultMat = EnemyData.defaultMat;
         attackRange = EnemyData.attackRange;
     }
     protected override void GetReference()
@@ -70,56 +68,57 @@ public class HealerEnemy : Enemy
     private void GetEnemyToHeal()
     {
         
-        if (!isSeachingForEnemyToHeal )
-        {
-            GetAllEnemisInRoom();
-            isSeachingForEnemyToHeal = true;
-            foreach (GameObject enemy in enemyInRoom.ToArray())
-            {
-                if (enemy == null)
-                {
-                    enemyInRoom.Remove(enemy);
-                    continue;
-                }
-                Enemy enemyScript = enemy.GetComponent<Enemy>();
-                if(enemyScript.currentHealth < enemyScript.maxHealth && !isHealing)
-                {
-                    isHealing = true;
-                    isSeachingForEnemyToHeal = false;
-                    enemyCurrentlyHealed = enemyScript;
-                    StartCoroutine(HealingCo(enemyScript, amountHeal, timeBetweenHeal)) ;
-                }
-                else
-                {
+        //if (!isSeachingForEnemyToHeal )
+        //{
+        //    GetAllEnemisInRoom();
+        //    isSeachingForEnemyToHeal = true;
+        //    foreach (GameObject enemy in enemyInRoom.ToArray())
+        //    {
+        //        if (enemy == null)
+        //        {
+        //            enemyInRoom.Remove(enemy);
+        //            continue;
+        //        }
+        //        Enemy enemyScript = enemy.GetComponent<Enemy>();
+        //        if(enemyScript.currentHealth < enemyScript.maxHealth && !isHealing)
+        //        {
+        //            isHealing = true;
+        //            isSeachingForEnemyToHeal = false;
+        //            enemyCurrentlyHealed = enemyScript;
+        //            StartCoroutine(HealingCo(enemyScript, amountHeal, timeBetweenHeal)) ;
+        //        }
+        //        else
+        //        {
 
-                    continue;
-                }
+        //            continue;
+        //        }
 
-            }
-            isSeachingForEnemyToHeal = false;
-            enemyInRoom.Clear();
-        }
+        //    }
+        //    isSeachingForEnemyToHeal = false;
+        //    enemyInRoom.Clear();
+        //}
         
 
     }
 
     private IEnumerator HealingCo(Enemy _enemy, float _amountToHeal, float _timeBetweenHeal)
     {
-        while (_enemy.currentHealth < _enemy.maxHealth)
-        {
-            yield return new WaitForSeconds(_timeBetweenHeal);
-            if (_enemy == null)
-            {
-                isHealing = false;
-                break;
-            }
-            _enemy.currentHealth += _amountToHeal;  
-            if (enemyCurrentlyHealed.currentHealth == enemyCurrentlyHealed.maxHealth)
-            {
-                isHealing = false;
-                yield break;
-            }
-        }
+        //while (_enemy.currentHealth < _enemy.maxHealth)
+        //{
+        //    yield return new WaitForSeconds(_timeBetweenHeal);
+        //    if (_enemy == null)
+        //    {
+        //        isHealing = false;
+        //        break;
+        //    }
+        //    _enemy.currentHealth += _amountToHeal;  
+        //    if (enemyCurrentlyHealed.currentHealth == enemyCurrentlyHealed.maxHealth)
+        //    {
+        //        isHealing = false;
+        //        yield break;
+        //    }
+        //}
+        yield return new WaitForSeconds(_timeBetweenHeal);
 
     }
 }

@@ -13,7 +13,7 @@ public class BaroudHonneur : StacksObjects
     protected override void Update()
     {
         
-        if (player.currentHealth==0)
+        if (player.CurrentHealth==0)
         {
             AutoBaroudHonneur();
             Destroy(gameObject);
@@ -43,6 +43,6 @@ public class BaroudHonneur : StacksObjects
     private void GainHp()
     {
         int gainHp = 2;
-        player.currentHealth += gainHp;
+        player.CurrentHealth += gainHp;
     }
 }
