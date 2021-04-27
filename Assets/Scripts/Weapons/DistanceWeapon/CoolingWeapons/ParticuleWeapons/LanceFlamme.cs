@@ -23,7 +23,7 @@ public class LanceFlamme : ParticuleWeapon
                 {
                     Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
                     CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
-                    CoroutineManager.Instance.StartCoroutine(IgniteTimeCo(enemyScript));
+
                     enemyScript.TakeDamage(damage);
 
                 }
@@ -37,28 +37,4 @@ public class LanceFlamme : ParticuleWeapon
         }
     }
 
-
-    protected IEnumerator IgniteCo(Enemy enemy)
-    {
-        if (enemy == null) yield break;
-        while (enemy.isBurned)
-        {
-            yield return new WaitForSeconds(timeBetwenDamage);
-            if (enemy == null) yield break;
-            enemy.TakeDamage(igniteDamage);
-        }
-                
-    }
-
-    protected IEnumerator IgniteTimeCo(Enemy enemy)
-    {
-        if (!enemy.isBurned)
-        {
-            enemy.isBurned = true;
-            CoroutineManager.Instance.StartCoroutine(IgniteCo(enemy));
-            yield return new WaitForSeconds(timeBetwenDamage);
-            if (enemy == null) yield break;
-            enemy.isBurned = false;
-        }
-    }
 }

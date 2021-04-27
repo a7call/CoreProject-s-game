@@ -22,39 +22,10 @@ public class EpeeFeu : CacWeapons
                 enemyScript.TakeDamage(damage);
                 CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
 
-                StartCoroutine(Feu(enemyScript));
+               
 
-                if (PlayerProjectiles.isImolationModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
-                }
-                if (PlayerProjectiles.isCryoModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
-                }
-                if (PlayerProjectiles.isParaModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
-                }
             }
         }
     }
-
-
-    public IEnumerator Feu(Enemy enemy)
-    {
-        int i;
-        for (i = 0; i < NbDegats; i++)
-        {
-            yield return new WaitForSeconds(Timer);
-            if (enemy.isOnFire == false)
-            {
-                enemy.isOnFire = true;
-                enemy.TakeDamage(FeuDamage);
-            }
-            
-        }
-
-        enemy.isOnFire = false;
-    }
+ 
 }

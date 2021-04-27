@@ -31,18 +31,6 @@ public class EpeeGel : CacWeapons
 
                 CoroutineManager.Instance.StartCoroutine(Gel(enemyScript));
 
-                if (PlayerProjectiles.isImolationModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
-                }
-                if (PlayerProjectiles.isCryoModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
-                }
-                if (PlayerProjectiles.isParaModule)
-                {
-                    CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
-                }
             }
         }
     }

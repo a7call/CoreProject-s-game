@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PassiveObjectManager : MonoBehaviour
 {
+
+    public static List<IAbility> currentAbilities = new List<IAbility>();
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PassiveObject"))

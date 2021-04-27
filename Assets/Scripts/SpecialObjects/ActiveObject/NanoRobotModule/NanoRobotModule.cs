@@ -53,7 +53,7 @@ public class NanoRobotModule : CdObjects
             {
                 if (hit.gameObject == enemy.gameObject) continue;
                 Enemy enemyScript = hit.GetComponent<Enemy>();
-                if (enemyScript.currentHealth > 0) enemyScript.TakeDamage(damage);
+                if (enemyScript.CurrentHealth > 0) enemyScript.TakeDamage(damage);
                 Vector2 dir = (enemy.transform.position - hit.gameObject.transform.position).normalized;
                 CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(200, -dir, 0.2f, enemyScript));
             }

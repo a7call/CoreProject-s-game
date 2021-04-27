@@ -12,7 +12,7 @@ using Pathfinding;
 /// Une fonction permettant d'initialiser le premier point de patrouille
 /// Les fonctions nécessaires à la gestion de la vie de l'ennemi (se référer à Lopez ou au tuto FR)
 /// </summary>
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, ICharacter
 {
     [HideInInspector]
     public bool isInvokedInBossRoom = false;
@@ -24,10 +24,9 @@ public class Enemy : MonoBehaviour
     #region State properties
     public bool IsPoisoned { get; set; }
     public bool isSlowed { get; set; }
+
     public bool isAlreadyElectrified;
-    public bool isOnFire = false;
-    
-    public bool isBurned = false;
+    public bool IsBurned { get; set; }
     #endregion
 
     #region Armes and special effect variable
@@ -158,15 +157,12 @@ public class Enemy : MonoBehaviour
 
 
     #region Health and Death
-    // Vie actuelle
-    [HideInInspector]
-    public float currentHealth;
-    // Vie initiale
-    [HideInInspector]
+
     public int maxHealth;
-    // Material d'indication pour un ennemi touché
-    protected Material whiteMat;
-    protected Material defaultMat;
+    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
+    protected float currentHealth;
+    public int CurrentHealth { get => (int)currentHealth; set => currentHealth = value; }
+    
     [SerializeField]
     protected HealthBar healthBar;
    
@@ -193,6 +189,11 @@ public class Enemy : MonoBehaviour
     {
         TakeDamageSound();
         currentHealth -= _damage;
+        foreach(var ability in PassiveObjectManager.currentAbilities)
+        {
+            ability.ApplyEffect(this);
+        }
+       
         if (currentHealth <= 0)
         {
             isDying = true;
@@ -473,9 +474,7 @@ public class Enemy : MonoBehaviour
         if (audioManagerEffect != null)
             audioManagerEffect.Play(dieSound);
     }
-
-
-    #endregion 
+    #endregion
 
 
 }

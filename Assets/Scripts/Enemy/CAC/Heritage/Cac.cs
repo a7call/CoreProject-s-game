@@ -55,8 +55,6 @@ public class Cac : Enemy
 
         inSight = CacDatas.InSight;
         maxHealth = CacDatas.maxHealth;
-        whiteMat = CacDatas.whiteMat;
-        defaultMat = CacDatas.defaultMat;
         attackDelay = CacDatas.attackDelay;
         isSupposedToMoveAttacking = CacDatas.isSupposedToMoveAttacking;
     }
