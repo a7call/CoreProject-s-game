@@ -85,7 +85,37 @@ Tilemap:
   m_GameObject: {fileID: 6703052026546465859}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: -2, y: 2, z: 0}
+  - first: {x: -5, y: 4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -4, y: 4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -3, y: 4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 5
+      m_TileSpriteIndex: 5
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -5, y: 5, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -95,15 +125,55 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -4, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -3, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 2f39ef790b35a724a80dc4d3f82df9a9, type: 2}
+    m_Data: {fileID: 11400000, guid: b80480edd99837b4d818b5087d7ff2bf, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: c72b587d74809194abb241397515d8c2, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: e2e3fd0599b29a24b8c48b5ae5574975, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: f678986cb7231cb4098e0155749444c7, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: b1e833ba4d4960b4ea0e134e72e8011c, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 3b66b75a7650bd8448d3c386ce8b4807, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
-    m_Data: {fileID: -7900659467362907470, guid: afa7a89d41fd46f4dae381045e5ce078, type: 3}
-  m_TileMatrixArray:
+    m_Data: {fileID: -6255168385467453728, guid: 42e7eaed8003b3640ba8ffb42f7704cf, type: 3}
   - m_RefCount: 1
+    m_Data: {fileID: -2130216340601798238, guid: 42e7eaed8003b3640ba8ffb42f7704cf, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -896094184174445131, guid: 42e7eaed8003b3640ba8ffb42f7704cf, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 4069154792220981941, guid: 42e7eaed8003b3640ba8ffb42f7704cf, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 2685559695938165663, guid: 42e7eaed8003b3640ba8ffb42f7704cf, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 1301063424448585637, guid: 42e7eaed8003b3640ba8ffb42f7704cf, type: 3}
+  m_TileMatrixArray:
+  - m_RefCount: 6
     m_Data:
       e00: 1
       e01: 0
@@ -122,13 +192,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 1
+  - m_RefCount: 6
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -2, y: 0, z: 0}
-  m_Size: {x: 2, y: 3, z: 1}
+  m_Origin: {x: -5, y: 0, z: 0}
+  m_Size: {x: 6, y: 6, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -196,7 +266,7 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &8635189872966512215
+--- !u!114 &4244233542397343831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

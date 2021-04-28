@@ -9,35 +9,16 @@ public class DotProjectilePoison : PlayerProjectiles
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-   
+        IAbility PoisonEffect = new PoisonAbility(damageAmount, duration);
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            if(!enemy.IsPoisoned)
-                 CoroutineManager.Instance.StartCoroutine(DotCo(enemy, damageAmount, duration));
+            if (!enemy.IsPoisoned)
+                PoisonEffect.ApplyEffect(collision.GetComponent<ICharacter>());
         }
         base.OnTriggerEnter2D(collision);
         
 
     }
 
-    private IEnumerator DotCo(Enemy enemy, float damageAmount, float duration)
-    {
-        enemy.IsPoisoned = true;
-        float amountDamaged = 0;
-        float damagePerLoop = damageAmount / duration;
-        while (amountDamaged < damageAmount)
-        {
-            
-            if (enemy == null) break;
-            enemy.TakeDamage(damage);
-            amountDamaged += damagePerLoop;
-            yield return new WaitForSeconds(1f);
-        }
-        enemy.IsPoisoned = false;
-        
-      
-        
-
-    }
 }

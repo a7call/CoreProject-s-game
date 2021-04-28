@@ -26,8 +26,6 @@ public class SnotZone : Enemy
     {
         aIPath.maxSpeed = Random.Range(enemyScriptableObject.moveSpeed, enemyScriptableObject.moveSpeed + 1);
         maxHealth = enemyScriptableObject.maxHealth;
-        whiteMat = enemyScriptableObject.whiteMat;
-        defaultMat = enemyScriptableObject.defaultMat;
         attackRange = enemyScriptableObject.attackRange;
     }
     protected override void Update()

@@ -5,11 +5,16 @@ using UnityEngine.UI;
 using Wanderer.CharacterStats;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICharacter
 {
 
     public PlayerScriptableObjectScript playerData;
-   
+
+    #region OutSource States
+    public bool IsPoisoned { get; set; } 
+    public bool IsBurned{ get; set; } 
+    #endregion
+
     #region Stats
     [Header("Projectile")]
     public CharacterStats damage;
@@ -37,6 +42,7 @@ public class Player : MonoBehaviour
 
     [Header("CacWeapon")]
     public CharacterStats attackRadius;
+    public CharacterStats attackRange;
 
     [Header("Player")]
     public CharacterStats mHealth;
@@ -430,19 +436,20 @@ public class Player : MonoBehaviour
     protected bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
+        
         if (!isInvincible)
         {
             if (currentArmor > 0)
             {
-                currentArmor -= damage;
+                currentArmor -= (int)damage;
                 StartCoroutine(InvincibilityDelay());
                 StartCoroutine(InvincibilityFlash());
             }
             else
             {
-                currentHealth -= damage;
+                currentHealth -= (int)damage;
                 StartCoroutine(InvincibilityDelay());
                 StartCoroutine(InvincibilityFlash());
             }
@@ -486,8 +493,29 @@ public class Player : MonoBehaviour
 
 
     #region Health and armor
-    public int maxHealth;
-    public int currentHealth;
+    private int maxHealth;
+    public int MaxHealth { 
+        get
+        {
+            return maxHealth;
+        }
+        set
+        {
+            maxHealth = value;
+        }
+    }
+    private int currentHealth;
+    public int CurrentHealth
+    {
+        get
+        {
+            return currentHealth;
+        }
+        set
+        {
+            currentHealth = value;
+        }
+    }
     public int currentArmor;
     private int maxArmor = 2;
     public void AddLifePlayer(int health)

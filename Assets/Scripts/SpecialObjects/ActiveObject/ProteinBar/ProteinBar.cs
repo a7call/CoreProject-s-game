@@ -23,7 +23,7 @@ public class ProteinBar : StacksObjects
     private void TakeProteinBar()
     {
         int gainHp = 2;
-        player.currentHealth += gainHp;
+        player.CurrentHealth += gainHp;
     }
 
 }

@@ -45,7 +45,7 @@ public class SpeDistance2 : Distance
     {
         for (int i = 0; i <= dotNumber; i++)
         {
-            player.currentHealth -= _dotDamages;
+           // player.currentHealth -= _dotDamages;
             yield return new WaitForSeconds(timeDot);
         }
         isFirstAttack = false;

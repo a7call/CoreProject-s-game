@@ -207,7 +207,7 @@ public class Teleportation : MonoBehaviour
                 {
                     isPrio = true;
                     isLoosingHp = true;
-                    player.currentHealth -= 1;
+                    player.CurrentHealth -= 1;
                     StartCoroutine(DisableTp());
                     isPrio = false;
                 }

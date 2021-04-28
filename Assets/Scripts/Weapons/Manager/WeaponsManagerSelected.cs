@@ -29,7 +29,10 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     private void Update()
     {
-        MoveWeapon();
+        if (isPlayingDistance)
+            MoveDistanceWeapon();
+        else
+            MoveCacWeapon();
 
 
         ChangeWeapons();
@@ -45,7 +48,8 @@ public class WeaponsManagerSelected : MonoBehaviour
             collision.GetComponent<Weapons>().enabled = true;
             Weapons _weapons = collision.GetComponent<Weapons>();
             collision.transform.localPosition = PositionArme;
-            collision.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            collision.transform.rotation = Quaternion.Euler(0, 0,0);
             collision.transform.gameObject.SetActive(false);
             collision.GetComponent<Collider2D>().enabled = false;
             
@@ -198,8 +202,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     private void EquipeWeapon(GameObject weapon)
     {
         weapon.gameObject.SetActive(true);
-        GetReferences(weapon);
-        SetUpWeaponForUse(_weapons);
+        GetReferencesAndSetUP(weapon);
         weapon.GetComponent<IPlayerWeapon>().WeaponData.Equip(transform.parent.GetComponent<Player>());
         if(weapon.GetComponent<CacWeapons>())
             previousCaCWeap = weapon;
@@ -298,12 +301,14 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     #region Weapon rotation
     protected Weapons _weapons;
+    protected CacWeapons cacWeapons;
+    protected DistanceWeapon distanceWeapons;
     protected SpriteRenderer spriteRenderer;
 
     Vector3 PositionArme = Vector3.zero;
     Vector3 PosAttackPoint = Vector3.zero;
 
-    protected void MoveWeapon()
+    protected void MoveDistanceWeapon()
     {
         
 
@@ -312,7 +317,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             if (isPlayingCac && _weapons.isAttacking)
                 return;
 
-                Vector3 mousePosition = Utils.GetMouseWorldPosition();
+            Vector3 mousePosition = Utils.GetMouseWorldPosition();
             Vector3 playerDirection = (mousePosition - transform.position);
             if (playerDirection.magnitude < 1f)
                 return;
@@ -335,11 +340,9 @@ public class WeaponsManagerSelected : MonoBehaviour
                 spriteRenderer.flipY = true;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
-                if(isPlayingDistance)
-                    _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
-                else
-                    _weapons.attackPoint.position =  transform.position + aimDirection;
-                
+
+                _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+
 
 
 
@@ -349,38 +352,61 @@ public class WeaponsManagerSelected : MonoBehaviour
                 spriteRenderer.flipY = false;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
-                if (isPlayingDistance)
-                    _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
-                else
-                    _weapons.attackPoint.position = transform.position + aimDirection;
+                _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+            }
+        }
+    }
+
+    protected void MoveCacWeapon()
+    {
+        if (_weapons != null)
+        {
+            
+            if (_weapons.isAttacking)
+                return;
+
+            Vector3 mousePosition = Utils.GetMouseWorldPosition();
+            Vector3 playerDirection = (mousePosition - transform.position);
+            if (playerDirection.magnitude < 1f)
+                return;
+            Vector3 aimDirection = (mousePosition - transform.position).normalized;
+            var cacWeapons = (CacWeapons)_weapons;
+            _weapons.attackPoint.position = transform.position + aimDirection * cacWeapons.attackRange;
+
+            float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
+
+            if (aimDirection.y > 0.7)
+            {
+                SetWeaponYPositionAndLayer(ref _weapons, _weapons.topOffSetY, -1);
+            }
+            else if (aimDirection.y < 0.5)
+            {
+                SetWeaponYPositionAndLayer(ref _weapons, _weapons.otherOffsetY, 1);
             }
         }
     }
 
 
-    
-    private void GetReferences(GameObject weapon)
+    private void GetReferencesAndSetUP(GameObject weapon)
     {
         _weapons = weapon.GetComponent<Weapons>();
         spriteRenderer = _weapons.GetComponent<SpriteRenderer>();
         PosAttackPoint = _weapons.attackPointPos;
-        SetRightAttackPointPos();
+        SetRightDistanceAttackPointPos();
+        SetWeaponXPosition(_weapons);
     }
 
-    private void SetRightAttackPointPos()
+    private void SetRightDistanceAttackPointPos()
     {
-        if (!spriteRenderer.flipY)
-            _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
-        else
-            _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
-    }
-
-    private void SetUpWeaponForUse(Weapons weapons)
-    {
-        
-        GetWeapon(weapons);
-        SetWeaponXPosition(weapons);
-        
+        if(_weapons is DistanceWeapon)
+        {
+            if (!spriteRenderer.flipY)
+                _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+            else
+                _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
+        }
+       
     }
 
     private void SetWeaponXPosition( Weapons weapons)
@@ -395,138 +421,6 @@ public class WeaponsManagerSelected : MonoBehaviour
         _weapons.transform.localPosition = PositionArme;
         spriteRenderer.sortingOrder = orderInLayer;
     }
-
-    private void GetWeapon(Weapons weapons)
-    {
-        if (isPlayingCac)
-        {
-           this._weapons = weapons;
-        }
-        else if (isPlayingDistance)
-        {
-           this._weapons = weapons;
-        }
-    }
-
-    
-
     #endregion
-
-    // Méthode générique non utilisée mais conservée [A utiliser potentiellement si le code ci dessus est trop lourd]
-    //private void ScrollWeapons(int _selectedWeapon, List<GameObject> _selectedWeaponList)
-    //{
-    //    if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-    //    {
-    //        if (_selectedWeapon >= _selectedWeaponList.Count - 1)
-    //        {
-    //            _selectedWeapon = 0;
-    //        }
-    //        else
-    //        {
-    //            _selectedWeapon++;
-    //        }
-    //    }
-
-    //    if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-    //    {
-    //        if (_selectedWeapon <= 0)
-    //        {
-    //            _selectedWeapon = _selectedWeaponList.Count - 1;
-    //        }
-    //        else
-    //        {
-    //            _selectedWeapon--;
-    //        }
-    //    }
-    //}
-
-    //private void WhichWeaponScroll()
-    //{
-    //    if (isPlayingCac == true)
-    //    {
-    //        print("Parcours liste cac");
-    //        ScrollWeapons(selectedCacWeapon, cacWeaponsList);
-    //    }
-    //    else if (isPlayingDistance == true)
-    //    {
-    //        print("Parcours liste distance");
-    //        ScrollWeapons(selectedDistanceWeapon, distanceWeaponsList);
-    //    }
-    //}
-
-    /* Ancien methode MoveWeapon
-   rotected Vector3 screenMousePos;
-   protected Vector3 screenPlayerPos;
-   protected Vector3 screenWeaponPos;
-   private float angle;
-
-   protected void MoveWeapon()
-   {
-
-       // position de la souris sur l'écran 
-       screenMousePos = Input.mousePosition;
-       Vector3 screenMousePos2 = Camera.main.ScreenToWorldPoint(screenMousePos);
-       // position du player en pixel sur l'écran 
-       screenPlayerPos = Camera.main.WorldToScreenPoint(transform.parent.transform.position);
-       // position du point d'attaque 
-
-
-       if (isPlayingCac)
-       {
-
-           _weapons = cacWeaponsList[selectedCacWeapon].GetComponent<Weapons>();
-
-       }
-       if (isPlayingDistance)
-       {
-           _weapons = distanceWeaponsList[selectedDistanceWeapon].GetComponent<Weapons>();
-
-       }
-       if (_weapons != null)
-       {
-           spriteRenderer = _weapons.GetComponent<SpriteRenderer>();
-
-
-           Vector3 PositionArme = _weapons.OffPositionArme;
-           Vector3 PosAttackPoint = _weapons.attackPoint.localPosition;
-
-
-           Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
-          // print(_weapons.transform.position);
-
-           if (dir.x < -5 && !spriteRenderer.flipX)
-           {
-               spriteRenderer.flipX = true;
-               _weapons.transform.localPosition = new Vector3(-PositionArme.x, PositionArme.y);
-               _weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
-
-           }
-           else if (dir.x > 5 && spriteRenderer.flipX)
-           {
-               spriteRenderer.flipX = false;
-               _weapons.transform.localPosition = PositionArme;
-               _weapons.attackPoint.localPosition = new Vector3(-PosAttackPoint.x, PosAttackPoint.y);
-
-           }
-
-           if (spriteRenderer.flipX)
-           {
-               angle = Quaternion.FromToRotation(Vector3.left, dir).eulerAngles.z;
-           }
-           else
-           {
-               angle = Quaternion.FromToRotation(Vector3.right, dir).eulerAngles.z;
-
-           }
-
-           if (Quaternion.Euler(0, 0, angle).z > 0.85)
-           {
-               angle = 100;
-           }
-
-           _weapons.transform.rotation = Quaternion.Euler(0, 0, angle);
-       }
-
-   }*/
 
 }
