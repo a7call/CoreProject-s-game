@@ -49,8 +49,9 @@ public class CacWeapons : Weapons, IPlayerWeapon
 
     protected override void Awake()
     {
-        base.Awake();
         SetData();
+        base.Awake();
+      
 
     }
 
