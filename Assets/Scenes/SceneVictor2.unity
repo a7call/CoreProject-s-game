@@ -195,7 +195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &33191426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,7 +588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8816517250457905050, guid: d0624929a66534a91b9ac679767055cb, type: 3}
       propertyPath: m_RootOrder
-      value: 36
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8816517250457905050, guid: d0624929a66534a91b9ac679767055cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7006,7 +7006,7 @@ Transform:
   m_Children:
   - {fileID: 585667458}
   m_Father: {fileID: 0}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &671592162
 MonoBehaviour:
@@ -7030,8 +7030,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
-  fireSound: 
-  reloadSound: 
   LaserDatas: {fileID: 11400000, guid: 5b7439ef0c7644beb87f7cb16d30a735, type: 2}
 --- !u!61 &671592163
 BoxCollider2D:
@@ -7367,7 +7365,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &788606641 stripped
 GameObject:
@@ -7603,7 +7601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8816517250457905050, guid: 0f47f5458e9ce4bcd81a9691690a61a9, type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 8816517250457905050, guid: 0f47f5458e9ce4bcd81a9691690a61a9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7993,7 +7991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8632570932186613536, guid: e7435c9e44c47437dae69b0a896fcda9, type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 8632570932186613536, guid: e7435c9e44c47437dae69b0a896fcda9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8177,7 +8175,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1083410005
 MonoBehaviour:
@@ -8335,7 +8333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109978053 stripped
 GameObject:
@@ -13332,7 +13330,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1236662554 stripped
 GameObject:
@@ -13613,6 +13611,14 @@ PrefabInstance:
     - target: {fileID: 3060900955627440721, guid: 15f1488aafc4e4cc6b1fc2a259aa0f45, type: 3}
       propertyPath: m_Name
       value: PistoletGele (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664707795678365839, guid: 15f1488aafc4e4cc6b1fc2a259aa0f45, type: 3}
+      propertyPath: FireSound
+      value: Laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664707795678365839, guid: 15f1488aafc4e4cc6b1fc2a259aa0f45, type: 3}
+      propertyPath: ReloadSound
+      value: Laser
       objectReference: {fileID: 0}
     - target: {fileID: 5806290534857353581, guid: 15f1488aafc4e4cc6b1fc2a259aa0f45, type: 3}
       propertyPath: m_RootOrder
@@ -13945,11 +13951,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5260032422402566983, guid: f3d22987b8dc646c8a7ca17f67cfe472, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.849299
+      value: 2.14
       objectReference: {fileID: 0}
     - target: {fileID: 5260032422402566983, guid: f3d22987b8dc646c8a7ca17f67cfe472, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.7932031
+      value: -5.49
       objectReference: {fileID: 0}
     - target: {fileID: 5260032422402566983, guid: f3d22987b8dc646c8a7ca17f67cfe472, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13982,6 +13988,10 @@ PrefabInstance:
     - target: {fileID: 5260032422402566983, guid: f3d22987b8dc646c8a7ca17f67cfe472, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6266301892024765093, guid: f3d22987b8dc646c8a7ca17f67cfe472, type: 3}
+      propertyPath: FireSound
+      value: Laser
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3d22987b8dc646c8a7ca17f67cfe472, type: 3}
@@ -14317,7 +14327,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2036633520
 PrefabInstance:
@@ -14600,7 +14610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3619912725290422874, guid: 228479ceac7f83845bdc8196335ef87e, type: 3}
       propertyPath: m_RootOrder
-      value: 32
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3619912725290422874, guid: 228479ceac7f83845bdc8196335ef87e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14794,7 +14804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8945299246766118457, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8945299246766118457, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
       propertyPath: m_TagString
