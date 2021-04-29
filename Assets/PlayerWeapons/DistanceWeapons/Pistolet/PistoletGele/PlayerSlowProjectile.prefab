@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 7160189938469113772}
   - component: {fileID: 4970712550709939031}
   - component: {fileID: 494163538769445502}
-  - component: {fileID: 2923503309316269297}
+  - component: {fileID: 4496675453748977358}
   m_Layer: 6
   m_Name: PlayerSlowProjectile
   m_TagString: Untagged
@@ -102,7 +102,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: b0e13b6841ecb0b4388c1638de05cc90, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -170,8 +170,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &2923503309316269297
-CircleCollider2D:
+--- !u!60 &4496675453748977358
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -184,5 +184,22 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.140625
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.4375}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.5, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.0548369, y: 0.18722048}
+      - {x: -0.028030537, y: 0.18722047}
+      - {x: -0.15436074, y: 0.124055356}
+      - {x: -0.15758021, y: -0.09252584}
+      - {x: -0.029201064, y: -0.15524545}
+      - {x: 0.061586812, y: -0.15593612}
+      - {x: 0.1863014, y: -0.09198059}
+      - {x: 0.18561074, y: 0.1256651}
