@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 0da686645fcd36146ac267b27f6ff5f6
+guid: 21151182b3cc1064381d0f01d8354858
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5832300707549854203
-    second: KatanaSeul1_0
+      213: 1454024453077051171
+    second: ElectrickSword_0
+  - first:
+      213: -68177070544469836
+    second: ElectrickSword_1
+  - first:
+      213: -517824713870437381
+    second: ElectrickSword_2
+  - first:
+      213: 1385737355221902999
+    second: ElectrickSword_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -94,22 +103,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KatanaSeul1_0
+      name: ElectrickSword_0
       rect:
         serializedVersion: 2
-        x: 49
-        y: 61
-        width: 19
-        height: 37
+        x: 0
+        y: 0
+        width: 32
+        height: 48
       alignment: 9
-      pivot: {x: 0.21052632, y: 0.081081085}
+      pivot: {x: 0.28125, y: 0.083333336}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf9b4c8b79e70f050800000000000000
-      internalID: 5832300707549854203
+      spriteID: 327a36c498bbd2410800000000000000
+      internalID: 1454024453077051171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElectrickSword_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.28125, y: 0.083333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b0ce58c059cd0ff0800000000000000
+      internalID: -68177070544469836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElectrickSword_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.28125, y: 0.083333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf395d19a2150d8f0800000000000000
+      internalID: -517824713870437381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElectrickSword_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.28125, y: 0.083333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 796adf958c02b3310800000000000000
+      internalID: 1385737355221902999
       vertices: []
       indices: 
       edges: []
@@ -123,7 +195,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - texture: {fileID: 2800000, guid: 5acacbfc244e8f146875d60cfe2e3b40, type: 3}
+      name: _Emission
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

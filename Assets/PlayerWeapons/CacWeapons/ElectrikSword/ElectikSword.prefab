@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2168784955452047560}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: 'attackPoint '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,10 +41,12 @@ GameObject:
   - component: {fileID: 2168784956161887984}
   - component: {fileID: 2168784956161887991}
   - component: {fileID: 2168784956161887990}
-  m_Layer: 0
+  - component: {fileID: 1132277323}
+  - component: {fileID: 1132277322}
+  m_Layer: 19
   m_Name: ElectikSword
   m_TagString: CacWeapon
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -76,18 +78,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.12986882, y: 0.6619344}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.40625, y: 0.0625}
+    oldSize: {x: 1, y: 1.5}
+    newSize: {x: 1, y: 1.5}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.668702, y: 1.4293633}
   m_EdgeRadius: 0
 --- !u!114 &2168784956161887990
 MonoBehaviour:
@@ -101,11 +103,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f688ac80790c948acd6b2de6a7a413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPoint: {fileID: 2168784955452047560}
+  isAttacking: 0
+  offSetX: 0
+  topOffSetY: 0
+  otherOffsetY: 0
+  attackPointPos: {x: 0, y: 0, z: 0}
   damage: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 2168784955452047560}
-  isAttacking: 0
-  WeaponData: {fileID: 11400000, guid: 76f6c9fcb08b3aa4c97e7aae9e4f0726, type: 2}
+    m_Bits: 512
+  fireSound: 
+  reloadSound: 
+  CacWeaponData: {fileID: 11400000, guid: 76f6c9fcb08b3aa4c97e7aae9e4f0726, type: 2}
+  attackRange: 0
+  SlashObj: {fileID: 282977074609468508, guid: 258e3912318cb5c4b80e28431090d968, type: 3}
   electrificationRadius: 0.6
+--- !u!212 &1132277323
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168784956161887989}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6b910906724f7654489c4ad661f7e47a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 299582325
+  m_SortingLayer: 1
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1454024453077051171, guid: 21151182b3cc1064381d0f01d8354858, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1.5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &1132277322
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168784956161887989}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a7cd940e5f76d70469eb0238a5a042c4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
