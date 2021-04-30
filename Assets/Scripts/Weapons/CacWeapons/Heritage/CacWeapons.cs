@@ -46,6 +46,8 @@ public class CacWeapons : Weapons, IPlayerWeapon
     [HideInInspector]
     public static float RangeMultiplier;
 
+    [SerializeField] protected string AttackSound;
+
 
     protected override void Awake()
     {
@@ -113,7 +115,7 @@ public class CacWeapons : Weapons, IPlayerWeapon
     {
         if (!PauseMenu.isGamePaused)
         {
-            
+            PlayEffectSound(AttackSound);
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
            
             if (isVampirismeModule)

@@ -44,7 +44,11 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     [HideInInspector]
     public static bool isUnlimitedAmmoModule;
     #endregion
-  
+
+    //Sounds
+    [SerializeField] protected string FireSound;
+    [SerializeField] protected string ReloadSound;
+
     #region Unity Mono
     protected override void Awake()
     {
@@ -167,7 +171,8 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         Instantiate(projectile, attackPoint.position, transform.rotation);
 
 
-        FireSound();
+        PlayEffectSound(FireSound);
+       
 
         yield return new WaitForSeconds(player.attackSpeed.Value);
         isAttacking = false;
@@ -213,7 +218,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         //if (BulletInMag != magSize && !IsReloading && (ammoStock != 0 | InfiniteAmmo))
         //{
 
-        ReloadSound();
+        PlayEffectSound(ReloadSound);
         IsReloading = true;
         yield return new WaitForSeconds(reloadDelay);
         if (ammoStock + BulletInMag >= magSize && !InfiniteAmmo)

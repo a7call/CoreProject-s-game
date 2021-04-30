@@ -74,20 +74,14 @@ public class Weapons : MonoBehaviour
 
     //Sounds
     protected AudioManagerEffect audioManagerEffect;
-    [SerializeField] protected string fireSound;
-    [SerializeField] protected string reloadSound;
+   
 
-    protected void FireSound()
+    protected void PlayEffectSound(string SoundToPlay)
     {
         if (audioManagerEffect != null)
-            audioManagerEffect.Play(fireSound);
+            audioManagerEffect.Play(SoundToPlay);
     }
 
-    protected void ReloadSound()
-    {
-        if (audioManagerEffect != null)
-            audioManagerEffect.Play(reloadSound);
-    }
 
     #endregion
 
