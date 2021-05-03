@@ -32,7 +32,6 @@ public abstract class Characters : MonoBehaviour
     {
         TakeDamageSound();
         CurrentHealth -= damage;
-        print(CurrentHealth);
         if (CurrentHealth <= 0)
         {
             IsDying = true;
