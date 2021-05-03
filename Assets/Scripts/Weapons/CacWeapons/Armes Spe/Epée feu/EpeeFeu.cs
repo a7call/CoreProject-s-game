@@ -5,25 +5,26 @@ using UnityEngine;
 public class EpeeFeu : CacWeapons
 {
 
-    [SerializeField] protected float Timer;
-    [SerializeField] protected int NbDegats;
-    [SerializeField] protected float FeuDamage;
-    
+    [SerializeField] protected float burnTime;
+    [SerializeField] protected float burnDamageTotalAmount;
+    private DotAbility _burningAbility;
+    protected override void Awake()
+    {
+        base.Awake();
+        _burningAbility = new BurnAbility(burnDamageTotalAmount, burnTime);
+        
+    }
+
 
     protected override void AttackAppliedOnEnemy(Collider2D[] enemyHit)
     {
-
-
+        base.AttackAppliedOnEnemy(enemyHit);
         foreach (Collider2D enemy in enemyHit)
         {
             if (enemy.gameObject.CompareTag("Enemy"))
             {
-                Enemy enemyScript = enemy.GetComponent<Enemy>();
-                enemyScript.TakeDamage(damage);
-                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
-
-               
-
+                ICharacter enemyAsCarac = enemy.GetComponent<ICharacter>();
+                 _burningAbility.ApplyEffect(enemyAsCarac);
             }
         }
     }

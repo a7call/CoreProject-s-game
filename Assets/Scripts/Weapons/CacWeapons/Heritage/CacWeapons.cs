@@ -9,9 +9,6 @@ using UnityEngine.UI;
 public class CacWeapons : Weapons, IPlayerWeapon
 {
 
-    public static bool isAntiEmeuteModule;
-    public static float knockBackForceMultiplier;
-    private bool alreadyMultiplied;
     [SerializeField] protected CaCWeaponScriptableObject CacWeaponData;
 
     public WeaponScriptableObject WeaponData {
@@ -63,28 +60,8 @@ public class CacWeapons : Weapons, IPlayerWeapon
     }
     protected override void Update()
     {
-        if (isAntiEmeuteModule && !alreadyMultiplied)
-        {
-            knockBackForce *= knockBackForceMultiplier;
-            alreadyMultiplied = true;
-        }
-
-        if (isFuryModule && !CadenceAlreadyUp)
-        {
-            CadenceAlreadyUp = true;
-            attackDelay /= CadenceMultiplier;
-        }
-
-        if (isUpRangeCacModule && !isRangeAlreadyUp)
-        {
-            isRangeAlreadyUp = true;
-            attackRadius *= RangeMultiplier;
-        }
-
-
         base.Update();
         GetKnockBackDir();
-
     }
     private void OnDrawGizmosSelected()
     {
@@ -94,6 +71,7 @@ public class CacWeapons : Weapons, IPlayerWeapon
         Gizmos.DrawLine(transform.position, attackPoint.position);
     }
 
+    #region Datas
     private void SetData()
     {
         enemyLayer = WeaponData.enemyLayer;
@@ -110,6 +88,12 @@ public class CacWeapons : Weapons, IPlayerWeapon
         attackRadius = player.attackRadius.Value;
         attackRange = player.attackRange.Value;
     }
+    #endregion
+
+
+    #region Attack
+
+    public GameObject SlashObj;
 
     protected virtual IEnumerator Attack()
     {
@@ -117,15 +101,9 @@ public class CacWeapons : Weapons, IPlayerWeapon
         {
             PlayEffectSound(AttackSound);
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
-           
-            if (isVampirismeModule)
-            {
-                RewardSpawner.isAttackCAC = true;
-            }
-
             AttackAppliedOnEnemy(enemyHit);
             yield return new WaitForSeconds(attackDelay);
-            RewardSpawner.isAttackCAC = false;
+            GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
             isAttacking = false;
         }
 
@@ -138,37 +116,25 @@ public class CacWeapons : Weapons, IPlayerWeapon
         {
             if (enemy.gameObject.CompareTag("Enemy"))
             {
-                
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
                 CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
-                //if (PlayerProjectiles.isImolationModule)
-                //{
-                //    CoroutineManager.Instance.StartCoroutine(ImmolationModule.ImolationDotCo(enemyScript));
-                //}
-                //if (PlayerProjectiles.isCryoModule)
-                //{
-                //    CoroutineManager.Instance.StartCoroutine(CryogenisationModule.CryoCo(enemyScript));
-                //}
-                //if (PlayerProjectiles.isParaModule)
-                //{
-                //    CoroutineManager.Instance.StartCoroutine(ParalysieModule.ParaCo(enemyScript));
-                //}
             }
-
             if (enemy.gameObject.CompareTag("EnemyProjectil"))
                 Destroy(enemy.gameObject);
 
         }
            
     }
-    public GameObject SlashObj;
+   // function to trigger the attack +  "animation" (flip)
+   // Slash Object Instantiate   
     public void ToAttack()
     {
         if (!isAttacking)
         {
             isAttacking = true;
             GetComponent<SpriteRenderer>().flipY = !GetComponent<SpriteRenderer>().flipY;
+            GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
             GameObject obj = Instantiate(SlashObj, attackPoint.position, transform.rotation);
             obj.transform.parent = transform;
             StartCoroutine(Attack());
@@ -183,4 +149,6 @@ public class CacWeapons : Weapons, IPlayerWeapon
     {
         dir = (attackPoint.position - player.transform.position).normalized;
     }
+
+    #endregion
 }

@@ -12,7 +12,7 @@ using Pathfinding;
 /// Une fonction permettant d'initialiser le premier point de patrouille
 /// Les fonctions nécessaires à la gestion de la vie de l'ennemi (se référer à Lopez ou au tuto FR)
 /// </summary>
-public class Enemy : MonoBehaviour, ICharacter
+public class Enemy : Characters
 {
     [HideInInspector]
     public bool isInvokedInBossRoom = false;
@@ -21,25 +21,7 @@ public class Enemy : MonoBehaviour, ICharacter
     protected Player player;
     #endregion
 
-    #region State properties
-    public bool IsPoisoned { get; set; }
-    public bool isSlowed { get; set; }
-
-    public bool isAlreadyElectrified;
-    public bool IsBurned { get; set; }
-    #endregion
-
-    #region Armes and special effect variable
-
-    public static bool isPerturbateurIEM = false;
-    public static bool isArretTemporel = false;
-    
-    #endregion
-
-
     #region  Animation 
-    //Animator variable 
-    public Animator animator;
     //Bool to Check If ready to start an another attack sequence
     protected bool attackAnimationPlaying = false;
 
@@ -88,7 +70,7 @@ public class Enemy : MonoBehaviour, ICharacter
     //Methode permetant de lancer la séquence de d'attaque via l'animation
     protected virtual void PlayAttackAnim()
     {
-        if (!attackAnimationPlaying && !isPerturbateurIEM)
+        if (!attackAnimationPlaying )
         {
             attackAnimationPlaying = true;
             isAttacking = true;
@@ -157,52 +139,26 @@ public class Enemy : MonoBehaviour, ICharacter
 
 
     #region Health and Death
-
-    public int maxHealth;
-    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
-    protected float currentHealth;
-    public int CurrentHealth { get => (int)currentHealth; set => currentHealth = value; }
-    
-    [SerializeField]
-    protected HealthBar healthBar;
-   
-
-    // HealthBar
-    public GameObject healthBarGFX;
-    protected bool isHealthBarActive;
-    [SerializeField]
-    protected float timeBeforeDesactive;
     protected bool isDying = false;
 
-
-
-    // Set health to maximum
-    protected virtual void SetMaxHealth()
-    {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-    }
-
-
     // Prends les dégats
-    public virtual void TakeDamage(float _damage)
+    public override void TakeDamage(float damage)
     {
-        TakeDamageSound();
-        currentHealth -= _damage;
-        foreach(var ability in PassiveObjectManager.currentAbilities)
+        foreach (var ability in PassiveObjectManager.currentAbilities)
         {
             ability.ApplyEffect(this);
         }
-       
-        if (currentHealth <= 0)
-        {
-            isDying = true;
-            StartCoroutine(DeathSate());
+        base.TakeDamage(damage);
 
-        }
     }
+    /// <summary>
+    ///  DEATH CODE NEED REFACTORING
+    /// </summary>
 
-    // DeathCODE
+    protected override void Die()
+    {
+        StartCoroutine(DeathSate());
+    }
     private IEnumerator DeathSate()
     {
         yield return new WaitForEndOfFrame();
@@ -228,6 +184,7 @@ public class Enemy : MonoBehaviour, ICharacter
         }
     }
 
+    // A VIRER
     protected virtual void EnemyDie()
     {
         if (isDying)
@@ -262,25 +219,7 @@ public class Enemy : MonoBehaviour, ICharacter
             rewardSpawner.SpawnArmorReward(this.gameObject);
         }
     }
-    // END DeathCode
 
-    // Affiche la barre de vie
-    protected void DisplayBar()
-    {
-        if (currentHealth < maxHealth && !isHealthBarActive)
-        {
-            healthBarGFX.SetActive(true);
-            isHealthBarActive = true;
-        }
-    }
-
-    // Coroutine qui désactive la barre de vie
-    protected IEnumerator WaitToDesactive()
-    {
-        yield return new WaitForSeconds(timeBeforeDesactive);
-        healthBarGFX.SetActive(false);
-        isHealthBarActive = false;
-    }
     #endregion
 
 
@@ -407,7 +346,6 @@ public class Enemy : MonoBehaviour, ICharacter
     }
     protected virtual void GetReference()
     {
-        healthBarGFX.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         aIPath = GetComponent<AIPath>();
         currentState = State.Patrolling;
@@ -428,9 +366,6 @@ public class Enemy : MonoBehaviour, ICharacter
     {
 
         SwitchBasicStates(currentState);
-
-        healthBar.SetHealth(currentHealth);
-        DisplayBar();
         ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
 
         SetMouvementAnimationVariable();
@@ -452,29 +387,12 @@ public class Enemy : MonoBehaviour, ICharacter
 
     #region sound
 
-    protected AudioManagerEffect audioManagerEffect;
     [SerializeField] protected string fireSound;
-    [SerializeField] protected string takeDamageSound;
-    [SerializeField] protected string dieSound;
 
     protected void FireSound()
     {
         if (audioManagerEffect != null)
             audioManagerEffect.Play(fireSound);
     }
-
-    protected void TakeDamageSound()
-    {
-        if (audioManagerEffect != null)
-            audioManagerEffect.Play(takeDamageSound);
-    }
-
-    protected void DieSound()
-    {
-        if (audioManagerEffect != null)
-            audioManagerEffect.Play(dieSound);
-    }
     #endregion
-
-
 }

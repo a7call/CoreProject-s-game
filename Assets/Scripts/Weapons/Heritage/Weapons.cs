@@ -48,6 +48,7 @@ public class Weapons : MonoBehaviour
     protected virtual void OnEnable()
     { 
         GetComponent<SpriteRenderer>().flipY = false;
+        GetComponent<SpriteRenderer>().flipX = false;
         isAttacking = false;
 
     }
@@ -84,35 +85,6 @@ public class Weapons : MonoBehaviour
 
 
     #endregion
-
-
-    /* ANCIENNE METHODE GETDIRPROJ
-    *  
-    * protected virtual void GetDirProj()
-    {
-
-        GetAttackDirection();
-
-        float distSP = new Vector3((screenMousePos - screenPlayerPos).x , (screenMousePos - screenPlayerPos).y ).magnitude;
-
-        if (distSP < RangeMiniChangementTir)
-        {
-            dirProj = new Vector3(attackPoint.transform.position.x - transform.position.x, attackPoint.transform.position.y - transform.position.y);
-
-        }
-        else if (distSP < RangeChangementTir && distSP > RangeMiniChangementTir)
-        {
-            dirProj = new Vector3((screenMousePos - screenPlayerPos).x - player.transform.position.x, (screenMousePos - screenPlayerPos).y - player.transform.position.y).normalized;
-
-        }
-        else
-        {
-
-            dirProj = (posSouris).normalized;
-        }
-    } */
-
-    protected Vector3 dirProj;
 
 }
 

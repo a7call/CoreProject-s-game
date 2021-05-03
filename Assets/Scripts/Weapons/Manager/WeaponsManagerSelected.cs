@@ -376,7 +376,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
-            if (aimDirection.y > 0.7)
+            if (aimDirection.y > 0.6)
             {
                 SetWeaponYPositionAndLayer(ref _weapons, _weapons.topOffSetY, -1);
             }

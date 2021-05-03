@@ -122,23 +122,6 @@ public class Distance : Enemy
        
     }
    
-   
-
-    protected void ShouldNotMoveDuringAttacking(bool isSupposedToMoveShooting)
-    {
-        if (!isSupposedToMoveShooting)
-        {
-            if (currentState == State.Chasing && !aIPath.canMove)
-            {
-                aIPath.canMove = true;
-            }
-            else if (currentState == State.Attacking && aIPath.canMove)
-            {
-                aIPath.canMove = false;
-            }
-        }
-       
-    }
   
     // Start Shoot Sequence
     protected virtual IEnumerator CanShootCO()

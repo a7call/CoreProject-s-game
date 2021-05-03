@@ -8,8 +8,7 @@ public class AntiEmeuteModule : PassiveObjects
   
     void Start()
     {
-        CacWeapons.isAntiEmeuteModule = true;
-        CacWeapons.knockBackForceMultiplier = knockBackForceM;
+       
     }
 
    

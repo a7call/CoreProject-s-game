@@ -22,7 +22,7 @@ public class ArretTemporel : CdObjects
 
     protected virtual IEnumerator ActiveTime()
     {
-        Enemy.isArretTemporel = true;
+
         GameObject[] ennemis = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject[] projectiles = GameObject.FindGameObjectsWithTag("EnemyProjectil");
 
@@ -45,7 +45,6 @@ public class ArretTemporel : CdObjects
 
         yield return new WaitForSeconds(activeTime);
 
-        Enemy.isArretTemporel = false;
         foreach (GameObject enemy in ennemis)
         {
             if (enemy == null)

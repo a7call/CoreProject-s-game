@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DotAbility 
+public abstract class DotAbility 
 {
 
     protected float _damageAmount;
@@ -13,6 +13,7 @@ public class DotAbility
         _damageAmount = damageAmount;
         _duration = duration;
     }
+    public abstract void ApplyEffect(ICharacter character);
 
     protected virtual IEnumerator DotCo(ICharacter character, float damageAmount, float duration)
     {
@@ -24,7 +25,7 @@ public class DotAbility
             {
                 yield break;
             }
-            character.TakeDamage(1);
+            character.TakeDamage(damagePerLoop);
             amountDamaged += damagePerLoop;
             yield return new WaitForSeconds(1f);
         }

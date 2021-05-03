@@ -36,7 +36,7 @@ public class ParticuleWeapon : CollingWeapons
                 if (hit.transform.gameObject.CompareTag("Enemy"))
                 {
                     Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
-                    CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dirProj, knockBackTime, enemyScript));
+                    //CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dirProj, knockBackTime, enemyScript));
                     enemyScript.TakeDamage(damage);
 
                 }

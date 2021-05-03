@@ -11,9 +11,9 @@ public class PlayerSlowProjectile : PlayerProjectiles
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            if (!enemy.isSlowed)
+            if (!enemy.IsSlowed)
             {
-                enemy.isSlowed = true;
+                enemy.IsSlowed = true;
                 enemy.aIPath.maxSpeed *= slowMultiplier;
 
 

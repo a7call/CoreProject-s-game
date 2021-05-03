@@ -197,7 +197,7 @@ public class BossTentaclePop : Enemy
                 break;
         }
 
-        healthBar.SetHealth(currentHealth);
+       // healthBar.SetHealth(currentHealth);
         SetMouvementAnimationVariable();
         GetLastDirection();
     }
@@ -205,7 +205,7 @@ public class BossTentaclePop : Enemy
     // Permet d'avoir les références
     protected override void GetReference()
     {
-        healthBarGFX.SetActive(true);
+       // healthBarGFX.SetActive(true);
         rb = GetComponent<Rigidbody2D>();
         aIPath = GetComponent<AIPath>();
         target = GameObject.FindGameObjectWithTag("Player").transform;

@@ -40,14 +40,14 @@ public class Extincteur : ParticuleWeapon
 
    protected IEnumerator SlowCo(Enemy enemy)
     {
-        if (!enemy.isSlowed)
+        if (!enemy.IsSlowed)
         {
-            enemy.isSlowed = true;
+            enemy.IsSlowed = true;
             enemy.aIPath.maxSpeed /= slowMultiplier;
             yield return new WaitForSeconds(slowTimer);
             if (enemy == null) yield break;
             enemy.aIPath.maxSpeed *= slowMultiplier;
-            enemy.isSlowed = false;
+            enemy.IsSlowed = false;
         }
        
     }

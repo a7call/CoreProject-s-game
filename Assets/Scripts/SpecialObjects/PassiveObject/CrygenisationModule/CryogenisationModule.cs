@@ -20,14 +20,14 @@ public class CryogenisationModule : PassiveObjects
 
     public static IEnumerator CryoCo(Enemy enemy)
     {
-        if (!enemy.isSlowed)
+        if (!enemy.IsSlowed)
         {
-            enemy.isSlowed = true;
+            enemy.IsSlowed = true;
             float baseMoveSpeed = enemy.aIPath.maxSpeed;
             enemy.aIPath.maxSpeed *= slowMutliplier;
             yield return new WaitForSeconds(cryoTimer);
             enemy.aIPath.maxSpeed = baseMoveSpeed;
-            enemy.isSlowed = false;
+            enemy.IsSlowed = false;
         }
             
     }
