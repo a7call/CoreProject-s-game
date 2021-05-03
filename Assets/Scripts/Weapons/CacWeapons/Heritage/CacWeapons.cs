@@ -103,7 +103,6 @@ public class CacWeapons : Weapons, IPlayerWeapon
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
             AttackAppliedOnEnemy(enemyHit);
             yield return new WaitForSeconds(attackDelay);
-            GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
             isAttacking = false;
         }
 
@@ -134,7 +133,6 @@ public class CacWeapons : Weapons, IPlayerWeapon
         {
             isAttacking = true;
             GetComponent<SpriteRenderer>().flipY = !GetComponent<SpriteRenderer>().flipY;
-            GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
             GameObject obj = Instantiate(SlashObj, attackPoint.position, transform.rotation);
             obj.transform.parent = transform;
             StartCoroutine(Attack());
