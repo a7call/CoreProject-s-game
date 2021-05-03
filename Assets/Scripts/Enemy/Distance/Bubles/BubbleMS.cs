@@ -35,9 +35,9 @@ public class BubbleMS : Distance
 
     #region DeathObject
     public GameObject deathObject;
-    protected override void EnemyDie()
+    protected override void DestroyEnemy()
     {
-        base.EnemyDie();
+        base.DestroyEnemy();
         if (isDying)
         {
            Instantiate(deathObject, transform.position, Quaternion.identity);

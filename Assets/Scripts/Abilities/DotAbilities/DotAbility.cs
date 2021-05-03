@@ -13,9 +13,9 @@ public abstract class DotAbility
         _damageAmount = damageAmount;
         _duration = duration;
     }
-    public abstract void ApplyEffect(ICharacter character);
+    public abstract void ApplyEffect(Characters character);
 
-    protected virtual IEnumerator DotCo(ICharacter character, float damageAmount, float duration)
+    protected virtual IEnumerator DotCo(Characters character, float damageAmount, float duration)
     {
         float amountDamaged = 0;
         float damagePerLoop = damageAmount / duration;

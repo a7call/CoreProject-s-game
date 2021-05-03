@@ -34,7 +34,7 @@ public class TentacleAstronautEggPopMother : Distance
                 break;
         }
     }
-    protected override void EnemyDie()
+    protected override void DestroyEnemy()
     {
         if (isDying)
         {

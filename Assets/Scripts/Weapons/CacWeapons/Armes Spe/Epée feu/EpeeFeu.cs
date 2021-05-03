@@ -23,7 +23,7 @@ public class EpeeFeu : CacWeapons
         {
             if (enemy.gameObject.CompareTag("Enemy"))
             {
-                ICharacter enemyAsCarac = enemy.GetComponent<ICharacter>();
+                Characters enemyAsCarac = enemy.GetComponent<Characters>();
                  _burningAbility.ApplyEffect(enemyAsCarac);
             }
         }

@@ -4,5 +4,5 @@ using UnityEngine;
 
  public interface IAbility 
 {
-    void ApplyEffect(ICharacter character);
+    void ApplyEffect(Characters character);
 }

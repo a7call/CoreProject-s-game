@@ -9,7 +9,6 @@ public class DamageOnCollision : MonoBehaviour
  
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print(collision);
         if (collision.collider.CompareTag("Player"))
             collision.collider.GetComponent<Player>().TakeDamage(1);
         Enemy enemy =  gameObject.transform.parent.GetComponent<Enemy>();

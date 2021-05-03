@@ -6,7 +6,7 @@ public class BurnAbility : DotAbility, IAbility
 {
     public BurnAbility(float _damageAmount, float _duration) : base(_damageAmount, _duration) { }
 
-    public override void ApplyEffect(ICharacter character)
+    public override void ApplyEffect(Characters character)
     {
         if (!character.IsBurned)
         {
@@ -15,7 +15,7 @@ public class BurnAbility : DotAbility, IAbility
           
 
     }
-    protected override IEnumerator DotCo(ICharacter character, float damageAmount, float duration)
+    protected override IEnumerator DotCo(Characters character, float damageAmount, float duration)
     {
         character.IsBurned = true;
         yield return base.DotCo(character, damageAmount, duration);

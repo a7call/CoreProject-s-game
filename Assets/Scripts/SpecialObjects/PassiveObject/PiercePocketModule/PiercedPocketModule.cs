@@ -8,16 +8,6 @@ public class PiercedPocketModule : PassiveObjects
     public  float timeBetweenBombs;
     public  bool bombsReady = true;
 
-    void Start()
-    {
-        Player.isPiercedPocketModule = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public  IEnumerator SpawnBombs()
     {

@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class ElectrikSword : CacWeapons
 {
+    private StunAbility stun;
+    [SerializeField] float stunTime = 3f; 
+    protected override void Awake()
+    {
+        base.Awake();
+        stun = new StunAbility(stunTime);
+    }
     protected override void AttackAppliedOnEnemy(Collider2D[] enemyHit)
     {
         base.AttackAppliedOnEnemy(enemyHit);
@@ -11,7 +18,7 @@ public class ElectrikSword : CacWeapons
         {
             if (enemy.gameObject.CompareTag("Enemy"))
             {
-
+                stun.ApplyEffect(enemy.GetComponent<Enemy>());
             }
 
         }
