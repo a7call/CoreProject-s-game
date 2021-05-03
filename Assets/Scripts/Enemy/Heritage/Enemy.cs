@@ -54,16 +54,16 @@ public class Enemy : Characters
     protected virtual void Update()
     {
 
+       
+           
+        SwitchBasicStates(currentState);
+        ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
+        SetMouvementAnimationVariable();
         if (IsStuned)
         {
             currentState = State.Stunned;
             return;
         }
-           
-        SwitchBasicStates(currentState);
-        ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
-
-        SetMouvementAnimationVariable();
         GetLastDirection();
     }
 
@@ -305,7 +305,10 @@ public class Enemy : Characters
                 break;
             case State.Stunned:
                 // Animation
-                DisableEnemyMouvement();
+                if (IsStuned)
+                    DisableEnemyMouvement();
+                else
+                    PlayerInSight();
                 break;
 
             case State.KnockedBack:
