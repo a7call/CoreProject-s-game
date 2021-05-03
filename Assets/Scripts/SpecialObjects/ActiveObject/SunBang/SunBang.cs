@@ -37,7 +37,7 @@ public class SunBang : StacksObjects
             {
                 Enemy enemyScript = hit.GetComponent<Enemy>();
                 enemiesInRange.Insert(0, enemyScript);
-                enemyScript.currentState = Enemy.State.Paralysed;
+                enemyScript.currentState = Enemy.State.Stunned;
                 enemyScript.isreadyToAttack = false;
 
             }

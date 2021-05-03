@@ -6,13 +6,13 @@ public class PoisonAbility : DotAbility, IAbility
 {
     public PoisonAbility(float _damageAmount, float _duration) : base(_damageAmount, _duration) { }
 
-    public override void ApplyEffect(ICharacter character)
+    public override void ApplyEffect(Characters character)
     {
         if (!character.IsPoisoned)
             CoroutineManager.Instance.StartCoroutine(DotCo(character, _damageAmount, _duration));
 
     }
-    protected override IEnumerator DotCo(ICharacter character, float damageAmount, float duration)
+    protected override IEnumerator DotCo(Characters character, float damageAmount, float duration)
     {
         character.IsPoisoned = true;
         yield return base.DotCo(character, damageAmount, duration);

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Characters : MonoBehaviour, ICharacter
+public abstract class Characters : MonoBehaviour
 {
+    [HideInInspector]
     public Animator animator;
     public bool IsPoisoned { get; set; }
     public bool IsBurned { get; set; }
@@ -12,18 +13,27 @@ public abstract class Characters : MonoBehaviour, ICharacter
 
     public bool IsDying { get; set; }
 
+    [HideInInspector]
+    public Rigidbody2D rb;
+
+    protected virtual void Awake()
+    {
+        SetMaxHealth();
+    }
 
     #region Health System
+
     protected int maxHealth;
     public int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
     protected float currentHealth;
-    public int CurrentHealth { get => (int)currentHealth; set => currentHealth = value; }
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
     public virtual void TakeDamage(float damage)
     {
         TakeDamageSound();
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        CurrentHealth -= damage;
+        print(CurrentHealth);
+        if (CurrentHealth <= 0)
         {
             IsDying = true;
             Die();
@@ -36,6 +46,32 @@ public abstract class Characters : MonoBehaviour, ICharacter
     }
 
     protected abstract void Die();
+    #endregion
+
+    #region Animation
+    protected void AddAnimationEvent(string name, string functionName, float time = 0)
+    {
+        AnimationClip Clip = null;
+        var animClip = animator.runtimeAnimatorController.animationClips;
+        foreach (var clip in animClip)
+        {
+            if (clip.name == name)
+            {
+                Clip = clip;
+                break;
+            }
+        }
+
+        var _aEvents = new AnimationEvent();
+        _aEvents.functionName = functionName;
+
+        if (time != 0)
+            _aEvents.time = time;
+        else
+            _aEvents.time = Clip.length;
+
+        Clip.AddEvent(_aEvents);
+    }
     #endregion
 
     #region Sounds

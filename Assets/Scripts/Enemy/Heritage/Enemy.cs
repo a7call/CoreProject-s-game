@@ -21,6 +21,64 @@ public class Enemy : Characters
     protected Player player;
     #endregion
 
+    #region Unity Mono
+
+    protected override void Awake()
+    {
+        base.Awake();
+        GetReference();
+        AddAnimationEvent("Death", "DestroyEnemy");
+    }
+
+    protected virtual void Start()
+    {
+    }
+    protected virtual void GetReference()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        aIPath = GetComponent<AIPath>();
+        currentState = State.Patrolling;
+        animator.GetComponent<Animator>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+
+
+        targetSetter = GetComponent<AIDestinationSetter>();
+        targetSetter.target = target;
+        player = target.GetComponent<Player>();
+        player = target.GetComponent<Player>();
+
+        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
+    }
+
+
+    protected virtual void Update()
+    {
+
+        if (IsStuned)
+        {
+            currentState = State.Stunned;
+            return;
+        }
+           
+        SwitchBasicStates(currentState);
+        ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
+
+        SetMouvementAnimationVariable();
+        GetLastDirection();
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    #endregion
+
     #region  Animation 
     //Bool to Check If ready to start an another attack sequence
     protected bool attackAnimationPlaying = false;
@@ -78,6 +136,8 @@ public class Enemy : Characters
         }
     }
 
+   
+
     #endregion
 
 
@@ -106,9 +166,6 @@ public class Enemy : Characters
 
 
     #region Physics 
-    [HideInInspector]
-    public Rigidbody2D rb;
-
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
 
@@ -151,22 +208,16 @@ public class Enemy : Characters
         base.TakeDamage(damage);
 
     }
-    /// <summary>
-    ///  DEATH CODE NEED REFACTORING
-    /// </summary>
 
     protected override void Die()
     {
         StartCoroutine(DeathSate());
+        isDying = true;
     }
     private IEnumerator DeathSate()
     {
         yield return new WaitForEndOfFrame();
         currentState = State.Death;
-    }
-
-    private void HasEnterDyingState()
-    {
         DisableEnemyMouvement();
         rb.velocity = Vector2.zero;
         if (GetComponent<Collider2D>().enabled)
@@ -180,16 +231,14 @@ public class Enemy : Characters
             }
             GetComponent<Collider2D>().enabled = false;
             animator.SetTrigger("isDying");
+
             DieSound();
         }
     }
-
-    // A VIRER
-    protected virtual void EnemyDie()
+    protected virtual void DestroyEnemy()
     {
         if (isDying)
         {
-            
             isDying = false;
             SpawnRewards();
             nanoRobot();
@@ -242,7 +291,7 @@ public class Enemy : Characters
         Attacking,
         Death,
         ShootingLaser,
-        Paralysed,
+        Stunned,
         KnockedBack,
         Freeze,
         Feared,
@@ -250,43 +299,41 @@ public class Enemy : Characters
     }
     void SwitchBasicStates(State currentState)
     {
-        switch(currentState)
+        switch (currentState)
         {
             default:
-                rb.velocity = Vector2.zero;
-            break;
-            case State.Paralysed:
+                break;
+            case State.Stunned:
                 // Animation
                 DisableEnemyMouvement();
-            break;
+                break;
 
             case State.KnockedBack:
                 DisableEnemyMouvement();
-            break;
+                break;
 
             case State.Freeze:
                 // Animation
                 DisableEnemyMouvement();
-            break;
+                break;
 
             case State.Feared:
                 DisableEnemyMouvement();
-            Fear();
-            break;
+                Fear();
+                break;
 
             case State.Death:
-                HasEnterDyingState();
+                rb.velocity = Vector2.zero;
+                //NOTHING ELSE TO DO
+                break;
 
-            break;
             case State.Patrolling:
                 if (aIPath.canMove)
-            {
-                DisableEnemyMouvement();
-            }
-            PlayerInSight();
-
-
-            break;
+                {
+                    DisableEnemyMouvement();
+                }
+                PlayerInSight();
+                break;
         }
     }
 
@@ -328,59 +375,6 @@ public class Enemy : Characters
         }
     }
 
-
-    #endregion
-
-  
-
-    #region Unity Mono
-
-    protected virtual void Awake()
-    {
-        GetReference();
-    }
-
-    protected virtual void Start()
-    {
-        SetMaxHealth();
-    }
-    protected virtual void GetReference()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        aIPath = GetComponent<AIPath>();
-        currentState = State.Patrolling;
-        animator.GetComponent<Animator>();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        
-        targetSetter = GetComponent<AIDestinationSetter>();
-        targetSetter.target = target;
-        player = target.GetComponent<Player>();
-        player = target.GetComponent<Player>();
-
-        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
-    }
-
-
-    protected virtual void Update()
-    {
-
-        SwitchBasicStates(currentState);
-        ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
-
-        SetMouvementAnimationVariable();
-        GetLastDirection();
-    }
-
-    private void OnDestroy()
-    {
-        StopAllCoroutines();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
 
     #endregion
 

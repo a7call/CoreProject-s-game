@@ -7,7 +7,6 @@ public class LastChanceModule : PassiveObjects
     
     void Start()
     {
-        Player.isLastChanceModule = true;
     }
 
 

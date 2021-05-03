@@ -5,15 +5,11 @@ using UnityEngine.UI;
 using Wanderer.CharacterStats;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour, ICharacter
+public class Player : Characters
 {
 
     public PlayerScriptableObjectScript playerData;
 
-    #region OutSource States
-    public bool IsPoisoned { get; set; } 
-    public bool IsBurned{ get; set; } 
-    #endregion
 
     #region Stats
     [Header("Projectile")]
@@ -62,20 +58,19 @@ public class Player : MonoBehaviour, ICharacter
     }
     #endregion
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         SetData();
         GetReference();
-        SetMaxHealth();
         SetMaxEnergy();
         SetMaxEnergyBarUI();
-
+        base.Awake();
     }
 
     #region Datas & reference
     protected void SetData()
     {
-        maxHealth = playerData.maxHealth;
+        MaxHealth = playerData.maxHealth;
         maxStacks = playerData.maxStacks;
         mooveSpeed = playerData.mooveSpeed;
         dashForce = playerData.dashForce;
@@ -122,11 +117,9 @@ public class Player : MonoBehaviour, ICharacter
             StopAllCoroutines();
         }
 
-        if (isSpeedShoesModule && !SpeedAlreadyUp)
-        {
-            SpeedAlreadyUp = true;
-            mooveSpeed *= SpeedMultiplier;
-        }
+        if (IsStuned)
+            return;
+
         switch (currentEtat)
         {
             default:
@@ -157,8 +150,6 @@ public class Player : MonoBehaviour, ICharacter
     }
 
     #region MOUVEMENT
-    [HideInInspector] public Rigidbody2D rb;
-     public Animator animator;
     public float mooveSpeed;
     private void FixedUpdate()
     {
@@ -232,18 +223,6 @@ public class Player : MonoBehaviour, ICharacter
         mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
     }
     #endregion
-
-    
-    #region Modules
-    public static bool isModuleInertie;
-    protected bool SpeedAlreadyUp = false;
-    public static bool isSpeedShoesModule;
-    public static float SpeedMultiplier;
-    public static bool isPiercedPocketModule;
-    [HideInInspector]
-    public static bool isArretTemporelActive = false;
-    #endregion
-
 
     #region Animation
     protected Vector3 screenMousePos;
@@ -403,21 +382,9 @@ public class Player : MonoBehaviour, ICharacter
     #endregion
 
     #region HEALTH
-    #region Module
-    public static bool isLastChanceModule = false;
-    [HideInInspector] public static bool isPowerUp = false;
-    private bool isPowerUpAlreadyUse = false;
-    public static bool IsDontFuckWithMe = false;
-
+    
     private void AjustHhealth()
     {
-        if (isPowerUp && !isPowerUpAlreadyUse)
-        {
-            maxHealth = 8;
-            currentHealth += 2;
-            isPowerUpAlreadyUse = true;
-        }
-
         if (currentHealth >= maxHealth)
         {
             currentHealth = maxHealth;
@@ -436,9 +403,8 @@ public class Player : MonoBehaviour, ICharacter
     protected bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
-        
         if (!isInvincible)
         {
             if (currentArmor > 0)
@@ -449,27 +415,10 @@ public class Player : MonoBehaviour, ICharacter
             }
             else
             {
-                currentHealth -= (int)damage;
+                base.TakeDamage(damage);
                 StartCoroutine(InvincibilityDelay());
                 StartCoroutine(InvincibilityFlash());
             }
-        }
-        if (IsDontFuckWithMe)
-        {
-            DontFuckWithMeModule.DestroyAllEnemyInRange();
-        }
-
-        if (currentHealth <= 0 && !isLastChanceModule)
-        {
-            //A mettre ici par la suite;
-            //image1.sprite = emptyHearth;
-            //Debug.Log("Mort");
-        }
-
-        else if (currentHealth <= 0 && isLastChanceModule)
-        {
-            currentHealth += 2;
-            isLastChanceModule = false;
         }
     }
     public IEnumerator InvincibilityFlash()
@@ -489,41 +438,21 @@ public class Player : MonoBehaviour, ICharacter
         yield return new WaitForSeconds(InvincibleDelay);
         isInvincible = false;
     }
+
+
     #endregion
 
 
     #region Health and armor
-    private int maxHealth;
-    public int MaxHealth { 
-        get
-        {
-            return maxHealth;
-        }
-        set
-        {
-            maxHealth = value;
-        }
-    }
-    private int currentHealth;
-    public int CurrentHealth
-    {
-        get
-        {
-            return currentHealth;
-        }
-        set
-        {
-            currentHealth = value;
-        }
-    }
+   
     public int currentArmor;
     private int maxArmor = 2;
     public void AddLifePlayer(int health)
     {
-        currentHealth += health;
-        if (currentHealth > maxHealth)
+        CurrentHealth += health;
+        if (CurrentHealth > maxHealth)
         {
-            currentHealth = maxHealth;
+            CurrentHealth = maxHealth;
         }
     }
     public void AddArmorPlayer(int _armor)
@@ -534,11 +463,12 @@ public class Player : MonoBehaviour, ICharacter
             currentArmor = maxArmor;
         }
     }
-   
-    public void SetMaxHealth()
+
+    protected override void Die()
     {
-        currentHealth = maxHealth;
+        // TO IMPLEMENT
     }
+   
     #endregion
 
 
@@ -565,123 +495,51 @@ public class Player : MonoBehaviour, ICharacter
         }
 
 
-        if (isPowerUp == false)
-        {
-            if (currentHealth == maxHealth)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = fullHearth;
-            }
-            else if (currentHealth == maxHealth - 1)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = halfHearth;
-            }
-            else if (currentHealth == maxHealth - 2)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 3)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = halfHearth;
-                image3.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 4)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = emptyHearth;
-                image3.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 5)
-            {
-                image1.sprite = halfHearth;
-                image2.sprite = emptyHearth;
-                image3.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 6)
-            {
-                image1.sprite = emptyHearth;
-                image2.sprite = emptyHearth;
-                image3.sprite = emptyHearth;
-            }
-        }
-        else
-        {
 
-            HealthContent.Find("ImagePowerUpHP").GetComponent<Image>().enabled = true;
-            image4 = HealthContent.Find("ImagePowerUpHP").GetComponent<Image>();
-
-            if (currentHealth == maxHealth)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = fullHearth;
-                image4.sprite = fullHearth;
-            }
-            else if (currentHealth == maxHealth - 1)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = fullHearth;
-                image4.sprite = halfHearth;
-            }
-            else if (currentHealth == maxHealth - 2)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = fullHearth;
-                image4.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 3)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = halfHearth;
-                image4.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 4)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = fullHearth;
-                image3.sprite = emptyHearth;
-                image4.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 5)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = halfHearth;
-                image3.sprite = emptyHearth;
-                image4.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 6)
-            {
-                image1.sprite = fullHearth;
-                image2.sprite = emptyHearth;
-                image3.sprite = emptyHearth;
-                image4.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 7)
-            {
-                image1.sprite = halfHearth;
-                image2.sprite = emptyHearth;
-                image3.sprite = emptyHearth;
-                image4.sprite = emptyHearth;
-            }
-            else if (currentHealth == maxHealth - 8)
-            {
-                image1.sprite = emptyHearth;
-                image2.sprite = emptyHearth;
-                image3.sprite = emptyHearth;
-                image4.sprite = emptyHearth;
-            }
+        if (currentHealth == maxHealth)
+        {
+            image1.sprite = fullHearth;
+            image2.sprite = fullHearth;
+            image3.sprite = fullHearth;
         }
+        else if (currentHealth == maxHealth - 1)
+        {
+            image1.sprite = fullHearth;
+            image2.sprite = fullHearth;
+            image3.sprite = halfHearth;
+        }
+        else if (currentHealth == maxHealth - 2)
+        {
+            image1.sprite = fullHearth;
+            image2.sprite = fullHearth;
+            image3.sprite = emptyHearth;
+        }
+        else if (currentHealth == maxHealth - 3)
+        {
+            image1.sprite = fullHearth;
+            image2.sprite = halfHearth;
+            image3.sprite = emptyHearth;
+        }
+        else if (currentHealth == maxHealth - 4)
+        {
+            image1.sprite = fullHearth;
+            image2.sprite = emptyHearth;
+            image3.sprite = emptyHearth;
+        }
+        else if (currentHealth == maxHealth - 5)
+        {
+            image1.sprite = halfHearth;
+            image2.sprite = emptyHearth;
+            image3.sprite = emptyHearth;
+        }
+        else if (currentHealth == maxHealth - 6)
+        {
+            image1.sprite = emptyHearth;
+            image2.sprite = emptyHearth;
+            image3.sprite = emptyHearth;
+        }
+
     }
-    #endregion
     #endregion
 
     #region Inputs attatck, coffre et interaction 

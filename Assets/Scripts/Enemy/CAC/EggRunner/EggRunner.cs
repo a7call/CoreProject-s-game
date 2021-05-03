@@ -69,7 +69,7 @@ public class EggRunner : Cac
         Destroy(gameObject);
     }
 
-    protected override void EnemyDie()
+    protected override void DestroyEnemy()
     {
         if (isDying)
         {

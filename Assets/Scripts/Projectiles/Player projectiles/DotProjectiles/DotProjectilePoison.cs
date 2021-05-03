@@ -14,7 +14,7 @@ public class DotProjectilePoison : PlayerProjectiles
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             if (!enemy.IsPoisoned)
-                PoisonEffect.ApplyEffect(collision.GetComponent<ICharacter>());
+                PoisonEffect.ApplyEffect(collision.GetComponent<Characters>());
         }
         base.OnTriggerEnter2D(collision);
         
