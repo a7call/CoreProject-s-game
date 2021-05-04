@@ -100,7 +100,6 @@ public class BossTentaclePop : Enemy
     private int offset; // Permet d'aligner le projectile central sur le joueur
 
 
-    private Player player;
 
     public enum BossState
     {

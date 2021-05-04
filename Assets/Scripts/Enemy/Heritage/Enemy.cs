@@ -61,7 +61,10 @@ public abstract class Enemy : Characters
             currentState = State.Stunned;
             return;
         }
+
         GetLastDirection();
+
+
     }
 
     private void OnDestroy()
@@ -179,13 +182,22 @@ public abstract class Enemy : Characters
     public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
         if (currentState == State.Charging) yield break;
+
         rb.AddForce(dir * knockBackForce);
+        State previousState = currentState;
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
-        currentState = State.Chasing;
+        if (isDying)
+        {
+            currentState = State.Death;
+            yield break;
+        }
+        else
+        {
+            currentState = previousState;
+        }
         rb.velocity = Vector2.zero;
         aIPath.canMove = true;
-        if (enemy.currentHealth <= 0) currentState = State.Death;
     }
 
     // Attack
@@ -214,7 +226,7 @@ public abstract class Enemy : Characters
     private IEnumerator DeathSate()
     {
         yield return new WaitForEndOfFrame();
-        currentState = State.Death;
+        
         DisableEnemyMouvement();
         rb.velocity = Vector2.zero;
         if (GetComponent<Collider2D>().enabled)
@@ -227,10 +239,12 @@ public abstract class Enemy : Characters
                 }
             }
             GetComponent<Collider2D>().enabled = false;
+            
             animator.SetTrigger("isDying");
 
             DieSound();
         }
+        currentState = State.Death;
     }
     protected virtual void DestroyEnemy()
     {

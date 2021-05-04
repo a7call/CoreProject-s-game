@@ -26,6 +26,10 @@ namespace Wanderer.Utils
         {
             return RandomBool(50f);
         }
+        public static float RandomizeParams(float min, float max)
+        {
+            return Random.Range(min, max);
+        }
     }
 }
 
