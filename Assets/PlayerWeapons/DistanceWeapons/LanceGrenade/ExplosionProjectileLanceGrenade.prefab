@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4172016093558675288}
   - component: {fileID: 6433581650378540946}
   - component: {fileID: 3596110955339526000}
+  - component: {fileID: 5264852549254180682}
   m_Layer: 6
   m_Name: ExplosionProjectileLanceGrenade
   m_TagString: Untagged
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 27d59e5070751a54db1a6af021b56f76, type: 2}
+  - {fileID: 2100000, guid: 1ee160b9dec592a48802966e5d4c6bb9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 299582325
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6949972355775812543, guid: edf75fd11f177dc479caae2b3a969a4b, type: 3}
+  m_Sprite: {fileID: 8084144937313231608, guid: 5bfc557813c8edb48b7eb4a99f0f4f02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dispersion: 0
+  impactSound: 
   explosionRadius: 1.5
 --- !u!58 &6433581650378540946
 CircleCollider2D:
@@ -112,9 +114,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.026641235, y: 0}
+  m_Offset: {x: -0.00025248528, y: 0}
   serializedVersion: 2
-  m_Radius: 0.111013874
+  m_Radius: 0.15499511
 --- !u!50 &3596110955339526000
 Rigidbody2D:
   serializedVersion: 4
@@ -136,3 +138,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &5264852549254180682
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6458180527659685685}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f3b0c6c0de2a3704889dcfc8af1a858d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
