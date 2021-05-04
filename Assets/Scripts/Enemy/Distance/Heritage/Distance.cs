@@ -40,6 +40,19 @@ public class Distance : Enemy
     {
         base.Update();
         SetTargetToRandomPoint();
+        switch (currentState)
+        {
+            case State.Chasing:
+                isInRange();
+                // suit le path créé et s'arrête pour tirer
+                break;
+            case State.Attacking:
+                isInRange();
+                // Couroutine gérant les shoots 
+                StartCoroutine(CanShootCO());
+                break;
+        }
+        
     }
     protected override void GetReference()
     {
@@ -83,7 +96,7 @@ public class Distance : Enemy
     {
         return Random.Range(min, max);
     }
-    protected virtual void SetData()
+    protected override void SetData()
     {
         // ScriptableObject Datas
         maxHealth = DistanceData.maxHealth;

@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3612759243388555237
 Transform:
   m_ObjectHideFlags: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6795443994441172330}
+  rb: {fileID: 0}
   takeDamageSound: 
   dieSound: 
   isInvokedInBossRoom: 0
@@ -139,7 +140,6 @@ MonoBehaviour:
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
   target: {fileID: 0}
-  rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
   isreadyToAttack: 1
   currentState: 1
@@ -313,7 +313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5543145213502621653
 Transform:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public abstract class Characters : MonoBehaviour
 
     protected virtual void Awake()
     {
+        SetData();
+        GetReference();
         SetMaxHealth();
     }
 
@@ -41,9 +43,13 @@ public abstract class Characters : MonoBehaviour
 
     protected virtual void SetMaxHealth()
     {
-        currentHealth = maxHealth;
+        
+        CurrentHealth = MaxHealth;
     }
+    //Set datas of scriptableObject
+    protected abstract void SetData();
 
+    protected abstract void GetReference();
     protected abstract void Die();
     #endregion
 
