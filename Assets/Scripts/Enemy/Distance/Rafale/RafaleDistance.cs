@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class RafaleDistance : Distance
+public class RafaleDistance : DistanceWithWeapon
 {
     //[SerializeField] protected RafaleDistanceData RafaleDistanceData;
 

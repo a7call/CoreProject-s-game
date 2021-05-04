@@ -29,6 +29,10 @@ namespace Edgar.Unity
             AddCompositeCollider(BackGroundWall);
             #endregion
 
+            #region MinimapWall
+            GameObject MinimapWall = CreateTilemapGameObject("MinimapWall", gameObject, -1000, "BackGround", TilemapRenderer.Mode.Chunk);
+            #endregion
+
             #region Additionnal Layer 1 + children
             GameObject AdditionnalLayer1 = CreateTilemapGameObject("Additionnal Layer 1", gameObject, 0, "Default", TilemapRenderer.Mode.Chunk);
             CreateTilemapGameObject("Grid", AdditionnalLayer1, 50, "BackGround", TilemapRenderer.Mode.Chunk);

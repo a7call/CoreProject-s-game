@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Wanderer.Utils;
 /// <summary>
 /// Classe mère des Distance et héritière de Enemy.cs
 /// Elle contient une fonction setData permettant de récupérer les données du scriptable object 
@@ -28,31 +29,12 @@ public class Distance : Enemy
     protected float restTime;
     // Projectile to instantiate
     protected GameObject projetile;
-   
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-    }
+  
 
     protected override void Update()
     {
         base.Update();
         SetTargetToRandomPoint();
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                // suit le path créé et s'arrête pour tirer
-                break;
-            case State.Attacking:
-                isInRange();
-                // Couroutine gérant les shoots 
-                StartCoroutine(CanShootCO());
-                break;
-        }
-        
     }
     protected override void GetReference()
     {
@@ -92,32 +74,29 @@ public class Distance : Enemy
         }
     }
 
-    private float RandomizeParams(float min, float max)
-    {
-        return Random.Range(min, max);
-    }
+  
     protected override void SetData()
     {
         // ScriptableObject Datas
         maxHealth = DistanceData.maxHealth;
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
-        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + RandomizeParams(-1, 2));
+        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + Utils.RandomizeParams(-1, 2));
         dispersion = DistanceData.dispersion;
         inSight = DistanceData.InSight;
         isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
 
         //Chiffre arbitraire à modifier 
-        coefAttackModeRange = RandomizeParams(1.2f, 1.5f);
+        coefAttackModeRange = Utils.RandomizeParams(1.2f, 1.5f);
         attackModeRange = attackRange * coefAttackModeRange;
 
 
         // PathFinding Variable
         aIPath.endReachedDistance = attackRange *2/3;
         aIPath.slowdownDistance = aIPath.endReachedDistance + 0.5f;
-        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime + RandomizeParams(-0.5f, 0.5f));
-        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + RandomizeParams(-0.2f, 0.2f));
-        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + RandomizeParams(-0.1f, 0.1f));
+        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime + Utils.RandomizeParams(-0.5f, 0.5f));
+        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + Utils.RandomizeParams(-0.2f, 0.2f));
+        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
     }
 
     protected override void isInRange()
@@ -144,11 +123,13 @@ public class Distance : Enemy
             isReadytoShoot = false;
             // Wait for coroutine shoot to end
             yield return StartCoroutine(ShootCO());
+            isAttacking = false;
             // delay before next Shoot
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
             // gestion de l'animation d'attaque
             attackAnimationPlaying = false;
+            
 
         }
     }

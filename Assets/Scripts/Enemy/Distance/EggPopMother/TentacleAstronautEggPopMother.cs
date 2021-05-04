@@ -4,7 +4,7 @@ using UnityEngine;
 
 // Sur cet ennemi, penser à mettre un projectile classique avec une animation qui ressemble à de la salive
 
-public class TentacleAstronautEggPopMother : Distance
+public class TentacleAstronautEggPopMother : DistanceWithWeapon
 {
     private float radius = 2f;
     [SerializeField] private List<GameObject> enemyToPop = new List<GameObject>();
