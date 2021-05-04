@@ -22,7 +22,7 @@ public class SnotZone : Enemy
 
     //  Corriger existe en deux examplaire
 
-    void SetData()
+    protected override void  SetData()
     {
         aIPath.maxSpeed = Random.Range(enemyScriptableObject.moveSpeed, enemyScriptableObject.moveSpeed + 1);
         maxHealth = enemyScriptableObject.maxHealth;
@@ -32,7 +32,7 @@ public class SnotZone : Enemy
     {
         base.Update();
         //getRota();
-               switch (currentState)
+        switch (currentState)
         {
             case State.Patrolling:
                 PlayerInSight();
@@ -47,23 +47,7 @@ public class SnotZone : Enemy
         }
 
     }
-    //private IEnumerator Zone()
-    //{
-    //    if (hasStartAttacking)
-    //    {
-    //        hasStartAttacking = false;
-    //        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, hitLayer);
-
-    //        foreach (Collider2D hit in hits)
-    //        {
-    //            hit.GetComponent<Player>().TakeDamage(1);
-
-    //        }
-    //        yield return new WaitForSeconds(1f);
-    //        hasStartAttacking = true;
-    //    }
-       
-    //}
+  
 
     private void OnDrawGizmos()
     {

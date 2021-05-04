@@ -60,15 +60,13 @@ public class Player : Characters
 
     protected override void Awake()
     {
-        SetData();
-        GetReference();
+        base.Awake();
         SetMaxEnergy();
         SetMaxEnergyBarUI();
-        base.Awake();
     }
 
     #region Datas & reference
-    protected void SetData()
+    protected override void SetData()
     {
         MaxHealth = playerData.maxHealth;
         maxStacks = playerData.maxStacks;
@@ -85,7 +83,7 @@ public class Player : Characters
         halfArmor = playerData.halfArmor;
         fullArmor = playerData.fullArmor;
     }
-    private void GetReference()
+    protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();

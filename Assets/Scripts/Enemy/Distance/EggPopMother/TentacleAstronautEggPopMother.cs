@@ -6,47 +6,24 @@ using UnityEngine;
 
 public class TentacleAstronautEggPopMother : Distance
 {
-    // Retirer le serializeField
-    [SerializeField] private float radius = 2f;
+    private float radius = 2f;
+    [SerializeField] private List<GameObject> enemyToPop = new List<GameObject>();
+    [SerializeField] private int numberToPop = 3;
 
-    [HideInInspector]
-    [SerializeField] private GameObject[] listParasite = new GameObject[3];
-
-    void Start()
-    {
-     
-        // Set data
-        SetData();
-        SetMaxHealth();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                break;
-            case State.Attacking:
-                isInRange();
-                StartCoroutine(CanShootCO());
-                break;
-        }
-    }
     protected override void DestroyEnemy()
     {
+        float angle = 0;
         if (isDying)
         {
-            SpawnRewards();
-            foreach (GameObject parasite in listParasite)
+            Vector3 firstSpawn = transform.position + radius * (Vector3)Random.insideUnitCircle.normalized;
+            for (int i=0; i < numberToPop; i++)
             {
-                Vector2 transf2D = new Vector2(transform.position.x, transform.position.y);
-                Instantiate(parasite, transf2D + radius * Random.insideUnitCircle.normalized, Quaternion.identity);
+                Vector3 spawnPos = transform.position + (Quaternion.AngleAxis(angle, Vector3.forward) * firstSpawn).normalized;
+                angle += 360 / numberToPop;
+                Instantiate(enemyToPop[Random.Range(0, enemyToPop.Count)], spawnPos, Quaternion.identity);
             }
-            nanoRobot();
-            Destroy(gameObject);
         }
+        base.DestroyEnemy();
     }
 
 }

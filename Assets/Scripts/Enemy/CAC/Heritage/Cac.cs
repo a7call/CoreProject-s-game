@@ -45,7 +45,7 @@ public class Cac : Enemy
 
     #region Datas
     [SerializeField] protected CacScriptableObject CacDatas;
-    protected virtual void SetData()
+    protected override void SetData()
     {
         attackRange = CacDatas.attackRange;
         attackRadius = CacDatas.attackRadius;

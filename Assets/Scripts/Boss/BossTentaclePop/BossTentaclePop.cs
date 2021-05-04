@@ -116,8 +116,9 @@ public class BossTentaclePop : Enemy
         SetData();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         gameObject.GetComponent<Enemy>().isInvokedInBossRoom = true;
         player.currentEtat = Player.EtatJoueur.shopping; // Etat AFK du joueur, il ne peut rien faire
         currentState = State.Chasing;
@@ -217,7 +218,7 @@ public class BossTentaclePop : Enemy
     }
     
     // Permet de Set les Data
-    private void SetData()
+    protected override void SetData()
     {
         maxHealth = BossData.maxHealth;
 

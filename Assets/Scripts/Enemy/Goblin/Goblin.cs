@@ -25,8 +25,9 @@ public class Goblin : Enemy
         base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         //spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         currentState = State.Chasing;
         aIPath.canMove = false;
@@ -35,7 +36,7 @@ public class Goblin : Enemy
         StartCoroutine(Starter());
     }
 
-    private void SetData()
+    protected override void SetData()
     {
         aIPath.maxSpeed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
 

@@ -12,7 +12,7 @@ using Pathfinding;
 /// Une fonction permettant d'initialiser le premier point de patrouille
 /// Les fonctions nécessaires à la gestion de la vie de l'ennemi (se référer à Lopez ou au tuto FR)
 /// </summary>
-public class Enemy : Characters
+public abstract class Enemy : Characters
 {
     [HideInInspector]
     public bool isInvokedInBossRoom = false;
@@ -24,21 +24,21 @@ public class Enemy : Characters
     #region Unity Mono
 
     protected override void Awake()
-    {
-        base.Awake();
+    { 
         GetReference();
         AddAnimationEvent("Death", "DestroyEnemy");
+        base.Awake();
     }
 
     protected virtual void Start()
     {
     }
-    protected virtual void GetReference()
+    protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
         aIPath = GetComponent<AIPath>();
         currentState = State.Patrolling;
-        animator.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
 
@@ -52,10 +52,7 @@ public class Enemy : Characters
 
 
     protected virtual void Update()
-    {
-
-       
-           
+    { 
         SwitchBasicStates(currentState);
         ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
         SetMouvementAnimationVariable();
