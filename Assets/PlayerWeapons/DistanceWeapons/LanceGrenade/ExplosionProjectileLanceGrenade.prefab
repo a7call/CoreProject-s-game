@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7513890560125490753}
   - component: {fileID: 8413511241850102341}
   - component: {fileID: 4172016093558675288}
-  - component: {fileID: 6433581650378540946}
   - component: {fileID: 3596110955339526000}
   - component: {fileID: 5264852549254180682}
+  - component: {fileID: 7210228569168286241}
   m_Layer: 6
   m_Name: ExplosionProjectileLanceGrenade
   m_TagString: Untagged
@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 437dc875ba5cb554f8d0a099c5bfcf25, type: 2}
+  - {fileID: 2100000, guid: 38fd66a32e1c8dc42ab336848e494c80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 299582325
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 8084144937313231608, guid: 5bfc557813c8edb48b7eb4a99f0f4f02, type: 3}
+  m_Sprite: {fileID: -3266031028929562580, guid: 473c4a98b49571344916741d409be90b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,22 +101,6 @@ MonoBehaviour:
   dispersion: 0
   impactSound: 
   explosionRadius: 1.5
---- !u!58 &6433581650378540946
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6458180527659685685}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.00338009, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.2135011
 --- !u!50 &3596110955339526000
 Rigidbody2D:
   serializedVersion: 4
@@ -157,3 +141,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &7210228569168286241
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6458180527659685685}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.000000037252903}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.5, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.34690505}
+  m_EdgeRadius: 0
