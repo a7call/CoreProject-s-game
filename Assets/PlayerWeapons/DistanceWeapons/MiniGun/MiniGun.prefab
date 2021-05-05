@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 282653564910098035}
   - component: {fileID: 2259783509908737714}
   - component: {fileID: 4833679623815806301}
-  m_Layer: 0
+  - component: {fileID: 1936622553}
+  m_Layer: 19
   m_Name: Mini Gun Sheet_0
   m_TagString: DistanceWeapon
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5035980675320920807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.366232, y: 39.24328, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1712573370845982872}
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 737679df99e05154ab73ad62d9c4d7dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71,9 +72,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 299582325
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1957909822809482277, guid: 86eb4dd5a6a714e48b391f15619fc4d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,7 +102,7 @@ BoxCollider2D:
   m_Offset: {x: 0.3192463, y: -0.093437195}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.39583334, y: 0.48958334}
     oldSize: {x: 3, y: 3}
     newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
@@ -132,10 +133,31 @@ MonoBehaviour:
   damage: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  DistanceWeaponDataCast: {fileID: 0}
+    m_Bits: 512
+  DistanceWeaponDataCast: {fileID: 11400000, guid: 4731d839770650a49ab03d602e08885e, type: 2}
+  FireSound: 
+  ReloadSound: 
   BulletInMag: 0
   ammoStock: 0
+--- !u!95 &1936622553
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035980675320920807}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b814ba7be37e50c4a846768a09a5564d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8853335641715805420
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +170,7 @@ GameObject:
   m_Layer: 0
   m_Name: attackPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -160,7 +182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8853335641715805420}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.864, y: -0.056, z: 0}
+  m_LocalPosition: {x: 0.98, y: 0.015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923897081904263023}
