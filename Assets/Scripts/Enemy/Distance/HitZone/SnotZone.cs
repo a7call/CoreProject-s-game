@@ -10,11 +10,13 @@ public class SnotZone : Enemy
     [SerializeField] protected EnemyScriptableObject enemyScriptableObject;
     [SerializeField] private LayerMask hitLayer;
     private bool hasStartAttacking = true;
+    StinkManager stinkManager;
 
     protected override void Start()
     {
         // Set data
         base.Start();
+        stinkManager = FindObjectOfType<StinkManager>();
         SetData();
         aIPath.slowdownDistance = aIPath.endReachedDistance;
         SetMaxHealth();
@@ -32,6 +34,7 @@ public class SnotZone : Enemy
     {
         base.Update();
         //getRota();
+        stinkManager.SetStinkTile(transform.position,5);
         switch (currentState)
         {
             case State.Patrolling:
