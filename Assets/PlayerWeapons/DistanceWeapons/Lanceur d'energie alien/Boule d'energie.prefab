@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4589407644236281478}
   - component: {fileID: 7341308526580671264}
   - component: {fileID: -5691884647851971090}
+  - component: {fileID: 1632615968716978686}
   m_Layer: 6
   m_Name: Boule d'energie
   m_TagString: Untagged
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 27d59e5070751a54db1a6af021b56f76, type: 2}
+  - {fileID: 2100000, guid: 6b1265c366a4d1e4fa1a3d8fb7174cbc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 299582325
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6949972355775812543, guid: edf75fd11f177dc479caae2b3a969a4b, type: 3}
+  m_Sprite: {fileID: 313423570494160749, guid: 0f7fdaa0a93ac7543b520386af26ff02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -119,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dispersion: 0
+  impactSound: 
   ExplosionDelay: 3
   ExplosionRadius: 3
   ExploDamage: 3
@@ -138,6 +140,25 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.04139495, y: -0.0289765}
   serializedVersion: 2
-  m_Radius: 0.140625
+  m_Radius: 0.4014132
+--- !u!95 &1632615968716978686
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2ee969881e725c54b8e3b3473f44b2c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
