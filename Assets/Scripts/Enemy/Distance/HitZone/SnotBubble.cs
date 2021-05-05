@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 /// <summary>
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
@@ -9,22 +10,23 @@ public class SnotBubble : Distance
 {
 
     private bool alreadyActive;
-
+    StinkManager stinkManager;
     protected override void Start()
     {
         
         SetData();
+        stinkManager = FindObjectOfType<StinkManager>();
         base.Start();
 
     }
     protected override void Update()
     {
         base.Update();
+        stinkManager.SetStinkTile(transform.position, 3);
         switch (currentState)
         {
             case State.Chasing:
-                //StartCoroutine(ZoneCo());
-                // suit le path créé et s'arrête pour tirer
+              
                 break;
 
         }

@@ -9,6 +9,8 @@ public class StinkTile
     public Vector3Int _tileGridPos;
     public float _maxTimeAlive = 3f;
     public float _timeLiving = 0f;
+    public Color _Color;
+
 
 
     public StinkTile(TileBase tile, Tilemap stinkTilemap, Vector3Int gridPos)
@@ -16,55 +18,79 @@ public class StinkTile
         _tile = tile;
         _stinkTilemap = stinkTilemap;
         _tileGridPos = gridPos;
-        destroyTile();
-    }
-    void destroyTile()
-    {
-        while (_timeLiving <= _maxTimeAlive)
-        {
-            _timeLiving += Time.deltaTime;
-        }
-        _stinkTilemap.SetTile(_tileGridPos, null);
+        _stinkTilemap.SetTile(gridPos, _tile);
+        _Color = _stinkTilemap.color;
     }
 
-    public void UpdateTile()
-    {
-        _timeLiving = 0f;
-    }
 }
 public class StinkManager : MonoBehaviour
 {
     public Tilemap stinkMap;
     public TileBase tile;
+    public int radius;
 
-    List<StinkTile> stinkTileList = new List<StinkTile>();
+    public List<StinkTile> stinkTileList = new List<StinkTile>();
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int gridPosition = stinkMap.WorldToCell(mousePos);
-
-            SetStinkTile(gridPosition);
-        }
-
+        DestroyStinkTiles();
     }
 
-    void SetStinkTile(Vector3Int gridPos)
+    public void SetStinkTile(Vector3 worldPosition, int radius)
     {
-        foreach(var stink in stinkTileList)
+      
+
+        Vector3Int gridPosition = stinkMap.WorldToCell(worldPosition);
+
+
+        for (int x = -radius; x <= radius; x++)
         {
-            if (stink._tileGridPos != gridPos)
+            for (int y = -radius; y <= radius; y++)
             {
-                var stinkTile = new StinkTile(tile, stinkMap, gridPos);
-                stinkTileList.Add(stinkTile);
+                float distanceFromCenter = Mathf.Abs(x) + Mathf.Abs(y);
+                if (distanceFromCenter <= radius)
+                {
+                    checkTileMap(gridPosition.x + x, gridPosition.y + y);
+                    Vector3Int gridPos = new Vector3Int(gridPosition.x + x, gridPosition.y + y, 0);
+                    var stinkTile = new StinkTile(tile, stinkMap, gridPos);
+                    stinkTileList.Add(stinkTile);
+
+                }
             }
-            else
-            {
-                stink.UpdateTile();
-            } 
         }
-        
+    }
+
+    void checkTileMap(int gridPosX, int gridPosY)
+    {
+        foreach (var stink in stinkTileList.ToArray())
+        {
+            if (stink._tileGridPos.x == gridPosX && stink._tileGridPos.y == gridPosY)
+            {
+                Vector3Int gridPos = new Vector3Int(gridPosX, gridPosY,0);
+                stinkMap.SetTile(gridPos, null);
+                stinkTileList.Remove(stink);
+            }
+        }
+    }
+
+
+    void DestroyStinkTiles()
+    {
+        foreach (var stinkTile in stinkTileList.ToArray())
+        {
+            stinkTile._maxTimeAlive -= Time.deltaTime/2;
+
+            //var alpha = stinkTile._Color.a -= Time.deltaTime / 4;
+            //var color = new Color(stinkTile._Color.r, stinkTile._Color.g, stinkTile._Color.b, alpha);
+            //stinkMap.SetTileFlags(stinkTile._tileGridPos, TileFlags.None);
+            //stinkMap.SetColor(stinkTile._tileGridPos, color);
+            //stinkMap.SetTileFlags(stinkTile._tileGridPos, TileFlags.LockColor);
+            if (stinkTile._maxTimeAlive <= 0)
+            {
+                stinkMap.SetTile(stinkTile._tileGridPos, null);
+                stinkTileList.Remove(stinkTile);
+            }
+        }
     }
 }
+
