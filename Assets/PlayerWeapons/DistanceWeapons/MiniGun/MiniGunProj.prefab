@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 447874545833512403}
   - component: {fileID: -1722993414655278476}
   - component: {fileID: 4589407644236281478}
-  - component: {fileID: 5026467669367717921}
+  - component: {fileID: 3659927844943047048}
+  - component: {fileID: 4359966992814732172}
   m_Layer: 6
   m_Name: MiniGunProj
   m_TagString: Untagged
@@ -67,7 +68,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68ba8811212d3d74985bcb0dc2bc4e04, type: 2}
+  - {fileID: 2100000, guid: 5418faf3eb0a41c4bb20bc032f3d4570, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_SortingLayerID: 299582325
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: cf2170638bbb5e84b9a3fc253d700d81, type: 3}
+  m_Sprite: {fileID: 1105981223302833512, guid: 026056246db3a544ab35835f5b9d6e05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,8 +121,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &5026467669367717921
-BoxCollider2D:
+--- !u!58 &3659927844943047048
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,16 +134,25 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0007893145, y: -0.01420749}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
-    newSize: {x: 0.5, y: 0.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0.0003849864, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.43843418, y: 0.089561194}
-  m_EdgeRadius: 0
+  m_Radius: 0.1565223
+--- !u!95 &4359966992814732172
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d4271cd130a78d949a74d00213118ab8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
