@@ -8,9 +8,8 @@ using UnityEngine;
 public class SnotZone : Enemy
 {
     [SerializeField] protected EnemyScriptableObject enemyScriptableObject;
-    [SerializeField] private LayerMask hitLayer;
-    private bool hasStartAttacking = true;
     StinkManager stinkManager;
+    [SerializeField] private int stinkRadius;
 
     protected override void Start()
     {
@@ -33,17 +32,14 @@ public class SnotZone : Enemy
     protected override void Update()
     {
         base.Update();
-        //getRota();
-        stinkManager.SetStinkTile(transform.position,5);
+        if(aIPath.velocity.sqrMagnitude >= 0.1f)
+            stinkManager.SetStinkTile(transform.position, stinkRadius);
         switch (currentState)
         {
             case State.Patrolling:
                 PlayerInSight();
                 break;
             case State.Chasing:
-                //StartCoroutine(Zone());
-                // suit le path créé et s'arrête pour tirer
-
                 break;
 
 
