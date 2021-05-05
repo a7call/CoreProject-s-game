@@ -74,10 +74,12 @@ public class StinkManager : MonoBehaviour
                     if (stinkMap.GetTile(neigboorsPos) != null)
                         neighboorCounter++;
                 }
-
             }
-    
-            if (neighboorCounter < 4 )
+            if(stinkMap.GetTile(stink._tileGridPos) == tiles[0] && neighboorCounter >= 4)
+            {
+                stinkMap.SetTile(stink._tileGridPos, tiles[2]);
+            }
+            if (neighboorCounter < 4)
                 stinkMap.SetTile(stink._tileGridPos, tiles[0]);
 
         }
