@@ -251,7 +251,6 @@ public abstract class Enemy : Characters
         if (isDying)
         {
             isDying = false;
-            SpawnRewards();
             nanoRobot();
             Destroy(gameObject);
         }
@@ -262,21 +261,6 @@ public abstract class Enemy : Characters
         {
             NanoRobotModule nanoRobotModule = FindObjectOfType<NanoRobotModule>();
             nanoRobotModule.NanoRobotExplosion(gameObject.transform);
-        }
-    }
-
-    protected void SpawnRewards()
-    {
-        if (!isInvokedInBossRoom)
-        {
-            RewardSpawner rewardSpawner = FindObjectOfType<RewardSpawner>();
-            rewardSpawner.RandomCoinReward(this.gameObject);
-            rewardSpawner.SpawnKeyReward(this.gameObject);
-            rewardSpawner.SpawnHeartReward(this.gameObject);
-            rewardSpawner.SpawnAmoReward(this.gameObject);
-            rewardSpawner.SpawnCoffreArmeReward(this.gameObject);
-            rewardSpawner.SpawnCoffreModuleReward(this.gameObject);
-            rewardSpawner.SpawnArmorReward(this.gameObject);
         }
     }
 
