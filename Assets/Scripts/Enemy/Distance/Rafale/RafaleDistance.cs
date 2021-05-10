@@ -13,7 +13,7 @@ public class RafaleDistance : DistanceWithWeapon
     protected float timeIntervale;
     protected int nbTir;
 
-    private int n = 0; //compteur pour le while
+    protected int n = 0; //compteur pour le while
 
     protected override void Awake()
     {

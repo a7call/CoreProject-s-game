@@ -10,6 +10,9 @@ public class PompeDistanceEnemy : DistanceWithWeapon
 {
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
+    [SerializeField] int NbRafale = 0;
+    [SerializeField] int TimeIntervaleTir = 0;
+
     private AngleProjectile AngleProjectile;
 
     protected override void Start()
@@ -21,6 +24,26 @@ public class PompeDistanceEnemy : DistanceWithWeapon
     // Voir Enemy.cs (héritage)
     protected override IEnumerator ShootCO()
     {
+        
+        for (int i = 0; i < NbRafale; i++)
+        {
+
+            StartCoroutine(ShootPump());
+            yield return new WaitForSecondsRealtime(TimeIntervaleTir);
+        }
+    }
+
+    private void GetProjectile()
+    {
+        foreach (GameObject projectile in projectiles)
+        {
+            AngleProjectile = projectile.GetComponent<AngleProjectile>();
+        }
+    }
+
+    protected IEnumerator ShootPump()
+    {
+        
         float decalage = angleTir / (projectiles.Length - 1);
         AngleProjectile.angleDecalage = -decalage * (projectiles.Length + 1) / 2;
 
@@ -32,13 +55,5 @@ public class PompeDistanceEnemy : DistanceWithWeapon
             myProjectile.transform.parent = gameObject.transform;
         }
         yield return new WaitForEndOfFrame();
-    }
-
-    private void GetProjectile()
-    {
-        foreach (GameObject projectile in projectiles)
-        {
-            AngleProjectile = projectile.GetComponent<AngleProjectile>();
-        }
     }
 }
