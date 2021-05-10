@@ -170,6 +170,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         BulletInMag--;
         Instantiate(projectile, attackPoint.position, transform.rotation);
 
+        
 
         PlayEffectSound(FireSound);
        

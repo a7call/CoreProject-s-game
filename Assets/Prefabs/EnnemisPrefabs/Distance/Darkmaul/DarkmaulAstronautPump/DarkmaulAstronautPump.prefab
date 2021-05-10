@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1593327925}
+  rb: {fileID: 0}
   takeDamageSound: 
   dieSound: 
   isInvokedInBossRoom: 0
@@ -160,7 +161,6 @@ MonoBehaviour:
   aIPath: {fileID: 0}
   targetSetter: {fileID: 0}
   target: {fileID: 0}
-  rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
   isreadyToAttack: 1
   currentState: 1
@@ -175,16 +175,8 @@ MonoBehaviour:
   - {fileID: 3809135497528977688, guid: a07ade24506d547a6b73db8e77b56933, type: 3}
   - {fileID: 3809135497528977688, guid: a07ade24506d547a6b73db8e77b56933, type: 3}
   angleTir: 50
-  chargeDelay: 10
-  chargeTime: 3
-  delayToFirstCharge: 2
-  waitingTime: 1
-  newSlowDownDistance: 0.3
-  newEndReachedDistance: 0.2
-  newMoveSpeed: 10
-  newNextWayPointDist: 20
-  chargeDistance: 2
-  isCharging: 0
+  NbRafale: 3
+  TimeIntervaleTir: 0.7
 --- !u!61 &-5163349306312838963
 BoxCollider2D:
   m_ObjectHideFlags: 0

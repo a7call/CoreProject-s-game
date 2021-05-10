@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using Edgar.Unity.Examples.PC2D.Example;
+using UnityEngine;
 /// <summary>
 /// Classe mère des armes 
 /// </summary>
 public class Weapons : MonoBehaviour
 {
+    
+
     protected GameObject playerGO;
     protected Player player;
     protected Animator animator;

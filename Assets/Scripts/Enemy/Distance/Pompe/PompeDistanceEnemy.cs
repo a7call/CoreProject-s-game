@@ -11,7 +11,7 @@ public class PompeDistanceEnemy : DistanceWithWeapon
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
     [SerializeField] int NbRafale = 0;
-    [SerializeField] int TimeIntervaleTir = 0;
+    [SerializeField] float TimeIntervaleTir = 0;
 
     private AngleProjectile AngleProjectile;
 
