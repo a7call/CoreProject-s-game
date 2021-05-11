@@ -2,12 +2,8 @@
 using UnityEngine;
 
 
-namespace Edgar.Unity.Examples.PC2D.Example
-{
     public class CameraFollow : MonoBehaviour
     {
-
-
         public Transform target;
 
         // Update is called once per frame
@@ -83,4 +79,3 @@ namespace Edgar.Unity.Examples.PC2D.Example
         //}
 
     }
-}
