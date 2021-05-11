@@ -74,7 +74,7 @@ public class EggRunner : Cac
         if (isDying)
         {
             isDying = false;
-            nanoRobot();
+
             Attack();
         }
     }

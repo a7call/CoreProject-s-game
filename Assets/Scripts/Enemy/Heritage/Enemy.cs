@@ -32,6 +32,7 @@ public abstract class Enemy : Characters
 
     protected virtual void Start()
     {
+        allEnemies.AddRange(FindObjectsOfType<Enemy>());
     }
     protected override void GetReference()
     {
@@ -52,7 +53,7 @@ public abstract class Enemy : Characters
 
 
     protected virtual void Update()
-    { 
+    {
         SwitchBasicStates(currentState);
         ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
         SetMouvementAnimationVariable();
@@ -61,10 +62,17 @@ public abstract class Enemy : Characters
             currentState = State.Stunned;
             return;
         }
+        
 
+
+
+
+
+    }
+    private void FixedUpdate()
+    {
         GetLastDirection();
-
-
+        MoveWithAi();
     }
 
     private void OnDestroy()
@@ -151,6 +159,7 @@ public abstract class Enemy : Characters
     public AIDestinationSetter targetSetter;
     [HideInInspector]
     public Transform target;
+    public List<Enemy> allEnemies = new List<Enemy>();
 
     protected void EnableEnemyMouvement()
     {
@@ -162,6 +171,53 @@ public abstract class Enemy : Characters
     {
         aIPath.canMove = false;
     }
+    List<Enemy> GetEnemiesInRadius()
+    {
+        List<Enemy> returnedEnemies = new List<Enemy>();
+        foreach (var enemy in allEnemies.ToArray())
+        {
+            if (enemy == null)
+            {
+                allEnemies.Remove(enemy);
+                continue;
+            }
+
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= 0.5f)
+            {
+                if (enemy.gameObject != this.gameObject)
+                {
+                    returnedEnemies.Add(enemy);
+                }
+
+            }
+
+        }
+            
+        return returnedEnemies;
+    }
+    Vector3 Avoidance()
+    {
+        Vector3 avoidVector = new Vector3();
+        var enemyList = GetEnemiesInRadius();
+        if (enemyList.Count == 0)
+            return avoidVector;
+        foreach (var enemy in enemyList)
+        {
+            avoidVector += RunAway(enemy.transform.position);
+        }
+        return avoidVector;
+    }
+    void MoveWithAi()
+    {
+
+        rb.AddForce(20 * Avoidance() * Time.deltaTime);
+    }
+    private Vector3 RunAway(Vector3 position)
+    {
+        Vector3 neededVelocity = (transform.position - position) * 200;
+        return neededVelocity;
+    }
+
     #endregion
 
 
@@ -251,19 +307,9 @@ public abstract class Enemy : Characters
         if (isDying)
         {
             isDying = false;
-            nanoRobot();
             Destroy(gameObject);
         }
     }
-    protected void nanoRobot()
-    {
-        if (PlayerProjectiles.isNanoRobotModule)
-        {
-            NanoRobotModule nanoRobotModule = FindObjectOfType<NanoRobotModule>();
-            nanoRobotModule.NanoRobotExplosion(gameObject.transform);
-        }
-    }
-
     #endregion
 
 

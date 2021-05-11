@@ -14,9 +14,6 @@ public class Distance : Enemy
     [SerializeField] protected DistanceScriptableObject DistanceData;
     [HideInInspector]
     public float dispersion;
-    // Variables afin de définir un point arbitraire au tour du joueur comme la target  : à pour but de randomiser le déplacement.
-    Transform randomTargetPointTransform;
-    Vector3 randomPoint;
     // attackPoint : where projectile should start
     protected Transform attackPoint;
     // attackModeRange : range ou l'ennemi passe en mode chaising  != attackRange  : range ou l'ennemi passe en mode attaque. 
@@ -29,40 +26,28 @@ public class Distance : Enemy
     protected float restTime;
     // Projectile to instantiate
     protected GameObject projetile;
-  
+
 
     protected override void Update()
     {
         base.Update();
-        SetTargetToRandomPoint();
+      
+
+        switch (currentState)
+        {
+            case State.Chasing:
+                isInRange();
+                break;
+            case State.Attacking:
+                isInRange();
+                StartCoroutine(CanShootCO());
+                break;
+        }
     }
     protected override void GetReference()
     {
         base.GetReference();
-        CreatEnemyTargetGo();
         GetAttackPointGO();
-    }
-    protected void SetTargetToRandomPoint()
-    {
-        if (currentState == State.Chasing && targetSetter.target != randomTargetPointTransform)
-        {
-            targetSetter.target = randomTargetPointTransform;
-        }
-        else if(targetSetter.target == randomTargetPointTransform)
-        {
-            targetSetter.target = target;
-        }
-    }
-
-    protected void CreatEnemyTargetGo()
-    {
-        GameObject randomTargetPoint = new GameObject();
-        randomTargetPoint.name = "targetMouvePoint";
-        randomTargetPoint.transform.parent = target.transform.GetChild(target.transform.childCount-1);
-        randomTargetPointTransform = randomTargetPoint.transform;
-        randomPoint = (Vector3)Random.insideUnitCircle;
-        randomTargetPointTransform.position = target.position + randomPoint;
-        targetSetter.target = randomTargetPointTransform;
     }
     void GetAttackPointGO()
     {
@@ -78,7 +63,7 @@ public class Distance : Enemy
     protected override void SetData()
     {
         // ScriptableObject Datas
-        maxHealth = DistanceData.maxHealth;
+        MaxHealth = DistanceData.maxHealth;
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + Utils.RandomizeParams(-1, 2));

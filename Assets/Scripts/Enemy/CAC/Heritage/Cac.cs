@@ -54,7 +54,7 @@ public class Cac : Enemy
         aIPath.maxSpeed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
 
         inSight = CacDatas.InSight;
-        maxHealth = CacDatas.maxHealth;
+        MaxHealth = CacDatas.maxHealth;
         attackDelay = CacDatas.attackDelay;
         isSupposedToMoveAttacking = CacDatas.isSupposedToMoveAttacking;
     }

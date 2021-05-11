@@ -219,7 +219,7 @@ public class BossTentaclePop : Enemy
     // Permet de Set les Data
     protected override void SetData()
     {
-        maxHealth = BossData.maxHealth;
+       // maxHealth = BossData.maxHealth;
 
         attackRange = BossData.attackRange;
         restTime = BossData.restTime;
@@ -269,7 +269,7 @@ public class BossTentaclePop : Enemy
     // Permet de savoir si le Boss est en State 1 ou 2
     private void ActualState()
     {
-        if (currentHealth > maxHealth / 2)
+        if (CurrentHealth > MaxHealth / 2)
         {
             currentBossState = BossState.Phase1;
         }
@@ -289,7 +289,7 @@ public class BossTentaclePop : Enemy
     // Permet de savoir si le Boss est mort
     private void DeathState()
     {
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             StopCoroutine("CanThirdAbility");
             StopCoroutine("CanFirstAbilityState2");

@@ -40,7 +40,7 @@ public class Goblin : Enemy
     {
         aIPath.maxSpeed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
 
-        maxHealth = enemyData.maxHealth;
+        //maxHealth = enemyData.maxHealth;
     }
 
     protected override void Update()

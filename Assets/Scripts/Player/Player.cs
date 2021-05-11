@@ -379,22 +379,6 @@ public class Player : Characters
     #endregion
     #endregion
 
-    #region HEALTH
-    
-    private void AjustHhealth()
-    {
-        if (currentHealth >= maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        // RETIRER LE HEALTH IF LORSQUE L'ON AURA FAIT LA MORT DU JOUEUR
-        else if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-        }
-    }
-    #endregion
-
 
     #region Damage to player
     public SpriteRenderer graphics;
@@ -445,12 +429,24 @@ public class Player : Characters
    
     public int currentArmor;
     private int maxArmor = 2;
+    private void AjustHhealth()
+    {
+        if (CurrentHealth >= MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+        // RETIRER LE HEALTH IF LORSQUE L'ON AURA FAIT LA MORT DU JOUEUR
+        else if (CurrentHealth <= 0)
+        {
+            CurrentHealth = 0;
+        }
+    }
     public void AddLifePlayer(int health)
     {
         CurrentHealth += health;
-        if (CurrentHealth > maxHealth)
+        if (CurrentHealth > MaxHealth)
         {
-            CurrentHealth = maxHealth;
+            CurrentHealth = MaxHealth;
         }
     }
     public void AddArmorPlayer(int _armor)
@@ -494,43 +490,43 @@ public class Player : Characters
 
 
 
-        if (currentHealth == maxHealth)
+        if (CurrentHealth == MaxHealth)
         {
             image1.sprite = fullHearth;
             image2.sprite = fullHearth;
             image3.sprite = fullHearth;
         }
-        else if (currentHealth == maxHealth - 1)
+        else if (CurrentHealth == MaxHealth - 1)
         {
             image1.sprite = fullHearth;
             image2.sprite = fullHearth;
             image3.sprite = halfHearth;
         }
-        else if (currentHealth == maxHealth - 2)
+        else if (CurrentHealth == MaxHealth - 2)
         {
             image1.sprite = fullHearth;
             image2.sprite = fullHearth;
             image3.sprite = emptyHearth;
         }
-        else if (currentHealth == maxHealth - 3)
+        else if (CurrentHealth == MaxHealth - 3)
         {
             image1.sprite = fullHearth;
             image2.sprite = halfHearth;
             image3.sprite = emptyHearth;
         }
-        else if (currentHealth == maxHealth - 4)
+        else if (CurrentHealth == MaxHealth - 4)
         {
             image1.sprite = fullHearth;
             image2.sprite = emptyHearth;
             image3.sprite = emptyHearth;
         }
-        else if (currentHealth == maxHealth - 5)
+        else if (CurrentHealth == MaxHealth - 5)
         {
             image1.sprite = halfHearth;
             image2.sprite = emptyHearth;
             image3.sprite = emptyHearth;
         }
-        else if (currentHealth == maxHealth - 6)
+        else if (CurrentHealth == MaxHealth - 6)
         {
             image1.sprite = emptyHearth;
             image2.sprite = emptyHearth;
