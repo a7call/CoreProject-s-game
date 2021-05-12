@@ -62,17 +62,11 @@ public abstract class Enemy : Characters
             currentState = State.Stunned;
             return;
         }
-        
-
-
-
-
-
     }
     private void FixedUpdate()
     {
         GetLastDirection();
-        MoveWithAi();
+        //MoveWithAi();
     }
 
     private void OnDestroy()
@@ -203,14 +197,16 @@ public abstract class Enemy : Characters
             return avoidVector;
         foreach (var enemy in enemyList)
         {
+            //avoidancePriority = 1 + 1 / Vector3.Distance(enemy.transform.position, transform.position);
             avoidVector += RunAway(enemy.transform.position);
         }
         return avoidVector;
     }
+    private  float avoidancePriority = 0;
     void MoveWithAi()
     {
-
-        rb.AddForce(20 * Avoidance() * Time.deltaTime);
+        
+       // rb.AddForce(avoidancePriority * Avoidance() * Time.deltaTime);
     }
     private Vector3 RunAway(Vector3 position)
     {
