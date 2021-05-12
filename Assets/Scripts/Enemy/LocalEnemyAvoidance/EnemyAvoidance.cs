@@ -65,15 +65,25 @@ public class EnemyAvoidance : MonoBehaviour
             seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
         }
     }
+    bool avoidMode = false;
     public void Update()
     {
-        print(Avoidance() +""+ gameObject);
-        if (Avoidance() == Vector3.zero)
+        if (GetEnemiesInRadius(_avoidanceRadius).Count > 0 && !avoidMode)
         {
-           
+            avoidMode = true;
+            velocity = Vector3.zero;
+        } 
+        if (GetEnemiesInRadius(2*_avoidanceRadius).Count == 0 && avoidMode)
+        {
+            avoidMode = false;
+            velocity = Vector3.zero;
+        }
+            
+
+        if (!avoidMode)
+        {
             velocity = PathFindingMouv();
         }
-
         else
         {
             acceleration = Combine();
@@ -81,7 +91,7 @@ public class EnemyAvoidance : MonoBehaviour
             velocity += acceleration * Time.deltaTime;
             velocity = Vector3.ClampMagnitude(velocity, maxVelocity);
         }
-        transform.position += velocity * Time.deltaTime;
+        transform.Translate(  velocity * Time.deltaTime);
 
     }
     public void FixedUpdate()
@@ -169,23 +179,18 @@ public class EnemyAvoidance : MonoBehaviour
         return returnedEnemies;
 
     }
-    Vector3 previousVec = new Vector3();
+
     Vector3 Avoidance()
     {
+        
         Vector3 avoidVector = new Vector3();
         var enemyList = GetEnemiesInRadius(_avoidanceRadius);
-        var enemyListInMaxRadius = GetEnemiesInRadius(5);
-        print(enemyListInMaxRadius.Count);
-        // A Ameliorer
-        if ((enemyList.Count == 0 && enemyListInMaxRadius.Count != 0))
-            return previousVec;
-        else if (enemyList.Count == 0 && enemyListInMaxRadius.Count == 0)
+        if (enemyList.Count <= 0)
             return avoidVector;
         foreach (var enemy in enemyList)
         {
             avoidVector += RunAway(enemy.transform.position);
         }
-        previousVec = avoidVector;
         return avoidVector;
     }
 
