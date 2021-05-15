@@ -10,7 +10,7 @@ public class EnemyAvoidance : MonoBehaviour
     Seeker seeker;
     public Path path;
 
-    public float speed = 2;
+    public float speed = 1.5f;
 
     Vector3 velocity;
     Vector3 acceleration;
@@ -33,6 +33,8 @@ public class EnemyAvoidance : MonoBehaviour
 
     public float pathfindPriority;
 
+    public Transform target;
+
 
     public void Start()
     {
@@ -43,8 +45,9 @@ public class EnemyAvoidance : MonoBehaviour
         // Start to calculate a new path to the targetPosition object, return the result to the OnPathComplete method.
         // Path requests are asynchronous, so when the OnPathComplete method is called depends on how long it
         // takes to calculate the path. Usually it is called the next frame.
-        InvokeRepeating("UpdatePath", 0f, 0.5f);
-      
+        InvokeRepeating("UpdatePath", 0f, 1f);
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        
     }
 
     public void OnPathComplete(Path p)
@@ -65,32 +68,31 @@ public class EnemyAvoidance : MonoBehaviour
             seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
         }
     }
-    bool avoidMode = false;
     public void Update()
     {
-        if (GetEnemiesInRadius(_avoidanceRadius).Count > 0 && !avoidMode)
-        {
-            avoidMode = true;
-            velocity = Vector3.zero;
-        } 
-        if (GetEnemiesInRadius(2*_avoidanceRadius).Count == 0 && avoidMode)
-        {
-            avoidMode = false;
-            velocity = Vector3.zero;
-        }
-            
+        //if (GetEnemiesInRadius(_avoidanceRadius).Count > 0 && !avoidMode)
+        //{
+        //    avoidMode = true;
+        //    velocity = Vector3.zero;
+        //} 
+        //if (GetEnemiesInRadius(2*_avoidanceRadius).Count == 0 && avoidMode)
+        //{
+        //    avoidMode = false;
+        //    velocity = Vector3.zero;
+        //}
+        if (Vector3.Distance(transform.position, target.position) <= 4f)
+            return;
 
-        if (!avoidMode)
-        {
-            velocity = PathFindingMouv();
-        }
-        else
-        {
-            acceleration = Combine();
-            acceleration = Vector3.ClampMagnitude(acceleration, maxAcceleration);
-            velocity += acceleration * Time.deltaTime;
-            velocity = Vector3.ClampMagnitude(velocity, maxVelocity);
-        }
+
+        velocity = PathFindingMouv();
+        
+        //else
+        //{
+        //    acceleration = Combine();
+        //    acceleration = Vector3.ClampMagnitude(acceleration, maxAcceleration);
+        //    velocity += acceleration * Time.deltaTime;
+        //    velocity = Vector3.ClampMagnitude(velocity, maxVelocity);
+        //}
         transform.Translate(  velocity * Time.deltaTime);
 
     }
@@ -104,7 +106,7 @@ public class EnemyAvoidance : MonoBehaviour
         seeker.pathCallback -= OnPathComplete;
     }
 
-    float speedFactor;
+    List<GraphNode> previousPath = new List<GraphNode>(); 
     Vector3 PathFindingMouv()
     {
         var pathFindingVector = new Vector2();
@@ -146,11 +148,35 @@ public class EnemyAvoidance : MonoBehaviour
                 break;
             }
         }
+        var gridGraph = AstarPath.active.data;
+        if(previousPath.Count != 0)
+        {
+            foreach(var node in previousPath)
+            {
+                node.Penalty = 0;
+            }
+        }
+
+        foreach(var node in path.path)
+        {
+            previousPath.Add(node);
+            // node.Penalty = 40000;
+            //for (int x = -1; x <= 1; x++)
+            //{
+            //    for (int y = -1; y <= 1; y++)
+            //    {
+                    
+            //    }
+            //}
+
+        }
+        
+       
 
         // Slow down smoothly upon approaching the end of the path
         // This value will smoothly go from 1 to 0 as the agent approaches the last waypoint in the path.
-         speedFactor = reachedEndOfPath ? Mathf.Sqrt(distanceToWaypoint / nextWaypointDistance) : 1f;
-
+        var  speedFactor = reachedEndOfPath ? Mathf.Sqrt(distanceToWaypoint / nextWaypointDistance) : 1f;
+        
         // Direction to the next waypoint
         // Normalize it so that it has a length of 1 world unit
         Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
@@ -158,11 +184,6 @@ public class EnemyAvoidance : MonoBehaviour
         pathFindingVector = dir * speed * speedFactor;
 
         return pathFindingVector;
-    }
-    Vector3 Combine()
-    {
-        return pathfindPriority * PathFindingMouv()
-            + avoidancePriority * Avoidance();
     }
     List<EnemyAvoidance> GetEnemiesInRadius(float radius)
     {
