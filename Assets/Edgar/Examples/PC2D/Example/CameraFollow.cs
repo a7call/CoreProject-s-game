@@ -57,25 +57,4 @@ using UnityEngine;
             transform.rotation = Quaternion.Euler(0f, 0f, shakeRotation * Random.Range(-1f, 1f));
         }
 
-        //public IEnumerator StartShake(float duration, float magnitude)
-        //{
-
-        //    float elapsedTime = 0.0f;
-
-        //    while (elapsedTime < duration)
-        //    {
-        //        float x = Random.Range(-1f, 1f) * magnitude;
-        //        float y = Random.Range(-1f, 1f) * magnitude;
-
-        //        transform.localPosition = transform.localPosition + new Vector3(x,y);
-
-        //        magnitude = Mathf.MoveTowards(magnitude, 0f, shakeFadeTime * Time.deltaTime);
-
-        //        elapsedTime += Time.deltaTime;
-
-        //        yield return null;
-        //    }
-
-        //}
-
     }
