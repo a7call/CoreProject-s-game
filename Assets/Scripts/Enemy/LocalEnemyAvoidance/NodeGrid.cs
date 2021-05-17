@@ -56,7 +56,7 @@ public class Node : IHeapItem<Node>
 
 public class NodeGrid: MonoBehaviour
 {
-    Node[,] grid;
+    public Node[,] grid;
     LayerMask walkableMask;
     Dictionary<int, int> walkableRegionsDictionnary = new Dictionary<int, int>();
     public int obstacleProximityPenalty = 10;
@@ -93,18 +93,19 @@ public class NodeGrid: MonoBehaviour
         }
        
         CreateGrid();
-       
+        //StartCoroutine(EnemyPenalty());
+
+
     }
+    public LayerMask enemyLayer;
+    private float minPathUpdateTime = 0.5f;
+
     private void Update()
     {
-        //var ray = new Ray(new Vector3(0,-10) + Vector3.forward * 50, -Vector3.forward);
-        //Debug.DrawRay(ray.origin, 100 * ray.direction);
-        //RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction,100) ;
-        //if (hit)
-        //{
-        //    print(hit.collider.gameObject);
-        //}
+        
+       
     }
+
     private void CreateGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];

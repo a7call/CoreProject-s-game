@@ -5,12 +5,14 @@ using UnityEngine;
 public class PathWanderer
 {
     public readonly Vector3[] lookPoints;
+    public readonly List<Node> _nodePath;
     public readonly Line[] turnBoundaries;
     public readonly int finishLineIndex;
     public readonly int slowDownIndex;
-    public PathWanderer(Vector3[] wayPoints, Vector3 startPos, float turnDist, float stoppingDist)
+    public PathWanderer(Vector3[] wayPoints, Vector3 startPos, float turnDist, float stoppingDist, List<Node> nodePath)
     {
         lookPoints = wayPoints;
+        _nodePath = nodePath;
         turnBoundaries = new Line[lookPoints.Length];
         finishLineIndex = turnBoundaries.Length - 1;
         Vector2 previousPoint = V3toV2(startPos);

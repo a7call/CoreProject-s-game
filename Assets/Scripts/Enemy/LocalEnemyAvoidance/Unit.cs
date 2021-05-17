@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour
     const float minPathUpdateTime = 0.2f;
     const float pathUpdateMoveThreshHold = 0.5f;
 
+    NodeGrid grid;
+
     Vector3 currentDir;
     float interpolationSpeed;
 
@@ -25,16 +27,36 @@ public class Unit : MonoBehaviour
     PathWanderer path;
     private void Start()
     {
+        grid = FindObjectOfType<NodeGrid>();
         StartCoroutine(UpdatePath());
     }
-
-    public void OnPathFound(Vector3[] wayPoints, bool pathSuccessful)
+    List<Node> oldNodePath = new List<Node>();
+    public void OnPathFound(Vector3[] wayPoints, bool pathSuccessful, List<Node> nodePath)
     {
         if (pathSuccessful)
         {
-            path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist);
+            SetPenaltyToNode(oldNodePath,-5);
+            path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist, nodePath);
+            oldNodePath = path._nodePath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
+            SetPenaltyToNode(path._nodePath, 5);
+        }
+    }
+    void SetPenaltyToNode(List<Node> nodePath, int penalty)
+    {
+        foreach(var n in nodePath)
+        {
+            for(int x =-1; x<=1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    if(grid.grid[n._gridX + x, n._gridY + y]._movementPenalty + penalty >= 0)
+                        grid.grid[n._gridX + x, n._gridY + y]._movementPenalty += penalty;
+                    else
+                        grid.grid[n._gridX + x, n._gridY + y]._movementPenalty += 0;
+                }
+            }             
         }
     }
 
@@ -45,7 +67,7 @@ public class Unit : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
 
-        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position,OnPathFound));
 
         float sqrMoveThreshHold = pathUpdateMoveThreshHold * pathUpdateMoveThreshHold;
         Vector3 targetPosOld = target.position;
@@ -54,7 +76,7 @@ public class Unit : MonoBehaviour
             yield return new WaitForSeconds(minPathUpdateTime);
             if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshHold)
             {
-                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+                PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
                 targetPosOld = target.position;
             }
 
@@ -73,12 +95,6 @@ public class Unit : MonoBehaviour
         {
 
             Vector2 pos2D = new Vector2(transform.position.x, transform.position.y);
-            if(path.turnBoundaries.Length <= 0)
-            {
-                followingPath = false;
-                break;
-            }
-            
             while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
             {
                 if(pathIndex == path.finishLineIndex)

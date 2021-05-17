@@ -6,19 +6,13 @@ using System;
 
 public class WandererPathFinding : MonoBehaviour
 {
-    PathRequestManager requestManager;
     NodeGrid grid;
-
-    
-
     private void Awake()
     {
         grid = GetComponent<NodeGrid>();
-        requestManager = GetComponent<PathRequestManager>();
-
     }
 
-    IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
+    public void FindPath(PathRequest request, Action<PathResult> callback)
     {
         Stopwatch sw = new Stopwatch();
         sw.Start();
@@ -26,8 +20,8 @@ public class WandererPathFinding : MonoBehaviour
         Vector3[] wayPoints = new Vector3[0];
         bool pathSuccess = false;
 
-        var startNode = grid.NodeFromWorldPoint(startPos);
-        var targetNode = grid.NodeFromWorldPoint(targetPos);
+        var startNode = grid.NodeFromWorldPoint(request._pathStart);
+        var targetNode = grid.NodeFromWorldPoint(request._pathEnd);
 
         if(startNode._walkable && targetNode._walkable)
         {
@@ -67,33 +61,32 @@ public class WandererPathFinding : MonoBehaviour
                     }
                 }
             }
-            yield return null;
+            var path = new List<Node>();
             if (pathSuccess)
             {
-                wayPoints = RetracePath(startNode, targetNode);
+                wayPoints = RetracePath(startNode, targetNode,out path);
+                pathSuccess = wayPoints.Length > 0;
             }
-            requestManager.FinishedProcessingPath(wayPoints, pathSuccess);
+            callback(new PathResult(wayPoints, pathSuccess, path, request._callback));
         }  
     }
 
-    public void StartFindPath(Vector3 startPos, Vector3 targetPos)
+    Vector3[] RetracePath(Node startNode, Node endNode, out List<Node> path)
     {
-        StartCoroutine(FindPath(startPos, targetPos));
-    }
-
-    Vector3[] RetracePath(Node startNode, Node endNode)
-    {
-        List<Node> path = new List<Node>();
+        path = new List<Node>();
         var currentNode = endNode;
         while (currentNode != startNode)
         {
             path.Add(currentNode);
-            currentNode = currentNode._parent;
+            currentNode = currentNode._parent;   
         }
         Vector3[] wayPoints = SimplifyPath(path);
         Array.Reverse(wayPoints);
         return wayPoints;
     }
+
+
+
 
     Vector3[] SimplifyPath(List<Node> path)
     {
