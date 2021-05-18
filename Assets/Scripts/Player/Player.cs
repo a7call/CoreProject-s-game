@@ -367,6 +367,17 @@ public class Player : Characters
         }
     }
 
+    public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime)
+    {
+        
+        rb.AddForce(dir * knockBackForce);
+        
+        yield return new WaitForSeconds(knockBackTime);
+       
+        rb.velocity = Vector2.zero;
+        
+    }
+
 
     void PiercedPocketActivation()
     {

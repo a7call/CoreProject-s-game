@@ -9,6 +9,8 @@ public class CaCWeaponScriptableObject : WeaponScriptableObject
 {
     public float attackRadius;
     public float attackRange;
+    public float knockFrontForce;
+    public float knockFrontTime;
     public override void Equip(Player p)
     {
         base.Equip(p);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExplosionProjectile : PlayerProjectiles
 {
     [SerializeField] protected float explosionRadius;
-    protected float screenShakePower = 0.4f;
+    protected float screenShakePower = 0.35f;
     protected float screenShakeDuration = 0.3f;
 
     protected override void Start()

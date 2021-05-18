@@ -19,6 +19,8 @@ public class CacWeapons : Weapons, IPlayerWeapon
      }
     protected float knockBackForce;
     protected float knockBackTime;
+    protected float knockFrontForce;
+    protected float knockFrontTime;
     protected Vector3 dir;
     protected float attackRadius;
     public float attackRange;
@@ -87,6 +89,8 @@ public class CacWeapons : Weapons, IPlayerWeapon
         knockBackTime = WeaponData.knockBackTime;
         attackRadius = player.attackRadius.Value;
         attackRange = player.attackRange.Value;
+        knockFrontForce = CacWeaponData.knockFrontForce;
+        knockFrontTime = CacWeaponData.knockFrontTime;
     }
     #endregion
 
@@ -99,11 +103,13 @@ public class CacWeapons : Weapons, IPlayerWeapon
     {
         if (!PauseMenu.isGamePaused)
         {
+            CoroutineManager.Instance.StartCoroutine(player.KnockCo(knockFrontForce, dir, knockFrontTime));
             PlayEffectSound(AttackSound);
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
             AttackAppliedOnEnemy(enemyHit);
             yield return new WaitForSeconds(attackDelay);
             isAttacking = false;
+           
         }
 
     }
