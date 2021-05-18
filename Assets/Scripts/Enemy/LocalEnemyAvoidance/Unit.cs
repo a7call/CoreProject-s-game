@@ -35,12 +35,10 @@ public class Unit : MonoBehaviour
     {
         if (pathSuccessful)
         {
-            SetPenaltyToNode(oldNodePath,-5);
+           
             path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist, nodePath);
-            oldNodePath = path._nodePath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
-            SetPenaltyToNode(path._nodePath, 5);
         }
     }
     void SetPenaltyToNode(List<Node> nodePath, int penalty)
