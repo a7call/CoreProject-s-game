@@ -46,7 +46,16 @@ public class WandererPathFinding : MonoBehaviour
                 {
                     if (!neighboor._walkable || closeSet.Contains(neighboor))
                         continue;
-                    int newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor) + neighboor._movementPenalty;
+                    int newMouvementCostToNeighboor;
+                    if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f)
+                    {
+                      newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor) + neighboor._movementPenalty;
+                    }
+                    else
+                    {
+                        newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor);
+                    }
+                    
                     if (newMouvementCostToNeighboor < neighboor._gCost || !openSet.Contains(neighboor))
                     {
                         neighboor._gCost = newMouvementCostToNeighboor;
