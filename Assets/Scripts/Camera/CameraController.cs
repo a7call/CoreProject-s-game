@@ -54,6 +54,7 @@ public class CameraController : MonoBehaviour
         UpdateCameraPosition();
     }
 
+    # region CameraFollow
     private Vector3 CaptureMousePos()
     {
         Vector2 ret = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -80,11 +81,26 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-        Vector3 tempPos;
-        tempPos = Vector3.SmoothDamp(transform.position, target, ref refVel, smoothTime);
-        transform.position = tempPos;
+        transform.position = Vector3.SmoothDamp(transform.position, target, ref refVel, smoothTime);
     }
 
+    #endregion
+
+    #region Shake 
+
+    // Global Shake
+    public void Shake(float magnitude, float length)
+    {
+        isShaking = true;
+        float x = Random.Range(-1f, 1f) * magnitude;
+        float y = Random.Range(-1f, 1f) * magnitude;
+        shakeVector = new Vector3(x, y);
+        // shakeVector = Vector3.zero;
+        shakeMag = magnitude;
+        shakeTimeEnd = Time.time + length;
+    }
+
+    // Directionnal Shake
     public void Shake(Vector3 direction, float magnitude, float length)
     {
         isShaking = true;
@@ -92,6 +108,7 @@ public class CameraController : MonoBehaviour
         shakeMag = magnitude;
         shakeTimeEnd = Time.time + length;
     }
+
 
     private Vector3 UpdateShake()
     {
@@ -104,6 +121,8 @@ public class CameraController : MonoBehaviour
         tempOffset *= shakeMag;
         return tempOffset;
     }
+
+    #endregion
 
 }
 
