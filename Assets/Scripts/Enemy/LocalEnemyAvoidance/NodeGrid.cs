@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class TerrainType
+{
+    public LayerMask terrainMask;
+    public int terrainPenalty;
+}
 public class Node : IHeapItem<Node>
 {
     public bool _walkable;
@@ -94,7 +101,7 @@ public class NodeGrid: MonoBehaviour
             walkableRegionsDictionnary.Add((int)Mathf.Log(region.terrainMask.value,2),region.terrainPenalty);
         }
        
-        CreateGrid();
+       // CreateGrid();
         //StartCoroutine(EnemyPenalty());
 
 
@@ -106,7 +113,7 @@ public class NodeGrid: MonoBehaviour
        
     }
     public Vector3 worldBottomLeft;
-    private void CreateGrid()
+    public void CreateGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];
         worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.up * gridWorldSize.y / 2;
@@ -311,10 +318,5 @@ public class NodeGrid: MonoBehaviour
   
 
 }
-[System.Serializable]
-public class TerrainType
-{
-    public LayerMask terrainMask;
-    public int terrainPenalty;
-}
+
 

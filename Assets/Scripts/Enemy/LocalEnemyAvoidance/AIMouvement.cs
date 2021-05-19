@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class AIMouvement : MonoBehaviour
 {
     const float minPathUpdateTime = 0.2f;
     const float pathUpdateMoveThreshHold = 0.5f;
@@ -14,13 +14,19 @@ public class Unit : MonoBehaviour
     NodeGrid grid;
 
     private Animator animator;
+
+    #region Mouvement variable
+    Vector2 directionToTarget = new Vector2();
+    Vector3 currentDir;
+    public bool shouldMove = false;
+    private Rigidbody2D rb;
     public bool isMoving = false;
+    #endregion  
 
     int penaltyToNodeOnPath = 5;
     List<Node> currentPath = new List<Node>();
 
-
-    Vector3 currentDir;
+    
     float interpolationSpeed;
 
     [Header("Target")]
@@ -32,12 +38,13 @@ public class Unit : MonoBehaviour
     public float turnDistance = 5;
 
     [Header("SlowDownUnit")]
-    public float stoppingDist = 2;
+    private float stoppingDist = 0;
 
     PathWanderer path;
     private void Start()
     {
         grid = FindObjectOfType<NodeGrid>();
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         StartCoroutine(isUnitMoving());
         StartCoroutine(UpdatePath());
@@ -55,17 +62,31 @@ public class Unit : MonoBehaviour
         }
        
     }
+    private void Update()
+    {
+
+    }
     private void FixedUpdate()
     {
-        GetLastDirection();
-    }
-    protected virtual void GetLastDirection()
-    {
+        if (shouldMove)
+        {
+           rb.MovePosition(((Vector2)transform.position + directionToTarget.normalized * Time.deltaTime * speed));
+        }
+            
+       // GetLastDirection();
         
-        animator.SetFloat("Speed", 1);
-        animator.SetFloat("lastMoveX", target.position.x - gameObject.transform.position.x);
-        animator.SetFloat("lastMoveY", target.position.y - gameObject.transform.position.y);
     }
+    //Vector2 lastPos = new Vector2();
+    //protected virtual void GetLastDirection()
+    //{
+    //    Vector2 trackVelocity = (rb.position - lastPos) * 50;
+    //    lastPos = rb.position;
+
+        
+    //    animator.SetFloat("Speed", 1);
+    //    animator.SetFloat("HorizontalSpeed", trackVelocity.x);
+    //    animator.SetFloat("VerticalSpeed", trackVelocity.y);
+    //}
 
     IEnumerator UpdatePath()
     {
@@ -93,10 +114,6 @@ public class Unit : MonoBehaviour
            
     }
    
-    private void Update()
-    {
-        
-    }
   
     IEnumerator isUnitMoving()
     {
@@ -112,7 +129,7 @@ public class Unit : MonoBehaviour
                 isMoving = true;
                 UnBusyNodes();
             }
-            else if (isMoving)
+            else if (isMoving && (transform.position - unitPosOld).sqrMagnitude < sqrMoveThreshHold)
             {
                 isMoving = false;
                 occupiedNodes =  grid.SetNodeBusy(transform.position);  
@@ -142,6 +159,7 @@ public class Unit : MonoBehaviour
                 if(pathIndex == path.finishLineIndex)
                 {
                     followingPath = false;
+                    shouldMove = false;
                     break;
                 }
                 else
@@ -156,22 +174,23 @@ public class Unit : MonoBehaviour
                 if(pathIndex >= path.slowDownIndex && stoppingDist > 0)
                 {
                     speedPercent = Mathf.Clamp01(path.turnBoundaries[path.finishLineIndex].DistanceFromPoint(pos2D) / stoppingDist);
-                    if (speedPercent < 0.5f)
+                    if (speedPercent < 0.8f)
                     {
+                        shouldMove = false;
                         followingPath = false;
                         break;
                     }
                   
                 }
-               
+                shouldMove = true;
                 var directiontoMoveTo = path.lookPoints[pathIndex] - transform.position;
                 interpolationSpeed += turnSpeed;
-                var dir = Vector3.Slerp(currentDir, directiontoMoveTo, interpolationSpeed * Time.deltaTime) ;
-                transform.Translate(dir.normalized * Time.deltaTime * speed* speedPercent);
+                directionToTarget = Vector3.Slerp(currentDir, directiontoMoveTo, interpolationSpeed * Time.deltaTime);
             }
             yield return null;
         }
     }
+
 
     public void OnDrawGizmos()
     {

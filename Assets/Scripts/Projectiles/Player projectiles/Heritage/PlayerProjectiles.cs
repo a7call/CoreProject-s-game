@@ -86,6 +86,7 @@ public class PlayerProjectiles : MonoBehaviour
     {
 
         directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
+        if(CameraController.instance != null)
         CameraController.instance.Shake((playerGO.transform.position - transform.position).normalized, 1.5f, 0.05f); // A venir modifier selon les projectilles
         // CameraController.instance.Shake(3f, 1f);
         rb.velocity = directionTir * projectileSpeed;

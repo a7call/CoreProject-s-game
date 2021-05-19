@@ -165,55 +165,7 @@ public abstract class Enemy : Characters
     {
         aIPath.canMove = false;
     }
-    List<Enemy> GetEnemiesInRadius()
-    {
-        List<Enemy> returnedEnemies = new List<Enemy>();
-        foreach (var enemy in allEnemies.ToArray())
-        {
-            if (enemy == null)
-            {
-                allEnemies.Remove(enemy);
-                continue;
-            }
-
-            if (Vector3.Distance(transform.position, enemy.transform.position) <= 0.5f)
-            {
-                if (enemy.gameObject != this.gameObject)
-                {
-                    returnedEnemies.Add(enemy);
-                }
-
-            }
-
-        }
-            
-        return returnedEnemies;
-    }
-    Vector3 Avoidance()
-    {
-        Vector3 avoidVector = new Vector3();
-        var enemyList = GetEnemiesInRadius();
-        if (enemyList.Count == 0)
-            return avoidVector;
-        foreach (var enemy in enemyList)
-        {
-            //avoidancePriority = 1 + 1 / Vector3.Distance(enemy.transform.position, transform.position);
-            avoidVector += RunAway(enemy.transform.position);
-        }
-        return avoidVector;
-    }
-    private  float avoidancePriority = 0;
-    void MoveWithAi()
-    {
-        
-       // rb.AddForce(avoidancePriority * Avoidance() * Time.deltaTime);
-    }
-    private Vector3 RunAway(Vector3 position)
-    {
-        Vector3 neededVelocity = (transform.position - position) * 200;
-        return neededVelocity;
-    }
-
+ 
     #endregion
 
 
@@ -234,8 +186,8 @@ public abstract class Enemy : Characters
     public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
         if (currentState == State.Charging) yield break;
-
-        rb.AddForce(dir * knockBackForce);
+        // NEED TO BE CHANGED TO IMPULSE
+        rb.AddForce(dir * knockBackForce, ForceMode2D.Force);
         State previousState = currentState;
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
