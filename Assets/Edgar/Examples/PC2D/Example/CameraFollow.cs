@@ -87,9 +87,9 @@ using UnityEngine;
 
             shakeTimeRemaining -= Time.deltaTime;
 
-            float x = Random.Range(0.2f,1f) * shakePower;
+            //float x = Random.Range(0.2f,1f) * shakePower;
                 
-            transform.localPosition = transform.localPosition + direction * x;
+            transform.localPosition = transform.localPosition + direction * shakePower;
 
             shakePower = Mathf.MoveTowards(shakePower, 0f, shakeFadeTime * Time.deltaTime);
 
