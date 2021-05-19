@@ -45,7 +45,7 @@ public class WandererPathFinding : MonoBehaviour
                 {
                     if (!neighboor._walkable || closeSet.Contains(neighboor))
                         continue;
-                    if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f && neighboor._isBusy && Vector3.Distance(neighboor._worldPosition, request._pathStart) >= 3*grid.nodeRadius)
+                    if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f && neighboor._isBusy && Vector3.Distance(neighboor._worldPosition, request._pathStart) >= 4*grid.nodeRadius)
                         continue;
 
                     int newMouvementCostToNeighboor;

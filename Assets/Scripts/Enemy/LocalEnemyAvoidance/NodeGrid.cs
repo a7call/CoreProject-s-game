@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class TerrainType
+{
+    public LayerMask terrainMask;
+    public int terrainPenalty;
+}
 public class Node : IHeapItem<Node>
 {
     public bool _walkable;
@@ -311,10 +318,5 @@ public class NodeGrid: MonoBehaviour
   
 
 }
-[System.Serializable]
-public class TerrainType
-{
-    public LayerMask terrainMask;
-    public int terrainPenalty;
-}
+
 

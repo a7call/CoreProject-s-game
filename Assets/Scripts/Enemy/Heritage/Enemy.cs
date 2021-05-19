@@ -235,7 +235,7 @@ public abstract class Enemy : Characters
     {
         if (currentState == State.Charging) yield break;
 
-        rb.AddForce(dir * knockBackForce);
+        rb.AddForce(dir * knockBackForce, ForceMode2D.Impulse);
         State previousState = currentState;
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
