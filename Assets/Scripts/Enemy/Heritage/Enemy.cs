@@ -234,8 +234,8 @@ public abstract class Enemy : Characters
     public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
         if (currentState == State.Charging) yield break;
-
-        rb.AddForce(dir * knockBackForce, ForceMode2D.Impulse);
+        // NEED TO BE CHANGED TO IMPULSE
+        rb.AddForce(dir * knockBackForce, ForceMode2D.Force);
         State previousState = currentState;
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);

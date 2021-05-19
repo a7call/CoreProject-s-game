@@ -73,20 +73,20 @@ public class AIMouvement : MonoBehaviour
            rb.MovePosition(((Vector2)transform.position + directionToTarget.normalized * Time.deltaTime * speed));
         }
             
-        GetLastDirection();
+       // GetLastDirection();
         
     }
-    Vector2 lastPos = new Vector2();
-    protected virtual void GetLastDirection()
-    {
-        Vector2 trackVelocity = (rb.position - lastPos) * 50;
-        lastPos = rb.position;
+    //Vector2 lastPos = new Vector2();
+    //protected virtual void GetLastDirection()
+    //{
+    //    Vector2 trackVelocity = (rb.position - lastPos) * 50;
+    //    lastPos = rb.position;
 
         
-        animator.SetFloat("Speed", 1);
-        animator.SetFloat("HorizontalSpeed", trackVelocity.x);
-        animator.SetFloat("VerticalSpeed", trackVelocity.y);
-    }
+    //    animator.SetFloat("Speed", 1);
+    //    animator.SetFloat("HorizontalSpeed", trackVelocity.x);
+    //    animator.SetFloat("VerticalSpeed", trackVelocity.y);
+    //}
 
     IEnumerator UpdatePath()
     {
