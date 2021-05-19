@@ -103,6 +103,7 @@ public class CameraController : MonoBehaviour
     // Directionnal Shake
     public void Shake(Vector3 direction, float magnitude, float length)
     {
+        print("Shake");
         isShaking = true;
         shakeVector = direction;
         shakeMag = magnitude;
@@ -117,8 +118,10 @@ public class CameraController : MonoBehaviour
             isShaking = false;
             return Vector3.zero;
         }
+        print('A');
         Vector3 tempOffset = shakeVector;
         tempOffset *= shakeMag;
+        print("ShakeMag : " + shakeMag);
         return tempOffset;
     }
 
