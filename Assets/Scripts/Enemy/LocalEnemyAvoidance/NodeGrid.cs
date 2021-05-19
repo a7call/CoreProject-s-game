@@ -6,6 +6,7 @@ using UnityEngine;
 public class Node : IHeapItem<Node>
 {
     public bool _walkable;
+    public bool _isBusy;
     public Vector3 _worldPosition;
     public int _gCost;
     public int _hCost;
@@ -14,6 +15,7 @@ public class Node : IHeapItem<Node>
     public Node _parent;
     int _heapIndex;
     public int _movementPenalty;
+    public int _unitMovementPenalty;
     
      
     public Node(bool walkable, Vector3 worldPos, int gridX, int gridY, int penalty)
@@ -97,8 +99,6 @@ public class NodeGrid: MonoBehaviour
 
 
     }
-    public LayerMask enemyLayer;
-    private float minPathUpdateTime = 0.5f;
 
     private void Update()
     {
@@ -141,6 +141,48 @@ public class NodeGrid: MonoBehaviour
         }
         if(isBlurredPenaltyActive)
             BlurPenaltyMap(3);
+    }
+
+    public void UpdateUnitMouvementPenalty(int penalty, List<Node> path)
+    {
+        foreach (var n in path)
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+
+                for (int y = -1; y <= 1; y++)
+                {
+                    int appliedPenalty;
+                    if (x == 0 && y == 0)
+                    {
+                        appliedPenalty = penalty;
+                    }
+                    else
+                    {
+                        appliedPenalty = (int)penalty / 2;
+                    }
+
+                    if (grid[n._gridX + x, n._gridY + y]._unitMovementPenalty + appliedPenalty <= 0)
+                        grid[n._gridX + x, n._gridY + y]._unitMovementPenalty = 0;
+                    else
+                        grid[n._gridX + x, n._gridY + y]._unitMovementPenalty += appliedPenalty;
+                }
+            }
+        }
+    }
+
+    public List<Node> SetNodeBusy(Vector3 pos)
+    {
+        var busyNodes = new List<Node>();
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                grid[(Mathf.RoundToInt((pos.x - worldBottomLeft.x - nodeRadius) / (2 * nodeRadius)) + x), Mathf.RoundToInt((pos.y - worldBottomLeft.y - nodeRadius) / (2 * nodeRadius)) + y]._isBusy = true;
+                busyNodes.Add(grid[(Mathf.RoundToInt((pos.x - worldBottomLeft.x - nodeRadius) / (2 * nodeRadius)) + x), Mathf.RoundToInt((pos.y - worldBottomLeft.y - nodeRadius) / (2 * nodeRadius)) + y]);
+            }
+        }
+        return busyNodes;
     }
     public int MaxSize
     {
@@ -193,6 +235,10 @@ public class NodeGrid: MonoBehaviour
                 {
                     Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, node._movementPenalty));
                     Gizmos.color = (node._walkable) ? Gizmos.color : Color.red;
+                    if (node._isBusy)
+                    {
+                        Gizmos.color = Color.blue;
+                    }     
                     Gizmos.DrawCube(node._worldPosition, Vector3.one * nodeDiameter);
                 }
                 else

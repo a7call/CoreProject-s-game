@@ -41,19 +41,22 @@ public class WandererPathFinding : MonoBehaviour
 
                     break;
                 }
-
                 foreach (var neighboor in grid.GetNeighboors(currentNode))
                 {
                     if (!neighboor._walkable || closeSet.Contains(neighboor))
                         continue;
+                    if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f && neighboor._isBusy && Vector3.Distance(neighboor._worldPosition, request._pathStart) >= 3*grid.nodeRadius)
+                        continue;
+
                     int newMouvementCostToNeighboor;
+
                     if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f)
                     {
-                      newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor) + neighboor._movementPenalty;
+                        newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor) + neighboor._movementPenalty + neighboor._unitMovementPenalty; ;
                     }
                     else
                     {
-                        newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor);
+                        newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor) + neighboor._movementPenalty;
                     }
                     
                     if (newMouvementCostToNeighboor < neighboor._gCost || !openSet.Contains(neighboor))

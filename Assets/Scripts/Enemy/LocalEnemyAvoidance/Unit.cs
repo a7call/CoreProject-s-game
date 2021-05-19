@@ -8,9 +8,17 @@ public class Unit : MonoBehaviour
     const float minPathUpdateTime = 0.2f;
     const float pathUpdateMoveThreshHold = 0.5f;
 
+    float isMoveThreshHold = 0.1f;
+    List<Node> occupiedNodes = new List<Node>();
+
     NodeGrid grid;
+
     private Animator animator;
     public bool isMoving = false;
+
+    int penaltyToNodeOnPath = 5;
+    List<Node> currentPath = new List<Node>();
+
 
     Vector3 currentDir;
     float interpolationSpeed;
@@ -34,23 +42,22 @@ public class Unit : MonoBehaviour
         StartCoroutine(isUnitMoving());
         StartCoroutine(UpdatePath());
     }
-    List<Node> oldNodePath = new List<Node>();
+   
     public void OnPathFound(Vector3[] wayPoints, bool pathSuccessful, List<Node> nodePath)
     {
         if (pathSuccessful)
         {
             path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist, nodePath);
-            oldNodePath = path._nodePath;
+            currentPath = path._nodePath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
-            SetPenaltyToNode(path._nodePath, 5);
+            grid.UpdateUnitMouvementPenalty(penaltyToNodeOnPath, nodePath);
         }
        
     }
     private void FixedUpdate()
     {
         GetLastDirection();
-        //MoveWithAi();
     }
     protected virtual void GetLastDirection()
     {
@@ -58,41 +65,6 @@ public class Unit : MonoBehaviour
         animator.SetFloat("Speed", 1);
         animator.SetFloat("lastMoveX", target.position.x - gameObject.transform.position.x);
         animator.SetFloat("lastMoveY", target.position.y - gameObject.transform.position.y);
-    }
-    void SetPenaltyToNode(List<Node> nodePath, int penalty)
-    {
-        foreach(var n in nodePath)
-        {
-            for(int x =-1; x<=1; x++)
-            {
-                for (int y = -1; y <= 1; y++)
-                {
-                    var appliedPenalty = 0;
-                    if(x == 0 && y == 0) {
-                        appliedPenalty = penalty;
-                    }
-                    else
-                    {
-                        appliedPenalty = (int)penalty / 2;
-                    }
-                    if(grid.grid[n._gridX + x, n._gridY + y]._movementPenalty + appliedPenalty >= 0)
-                        grid.grid[n._gridX + x, n._gridY + y]._movementPenalty += appliedPenalty;
-                    else
-                        grid.grid[n._gridX + x, n._gridY + y]._movementPenalty += 0;
-                }
-            }             
-        }
-    }
-    void SetPenaltyToNode2(List<Node> nodePath, int penalty)
-    {
-        foreach (var n in nodePath)
-        {
-
-                    if (grid.grid[n._gridX  , n._gridY ]._movementPenalty + penalty >= 0)
-                        grid.grid[n._gridX , n._gridY ]._movementPenalty += penalty;
-                    else
-                        grid.grid[n._gridX , n._gridY ]._movementPenalty += 0;
-        }
     }
 
     IEnumerator UpdatePath()
@@ -112,7 +84,7 @@ public class Unit : MonoBehaviour
             yield return new WaitForSeconds(minPathUpdateTime);
             if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshHold)
             {
-                SetPenaltyToNode(oldNodePath, -5);
+                grid.UpdateUnitMouvementPenalty(-penaltyToNodeOnPath, currentPath);
                 PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
                 targetPosOld = target.position;
             }
@@ -120,59 +92,41 @@ public class Unit : MonoBehaviour
         }
            
     }
-    float MoveThreshHold =0.5f;
+   
     private void Update()
     {
         
     }
-     
+  
     IEnumerator isUnitMoving()
     {
-        float sqrMoveThreshHold = MoveThreshHold * MoveThreshHold;
-        Vector3 unitPosOld = transform.position;
+        float sqrMoveThreshHold = isMoveThreshHold * isMoveThreshHold;
+        
         while (true)
         {
-            yield return new WaitForSeconds(minPathUpdateTime);
+            Vector3 unitPosOld = transform.position;
+            yield return new WaitForSeconds(0.5f);
            
-            if ((transform.position - unitPosOld).sqrMagnitude > sqrMoveThreshHold)
+            if ((transform.position - unitPosOld).sqrMagnitude > sqrMoveThreshHold && !isMoving)
             {
                 isMoving = true;
+                UnBusyNodes();
             }
-            else
+            else if (isMoving)
             {
                 isMoving = false;
+                occupiedNodes =  grid.SetNodeBusy(transform.position);  
             }
 
         }
     }
-    public LayerMask enemyLayer;
-    //void GetNotMovingUnits()
-    //{
-    //    var hits = Physics2D.CircleCastAll(transform.position, 5,Vector2.zero,0, enemyLayer);
-    //    if (hits.Length > 0)
-    //    {
-            
-    //        foreach(var hit in hits)
-    //        {
-    //            if (hit.collider.gameObject == this.gameObject)
-    //                continue;
-
-    //            print(hit.collider.gameObject);
-    //            if (!hit.collider.gameObject.GetComponent<Unit>().isMoving)
-    //            {
-    //                for (int x = -1; x <= 1; x++)
-    //                {
-    //                    for (int y = -1; y <= 1; y++)
-    //                    {
-    //                        grid.grid[(Mathf.RoundToInt((hit.transform.position.x - grid.worldBottomLeft.x  - grid.nodeRadius) / (2 * grid.nodeRadius))+x), (Mathf.RoundToInt((hit.transform.position.y - grid.worldBottomLeft.y - grid.nodeRadius) / (2 * grid.nodeRadius))+y)]._walkable = false;
-
-    //                    }
-    //                }                   
-    //            }
-    //        }
-    //    }
-    //}
-
+    void UnBusyNodes()
+    {
+        foreach(var node in occupiedNodes)
+        {
+            node._isBusy = false;
+        }
+    }
 
     IEnumerator FollowPath()
     {
