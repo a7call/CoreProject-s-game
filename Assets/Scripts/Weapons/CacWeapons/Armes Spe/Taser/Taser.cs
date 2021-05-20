@@ -30,9 +30,9 @@ public class Taser : CacWeapons
 
     protected IEnumerator TasedEnemy(Enemy enemy)
     {
-        float baseMoveSpeed = enemy.aIPath.maxSpeed;
-        enemy.aIPath.maxSpeed = 0;
+        float baseMoveSpeed = enemy.AIMouvement.speed;
+        enemy.AIMouvement.speed = 0;
         yield return new WaitForSeconds(paralysedTime);
-        enemy.aIPath.maxSpeed = baseMoveSpeed;
+        enemy.AIMouvement.speed = baseMoveSpeed;
     }
 }

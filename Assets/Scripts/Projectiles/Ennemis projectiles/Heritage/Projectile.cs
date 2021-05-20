@@ -49,7 +49,7 @@ public class Projectile : MonoBehaviour
     {
         if (GetComponentInParent<Enemy>())
         {
-            target = GetComponentInParent<Enemy>().target;
+            target = GetComponentInParent<Enemy>().Target;
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         transform.parent = null;

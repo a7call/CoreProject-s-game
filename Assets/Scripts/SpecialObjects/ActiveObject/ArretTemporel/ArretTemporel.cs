@@ -53,7 +53,7 @@ public class ArretTemporel : CdObjects
             }
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.currentState = Enemy.State.Chasing;
-            enemyScript.aIPath.canMove = true;
+           // enemyScript.AIMouvement.canMove = true;
             enemyScript.isreadyToAttack = true;
 
         }

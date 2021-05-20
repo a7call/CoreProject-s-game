@@ -17,7 +17,6 @@ public class SnotZone : Enemy
         base.Start();
         stinkManager = FindObjectOfType<StinkManager>();
         SetData();
-        aIPath.slowdownDistance = aIPath.endReachedDistance;
         SetMaxHealth();
     }
 
@@ -25,15 +24,15 @@ public class SnotZone : Enemy
 
     protected override void  SetData()
     {
-        aIPath.maxSpeed = Random.Range(enemyScriptableObject.moveSpeed, enemyScriptableObject.moveSpeed + 1);
+        AIMouvement.speed = Random.Range(enemyScriptableObject.moveSpeed, enemyScriptableObject.moveSpeed + 1);
         MaxHealth = enemyScriptableObject.maxHealth;
         attackRange = enemyScriptableObject.attackRange;
     }
     protected override void Update()
     {
         base.Update();
-        if(aIPath.velocity.sqrMagnitude >= 0.1f)
-            stinkManager.SetStinkTile(transform.position, stinkRadius);
+        //if(AIMouvement.velocity.sqrMagnitude >= 0.1f)
+        //    stinkManager.SetStinkTile(transform.position, stinkRadius);
         switch (currentState)
         {
             case State.Patrolling:

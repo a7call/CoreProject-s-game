@@ -10,12 +10,11 @@ public class HelmetAstronautMS : Cac
         switch (currentState)
         {
             case State.Chasing:
-                StartCoroutine(PowerMode());
+                //StartCoroutine(PowerMode());
                 isInRange();
                 break;
 
             case State.Attacking:
-                GetPlayerPos();
                 StartCoroutine(BaseAttack());
                 isInRange();
                 break;
@@ -47,11 +46,11 @@ public class HelmetAstronautMS : Cac
     // Coroutine qui permet d'augmenter la vitesse de l'ennemi
     private IEnumerator IncreaseSpeed()
     {
-        float baseMoveSpeed = aIPath.maxSpeed;
+        float baseMoveSpeed = AIMouvement.speed;
         newSpeedEnemy = 2 * baseMoveSpeed;
-        aIPath.maxSpeed = newSpeedEnemy;
+        AIMouvement.speed = newSpeedEnemy;
         yield return new WaitForSeconds(speedDuration);
-        aIPath.maxSpeed = baseMoveSpeed;
+        AIMouvement.speed = baseMoveSpeed;
     }
     #endregion
 

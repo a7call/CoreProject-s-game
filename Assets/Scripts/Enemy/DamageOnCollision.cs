@@ -13,7 +13,7 @@ public class DamageOnCollision : MonoBehaviour
         {
             collision.collider.GetComponent<Player>().TakeDamage(1);
             Enemy enemy = gameObject.transform.parent.GetComponent<Enemy>();
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, -enemy.aIPath.desiredVelocity.normalized, knockBackTime, enemy));
+            //CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, -enemy.AIMouvement.desiredVelocity.normalized, knockBackTime, enemy));
         } 
     }
 }

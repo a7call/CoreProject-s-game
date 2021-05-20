@@ -101,7 +101,7 @@ public class NodeGrid: MonoBehaviour
             walkableRegionsDictionnary.Add((int)Mathf.Log(region.terrainMask.value,2),region.terrainPenalty);
         }
        
-       // CreateGrid();
+        CreateGrid();
         //StartCoroutine(EnemyPenalty());
 
 
@@ -181,12 +181,14 @@ public class NodeGrid: MonoBehaviour
     public List<Node> SetNodeBusy(Vector3 pos)
     {
         var busyNodes = new List<Node>();
+        
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
             {
-                grid[(Mathf.RoundToInt((pos.x - worldBottomLeft.x - nodeRadius) / (2 * nodeRadius)) + x), Mathf.RoundToInt((pos.y - worldBottomLeft.y - nodeRadius) / (2 * nodeRadius)) + y]._isBusy = true;
-                busyNodes.Add(grid[(Mathf.RoundToInt((pos.x - worldBottomLeft.x - nodeRadius) / (2 * nodeRadius)) + x), Mathf.RoundToInt((pos.y - worldBottomLeft.y - nodeRadius) / (2 * nodeRadius)) + y]);
+               var node = NodeFromWorldPoint(pos);
+               grid[node._gridX + x, node._gridY + y]._isBusy = true;
+               busyNodes.Add(grid[node._gridX + x, node._gridY + y]);
             }
         }
         return busyNodes;

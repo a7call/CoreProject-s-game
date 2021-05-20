@@ -56,7 +56,7 @@ public class DistorsionTemporelleEnemy : CdObjects
             {
                 continue;
             }
-            enemy.gameObject.GetComponent<Enemy>().aIPath.maxSpeed /= 2;
+            enemy.gameObject.GetComponent<Enemy>().AIMouvement.speed /= 2;
         }
 
         yield return new WaitForSeconds(timeDistorsionTemporelle);
@@ -67,7 +67,7 @@ public class DistorsionTemporelleEnemy : CdObjects
             {
                 continue;
             }
-            enemy.gameObject.GetComponent<Enemy>().aIPath.maxSpeed *= 2;
+            enemy.gameObject.GetComponent<Enemy>().AIMouvement.speed *= 2;
         }
 
         foreach (GameObject projectil in projectilsEnemy)

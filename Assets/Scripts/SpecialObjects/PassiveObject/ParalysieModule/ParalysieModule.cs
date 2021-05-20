@@ -27,12 +27,12 @@ public class ParalysieModule : PassiveObjects
     {
         if (!isParaActive)
         {
-            float baseMoveSpeed = enemy.aIPath.maxSpeed;
+            float baseMoveSpeed = enemy.AIMouvement.speed;
             isParaActive = true;
-            enemy.aIPath.maxSpeed = 0;
+            enemy.AIMouvement.speed = 0;
             yield return new WaitForSeconds(ParaTimer);
             isParaActive = false;
-            enemy.aIPath.maxSpeed = baseMoveSpeed;
+            enemy.AIMouvement.speed = baseMoveSpeed;
         }
         
     }

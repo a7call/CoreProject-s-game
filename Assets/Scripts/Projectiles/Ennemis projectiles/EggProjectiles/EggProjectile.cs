@@ -12,7 +12,7 @@ public class EggProjectile : Projectile
     {
         if (GetComponentInParent<Enemy>())
         {
-            target = GetComponentInParent<Enemy>().target;
+            target = GetComponentInParent<Enemy>().Target;
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 

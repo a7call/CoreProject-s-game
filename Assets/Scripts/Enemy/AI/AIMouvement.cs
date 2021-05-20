@@ -13,12 +13,23 @@ public class AIMouvement : MonoBehaviour
 
     NodeGrid grid;
 
-    private Animator animator;
-
     #region Mouvement variable
     Vector2 directionToTarget = new Vector2();
     Vector3 currentDir;
-    public bool shouldMove = false;
+    private bool shouldMove = true;
+    public bool ShouldMove
+    {
+        get
+        {
+            return shouldMove;
+        }
+        set
+        {
+            if (shouldMove != value)
+                shouldMove = value;
+        }
+
+    }
     private Rigidbody2D rb;
     public bool isMoving = false;
     #endregion  
@@ -34,8 +45,8 @@ public class AIMouvement : MonoBehaviour
 
     [Header("PathSpeed")]
     public float speed = 2;
-    public float turnSpeed = 3;
-    public float turnDistance = 5;
+    public float turnSpeed = 2;
+    public float turnDistance = 1;
 
     [Header("SlowDownUnit")]
     private float stoppingDist = 0;
@@ -45,7 +56,6 @@ public class AIMouvement : MonoBehaviour
     {
         grid = FindObjectOfType<NodeGrid>();
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         StartCoroutine(isUnitMoving());
         StartCoroutine(UpdatePath());
     }
@@ -60,33 +70,14 @@ public class AIMouvement : MonoBehaviour
             StartCoroutine("FollowPath");
             grid.UpdateUnitMouvementPenalty(penaltyToNodeOnPath, nodePath);
         }
-       
-    }
-    private void Update()
-    {
-
     }
     private void FixedUpdate()
     {
         if (shouldMove)
-        {
-           rb.MovePosition(((Vector2)transform.position + directionToTarget.normalized * Time.deltaTime * speed));
-        }
-            
-       // GetLastDirection();
-        
+        { 
+          rb.MovePosition(((Vector2)transform.position + directionToTarget.normalized * Time.deltaTime * speed));
+        } 
     }
-    //Vector2 lastPos = new Vector2();
-    //protected virtual void GetLastDirection()
-    //{
-    //    Vector2 trackVelocity = (rb.position - lastPos) * 50;
-    //    lastPos = rb.position;
-
-        
-    //    animator.SetFloat("Speed", 1);
-    //    animator.SetFloat("HorizontalSpeed", trackVelocity.x);
-    //    animator.SetFloat("VerticalSpeed", trackVelocity.y);
-    //}
 
     IEnumerator UpdatePath()
     {
@@ -94,6 +85,7 @@ public class AIMouvement : MonoBehaviour
         {
             yield return new WaitForSeconds(0.3f);
         }
+        
 
         PathRequestManager.RequestPath(new PathRequest(transform.position, target.position,OnPathFound));
 
@@ -101,7 +93,6 @@ public class AIMouvement : MonoBehaviour
         Vector3 targetPosOld = target.position;
         while (true)
         {
-            
             yield return new WaitForSeconds(minPathUpdateTime);
             if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshHold)
             {
@@ -109,16 +100,12 @@ public class AIMouvement : MonoBehaviour
                 PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
                 targetPosOld = target.position;
             }
-
-        }
-           
+        }   
     }
    
-  
     IEnumerator isUnitMoving()
     {
-        float sqrMoveThreshHold = isMoveThreshHold * isMoveThreshHold;
-        
+        float sqrMoveThreshHold = isMoveThreshHold * isMoveThreshHold; 
         while (true)
         {
             Vector3 unitPosOld = transform.position;
@@ -132,9 +119,9 @@ public class AIMouvement : MonoBehaviour
             else if (isMoving && (transform.position - unitPosOld).sqrMagnitude < sqrMoveThreshHold)
             {
                 isMoving = false;
+                UnBusyNodes();
                 occupiedNodes =  grid.SetNodeBusy(transform.position);  
             }
-
         }
     }
     void UnBusyNodes()
@@ -150,9 +137,8 @@ public class AIMouvement : MonoBehaviour
         bool followingPath = true;
         int pathIndex = 0;
         float speedPercent = 1;
-        while (followingPath)
+        while (followingPath && shouldMove)
         {
-
             Vector2 pos2D = new Vector2(transform.position.x, transform.position.y);
             while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
             {
@@ -180,7 +166,6 @@ public class AIMouvement : MonoBehaviour
                         followingPath = false;
                         break;
                     }
-                  
                 }
                 shouldMove = true;
                 var directiontoMoveTo = path.lookPoints[pathIndex] - transform.position;
@@ -198,5 +183,9 @@ public class AIMouvement : MonoBehaviour
         {
             path.DrawWithGizmos();
         }
+    }
+    private void OnDestroy()
+    {
+        UnBusyNodes();
     }
 }

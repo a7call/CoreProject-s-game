@@ -16,30 +16,34 @@ public class HelmetAstronautExplose : Cac
                 break;
 
             case State.Attacking:
-                GetPlayerPos();
-                StartCoroutine(TriggerExplosion());
-                
+                StartCoroutine(TriggerExplosion()); 
                 break;
         }
     }
 
     IEnumerator TriggerExplosion()
     {
-        yield return new WaitForSeconds(timeToExplode);
-        aIPath.canMove = false;
-        Die();
+       yield return new WaitForSeconds(timeToExplode);
+       AIMouvement.ShouldMove = false;
+       Die();
     }
 
-
-    private void Attack()
+    // Similar to ApplyDamage but for Die animation event
+    void OnDeathDamage()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, hitLayers);
-        
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, AttackRadius, HitLayers);
+
         foreach (Collider2D h in hits)
         {
-            if(h.CompareTag("Player")) h.GetComponent<Player>().TakeDamage(1);
+
+            if (h.CompareTag("Player"))
+            {
+                h.GetComponent<Player>().TakeDamage(1);
+            }
+
         }
     }
+
     protected override void isInRange()
     {
         if (Vector3.Distance(transform.position, target.position) < attackRange)
@@ -47,10 +51,6 @@ public class HelmetAstronautExplose : Cac
             currentState = State.Attacking;
             isReadyToSwitchState = false;
         }
-    }
-    public void PrintEvent(string s)
-    {
-        Debug.Log("PrintEvent: " + s + " called at: " + Time.time);
     }
 
 }

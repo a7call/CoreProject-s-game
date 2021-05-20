@@ -38,9 +38,9 @@ public class EpeeGel : CacWeapons
     public static IEnumerator Gel(Enemy enemy)
     {
         
-        enemy.aIPath.maxSpeed /= SlowDiviser;
+        enemy.AIMouvement.speed /= SlowDiviser;
         yield return new WaitForSeconds(Timer);
-        enemy.aIPath.maxSpeed *= SlowDiviser;
+        enemy.AIMouvement.speed *= SlowDiviser;
 
     }
 }

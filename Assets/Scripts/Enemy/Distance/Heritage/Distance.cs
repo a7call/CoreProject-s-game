@@ -75,13 +75,7 @@ public class Distance : Enemy
         coefAttackModeRange = Utils.RandomizeParams(1.2f, 1.5f);
         attackModeRange = attackRange * coefAttackModeRange;
 
-
-        // PathFinding Variable
-        aIPath.endReachedDistance = attackRange *2/3;
-        aIPath.slowdownDistance = aIPath.endReachedDistance + 0.5f;
-        aIPath.repathRate = Random.Range(DistanceData.refreshPathTime, DistanceData.refreshPathTime + Utils.RandomizeParams(-0.5f, 0.5f));
-        aIPath.pickNextWaypointDist = Random.Range(DistanceData.nextWayPoint, DistanceData.nextWayPoint + Utils.RandomizeParams(-0.2f, 0.2f));
-        aIPath.maxSpeed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
+        AIMouvement.speed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
     }
 
     protected override void isInRange()

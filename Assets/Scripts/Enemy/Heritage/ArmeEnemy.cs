@@ -32,7 +32,7 @@ public class ArmeEnemy : MonoBehaviour
         if (enemy.currentState == Enemy.State.Stunned)
             return;
 
-        Vector3 dir = (enemy.target.position - enemy.transform.position).normalized;
+        Vector3 dir = (enemy.Target.position - enemy.transform.position).normalized;
 
 
         if (dir.x <= 0 && !spriteRenderer.flipX)

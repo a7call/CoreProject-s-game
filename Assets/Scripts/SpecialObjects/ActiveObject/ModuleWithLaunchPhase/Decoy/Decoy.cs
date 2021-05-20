@@ -21,35 +21,8 @@ public class Decoy : ModuleLauchPhase
         if (isNotMoving && !isAlreadyActive)
         {
             isAlreadyActive = true;
-            StartCoroutine(DecoyFunction());
+            //StartCoroutine(DecoyFunction());
         }
-    }
-
-    private IEnumerator DecoyFunction()
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, hit);
-        foreach (Collider2D hit in hits)
-        {
-            if (hit.gameObject.GetComponent<Enemy>())
-            {
-                Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-                enemy.targetSetter.target = gameObject.transform;
-                enemy.target = gameObject.transform;
-            }
-        }
-        yield return new WaitForSeconds(timeBeforDesactivation);
-
-        foreach (Collider2D hit in hits)
-        {
-            if (hit.gameObject.GetComponent<Enemy>())
-            {
-                Enemy enemy = hit.gameObject.GetComponent<Enemy>();
-                enemy.target = player.gameObject.transform;
-                enemy.targetSetter.target = enemy.target;
-                
-            }
-        }
-        Destroy(gameObject);
     }
 
 }

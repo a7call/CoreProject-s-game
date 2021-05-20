@@ -16,10 +16,6 @@ using UnityEngine;
 
 public class Cac : Enemy
 {
-    //DontFuckModule
-    public static bool IsDontFuckWithMe = false;
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -33,10 +29,12 @@ public class Cac : Enemy
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
             currentState = State.Attacking;
+            AIMouvement.ShouldMove = false;
         }
         else if (currentState != State.Chasing && !isAttacking )
         {
             currentState = State.Chasing;
+            AIMouvement.ShouldMove = true;
 
         }
 
@@ -51,7 +49,7 @@ public class Cac : Enemy
         attackRadius = CacDatas.attackRadius;
         hitLayers = CacDatas.hitLayers;
 
-        aIPath.maxSpeed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
+        AIMouvement.speed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
 
         inSight = CacDatas.InSight;
         MaxHealth = CacDatas.maxHealth;
@@ -62,24 +60,38 @@ public class Cac : Enemy
 
 
     #region Attack Code
-    [SerializeField] protected Transform attackPoint;
     // Rayon d'attaque de l'ennemi
-    public float attackRadius;
+    private float attackRadius;
+    public float AttackRadius { 
+        get
+        {
+            return attackRadius;
+        }
+    }
     // Layers subissant l'attaque de l'ennemi
-    public LayerMask hitLayers;
-    public Vector3 attackDir;
+    private LayerMask hitLayers;
+    public LayerMask HitLayers
+    {
+        get
+        {
+            return hitLayers;
+        }
+    }
 
     protected virtual IEnumerator BaseAttack()
     {
-        ApplyDamage();
+        var attackDir = target.position - transform.position;
+        var attackPoint = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
+        ApplyDamage(attackPoint);
         isAttacking = false;
         yield return new WaitForSeconds(attackDelay);
         attackAnimationPlaying = false;
     }
 
-    void ApplyDamage()
+    protected void ApplyDamage(Vector2 pos)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, hitLayers);
+        
+        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, attackRadius, hitLayers);
 
         foreach (Collider2D h in hits)
         {
@@ -91,14 +103,6 @@ public class Cac : Enemy
 
         }
     }
-
-    protected virtual void GetPlayerPos()
-    {
-        attackDir = target.position - transform.position;
-        attackPoint.position = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
-    }
-
-
     #endregion
 
 
@@ -107,11 +111,7 @@ public class Cac : Enemy
     {
         if (currentState != State.Attacking)
         {
-            if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
-            {
-                animator.SetFloat("lastMoveX", targetSetter.target.position.x - gameObject.transform.position.x);
-                animator.SetFloat("lastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
-            }
+            base.GetLastDirection();
         }
     }
     #endregion

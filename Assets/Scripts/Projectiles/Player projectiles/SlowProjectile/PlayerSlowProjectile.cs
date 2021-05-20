@@ -14,7 +14,7 @@ public class PlayerSlowProjectile : PlayerProjectiles
             if (!enemy.IsSlowed)
             {
                 enemy.IsSlowed = true;
-                enemy.aIPath.maxSpeed *= slowMultiplier;
+                enemy.AIMouvement.speed *= slowMultiplier;
 
 
             }

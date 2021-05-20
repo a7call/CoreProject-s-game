@@ -122,7 +122,7 @@ public class BossTentaclePop : Enemy
         player.currentEtat = Player.EtatJoueur.shopping; // Etat AFK du joueur, il ne peut rien faire
         currentState = State.Chasing;
         currentBossState = BossState.LoadingPhase;
-        aIPath.canMove = false;
+       AIMouvement.ShouldMove = false;
         SetTimers();
         SetMaxHealth();
     }
@@ -193,7 +193,7 @@ public class BossTentaclePop : Enemy
 
             case State.Death:
                 player.currentEtat = Player.EtatJoueur.shopping; // Etat AFK du joueur où il ne peut plus tirer non plus
-                aIPath.canMove = false;
+               AIMouvement.ShouldMove = false;
                 break;
         }
 
@@ -207,10 +207,8 @@ public class BossTentaclePop : Enemy
     {
        // healthBarGFX.SetActive(true);
         rb = GetComponent<Rigidbody2D>();
-        aIPath = GetComponent<AIPath>();
+        aIMouvement = GetComponent<AIMouvement>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        targetSetter = GetComponent<AIDestinationSetter>();
-        targetSetter.target = target;
         player = FindObjectOfType<Player>();
         player = FindObjectOfType<Player>();
         player = FindObjectOfType<Player>();
@@ -247,7 +245,7 @@ public class BossTentaclePop : Enemy
     {
         isLoading = true;
         yield return new WaitForSeconds(starterTimer);
-        aIPath.canMove = true;
+       AIMouvement.ShouldMove = true;
         isReadyToCycle = true;
         player.currentEtat = Player.EtatJoueur.normal;
         currentBossState = BossState.Phase1;
@@ -326,7 +324,7 @@ public class BossTentaclePop : Enemy
             currentState = State.Attacking;
             isShooting = true;
             isReadyToSwitchState = false;
-            aIPath.canMove = false;
+           AIMouvement.ShouldMove = false;
         }
         else
         {
@@ -537,12 +535,12 @@ public class BossTentaclePop : Enemy
     private IEnumerator CanThirdAbility()
     {
         isCastingAbility = true;
-        aIPath.canMove = false;
+        AIMouvement.ShouldMove = false;
         randomSpawner.SetActive(true);
         isReadyToThirdAbility = false;
         yield return new WaitForSeconds(timeBtwswitchAbility);
         ThirdAbility();
-        aIPath.canMove = true;
+        AIMouvement.ShouldMove = true;
         randomSpawner.SetActive(false);
         isReadyToFirstAbility = true;
         yield return new WaitForSeconds(reloadDelayThirdAbility);

@@ -30,22 +30,14 @@ public abstract class Enemy : Characters
         base.Awake();
     }
 
-    protected virtual void Start()
-    {
-        allEnemies.AddRange(FindObjectsOfType<Enemy>());
-    }
     protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
-        aIPath = GetComponent<AIPath>();
+        aIMouvement = GetComponent<AIMouvement>();
         currentState = State.Patrolling;
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-
-        targetSetter = GetComponent<AIDestinationSetter>();
-        targetSetter.target = target;
-        player = target.GetComponent<Player>();
         player = target.GetComponent<Player>();
 
         audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
@@ -56,17 +48,22 @@ public abstract class Enemy : Characters
     {
         SwitchBasicStates(currentState);
         ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
-        SetMouvementAnimationVariable();
+
+        // A MODIFIER SI ON TROUVE MIEUX
         if (IsStuned)
         {
             currentState = State.Stunned;
             return;
         }
     }
+    protected virtual void Start()
+    {
+
+    }
     private void FixedUpdate()
     {
         GetLastDirection();
-        //MoveWithAi();
+        SetMouvementAnimationVariable();
     }
 
     private void OnDestroy()
@@ -85,22 +82,18 @@ public abstract class Enemy : Characters
     //Bool to Check If ready to start an another attack sequence
     protected bool attackAnimationPlaying = false;
 
-
+    Vector2 lastPos = new Vector2();
     protected virtual void SetMouvementAnimationVariable()
     {
 
-        if (aIPath.canMove)
+        if (AIMouvement.ShouldMove)
         {
-            animator.SetFloat("HorizontalSpeed", aIPath.velocity.x);
-            animator.SetFloat("VerticalSpeed", aIPath.velocity.y);
-            float EnemySpeed = aIPath.velocity.sqrMagnitude;
-            animator.SetFloat("Speed", EnemySpeed);
+            Vector2 trackVelocity = (rb.position - lastPos) * 50;
+            lastPos = rb.position;
+            animator.SetFloat("Speed", trackVelocity.sqrMagnitude);
         }
         else
         {
-
-            animator.SetFloat("HorizontalSpeed", 0);
-            animator.SetFloat("VerticalSpeed", 0);
             float EnemySpeed = 0;
             animator.SetFloat("Speed", EnemySpeed);
         }
@@ -118,13 +111,8 @@ public abstract class Enemy : Characters
     // Permet de récuperer la dernière direction
     protected virtual void GetLastDirection()
     {
-
-        if (aIPath.desiredVelocity.x > 0.1 || aIPath.desiredVelocity.x < 0.1 || aIPath.desiredVelocity.y < 0.1 || aIPath.desiredVelocity.y > 0.1)
-        {
-
-            animator.SetFloat("lastMoveX", targetSetter.target.position.x - gameObject.transform.position.x);
-            animator.SetFloat("lastMoveY", targetSetter.target.position.y - gameObject.transform.position.y);
-        }
+        animator.SetFloat("lastMoveX", AIMouvement.target.position.x - gameObject.transform.position.x);
+        animator.SetFloat("lastMoveY", AIMouvement.target.position.y - gameObject.transform.position.y);
     }
 
     //Methode permetant de lancer la séquence de d'attaque via l'animation
@@ -137,56 +125,36 @@ public abstract class Enemy : Characters
             animator.SetTrigger("isAttacking");
         }
     }
-
-   
-
     #endregion
 
 
-    #region  PathFinding 
-
-    [HideInInspector]
-    public float nextWayPointDistance = 0.05f;
-    [HideInInspector]
-    public AIPath aIPath;
-    [HideInInspector]
-    public AIDestinationSetter targetSetter;
-    [HideInInspector]
-    public Transform target;
-    public List<Enemy> allEnemies = new List<Enemy>();
-
-    protected void EnableEnemyMouvement()
+    #region  PathFinding
+    protected AIMouvement aIMouvement;
+    public AIMouvement AIMouvement
     {
-        aIPath.canMove = true;
-        aIPath.canSearch = true;
+        get
+        {
+            return aIMouvement;
+        }
     }
 
-    protected void DisableEnemyMouvement()
+    protected Transform target;
+    public Transform Target
     {
-        aIPath.canMove = false;
+        get
+        {
+            return target;
+        }
     }
  
     #endregion
 
 
     #region Physics 
-    [HideInInspector]
-    public Vector3 direction = Vector3.zero;
-
-    // Permet de fear
-    protected virtual void Fear()
-    {
-        float moveSpeed = aIPath.maxSpeed * 100;
-        if (direction == Vector3.zero) direction = (player.transform.position - gameObject.transform.position).normalized;
-
-        rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
-    }
-
     // Coroutine qui knockBack l'ennemi
     public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
-        if (currentState == State.Charging) yield break;
-        // NEED TO BE CHANGED TO IMPULSE
+        //CHANGER POUR IMPLUSE (PLUS ADAPTE)
         rb.AddForce(dir * knockBackForce, ForceMode2D.Force);
         State previousState = currentState;
         currentState = State.KnockedBack;
@@ -201,7 +169,7 @@ public abstract class Enemy : Characters
             currentState = previousState;
         }
         rb.velocity = Vector2.zero;
-        aIPath.canMove = true;
+        AIMouvement.ShouldMove= true;
     }
 
     // Attack
@@ -231,7 +199,7 @@ public abstract class Enemy : Characters
     {
         yield return new WaitForEndOfFrame();
         
-        DisableEnemyMouvement();
+        //AiMouvement.shouldMove = false;
         rb.velocity = Vector2.zero;
         if (GetComponent<Collider2D>().enabled)
         {
@@ -295,34 +263,33 @@ public abstract class Enemy : Characters
             case State.Stunned:
                 // Animation
                 if (IsStuned)
-                    DisableEnemyMouvement();
+                {
+                    aIMouvement.ShouldMove = false;
+                }
                 else
-                    PlayerInSight();
+                {
+                    isInRange();
+                }      
                 break;
 
             case State.KnockedBack:
-                DisableEnemyMouvement();
+                aIMouvement.ShouldMove = false;
                 break;
 
             case State.Freeze:
                 // Animation
-                DisableEnemyMouvement();
-                break;
-
-            case State.Feared:
-                DisableEnemyMouvement();
-                Fear();
+                aIMouvement.ShouldMove = false;
                 break;
 
             case State.Death:
-                rb.velocity = Vector2.zero;
+                aIMouvement.ShouldMove = false;
                 //NOTHING ELSE TO DO
                 break;
 
             case State.Patrolling:
-                if (aIPath.canMove)
+                if (AIMouvement.ShouldMove)
                 {
-                    DisableEnemyMouvement();
+                    aIMouvement.ShouldMove = false;
                 }
                 PlayerInSight();
                 break;
@@ -334,7 +301,7 @@ public abstract class Enemy : Characters
         if (Vector3.Distance(transform.position, target.position) < inSight)
         {
             currentState = State.Chasing;
-            EnableEnemyMouvement();
+            AIMouvement.ShouldMove = true;
         }
     }
 
@@ -342,13 +309,15 @@ public abstract class Enemy : Characters
     {
         if (!isSupposedToMoveAttacking)
         {
-            if (currentState == State.Chasing && !aIPath.canMove)
+            if (currentState == State.Chasing )
             {
-                aIPath.canMove = true;
+               AIMouvement.ShouldMove = true;
+               
             }
-            else if (currentState == State.Attacking && aIPath.canMove)
+            else if (currentState == State.Attacking )
             {
-                aIPath.canMove = false;
+               AIMouvement.ShouldMove = false;
+                
             }
         }
 
@@ -363,11 +332,9 @@ public abstract class Enemy : Characters
         }
         else 
         {
-                currentState = State.Chasing;
+            currentState = State.Chasing;
         }
     }
-
-
     #endregion
 
 

@@ -37,10 +37,10 @@ public class ParasiteIdol : CdObjects
         foreach (Collider2D enemy in hits)
         {
             if (enemy == null) continue;
-            enemy.gameObject.GetComponent<Enemy>().aIPath.canMove = true;
+           // enemy.gameObject.GetComponent<Enemy>().AIMouvement.canMove = true;
             enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
             enemy.gameObject.GetComponent<Enemy>().rb.velocity = Vector3.zero;
-            enemy.gameObject.GetComponent<Enemy>().direction = Vector3.zero;
+           // enemy.gameObject.GetComponent<Enemy>().direction = Vector3.zero;
         }
     }
 

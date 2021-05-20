@@ -30,7 +30,7 @@ public class Goblin : Enemy
         base.Start();
         //spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         currentState = State.Chasing;
-        aIPath.canMove = false;
+       AIMouvement.ShouldMove = false;
         SetData();
         SetMaxHealth();
         StartCoroutine(Starter());
@@ -38,7 +38,7 @@ public class Goblin : Enemy
 
     protected override void SetData()
     {
-        aIPath.maxSpeed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
+        AIMouvement.speed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
 
         //maxHealth = enemyData.maxHealth;
     }
@@ -50,7 +50,7 @@ public class Goblin : Enemy
         switch (currentState)
         {
             case State.Chasing:
-                aIPath.canMove = false;
+               AIMouvement.ShouldMove = false;
                 if(counter != stack)
                 {
                     StartCoroutine(RunningAway());
@@ -69,7 +69,7 @@ public class Goblin : Enemy
         {
             counter += 1;
             canGoToPos = false;
-            Fear();
+            //Fear();
             yield return new WaitForSeconds(fearTime);
             rb.velocity = Vector2.zero;
             yield return new WaitForSeconds(afkTime);
@@ -98,13 +98,6 @@ public class Goblin : Enemy
             yield return new WaitForSeconds(timeBetweenFlashes);
         }
         Destroy(gameObject);
-    }
-
-    protected override void Fear()
-    {
-        float moveSpeed = aIPath.maxSpeed * 100;
-        direction = (player.transform.position - gameObject.transform.position).normalized;
-        rb.velocity = -direction * moveSpeed * Time.fixedDeltaTime;
     }
 
 }

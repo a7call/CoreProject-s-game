@@ -37,7 +37,7 @@ public class ArmeCacEnemy : ArmeEnemy
     void ApplyDamage()
     {
        
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, enemyCac.attackRadius, enemyCac.hitLayers);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, enemyCac.AttackRadius, enemyCac.HitLayers);
 
         foreach (Collider2D h in hits)
         {
@@ -51,7 +51,7 @@ public class ArmeCacEnemy : ArmeEnemy
     }
     private void OnDrawGizmosSelected()
     {
-        if(attackPoint != null) Gizmos.DrawWireSphere(attackPoint.position, enemyCac.attackRadius);
+        if(attackPoint != null) Gizmos.DrawWireSphere(attackPoint.position, enemyCac.AttackRadius);
 
     }
 }

@@ -17,7 +17,7 @@ public class Laser : Projectile
     // Start is called before the first frame update
     protected override void Start()
     {
-        target = GetComponentInParent<Enemy>().target;
+        target = GetComponentInParent<Enemy>().Target;
         StartCoroutine(OkToShoot());
 
         GetDirection();

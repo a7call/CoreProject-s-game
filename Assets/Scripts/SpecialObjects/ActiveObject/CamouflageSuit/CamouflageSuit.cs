@@ -23,7 +23,7 @@ public class CamouflageSuit : CdObjects
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy enemy in enemies)
         {
-            enemy.targetSetter.target = enemy.transform;
+           
             enemy.isreadyToAttack = false;
             enemy.StopAllCoroutines();
             
@@ -33,7 +33,6 @@ public class CamouflageSuit : CdObjects
         foreach (Enemy enemy in enemies)
         {
             enemy.isreadyToAttack = true;
-            enemy.targetSetter.target = enemy.target;
         }
     }
 }

@@ -48,7 +48,7 @@ public class SunBang : StacksObjects
         {
             if (enemy == null) continue;
             enemy.currentState = Enemy.State.Chasing;
-            enemy.aIPath.canMove = true; 
+           // enemy.AIMouvement.canMove = true; 
             enemy.isreadyToAttack = true;
             enemiesInRange.Remove(enemy);
         }
