@@ -17,7 +17,8 @@ public class ExplosionProjectile : PlayerProjectiles
         Collider2D[] ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
         Explosion(ennemies, collision);
         base.OnTriggerEnter2D(collision);
-        cameraFollow.StartShake(screenShakeDuration, screenShakePower);
+        cameraFollow.StartShakeG(screenShakeDuration, screenShakePower);
+        CameraController.instance.Shake(0.3f, 0.2f);
     }
 
     protected virtual void Explosion(Collider2D[] ennemies, Collider2D collision)

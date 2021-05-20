@@ -21,11 +21,13 @@ public class CameraController : MonoBehaviour
 
     private float zStart;
 
-    private float shakeMag, shakeTimeEnd;
+    private float shakeMag, shakeFadeTime, shakeTimeEnd;
 
     private Vector3 shakeVector;
 
     private bool isShaking;
+
+    private bool isShakingD, isShakingG;
 
     #endregion
 
@@ -91,38 +93,54 @@ public class CameraController : MonoBehaviour
     // Global Shake
     public void Shake(float magnitude, float length)
     {
-        isShaking = true;
-        float x = Random.Range(-1f, 1f) * magnitude;
-        float y = Random.Range(-1f, 1f) * magnitude;
-        shakeVector = new Vector3(x, y);
+        isShakingG = true;
         // shakeVector = Vector3.zero;
         shakeMag = magnitude;
         shakeTimeEnd = Time.time + length;
+        shakeFadeTime = magnitude / length;
     }
 
     // Directionnal Shake
     public void Shake(Vector3 direction, float magnitude, float length)
     {
         print("Shake");
-        isShaking = true;
+        isShakingD = true;
         shakeVector = direction;
         shakeMag = magnitude;
         shakeTimeEnd = Time.time + length;
+        shakeFadeTime = magnitude / length;
     }
 
-
+    private Vector3 myOffset = Vector3.zero;
     private Vector3 UpdateShake()
-    {
-        if(!isShaking || shakeTimeEnd < Time.time)
+    { 
+        if(shakeTimeEnd < Time.time)
         {
-            isShaking = false;
-            return Vector3.zero;
+            isShakingD = false;
+            isShakingG = false;
+            shakeTimeEnd = 0;
+            shakeMag = 0;
+            myOffset = Vector3.zero;
         }
-        print('A');
-        Vector3 tempOffset = shakeVector;
-        tempOffset *= shakeMag;
-        print("ShakeMag : " + shakeMag);
-        return tempOffset;
+
+        if (isShakingD)
+        {
+            print('A');
+            Vector3 tempOffset = shakeVector;
+            tempOffset *= Mathf.MoveTowards(shakeMag, 0f, shakeFadeTime * Time.deltaTime);
+            print("ShakeMag : " + shakeMag);
+            myOffset = tempOffset;
+        }
+
+        if (isShakingG)
+        {
+            print("B");
+            float x = Random.Range(-1f, 1f) * shakeMag;
+            float y = Random.Range(-1f, 1f) * shakeMag;
+            shakeVector = new Vector3(x, y);
+        }
+
+        return myOffset;
     }
 
     #endregion
