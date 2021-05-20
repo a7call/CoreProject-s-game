@@ -6,55 +6,59 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    # region Variables
+    #region Variables
 
     public static CameraController instance;
 
-    private Transform player;
+    // Shake
+    private float shakeTimeRemaining, shakePower, shakeFadeTime, shakeRotation;
+    private bool isShakingD = false, isShakingG = false;
+    [SerializeField] private float rotationMultiplier;
+    private Vector3 direction;
 
-    private Vector3 target, mousePos, refVel, shakeOffset;
-
-    // Distance à laquelle la caméra se situe lorsque notre souris est sur un bord de l'écran
-    [SerializeField] private float cameraDist = 3.5f;
-
-    [SerializeField] private float smoothTime = 0.2f;
-
+    // Follow
+    private Transform playerTransform;
+    private Vector3 target, mousePos, refVel;
+    [SerializeField] private float cameraDist = 2f, smoothTime = 0.1f;
     private float zStart;
-
-    private float shakeMag, shakeTimeEnd;
-
-    private Vector3 shakeVector;
-
-    private bool isShaking;
 
     #endregion
 
+    #region MonoBehaviour
+
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
 
         if (instance != null && instance != this)
             Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
 
         instance = this;
-
     }
 
     private void Start()
     {
-        target = player.transform.position;
+        target = playerTransform.position;
         zStart = transform.position.z;
     }
 
-    private void Update()
+    void Update()
     {
+        // Follow
         mousePos = CaptureMousePos();
         target = UpdateTargetPos();
-        shakeOffset = UpdateShake();
         UpdateCameraPosition();
+
+        // Shake 
+        if (shakeTimeRemaining > 0 && isShakingG) GlobalShake();
+
+        if (shakeTimeRemaining > 0 && isShakingD) DirectionnalShake();
     }
 
-    # region CameraFollow
+    #endregion
+
+    #region Follow 
     private Vector3 CaptureMousePos()
     {
         Vector2 ret = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -62,7 +66,7 @@ public class CameraController : MonoBehaviour
         ret -= Vector2.one;
         float max = 0.9f;
 
-        if(Mathf.Abs(ret.x) > max || Mathf.Abs(ret.y) > max)
+        if (Mathf.Abs(ret.x) > max || Mathf.Abs(ret.y) > max)
         {
             ret = ret.normalized;
         }
@@ -73,8 +77,7 @@ public class CameraController : MonoBehaviour
     private Vector3 UpdateTargetPos()
     {
         Vector3 mouseOffset = mousePos * cameraDist;
-        Vector3 ret = player.position + mouseOffset;
-        ret += shakeOffset;
+        Vector3 ret = playerTransform.position + mouseOffset;
         ret.z = zStart;
         return ret;
     }
@@ -86,43 +89,64 @@ public class CameraController : MonoBehaviour
 
     #endregion
 
-    #region Shake 
+    #region Shake
 
-    // Global Shake
-    public void Shake(float magnitude, float length)
+    public void StartShakeG(float length, float power)
     {
-        isShaking = true;
-        float x = Random.Range(-1f, 1f) * magnitude;
-        float y = Random.Range(-1f, 1f) * magnitude;
-        shakeVector = new Vector3(x, y);
-        // shakeVector = Vector3.zero;
-        shakeMag = magnitude;
-        shakeTimeEnd = Time.time + length;
+        shakeTimeRemaining = length;
+        shakePower = power;
+
+        shakeFadeTime = power / length;
+
+        shakeRotation = power * rotationMultiplier;
+
+        isShakingG = true;
     }
 
-    // Directionnal Shake
-    public void Shake(Vector3 direction, float magnitude, float length)
+    public void StartShakeD(float length, float power, Vector3 shakeDirection)
     {
-        isShaking = true;
-        shakeVector = direction;
-        shakeMag = magnitude;
-        shakeTimeEnd = Time.time + length;
+        shakeTimeRemaining = length;
+        shakePower = power;
+
+        shakeFadeTime = power / length;
+
+        direction = shakeDirection;
+
+        isShakingD = true;
     }
 
-
-    private Vector3 UpdateShake()
+    private void GlobalShake()
     {
-        if(!isShaking || shakeTimeEnd < Time.time)
+        shakeTimeRemaining -= Time.deltaTime;
+
+        float x = Random.Range(-1f, 1f) * shakePower;
+        float y = Random.Range(-1f, 1f) * shakePower;
+
+        transform.position = transform.position + new Vector3(x, y);
+        transform.rotation = Quaternion.Euler(0f, 0f, shakeRotation * Random.Range(-1f, 1f));
+
+        shakePower = Mathf.MoveTowards(shakePower, 0f, shakeFadeTime * Time.deltaTime);
+
+        shakeRotation = Mathf.MoveTowards(shakeRotation, 0f, shakeFadeTime * rotationMultiplier * Time.deltaTime);
+
+        if (shakeTimeRemaining <= 0)
         {
-            isShaking = false;
-            return Vector3.zero;
+            transform.rotation = Quaternion.identity;
+            isShakingG = false;
         }
-        Vector3 tempOffset = shakeVector;
-        tempOffset *= shakeMag;
-        return tempOffset;
+    }
+
+    private void DirectionnalShake()
+    {
+        shakeTimeRemaining -= Time.deltaTime;
+
+        transform.localPosition = transform.localPosition + direction * shakePower;
+
+        shakePower = Mathf.MoveTowards(shakePower, 0f, shakeFadeTime * Time.deltaTime);
+
+        if (shakeTimeRemaining <= 0) isShakingD = false;
     }
 
     #endregion
-
 }
 
