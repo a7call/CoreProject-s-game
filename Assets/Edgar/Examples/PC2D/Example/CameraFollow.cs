@@ -4,25 +4,23 @@
 public class CameraFollow : MonoBehaviour
 {
 
+    #region Variables
+
     // Shake
     private float shakeTimeRemaining, shakePower, shakeFadeTime, shakeRotation;
-    [SerializeField] private float rotationMultiplier;
-
-    private Vector3 direction;
-
     private bool isShakingD = false, isShakingG = false;
+    [SerializeField] private float rotationMultiplier;
+    private Vector3 direction;
 
     // Follow
     private Transform playerTransform;
-    private Vector3 target;
-    private Vector3 mousePos;
-    private Vector3 refVel;
+    private Vector3 target, mousePos, refVel;
+    [SerializeField] private float cameraDist = 2f, smoothTime = 0.1f;
     private float zStart;
 
-    // Distance à laquelle la caméra se situe lorsque notre souris est sur un bord de l'écran
-    [SerializeField] private float cameraDist = 2f;
+    #endregion
 
-    [SerializeField] private float smoothTime = 0.1f;
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -47,6 +45,8 @@ public class CameraFollow : MonoBehaviour
 
         if (shakeTimeRemaining > 0 && isShakingD) DirectionnalShake();
     }
+
+    #endregion
 
     #region Follow 
     private Vector3 CaptureMousePos()

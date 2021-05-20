@@ -11,10 +11,9 @@ public class PlayerProjectiles : MonoBehaviour
     protected WeaponsManagerSelected weaponManager;
     protected Weapons weapon;
     protected Rigidbody2D rb;
-    protected CameraFollow cameraFollow;
 
     protected float screenTranslationPower = 0.15f;
-    protected float screenTranslationDuration = 0.15f;
+    protected float screenTranslationDuration = 0.05f;
 
 
     #region Stats
@@ -40,8 +39,6 @@ public class PlayerProjectiles : MonoBehaviour
     protected virtual void Start()
     {
         Launch();
-        cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-        cameraFollow.StartShakeD(screenTranslationDuration , screenTranslationPower, directionTir);
 
     }
 
@@ -86,9 +83,7 @@ public class PlayerProjectiles : MonoBehaviour
     {
 
         directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
-        if(CameraController.instance != null)
-        CameraController.instance.Shake(directionTir, 0.15f, 0.15f); // A venir modifier selon les projectilles
-        // CameraController.instance.Shake(3f, 1f);
+        if(CameraController.instance != null) CameraController.instance.StartShakeD(screenTranslationDuration, screenTranslationPower, directionTir.normalized);
         rb.velocity = directionTir * projectileSpeed;
         
     }
