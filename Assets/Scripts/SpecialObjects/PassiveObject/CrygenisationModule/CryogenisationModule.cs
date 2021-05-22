@@ -23,10 +23,10 @@ public class CryogenisationModule : PassiveObjects
         if (!enemy.IsSlowed)
         {
             enemy.IsSlowed = true;
-            float baseMoveSpeed = enemy.AIMouvement.speed;
-            enemy.AIMouvement.speed *= slowMutliplier;
+            float baseMoveSpeed = enemy.AIMouvement.Speed;
+            enemy.AIMouvement.Speed *= slowMutliplier;
             yield return new WaitForSeconds(cryoTimer);
-            enemy.AIMouvement.speed = baseMoveSpeed;
+            enemy.AIMouvement.Speed = baseMoveSpeed;
             enemy.IsSlowed = false;
         }
             

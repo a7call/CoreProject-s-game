@@ -43,10 +43,10 @@ public class Extincteur : ParticuleWeapon
         if (!enemy.IsSlowed)
         {
             enemy.IsSlowed = true;
-            enemy.AIMouvement.speed /= slowMultiplier;
+            enemy.AIMouvement.Speed /= slowMultiplier;
             yield return new WaitForSeconds(slowTimer);
             if (enemy == null) yield break;
-            enemy.AIMouvement.speed *= slowMultiplier;
+            enemy.AIMouvement.Speed *= slowMultiplier;
             enemy.IsSlowed = false;
         }
        

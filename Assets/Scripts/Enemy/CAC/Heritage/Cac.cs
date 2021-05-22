@@ -49,7 +49,7 @@ public class Cac : Enemy
         attackRadius = CacDatas.attackRadius;
         hitLayers = CacDatas.hitLayers;
 
-        AIMouvement.speed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
+        AIMouvement.Speed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
 
         inSight = CacDatas.InSight;
         MaxHealth = CacDatas.maxHealth;

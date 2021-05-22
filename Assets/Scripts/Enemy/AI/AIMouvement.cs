@@ -15,8 +15,8 @@ public class AIMouvement : MonoBehaviour
 
     #region Mouvement variable
     Vector2 directionToTarget = new Vector2();
-    Vector3 currentDir;
     private bool shouldMove = true;
+    bool canFindPath = false;
     public bool ShouldMove
     {
         get
@@ -25,7 +25,7 @@ public class AIMouvement : MonoBehaviour
         }
         set
         {
-            if (shouldMove != value)
+            if (shouldMove != value && !canFindPath)
                 shouldMove = value;
         }
 
@@ -38,15 +38,28 @@ public class AIMouvement : MonoBehaviour
     List<Node> currentPath = new List<Node>();
 
     
-    float interpolationSpeed;
+ 
 
     [Header("Target")]
     public Transform target;
 
-    [Header("PathSpeed")]
-    public float speed = 2;
-    public float turnSpeed = 2;
-    public float turnDistance = 1;
+    
+    private float speed = 2;
+    public float Speed { 
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed = value;
+        }
+    }
+
+    // Smooth path (not used)
+    private float turnSpeed = 4;
+    private float turnDistance = 0f;
+    float interpolationSpeed;
 
     [Header("SlowDownUnit")]
     private float stoppingDist = 0;
@@ -56,7 +69,6 @@ public class AIMouvement : MonoBehaviour
     {
         grid = FindObjectOfType<NodeGrid>();
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(isUnitMoving());
         StartCoroutine(UpdatePath());
     }
    
@@ -64,11 +76,18 @@ public class AIMouvement : MonoBehaviour
     {
         if (pathSuccessful)
         {
+            canFindPath = false;
+            shouldMove = true;
             path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist, nodePath);
             currentPath = path._nodePath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
             grid.UpdateUnitMouvementPenalty(penaltyToNodeOnPath, nodePath);
+        }
+        else
+        {
+            canFindPath = true;
+            shouldMove = false;
         }
     }
     private void FixedUpdate()
@@ -102,35 +121,39 @@ public class AIMouvement : MonoBehaviour
             }
         }   
     }
-   
-    IEnumerator isUnitMoving()
-    {
-        float sqrMoveThreshHold = isMoveThreshHold * isMoveThreshHold; 
-        while (true)
-        {
-            Vector3 unitPosOld = transform.position;
-            yield return new WaitForSeconds(0.5f);
-           
-            if ((transform.position - unitPosOld).sqrMagnitude > sqrMoveThreshHold && !isMoving)
-            {
-                isMoving = true;
-                UnBusyNodes();
-            }
-            else if (isMoving && (transform.position - unitPosOld).sqrMagnitude < sqrMoveThreshHold)
-            {
-                isMoving = false;
-                UnBusyNodes();
-                occupiedNodes =  grid.SetNodeBusy(transform.position);  
-            }
-        }
-    }
-    void UnBusyNodes()
-    {
-        foreach(var node in occupiedNodes)
-        {
-            node._isBusy = false;
-        }
-    }
+
+    // BUSY NODE ABANDONNED FEATURE
+
+    //IEnumerator isUnitMoving()
+    //{
+    //    float sqrMoveThreshHold = isMoveThreshHold * isMoveThreshHold; 
+    //    while (true)
+    //    {
+    //        Vector3 unitPosOld = transform.position;
+    //        yield return new WaitForSeconds(0.5f);
+
+    //        if ((transform.position - unitPosOld).sqrMagnitude > sqrMoveThreshHold && !isMoving)
+    //        {
+    //            isMoving = true;
+    //            UnBusyNodes();
+    //        }
+    //        else if (isMoving && (transform.position - unitPosOld).sqrMagnitude < sqrMoveThreshHold)
+    //        {
+    //            isMoving = false;
+    //            UnBusyNodes();
+    //            occupiedNodes =  grid.SetNodeBusy(transform.position);  
+    //        }
+    //    }
+    //}
+    //void UnBusyNodes()
+    //{
+    //    foreach(var node in occupiedNodes)
+    //    {
+    //        node._isBusy = false;
+    //    }
+    //}
+
+    //END
 
     IEnumerator FollowPath()
     {
@@ -144,13 +167,13 @@ public class AIMouvement : MonoBehaviour
             {
                 if(pathIndex == path.finishLineIndex)
                 {
+                    
                     followingPath = false;
                     shouldMove = false;
                     break;
                 }
                 else
                 {
-                    currentDir = path.lookPoints[pathIndex] - transform.position;
                     interpolationSpeed = 0;
                     pathIndex++;
                 }
@@ -167,10 +190,8 @@ public class AIMouvement : MonoBehaviour
                         break;
                     }
                 }
-                shouldMove = true;
-                var directiontoMoveTo = path.lookPoints[pathIndex] - transform.position;
-                interpolationSpeed += turnSpeed;
-                directionToTarget = Vector3.Slerp(currentDir, directiontoMoveTo, interpolationSpeed * Time.deltaTime);
+                 shouldMove = true;
+                 directionToTarget = path.lookPoints[pathIndex] - transform.position;
             }
             yield return null;
         }
@@ -186,6 +207,5 @@ public class AIMouvement : MonoBehaviour
     }
     private void OnDestroy()
     {
-        UnBusyNodes();
     }
 }

@@ -102,16 +102,8 @@ public class NodeGrid: MonoBehaviour
         }
        
         CreateGrid();
-        //StartCoroutine(EnemyPenalty());
-
-
     }
 
-    private void Update()
-    {
-        
-       
-    }
     public Vector3 worldBottomLeft;
     public void CreateGrid()
     {

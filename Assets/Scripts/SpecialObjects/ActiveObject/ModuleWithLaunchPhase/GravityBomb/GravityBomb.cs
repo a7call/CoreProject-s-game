@@ -23,7 +23,7 @@ public class GravityBomb : ExplosivesModule
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().AIMouvement.speed /= 2f;
+            collision.GetComponent<Enemy>().AIMouvement.Speed /= 2f;
             enemiesSlowed.Add(collision.gameObject);
         }
         if (collision.CompareTag("Player"))
@@ -37,7 +37,7 @@ public class GravityBomb : ExplosivesModule
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().AIMouvement.speed *= 2f;
+            collision.GetComponent<Enemy>().AIMouvement.Speed *= 2f;
             enemiesSlowed.Remove(collision.gameObject);
         }
         if (collision.CompareTag("Player"))

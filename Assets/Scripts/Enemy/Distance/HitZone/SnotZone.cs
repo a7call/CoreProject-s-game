@@ -24,7 +24,7 @@ public class SnotZone : Enemy
 
     protected override void  SetData()
     {
-        AIMouvement.speed = Random.Range(enemyScriptableObject.moveSpeed, enemyScriptableObject.moveSpeed + 1);
+        AIMouvement.Speed = Random.Range(enemyScriptableObject.moveSpeed, enemyScriptableObject.moveSpeed + 1);
         MaxHealth = enemyScriptableObject.maxHealth;
         attackRange = enemyScriptableObject.attackRange;
     }

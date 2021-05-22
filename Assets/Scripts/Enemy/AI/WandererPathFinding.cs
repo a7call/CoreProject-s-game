@@ -23,8 +23,9 @@ public class WandererPathFinding : MonoBehaviour
         var startNode = grid.NodeFromWorldPoint(request._pathStart);
         var targetNode = grid.NodeFromWorldPoint(request._pathEnd);
 
-        if(startNode._walkable && targetNode._walkable)
+        if(startNode._walkable && targetNode._walkable && !targetNode._isBusy)
         {
+            
             Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
             HashSet<Node> closeSet = new HashSet<Node>();
             openSet.Add(startNode);
@@ -45,8 +46,9 @@ public class WandererPathFinding : MonoBehaviour
                 {
                     if (!neighboor._walkable || closeSet.Contains(neighboor))
                         continue;
-                    if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f && neighboor._isBusy && Vector3.Distance(neighboor._worldPosition, request._pathStart) >= 4*grid.nodeRadius)
-                        continue;
+                    // BUSY NODE ABANDONNED FEATURE
+                    //if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f && neighboor._isBusy && Vector3.Distance(neighboor._worldPosition, request._pathStart) >= 4 * grid.nodeRadius)
+                    //    continue;
 
                     int newMouvementCostToNeighboor;
 
@@ -80,7 +82,13 @@ public class WandererPathFinding : MonoBehaviour
                 pathSuccess = wayPoints.Length > 0;
             }
             callback(new PathResult(wayPoints, pathSuccess, path, request._callback));
-        }  
+        }
+        else if(!targetNode._walkable || targetNode._isBusy )
+        {
+            callback(new PathResult(null, false, null, request._callback));
+        }
+       
+       
     }
 
     Vector3[] RetracePath(Node startNode, Node endNode, out List<Node> path)

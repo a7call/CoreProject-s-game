@@ -320,6 +320,17 @@ public abstract class Enemy : Characters
                 
             }
         }
+        else
+        {
+            if (Vector3.Distance(transform.position, target.position) <= attackRange / 2 && AIMouvement.ShouldMove)
+            {
+                AIMouvement.ShouldMove = false;
+            }
+            else if (Vector3.Distance(transform.position, target.position) >= attackRange && !AIMouvement.ShouldMove)
+            {
+                AIMouvement.ShouldMove = true;
+            }
+        }
 
     }
 

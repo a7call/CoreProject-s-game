@@ -21,7 +21,7 @@ public class HelmetAstronautMS : Cac
         }
 
     }
-
+    // LE POWER MODE EST DESACTIVER LE TEMPS DE TROUVER UN EFFET OU UNE ANIMATION POUR LE REPRESENTER 
     #region Power Mode
     [SerializeField] private float distanceEnemyAggressive = 5f;
     private bool isPowerModeReady = true;
@@ -46,12 +46,16 @@ public class HelmetAstronautMS : Cac
     // Coroutine qui permet d'augmenter la vitesse de l'ennemi
     private IEnumerator IncreaseSpeed()
     {
-        float baseMoveSpeed = AIMouvement.speed;
+        float baseMoveSpeed = AIMouvement.Speed;
         newSpeedEnemy = 2 * baseMoveSpeed;
-        AIMouvement.speed = newSpeedEnemy;
+        AIMouvement.Speed = newSpeedEnemy;
         yield return new WaitForSeconds(speedDuration);
-        AIMouvement.speed = baseMoveSpeed;
+        AIMouvement.Speed = baseMoveSpeed;
     }
     #endregion
-
+    protected override IEnumerator BaseAttack()
+    {
+        yield return new WaitForSeconds(attackDelay);
+        attackAnimationPlaying = false;
+    }
 }

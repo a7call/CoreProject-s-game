@@ -27,23 +27,6 @@ public class Distance : Enemy
     // Projectile to instantiate
     protected GameObject projetile;
 
-
-    protected override void Update()
-    {
-        base.Update();
-      
-
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                break;
-            case State.Attacking:
-                isInRange();
-                StartCoroutine(CanShootCO());
-                break;
-        }
-    }
     protected override void GetReference()
     {
         base.GetReference();
@@ -75,7 +58,7 @@ public class Distance : Enemy
         coefAttackModeRange = Utils.RandomizeParams(1.2f, 1.5f);
         attackModeRange = attackRange * coefAttackModeRange;
 
-        AIMouvement.speed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
+        AIMouvement.Speed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
     }
 
     protected override void isInRange()

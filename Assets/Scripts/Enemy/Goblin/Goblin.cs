@@ -38,7 +38,7 @@ public class Goblin : Enemy
 
     protected override void SetData()
     {
-        AIMouvement.speed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
+        AIMouvement.Speed = Random.Range(enemyData.moveSpeed, enemyData.moveSpeed + 1f);
 
         //maxHealth = enemyData.maxHealth;
     }
