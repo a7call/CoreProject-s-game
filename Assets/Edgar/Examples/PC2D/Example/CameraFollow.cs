@@ -35,17 +35,17 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        // Follow
-        mousePos = CaptureMousePos();
-        target = UpdateTargetPos();
-        UpdateCameraPosition();
-
         // Shake 
         if (shakeTimeRemaining > 0 && isShakingG) GlobalShake();
 
         if (shakeTimeRemaining > 0 && isShakingD) DirectionnalShake();
     }
-
+    private void FixedUpdate()
+    {
+        mousePos = CaptureMousePos();
+        target = UpdateTargetPos();
+        UpdateCameraPosition();
+    }
     #endregion
 
     #region Follow 
