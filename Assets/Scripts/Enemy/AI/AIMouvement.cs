@@ -14,8 +14,21 @@ public class AIMouvement : MonoBehaviour
     NodeGrid grid;
 
     #region Mouvement variable
-    Vector2 directionToTarget = new Vector2();
-    private bool shouldMove = true;
+    private Vector2 directionToTarget = new Vector2();
+    public Vector2 DirectionToTarget
+    {
+        get
+        {
+            return directionToTarget;
+
+        }
+        set
+        {
+            directionToTarget = value;
+        }
+    }
+    
+    public bool shouldMove = true;
     bool canFindPath = false;
     public bool ShouldMove
     {
@@ -78,7 +91,11 @@ public class AIMouvement : MonoBehaviour
         {
             canFindPath = false;
             shouldMove = true;
+            if (this == null)
+                return;
+
             path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist, nodePath);
+            
             currentPath = path._nodePath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
@@ -159,40 +176,42 @@ public class AIMouvement : MonoBehaviour
     {
         bool followingPath = true;
         int pathIndex = 0;
-        float speedPercent = 1;
-        while (followingPath && shouldMove)
+        //float speedPercent = 1;
+        while (followingPath)
         {
             Vector2 pos2D = new Vector2(transform.position.x, transform.position.y);
             while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
             {
                 if(pathIndex == path.finishLineIndex)
                 {
-                    
-                    followingPath = false;
                     shouldMove = false;
+                    followingPath = false;
                     break;
                 }
                 else
                 {
-                    interpolationSpeed = 0;
                     pathIndex++;
                 }
             }
             if (followingPath)
             {
-                if(pathIndex >= path.slowDownIndex && stoppingDist > 0)
-                {
-                    speedPercent = Mathf.Clamp01(path.turnBoundaries[path.finishLineIndex].DistanceFromPoint(pos2D) / stoppingDist);
-                    if (speedPercent < 0.8f)
-                    {
-                        shouldMove = false;
-                        followingPath = false;
-                        break;
-                    }
-                }
-                 shouldMove = true;
-                 directionToTarget = path.lookPoints[pathIndex] - transform.position;
+                //if(pathIndex >= path.slowDownIndex && stoppingDist > 0)
+                //{
+                //    speedPercent = Mathf.Clamp01(path.turnBoundaries[path.finishLineIndex].DistanceFromPoint(pos2D) / stoppingDist);
+                //    if (speedPercent < 0.8f)
+                //    {
+                //        shouldMove = false;
+                //        followingPath = false;
+                //        break;
+                //    }
+                //}
+               
+                if (shouldMove)
+                    directionToTarget = path.lookPoints[pathIndex] - transform.position;
+                else
+                    directionToTarget = Vector2.zero;
             }
+            
             yield return null;
         }
     }

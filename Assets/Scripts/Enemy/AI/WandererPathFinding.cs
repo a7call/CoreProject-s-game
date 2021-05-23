@@ -38,7 +38,7 @@ public class WandererPathFinding : MonoBehaviour
                 {
                     sw.Stop();
                    // print("Path found: " + sw.ElapsedMilliseconds + " ms");
-                    pathSuccess = true;
+                    pathSuccess = true;                    
 
                     break;
                 }
@@ -83,10 +83,15 @@ public class WandererPathFinding : MonoBehaviour
             }
             callback(new PathResult(wayPoints, pathSuccess, path, request._callback));
         }
-        else if(!targetNode._walkable || targetNode._isBusy )
+        else
         {
-            callback(new PathResult(null, false, null, request._callback));
+            print(startNode._walkable);
+            print(targetNode._walkable);
         }
+        //else if (!targetNode._walkable || targetNode._isBusy)
+        //{
+        //    callback(new PathResult(null, false, null, request._callback));
+        //}
        
        
     }

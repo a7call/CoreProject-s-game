@@ -195,8 +195,11 @@ public class Player : Characters
     private Vector2 mouvement;
     void MovePlayer(Vector2 _mouvement)
     {
+        
         Vector3 targetVelocity = _mouvement;
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, StartSmoothTime);
+        // rb.velocity = _mouvement.normalized * velocity ;
+        //rb.MovePosition(((Vector2)transform.position + _mouvement.normalized * Time.deltaTime * mooveSpeed));
 
         if (rb.velocity.magnitude > 0.1)
         {

@@ -322,11 +322,11 @@ public abstract class Enemy : Characters
         }
         else
         {
-            if (Vector3.Distance(transform.position, target.position) <= attackRange / 2 && AIMouvement.ShouldMove)
+            if (Vector3.Distance(transform.position, target.position) <= attackRange / 2)
             {
                 AIMouvement.ShouldMove = false;
             }
-            else if (Vector3.Distance(transform.position, target.position) >= attackRange && !AIMouvement.ShouldMove)
+            else if (Vector3.Distance(transform.position, target.position) >= attackRange)
             {
                 AIMouvement.ShouldMove = true;
             }
@@ -340,6 +340,7 @@ public abstract class Enemy : Characters
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
             currentState = State.Attacking;
+            aIMouvement.DirectionToTarget = Vector2.zero;
         }
         else 
         {

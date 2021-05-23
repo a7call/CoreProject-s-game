@@ -26,7 +26,7 @@ public class Cac : Enemy
     protected override void isInRange()
     {
 
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        if (Vector3.Distance(transform.position, target.position) < attackRange  )
         {
             currentState = State.Attacking;
             AIMouvement.ShouldMove = false;
