@@ -44,7 +44,7 @@ public class AIMouvement : MonoBehaviour
     public bool isMoving = false;
     #endregion  
 
-    int penaltyToNodeOnPath = 5;
+    int penaltyToNodeOnPath = 400;
     List<Node> currentPath = new List<Node>();
 
 
@@ -107,8 +107,6 @@ public class AIMouvement : MonoBehaviour
 
     IEnumerator UpdatePath()
     {
-        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position,OnPathFound));
-
         float sqrMoveThreshHold = pathUpdateMoveThreshHold * pathUpdateMoveThreshHold;
         Vector3 targetPosOld = target.position;
         while (true)
@@ -179,18 +177,7 @@ public class AIMouvement : MonoBehaviour
                 }
             }
             if (followingPath)
-            {
-                //if(pathIndex >= path.slowDownIndex && stoppingDist > 0)
-                //{
-                //    speedPercent = Mathf.Clamp01(path.turnBoundaries[path.finishLineIndex].DistanceFromPoint(pos2D) / stoppingDist);
-                //    if (speedPercent < 0.8f)
-                //    {
-                //        shouldMove = false;
-                //        followingPath = false;
-                //        break;
-                //    }
-                //}
-               
+            {  
                 if (shouldMove)
                     directionToTarget = path.lookPoints[pathIndex] - transform.position;
                 else
@@ -204,10 +191,10 @@ public class AIMouvement : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        if (path != null)
-        {
-            path.DrawWithGizmos();
-        }
+        //if (path != null)
+        //{
+        //    path.DrawWithGizmos();
+        //}
     }
     private void OnDestroy()
     {

@@ -17,8 +17,10 @@ namespace Edgar.Unity.Examples
         }
         public void OnTriggerEnter2D(Collider2D otherCollider)
         {
-            if (otherCollider.gameObject.tag == "Player")
+            
+            if (otherCollider.tag == "Player")
             {
+                
                 roomManager?.OnRoomEnter(otherCollider.gameObject);
             }
         }

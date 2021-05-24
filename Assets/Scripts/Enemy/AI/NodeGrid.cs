@@ -151,27 +151,16 @@ public class NodeGrid: MonoBehaviour
     {
         foreach (var n in path)
         {
-            for (int x = -1; x <= 1; x++)
+            if (grid[n._gridX , n._gridY ]._unitMovementPenalty + penalty <= 0)
             {
-
-                for (int y = -1; y <= 1; y++)
-                {
-                    int appliedPenalty;
-                    if (x == 0 && y == 0)
-                    {
-                        appliedPenalty = penalty;
-                    }
-                    else
-                    {
-                        appliedPenalty = (int)penalty / 2;
-                    }
-
-                    if (grid[n._gridX , n._gridY ]._unitMovementPenalty + appliedPenalty <= 0)
-                        grid[n._gridX , n._gridY ]._unitMovementPenalty = 0;
-                    else
-                        grid[n._gridX , n._gridY ]._unitMovementPenalty += appliedPenalty;
-                }
+                grid[n._gridX, n._gridY]._unitMovementPenalty = 0;
             }
+
+            else
+            {
+                grid[n._gridX, n._gridY]._unitMovementPenalty += penalty;
+            }
+               
         }
     }
 
@@ -239,7 +228,7 @@ public class NodeGrid: MonoBehaviour
             {
                 if (isBlurredPenaltyActive)
                 {
-                    Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, node._movementPenalty));
+                    Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, node._unitMovementPenalty));
                     Gizmos.color = (node._walkable) ? Gizmos.color : Color.red;
                     if (node._isBusy)
                     {

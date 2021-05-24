@@ -55,14 +55,6 @@ namespace Edgar.Unity.Examples
         public void Start()
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
-            if (transform.GetComponentInChildren<NodeGrid>())
-            {
-                WandererObject = transform.GetComponentInChildren<NodeGrid>().gameObject;
-                WandererObject.GetComponent<NodeGrid>().CreateGrid();
-
-                WandererObject.SetActive(false);
-            }
-           
             room = roomInstance?.Room as WandererRoom;
             
         }
@@ -87,7 +79,6 @@ namespace Edgar.Unity.Examples
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
-          
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
             WandererRoomDetectionPostProcess.SpawnEnemy(RoomInstance, this, ref roomStruct, Enemies, true);
             
@@ -112,13 +103,13 @@ namespace Edgar.Unity.Examples
         //EnemyBase Spawn
         void SecondSpawn()
         {
-            if (roomStruct.shouldHaveSecondSpawn && !Cleared)
-            {
-                if (roomStruct.ennemies.Count <= numberOfEnemyLeftInRoom)
-                {
-                    WandererRoomDetectionPostProcess.SpawnEnemy(RoomInstance, this, ref roomStruct, Enemies, true);
-                }
-            }
+            //if (roomStruct.shouldHaveSecondSpawn && !Cleared)
+            //{
+            //    if (roomStruct.ennemies.Count <= numberOfEnemyLeftInRoom)
+            //    {
+            //        WandererRoomDetectionPostProcess.SpawnEnemy(RoomInstance, this, ref roomStruct, Enemies, true);
+            //    }
+            //}
         }
 
         void CleanEnemyArray()

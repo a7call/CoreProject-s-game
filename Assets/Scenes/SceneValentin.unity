@@ -255,16 +255,28 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3944287817854806613, guid: 842fa452e58327649bddbbea0937ca82, type: 3}
+      propertyPath: gridWorldSize.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944287817854806613, guid: 842fa452e58327649bddbbea0937ca82, type: 3}
+      propertyPath: gridWorldSize.y
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944287817854806613, guid: 842fa452e58327649bddbbea0937ca82, type: 3}
       propertyPath: displayGridGizmos
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3944287817854806613, guid: 842fa452e58327649bddbbea0937ca82, type: 3}
-      propertyPath: walkabeMask.m_Bits
-      value: 16384
+      propertyPath: isBlurredPenaltyActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3944287817854806618, guid: 842fa452e58327649bddbbea0937ca82, type: 3}
       propertyPath: m_Name
       value: WandereA*
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944287817854806618, guid: 842fa452e58327649bddbbea0937ca82, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842fa452e58327649bddbbea0937ca82, type: 3}
@@ -410,7 +422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &230941946
 Transform:
   m_ObjectHideFlags: 0
@@ -2447,7 +2459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2000239985
 Transform:
   m_ObjectHideFlags: 0
@@ -2635,11 +2647,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101717229859328977, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.3
+      value: 597
       objectReference: {fileID: 0}
     - target: {fileID: 101717229859328977, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.3
+      value: 342
       objectReference: {fileID: 0}
     - target: {fileID: 101717229859328977, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2676,6 +2688,14 @@ PrefabInstance:
     - target: {fileID: 101717229859328989, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 101717229859328989, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 101717229859328991, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 814a8af747e066549b09cac07f0e6cb8, type: 3}
@@ -2837,7 +2857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8945299246766118458, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
       propertyPath: PostProcessConfig.CenterGrid
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8945299246766118458, guid: 6fec8ea50c62a5e4698d5eabc7974309, type: 3}
       propertyPath: CustomPostProcessTasks.Array.size
