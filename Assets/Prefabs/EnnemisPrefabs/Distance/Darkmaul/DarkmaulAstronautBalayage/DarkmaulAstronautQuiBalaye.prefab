@@ -98,13 +98,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7634258490105725873}
   - component: {fileID: 7634258490105725872}
-  - component: {fileID: 7634258490105725879}
   - component: {fileID: 7634258490105725878}
   - component: {fileID: 5968002960519933558}
-  - component: {fileID: 8559690270340112145}
-  - component: {fileID: 9205256889157998456}
   - component: {fileID: 7677091706454138766}
   - component: {fileID: 7677091706406396184}
+  - component: {fileID: 1974592406}
   m_Layer: 9
   m_Name: DarkmaulAstronautQuiBalaye
   m_TagString: Enemy
@@ -149,34 +147,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7634258490105725879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634258490105725877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!212 &7634258490105725878
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -254,56 +224,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.62763786, y: 0.7348131}
   m_EdgeRadius: 0
---- !u!114 &8559690270340112145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634258490105725877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 2
-  radius: 0.7
-  height: 2
-  repathRate: 0.3
-  canSearch: 1
-  canMove: 1
-  maxSpeed: 2
-  gravity: {x: NaN, y: NaN, z: NaN}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  centerOffsetCompatibility: NaN
-  orientation: 1
-  enableRotation: 0
-  targetCompatibility: {fileID: 0}
-  maxAcceleration: -2.5
-  rotationSpeed: 360
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 10
-  endReachedDistance: 0.2
-  alwaysDrawGizmos: 0
-  slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
-  constrainInsideGraph: 0
---- !u!114 &9205256889157998456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634258490105725877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  target: {fileID: 0}
 --- !u!95 &7677091706454138766
 Animator:
   serializedVersion: 3
@@ -340,11 +260,6 @@ MonoBehaviour:
   takeDamageSound: 
   dieSound: 
   isInvokedInBossRoom: 0
-  nextWayPointDistance: 0.05
-  aIPath: {fileID: 0}
-  targetSetter: {fileID: 0}
-  target: {fileID: 0}
-  direction: {x: 0, y: 0, z: 0}
   isreadyToAttack: 1
   currentState: 0
   fireSound: 
@@ -352,6 +267,21 @@ MonoBehaviour:
   dispersion: 0
   isReadytoShoot: 1
   angleTotalBalayage: 90
+--- !u!114 &1974592406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634258490105725877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f9d3abb148523469b149978552a4e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldMove: 1
+  isMoving: 0
+  target: {fileID: 0}
 --- !u!1001 &2109630991238581561
 PrefabInstance:
   m_ObjectHideFlags: 0

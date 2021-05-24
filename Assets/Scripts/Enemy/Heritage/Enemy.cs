@@ -168,8 +168,13 @@ public abstract class Enemy : Characters
         {
             currentState = previousState;
         }
-        rb.velocity = Vector2.zero;
-        AIMouvement.ShouldMove= true;
+        // C'est DU SPARADRA
+        if (this != null)
+        {
+            rb.velocity = Vector2.zero;
+            AIMouvement.ShouldMove = true;
+        }
+        
     }
 
     // Attack

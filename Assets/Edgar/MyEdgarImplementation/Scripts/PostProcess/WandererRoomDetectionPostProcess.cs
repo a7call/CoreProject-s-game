@@ -56,14 +56,15 @@ namespace Edgar.Unity.Examples
                 var roomManager = AssignRoomComponents(roomInstance);
                 AssignPointToRooms(roomInstance, roomManager, ref roomStruct);
 
-                if (ShouldSpawnEnemy(roomInstance, roomStruct))
-                    SpawnEnemy(roomInstance, roomManager, ref roomStruct, Enemies);
+                //if (ShouldSpawnEnemy(roomInstance, roomStruct))
+                //    SpawnEnemy(roomInstance, roomManager, ref roomStruct, Enemies);
 
                 roomDictionary.Add(roomInstance, roomStruct);
                 roomManager.roomStruct = roomStruct;
                 roomManager.Enemies = Enemies;
             }
-            AstarPath.active.Scan();
+           // AstarPath.active.Scan();
+            FindObjectOfType<NodeGrid>().CreateGrid();
             MovePlayerToSpawn(level);
         }
         
@@ -102,6 +103,7 @@ namespace Edgar.Unity.Examples
 
             // Add the room manager component
             var roomManager = roomTemplateInstance.AddComponent<WandererCurrentRoomDetectionRoomManager>();
+            
 
             roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
 

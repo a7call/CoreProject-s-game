@@ -22,18 +22,27 @@ public class WandererPathFinding : MonoBehaviour
 
         var startNode = grid.NodeFromWorldPoint(request._pathStart);
         var targetNode = grid.NodeFromWorldPoint(request._pathEnd);
-
-        if(startNode._walkable && targetNode._walkable && !targetNode._isBusy)
+        if (!targetNode._walkable )
         {
-            
+            targetNode = ChangeTargetNode(targetNode);
+        }
+        if (!startNode._walkable)
+        {
+            startNode = ChangeTargetNode(startNode);
+        }
+
+        if (startNode._walkable && targetNode._walkable && !targetNode._isBusy)
+        {
             Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
             HashSet<Node> closeSet = new HashSet<Node>();
             openSet.Add(startNode);
             while (openSet.Count > 0)
             {
                 Node currentNode = openSet.RemoveFirst();
+                
                 closeSet.Add(currentNode);
 
+                   
                 if (currentNode == targetNode)
                 {
                     sw.Stop();
@@ -83,17 +92,50 @@ public class WandererPathFinding : MonoBehaviour
             }
             callback(new PathResult(wayPoints, pathSuccess, path, request._callback));
         }
-        else
+    }
+
+    Node ChangeTargetNode(Node targetNode)
+    {
+        var nodelist = new List<Node>();
+        for (int x = -1; x <= 1; x++)
         {
-            print(startNode._walkable);
-            print(targetNode._walkable);
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == y)
+                    continue;
+
+                var newNode = grid.grid[targetNode._gridX + x, targetNode._gridY + y];
+                if (newNode._walkable)
+                {
+                   return  newNode;
+                }
+                else
+                {
+                    nodelist.Add(newNode);
+                    
+                }
+            }
         }
-        //else if (!targetNode._walkable || targetNode._isBusy)
-        //{
-        //    callback(new PathResult(null, false, null, request._callback));
-        //}
-       
-       
+        foreach (var node in nodelist)
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    if (x == y)
+                        continue;
+
+                    var newNode = grid.grid[node._gridX + x, node._gridY + y];
+                    if (newNode._walkable)
+                    {
+                        
+                        return newNode;
+
+                    }
+                }
+            }
+        }
+        return targetNode;
     }
 
     Vector3[] RetracePath(Node startNode, Node endNode, out List<Node> path)

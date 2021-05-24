@@ -49,13 +49,22 @@ namespace Edgar.Unity.Examples
         public RoomInstance RoomInstance;
         public static RoomInstance previousRoom;
         public static RoomInstance previousCorridor;
-
+        public GameObject WandererObject;
         
 
         public void Start()
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
+            if (transform.GetComponentInChildren<NodeGrid>())
+            {
+                WandererObject = transform.GetComponentInChildren<NodeGrid>().gameObject;
+                WandererObject.GetComponent<NodeGrid>().CreateGrid();
+
+                WandererObject.SetActive(false);
+            }
+           
             room = roomInstance?.Room as WandererRoom;
+            
         }
 
         
@@ -78,8 +87,12 @@ namespace Edgar.Unity.Examples
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
+          
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
+            WandererRoomDetectionPostProcess.SpawnEnemy(RoomInstance, this, ref roomStruct, Enemies, true);
+            
         }
+        
         /// <summary>
         /// Gets called when a player leaves the room.
         /// </summary>

@@ -40,13 +40,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3612759245202818931}
   - component: {fileID: 3612759245202818940}
-  - component: {fileID: 3612759245202818929}
   - component: {fileID: 3612759245202818930}
   - component: {fileID: 2016863281}
   - component: {fileID: 5408923339075209902}
-  - component: {fileID: 1470527738}
-  - component: {fileID: 1470527739}
   - component: {fileID: 6795443994441172330}
+  - component: {fileID: 191896056}
   m_Layer: 9
   m_Name: Parasite rampant
   m_TagString: Enemy
@@ -78,7 +76,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3612759245202818942}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -91,34 +89,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3612759245202818929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3612759245202818942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!114 &3612759245202818930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,21 +106,10 @@ MonoBehaviour:
   takeDamageSound: 
   dieSound: 
   isInvokedInBossRoom: 0
-  nextWayPointDistance: 3
-  aIPath: {fileID: 0}
-  targetSetter: {fileID: 0}
-  target: {fileID: 0}
-  direction: {x: 0, y: 0, z: 0}
   isreadyToAttack: 1
   currentState: 1
   fireSound: 
   CacDatas: {fileID: 11400000, guid: f6eefc7057f2fe245a62d819c9b6c619, type: 2}
-  attackPoint: {fileID: 3612759243388555237}
-  attackRadius: 0
-  hitLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  attackDir: {x: 0, y: 0, z: 0}
 --- !u!61 &2016863281
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -214,9 +173,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 299582325
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 6189787550646142873, guid: 0cfedcdf4401a084580dc8d8adfcf860, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -228,56 +187,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1470527738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3612759245202818942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 2
-  radius: 0.7
-  height: 2.01
-  repathRate: 0.3
-  canSearch: 1
-  canMove: 1
-  maxSpeed: 2
-  gravity: {x: 0, y: 0, z: 0}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  centerOffsetCompatibility: NaN
-  orientation: 1
-  enableRotation: 0
-  targetCompatibility: {fileID: 0}
-  maxAcceleration: -2.5
-  rotationSpeed: 360
-  slowdownDistance: 1.2
-  pickNextWaypointDist: 2
-  endReachedDistance: 0.2
-  alwaysDrawGizmos: 1
-  slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
-  constrainInsideGraph: 0
---- !u!114 &1470527739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3612759245202818942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  target: {fileID: 0}
 --- !u!95 &6795443994441172330
 Animator:
   serializedVersion: 3
@@ -297,6 +206,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &191896056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3612759245202818942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f9d3abb148523469b149978552a4e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldMove: 1
+  isMoving: 0
+  target: {fileID: 0}
 --- !u!1 &6575549654921808342
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5543145213502621653
 Transform:
   m_ObjectHideFlags: 0
@@ -352,5 +276,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5783968, y: 0.22976369}
+  m_Size: {x: 0.45545673, y: 0.22976369}
   m_EdgeRadius: 0

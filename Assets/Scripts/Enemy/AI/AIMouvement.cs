@@ -5,11 +5,8 @@ using UnityEngine;
 
 public class AIMouvement : MonoBehaviour
 {
-    const float minPathUpdateTime = 0.2f;
+    const float minPathUpdateTime = 0.3f;
     const float pathUpdateMoveThreshHold = 0.5f;
-
-    float isMoveThreshHold = 0.1f;
-    List<Node> occupiedNodes = new List<Node>();
 
     NodeGrid grid;
 
@@ -50,8 +47,6 @@ public class AIMouvement : MonoBehaviour
     int penaltyToNodeOnPath = 5;
     List<Node> currentPath = new List<Node>();
 
-    
- 
 
     [Header("Target")]
     public Transform target;
@@ -80,6 +75,7 @@ public class AIMouvement : MonoBehaviour
     PathWanderer path;
     private void Start()
     {
+        target = GameObject.FindGameObjectWithTag("AItarget").transform;
         grid = FindObjectOfType<NodeGrid>();
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(UpdatePath());
@@ -89,7 +85,6 @@ public class AIMouvement : MonoBehaviour
     {
         if (pathSuccessful)
         {
-            canFindPath = false;
             shouldMove = true;
             if (this == null)
                 return;
@@ -100,11 +95,6 @@ public class AIMouvement : MonoBehaviour
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
             grid.UpdateUnitMouvementPenalty(penaltyToNodeOnPath, nodePath);
-        }
-        else
-        {
-            canFindPath = true;
-            shouldMove = false;
         }
     }
     private void FixedUpdate()
@@ -117,12 +107,6 @@ public class AIMouvement : MonoBehaviour
 
     IEnumerator UpdatePath()
     {
-        if(Time.timeSinceLevelLoad < 0.3f)
-        {
-            yield return new WaitForSeconds(0.3f);
-        }
-        
-
         PathRequestManager.RequestPath(new PathRequest(transform.position, target.position,OnPathFound));
 
         float sqrMoveThreshHold = pathUpdateMoveThreshHold * pathUpdateMoveThreshHold;
@@ -184,6 +168,7 @@ public class AIMouvement : MonoBehaviour
             {
                 if(pathIndex == path.finishLineIndex)
                 {
+                    directionToTarget = Vector2.zero;
                     shouldMove = false;
                     followingPath = false;
                     break;
@@ -219,7 +204,7 @@ public class AIMouvement : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        if(path != null)
+        if (path != null)
         {
             path.DrawWithGizmos();
         }

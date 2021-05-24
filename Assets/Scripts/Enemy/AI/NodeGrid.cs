@@ -80,6 +80,7 @@ public class NodeGrid: MonoBehaviour
     [Header("Nodes")]
     public float nodeRadius;
     public LayerMask unwalkabeMask;
+    public LayerMask walkabeMask;
     public TerrainType[] walkableRegions;
 
     [Header("BlurredMap")]
@@ -95,19 +96,21 @@ public class NodeGrid: MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
-        foreach (TerrainType region in walkableRegions)
-        {
-            walkableMask.value = walkableMask |= region.terrainMask.value;
-            walkableRegionsDictionnary.Add((int)Mathf.Log(region.terrainMask.value,2),region.terrainPenalty);
-        }
-       
-        CreateGrid();
+        //foreach (TerrainType region in walkableRegions)
+        //{
+        //    walkableMask.value = walkableMask |= region.terrainMask.value;
+        //    walkableRegionsDictionnary.Add((int)Mathf.Log(region.terrainMask.value,2),region.terrainPenalty);
+        //}
+
+       // CreateGrid();
     }
 
     public Vector3 worldBottomLeft;
     public void CreateGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];
+        
+       
         worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.up * gridWorldSize.y / 2;
         
         for(int x=0; x<gridSizeX ; x++)
@@ -116,6 +119,8 @@ public class NodeGrid: MonoBehaviour
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
                 bool walkable = !Physics2D.OverlapCircle(worldPoint, nodeRadius, unwalkabeMask);
+                if (Physics2D.OverlapCircle(worldPoint, nodeRadius, walkabeMask))
+                    walkable = true;
                 int mouvementPenalty = 0;
 
 
@@ -161,10 +166,10 @@ public class NodeGrid: MonoBehaviour
                         appliedPenalty = (int)penalty / 2;
                     }
 
-                    if (grid[n._gridX + x, n._gridY + y]._unitMovementPenalty + appliedPenalty <= 0)
-                        grid[n._gridX + x, n._gridY + y]._unitMovementPenalty = 0;
+                    if (grid[n._gridX , n._gridY ]._unitMovementPenalty + appliedPenalty <= 0)
+                        grid[n._gridX , n._gridY ]._unitMovementPenalty = 0;
                     else
-                        grid[n._gridX + x, n._gridY + y]._unitMovementPenalty += appliedPenalty;
+                        grid[n._gridX , n._gridY ]._unitMovementPenalty += appliedPenalty;
                 }
             }
         }
@@ -240,12 +245,12 @@ public class NodeGrid: MonoBehaviour
                     {
                         Gizmos.color = Color.blue;
                     }     
-                    Gizmos.DrawCube(node._worldPosition, Vector3.one * nodeDiameter);
+                    Gizmos.DrawCube(node._worldPosition, Vector3.one * (nodeDiameter -0.05f ));
                 }
                 else
                 {
                     Gizmos.color = (node._walkable) ? Color.white : Color.red;
-                    Gizmos.DrawCube(node._worldPosition, Vector3.one * (nodeDiameter -0.1f));
+                    Gizmos.DrawCube(node._worldPosition, Vector3.one * (nodeDiameter -0.2f));
                 }
 
                
