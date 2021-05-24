@@ -6,8 +6,8 @@ public class ExplosionPiege : HeritagePiege
 {
     #region Variables
     
-    [SerializeField] private float activationDelay;
-    [SerializeField] private float damage;
+    
+    [SerializeField] private float enemyDamage;
     private bool isExploded =false;
 
     [SerializeField] private float explosionRadius;
@@ -29,23 +29,24 @@ public class ExplosionPiege : HeritagePiege
     {
         if (collision.gameObject.layer == 6 && isExploded == false)
         {
-            StartCoroutine(TriggerPiege());
+            TriggerPiege();
         }
     }
 
-    private IEnumerator TriggerPiege()
+    private void TriggerPiege()
     {
         animator.SetTrigger("IsTrigger");
-        yield return new WaitForSeconds(activationDelay);
-        //FonctionnementPiege();
+        isExploded = true;
     }
 
     private void FonctionnementPiege()
     {
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         CameraController.instance.StartShakeG(screenShakeDuration, screenShakePower);
-        Explosion(damage, hit);
-        isExploded = true;
+        Explosion(enemyDamage, hit);
+        Collider2D collider2D = GetComponent<Collider2D>();
+        collider2D.enabled = false;
+
     }
 
     private void Explosion(float damage, Collider2D[] Hit)

@@ -16,17 +16,17 @@ public class ProjectilePiege : MonoBehaviour
     private void Awake()
     {
         player = FindObjectOfType<Player>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        
         Launch();
     }
 
     private void Launch()
     {
-        //transform.Translate(directionTir * projectileSpeed * Time.deltaTime);
         rb.velocity = directionTir * projectileSpeed;
     }
 
