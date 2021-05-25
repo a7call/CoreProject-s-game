@@ -54,6 +54,7 @@ public class Node : IHeapItem<Node>
 
     public int CompareTo(Node nodeToCompare)
     {
+        
         int compare = _fCost.CompareTo(nodeToCompare._fCost);
         if(compare == 0)
         {
@@ -102,7 +103,7 @@ public class NodeGrid: MonoBehaviour
         //    walkableRegionsDictionnary.Add((int)Mathf.Log(region.terrainMask.value,2),region.terrainPenalty);
         //}
 
-       // CreateGrid();
+        //CreateGrid();
     }
 
     public Vector3 worldBottomLeft;

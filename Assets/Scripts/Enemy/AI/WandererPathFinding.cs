@@ -6,22 +6,26 @@ using System;
 
 public class WandererPathFinding : MonoBehaviour
 {
+    PathRequestManager requestManager;
     NodeGrid grid;
     private void Awake()
     {
+        requestManager = GetComponent<PathRequestManager>();
         grid = GetComponent<NodeGrid>();
     }
-
-    public void FindPath(PathRequest request, Action<PathResult> callback)
+    public void StartFindPath(Vector3 startPos, Vector3 targetPos)
     {
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
+        StartCoroutine(FindPath(startPos, targetPos));
+    }
 
+    public IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
+    {
         Vector3[] wayPoints = new Vector3[0];
         bool pathSuccess = false;
 
-        var startNode = grid.NodeFromWorldPoint(request._pathStart);
-        var targetNode = grid.NodeFromWorldPoint(request._pathEnd);
+        var startNode = grid.NodeFromWorldPoint(startPos);
+        var targetNode = grid.NodeFromWorldPoint(targetPos);
+
         if (!targetNode._walkable )
         {
             targetNode = ChangeTargetNode(targetNode);
@@ -45,12 +49,10 @@ public class WandererPathFinding : MonoBehaviour
                    
                 if (currentNode == targetNode)
                 {
-                    sw.Stop();
-                   // print("Path found: " + sw.ElapsedMilliseconds + " ms");
                     pathSuccess = true;                    
-
                     break;
                 }
+                
                 foreach (var neighboor in grid.GetNeighboors(currentNode))
                 {
                     if (!neighboor._walkable || closeSet.Contains(neighboor))
@@ -61,7 +63,7 @@ public class WandererPathFinding : MonoBehaviour
 
                     int newMouvementCostToNeighboor;
 
-                    if (Vector3.Distance(neighboor._worldPosition, request._pathStart) <= 1f)
+                    if (Vector3.Distance(neighboor._worldPosition, startPos) <= 1f)
                     {
                         newMouvementCostToNeighboor = currentNode._gCost + GetDistance(currentNode, neighboor) + neighboor._movementPenalty + neighboor._unitMovementPenalty; ;
                     }
@@ -84,13 +86,14 @@ public class WandererPathFinding : MonoBehaviour
                     }
                 }
             }
+            yield return null;
             var path = new List<Node>();
             if (pathSuccess)
             {
                 wayPoints = RetracePath(startNode, targetNode,out path);
                 pathSuccess = wayPoints.Length > 0;
             }
-            callback(new PathResult(wayPoints, pathSuccess, path, request._callback));
+            requestManager.FinishedProcessingPath(wayPoints, pathSuccess, path);
         }
     }
 

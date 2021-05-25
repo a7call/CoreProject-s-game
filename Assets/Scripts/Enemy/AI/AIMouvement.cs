@@ -89,8 +89,7 @@ public class AIMouvement : MonoBehaviour
             if (this == null)
                 return;
 
-            path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist, nodePath);
-            
+            path = new PathWanderer(wayPoints, transform.position, turnDistance, stoppingDist, nodePath); 
             currentPath = path._nodePath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
@@ -107,6 +106,10 @@ public class AIMouvement : MonoBehaviour
 
     IEnumerator UpdatePath()
     {
+        if (Time.timeSinceLevelLoad < .3f)
+        {
+            yield return new WaitForSeconds(.3f);
+        }
         float sqrMoveThreshHold = pathUpdateMoveThreshHold * pathUpdateMoveThreshHold;
         Vector3 targetPosOld = target.position;
         while (true)
@@ -114,11 +117,10 @@ public class AIMouvement : MonoBehaviour
             yield return new WaitForSeconds(minPathUpdateTime);
             if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshHold)
             {
-                grid.UpdateUnitMouvementPenalty(-penaltyToNodeOnPath, currentPath);
-                PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
                 targetPosOld = target.position;
             }
-        }   
+        }
     }
 
     // BUSY NODE ABANDONNED FEATURE
