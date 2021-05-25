@@ -27,7 +27,7 @@ public class ExplosionPiege : HeritagePiege
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 6 && isExploded == false)
+        if (collision.gameObject.layer == 6 )
         {
             TriggerPiege();
         }
@@ -35,8 +35,12 @@ public class ExplosionPiege : HeritagePiege
 
     private void TriggerPiege()
     {
-        animator.SetTrigger("IsTrigger");
-        isExploded = true;
+        if (!isExploded)
+        {
+            animator.SetTrigger("IsTrigger");
+            isExploded = true;
+        }
+        
     }
 
     private void FonctionnementPiege()
@@ -67,6 +71,12 @@ public class ExplosionPiege : HeritagePiege
             {
                 player.TakeDamage(1);
                 CoroutineManager.Instance.StartCoroutine(player.KnockCo(knockBackForce, player.transform.position - transform.position, knockBackTime));
+            }
+
+            if (hit.gameObject.CompareTag("PiegeExplosion"))
+            {
+                ExplosionPiege explosionPiege = hit.GetComponent<ExplosionPiege>();
+                explosionPiege.TriggerPiege();
             }
 
         }
