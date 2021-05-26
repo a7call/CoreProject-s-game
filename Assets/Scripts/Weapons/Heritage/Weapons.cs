@@ -13,6 +13,9 @@ public class Weapons : MonoBehaviour
     public Transform attackPoint;
     public bool isAttacking = false;
 
+    protected float screenShakeMagnitude;
+    protected float screenShakeTime;
+
     // Offset de la postion de l'arme
     public float offSetX;
     public float topOffSetY;

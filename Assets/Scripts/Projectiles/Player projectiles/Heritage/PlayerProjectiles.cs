@@ -12,9 +12,6 @@ public class PlayerProjectiles : MonoBehaviour
     protected Weapons weapon;
     protected Rigidbody2D rb;
 
-    protected float screenTranslationPower = 0.15f;
-    protected float screenTranslationDuration = 0.05f;
-
 
     #region Stats
     protected float damage;
@@ -83,7 +80,6 @@ public class PlayerProjectiles : MonoBehaviour
     {
 
         directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
-        if(CameraController.instance != null) CameraController.instance.StartShakeD(screenTranslationDuration, screenTranslationPower, directionTir.normalized);
         rb.velocity = directionTir * projectileSpeed;
         
     }
