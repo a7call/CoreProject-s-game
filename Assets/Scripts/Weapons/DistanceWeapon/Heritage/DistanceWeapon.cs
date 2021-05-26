@@ -144,7 +144,8 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         magSize = player.magSize.Value;
         reloadDelay = player.reloadSpeed.Value;
         ammoStock = player.ammoStock.Value;
-       
+        screenShakeMagnitude = WeaponData.screenShakeMagnitude;
+        screenShakeTime = WeaponData.screenShakeTime;
     }
 
 
@@ -165,6 +166,8 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     float force = 100;
     protected virtual IEnumerator Shoot()
     {
+        if (CameraController.instance != null) CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, (attackPoint.position - transform.position).normalized);
+
         float decalage = Random.Range(-dispersion, dispersion);      
         Proj.dispersion = decalage;
         BulletInMag--;

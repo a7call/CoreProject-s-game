@@ -11,7 +11,8 @@ public abstract class WeaponScriptableObject : Item
     public Sprite image;
     public float knockBackForce;
     public float knockBackTime;
-   
+    public float screenShakeMagnitude;
+    public float screenShakeTime;
 
 
     public override void Equip(Player p)

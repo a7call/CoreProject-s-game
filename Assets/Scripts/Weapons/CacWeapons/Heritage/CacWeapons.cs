@@ -91,6 +91,9 @@ public class CacWeapons : Weapons, IPlayerWeapon
         attackRange = player.attackRange.Value;
         knockFrontForce = CacWeaponData.knockFrontForce;
         knockFrontTime = CacWeaponData.knockFrontTime;
+        screenShakeMagnitude = WeaponData.screenShakeMagnitude;
+        screenShakeTime = WeaponData.screenShakeTime;
+
     }
     #endregion
 
@@ -103,6 +106,7 @@ public class CacWeapons : Weapons, IPlayerWeapon
     {
         if (!PauseMenu.isGamePaused)
         {
+            CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, dir);
             CoroutineManager.Instance.StartCoroutine(player.KnockCo(knockFrontForce, dir, knockFrontTime));
             PlayEffectSound(AttackSound);
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
