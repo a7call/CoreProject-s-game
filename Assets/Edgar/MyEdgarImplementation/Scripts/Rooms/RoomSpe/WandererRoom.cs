@@ -7,7 +7,39 @@ using Edgar.Unity;
 public class WandererRoom : RoomBase
 {
     public RoomType Type;
-  
+
+    private int difficultyAllowed = 0;
+    public int DifficultyAllowed
+    {
+        get
+        {
+            return difficultyAllowed;
+        }
+        private set
+        {
+            SetRoomDifficulty(Type);
+        }
+    }
+
+    public void SetRoomDifficulty(RoomType type)
+    {
+
+        switch (type)
+        {
+            default:
+                difficultyAllowed = 0;
+                break;
+            case RoomType.Large:
+                difficultyAllowed = 15;
+                break;
+            case RoomType.Medium:
+                difficultyAllowed = 10;
+                break;
+            case RoomType.Small:
+                difficultyAllowed = 5;
+                break;
+        }
+    }
 
 
     public override List<GameObject> GetRoomTemplates()

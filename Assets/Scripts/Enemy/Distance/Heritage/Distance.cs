@@ -53,7 +53,7 @@ public class Distance : Enemy
         dispersion = DistanceData.dispersion;
         inSight = DistanceData.InSight;
         isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
-
+        difficulty = DistanceData.difficulty;
         //Chiffre arbitraire à modifier 
         coefAttackModeRange = Utils.RandomizeParams(1.2f, 1.5f);
         attackModeRange = attackRange * coefAttackModeRange;

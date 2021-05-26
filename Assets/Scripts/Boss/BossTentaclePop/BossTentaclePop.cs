@@ -118,7 +118,7 @@ public class BossTentaclePop : Enemy
     protected override void Start()
     {
         base.Start();
-        gameObject.GetComponent<Enemy>().isInvokedInBossRoom = true;
+       // gameObject.GetComponent<Enemy>().isInvokedInBossRoom = true;
         player.currentEtat = Player.EtatJoueur.shopping; // Etat AFK du joueur, il ne peut rien faire
         currentState = State.Chasing;
         currentBossState = BossState.LoadingPhase;

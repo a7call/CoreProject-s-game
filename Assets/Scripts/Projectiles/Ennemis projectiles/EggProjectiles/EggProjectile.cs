@@ -46,7 +46,7 @@ public class EggProjectile : Projectile
     protected void PopMobs()
     {
         GameObject mob = GameObject.Instantiate(mobs, transform.position, Quaternion.identity);
-        mob.GetComponent<Enemy>().isInvokedInBossRoom = true;
+        //mob.GetComponent<Enemy>().isInvokedInBossRoom = true;
         mob.transform.parent = gameObject.transform.parent;
     }
 }

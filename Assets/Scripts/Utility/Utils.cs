@@ -30,6 +30,11 @@ namespace Wanderer.Utils
         {
             return Random.Range(min, max);
         }
+
+        public static int RandomObjectInCollection(int collectionLenght)
+        {
+           return Random.Range(0, collectionLenght - 1);  
+        }
     }
 }
 

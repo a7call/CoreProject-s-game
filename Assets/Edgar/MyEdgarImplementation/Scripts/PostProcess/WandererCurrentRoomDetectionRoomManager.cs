@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 using System;
+using Wanderer.Utils;
 
 
 namespace Edgar.Unity.Examples
@@ -21,15 +22,7 @@ namespace Edgar.Unity.Examples
         /// </summary>
         public List<GameObject> Doors = new List<GameObject>();
 
-        /// <summary>
-        /// Enemies that can spawn inside the room.
-        /// </summary>
-        public EnemyStruct[] Enemies;
-
-        /// <summary>
-        /// room structure
-        /// </summary>
-        public RoomStruct roomStruct;
+       
 
         /// <summary>
         /// Collider of the floor tilemap layer.
@@ -50,6 +43,8 @@ namespace Edgar.Unity.Examples
         public static RoomInstance previousRoom;
         public static RoomInstance previousCorridor;
         public GameObject WandererObject;
+
+        public bool shouldSpawnMonsters;
         
 
         public void Start()
@@ -62,12 +57,7 @@ namespace Edgar.Unity.Examples
         
         public void Update()
         {
-            // clean Enemy array when enemy is killed;
-            CleanEnemyArray();
-            // If proba == EnemyBase Spawn
-            SecondSpawn();
-            // Check if all enemy are killed if true clear = true; (room is safe)
-            CheckIsRoomSafe();
+            
         }
 
         #region RoomEnter && RoomLeave
@@ -80,8 +70,7 @@ namespace Edgar.Unity.Examples
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
-            WandererRoomDetectionPostProcess.SpawnEnemy(RoomInstance, this, ref roomStruct, Enemies, true);
-            
+            StartCoroutine(RoomRandomSpawn());
         }
         
         /// <summary>
@@ -99,39 +88,40 @@ namespace Edgar.Unity.Examples
 
         #region Ennemies
 
-        float numberOfEnemyLeftInRoom = 2f;
+        public List<GameObject> monsters = new List<GameObject>();
+        private List<GameObject> activeMonsters = new List<GameObject>();
         //EnemyBase Spawn
-        void SecondSpawn()
+        IEnumerator RoomRandomSpawn()
         {
-            //if (roomStruct.shouldHaveSecondSpawn && !Cleared)
-            //{
-            //    if (roomStruct.ennemies.Count <= numberOfEnemyLeftInRoom)
-            //    {
-            //        WandererRoomDetectionPostProcess.SpawnEnemy(RoomInstance, this, ref roomStruct, Enemies, true);
-            //    }
-            //}
-        }
+            if (!shouldSpawnMonsters)
+                yield break;
 
-        void CleanEnemyArray()
-        {
-            if (!Cleared)
+            var currentDifficulty = 0;
+            var spawner = new Spawner(monsters);
+
+            while(currentDifficulty <= room.DifficultyAllowed)
             {
-                foreach (GameObject enemy in roomStruct.ennemies.ToArray())
+                int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
+               
+                var position = RandomPointInBounds(FloorCollider.bounds, 1f);
+
+                if (!IsPointWithinCollider(FloorCollider, position))
                 {
-                    if (enemy == null)
-                    {
-                        roomStruct.ennemies.Remove(enemy);
-                    }
+                    continue;
                 }
-            }
-        }
 
-        void CheckIsRoomSafe()
-        {
-            if (!roomStruct.shouldHaveSecondSpawn && roomStruct.ennemies.Count <= 0 && !Cleared && roomStruct.isEnemyAlreadySpawned)
-            {
-                Cleared = true;
+                if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
+                {
+                    continue;
+                }
+
+                
+                var spawnedMonster = spawner.Spawn(monsters[index], position, this.gameObject.transform);
+                currentDifficulty += spawnedMonster.GetComponent<Enemy>().Difficulty;
+
+                activeMonsters.Add(spawnedMonster);
             }
+            yield return null;
         }
         #endregion
 

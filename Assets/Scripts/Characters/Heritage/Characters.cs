@@ -18,9 +18,13 @@ public abstract class Characters : MonoBehaviour
 
     protected virtual void Awake()
     {
-        SetData();
         GetReference();
+        SetData();
         SetMaxHealth();
+    }
+    protected virtual void Start()
+    {
+
     }
 
     #region Health System

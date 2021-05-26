@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class BaseCaC : Cac
 {
+    
     protected override void Update()
     {
         base.Update();
@@ -20,6 +21,7 @@ public class BaseCaC : Cac
                 PlayAttackAnim();
                 break;
         }
+
     }
 
    

@@ -50,7 +50,7 @@ public class Cac : Enemy
         hitLayers = CacDatas.hitLayers;
 
         AIMouvement.Speed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
-
+        difficulty = CacDatas.difficulty;
         inSight = CacDatas.InSight;
         MaxHealth = CacDatas.maxHealth;
         attackDelay = CacDatas.attackDelay;

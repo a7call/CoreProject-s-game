@@ -10,12 +10,18 @@ using Pathfinding;
 /// Une fonction permettant de suivre le joueur si il est en range d'aggro
 /// Une fonction permmettant de savoir si le joueur est en range d'aggro
 /// Une fonction permettant d'initialiser le premier point de patrouille
-/// Les fonctions nécessaires à la gestion de la vie de l'ennemi (se référer à Lopez ou au tuto FR)
+/// Les fonctions nécessaires à la gestion de la vie de l'ennemi (se référer à Lopez )
 /// </summary>
 public abstract class Enemy : Characters
 {
-    [HideInInspector]
-    public bool isInvokedInBossRoom = false;
+    protected int difficulty;
+    public int Difficulty
+    {
+        get
+        {
+            return difficulty;
+        }
+    }
 
     #region Player Variable
     protected Player player;
@@ -24,10 +30,9 @@ public abstract class Enemy : Characters
     #region Unity Mono
 
     protected override void Awake()
-    { 
-        GetReference();
-        AddAnimationEvent("Death", "DestroyEnemy");
+    {
         base.Awake();
+        AddAnimationEvent("Death", "DestroyEnemy");    
     }
 
     protected override void GetReference()
@@ -37,9 +42,7 @@ public abstract class Enemy : Characters
         currentState = State.Patrolling;
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
-
         player = target.GetComponent<Player>();
-
         audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
 
@@ -56,10 +59,7 @@ public abstract class Enemy : Characters
             return;
         }
     }
-    protected virtual void Start()
-    {
-
-    }
+   
     private void FixedUpdate()
     {
         GetLastDirection();
@@ -204,8 +204,6 @@ public abstract class Enemy : Characters
     {
         yield return new WaitForEndOfFrame();
         
-        //AiMouvement.shouldMove = false;
-        rb.velocity = Vector2.zero;
         if (GetComponent<Collider2D>().enabled)
         {
             foreach (Transform child in transform)
