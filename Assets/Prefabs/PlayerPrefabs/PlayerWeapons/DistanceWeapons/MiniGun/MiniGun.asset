@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: MiniGun
   m_EditorClassIdentifier: 
   damage: 1
-  delayBetweenAttack: 0.05
+  delayBetweenAttack: 0.08
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: 1957909822809482277, guid: 86eb4dd5a6a714e48b391f15619fc4d9, type: 3}
   knockBackForce: 0
   knockBackTime: 0
+  screenShakeMagnitude: 0.12
+  screenShakeTime: 0.025
   projectile: {fileID: 5004741095190017796, guid: 0a3ca156682dffb479301c8a62d7a0ad, type: 3}
-  dispersion: 10
-  magSize: 300
-  reloadDelay: 1
-  ammoStock: 600
-  projectileSpeed: 10
+  dispersion: 4
+  magSize: 200
+  reloadDelay: 2
+  ammoStock: 800
+  projectileSpeed: 18
