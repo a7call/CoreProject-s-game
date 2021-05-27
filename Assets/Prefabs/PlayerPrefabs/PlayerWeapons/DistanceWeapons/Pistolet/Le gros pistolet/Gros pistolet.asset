@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: Gros pistolet
   m_EditorClassIdentifier: 
   damage: 2
-  delayBetweenAttack: 0.3
+  delayBetweenAttack: 0.15
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: 498815208745022802, guid: 8fbf3f1da7c41e746bfdadb840b552c4, type: 3}
   knockBackForce: 5
   knockBackTime: 0.1
+  screenShakeMagnitude: 0.06
+  screenShakeTime: 0.025
   projectile: {fileID: 5004741095190017796, guid: 25ee4fe2cd8ce4d8fa68c39a55a97946, type: 3}
   dispersion: 5
   magSize: 10
   reloadDelay: 1.5
   ammoStock: 200
-  projectileSpeed: 10
+  projectileSpeed: 15
