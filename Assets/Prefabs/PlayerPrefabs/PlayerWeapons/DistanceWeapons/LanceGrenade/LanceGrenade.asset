@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: LanceGrenade
   m_EditorClassIdentifier: 
   damage: 6
-  delayBetweenAttack: 2.5
+  delayBetweenAttack: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: -1936513037823811, guid: d2adb05139632bb40bc4238ec2f740ac, type: 3}
   knockBackForce: 350
   knockBackTime: 0.4
-  projectileSpeed: 15
+  screenShakeMagnitude: 0.2
+  screenShakeTime: 0.025
   projectile: {fileID: 6458180527659685685, guid: 1a1890c025c93dc4598036b518454c24, type: 3}
   dispersion: 2
   magSize: 8
   reloadDelay: 3
   ammoStock: 28
+  projectileSpeed: 20
