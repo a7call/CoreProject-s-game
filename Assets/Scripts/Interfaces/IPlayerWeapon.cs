@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IPlayerWeapon 
+public interface IPlayerWeapon 
 {
     WeaponScriptableObject WeaponData { get; }
 }

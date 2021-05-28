@@ -152,6 +152,7 @@ public class NodeGrid: MonoBehaviour
     {
         foreach (var n in path)
         {
+
             if (grid[n._gridX , n._gridY ]._unitMovementPenalty + penalty <= 0)
             {
                 grid[n._gridX, n._gridY]._unitMovementPenalty = 0;

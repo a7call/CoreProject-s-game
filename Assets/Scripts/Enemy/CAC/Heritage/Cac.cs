@@ -42,7 +42,15 @@ public class Cac : Enemy
     #endregion
 
     #region Datas
-    [SerializeField] protected CacScriptableObject CacDatas;
+    public ICharacter test
+    {
+        get
+        {
+            return CacDatas;
+        }
+    }
+    [SerializeField] public CacScriptableObject CacDatas;
+
     protected override void SetData()
     {
         attackRange = CacDatas.attackRange;

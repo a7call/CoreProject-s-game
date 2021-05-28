@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ICharacter
 {
-
+    float AttackRadius { get; set; }
 }

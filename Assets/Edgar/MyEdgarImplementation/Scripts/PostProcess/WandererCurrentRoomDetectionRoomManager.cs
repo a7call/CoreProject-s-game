@@ -44,20 +44,15 @@ namespace Edgar.Unity.Examples
         public static RoomInstance previousCorridor;
         public GameObject WandererObject;
 
-        public bool shouldSpawnMonsters;
+
+        private bool isActive;
         
 
         public void Start()
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
             room = roomInstance?.Room as WandererRoom;
-            
-        }
 
-        
-        public void Update()
-        {
-            
         }
 
         #region RoomEnter && RoomLeave
@@ -68,6 +63,7 @@ namespace Edgar.Unity.Examples
         /// 
         public void OnRoomEnter(GameObject player)
         {
+            isActive = true;
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
             StartCoroutine(RoomRandomSpawn());
@@ -79,6 +75,7 @@ namespace Edgar.Unity.Examples
         /// <param name="player"></param>
         public void OnRoomLeave(GameObject player)
         {
+            isActive = false;
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
             if (!roomInstance.IsCorridor) previousRoom = roomInstance;
             if (roomInstance.IsCorridor) previousCorridor = roomInstance;
@@ -87,19 +84,33 @@ namespace Edgar.Unity.Examples
         #endregion
 
         #region Ennemies
-
+        void ClearDeadMonsters(GameObject monster)
+        {
+            if (activeMonsters.Contains(monster))
+            {
+                activeMonsters.Remove(monster);
+                monster.GetComponent<Enemy>().onEnemyDeath -= ClearDeadMonsters;
+                if (activeMonsters.Count <= (int)maxNumberOfActiveMonsters / 2 && room.ShouldSpawnMonsterTwice)
+                {
+                    StartCoroutine(RoomRandomSpawn());
+                    room.ShouldSpawnMonsterTwice = false;
+                }
+                    
+            }
+        }
+        private int maxNumberOfActiveMonsters;
         public List<GameObject> monsters = new List<GameObject>();
         private List<GameObject> activeMonsters = new List<GameObject>();
         //EnemyBase Spawn
         IEnumerator RoomRandomSpawn()
         {
-            if (!shouldSpawnMonsters)
+            if (!room.ShouldSpawnMonsters)
                 yield break;
 
             var currentDifficulty = 0;
             var spawner = new Spawner(monsters);
 
-            while(currentDifficulty <= room.DifficultyAllowed)
+            while(currentDifficulty < room.DifficultyAllowed)
             {
                 int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
                
@@ -115,13 +126,19 @@ namespace Edgar.Unity.Examples
                     continue;
                 }
 
-                
+                print(monsters[index].GetComponent<Cac>().test.AttackRadius);
                 var spawnedMonster = spawner.Spawn(monsters[index], position, this.gameObject.transform);
+
                 currentDifficulty += spawnedMonster.GetComponent<Enemy>().Difficulty;
 
                 activeMonsters.Add(spawnedMonster);
             }
             yield return null;
+            maxNumberOfActiveMonsters = activeMonsters.Count();
+            foreach (var monster in activeMonsters)
+            {
+                monster.GetComponent<Enemy>().onEnemyDeath += ClearDeadMonsters;
+            }
         }
         #endregion
 
@@ -144,5 +161,6 @@ namespace Edgar.Unity.Examples
         }
         #endregion
     }
+    
 }
 
