@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: Pistolet Pirate
   m_EditorClassIdentifier: 
   damage: 2.25
-  delayBetweenAttack: 0.35
+  delayBetweenAttack: 0.21
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: -6727408485362707990, guid: d6683c2d94e73974ea5a0c997a962d44, type: 3}
   knockBackForce: 120
   knockBackTime: 0.2
+  screenShakeMagnitude: 0.07
+  screenShakeTime: 0.025
   projectile: {fileID: 5004741095190017796, guid: 38efce4537c62ed4fb198257a780a959, type: 3}
   dispersion: 5
   magSize: 6
   reloadDelay: 1.5
   ammoStock: 160
-  projectileSpeed: 10
+  projectileSpeed: 15

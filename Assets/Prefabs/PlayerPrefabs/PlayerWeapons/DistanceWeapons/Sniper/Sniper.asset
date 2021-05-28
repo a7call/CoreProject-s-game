@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: Sniper
   m_EditorClassIdentifier: 
   damage: 7.5
-  delayBetweenAttack: 1
+  delayBetweenAttack: 0.3
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: -7040960777665541239, guid: 712949af1900c0742a47f984793bde33, type: 3}
   knockBackForce: 300
   knockBackTime: 0.35
-  projectileSpeed: 20
+  screenShakeMagnitude: 0.2
+  screenShakeTime: 0.025
   projectile: {fileID: 5004741095190017796, guid: 4abd1d514756f48d0b8a4ff7561f9955, type: 3}
   dispersion: 0
   magSize: 10
   reloadDelay: 2.25
   ammoStock: 40
+  projectileSpeed: 20

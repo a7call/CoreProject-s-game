@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: PistoletGele
   m_EditorClassIdentifier: 
   damage: 5
-  delayBetweenAttack: 0.25
+  delayBetweenAttack: 0.15
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: -7420992978983025675, guid: dec6924e12538b24e80e48d857d38c44, type: 3}
   knockBackForce: 150
   knockBackTime: 0.2
+  screenShakeMagnitude: 0.06
+  screenShakeTime: 0.025
   projectile: {fileID: 5637593918909201116, guid: 37ad7546a45788e4081ec7927354de4a, type: 3}
   dispersion: 4
   magSize: 24
   reloadDelay: 2
   ammoStock: 188
-  projectileSpeed: 10
+  projectileSpeed: 17

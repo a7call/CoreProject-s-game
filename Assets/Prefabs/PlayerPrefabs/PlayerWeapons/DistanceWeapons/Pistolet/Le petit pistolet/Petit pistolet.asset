@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: Petit pistolet
   m_EditorClassIdentifier: 
   damage: 1.5
-  delayBetweenAttack: 0.25
+  delayBetweenAttack: 0.16
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: 5584434446872974272, guid: a1c4f066a5ce54147b8219a2c3b24c76, type: 3}
   knockBackForce: 100
   knockBackTime: 0.2
-  projectileSpeed: 10
+  screenShakeMagnitude: 0.05
+  screenShakeTime: 0.025
   projectile: {fileID: 5004741095190017796, guid: 064ee4bf578834d79aa4a13bf5f97533, type: 3}
   dispersion: 4
   magSize: 12
   reloadDelay: 1
   ammoStock: 3000
+  projectileSpeed: 15
