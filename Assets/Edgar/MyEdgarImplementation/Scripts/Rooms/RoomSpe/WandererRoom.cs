@@ -2,11 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Edgar.Unity;
-
+using System;
+using Wanderer.Utils;
 
 public class WandererRoom : RoomBase
 {
+    private double chanceToSpawn;
+    public double ChanceToSpawn
+    {
+        get
+        {
+            return chanceToSpawn;
+        }
+    }
+
     public RoomType Type;
+
+    private bool shouldSpawnMonstersTwice = false;
+
+    public bool ShouldSpawnMonsterTwice
+    {
+        get
+        {
+            return shouldSpawnMonstersTwice;
+        }
+        set
+        {
+            shouldSpawnMonstersTwice = value;
+        }
+    }
+
+    private bool shouldSpawnMonsters = false;
+
+    public bool ShouldSpawnMonsters
+    {
+        get
+        {
+            return shouldSpawnMonsters;
+        }
+    }
 
     private int difficultyAllowed = 0;
     public int DifficultyAllowed
@@ -14,10 +48,6 @@ public class WandererRoom : RoomBase
         get
         {
             return difficultyAllowed;
-        }
-        private set
-        {
-            SetRoomDifficulty(Type);
         }
     }
 
@@ -40,6 +70,35 @@ public class WandererRoom : RoomBase
                 break;
         }
     }
+    
+    public void isAllowedToSpawnMonstersTwice()
+    {
+        shouldSpawnMonstersTwice = Utils.RandomBool((float)chanceToSpawn * 100);
+    }
+    public void isAllowedToSpawnMonsters(RoomType type)
+    {
+        shouldSpawnMonsters = (type == RoomType.Large || type == RoomType.Medium || type == RoomType.Small);
+    }
+
+    public void SetChanceToSpawn(RoomType type)
+    {
+        switch (type)
+        {
+            default:
+                chanceToSpawn = 0;
+                break;
+            case RoomType.Large:
+                chanceToSpawn = 0.5;
+                break;
+            case RoomType.Medium:
+                chanceToSpawn = 0.25;
+                break;
+            case RoomType.Small:
+                chanceToSpawn = 0.1;
+                break;
+        }
+    }
+
 
 
     public override List<GameObject> GetRoomTemplates()
@@ -90,4 +149,6 @@ public class WandererRoom : RoomBase
 
         return style;
     }
+
+   
 }

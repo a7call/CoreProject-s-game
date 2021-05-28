@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using System;
 /// <summary>
 /// Classe mère des ennemis 
 /// Elle contient une enum permettant d'indiquer le State de l'ennemi
@@ -29,6 +30,8 @@ public abstract class Enemy : Characters
 
     #region Unity Mono
 
+    public event Action<GameObject> onEnemyDeath;
+
     protected override void Awake()
     {
         base.Awake();
@@ -45,7 +48,8 @@ public abstract class Enemy : Characters
         player = target.GetComponent<Player>();
         audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
-
+    
+  
 
     protected virtual void Update()
     {
@@ -69,6 +73,8 @@ public abstract class Enemy : Characters
     private void OnDestroy()
     {
         StopAllCoroutines();
+        if (onEnemyDeath != null)
+            onEnemyDeath(this.gameObject);
     }
 
     private void OnDrawGizmos()

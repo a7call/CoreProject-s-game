@@ -36,13 +36,18 @@ namespace Edgar.Unity.Examples
                 var roomManager = AssignRoomComponents(roomInstance);
                 roomManager.RoomInstance = roomInstance;
 
-                roomManager.shouldSpawnMonsters = ShouldSpawnMonsters(roomInstance);
-                
-                if (roomManager.shouldSpawnMonsters)
-                {
-                   roomManager.monsters = monsters;
+               
+                var room = (WandererRoom)roomInstance.Room;
+                room.isAllowedToSpawnMonsters(room.Type);
+                room.SetRoomDifficulty(room.Type);
+                room.SetChanceToSpawn(room.Type);
+
+                if (room.ShouldSpawnMonsters)
+                {  
+                    room.isAllowedToSpawnMonstersTwice();
+                    // à revoir
+                    roomManager.monsters = monsters;
                 }
-              
             }
             // AstarPath.active.Scan();
             FindObjectOfType<NodeGrid>().CreateGrid();
@@ -80,14 +85,6 @@ namespace Edgar.Unity.Examples
         //    roomStruct.shouldHaveSecondSpawn = false;
         //}
         //#endregion
-
-
-    
-        private bool ShouldSpawnMonsters(RoomInstance roomInstance)
-        {
-            var room = (WandererRoom)roomInstance.Room;
-            return (room.Type == RoomType.Large || room.Type == RoomType.Medium || room.Type == RoomType.Small);
-        }
 
         //private void SetSecondSpawn(ref RoomStruct roomStruct)
         //{
