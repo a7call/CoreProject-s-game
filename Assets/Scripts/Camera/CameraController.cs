@@ -48,12 +48,16 @@ public class CameraController : MonoBehaviour
         // Follow
         mousePos = CaptureMousePos();
         target = UpdateTargetPos();
-        UpdateCameraPosition();
+        
 
         // Shake 
         if (shakeTimeRemaining > 0 && isShakingG) GlobalShake();
 
         if (shakeTimeRemaining > 0 && isShakingD) DirectionnalShake();
+    }
+    private void FixedUpdate()
+    {
+        UpdateCameraPosition();
     }
 
     #endregion
