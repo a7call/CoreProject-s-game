@@ -66,7 +66,7 @@ namespace Edgar.Unity.Examples
             isActive = true;
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
-            StartCoroutine(RoomRandomSpawn());
+            StartCoroutine(RoomSpawn());
         }
         
         /// <summary>
@@ -84,82 +84,21 @@ namespace Edgar.Unity.Examples
         #endregion
 
         #region Ennemies
-        void ClearDeadMonsters(GameObject monster)
+       
+        IEnumerator RoomSpawn()
         {
-            if (activeMonsters.Contains(monster))
+
+            foreach (var monsterObj in room.ActiveMonsters)
             {
-                activeMonsters.Remove(monster);
-                monster.GetComponent<Enemy>().onEnemyDeath -= ClearDeadMonsters;
-                if (activeMonsters.Count <= (int)maxNumberOfActiveMonsters / 2 && room.ShouldSpawnMonsterTwice)
-                {
-                    StartCoroutine(RoomRandomSpawn());
-                    room.ShouldSpawnMonsterTwice = false;
-                }
-                    
-            }
-        }
-        private int maxNumberOfActiveMonsters;
-        public List<GameObject> monsters = new List<GameObject>();
-        private List<GameObject> activeMonsters = new List<GameObject>();
-        //EnemyBase Spawn
-        IEnumerator RoomRandomSpawn()
-        {
-            if (!room.ShouldSpawnMonsters)
-                yield break;
-
-            var currentDifficulty = 0;
-            var spawner = new Spawner(monsters);
-
-            while(currentDifficulty < room.DifficultyAllowed)
-            {
-                int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
-               
-                var position = RandomPointInBounds(FloorCollider.bounds, 1f);
-
-                if (!IsPointWithinCollider(FloorCollider, position))
-                {
-                    continue;
-                }
-
-                if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
-                {
-                    continue;
-                }
-
-                print(monsters[index].GetComponent<Cac>().test.AttackRadius);
-                var spawnedMonster = spawner.Spawn(monsters[index], position, this.gameObject.transform);
-
-                currentDifficulty += spawnedMonster.GetComponent<Enemy>().Difficulty;
-
-                activeMonsters.Add(spawnedMonster);
+                monsterObj.Item1.GetComponent<Enemy>().onEnemyDeath += room.ClearDeadMonsters;
+                var spawnedMonster = room.spawner.Spawn(monsterObj.Item1, monsterObj.Item2, this.gameObject.transform);
             }
             yield return null;
-            maxNumberOfActiveMonsters = activeMonsters.Count();
-            foreach (var monster in activeMonsters)
-            {
-                monster.GetComponent<Enemy>().onEnemyDeath += ClearDeadMonsters;
-            }
         }
+
         #endregion
 
-        #region Utiles
 
-        public static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
-        {
-            return collider.OverlapPoint(point);
-        }
-
-        public static Vector3 RandomPointInBounds(Bounds bounds, float margin = 0)
-        {
-            var random = WandererGameManager.Instance.Random;
-
-            return new Vector3(
-               UnityEngine.Random.Range(bounds.min.x + margin, bounds.max.x - margin),
-                UnityEngine.Random.Range(bounds.min.y + margin, bounds.max.y - margin),
-                UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
-            );
-        }
-        #endregion
     }
     
 }

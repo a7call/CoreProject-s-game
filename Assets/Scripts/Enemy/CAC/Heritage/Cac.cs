@@ -14,7 +14,7 @@ using UnityEngine;
 
 
 
-public class Cac : Enemy
+public class Cac : Enemy, IMonster
 {
     protected override void Awake()
     {
@@ -42,8 +42,7 @@ public class Cac : Enemy
     #endregion
 
     #region Datas
-    public ICharacter test
-    {
+    public IMonsterData Datas {
         get
         {
             return CacDatas;
@@ -58,7 +57,7 @@ public class Cac : Enemy
         hitLayers = CacDatas.hitLayers;
 
         AIMouvement.Speed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
-        difficulty = CacDatas.difficulty;
+        difficulty = CacDatas.Difficulty;
         inSight = CacDatas.InSight;
         MaxHealth = CacDatas.maxHealth;
         attackDelay = CacDatas.attackDelay;

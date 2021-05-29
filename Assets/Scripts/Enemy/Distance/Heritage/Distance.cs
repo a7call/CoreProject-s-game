@@ -11,6 +11,13 @@ using Wanderer.Utils;
 public class Distance : Enemy
 {
     // Scriptable Object
+    public IMonsterData Datas
+    {
+        get
+        {
+            return DistanceData;
+        }
+    }
     [SerializeField] protected DistanceScriptableObject DistanceData;
     [HideInInspector]
     public float dispersion;
@@ -53,7 +60,7 @@ public class Distance : Enemy
         dispersion = DistanceData.dispersion;
         inSight = DistanceData.InSight;
         isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
-        difficulty = DistanceData.difficulty;
+        difficulty = DistanceData.Difficulty;
         //Chiffre arbitraire à modifier 
         coefAttackModeRange = Utils.RandomizeParams(1.2f, 1.5f);
         attackModeRange = attackRange * coefAttackModeRange;

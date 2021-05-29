@@ -45,8 +45,8 @@ namespace Edgar.Unity.Examples
                 if (room.ShouldSpawnMonsters)
                 {  
                     room.isAllowedToSpawnMonstersTwice();
-                    // à revoir
-                    roomManager.monsters = monsters;
+                    room.monsters = monsters;
+                    room.RoomRandomSpawnSetUp();
                 }
             }
             // AstarPath.active.Scan();
@@ -71,6 +71,7 @@ namespace Edgar.Unity.Examples
             
 
             roomManager.FloorCollider = floor.GetComponent<CompositeCollider2D>();
+            room.FloorCollider = floor.GetComponent<CompositeCollider2D>();
 
             floor.AddComponent<WandererCurrentRoomDetectionTriggerhandler>();
 

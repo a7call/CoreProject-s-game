@@ -6,12 +6,18 @@
 /// </summary>
 
 [CreateAssetMenu(fileName = "new Cac", menuName = "CacEnemy")]
-public class CacScriptableObject : EnemyScriptableObject, ICharacter
+public class CacScriptableObject : EnemyScriptableObject, IMonsterData
 {
     public float attackRadius;
     public LayerMask hitLayers;
     public float timeToSwich;
     public float attackDelay;
-
-    public float AttackRadius { get; set; } = 5f;
+    [SerializeField] private int difficulty;
+    public int Difficulty
+    {
+        get
+        {
+            return difficulty;
+        }
+    }
 }

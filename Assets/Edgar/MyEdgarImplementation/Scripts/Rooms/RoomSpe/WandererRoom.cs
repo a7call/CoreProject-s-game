@@ -4,6 +4,7 @@ using UnityEngine;
 using Edgar.Unity;
 using System;
 using Wanderer.Utils;
+using System.Linq;
 
 public class WandererRoom : RoomBase
 {
@@ -42,12 +43,12 @@ public class WandererRoom : RoomBase
         }
     }
 
-    private int difficultyAllowed = 0;
-    public int DifficultyAllowed
+    private int maxDifficulty = 0;
+    public int MaxDifficulty
     {
         get
         {
-            return difficultyAllowed;
+            return maxDifficulty;
         }
     }
 
@@ -57,16 +58,16 @@ public class WandererRoom : RoomBase
         switch (type)
         {
             default:
-                difficultyAllowed = 0;
+                maxDifficulty = 0;
                 break;
             case RoomType.Large:
-                difficultyAllowed = 15;
+                maxDifficulty = 15;
                 break;
             case RoomType.Medium:
-                difficultyAllowed = 10;
+                maxDifficulty = 10;
                 break;
             case RoomType.Small:
-                difficultyAllowed = 5;
+                maxDifficulty = 5;
                 break;
         }
     }
@@ -97,6 +98,81 @@ public class WandererRoom : RoomBase
                 chanceToSpawn = 0.1;
                 break;
         }
+    }
+
+    private int maxNumberOfActiveMonsters;
+    public List<GameObject> monsters = new List<GameObject>();
+    public Spawner spawner;
+    private List<Tuple<GameObject, Vector3>> activeMonsters = new List<Tuple<GameObject, Vector3>>();
+    public List<Tuple<GameObject, Vector3>> ActiveMonsters
+    {
+        get
+        {
+            return activeMonsters;
+        }
+    }
+    public Collider2D FloorCollider;
+    public void ClearDeadMonsters(GameObject monster)
+    {
+        foreach (var monsterObj in activeMonsters)
+        {
+            if (monsterObj.Item1 == monster)
+            {
+                activeMonsters.Remove(monsterObj);
+                monster.GetComponent<Enemy>().onEnemyDeath -= ClearDeadMonsters;
+            }
+        }
+    }
+    //EnemyBase Spawn
+    public void RoomRandomSpawnSetUp()
+    {
+        if (!shouldSpawnMonsters)
+            return;
+
+        var currentDifficulty = 0;
+        spawner = new Spawner(monsters);
+
+        while (currentDifficulty < maxDifficulty)
+        {
+            int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
+
+            var position = RandomPointInBounds(FloorCollider.bounds, 1f);
+
+            if (!IsPointWithinCollider(FloorCollider, position))
+            {
+                continue;
+            }
+
+            if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
+            {
+                continue;
+            }
+            var monsterScr = monsters[index].GetComponent<IMonster>();
+            var monsterDifficulty = monsterScr.Datas.Difficulty;
+
+            if (currentDifficulty + monsterDifficulty > maxDifficulty)
+                continue;
+
+            currentDifficulty += monsterDifficulty;
+            activeMonsters.Add(Tuple.Create(monsters[index], position));
+
+        }
+        maxNumberOfActiveMonsters = activeMonsters.Count();
+
+    }
+
+    public static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
+    {
+        return collider.OverlapPoint(point);
+    }
+
+    public static Vector3 RandomPointInBounds(Bounds bounds, float margin = 0)
+    {
+        return new Vector3(
+           UnityEngine.Random.Range(bounds.min.x + margin, bounds.max.x - margin),
+            UnityEngine.Random.Range(bounds.min.y + margin, bounds.max.y - margin),
+            UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
+        );
     }
 
 

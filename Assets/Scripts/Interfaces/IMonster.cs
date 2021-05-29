@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ICharacter
+public interface IMonster 
 {
-    float AttackRadius { get; set; }
+    public IMonsterData Datas { get;}
 }
