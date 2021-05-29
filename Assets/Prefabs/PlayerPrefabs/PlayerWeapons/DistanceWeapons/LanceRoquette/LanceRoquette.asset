@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: LanceRoquette
   m_EditorClassIdentifier: 
   damage: 8
-  delayBetweenAttack: 3
+  delayBetweenAttack: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   image: {fileID: -3034154163530674532, guid: cce8cca243fc24a41840915a44a5f787, type: 3}
   knockBackForce: 400
   knockBackTime: 0.5
+  screenShakeMagnitude: 0.2
+  screenShakeTime: 0.025
   projectile: {fileID: 6458180527659685685, guid: 66dbe4673afc2f14f94bf7defdb68464, type: 3}
   dispersion: 2
   magSize: 8
   reloadDelay: 3
   ammoStock: 32
-  projectileSpeed: 15
+  projectileSpeed: 20

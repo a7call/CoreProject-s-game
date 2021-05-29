@@ -15,6 +15,8 @@ public class Pompe : DistanceWeapon
 
     protected override IEnumerator Shoot()
     {
+        if (CameraController.instance != null) CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, (attackPoint.position - transform.position).normalized);
+
         float decalage = angleTir / (numberOfProj - 1);
 
         PompeProjectile.angleDecalage = -decalage * (numberOfProj + 1) / 2;
