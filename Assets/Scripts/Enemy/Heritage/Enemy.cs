@@ -162,7 +162,6 @@ public abstract class Enemy : Characters
     {
         //CHANGER POUR IMPLUSE (PLUS ADAPTE)
         rb.AddForce(dir * knockBackForce, ForceMode2D.Force);
-        State previousState = currentState;
         currentState = State.KnockedBack;
         yield return new WaitForSeconds(knockBackTime);
         if (isDying)
@@ -172,7 +171,7 @@ public abstract class Enemy : Characters
         }
         else
         {
-            currentState = previousState;
+            currentState = State.Chasing;
         }
         // C'est DU SPARADRA
         if (this != null)

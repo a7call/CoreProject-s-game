@@ -32,7 +32,7 @@ public abstract class Characters : MonoBehaviour
     private int maxHealth;
     public int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
-    private float currentHealth;
+    public float currentHealth;
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
     public virtual void TakeDamage(float damage)
     {
