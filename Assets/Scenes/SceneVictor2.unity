@@ -240,6 +240,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 0, y: 0}
   Type: 6
+  monsters: []
+  FloorCollider: {fileID: 0}
 --- !u!1001 &615429207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -544,6 +546,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 442989080126505834, guid: 0f47f5458e9ce4bcd81a9691690a61a9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8816517250457905044, guid: 0f47f5458e9ce4bcd81a9691690a61a9, type: 3}
       propertyPath: m_Name
       value: AudioManagerMusic
@@ -608,6 +614,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 0, y: 0}
   Type: 6
+  monsters: []
+  FloorCollider: {fileID: 0}
 --- !u!224 &1008074966 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8614095764981841402, guid: 464d64273a4919644894301b0df1ba26, type: 3}
