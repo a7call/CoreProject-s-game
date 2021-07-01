@@ -20,7 +20,7 @@ public class ParasiteIdol : CdObjects
         if(UseModule)
         {
             UseModule = false;
-            CoroutineManager.Instance.StartCoroutine(ResetStateChasing());
+            CoroutineManager.GetInstance().StartCoroutine(ResetStateChasing());
         }
     }
 

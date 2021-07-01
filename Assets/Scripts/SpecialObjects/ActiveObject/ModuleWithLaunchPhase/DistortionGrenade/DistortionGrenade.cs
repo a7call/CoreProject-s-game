@@ -9,7 +9,7 @@ public class DistortionGrenade : ExplosivesModule
     protected override void Start()
     {
         base.Start();
-        CoroutineManager.Instance.StartCoroutine(ExplosionOnEnemy());
+        CoroutineManager.GetInstance().StartCoroutine(ExplosionOnEnemy());
     }
    
 

@@ -19,7 +19,7 @@ public class Detonator : ExplosivesModule
         base.Update();
         if (detonatorModule.readyToExplode && detonatorModule.UseModule)
         {
-            CoroutineManager.Instance.StartCoroutine(ExplosionOnEnemy());
+            CoroutineManager.GetInstance().StartCoroutine(ExplosionOnEnemy());
             detonatorModule.readyToExplode = false;
             detonatorModule.UseModule = false;
             if (detonatorModule.numberOfUse < 1)

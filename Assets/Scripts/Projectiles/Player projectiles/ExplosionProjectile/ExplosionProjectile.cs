@@ -29,7 +29,7 @@ public class ExplosionProjectile : PlayerProjectiles
             if (enemyScript == null) continue;
             if (isNuclearExplosionModule)
             {
-               // CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
+               // CoroutineManager.GetInstance().StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
             }
             if (enemy == null || enemy == collision) continue;
             enemyScript.TakeDamage(damage);

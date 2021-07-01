@@ -12,8 +12,8 @@ public class WeaponsUI : MonoBehaviour
     }
     private void Update()
     {
-        SetUI();
-        SetUIAmmo();
+       // SetUI();
+       // SetUIAmmo();
     }
 
     private void SetUI()

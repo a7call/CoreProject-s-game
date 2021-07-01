@@ -12,7 +12,7 @@ public class GravityAcceleratorBomb : MonoBehaviour
     {
         enemiesSlowed = new List<GameObject>();
         Invoke("Activation", timeBeforActivation);
-        CoroutineManager.Instance.StartCoroutine(Desactivation());
+        CoroutineManager.GetInstance().StartCoroutine(Desactivation());
         
     }
     private void Activation()

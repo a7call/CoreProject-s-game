@@ -44,7 +44,7 @@ public class CanonZeus : DistanceWeapon
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
                     Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
-                    CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dirTir, knockBackTime, enemyScript));
+                    CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackforce, dirTir, knockBackTime, enemyScript));
                     enemyScript.TakeDamage(damage);
                     
                 }

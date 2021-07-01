@@ -12,7 +12,7 @@ public class StunAbility : IAbility
     
     public void ApplyEffect(Characters character)
     {
-        CoroutineManager.Instance.StartCoroutine(StunCO(character, _stunTime)) ;
+        CoroutineManager.GetInstance().StartCoroutine(StunCO(character, _stunTime)) ;
     }
     private IEnumerator StunCO(Characters character, float stunTime)
     {

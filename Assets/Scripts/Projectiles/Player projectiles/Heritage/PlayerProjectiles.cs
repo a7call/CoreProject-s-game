@@ -95,7 +95,7 @@ public class PlayerProjectiles : MonoBehaviour
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(damage);
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
+            CoroutineManager.GetInstance().StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
             //Modules
             ModuleProcs(enemy);
         }

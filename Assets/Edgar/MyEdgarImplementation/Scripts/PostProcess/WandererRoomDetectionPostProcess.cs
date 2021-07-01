@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using Assets.Scripts.Game;
 
 namespace Edgar.Unity.Examples
 {

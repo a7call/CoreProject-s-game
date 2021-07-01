@@ -36,8 +36,8 @@ public class BaroudHonneur : StacksObjects
     {
 
         GainHp();
-        CoroutineManager.Instance.StartCoroutine(player.InvincibilityDelay());
-        CoroutineManager.Instance.StartCoroutine(player.InvincibilityFlash());
+        CoroutineManager.GetInstance().StartCoroutine(player.InvincibilityDelay());
+        CoroutineManager.GetInstance().StartCoroutine(player.InvincibilityFlash());
     }
 
     private void GainHp()

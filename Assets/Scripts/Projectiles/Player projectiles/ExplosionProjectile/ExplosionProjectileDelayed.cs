@@ -18,12 +18,12 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(damage);
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
+            CoroutineManager.GetInstance().StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
             //Modules
             ModuleProcs(enemy);
         }
         
-        CoroutineManager.Instance.StartCoroutine(DelayedExplosion(ennemies, collision));
+        CoroutineManager.GetInstance().StartCoroutine(DelayedExplosion(ennemies, collision));
 
 
 
@@ -44,7 +44,7 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
                 Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
                 if (isNuclearExplosionModule)
                 {
-                    CoroutineManager.Instance.StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
+                    CoroutineManager.GetInstance().StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
                 }
                 if (enemy == null || enemy == collision) continue;
                 enemyScript.TakeDamage(damage);

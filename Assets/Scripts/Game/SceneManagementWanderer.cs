@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Levels
 {
-    public class LevelManager : Singleton<LevelManager>
+    public class SceneManagementWanderer : Singleton<SceneManagementWanderer>
     {     
         public void SwitchScene(string _name)
         {

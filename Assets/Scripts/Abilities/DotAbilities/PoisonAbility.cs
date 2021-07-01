@@ -9,7 +9,7 @@ public class PoisonAbility : DotAbility, IAbility
     public override void ApplyEffect(Characters character)
     {
         if (!character.IsPoisoned)
-            CoroutineManager.Instance.StartCoroutine(DotCo(character, _damageAmount, _duration));
+            CoroutineManager.GetInstance().StartCoroutine(DotCo(character, _damageAmount, _duration));
 
     }
     protected override IEnumerator DotCo(Characters character, float damageAmount, float duration)

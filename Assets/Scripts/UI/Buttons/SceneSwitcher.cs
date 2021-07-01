@@ -11,19 +11,19 @@ namespace Assets.Scripts.UI
     {
         public string desiredScene;
         Button menuButton;
-        LevelManager levelManager;
+        SceneManagementWanderer sceneManager;
         
 
         private void Start()
         {
             menuButton = GetComponent<Button>();
             menuButton.onClick.AddListener(OnButtonClicked);
-            levelManager = LevelManager.GetInstance();
+            sceneManager = SceneManagementWanderer.GetInstance();
         }
 
         void OnButtonClicked()
         {
-            levelManager.SwitchScene(desiredScene);
+            sceneManager.SwitchScene(desiredScene);
         }
     }
 }

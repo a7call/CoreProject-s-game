@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 using System.Linq;
 using System;
 using Wanderer.Utils;
-
+using Assets.Scripts.Game;
 
 namespace Edgar.Unity.Examples
 

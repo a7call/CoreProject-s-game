@@ -18,7 +18,7 @@ public class HomeBaseCall : StacksObjects
 
         if (UseModule)
         {
-            CoroutineManager.Instance.StartCoroutine(AmmoSupply());
+            CoroutineManager.GetInstance().StartCoroutine(AmmoSupply());
             UseModule = false;
             SupplyPosition = player.transform.position;
         }

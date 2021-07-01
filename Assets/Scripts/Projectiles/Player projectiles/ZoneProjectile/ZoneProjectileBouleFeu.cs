@@ -13,8 +13,8 @@ public class ZoneProjectileBouleFeu : PlayerProjectiles
       
         if (collision.CompareTag("Enemy"))
         {
-            CoroutineManager.Instance.StartCoroutine(ActiveZone());
-            CoroutineManager.Instance.StartCoroutine(ZoneCo());
+            CoroutineManager.GetInstance().StartCoroutine(ActiveZone());
+            CoroutineManager.GetInstance().StartCoroutine(ZoneCo());
           
         }
         base.OnTriggerEnter2D(collision);

@@ -12,7 +12,7 @@ public class VoidGrenade : ExplosivesModule
     protected override void Start()
     {
         base.Start();
-        CoroutineManager.Instance.StartCoroutine(ExplosionOnEnemy());
+        CoroutineManager.GetInstance().StartCoroutine(ExplosionOnEnemy());
     }
 
     protected override void ExplosionEffects(Enemy enemy)
@@ -20,7 +20,7 @@ public class VoidGrenade : ExplosivesModule
          ennemyTouche.Add(enemy);
          base.ExplosionEffects(enemy);
          enemy.AIMouvement.Speed /= SpeedDivisor;
-         CoroutineManager.Instance.StartCoroutine(SlowEnemy());
+         CoroutineManager.GetInstance().StartCoroutine(SlowEnemy());
          
     }
 

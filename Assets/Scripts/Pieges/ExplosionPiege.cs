@@ -62,7 +62,7 @@ public class ExplosionPiege : HeritagePiege
             {
                 Enemy enemyScript = hit.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
-                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, hit.transform.position - transform.position, knockBackTime, enemyScript));
+                CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackForce, hit.transform.position - transform.position, knockBackTime, enemyScript));
             }
 
             if (hit.gameObject.CompareTag("EnemyProjectil")) Destroy(hit.gameObject);
@@ -70,7 +70,7 @@ public class ExplosionPiege : HeritagePiege
             if (hit.gameObject.CompareTag("Player"))
             {
                 player.TakeDamage(1);
-                CoroutineManager.Instance.StartCoroutine(player.KnockCo(knockBackForce, player.transform.position - transform.position, knockBackTime));
+                CoroutineManager.GetInstance().StartCoroutine(player.KnockCo(knockBackForce, player.transform.position - transform.position, knockBackTime));
             }
 
             if (hit.gameObject.CompareTag("PiegeExplosion"))

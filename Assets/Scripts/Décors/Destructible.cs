@@ -18,7 +18,7 @@ public class Destructible : MonoBehaviour
             rb.AddForce(dir.normalized * force);
             Collider2D col = parts.GetComponent<Collider2D>();
             col.enabled = false;
-            CoroutineManager.Instance.StartCoroutine(ShouldStopMoving(rb));
+            CoroutineManager.GetInstance().StartCoroutine(ShouldStopMoving(rb));
         }
         
         Destroy(gameObject);

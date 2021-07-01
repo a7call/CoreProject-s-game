@@ -27,9 +27,9 @@ public class EpeeGel : CacWeapons
             {
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
-                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
+                CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
 
-                CoroutineManager.Instance.StartCoroutine(Gel(enemyScript));
+                CoroutineManager.GetInstance().StartCoroutine(Gel(enemyScript));
 
             }
         }

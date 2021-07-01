@@ -54,7 +54,7 @@ public class GravityBomb : ExplosivesModule
             print("test");
             isAlreadyActive = true;
             Invoke("Activation", timeBeforActivation);
-            CoroutineManager.Instance.StartCoroutine(ExplosionOnEnemy());
+            CoroutineManager.GetInstance().StartCoroutine(ExplosionOnEnemy());
         }
     }
  

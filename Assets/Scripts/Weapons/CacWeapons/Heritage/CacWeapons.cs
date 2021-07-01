@@ -107,7 +107,7 @@ public class CacWeapons : Weapons, IPlayerWeapon
         if (!PauseMenu.isGamePaused)
         {
             CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, dir);
-            CoroutineManager.Instance.StartCoroutine(player.KnockCo(knockFrontForce, dir, knockFrontTime));
+            CoroutineManager.GetInstance().StartCoroutine(player.KnockCo(knockFrontForce, dir, knockFrontTime));
             PlayEffectSound(AttackSound);
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
             AttackAppliedOnEnemy(enemyHit);
@@ -127,7 +127,7 @@ public class CacWeapons : Weapons, IPlayerWeapon
             {
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
-                CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
+                CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
             }
             if (enemy.gameObject.CompareTag("EnemyProjectil"))
                 Destroy(enemy.gameObject);

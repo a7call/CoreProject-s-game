@@ -10,7 +10,7 @@ public class BurnAbility : DotAbility, IAbility
     {
         if (!character.IsBurned)
         {
-            CoroutineManager.Instance.StartCoroutine(DotCo(character, _damageAmount, _duration));
+            CoroutineManager.GetInstance().StartCoroutine(DotCo(character, _damageAmount, _duration));
         }
           
 

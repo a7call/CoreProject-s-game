@@ -1,11 +1,16 @@
+using Edgar.Unity;
+using Edgar.Unity.Examples;
 using System.Collections;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
 using Random = System.Random;
 
-namespace Edgar.Unity.Examples
+namespace Assets.Scripts.Game
 {
-    public class WandererGameManager : GameManagerBase<WandererGameManager>
+    
+    public class WandererGameManager : GameManagerBaseWanderer<WandererGameManager>
     {
         // Current active room
         private RoomInstance currentRoom;
@@ -25,7 +30,17 @@ namespace Edgar.Unity.Examples
         public int Stage = 1;
 
         public LevelGraph CurrentLevelGraph;
-
+        void OnEnable()
+        {
+            Debug.Log("OnEnable called");
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        // called second
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        { 
+            if(scene.name != "MainMenu")
+                LoadNextLevel();
+        }
         public void Update()
         {
             if (Input.GetKey(KeyCode.G) && !isGenerating)

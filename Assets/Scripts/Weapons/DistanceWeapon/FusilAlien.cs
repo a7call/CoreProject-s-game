@@ -34,7 +34,7 @@ public class FusilAlien : DistanceWeapon
 
         if (IsWeaponLoad && !OkToShoot)
         {
-            CoroutineManager.Instance.StartCoroutine(Shoot());
+            CoroutineManager.GetInstance().StartCoroutine(Shoot());
             IsWeaponLoad = false;
             
         }

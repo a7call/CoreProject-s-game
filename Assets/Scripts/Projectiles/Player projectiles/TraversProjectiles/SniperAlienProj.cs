@@ -14,8 +14,8 @@ public class SniperAlienProj : TraversProjectile
             
             Enemy enemy = collision.GetComponent<Enemy>();
             enemy.TakeDamage(damage);
-            CoroutineManager.Instance.StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
-            CoroutineManager.Instance.StartCoroutine(KryptoHit(enemy));
+            CoroutineManager.GetInstance().StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
+            CoroutineManager.GetInstance().StartCoroutine(KryptoHit(enemy));
             //Modules
             ModuleProcs(enemy);
 

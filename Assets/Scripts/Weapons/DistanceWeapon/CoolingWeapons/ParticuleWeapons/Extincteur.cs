@@ -22,8 +22,8 @@ public class Extincteur : ParticuleWeapon
                 if (hit.transform.gameObject.CompareTag("Enemy"))
                 {
                     Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
-                    CoroutineManager.Instance.StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
-                    CoroutineManager.Instance.StartCoroutine(SlowCo(enemyScript));
+                    CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
+                    CoroutineManager.GetInstance().StartCoroutine(SlowCo(enemyScript));
                     enemyScript.TakeDamage(damage);
 
                 }
