@@ -137,7 +137,5 @@ public class ShopItem : MonoBehaviour
             inventory.itemInventory.Add(gameObject);
         }
 
-        player.AddLifePlayer(shopItemButton.itemHealth);
-        player.AddArmorPlayer(shopItemButton.itemArmor);
     }
 }

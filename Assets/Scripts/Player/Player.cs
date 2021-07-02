@@ -61,39 +61,33 @@ public class Player : Characters
     protected override void Awake()
     {
         base.Awake();
-        SetMaxEnergy();
-        SetMaxEnergyBarUI();
+        //SetMaxEnergy();
+        //SetMaxEnergyBarUI();
     }
 
     #region Datas & reference
     protected override void SetData()
     {
         MaxHealth = playerData.maxHealth;
-        maxStacks = playerData.maxStacks;
         mooveSpeed = playerData.mooveSpeed;
-        dashForce = playerData.dashForce;
-        stacksReloadTime = playerData.stacksReloadTime;
-        DashTime = playerData.DashTime;
-
-
-        emptyHearth = playerData.emptyHearth;
-        halfHearth = playerData.halfHearth;
-        fullHearth = playerData.fullHearth;
-        imageArmor = playerData.imageArmor;
-        halfArmor = playerData.halfArmor;
-        fullArmor = playerData.fullArmor;
+        //emptyHearth = playerData.emptyHearth;
+        //halfHearth = playerData.halfHearth;
+        //fullHearth = playerData.fullHearth;
+        //imageArmor = playerData.imageArmor;
+        //halfArmor = playerData.halfArmor;
+        //fullArmor = playerData.fullArmor;
     }
     protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        canvas = GameObject.FindGameObjectWithTag("PlayerCanvas");
-        HealthContent = canvas.transform.Find("HealthContent");
-        image1 = HealthContent.Find("ImageFirstHP").GetComponent<Image>();
-        image2 = HealthContent.Find("ImageSecondHP").GetComponent<Image>();
-        image3 = HealthContent.Find("ImageThirdHP").GetComponent<Image>();
-        Transform ArmorContent = canvas.transform.Find("ArmorContent");
-        imageArmor = ArmorContent.Find("ImageArmor").GetComponent<Image>();
+        //canvas = GameObject.FindGameObjectWithTag("PlayerCanvas");
+        //HealthContent = canvas.transform.Find("HealthContent");
+        //image1 = HealthContent.Find("ImageFirstHP").GetComponent<Image>();
+        //image2 = HealthContent.Find("ImageSecondHP").GetComponent<Image>();
+        //image3 = HealthContent.Find("ImageThirdHP").GetComponent<Image>();
+        //Transform ArmorContent = canvas.transform.Find("ArmorContent");
+        //imageArmor = ArmorContent.Find("ImageArmor").GetComponent<Image>();
         activeObjectManager = GetComponentInChildren<ActiveObjectManager>();
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
         inventory = GetComponentInChildren<Inventory>();
@@ -103,17 +97,8 @@ public class Player : Characters
     protected void Update()
     {
         Animation();
-        AjustHhealth();
-        UpdateUILife();
 
-        StartCoroutine(EnergyReloading());
-        if (currentStack > maxStacks)
-        {
-            energyBar.SetEnergy(maxStacks);
-            currentStack = maxStacks;
-            energyIsReloading = false;
-            StopAllCoroutines();
-        }
+        AjustHhealth();
 
         if (IsStuned)
             return;
@@ -135,10 +120,6 @@ public class Player : Characters
 
             case EtatJoueur.shopping:
                 //Definir tout ce qu'on veut faire dedans
-                break;
-
-            case EtatJoueur.AFK:
-                canDash = false;
                 break;
 
             case EtatJoueur.Grapping:
@@ -293,7 +274,7 @@ public class Player : Characters
 
     public void OnDash()
     {
-        StartCoroutine(Dash());
+        //StartCoroutine(Dash());
 
         //PlayerControl variable;
         //variable.Player.Reload.actionMap.AddBinding("<Keyboard/a");
@@ -302,74 +283,9 @@ public class Player : Characters
 
     #endregion
 
-    #region ENERGY
 
-    #region Energy Management
-    [HideInInspector]
-    public int maxStacks;
-    public bool energyIsReloading = false;
-    public int currentStack;
-    private EnergyBar energyBar;
-    public float stacksReloadTime;
 
-    public void SpendEnergy(int stackSpend)
-    {
-        currentStack -= stackSpend;
-        energyBar.SetEnergy(currentStack);
-    }
-    void SetMaxEnergyBarUI()
-    {
-        energyBar = FindObjectOfType<EnergyBar>();
-        energyBar.SetMaxEnergy(maxStacks);
-    }
-    void SetMaxEnergy()
-    {
-        currentStack = maxStacks;
-    }
-
-    public IEnumerator EnergyReloading()
-    {
-        if (!energyIsReloading && currentStack != maxStacks)
-        {
-            energyIsReloading = true;
-            yield return new WaitForSeconds(stacksReloadTime);
-            currentStack++;
-            energyBar.SetEnergy(currentStack);
-            energyIsReloading = false;
-        }
-
-    }
-    #endregion
-
-    #region Dash
-
-    public float dashForce;
-    protected float DashTime;
-    public bool canDash = true;
-    public float timeBetweenDashes = 0.5f;
-    private IEnumerator Dash()
-    {
-        if (canDash && currentStack > 0)
-        {
-            Vector2 dir = new Vector2(mouvement.x, mouvement.y);
-            if (dir != Vector2.zero)
-            {
-                currentEtat = EtatJoueur.Dashing;
-                SpendEnergy(1);
-                canDash = false;
-                rb.AddForce(dir * dashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
-                LayerMask projectilLayerMask = 3;
-                Physics2D.IgnoreLayerCollision(gameObject.layer, projectilLayerMask);
-                yield return new WaitForSeconds(DashTime);
-                Physics2D.IgnoreLayerCollision(gameObject.layer, projectilLayerMask, false);
-                currentEtat = EtatJoueur.normal;
-                yield return new WaitForSeconds(timeBetweenDashes);
-                canDash = true;
-            }
-
-        }
-    }
-
+ 
     public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime)
     {
         animator.SetBool("IsAttackingCac", true);
@@ -388,9 +304,6 @@ public class Player : Characters
             if (pockets.bombsReady) StartCoroutine(pockets.SpawnBombs());
         }
     }
-    #endregion
-    #endregion
-
 
     #region Damage to player
     public SpriteRenderer graphics;
@@ -453,23 +366,6 @@ public class Player : Characters
             CurrentHealth = 0;
         }
     }
-    public void AddLifePlayer(int health)
-    {
-        CurrentHealth += health;
-        if (CurrentHealth > MaxHealth)
-        {
-            CurrentHealth = MaxHealth;
-        }
-    }
-    public void AddArmorPlayer(int _armor)
-    {
-        currentArmor += _armor;
-        if (currentArmor > maxArmor)
-        {
-            currentArmor = maxArmor;
-        }
-    }
-
     protected override void Die()
     {
         // TO IMPLEMENT
@@ -478,75 +374,76 @@ public class Player : Characters
     #endregion
 
 
-    #region UI
-    protected Image image1, image2, image3, image4, imageArmor;
-    protected Sprite emptyHearth, halfHearth, fullHearth, halfArmor, fullArmor;
-    protected Transform HealthContent;
-    protected GameObject canvas;
-    private void UpdateUILife()
-    {
-        if (currentArmor == maxArmor)
-        {
-            imageArmor.enabled = true;
-            imageArmor.sprite = fullArmor;
-        }
-        else if (currentArmor == maxArmor - 1)
-        {
-            imageArmor.enabled = true;
-            imageArmor.sprite = halfArmor;
-        }
-        else
-        {
-            imageArmor.enabled = false;
-        }
+    //#region UI
+    //protected Image image1, image2, image3, image4, imageArmor;
+    //protected Sprite emptyHearth, halfHearth, fullHearth, halfArmor, fullArmor;
+    //protected Transform HealthContent;
+    //protected GameObject canvas;
+    
+    //private void UpdateUILife()
+    //{
+    //    if (currentArmor == maxArmor)
+    //    {
+    //        imageArmor.enabled = true;
+    //        imageArmor.sprite = fullArmor;
+    //    }
+    //    else if (currentArmor == maxArmor - 1)
+    //    {
+    //        imageArmor.enabled = true;
+    //        imageArmor.sprite = halfArmor;
+    //    }
+    //    else
+    //    {
+    //        imageArmor.enabled = false;
+    //    }
 
 
 
-        if (CurrentHealth == MaxHealth)
-        {
-            image1.sprite = fullHearth;
-            image2.sprite = fullHearth;
-            image3.sprite = fullHearth;
-        }
-        else if (CurrentHealth == MaxHealth - 1)
-        {
-            image1.sprite = fullHearth;
-            image2.sprite = fullHearth;
-            image3.sprite = halfHearth;
-        }
-        else if (CurrentHealth == MaxHealth - 2)
-        {
-            image1.sprite = fullHearth;
-            image2.sprite = fullHearth;
-            image3.sprite = emptyHearth;
-        }
-        else if (CurrentHealth == MaxHealth - 3)
-        {
-            image1.sprite = fullHearth;
-            image2.sprite = halfHearth;
-            image3.sprite = emptyHearth;
-        }
-        else if (CurrentHealth == MaxHealth - 4)
-        {
-            image1.sprite = fullHearth;
-            image2.sprite = emptyHearth;
-            image3.sprite = emptyHearth;
-        }
-        else if (CurrentHealth == MaxHealth - 5)
-        {
-            image1.sprite = halfHearth;
-            image2.sprite = emptyHearth;
-            image3.sprite = emptyHearth;
-        }
-        else if (CurrentHealth == MaxHealth - 6)
-        {
-            image1.sprite = emptyHearth;
-            image2.sprite = emptyHearth;
-            image3.sprite = emptyHearth;
-        }
+    //    if (CurrentHealth == MaxHealth)
+    //    {
+    //        image1.sprite = fullHearth;
+    //        image2.sprite = fullHearth;
+    //        image3.sprite = fullHearth;
+    //    }
+    //    else if (CurrentHealth == MaxHealth - 1)
+    //    {
+    //        image1.sprite = fullHearth;
+    //        image2.sprite = fullHearth;
+    //        image3.sprite = halfHearth;
+    //    }
+    //    else if (CurrentHealth == MaxHealth - 2)
+    //    {
+    //        image1.sprite = fullHearth;
+    //        image2.sprite = fullHearth;
+    //        image3.sprite = emptyHearth;
+    //    }
+    //    else if (CurrentHealth == MaxHealth - 3)
+    //    {
+    //        image1.sprite = fullHearth;
+    //        image2.sprite = halfHearth;
+    //        image3.sprite = emptyHearth;
+    //    }
+    //    else if (CurrentHealth == MaxHealth - 4)
+    //    {
+    //        image1.sprite = fullHearth;
+    //        image2.sprite = emptyHearth;
+    //        image3.sprite = emptyHearth;
+    //    }
+    //    else if (CurrentHealth == MaxHealth - 5)
+    //    {
+    //        image1.sprite = halfHearth;
+    //        image2.sprite = emptyHearth;
+    //        image3.sprite = emptyHearth;
+    //    }
+    //    else if (CurrentHealth == MaxHealth - 6)
+    //    {
+    //        image1.sprite = emptyHearth;
+    //        image2.sprite = emptyHearth;
+    //        image3.sprite = emptyHearth;
+    //    }
 
-    }
-    #endregion
+    //}
+    //#endregion
 
     #region Inputs attatck, coffre et interaction 
 

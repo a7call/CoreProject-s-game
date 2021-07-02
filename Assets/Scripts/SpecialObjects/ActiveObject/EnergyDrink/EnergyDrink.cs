@@ -27,11 +27,6 @@ public class EnergyDrink : StacksObjects
     {
         
         Player energy = player.gameObject.GetComponent<Player>();
-        if(energy.currentStack != energy.maxStacks)
-        {
-            energy.currentStack++;
-           
-        }
         
     }
 

@@ -1,3 +1,4 @@
+using Assets.Scripts.UI;
 using Edgar.Unity;
 using Edgar.Unity.Examples;
 using System.Collections;
@@ -60,13 +61,15 @@ namespace Assets.Scripts.Game
             isGenerating = true;
 
             // Show loading screen
-            ShowLoadingScreen("Enter the Gungeon", $"Stage {Stage}");
+            ShowLoadingScreen("Loading Screen", $"Stage {Stage}");
 
             // Find the generator runner
             var generator = GameObject.FindGameObjectWithTag("DUNGEONGEN").GetComponent<DungeonGenerator>();
 
             // Start the generator coroutine
             StartCoroutine(GeneratorCoroutine(generator));
+
+            CanvasManager.GetInstance().SwitchCanvas(CanvasType.PlayerUI);
         }
 
         /// <summary>

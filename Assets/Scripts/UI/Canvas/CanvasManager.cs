@@ -12,6 +12,8 @@ namespace Assets.Scripts.UI
     {
         MainMenu,
         GameUI,
+        PlayerUI,
+        DungeonUI,
         EndScreen
     }
 

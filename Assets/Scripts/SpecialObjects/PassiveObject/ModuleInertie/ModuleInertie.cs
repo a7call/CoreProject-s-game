@@ -10,7 +10,6 @@ public class ModuleInertie : PassiveObjects
     }
     void Start()
     {
-        player.maxStacks++;
-        player.currentStack = player.maxStacks;
+
     }
 }

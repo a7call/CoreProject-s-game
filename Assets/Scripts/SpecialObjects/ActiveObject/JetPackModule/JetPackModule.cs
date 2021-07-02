@@ -27,7 +27,7 @@ public class JetPackModule : CdObjects
     {
         if (isFlying)
         {
-           player.canDash = false;
+
         }
         
         if (UseModule && !isAlreadyFlying)
@@ -39,7 +39,6 @@ public class JetPackModule : CdObjects
         else if (UseModule && isAlreadyFlying)
         {
             UseModule = false;
-            player.canDash = true;
             isFlying = false;
             StartCoroutine(StopFlying());
 
