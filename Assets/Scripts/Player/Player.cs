@@ -61,8 +61,7 @@ public class Player : Characters
     protected override void Awake()
     {
         base.Awake();
-        //SetMaxEnergy();
-        //SetMaxEnergyBarUI();
+        DontDestroyOnLoad(gameObject);
     }
 
     #region Datas & reference
@@ -70,24 +69,12 @@ public class Player : Characters
     {
         MaxHealth = playerData.maxHealth;
         mooveSpeed = playerData.mooveSpeed;
-        //emptyHearth = playerData.emptyHearth;
-        //halfHearth = playerData.halfHearth;
-        //fullHearth = playerData.fullHearth;
-        //imageArmor = playerData.imageArmor;
-        //halfArmor = playerData.halfArmor;
-        //fullArmor = playerData.fullArmor;
     }
     protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
+        healthBar = GameObject.FindGameObjectWithTag("PlayerCanvas").GetComponentInChildren<PlayerHealthBar>();
         animator = GetComponent<Animator>();
-        //canvas = GameObject.FindGameObjectWithTag("PlayerCanvas");
-        //HealthContent = canvas.transform.Find("HealthContent");
-        //image1 = HealthContent.Find("ImageFirstHP").GetComponent<Image>();
-        //image2 = HealthContent.Find("ImageSecondHP").GetComponent<Image>();
-        //image3 = HealthContent.Find("ImageThirdHP").GetComponent<Image>();
-        //Transform ArmorContent = canvas.transform.Find("ArmorContent");
-        //imageArmor = ArmorContent.Find("ImageArmor").GetComponent<Image>();
         activeObjectManager = GetComponentInChildren<ActiveObjectManager>();
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
         inventory = GetComponentInChildren<Inventory>();
@@ -97,8 +84,8 @@ public class Player : Characters
     protected void Update()
     {
         Animation();
-
         AjustHhealth();
+        healthBar.UpdateHealthUI(CurrentHealth, MaxHealth);
 
         if (IsStuned)
             return;
@@ -314,18 +301,9 @@ public class Player : Characters
     {
         if (!isInvincible)
         {
-            if (currentArmor > 0)
-            {
-                currentArmor -= (int)damage;
-                StartCoroutine(InvincibilityDelay());
-                StartCoroutine(InvincibilityFlash());
-            }
-            else
-            {
                 base.TakeDamage(damage);
                 StartCoroutine(InvincibilityDelay());
                 StartCoroutine(InvincibilityFlash());
-            }
         }
     }
     public IEnumerator InvincibilityFlash()
@@ -351,9 +329,6 @@ public class Player : Characters
 
 
     #region Health and armor
-   
-    public int currentArmor;
-    private int maxArmor = 2;
     private void AjustHhealth()
     {
         if (CurrentHealth >= MaxHealth)
@@ -370,80 +345,13 @@ public class Player : Characters
     {
         // TO IMPLEMENT
     }
-   
+
     #endregion
 
 
-    //#region UI
-    //protected Image image1, image2, image3, image4, imageArmor;
-    //protected Sprite emptyHearth, halfHearth, fullHearth, halfArmor, fullArmor;
-    //protected Transform HealthContent;
-    //protected GameObject canvas;
-    
-    //private void UpdateUILife()
-    //{
-    //    if (currentArmor == maxArmor)
-    //    {
-    //        imageArmor.enabled = true;
-    //        imageArmor.sprite = fullArmor;
-    //    }
-    //    else if (currentArmor == maxArmor - 1)
-    //    {
-    //        imageArmor.enabled = true;
-    //        imageArmor.sprite = halfArmor;
-    //    }
-    //    else
-    //    {
-    //        imageArmor.enabled = false;
-    //    }
-
-
-
-    //    if (CurrentHealth == MaxHealth)
-    //    {
-    //        image1.sprite = fullHearth;
-    //        image2.sprite = fullHearth;
-    //        image3.sprite = fullHearth;
-    //    }
-    //    else if (CurrentHealth == MaxHealth - 1)
-    //    {
-    //        image1.sprite = fullHearth;
-    //        image2.sprite = fullHearth;
-    //        image3.sprite = halfHearth;
-    //    }
-    //    else if (CurrentHealth == MaxHealth - 2)
-    //    {
-    //        image1.sprite = fullHearth;
-    //        image2.sprite = fullHearth;
-    //        image3.sprite = emptyHearth;
-    //    }
-    //    else if (CurrentHealth == MaxHealth - 3)
-    //    {
-    //        image1.sprite = fullHearth;
-    //        image2.sprite = halfHearth;
-    //        image3.sprite = emptyHearth;
-    //    }
-    //    else if (CurrentHealth == MaxHealth - 4)
-    //    {
-    //        image1.sprite = fullHearth;
-    //        image2.sprite = emptyHearth;
-    //        image3.sprite = emptyHearth;
-    //    }
-    //    else if (CurrentHealth == MaxHealth - 5)
-    //    {
-    //        image1.sprite = halfHearth;
-    //        image2.sprite = emptyHearth;
-    //        image3.sprite = emptyHearth;
-    //    }
-    //    else if (CurrentHealth == MaxHealth - 6)
-    //    {
-    //        image1.sprite = emptyHearth;
-    //        image2.sprite = emptyHearth;
-    //        image3.sprite = emptyHearth;
-    //    }
-
-    //}
-    //#endregion
+    #region UI
+    private PlayerHealthBar healthBar;
+    #endregion
 
     #region Inputs attatck, coffre et interaction 
 
@@ -457,14 +365,14 @@ public class Player : Characters
     public PlayerInput playerInput;
     public void OnShoot()
     {
+        if (weaponManager == null)
+            return;
         if (!isShooting)
         {
             isShooting = true;
 
-            if (weaponManager.isPlayingDistance)
-            {
-
-                
+            if (weaponManager.isPlayingDistance && weaponManager.distanceWeaponsList != null)
+            { 
                 //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
                 weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = true;
 

@@ -74,7 +74,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     {
         base.Update();
         InfiniteAmmo = isUnlimitedAmmoModule;
-        DisplayAmmo();
+        //DisplayAmmo();
 
         if (IsReloading)
             return;
@@ -119,8 +119,8 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     protected override void GetReferences()
     {
         base.GetReferences();
-        AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
-        AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
+        //AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
+        //AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
         Proj = projectile.GetComponent<PlayerProjectiles>();
     }
     private void InitializeMag()

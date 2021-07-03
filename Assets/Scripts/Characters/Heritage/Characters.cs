@@ -29,16 +29,13 @@ public abstract class Characters : MonoBehaviour
 
     #region Health System
 
-    private int maxHealth;
-    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
-
-    public float currentHealth;
-    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
+    public int MaxHealth { get; set; }
+    public float CurrentHealth { get; set; }
     public virtual void TakeDamage(float damage)
     {
         TakeDamageSound();
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
         {
             IsDying = true;
             Die();
@@ -47,7 +44,7 @@ public abstract class Characters : MonoBehaviour
 
     protected virtual void SetMaxHealth()
     {
-        currentHealth = maxHealth;
+        CurrentHealth = MaxHealth;
     }
     //Set datas of scriptableObject
     protected abstract void SetData();

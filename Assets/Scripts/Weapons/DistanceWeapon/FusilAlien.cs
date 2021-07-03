@@ -40,7 +40,7 @@ public class FusilAlien : DistanceWeapon
         }
 
 
-        DisplayAmmo();
+       // DisplayAmmo();
 
         if (isCanonRapideModule && !CadenceAlreadyUp)
         {

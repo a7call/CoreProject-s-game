@@ -48,6 +48,19 @@ namespace Assets.Scripts.Game
             {
                 LoadNextLevel();
             }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                if (Canvas.activeSelf)
+                {
+                    Canvas.SetActive(false);
+                }
+                else
+                {
+                    Canvas.SetActive(true);
+                }
+
+            }
+                
 
             if (Input.GetKey(KeyCode.H) && !isGenerating)
             {

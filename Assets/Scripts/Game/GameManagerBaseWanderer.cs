@@ -9,7 +9,7 @@ namespace Assets.Scripts.Game
           where TGameManager : Component
     {
         public static TGameManager Instance;
-
+        
         private static bool m_applicationIsQuitting = false;
 
         public GameObject Canvas;
@@ -31,6 +31,7 @@ namespace Assets.Scripts.Game
         }
         public void Awake()
         {
+            Canvas = GetCanvas();
             if (Instance == null)
             {
                 Instance = this as TGameManager;
@@ -68,7 +69,7 @@ namespace Assets.Scripts.Game
         /// <param name="text"></param>
         protected void SetLevelInfo(string text)
         {
-            var canvas = GetCanvas();
+            var canvas = Canvas;
             var levelInfo = canvas.transform.Find("LevelInfo")?.gameObject.GetComponent<Text>();
 
             if (levelInfo != null)
@@ -84,7 +85,7 @@ namespace Assets.Scripts.Game
         /// <param name="secondaryText"></param>
         protected void ShowLoadingScreen(string primaryText, string secondaryText)
         {
-            var canvas = GetCanvas();
+            var canvas = Canvas;
             var loadingImage = canvas.transform.Find("LoadingImage")?.gameObject;
             var primaryTextComponent = loadingImage?.transform.Find("PrimaryText")?.gameObject.GetComponent<Text>();
             var secondaryTextComponent = loadingImage?.transform.Find("SecondaryText")?.gameObject.GetComponent<Text>();
@@ -126,7 +127,7 @@ namespace Assets.Scripts.Game
         /// </summary>
         protected void HideLoadingScreen()
         {
-            var canvas = GetCanvas();
+            var canvas = Canvas;
             var loadingImage = canvas.transform.Find("LoadingImage")?.gameObject;
 
             if (loadingImage != null)

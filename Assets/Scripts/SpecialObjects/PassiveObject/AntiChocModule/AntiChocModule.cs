@@ -7,6 +7,6 @@ public class AntiChocModule : PassiveObjects
 
     private void Start()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().currentArmor += 2;
+
     }
 }

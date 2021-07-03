@@ -27,6 +27,10 @@ namespace Assets.Scripts.UI
             base.Awake();
 
             canvasControllersList = GetComponentsInChildren<CanvasController>().ToList();
+          
+        }
+        private void Start()
+        {
             canvasControllersList.ForEach(x => x.gameObject.SetActive(false));
             SwitchCanvas(CanvasType.MainMenu);
         }

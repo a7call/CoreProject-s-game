@@ -105,7 +105,7 @@ public class Cac : Enemy, IMonster
 
             if (h.CompareTag("Player"))
             {
-                h.GetComponent<Player>().TakeDamage(1);
+                h.GetComponent<Player>().TakeDamage(20);
             }
 
         }
