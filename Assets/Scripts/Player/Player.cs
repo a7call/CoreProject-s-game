@@ -57,11 +57,19 @@ public class Player : Characters
         AFK,
     }
     #endregion
+    public GameObject RH;
+    public GameObject LH;
 
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
+        if(RH != null && LH != null)
+        {
+            RH.SetActive(false);
+            LH.SetActive(false);
+        }
+        
     }
 
     #region Datas & reference
@@ -169,18 +177,18 @@ public class Player : Characters
         // rb.velocity = _mouvement.normalized * velocity ;
         //rb.MovePosition(((Vector2)transform.position + _mouvement.normalized * Time.deltaTime * mooveSpeed));
 
-        if (rb.velocity.magnitude > 0.1)
-        {
-            if (!AudioSourceWalk.isPlaying)
-            {
-                AudioSourceWalk.Play();
-            }
+        //if (rb.velocity.magnitude > 0.1)
+        //{
+        //    if (!AudioSourceWalk.isPlaying)
+        //    {
+        //        AudioSourceWalk.Play();
+        //    }
            
-        }
-        else
-        {
-            AudioSourceWalk.Stop();
-        }
+        //}
+        //else
+        //{
+        //    AudioSourceWalk.Stop();
+        //}
        
     }
 
@@ -199,6 +207,19 @@ public class Player : Characters
     Vector3 horizon = new Vector3(1, 0, 0);
     void Animation()
     {
+        if (weaponManager.isRH)
+        {
+            RH.SetActive(true);
+            LH.SetActive(false);
+            animator.SetBool("isRH", true);
+        }
+        else
+        {
+            RH.SetActive(false);
+            LH.SetActive(true);
+            animator.SetBool("isRH", false);
+        }
+            
 
 
         float playerSpeed = mouvement.sqrMagnitude;
@@ -308,13 +329,14 @@ public class Player : Characters
     }
     public IEnumerator InvincibilityFlash()
     {
-        while (isInvincible)
-        {
-            graphics.color = new Color(1f, 1f, 1f, 0f);
-            yield return new WaitForSeconds(InvincibilityFlashDelay);
-            graphics.color = new Color(1f, 1f, 1f, 1f);
-            yield return new WaitForSeconds(InvincibilityFlashDelay);
-        }
+        //while (isInvincible)
+        //{
+        //    graphics.color = new Color(1f, 1f, 1f, 0f);
+        //    yield return new WaitForSeconds(InvincibilityFlashDelay);
+        //    graphics.color = new Color(1f, 1f, 1f, 1f);
+        //   
+        //}
+        yield return new WaitForSeconds(InvincibilityFlashDelay);
     }
 
     public IEnumerator InvincibilityDelay()

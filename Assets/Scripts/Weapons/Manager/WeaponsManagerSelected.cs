@@ -21,6 +21,8 @@ public class WeaponsManagerSelected : MonoBehaviour
     public bool isPlayingCac=false;
     [HideInInspector]
     public bool isPlayingDistance=false;
+    public bool isRH;
+
 
     private void Start()
     {
@@ -319,40 +321,38 @@ public class WeaponsManagerSelected : MonoBehaviour
 
             Vector3 mousePosition = Utils.GetMouseWorldPosition();
             Vector3 playerDirection = (mousePosition - transform.position);
-            if (playerDirection.magnitude < 1f)
-                return;
-            Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
+            
 
+            Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            print(angle);
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
-            if (aimDirection.y > 0.7)
+            if (playerDirection.y > 0)
             {
-                SetWeaponYPositionAndLayer(ref _weapons, _weapons.topOffSetY, 0);
+                SetWeaponYPositionAndLayer(ref _weapons, _weapons.topOffSetY, -1);
             }
-            else if( aimDirection.y < 0.5)
+            else if(playerDirection.y < 0)
             {
                 SetWeaponYPositionAndLayer(ref _weapons, _weapons.otherOffsetY,1);
             }
             
-            if (aimDirection.x < -0.5f && !spriteRenderer.flipY)
+            if (playerDirection.x < 0f && !spriteRenderer.flipY)
             {
                 spriteRenderer.flipY = true;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
-
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
-
-
-
+                isRH = false;
 
             }
-            else if (aimDirection.x > 0.7f && spriteRenderer.flipY)
+            else if (playerDirection.x >0 && spriteRenderer.flipY)
             {
                 spriteRenderer.flipY = false;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
+                isRH = true;
             }
         }
     }
@@ -395,6 +395,14 @@ public class WeaponsManagerSelected : MonoBehaviour
         PosAttackPoint = _weapons.attackPointPos;
         SetRightDistanceAttackPointPos();
         SetWeaponXPosition(_weapons);
+    }
+    void SwitchHandAnimation()
+    {
+        var player = GetComponentInParent<Player>();
+        if(player.animator.GetFloat("isRightHanded") == 0)
+            GetComponentInParent<Player>().animator.SetFloat("isRightHanded", 1);
+        else
+            GetComponentInParent<Player>().animator.SetFloat("isRightHanded", 0);
     }
 
     private void SetRightDistanceAttackPointPos()
