@@ -325,7 +325,7 @@ public class WeaponsManagerSelected : MonoBehaviour
 
             Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-            print(angle);
+            //print(angle);
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
             if (playerDirection.y > 0)

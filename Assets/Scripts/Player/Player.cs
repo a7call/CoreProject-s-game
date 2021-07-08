@@ -207,53 +207,59 @@ public class Player : Characters
     Vector3 horizon = new Vector3(1, 0, 0);
     void Animation()
     {
-        if (weaponManager.isRH)
+        if (gameObject.name == "Player2")
         {
-            RH.SetActive(true);
-            LH.SetActive(false);
-            animator.SetBool("isRH", true);
+            if (weaponManager.isRH)
+            {
+                RH.SetActive(true);
+                LH.SetActive(false);
+                animator.SetBool("isRH", true);
+            }
+            else
+            {
+                RH.SetActive(false);
+                LH.SetActive(true);
+                animator.SetBool("isRH", false);
+            }
         }
-        else
+
+
+        if (gameObject.name == "Player")
         {
-            RH.SetActive(false);
-            LH.SetActive(true);
-            animator.SetBool("isRH", false);
-        }
-            
+
+            float playerSpeed = mouvement.sqrMagnitude;
+            animator.SetFloat("Speed", playerSpeed);
+
+            // position de la souris sur l'écran 
+            screenMousePos = Input.mousePosition;
+            // position du player en pixel sur l'écran 
+            screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+            // position du point d'attaque 
+            Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
+
+            float angle = Quaternion.FromToRotation(Vector3.left, horizon - dir).eulerAngles.z;
 
 
-        float playerSpeed = mouvement.sqrMagnitude;
-        animator.SetFloat("Speed", playerSpeed);
-
-        // position de la souris sur l'écran 
-        screenMousePos = Input.mousePosition;
-        // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
-        // position du point d'attaque 
-        Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
-
-        float angle = Quaternion.FromToRotation(Vector3.left, horizon - dir).eulerAngles.z;
-
-
-        if (angle > 45 && angle <= 135)
-        {
-            animator.SetFloat("VerticalSpeed", 1);
-            animator.SetFloat("HorizontalSpeed", 0);
-        }
-        else if (angle > 135 && angle <= 225)
-        {
-            animator.SetFloat("HorizontalSpeed", -1);
-            animator.SetFloat("VerticalSpeed", 0);
-        }
-        else if (angle > 225 && angle <= 315)
-        {
-            animator.SetFloat("VerticalSpeed", -1);
-            animator.SetFloat("HorizontalSpeed", 0);
-        }
-        else
-        {
-            animator.SetFloat("HorizontalSpeed", 1);
-            animator.SetFloat("VerticalSpeed", 0);
+            if (angle > 45 && angle <= 135)
+            {
+                animator.SetFloat("VerticalSpeed", 1);
+                animator.SetFloat("HorizontalSpeed", 0);
+            }
+            else if (angle > 135 && angle <= 225)
+            {
+                animator.SetFloat("HorizontalSpeed", -1);
+                animator.SetFloat("VerticalSpeed", 0);
+            }
+            else if (angle > 225 && angle <= 315)
+            {
+                animator.SetFloat("VerticalSpeed", -1);
+                animator.SetFloat("HorizontalSpeed", 0);
+            }
+            else
+            {
+                animator.SetFloat("HorizontalSpeed", 1);
+                animator.SetFloat("VerticalSpeed", 0);
+            }
         }
 
     }
