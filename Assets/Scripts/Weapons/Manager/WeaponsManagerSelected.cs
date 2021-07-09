@@ -325,8 +325,11 @@ public class WeaponsManagerSelected : MonoBehaviour
             
 
             Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
+
+            if (playerDirection.magnitude < 1f)
+                aimDirection = playerDirection;
+
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-            //print(angle);
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
             GetHand(playerDirection);
@@ -347,7 +350,7 @@ public class WeaponsManagerSelected : MonoBehaviour
                 _weapons.transform.localPosition = PositionArme;
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
             }
-            else if (playerDirection.x >0 && spriteRenderer.flipY)
+            else if (playerDirection.x >0f && spriteRenderer.flipY)
             {
                 spriteRenderer.flipY = false;
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
@@ -374,6 +377,7 @@ public class WeaponsManagerSelected : MonoBehaviour
             _weapons.attackPoint.position = transform.position + aimDirection * cacWeapons.attackRange;
 
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
             if (aimDirection.y > 0.6)
