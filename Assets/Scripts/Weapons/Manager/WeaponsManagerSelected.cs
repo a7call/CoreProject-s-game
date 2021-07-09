@@ -203,6 +203,7 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     private void EquipeWeapon(GameObject weapon)
     {
+       
         weapon.gameObject.SetActive(true);
         GetReferencesAndSetUP(weapon);
         weapon.GetComponent<IPlayerWeapon>().WeaponData.Equip(transform.parent.GetComponent<Player>());
@@ -328,13 +329,15 @@ public class WeaponsManagerSelected : MonoBehaviour
             //print(angle);
             _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
 
+            GetHand(playerDirection);
+
             if (playerDirection.y > 0)
             {
-                SetWeaponYPositionAndLayer(ref _weapons, _weapons.topOffSetY, -1);
+                SetWeaponYPositionAndLayer(ref _weapons, -1);
             }
             else if(playerDirection.y < 0)
             {
-                SetWeaponYPositionAndLayer(ref _weapons, _weapons.otherOffsetY,1);
+                SetWeaponYPositionAndLayer(ref _weapons,1);
             }
             
             if (playerDirection.x < 0f && !spriteRenderer.flipY)
@@ -343,8 +346,6 @@ public class WeaponsManagerSelected : MonoBehaviour
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
-                isRH = false;
-
             }
             else if (playerDirection.x >0 && spriteRenderer.flipY)
             {
@@ -352,7 +353,6 @@ public class WeaponsManagerSelected : MonoBehaviour
                 PositionArme = new Vector3(-PositionArme.x, PositionArme.y);
                 _weapons.transform.localPosition = PositionArme;
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
-                isRH = true;
             }
         }
     }
@@ -378,11 +378,11 @@ public class WeaponsManagerSelected : MonoBehaviour
 
             if (aimDirection.y > 0.6)
             {
-                SetWeaponYPositionAndLayer(ref _weapons, _weapons.topOffSetY, -1);
+                SetWeaponYPositionAndLayer(ref _weapons, -1);
             }
             else if (aimDirection.y < 0.5)
             {
-                SetWeaponYPositionAndLayer(ref _weapons, _weapons.otherOffsetY, 1);
+                SetWeaponYPositionAndLayer(ref _weapons, 1);
             }
         }
     }
@@ -396,13 +396,16 @@ public class WeaponsManagerSelected : MonoBehaviour
         SetRightDistanceAttackPointPos();
         SetWeaponXPosition(_weapons);
     }
-    void SwitchHandAnimation()
+    void GetHand(Vector3 playerDirection)
     {
-        var player = GetComponentInParent<Player>();
-        if(player.animator.GetFloat("isRightHanded") == 0)
-            GetComponentInParent<Player>().animator.SetFloat("isRightHanded", 1);
-        else
-            GetComponentInParent<Player>().animator.SetFloat("isRightHanded", 0);
+        if (playerDirection.x < 0f)
+        {
+            isRH = false;
+        }
+        else if (playerDirection.x > 0)
+        {
+            isRH = true;
+        }
     }
 
     private void SetRightDistanceAttackPointPos()
@@ -423,9 +426,9 @@ public class WeaponsManagerSelected : MonoBehaviour
         weapons.transform.localPosition = PositionArme;
     }
 
-    private void SetWeaponYPositionAndLayer(ref Weapons _weapons, float offSet, int orderInLayer)
+    private void SetWeaponYPositionAndLayer(ref Weapons _weapons, int orderInLayer)
     {
-        PositionArme.y = offSet;
+        PositionArme.y = _weapons.offSetY;
         _weapons.transform.localPosition = PositionArme;
         spriteRenderer.sortingOrder = orderInLayer;
     }

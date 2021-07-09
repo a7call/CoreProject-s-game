@@ -18,8 +18,7 @@ public class Weapons : MonoBehaviour
 
     // Offset de la postion de l'arme
     public float offSetX;
-    public float topOffSetY;
-    public float otherOffsetY;
+    public float offSetY;
     public Vector3 attackPointPos;
 
    
