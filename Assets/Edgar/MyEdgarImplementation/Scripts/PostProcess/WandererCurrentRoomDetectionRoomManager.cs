@@ -43,6 +43,10 @@ namespace Edgar.Unity.Examples
         public static RoomInstance previousRoom;
         public static RoomInstance previousCorridor;
         public GameObject WandererObject;
+        public Tile animatedDoor;
+        public Tile closedDoor;
+        public List<Vector3Int> listOfDoorsPos = new List<Vector3Int>();
+        private Tilemap doorTilemap;
 
 
         private bool isActive;
@@ -52,6 +56,29 @@ namespace Edgar.Unity.Examples
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
             room = roomInstance?.Room as WandererRoom;
+            Transform Doors = gameObject.transform.Find("Tilemaps").Find("Doors");
+            if (Doors != null)
+            {
+                doorTilemap = Doors.GetComponent<Tilemap>();
+
+                listOfDoorsPos = new List<Vector3Int>();
+
+                foreach (var pos in doorTilemap.cellBounds.allPositionsWithin)
+                {
+                    Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
+                    Vector3 place = doorTilemap.CellToWorld(localPlace);
+                    if (doorTilemap.HasTile(localPlace))
+                    {
+                        listOfDoorsPos.Add(localPlace);
+                    }
+                }
+                print(listOfDoorsPos.Count);
+            }
+           
+        }
+
+        void ChangeToAnimTiles()
+        {
 
         }
 
@@ -78,7 +105,17 @@ namespace Edgar.Unity.Examples
             isActive = false;
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
             if (!roomInstance.IsCorridor) previousRoom = roomInstance;
-            if (roomInstance.IsCorridor) previousCorridor = roomInstance;
+            if (roomInstance.IsCorridor)
+            {
+                Debug.LogWarning("Leaving Corridor");
+                previousCorridor = roomInstance;
+                foreach(var pos in listOfDoorsPos)
+                {
+                   
+                    doorTilemap.SetTile(pos, closedDoor);
+                }
+
+            }
 
         }
         #endregion

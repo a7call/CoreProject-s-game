@@ -24,6 +24,8 @@ namespace Edgar.Unity
             AddCompositeCollider(ForeGroundWall);
             #endregion
 
+            CreateTilemapGameObject("Doors", gameObject, 0, "ForeGround", TilemapRenderer.Mode.Chunk);
+
             #region BackGround Wall
             var BackGroundWall = CreateTilemapGameObject("BackGroundWall", gameObject, 100, "BackGround", TilemapRenderer.Mode.Chunk) ;
             AddCompositeCollider(BackGroundWall);
