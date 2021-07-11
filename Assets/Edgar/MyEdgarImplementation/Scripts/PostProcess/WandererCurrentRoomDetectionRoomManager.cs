@@ -40,17 +40,15 @@ namespace Edgar.Unity.Examples
         private WandererRoom room;
 
         public RoomInstance RoomInstance;
+
         public static RoomInstance previousRoom;
         public static RoomInstance previousCorridor;
+
         public List<WandererCurrentRoomDetectionRoomManager> connectedRoomDetectionManagers = new List<WandererCurrentRoomDetectionRoomManager>();
-        public GameObject WandererObject;
+
 
         public GameObject doors;
         
-
-
-        private bool isActive;
-
         private void OnEnable()
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
@@ -69,7 +67,7 @@ namespace Edgar.Unity.Examples
             switch (room.roomState)
             {
                 case RoomState.Cleared:
-                    
+                    OpenRoom();
                     break;
                 case RoomState.UnCleared:
                     room.isAllowedToSpawnMonsters(room.Type);
@@ -116,6 +114,13 @@ namespace Edgar.Unity.Examples
                 room.doors.GetComponent<DoorManagement>().CloseDoors();
             }
         }
+        void OpenRoom()
+        {
+            foreach (var room in connectedRoomDetectionManagers)
+            {
+                room.doors.GetComponent<DoorManagement>().OpenDoors();
+            }
+        }
 
         #region RoomEnter && RoomLeave
         /// <summary>
@@ -125,39 +130,59 @@ namespace Edgar.Unity.Examples
         /// 
         public void OnRoomEnter(GameObject player)
         {
-            isActive = true;
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
+
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
             if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn && room.roomState != RoomState.Cleared)
-                room.SethRoomState(RoomState.CurrentlyUsed);
-               
+                room.SetRoomState(RoomState.CurrentlyUsed);     
         }
-        
+
+        private void Update()
+        {
+            if (room.roomState != RoomState.Cleared && room.ActiveMonsters.Count <= 0)
+            {
+                room.SetRoomState(RoomState.Cleared);
+            }
+        }
+
         /// <summary>
         /// Gets called when a player leaves the room.
         /// </summary>
         /// <param name="player"></param>
         public void OnRoomLeave(GameObject player)
         {
-            isActive = false;
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
             if (!roomInstance.IsCorridor) previousRoom = roomInstance;
             if (roomInstance.IsCorridor) previousCorridor = roomInstance;
-
         }
         #endregion
 
         #region Ennemies
-       
+        List<GameObject> instansiatedMonster = new List<GameObject>();
         IEnumerator RoomSpawn()
         {
 
             foreach (var monsterObj in room.ActiveMonsters)
             {
-                monsterObj.Item1.GetComponent<Enemy>().onEnemyDeath += room.ClearDeadMonsters;
                 var spawnedMonster = room.spawner.Spawn(monsterObj.Item1, monsterObj.Item2, this.gameObject.transform);
+                instansiatedMonster.Add(spawnedMonster);
+                spawnedMonster.GetComponent<Enemy>().onEnemyDeath += ClearDeadMonsters;
             }
             yield return null;
+        }
+        public void ClearDeadMonsters(GameObject monster)
+        {
+            foreach (var monsterObj in instansiatedMonster.ToArray())
+            {
+                if (monsterObj == monster)
+                {
+                    instansiatedMonster.Remove(monsterObj);
+                    monster.GetComponent<Enemy>().onEnemyDeath -= ClearDeadMonsters;
+                }
+            }
+
+            if (instansiatedMonster.Count <= 0 &&  room.roomState != RoomState.Cleared)
+                room.SetRoomState(RoomState.Cleared);
         }
 
         #endregion

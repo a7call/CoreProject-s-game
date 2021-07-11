@@ -34,7 +34,9 @@ public abstract class Enemy : Characters
     public void EnemyDeath()
     {
         if (onEnemyDeath != null)
+        {
             onEnemyDeath(this.gameObject);
+        }      
     }
 
     protected override void Awake()

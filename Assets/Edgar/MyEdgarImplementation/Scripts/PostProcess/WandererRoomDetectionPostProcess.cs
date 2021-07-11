@@ -41,7 +41,7 @@ namespace Edgar.Unity.Examples
 
                 if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn)
                 {
-                    room.SethRoomState(RoomState.UnCleared);
+                    room.SetRoomState(RoomState.UnCleared);
                 }
             }
             // AstarPath.active.Scan();

@@ -26,7 +26,7 @@ public class WandererRoom : RoomBase
     public RoomState roomState;
 
     public event Action onSwitchRoomState;
-    public void SethRoomState(RoomState state)
+    public void SetRoomState(RoomState state)
     {
         roomState = state;
         if (onSwitchRoomState != null)
@@ -118,19 +118,7 @@ public class WandererRoom : RoomBase
         }
     }
     public Collider2D FloorCollider;
-    public void ClearDeadMonsters(GameObject monster)
-    {
-        foreach (var monsterObj in activeMonsters)
-        {
-            if (monsterObj.Item1 == monster)
-            {
-                activeMonsters.Remove(monsterObj);
-                monster.GetComponent<Enemy>().onEnemyDeath -= ClearDeadMonsters;
-            }
-        }
-    }
-
-
+   
     //EnemyBase Spawn
     public void RoomRandomSpawnSetUp()
     {
