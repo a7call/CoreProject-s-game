@@ -14,7 +14,6 @@ public enum RoomState
 }
 public class WandererRoom : RoomBase
 {
-
     public double ChanceToSpawn
     {
         get;
@@ -98,11 +97,6 @@ public class WandererRoom : RoomBase
                 break;
         }
     }
-
-   
-
-   
-
 
     #region MonsterManagement
 

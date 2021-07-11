@@ -13,18 +13,6 @@ namespace Edgar.Unity.Examples
     public class WandererCurrentRoomDetectionRoomManager : MonoBehaviour
     {
         /// <summary>
-        /// Whether the room was cleared from all the enemies.
-        /// </summary>
-        public bool Cleared = false;
-
-        /// <summary>
-        /// Doors of neighboring corridors.
-        /// </summary>
-        public List<GameObject> Doors = new List<GameObject>();
-
-       
-
-        /// <summary>
         /// Collider of the floor tilemap layer.
         /// </summary>
         public Collider2D FloorCollider;
@@ -46,9 +34,12 @@ namespace Edgar.Unity.Examples
 
         public List<WandererCurrentRoomDetectionRoomManager> connectedRoomDetectionManagers = new List<WandererCurrentRoomDetectionRoomManager>();
 
+        List<GameObject> instansiatedMonster = new List<GameObject>();
 
-        public GameObject doors;
-        
+
+        public Transform doorsHandler;
+
+        #region Unity Mono
         private void OnEnable()
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
@@ -62,6 +53,16 @@ namespace Edgar.Unity.Examples
             room.onSwitchRoomState -= OnRoomStateSwitch;
         }
 
+
+
+        public void Start()
+        {
+            GetDoorHandlerInCorridors();
+            GetConnectedRoom();
+        }
+        #endregion
+
+        #region State Management
         public void OnRoomStateSwitch()
         {
             switch (room.roomState)
@@ -69,6 +70,7 @@ namespace Edgar.Unity.Examples
                 case RoomState.Cleared:
                     OpenRoom();
                     break;
+
                 case RoomState.UnCleared:
                     room.isAllowedToSpawnMonsters(room.Type);
                     room.SetRoomDifficulty(room.Type);
@@ -79,8 +81,8 @@ namespace Edgar.Unity.Examples
                         //isAllowedToSpawnMonstersTwice();
                         room.RoomRandomSpawnSetUp();
                     }
-
                     break;
+
                 case RoomState.CurrentlyUsed:
                     //Init Combat phase
                     StartCoroutine(RoomSpawn());
@@ -88,16 +90,17 @@ namespace Edgar.Unity.Examples
                     break;
             }
         }
+        #endregion
 
-
-
-
-        public void Start()
-        {     
-            if(roomInstance.IsCorridor)
-                doors = gameObject.transform.Find("Tilemaps").Find("Additionnal Layer 1").Find("Doors").gameObject;
-
-            GetConnectedRoom();
+        #region Doors Handling
+        void GetDoorHandlerInCorridors()
+        {
+            if (roomInstance.IsCorridor)
+            {
+                doorsHandler = gameObject.transform.Find("Tilemaps").Find("Additionnal Layer 1").Find("Doors");
+                if (doorsHandler == null)
+                    Debug.LogError("One corridor miss some doors");
+            }     
         }
 
         void GetConnectedRoom()
@@ -111,16 +114,17 @@ namespace Edgar.Unity.Examples
         {
             foreach(var room in connectedRoomDetectionManagers)
             {
-                room.doors.GetComponent<DoorManagement>().CloseDoors();
+                room.doorsHandler.GetComponent<DoorManagement>().CloseDoors();
             }
         }
         void OpenRoom()
         {
             foreach (var room in connectedRoomDetectionManagers)
             {
-                room.doors.GetComponent<DoorManagement>().OpenDoors();
+                room.doorsHandler.GetComponent<DoorManagement>().OpenDoors();
             }
         }
+        #endregion;
 
         #region RoomEnter && RoomLeave
         /// <summary>
@@ -131,19 +135,11 @@ namespace Edgar.Unity.Examples
         public void OnRoomEnter(GameObject player)
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
-
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
             if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn && room.roomState != RoomState.Cleared)
                 room.SetRoomState(RoomState.CurrentlyUsed);     
         }
 
-        private void Update()
-        {
-            if (room.roomState != RoomState.Cleared && room.ActiveMonsters.Count <= 0)
-            {
-                room.SetRoomState(RoomState.Cleared);
-            }
-        }
 
         /// <summary>
         /// Gets called when a player leaves the room.
@@ -157,8 +153,8 @@ namespace Edgar.Unity.Examples
         }
         #endregion
 
-        #region Ennemies
-        List<GameObject> instansiatedMonster = new List<GameObject>();
+        #region Ennemies Room Management
+        
         IEnumerator RoomSpawn()
         {
 
@@ -184,7 +180,6 @@ namespace Edgar.Unity.Examples
             if (instansiatedMonster.Count <= 0 &&  room.roomState != RoomState.Cleared)
                 room.SetRoomState(RoomState.Cleared);
         }
-
         #endregion
 
 
