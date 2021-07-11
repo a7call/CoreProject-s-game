@@ -31,6 +31,11 @@ public abstract class Enemy : Characters
     #region Unity Mono
 
     public event Action<GameObject> onEnemyDeath;
+    public void EnemyDeath()
+    {
+        if (onEnemyDeath != null)
+            onEnemyDeath(this.gameObject);
+    }
 
     protected override void Awake()
     {
@@ -73,8 +78,7 @@ public abstract class Enemy : Characters
     private void OnDestroy()
     {
         StopAllCoroutines();
-        if (onEnemyDeath != null)
-            onEnemyDeath(this.gameObject);
+        EnemyDeath();
     }
 
     private void OnDrawGizmos()

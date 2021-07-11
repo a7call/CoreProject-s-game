@@ -6,50 +6,49 @@ using System;
 using Wanderer.Utils;
 using System.Linq;
 
+public enum RoomState
+{
+    Cleared,
+    UnCleared,
+    CurrentlyUsed,
+}
 public class WandererRoom : RoomBase
 {
-    private double chanceToSpawn;
+
     public double ChanceToSpawn
     {
-        get
-        {
-            return chanceToSpawn;
-        }
+        get;
+        private set;
     }
 
     public RoomType Type;
 
-    private bool shouldSpawnMonstersTwice = false;
+    public RoomState roomState;
 
-    public bool ShouldSpawnMonsterTwice
+    public event Action onSwitchRoomState;
+    public void SethRoomState(RoomState state)
     {
-        get
-        {
-            return shouldSpawnMonstersTwice;
-        }
-        set
-        {
-            shouldSpawnMonstersTwice = value;
-        }
+        roomState = state;
+        if (onSwitchRoomState != null)
+            onSwitchRoomState();
     }
 
-    private bool shouldSpawnMonsters = false;
+    public bool ShouldSpawnMonstersTwice
+    {
+        get;
+        set;
+    }
 
     public bool ShouldSpawnMonsters
     {
-        get
-        {
-            return shouldSpawnMonsters;
-        }
+        get;
+       private set;
     }
 
-    private int maxDifficulty = 0;
     public int MaxDifficulty
     {
-        get
-        {
-            return maxDifficulty;
-        }
+        get;
+        private set;
     }
 
     public void SetRoomDifficulty(RoomType type)
@@ -58,27 +57,27 @@ public class WandererRoom : RoomBase
         switch (type)
         {
             default:
-                maxDifficulty = 0;
+                MaxDifficulty = 0;
                 break;
             case RoomType.Large:
-                maxDifficulty = 15;
+                MaxDifficulty = 15;
                 break;
             case RoomType.Medium:
-                maxDifficulty = 10;
+                MaxDifficulty = 10;
                 break;
             case RoomType.Small:
-                maxDifficulty = 5;
+                MaxDifficulty = 5;
                 break;
         }
     }
     
     public void isAllowedToSpawnMonstersTwice()
     {
-        shouldSpawnMonstersTwice = Utils.RandomBool((float)chanceToSpawn * 100);
+        ShouldSpawnMonstersTwice = Utils.RandomBool((float)ChanceToSpawn * 100);
     }
     public void isAllowedToSpawnMonsters(RoomType type)
     {
-        shouldSpawnMonsters = (type == RoomType.Large || type == RoomType.Medium || type == RoomType.Small);
+        ShouldSpawnMonsters = (type == RoomType.Large || type == RoomType.Medium || type == RoomType.Small);
     }
 
     public void SetChanceToSpawn(RoomType type)
@@ -86,19 +85,26 @@ public class WandererRoom : RoomBase
         switch (type)
         {
             default:
-                chanceToSpawn = 0;
+                ChanceToSpawn = 0;
                 break;
             case RoomType.Large:
-                chanceToSpawn = 0.5;
+                ChanceToSpawn = 0.5;
                 break;
             case RoomType.Medium:
-                chanceToSpawn = 0.25;
+                ChanceToSpawn = 0.25;
                 break;
             case RoomType.Small:
-                chanceToSpawn = 0.1;
+                ChanceToSpawn = 0.1;
                 break;
         }
     }
+
+   
+
+   
+
+
+    #region MonsterManagement
 
     private int maxNumberOfActiveMonsters;
     public List<GameObject> monsters = new List<GameObject>();
@@ -123,16 +129,18 @@ public class WandererRoom : RoomBase
             }
         }
     }
+
+
     //EnemyBase Spawn
     public void RoomRandomSpawnSetUp()
     {
-        if (!shouldSpawnMonsters)
+        if (!ShouldSpawnMonsters)
             return;
 
         var currentDifficulty = 0;
         spawner = new Spawner(monsters);
 
-        while (currentDifficulty < maxDifficulty)
+        while (currentDifficulty < MaxDifficulty)
         {
             int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
 
@@ -150,7 +158,7 @@ public class WandererRoom : RoomBase
             var monsterScr = monsters[index].GetComponent<IMonster>();
             var monsterDifficulty = monsterScr.Datas.Difficulty;
 
-            if (currentDifficulty + monsterDifficulty > maxDifficulty)
+            if (currentDifficulty + monsterDifficulty > MaxDifficulty)
                 continue;
 
             currentDifficulty += monsterDifficulty;
@@ -160,6 +168,8 @@ public class WandererRoom : RoomBase
         maxNumberOfActiveMonsters = activeMonsters.Count();
 
     }
+
+    #endregion
 
     public static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
     {
@@ -174,8 +184,6 @@ public class WandererRoom : RoomBase
             UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
         );
     }
-
-
 
     public override List<GameObject> GetRoomTemplates()
     {

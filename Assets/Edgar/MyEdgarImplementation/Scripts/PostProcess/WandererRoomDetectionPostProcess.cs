@@ -38,15 +38,10 @@ namespace Edgar.Unity.Examples
 
                
                 var room = (WandererRoom)roomInstance.Room;
-                room.isAllowedToSpawnMonsters(room.Type);
-                room.SetRoomDifficulty(room.Type);
-                room.SetChanceToSpawn(room.Type);
 
-                if (room.ShouldSpawnMonsters)
-                {  
-                    room.isAllowedToSpawnMonstersTwice();
-                    room.monsters = monsters;
-                    room.RoomRandomSpawnSetUp();
+                if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn)
+                {
+                    room.SethRoomState(RoomState.UnCleared);
                 }
             }
             // AstarPath.active.Scan();

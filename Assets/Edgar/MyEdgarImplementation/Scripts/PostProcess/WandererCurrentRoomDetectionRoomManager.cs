@@ -42,6 +42,7 @@ namespace Edgar.Unity.Examples
         public RoomInstance RoomInstance;
         public static RoomInstance previousRoom;
         public static RoomInstance previousCorridor;
+        public List<WandererCurrentRoomDetectionRoomManager> connectedRoomDetectionManagers = new List<WandererCurrentRoomDetectionRoomManager>();
         public GameObject WandererObject;
 
         public GameObject doors;
@@ -50,13 +51,70 @@ namespace Edgar.Unity.Examples
 
         private bool isActive;
 
-
-        public void Start()
+        private void OnEnable()
         {
             roomInstance = GetComponent<RoomInfo>()?.RoomInstance;
             room = roomInstance?.Room as WandererRoom;
+            room.onSwitchRoomState += OnRoomStateSwitch;
+        }
+
+
+        private void OnDisable()
+        {
+            room.onSwitchRoomState -= OnRoomStateSwitch;
+        }
+
+        public void OnRoomStateSwitch()
+        {
+            switch (room.roomState)
+            {
+                case RoomState.Cleared:
+                    
+                    break;
+                case RoomState.UnCleared:
+                    room.isAllowedToSpawnMonsters(room.Type);
+                    room.SetRoomDifficulty(room.Type);
+                    room.SetChanceToSpawn(room.Type);
+
+                    if (room.ShouldSpawnMonsters)
+                    {
+                        //isAllowedToSpawnMonstersTwice();
+                        room.RoomRandomSpawnSetUp();
+                    }
+
+                    break;
+                case RoomState.CurrentlyUsed:
+                    //Init Combat phase
+                    StartCoroutine(RoomSpawn());
+                    CloseRoom();
+                    break;
+            }
+        }
+
+
+
+
+        public void Start()
+        {     
             if(roomInstance.IsCorridor)
                 doors = gameObject.transform.Find("Tilemaps").Find("Additionnal Layer 1").Find("Doors").gameObject;
+
+            GetConnectedRoom();
+        }
+
+        void GetConnectedRoom()
+        {
+            foreach (var door in roomInstance.Doors)
+            {
+              connectedRoomDetectionManagers.Add(door.ConnectedRoomInstance.RoomTemplateInstance.GetComponent<WandererCurrentRoomDetectionRoomManager>());
+            }
+        }
+        void CloseRoom()
+        {
+            foreach(var room in connectedRoomDetectionManagers)
+            {
+                room.doors.GetComponent<DoorManagement>().CloseDoors();
+            }
         }
 
         #region RoomEnter && RoomLeave
@@ -70,7 +128,9 @@ namespace Edgar.Unity.Examples
             isActive = true;
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
-            StartCoroutine(RoomSpawn());
+            if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn && room.roomState != RoomState.Cleared)
+                room.SethRoomState(RoomState.CurrentlyUsed);
+               
         }
         
         /// <summary>
@@ -82,10 +142,7 @@ namespace Edgar.Unity.Examples
             isActive = false;
             WandererGameManager.Instance.OnRoomLeave(RoomInstance);
             if (!roomInstance.IsCorridor) previousRoom = roomInstance;
-            if (roomInstance.IsCorridor)
-            {
-                doors.GetComponent<DoorManagement>().CloseDoors();
-            }
+            if (roomInstance.IsCorridor) previousCorridor = roomInstance;
 
         }
         #endregion
