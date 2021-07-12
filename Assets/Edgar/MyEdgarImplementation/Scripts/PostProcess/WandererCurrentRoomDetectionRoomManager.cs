@@ -136,7 +136,7 @@ namespace Edgar.Unity.Examples
         {
             Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             WandererGameManager.Instance.OnRoomEnter(RoomInstance);
-            if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn && room.roomState != RoomState.Cleared)
+            if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn && room.roomState == RoomState.UnCleared )
                 room.SetRoomState(RoomState.CurrentlyUsed);     
         }
 

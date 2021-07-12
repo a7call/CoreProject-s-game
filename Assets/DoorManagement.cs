@@ -23,6 +23,7 @@ public class DoorManagement : MonoBehaviour
     {
         foreach (var door in doors)
         {
+            ManageLayers(door, true);
             door.AnimateDoors("isClosing");
             door.ManageCollider(true);
         }
@@ -32,8 +33,23 @@ public class DoorManagement : MonoBehaviour
     {
         foreach (var door in doors)
         {
+            ManageLayers(door, false);
             door.AnimateDoors("isOpening");
             door.ManageCollider(false);
+        }
+    }
+
+    void ManageLayers(DoorObj doorsScript, bool isClosing)
+    {
+        if (doorsScript.isForeGroundDoor && isClosing)
+        {
+            doorsScript.sr.sortingLayerName = "ForeGround";
+            doorsScript.sr.sortingOrder = 0;
+        }
+        else
+        {
+            doorsScript.sr.sortingLayerName = "BackGround";
+            doorsScript.sr.sortingOrder = 100;
         }
     }
 

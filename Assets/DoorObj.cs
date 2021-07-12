@@ -8,8 +8,15 @@ public class DoorObj : MonoBehaviour
     // Start is called before the first frame update
     Animator doorAnimator;
     Collider2D DoorCollider;
+    public bool isForeGroundDoor = false;
+
+    [HideInInspector]
+    public SpriteRenderer sr;
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
+        sr.sortingLayerName = "BackGround";
+        sr.sortingOrder = 100;
         doorAnimator = GetComponent<Animator>();
         DoorCollider = GetComponent<Collider2D>();
         DoorCollider.enabled = false;

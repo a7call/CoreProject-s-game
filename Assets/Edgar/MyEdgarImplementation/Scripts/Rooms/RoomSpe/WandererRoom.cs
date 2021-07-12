@@ -124,10 +124,12 @@ public class WandererRoom : RoomBase
 
         while (currentDifficulty < MaxDifficulty)
         {
+
             int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
-
+            Debug.Log(monsters.Count);
+            
             var position = RandomPointInBounds(FloorCollider.bounds, 1f);
-
+            
             if (!IsPointWithinCollider(FloorCollider, position))
             {
                 continue;
@@ -144,6 +146,7 @@ public class WandererRoom : RoomBase
                 continue;
 
             currentDifficulty += monsterDifficulty;
+            
             activeMonsters.Add(Tuple.Create(monsters[index], position));
 
         }

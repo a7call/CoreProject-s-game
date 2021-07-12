@@ -456,11 +456,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5794951489212855749, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.476511
+      value: -188
       objectReference: {fileID: 0}
     - target: {fileID: 5794951489212855749, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.111265
+      value: -97
       objectReference: {fileID: 0}
     - target: {fileID: 5794951489212855749, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
       propertyPath: m_LocalPosition.z
@@ -801,6 +801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 0, y: 0}
   Type: 6
+  roomState: 0
   monsters: []
   FloorCollider: {fileID: 0}
 --- !u!1 &616357398
@@ -1497,6 +1498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 0, y: 0}
   Type: 6
+  roomState: 0
   monsters: []
   FloorCollider: {fileID: 0}
 --- !u!1001 &1003563123
@@ -1635,7 +1637,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1083410002
 MonoBehaviour:
   m_ObjectHideFlags: 0

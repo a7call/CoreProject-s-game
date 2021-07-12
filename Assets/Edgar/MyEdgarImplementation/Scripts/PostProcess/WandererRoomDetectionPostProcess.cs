@@ -11,7 +11,7 @@ namespace Edgar.Unity.Examples
     [CreateAssetMenu(menuName = "Edgar/Wanderer/Current room detection/Post-process", fileName = "CurrentRoomDetectionPostProcess")]
     public class WandererRoomDetectionPostProcess : DungeonGeneratorPostProcessBase
     {
-
+        public List<GameObject> monsters = new List<GameObject>();
         #region MainBoucle
         public override void Run(GeneratedLevel level, LevelDescription levelDescription)
         {
@@ -29,26 +29,31 @@ namespace Edgar.Unity.Examples
             #endregion
 
             Tilemap tilemapMiniMap = MinimapInit(level);
+            int i = 0;
             foreach (var roomInstance in level.GetRoomInstances())
             {
+                
                 // Set the Random instance of the GameManager to be the same instance as we use in the generator
                 if (WandererGameManager.Instance != null)
                     WandererGameManager.Instance.Random = Random;
-
+               
                 var roomManager = AssignRoomComponents(roomInstance);
                 roomManager.RoomInstance = roomInstance;
-
+                
                 var room = (WandererRoom)roomInstance.Room;
-
-                if (room.Type != RoomType.Corridor && room.Type != RoomType.Spawn)
-                {
-                    room.SetRoomState(RoomState.UnCleared);
-                }
-                else
+                Debug.Log(room.Type);
+                if (room.Type == RoomType.Corridor && room.Type == RoomType.Spawn)
                 {
                     room.SetRoomState(RoomState.Cleared);
                 }
+                else
+                {
+                    room.monsters = monsters;
+                    room.SetRoomState(RoomState.UnCleared); 
+                }
+                
             }
+           
             FindObjectOfType<NodeGrid>().CreateGrid();
             MovePlayerToSpawn(level);
         }
