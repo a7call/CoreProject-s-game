@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2802134261974501793}
   m_Layer: 0
   m_Name: DUNGEONGENVALENTIN
-  m_TagString: Untagged
+  m_TagString: DUNGEONGEN
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   PostProcessConfig:
     InitializeSharedTilemaps: 1
     TilemapLayersStructure: 2
-    TilemapLayersHandler: {fileID: 11400000, guid: ef9b5c67efedcc242bfd9fe00a07892d, type: 2}
+    TilemapLayersHandler: {fileID: 11400000, guid: b16ae9b5827c64642b5399485a0910c0, type: 2}
     TilemapLayersExample: {fileID: 0}
     TilemapMaterial: {fileID: 0}
     CopyTilesToSharedTilemaps: 1
@@ -67,7 +67,7 @@ MonoBehaviour:
     DisableRoomTemplatesColliders: 1
   CustomPostProcessTasks:
   - {fileID: 11400000, guid: 79c27e76ab6d5484294c1fc624c2ad7c, type: 2}
-  - {fileID: 11400000, guid: 3199556a0bd0a6247a51bb9ad6fa852f, type: 2}
+  - {fileID: 11400000, guid: 976c739c6e4281746bbf9001dc129726, type: 2}
   OtherConfig:
     UseRandomSeed: 1
     RandomGeneratorSeed: 0
@@ -94,8 +94,6 @@ MonoBehaviour:
   RoomInstances:
   - room: {fileID: -8121719124923575822, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
     isCorridor: 0
-    isEnemyAlreadySpawned: 0
-    enemies: []
     connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 5395073468646727418, guid: 1f5b0be975c2d224697bd66c1dd25c12, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -117,10 +115,8 @@ MonoBehaviour:
       - {x: 13, y: 7}
       - {x: 13, y: 0}
       - {x: 0, y: 0}
-  - room: {fileID: 6366544641711966003, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
+  - room: {fileID: 0}
     isCorridor: 0
-    isEnemyAlreadySpawned: 0
-    enemies: []
     connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 5395073468646727418, guid: 1fe0736721465de4e9bef4afeac764b1, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -142,10 +138,8 @@ MonoBehaviour:
       - {x: -21, y: 7}
       - {x: -21, y: 0}
       - {x: -34, y: 0}
-  - room: {fileID: -7516211885239612365, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
+  - room: {fileID: 0}
     isCorridor: 0
-    isEnemyAlreadySpawned: 0
-    enemies: []
     connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 5395073468646727418, guid: 1fe0736721465de4e9bef4afeac764b1, type: 3}
     roomTemplateInstance: {fileID: 0}
@@ -179,9 +173,7 @@ MonoBehaviour:
       - {x: -17, y: 0}
   - room: {fileID: 0}
     isCorridor: 1
-    isEnemyAlreadySpawned: 0
-    enemies: []
-    connection: {fileID: -6120936905286053302, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
+    connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 2167591645475645086, guid: 669b08d4746c3434c8d7646c1fc5f42f, type: 3}
     roomTemplateInstance: {fileID: 0}
     position: {x: 2, y: 5, z: 0}
@@ -205,7 +197,7 @@ MonoBehaviour:
         toZ: 0
       facingDirection: {x: 1, y: 0}
       isHorizontal: 0
-      connectedRoom: {fileID: -7516211885239612365, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
+      connectedRoom: {fileID: 0}
     outlinePolygon:
       points:
       - {x: -4, y: 6}
@@ -214,9 +206,7 @@ MonoBehaviour:
       - {x: -4, y: 2}
   - room: {fileID: 0}
     isCorridor: 1
-    isEnemyAlreadySpawned: 0
-    enemies: []
-    connection: {fileID: 4973872512235283182, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
+    connection: {fileID: 0}
     roomTemplatePrefab: {fileID: 2167591645475645086, guid: 669b08d4746c3434c8d7646c1fc5f42f, type: 3}
     roomTemplateInstance: {fileID: 0}
     position: {x: -15, y: 5, z: 0}
@@ -230,7 +220,7 @@ MonoBehaviour:
         toZ: 0
       facingDirection: {x: 1, y: 0}
       isHorizontal: 0
-      connectedRoom: {fileID: 6366544641711966003, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
+      connectedRoom: {fileID: 0}
     - doorLine:
         fromX: -2
         fromY: -2
@@ -240,7 +230,7 @@ MonoBehaviour:
         toZ: 0
       facingDirection: {x: -1, y: 0}
       isHorizontal: 0
-      connectedRoom: {fileID: -7516211885239612365, guid: 5d95db9f98f4a2049999c008d5a59cec, type: 2}
+      connectedRoom: {fileID: 0}
     outlinePolygon:
       points:
       - {x: -21, y: 6}

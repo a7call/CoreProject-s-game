@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 348.98428, y: 32}
   Type: 3
-  roomState: 1
+  roomState: 0
   monsters:
   - {fileID: 3612759245202818942, guid: d2e90ac52b7c4004f94e6a4fc42b44bc, type: 3}
   FloorCollider: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 483.64752, y: 177.74965}
   Type: 3
-  roomState: 1
+  roomState: 0
   monsters:
   - {fileID: 3612759245202818942, guid: d2e90ac52b7c4004f94e6a4fc42b44bc, type: 3}
   FloorCollider: {fileID: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: 344.95288, y: 172.65056}
+  Position: {x: 352, y: 176}
   Type: 4
   roomState: 1
   monsters:
@@ -85,6 +85,7 @@ MonoBehaviour:
   - {fileID: 9220380749257204426}
   - {fileID: -6678763473688822875}
   - {fileID: 8489962880906993853}
+  - {fileID: 9133387362186236504}
   CorridorIndividualRoomTemplates: []
   CorridorRoomTemplateSets: []
   DefaultIndividualRoomTemplates: []
@@ -94,6 +95,7 @@ MonoBehaviour:
   - {fileID: -4663813564161346174}
   - {fileID: -6046462849259097307}
   - {fileID: 1401823439744822822}
+  - {fileID: 7148002287045191599}
   EditorData:
     PanOffset: {x: -10.718189, y: 120.102165}
     Zoom: 0.9845411
@@ -118,6 +120,23 @@ MonoBehaviour:
   monsters:
   - {fileID: 3612759245202818942, guid: d2e90ac52b7c4004f94e6a4fc42b44bc, type: 3}
   FloorCollider: {fileID: 0}
+--- !u!114 &7148002287045191599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07704ecd5ff502541a0e9b07778821d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: 352.62198, y: 283.3826}
+  Type: 3
+  roomState: 0
+  monsters: []
+  FloorCollider: {fileID: 0}
 --- !u!114 &8489962880906993853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +151,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   From: {fileID: -4663813564161346174}
   To: {fileID: 1401823439744822822}
+  IsLocked: 0
+--- !u!114 &9133387362186236504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608b3e92561274e4685b11b79263f337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  From: {fileID: -4663813564161346174}
+  To: {fileID: 7148002287045191599}
   IsLocked: 0
 --- !u!114 &9220380749257204426
 MonoBehaviour:
