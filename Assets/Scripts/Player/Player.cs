@@ -209,7 +209,6 @@ public class Player : Characters
     {
         float playerSpeed = mouvement.sqrMagnitude;
         animator.SetFloat("Speed", playerSpeed);
-
         // position de la souris sur l'écran 
         screenMousePos = Input.mousePosition;
         // position du player en pixel sur l'écran 
