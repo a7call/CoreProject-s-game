@@ -30,10 +30,10 @@ public class DistanceNoGun : Distance
 
    
     protected override void Update()
-    {
-        //Debug.Log(isEnemyAlive);
-        
+    {        
         base.Update();
+
+        ChangeStateWithRange();
 
         switch (currentState)
         {
@@ -41,7 +41,6 @@ public class DistanceNoGun : Distance
                 PlayerInSight();
                 break;
             case State.Chasing:
-                isInRange();
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:

@@ -207,7 +207,7 @@ public class BossTentaclePop : Enemy
     {
        // healthBarGFX.SetActive(true);
         rb = GetComponent<Rigidbody2D>();
-        aIMouvement = GetComponent<AIMouvement>();
+        AIMouvement = GetComponent<AIMouvement>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         player = FindObjectOfType<Player>();
         player = FindObjectOfType<Player>();

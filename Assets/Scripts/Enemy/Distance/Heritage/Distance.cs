@@ -8,9 +8,8 @@ using Wanderer.Utils;
 /// Une coroutine de shoot
 /// Une fonction de shoot qui instansiate le projectile
 /// </summary>
-public class Distance : Enemy
+public class Distance : Enemy, IMonster
 {
-    // Scriptable Object
     public IMonsterData Datas
     {
         get
@@ -18,14 +17,14 @@ public class Distance : Enemy
             return DistanceData;
         }
     }
+    // Scriptable Object
     [SerializeField] protected DistanceScriptableObject DistanceData;
     [HideInInspector]
     public float dispersion;
     // attackPoint : where projectile should start
     protected Transform attackPoint;
-    // attackModeRange : range ou l'ennemi passe en mode chaising  != attackRange  : range ou l'ennemi passe en mode attaque. 
-    protected float attackModeRange;
-    protected float coefAttackModeRange;
+    // stopAttackRange : range ou l'ennemi passe en mode chaising  != attackRange  : range ou l'ennemi passe en mode attaque. 
+    protected float stopAttackRange;
  // Check si prêt à tirer
     [SerializeField]
     protected bool isReadytoShoot = true;
@@ -47,6 +46,10 @@ public class Distance : Enemy
             Transform weapon = supportArme.Find("Weapon");
             attackPoint = weapon.Find("attackPoint");
         }
+        else
+        {
+            Debug.LogWarning("It seems that this monster lack of a weapon");
+        }
     }
 
   
@@ -61,29 +64,52 @@ public class Distance : Enemy
         inSight = DistanceData.InSight;
         isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
         difficulty = DistanceData.Difficulty;
-        //Chiffre arbitraire à modifier 
-        coefAttackModeRange = Utils.RandomizeParams(1.2f, 1.5f);
-        attackModeRange = attackRange * coefAttackModeRange;
+
+        //Chiffre arbitraire à modifier
+        var stopAttackingRangeCoef = Utils.RandomizeParams(1.2f, 1.5f);
+        stopAttackRange = attackRange * stopAttackingRangeCoef;
 
         AIMouvement.Speed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
     }
 
-    protected override void isInRange()
-    {
-       
-            if (Vector3.Distance(transform.position, target.position) < attackRange)
-            {
-            currentState = State.Attacking;
-            }
-            else if(currentState != State.Chasing && !isAttacking && (Vector3.Distance(transform.position, target.position) > attackModeRange))
-            {
-            currentState = State.Chasing;
+    //protected override void isInRange()
+    //{
 
-            }
-       
+    //        if (Vector3.Distance(transform.position, target.position) < attackRange)
+    //        {
+    //        currentState = State.Attacking;
+    //        }
+    //        else if(currentState != State.Chasing && !isAttacking && (Vector3.Distance(transform.position, target.position) > stopAttackRange))
+    //        {
+    //        currentState = State.Chasing;
+
+    //        }
+
+    //}
+
+    protected virtual void ChangeStateWithRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < inSight && currentState == State.Patrolling)
+        {
+            currentState = State.Chasing;
+            AIMouvement.ShouldMove = true;
+        }
+
+        if (!AIMouvement.ShouldMove)
+            return;
+
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            currentState = State.Attacking;
+        }
+        else if (currentState != State.Chasing && !isAttacking && (Vector3.Distance(transform.position, target.position) > stopAttackRange))
+        {
+            currentState = State.Chasing;
+        }
+
     }
-   
-  
+
+
     // Start Shoot Sequence
     protected virtual IEnumerator CanShootCO()
     {

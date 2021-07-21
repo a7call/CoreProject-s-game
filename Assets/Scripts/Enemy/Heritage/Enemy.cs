@@ -48,7 +48,7 @@ public abstract class Enemy : Characters
     protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
-        aIMouvement = GetComponent<AIMouvement>();
+        AIMouvement = GetComponent<AIMouvement>();
         currentState = State.Patrolling;
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -141,13 +141,11 @@ public abstract class Enemy : Characters
 
 
     #region  PathFinding
-    protected AIMouvement aIMouvement;
+
     public AIMouvement AIMouvement
     {
-        get
-        {
-            return aIMouvement;
-        }
+        get;
+        protected set;
     }
 
     protected Transform target;
@@ -278,7 +276,7 @@ public abstract class Enemy : Characters
                 // Animation
                 if (IsStuned)
                 {
-                    aIMouvement.ShouldMove = false;
+                    AIMouvement.ShouldMove = false;
                 }
                 else
                 {
@@ -287,23 +285,23 @@ public abstract class Enemy : Characters
                 break;
 
             case State.KnockedBack:
-                aIMouvement.ShouldMove = false;
+                AIMouvement.ShouldMove = false;
                 break;
 
             case State.Freeze:
                 // Animation
-                aIMouvement.ShouldMove = false;
+                AIMouvement.ShouldMove = false;
                 break;
 
             case State.Death:
-                aIMouvement.ShouldMove = false;
+                AIMouvement.ShouldMove = false;
                 //NOTHING ELSE TO DO
                 break;
 
             case State.Patrolling:
                 if (AIMouvement.ShouldMove)
                 {
-                    aIMouvement.ShouldMove = false;
+                    AIMouvement.ShouldMove = false;
                 }
                 PlayerInSight();
                 break;
@@ -354,7 +352,7 @@ public abstract class Enemy : Characters
         if (Vector3.Distance(transform.position, target.position) < attackRange)
         {
             currentState = State.Attacking;
-            aIMouvement.DirectionToTarget = Vector2.zero;
+            AIMouvement.DirectionToTarget = Vector2.zero;
         }
         else 
         {
