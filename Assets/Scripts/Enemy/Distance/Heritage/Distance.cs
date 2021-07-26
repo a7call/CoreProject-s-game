@@ -72,44 +72,50 @@ public class Distance : Enemy, IMonster
         AIMouvement.Speed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
     }
 
-    //protected override void isInRange()
-    //{
-
-    //        if (Vector3.Distance(transform.position, target.position) < attackRange)
-    //        {
-    //        currentState = State.Attacking;
-    //        }
-    //        else if(currentState != State.Chasing && !isAttacking && (Vector3.Distance(transform.position, target.position) > stopAttackRange))
-    //        {
-    //        currentState = State.Chasing;
-
-    //        }
-
-    //}
-
-    protected virtual void ChangeStateWithRange()
+    protected bool isOutOfAttackRange()
     {
-        if (Vector3.Distance(transform.position, target.position) < inSight && currentState == State.Patrolling)
+        if (!isAttacking && (Vector3.Distance(transform.position, target.position) > stopAttackRange))
         {
-            currentState = State.Chasing;
-            AIMouvement.ShouldMove = true;
+            SwitchState(State.Chasing);
+            return true;
         }
-
-        if (!AIMouvement.ShouldMove)
-            return;
-
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-        }
-        else if (currentState != State.Chasing && !isAttacking && (Vector3.Distance(transform.position, target.position) > stopAttackRange))
-        {
-            currentState = State.Chasing;
-        }
-
+        return false;
     }
 
+    protected bool isInAttackRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        {
+            SwitchState(State.Attacking);
+            return true;
+        }
+        return false;
+    }
 
+    protected bool isInChasingRange()
+    {
+        if (Vector3.Distance(transform.position, target.position) < inSight)
+        {
+            SwitchState(State.Chasing);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected virtual void SwitchState(State nextState)
+    {
+        currentState = nextState;
+    }
+
+    protected override void PlayerInSight()
+    {
+        if (Vector3.Distance(transform.position, target.position) < inSight)
+        {
+            AIMouvement.ShouldMove = true;
+            SwitchState(State.Chasing);
+        }
+    }
     // Start Shoot Sequence
     protected virtual IEnumerator CanShootCO()
     {

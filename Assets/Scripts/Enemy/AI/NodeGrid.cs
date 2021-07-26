@@ -92,6 +92,9 @@ public class NodeGrid: MonoBehaviour
     [Header("Gizmos")]
     public bool displayGridGizmos;
 
+    [Header("GridCreation")]
+    public bool shouldCreateGrid = false;
+
     private void Awake()
     {
         nodeDiameter = nodeRadius * 2;
@@ -102,13 +105,14 @@ public class NodeGrid: MonoBehaviour
         //    walkableMask.value = walkableMask |= region.terrainMask.value;
         //    walkableRegionsDictionnary.Add((int)Mathf.Log(region.terrainMask.value,2),region.terrainPenalty);
         //}
-
-        //CreateGrid();
+        if (shouldCreateGrid)
+            CreateGrid();
     }
 
     public Vector3 worldBottomLeft;
     public void CreateGrid()
     {
+        shouldCreateGrid = false;
         grid = new Node[gridSizeX, gridSizeY];
         
        

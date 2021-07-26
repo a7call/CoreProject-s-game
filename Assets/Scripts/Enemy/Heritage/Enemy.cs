@@ -61,7 +61,7 @@ public abstract class Enemy : Characters
     protected virtual void Update()
     {
         SwitchBasicStates(currentState);
-        ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
+       // ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
 
         // A MODIFIER SI ON TROUVE MIEUX
         if (IsStuned)
@@ -311,8 +311,7 @@ public abstract class Enemy : Characters
     protected virtual void PlayerInSight()
     {
         if (Vector3.Distance(transform.position, target.position) < inSight)
-        {
-            currentState = State.Chasing;
+        {     
             AIMouvement.ShouldMove = true;
         }
     }

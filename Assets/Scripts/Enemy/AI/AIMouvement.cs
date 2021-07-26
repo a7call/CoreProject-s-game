@@ -49,7 +49,7 @@ public class AIMouvement : MonoBehaviour
 
 
     [Header("Target")]
-    public Transform target;
+    public Transform target { get; set; }
 
     
     private float speed = 2;

@@ -33,28 +33,33 @@ public class DistanceNoGun : Distance
     {        
         base.Update();
 
-        ChangeStateWithRange();
-
         switch (currentState)
         {
             case State.Patrolling:
-                PlayerInSight();
+                if (isInChasingRange())
+                    return;
+
                 break;
             case State.Chasing:
+                if (isInAttackRange())
+                    return;
+                if (!AIMouvement.ShouldMove)
+                    AIMouvement.ShouldMove = true;
                 // suit le path créé et s'arrête pour tirer
                 break;
             case State.Attacking:
-                SetInitialAttackPosition();
-                isInRange();
+                if (isOutOfAttackRange())
+                    return;
+
+                if (!isSupposedToMoveAttacking)
+                    AIMouvement.ShouldMove = false;
+
+                SetInitialAttackPosition();  
                 PlayAttackAnim();
                 break;
         }
        
     }
-
-    // Methode lergerement modifié pour permettre la mise en place des animations d'attaque
-
-
    
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
     public void SetInitialAttackPosition()
@@ -86,8 +91,6 @@ public class DistanceNoGun : Distance
         }
         
     }
-
-
    //Recherche les position potentiel des attaques points 
     private void findAttackPoints()
     {
