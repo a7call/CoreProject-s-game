@@ -40,6 +40,19 @@ public class AIMouvement : MonoBehaviour
         }
 
     }
+    [SerializeField]
+    private bool shouldSearch = false;
+    public bool ShouldSearch {
+        get
+        {
+            return shouldSearch;
+        }
+        set
+        {
+            shouldSearch = value;
+        }
+    }
+
     private Rigidbody2D rb;
     public bool isMoving = false;
     #endregion  
@@ -48,7 +61,6 @@ public class AIMouvement : MonoBehaviour
     List<Node> currentPath = new List<Node>();
 
 
-    [Header("Target")]
     public Transform target { get; set; }
 
     
@@ -104,7 +116,7 @@ public class AIMouvement : MonoBehaviour
         } 
     }
 
-    IEnumerator UpdatePath()
+    public IEnumerator UpdatePath()
     {
         if (Time.timeSinceLevelLoad < .3f)
         {
@@ -112,7 +124,7 @@ public class AIMouvement : MonoBehaviour
         }
         float sqrMoveThreshHold = pathUpdateMoveThreshHold * pathUpdateMoveThreshHold;
         Vector3 targetPosOld = target.position;
-        while (true)
+        while (shouldSearch)
         {
             yield return new WaitForSeconds(minPathUpdateTime);
             if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshHold)
@@ -122,39 +134,6 @@ public class AIMouvement : MonoBehaviour
             }
         }
     }
-
-    // BUSY NODE ABANDONNED FEATURE
-
-    //IEnumerator isUnitMoving()
-    //{
-    //    float sqrMoveThreshHold = isMoveThreshHold * isMoveThreshHold; 
-    //    while (true)
-    //    {
-    //        Vector3 unitPosOld = transform.position;
-    //        yield return new WaitForSeconds(0.5f);
-
-    //        if ((transform.position - unitPosOld).sqrMagnitude > sqrMoveThreshHold && !isMoving)
-    //        {
-    //            isMoving = true;
-    //            UnBusyNodes();
-    //        }
-    //        else if (isMoving && (transform.position - unitPosOld).sqrMagnitude < sqrMoveThreshHold)
-    //        {
-    //            isMoving = false;
-    //            UnBusyNodes();
-    //            occupiedNodes =  grid.SetNodeBusy(transform.position);  
-    //        }
-    //    }
-    //}
-    //void UnBusyNodes()
-    //{
-    //    foreach(var node in occupiedNodes)
-    //    {
-    //        node._isBusy = false;
-    //    }
-    //}
-
-    //END
 
     IEnumerator FollowPath()
     {
