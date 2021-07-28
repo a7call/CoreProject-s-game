@@ -100,4 +100,18 @@ public class Goblin : Enemy
         Destroy(gameObject);
     }
 
+    public override void DoChasingState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void DoAttackingState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void DoPatrollingState()
+    {
+        throw new System.NotImplementedException();
+    }
 }

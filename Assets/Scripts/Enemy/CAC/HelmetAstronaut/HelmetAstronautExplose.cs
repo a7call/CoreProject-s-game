@@ -8,17 +8,6 @@ public class HelmetAstronautExplose : Cac
 
     protected override void Update()
     {
-        base.Update();
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                break;
-
-            case State.Attacking:
-                StartCoroutine(TriggerExplosion()); 
-                break;
-        }
     }
 
     IEnumerator TriggerExplosion()
@@ -43,14 +32,4 @@ public class HelmetAstronautExplose : Cac
 
         }
     }
-
-    protected override void isInRange()
-    {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            isReadyToSwitchState = false;
-        }
-    }
-
 }

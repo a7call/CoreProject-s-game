@@ -15,22 +15,6 @@ public class Bubble360 : Distance
 
     protected override void Update()
     {
-        base.Update();
-        switch (currentState)
-        {
-          
-            case State.Chasing:
-                isInRange();
-                break;
-            case State.Attacking:
-                isInRange();
-                PlayAttackAnim();
-                break;
-        }
-        if (isDying)
-        {
-           GetComponent<SpriteRenderer>().material.SetColor("_Color", new Color(192, 2, 0, 1));
-        }
     }
     #endregion
 

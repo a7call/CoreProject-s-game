@@ -72,50 +72,6 @@ public class Distance : Enemy, IMonster
         AIMouvement.Speed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
     }
 
-    protected bool isOutOfAttackRange()
-    {
-        if (!isAttacking && (Vector3.Distance(transform.position, target.position) > stopAttackRange))
-        {
-            SwitchState(State.Chasing);
-            return true;
-        }
-        return false;
-    }
-
-    protected bool isInAttackRange()
-    {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            SwitchState(State.Attacking);
-            return true;
-        }
-        return false;
-    }
-
-    protected bool isInChasingRange()
-    {
-        if (Vector3.Distance(transform.position, target.position) < inSight)
-        {
-            SwitchState(State.Chasing);
-            return true;
-        }
-
-        return false;
-    }
-
-    protected virtual void SwitchState(State nextState)
-    {
-        currentState = nextState;
-    }
-
-    protected override void PlayerInSight()
-    {
-        if (Vector3.Distance(transform.position, target.position) < inSight)
-        {
-            AIMouvement.ShouldMove = true;
-            SwitchState(State.Chasing);
-        }
-    }
     // Start Shoot Sequence
     protected virtual IEnumerator CanShootCO()
     {
@@ -161,5 +117,18 @@ public class Distance : Enemy, IMonster
         yield return new WaitForEndOfFrame();
     }
 
+    public override void DoChasingState()
+    {
+        throw new System.NotImplementedException();
+    }
 
+    public override void DoAttackingState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void DoPatrollingState()
+    {
+        throw new System.NotImplementedException();
+    }
 }

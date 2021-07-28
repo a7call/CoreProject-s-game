@@ -6,19 +6,6 @@ public class HelmetAstronautMS : Cac
 {
     protected override void Update()
     {
-        base.Update();
-        switch (currentState)
-        {
-            case State.Chasing:
-                //StartCoroutine(PowerMode());
-                isInRange();
-                break;
-
-            case State.Attacking:
-                StartCoroutine(BaseAttack());
-                isInRange();
-                break;
-        }
 
     }
     // LE POWER MODE EST DESACTIVER LE TEMPS DE TROUVER UN EFFET OU UNE ANIMATION POUR LE REPRESENTER 

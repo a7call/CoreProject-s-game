@@ -17,19 +17,6 @@ public class BubbleMS : Distance
     protected override void Update()
     {
         
-        base.Update();
-        EnabledRayon();
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                break;
-            case State.Attacking:
-                PlayAttackAnim();
-                break;
-        }
-
-
     }
     #endregion
 

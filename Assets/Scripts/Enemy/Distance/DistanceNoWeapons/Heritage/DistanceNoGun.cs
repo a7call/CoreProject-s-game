@@ -30,35 +30,8 @@ public class DistanceNoGun : Distance
 
    
     protected override void Update()
-    {        
-        base.Update();
-
-        switch (currentState)
-        {
-            case State.Patrolling:
-                if (isInChasingRange())
-                    return;
-
-                break;
-            case State.Chasing:
-                if (isInAttackRange())
-                    return;
-                if (!AIMouvement.ShouldMove)
-                    AIMouvement.ShouldMove = true;
-                // suit le path créé et s'arrête pour tirer
-                break;
-            case State.Attacking:
-                if (isOutOfAttackRange())
-                    return;
-
-                if (!isSupposedToMoveAttacking)
-                    AIMouvement.ShouldMove = false;
-
-                SetInitialAttackPosition();  
-                PlayAttackAnim();
-                break;
-        }
-       
+    {
+        StateR.UpdateState();
     }
    
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
@@ -111,5 +84,19 @@ public class DistanceNoGun : Distance
             }
         }
     }
-    
+
+    public override void DoChasingState()
+    {
+        isInAttackRange(attackRange);
+    }
+
+    public override void DoAttackingState()
+    {
+        isOutOfAttackRange(stopAttackRange);
+    }
+
+    public override void DoPatrollingState()
+    {
+        isInChasingRange(inSight);
+    }
 }

@@ -22,25 +22,6 @@ public class Cac : Enemy, IMonster
         SetData();
     }
 
-    #region State Management
-    protected override void isInRange()
-    {
-
-        if (Vector3.Distance(transform.position, target.position) < attackRange  )
-        {
-            currentState = State.Attacking;
-            AIMouvement.ShouldMove = false;
-        }
-        else if (currentState != State.Chasing && !isAttacking )
-        {
-            currentState = State.Chasing;
-            AIMouvement.ShouldMove = true;
-
-        }
-
-    }
-    #endregion
-
     #region Datas
     public IMonsterData Datas {
         get
@@ -121,6 +102,21 @@ public class Cac : Enemy, IMonster
             base.GetLastDirection();
         }
     }
+
+    public override void DoChasingState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void DoAttackingState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void DoPatrollingState()
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
-   
+
 }

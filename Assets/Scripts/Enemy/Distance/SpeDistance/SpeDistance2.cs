@@ -14,7 +14,7 @@ public class SpeDistance2 : Distance
     [SerializeField] private int dotNumber = 5;
     [SerializeField] private int dotDamages = 20;
 
-    void Start()
+    protected override void Start()
     {
         player = FindObjectOfType<Player>();
         SetData();
@@ -23,19 +23,6 @@ public class SpeDistance2 : Distance
 
     protected override void Update()
     {
-        base.Update();
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                break;
-            case State.Attacking:
-                isInRange();
-                // Couroutine gérant les shoots 
-                StartCoroutine("CanShoot");
-                StartCoroutine(DotAttack(dotDamages));
-                break;
-        }
     }
 
 

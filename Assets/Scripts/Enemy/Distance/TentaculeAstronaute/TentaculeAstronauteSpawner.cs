@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TentaculeAstronauteSpawner : Distance
 {
-    void Start()
+    protected override void Start()
     {
         // Set data
         SetData();
@@ -13,19 +13,6 @@ public class TentaculeAstronauteSpawner : Distance
     }
     protected override void Update()
     {
-        base.Update();
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                // suit le path créé et s'arrête pour tirer
-                break;
-            case State.Attacking:
-                isInRange();
-                // Couroutine gérant les shoots 
-                StartCoroutine(CanShootCO());
-                break;
-        }
     }
 
 

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts;
 
-public abstract class Characters : MonoBehaviour
+public abstract class Characters : StateMachine
 {
     [HideInInspector]
     public Animator animator;

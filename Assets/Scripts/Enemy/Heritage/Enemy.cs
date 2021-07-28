@@ -42,7 +42,8 @@ public abstract class Enemy : Characters
     protected override void Awake()
     {
         base.Awake();
-        AddAnimationEvent("Death", "DestroyEnemy");    
+        AddAnimationEvent("Death", "DestroyEnemy");
+        SetState(new PatrollingState(this));
     }
 
     protected override void GetReference()
@@ -55,12 +56,46 @@ public abstract class Enemy : Characters
         player = target.GetComponent<Player>();
         audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
-    
-  
+
+    #region new State 
+    public abstract void DoChasingState();
+    public abstract void DoAttackingState();
+    public abstract void DoPatrollingState();
+
+    protected bool isOutOfAttackRange(float range)
+    {
+        if (!isAttacking && (Vector3.Distance(transform.position, target.position) > range))
+        {
+            SetState(new ChasingState(this));
+            return true;
+        }
+        return false;
+    }
+    protected bool isInAttackRange(float range)
+    {
+        if (Vector3.Distance(transform.position, target.position) < range)
+        {
+            SetState(new AttackState(this));
+            return true;
+        }
+        return false;
+    }
+    protected bool isInChasingRange(float range)
+    {
+        if (Vector3.Distance(transform.position, target.position) < range)
+        {
+            SetState(new ChasingState(this));
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
+
 
     protected virtual void Update()
     {
-        SwitchBasicStates(currentState);
+       // SwitchBasicStates(currentState);
        // ShouldNotMoveDuringAttacking(isSupposedToMoveAttacking);
 
         // A MODIFIER SI ON TROUVE MIEUX
@@ -280,7 +315,7 @@ public abstract class Enemy : Characters
                 }
                 else
                 {
-                    isInRange();
+                  
                 }      
                 break;
 
@@ -303,61 +338,9 @@ public abstract class Enemy : Characters
                 {
                     AIMouvement.ShouldMove = false;
                 }
-                PlayerInSight();
                 break;
         }
-    }
-
-    protected virtual void PlayerInSight()
-    {
-        if (Vector3.Distance(transform.position, target.position) < inSight)
-        {     
-            AIMouvement.ShouldMove = true;
-        }
-    }
-
-    protected void ShouldNotMoveDuringAttacking(bool isSupposedToMoveAttacking)
-    {
-        if (!isSupposedToMoveAttacking)
-        {
-            if (currentState == State.Chasing )
-            {
-               AIMouvement.ShouldMove = true;
-               
-            }
-            else if (currentState == State.Attacking )
-            {
-               AIMouvement.ShouldMove = false;
-                
-            }
-        }
-        else
-        {
-            if (Vector3.Distance(transform.position, target.position) <= attackRange / 2)
-            {
-                AIMouvement.ShouldMove = false;
-            }
-            else if (Vector3.Distance(transform.position, target.position) >= attackRange)
-            {
-                AIMouvement.ShouldMove = true;
-            }
-        }
-
-    }
-
-    // Permet de savoir si il est en state Chase ou Attacking
-    protected virtual void isInRange()
-    {
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
-        {
-            currentState = State.Attacking;
-            AIMouvement.DirectionToTarget = Vector2.zero;
-        }
-        else 
-        {
-            currentState = State.Chasing;
-        }
-    }
+    } 
     #endregion
 
 

@@ -21,17 +21,7 @@ public class Bubble360_2 : Distance
     }
     protected override void Update()
     {
-        base.Update();
-        switch (currentState)
-        {
-            case State.Chasing:
-                isInRange();
-                break;
-            case State.Attacking:
-                isInRange();
-                StartCoroutine(CanShootCO());
-                break;
-        }
+
     }
 
 

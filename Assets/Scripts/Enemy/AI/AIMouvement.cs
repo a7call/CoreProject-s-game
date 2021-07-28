@@ -97,7 +97,7 @@ public class AIMouvement : MonoBehaviour
     {
         if (pathSuccessful)
         {
-            shouldMove = true;
+            //shouldMove = true;
             if (this == null)
                 return;
 
