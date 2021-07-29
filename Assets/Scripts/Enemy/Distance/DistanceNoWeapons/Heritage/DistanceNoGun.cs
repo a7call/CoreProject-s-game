@@ -21,6 +21,7 @@ public class DistanceNoGun : Distance
         SetData();
         SetMaxHealth();
         findAttackPoints();
+       
     }
 
     protected override void GetReference()
@@ -28,10 +29,15 @@ public class DistanceNoGun : Distance
         base.GetReference();
     }
 
-   
+    protected override void Start()
+    {
+        base.Start();
+       // MoveToRandomPoint();
+    }
+
     protected override void Update()
     {
-        StateR.UpdateState();
+        StateR.UpdateState();        
     }
    
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
@@ -87,16 +93,30 @@ public class DistanceNoGun : Distance
 
     public override void DoChasingState()
     {
-        isInAttackRange(attackRange);
+       isInAttackRange(attackRange);
     }
 
     public override void DoAttackingState()
     {
-        isOutOfAttackRange(stopAttackRange);
+       isOutOfAttackRange(stopAttackRange, 1);
+       SetInitialAttackPosition();
+       PlayAttackAnim();
     }
 
     public override void DoPatrollingState()
     {
         isInChasingRange(inSight);
+    }
+
+    private void MoveToRandomPoint()
+    {
+        Vector2 randomPoint = 5 * Random.insideUnitCircle;
+        GameObject targetPoint = new GameObject();
+        targetPoint.transform.position = transform.position + (Vector3)randomPoint;
+        AIMouvement.ShouldSearch = true;
+        AIMouvement.ShouldMove = true;
+        AIMouvement.target = targetPoint.transform;
+        StopCoroutine("UpdatePath");
+        StartCoroutine("UpdatePath");
     }
 }

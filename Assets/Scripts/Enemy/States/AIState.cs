@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -10,7 +12,7 @@ public abstract class AIState : IState
         AICharacter = enemy;
     }
 
-    public abstract void StartState();
+    public abstract IEnumerator StartState();
 
     public abstract void UpdateState();
 }

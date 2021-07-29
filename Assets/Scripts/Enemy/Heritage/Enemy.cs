@@ -58,15 +58,19 @@ public abstract class Enemy : Characters
     }
 
     #region new State 
-    public abstract void DoChasingState();
-    public abstract void DoAttackingState();
-    public abstract void DoPatrollingState();
-
-    protected bool isOutOfAttackRange(float range)
+    public virtual void DoChasingState() { }
+    public virtual void DoAttackingState() { }
+    public virtual void DoPatrollingState() { }
+    protected bool isOutOfAttackRange(float range, float fleeRange)
     {
         if (!isAttacking && (Vector3.Distance(transform.position, target.position) > range))
         {
             SetState(new ChasingState(this));
+            return true;
+        }
+        if(!isAttacking && (Vector3.Distance(transform.position, target.position) < fleeRange))
+        {
+            SetState(new FleeingState(this));
             return true;
         }
         return false;

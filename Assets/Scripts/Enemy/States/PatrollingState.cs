@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class PatrollingState : AIState
@@ -6,9 +7,9 @@ public class PatrollingState : AIState
     public PatrollingState(Enemy enemy) : base(enemy)
     {
     }
-    public override void StartState()
+    public override IEnumerator StartState()
     {
-        return;
+        yield return null;
     }
 
     public override void UpdateState()

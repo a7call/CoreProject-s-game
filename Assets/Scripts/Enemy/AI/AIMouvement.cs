@@ -63,6 +63,8 @@ public class AIMouvement : MonoBehaviour
 
     public Transform target { get; set; }
 
+    public Transform Player { get; private set; }
+
     
     private float speed = 2;
     public float Speed { 
@@ -84,13 +86,16 @@ public class AIMouvement : MonoBehaviour
     [Header("SlowDownUnit")]
     private float stoppingDist = 0;
 
+    public Coroutine UpdatePathCo = null;
+
     PathWanderer path;
     private void Start()
     {
-        target = GameObject.FindGameObjectWithTag("AItarget").transform;
+        Player = GameObject.FindGameObjectWithTag("AItarget").transform;
+        target = Player;
         grid = FindObjectOfType<NodeGrid>();
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(UpdatePath());
+        UpdatePathCo = StartCoroutine(UpdatePath());
     }
    
     public void OnPathFound(Vector3[] wayPoints, bool pathSuccessful, List<Node> nodePath)
@@ -116,7 +121,7 @@ public class AIMouvement : MonoBehaviour
         } 
     }
 
-    public IEnumerator UpdatePath()
+    public IEnumerator UpdatePath(bool forcePathing = false)
     {
         if (Time.timeSinceLevelLoad < .3f)
         {
@@ -126,8 +131,10 @@ public class AIMouvement : MonoBehaviour
         Vector3 targetPosOld = target.position;
         while (shouldSearch)
         {
+            if (target == null)
+                yield break;
             yield return new WaitForSeconds(minPathUpdateTime);
-            if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshHold)
+            if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshHold || forcePathing)
             {
                 PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
                 targetPosOld = target.position;
@@ -148,7 +155,7 @@ public class AIMouvement : MonoBehaviour
                 if(pathIndex == path.finishLineIndex)
                 {
                     directionToTarget = Vector2.zero;
-                    shouldMove = false;
+                    //shouldMove = false;
                     followingPath = false;
                     break;
                 }
