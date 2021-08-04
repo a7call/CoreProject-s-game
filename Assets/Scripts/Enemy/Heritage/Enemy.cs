@@ -24,8 +24,11 @@ public abstract class Enemy : Characters
         }
     }
 
+    public Collider2D roomFloorCollider;
+    public Collider2D RoomFloorCollider { get { return roomFloorCollider; }set { roomFloorCollider = value; } }
+
     #region Player Variable
-    protected Player player;
+    public Player Player { get; private set; }
     #endregion
 
     #region Unity Mono
@@ -53,7 +56,7 @@ public abstract class Enemy : Characters
         currentState = State.Patrolling;
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        player = target.GetComponent<Player>();
+        Player = target.GetComponent<Player>();
         audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
 

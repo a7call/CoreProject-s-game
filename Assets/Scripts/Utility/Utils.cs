@@ -33,8 +33,23 @@ namespace Wanderer.Utils
 
         public static int RandomObjectInCollection(int collectionLenght)
         {
-           return Random.Range(0, collectionLenght - 1);  
+           return Random.Range(0, collectionLenght );  
+        }
+        public static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
+        {
+            return collider.OverlapPoint(point);
+        }
+
+        public static Vector3 RandomPointInBounds(Bounds bounds, float margin = 0)
+        {
+            return new Vector3(
+               UnityEngine.Random.Range(bounds.min.x + margin, bounds.max.x - margin),
+                UnityEngine.Random.Range(bounds.min.y + margin, bounds.max.y - margin),
+                UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
+            );
         }
     }
+
+   
 }
 

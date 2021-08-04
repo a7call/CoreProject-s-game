@@ -16,7 +16,6 @@ public class SpeDistance2 : Distance
 
     protected override void Start()
     {
-        player = FindObjectOfType<Player>();
         SetData();
         SetMaxHealth();
     }

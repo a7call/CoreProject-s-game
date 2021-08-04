@@ -15,7 +15,7 @@ public class DistanceScriptableObject : EnemyScriptableObject, IMonsterData
     public float timeIntervale;
     public int nbTir;
     public float dispersion;
-    private int difficulty;
+    [SerializeField] private int difficulty;
     public int Difficulty
     {
         get

@@ -162,7 +162,9 @@ namespace Edgar.Unity.Examples
             {
                 var spawnedMonster = room.spawner.Spawn(monsterObj.Item1, monsterObj.Item2, this.gameObject.transform);
                 instansiatedMonster.Add(spawnedMonster);
-                spawnedMonster.GetComponent<Enemy>().onEnemyDeath += ClearDeadMonsters;
+                Enemy spawnedMonsterScript = spawnedMonster.GetComponent<Enemy>();
+                spawnedMonsterScript.onEnemyDeath += ClearDeadMonsters;
+                spawnedMonsterScript.roomFloorCollider = FloorCollider;
             }
             yield return null;
         }

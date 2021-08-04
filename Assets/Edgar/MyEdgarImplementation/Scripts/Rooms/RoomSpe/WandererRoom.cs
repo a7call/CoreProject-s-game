@@ -126,11 +126,11 @@ public class WandererRoom : RoomBase
         {
 
             int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
-            Debug.Log(monsters.Count);
+            Debug.Log(index);
+
+            var position = Utils.RandomPointInBounds(FloorCollider.bounds, 1f);
             
-            var position = RandomPointInBounds(FloorCollider.bounds, 1f);
-            
-            if (!IsPointWithinCollider(FloorCollider, position))
+            if (!Utils.IsPointWithinCollider(FloorCollider, position))
             {
                 continue;
             }
@@ -139,6 +139,7 @@ public class WandererRoom : RoomBase
             {
                 continue;
             }
+            Debug.Log(monsters[index]);
             var monsterScr = monsters[index].GetComponent<IMonster>();
             var monsterDifficulty = monsterScr.Datas.Difficulty;
 
@@ -156,19 +157,7 @@ public class WandererRoom : RoomBase
 
     #endregion
 
-    public static bool IsPointWithinCollider(Collider2D collider, Vector2 point)
-    {
-        return collider.OverlapPoint(point);
-    }
-
-    public static Vector3 RandomPointInBounds(Bounds bounds, float margin = 0)
-    {
-        return new Vector3(
-           UnityEngine.Random.Range(bounds.min.x + margin, bounds.max.x - margin),
-            UnityEngine.Random.Range(bounds.min.y + margin, bounds.max.y - margin),
-            UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
-        );
-    }
+  
 
     public override List<GameObject> GetRoomTemplates()
     {

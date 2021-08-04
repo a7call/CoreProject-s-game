@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using Wanderer.Utils;
 
 public class FleeingState : AIState
 {
@@ -11,7 +12,7 @@ public class FleeingState : AIState
     {
         AICharacter.AIMouvement.ShouldMove = true;
         yield return Flee();
-        AICharacter.SetState(new AttackState(AICharacter));
+        AICharacter.SetState(new ChasingState(AICharacter));
     }
 
     public override void UpdateState()
@@ -20,23 +21,31 @@ public class FleeingState : AIState
 
     //to Rework
     private IEnumerator Flee()
-    {
-        Vector2 randomPoint = 5 * Random.insideUnitCircle;
-        GameObject targetPoint = new GameObject();
-        targetPoint.transform.position = AICharacter.transform.position + (Vector3)randomPoint;
+    { 
+        bool isValid = false;
+        Vector3 randomPointPos = Vector3.zero;
+        float fleeingRadius = 6;
         
-        AICharacter.AIMouvement.ShouldMove = true;
-        AICharacter.AIMouvement.ShouldSearch = true;
-        AICharacter.AIMouvement.target = targetPoint.transform;
-        if (AICharacter.AIMouvement.UpdatePathCo == null)
-            yield break;
-
-        while ((Vector3.Distance(AICharacter.transform.position, targetPoint.transform.position) > 0.5f))
+        while (!isValid)
         {
-            Debug.Log(Vector3.Distance(AICharacter.transform.position, targetPoint.transform.position));
+            
+            Vector3 randomPoint = fleeingRadius * Random.insideUnitCircle;
+            randomPointPos = Utils.RandomPointInBounds(AICharacter.roomFloorCollider.bounds, 1f);
+             isValid = true;
+           
+        }
+
+        GameObject targetPoint = new GameObject();
+
+        AICharacter.AIMouvement.target = targetPoint.transform;
+        AICharacter.AIMouvement.ShouldSearch = true;
+        AICharacter.AIMouvement.ShouldMove = true;
+
+        while ((Vector3.Distance(AICharacter.transform.position, targetPoint.transform.position) > 1f))
+        {
             yield return null;
         }
-        AICharacter.AIMouvement.target = AICharacter.AIMouvement.Player;
+        AICharacter.AIMouvement.target = AICharacter.transform;
         GameObject.Destroy(targetPoint);
     }
 }
