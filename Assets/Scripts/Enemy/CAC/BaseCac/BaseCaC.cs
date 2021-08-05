@@ -17,7 +17,7 @@ public class BaseCaC : Cac
 
     public override void DoAttackingState()
     {
-        isOutOfAttackRange(attackRange, -1);
+        isOutOfAttackRange(attackRange);
     }
 
     public override void DoPatrollingState()

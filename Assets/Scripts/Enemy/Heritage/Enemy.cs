@@ -27,6 +27,12 @@ public abstract class Enemy : Characters
     public Collider2D roomFloorCollider;
     public Collider2D RoomFloorCollider { get { return roomFloorCollider; }set { roomFloorCollider = value; } }
 
+    public bool CanFlee
+    {
+        get;
+        set;
+    } = true;
+
     #region Player Variable
     public Player Player { get; private set; }
     #endregion
@@ -64,16 +70,11 @@ public abstract class Enemy : Characters
     public virtual void DoChasingState() { }
     public virtual void DoAttackingState() { }
     public virtual void DoPatrollingState() { }
-    protected bool isOutOfAttackRange(float range, float fleeRange)
+    protected bool isOutOfAttackRange(float range)
     {
         if (!isAttacking && (Vector3.Distance(transform.position, target.position) > range))
         {
             SetState(new ChasingState(this));
-            return true;
-        }
-        if(!isAttacking && (Vector3.Distance(transform.position, target.position) < fleeRange))
-        {
-            SetState(new FleeingState(this));
             return true;
         }
         return false;

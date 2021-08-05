@@ -1,17 +1,22 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Wanderer.Utils;
 
 public class FleeingState : AIState
 {
-    public FleeingState(Enemy enemy) : base(enemy)
+    float _fleeingSpeed;
+    float _fleeingDebuffTime;
+    public FleeingState(Enemy enemy, float fleeingSpeed, float fleeingDebuffTime) : base(enemy)
     {
+        _fleeingSpeed = fleeingSpeed;
+        _fleeingDebuffTime = fleeingDebuffTime;
     }
     public override IEnumerator StartState()
     {
-        AICharacter.AIMouvement.ShouldMove = true;
-        yield return Flee();
+        yield return Flee(); 
+        CoroutineManager.GetInstance().StartCoroutine(FleeingDebuff());
         AICharacter.SetState(new ChasingState(AICharacter));
     }
 
@@ -23,20 +28,27 @@ public class FleeingState : AIState
     private IEnumerator Flee()
     { 
         bool isValid = false;
-        Vector3 randomPointPos = Vector3.zero;
-        float fleeingRadius = 6;
-        
+        Vector3 position = Vector3.zero;
+        var speed = AICharacter.AIMouvement.Speed;
+        AICharacter.AIMouvement.Speed = _fleeingSpeed;
         while (!isValid)
         {
-            
-            Vector3 randomPoint = fleeingRadius * Random.insideUnitCircle;
-            randomPointPos = Utils.RandomPointInBounds(AICharacter.roomFloorCollider.bounds, 1f);
+            position = Utils.RandomPointInBounds(AICharacter.RoomFloorCollider.bounds, 1f);
+            position.z = 0;
+
+            if (!Utils.IsPointWithinCollider(AICharacter.RoomFloorCollider, position))
+            {
+                continue;
+            }
+            if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
+            {
+                continue;
+            }
             isValid = true;
-           
         }
 
-        GameObject targetPoint = new GameObject();
-        targetPoint.transform.position = (Vector2)randomPointPos;
+        GameObject targetPoint = new GameObject("FleeingPosition" + AICharacter.gameObject.name);
+        targetPoint.transform.position = (Vector2)position;
         AICharacter.AIMouvement.target = targetPoint.transform;
         AICharacter.AIMouvement.ShouldSearch = true;
         AICharacter.AIMouvement.ShouldMove = true;
@@ -45,7 +57,16 @@ public class FleeingState : AIState
         {
             yield return null;
         }
+
         AICharacter.AIMouvement.target = AICharacter.transform;
+        AICharacter.AIMouvement.Speed = speed;
         GameObject.Destroy(targetPoint);
+    }
+    
+    IEnumerator FleeingDebuff()
+    {
+        AICharacter.CanFlee = false;
+        yield return new WaitForSeconds(_fleeingDebuffTime);
+        AICharacter.CanFlee = true;
     }
 }

@@ -18,6 +18,7 @@ namespace Edgar.Unity.Examples
 
             var tilemaps = level.RootGameObject.transform.Find("Tilemaps");
             var Rooms = level.RootGameObject.transform.Find("Rooms");
+            Rooms.transform.position = new Vector3(Rooms.transform.position.x, Rooms.transform.position.y, 0);
 
             #region SetLayers
             var foreGroundWall = tilemaps.transform.Find("ForeGroundWall").gameObject;
@@ -55,6 +56,7 @@ namespace Edgar.Unity.Examples
            
             FindObjectOfType<NodeGrid>().CreateGrid();
             MovePlayerToSpawn(level);
+
         }
         
         protected WandererCurrentRoomDetectionRoomManager AssignRoomComponents(RoomInstance roomInstance)

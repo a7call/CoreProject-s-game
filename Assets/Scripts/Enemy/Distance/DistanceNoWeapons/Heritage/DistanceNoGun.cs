@@ -10,7 +10,6 @@ using UnityEngine;
 /// </summary>
 public class DistanceNoGun : Distance
 {
-   
     private Transform attackPointFrontGO;
     private Transform attackPointBackGO;
     private Transform attackPointLeftGO;
@@ -93,12 +92,14 @@ public class DistanceNoGun : Distance
 
     public override void DoChasingState()
     {
-       isInAttackRange(attackRange);
+        SwitchToFleeState(1f);
+        isInAttackRange(attackRange);
     }
 
     public override void DoAttackingState()
     {
-       isOutOfAttackRange(stopAttackRange, 1);
+       SwitchToFleeState(1f);
+       isOutOfAttackRange(stopAttackRange);
        SetInitialAttackPosition();
        PlayAttackAnim();
     }
@@ -108,15 +109,12 @@ public class DistanceNoGun : Distance
         isInChasingRange(inSight);
     }
 
-    private void MoveToRandomPoint()
+    // WHEN TO FLEE ?
+    public void SwitchToFleeState(float fleeRange)
     {
-        Vector2 randomPoint = 5 * Random.insideUnitCircle;
-        GameObject targetPoint = new GameObject();
-        targetPoint.transform.position = transform.position + (Vector3)randomPoint;
-        AIMouvement.ShouldSearch = true;
-        AIMouvement.ShouldMove = true;
-        AIMouvement.target = targetPoint.transform;
-        StopCoroutine("UpdatePath");
-        StartCoroutine("UpdatePath");
+        if (!isAttacking && (Vector3.Distance(transform.position, target.position) < fleeRange) && CanFlee)
+        {
+            SetState(new FleeingState(this, fleeingSpeed : 2.5f, fleeingDebuffTime: 2.5f));
+        }
     }
 }

@@ -130,6 +130,7 @@ public class WandererRoom : RoomBase
             var position = Utils.RandomPointInBounds(FloorCollider.bounds, 1f);
             position.z = 0;
             
+            
             if (!Utils.IsPointWithinCollider(FloorCollider, position))
             {
                 continue;
@@ -147,10 +148,8 @@ public class WandererRoom : RoomBase
             currentDifficulty += monsterDifficulty;
             
             activeMonsters.Add(Tuple.Create(monsters[index], position));
-
         }
         maxNumberOfActiveMonsters = activeMonsters.Count();
-
     }
 
     #endregion
