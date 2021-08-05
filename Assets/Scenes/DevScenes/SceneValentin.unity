@@ -1594,11 +1594,6 @@ Transform:
   m_Father: {fileID: 496135290}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1078713439 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7291090580177061500, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
-  m_PrefabInstance: {fileID: 1710974056}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1083410000
 GameObject:
   m_ObjectHideFlags: 0
@@ -2210,11 +2205,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2238292797670557169, guid: 9bc91be2549b640fca60b708c28315ee, type: 3}
   m_PrefabInstance: {fileID: 482846924}
   m_PrefabAsset: {fileID: 0}
---- !u!19719996 &1543738291 stripped
-TilemapCollider2D:
-  m_CorrespondingSourceObject: {fileID: 4877743756399778839, guid: c237fe157ad68450b949e3f14c173cde, type: 3}
-  m_PrefabInstance: {fileID: 1363279978}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1593261068
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,7 +2239,6 @@ Transform:
   - {fileID: 183300234}
   - {fileID: 1974592405}
   - {fileID: 1377138926}
-  - {fileID: 1078713439}
   m_Father: {fileID: 1877104598}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2331,15 +2320,19 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1593261069}
+    m_TransformParent: {fileID: 2080367823}
     m_Modifications:
     - target: {fileID: 7291090580177061496, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
       propertyPath: m_Name
       value: EyeTentacleAstronauteLaser
       objectReference: {fileID: 0}
+    - target: {fileID: 7291090580177061496, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7291090580177061500, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7291090580177061500, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2384,7 +2377,7 @@ PrefabInstance:
     - target: {fileID: 8558823404436240972, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
       propertyPath: roomFloorCollider
       value: 
-      objectReference: {fileID: 1543738291}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e36e8aca650f4baa931071328ea66dd, type: 3}
 --- !u!1001 &1786816317
@@ -2676,6 +2669,11 @@ Transform:
   m_Father: {fileID: 1877104598}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2080367823 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4149695093235093664, guid: c237fe157ad68450b949e3f14c173cde, type: 3}
+  m_PrefabInstance: {fileID: 1363279978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2098924934
 PrefabInstance:
   m_ObjectHideFlags: 0
