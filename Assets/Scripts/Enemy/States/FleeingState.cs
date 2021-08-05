@@ -31,12 +31,12 @@ public class FleeingState : AIState
             
             Vector3 randomPoint = fleeingRadius * Random.insideUnitCircle;
             randomPointPos = Utils.RandomPointInBounds(AICharacter.roomFloorCollider.bounds, 1f);
-             isValid = true;
+            isValid = true;
            
         }
 
         GameObject targetPoint = new GameObject();
-
+        targetPoint.transform.position = (Vector2)randomPointPos;
         AICharacter.AIMouvement.target = targetPoint.transform;
         AICharacter.AIMouvement.ShouldSearch = true;
         AICharacter.AIMouvement.ShouldMove = true;

@@ -41,7 +41,6 @@ namespace Edgar.Unity.Examples
                 roomManager.RoomInstance = roomInstance;
                 
                 var room = (WandererRoom)roomInstance.Room;
-                Debug.Log(room.Type);
                 if (room.Type == RoomType.Corridor && room.Type == RoomType.Spawn)
                 {
                     room.SetRoomState(RoomState.Cleared);

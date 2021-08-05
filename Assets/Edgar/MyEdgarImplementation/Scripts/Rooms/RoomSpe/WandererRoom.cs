@@ -126,20 +126,18 @@ public class WandererRoom : RoomBase
         {
 
             int index = Wanderer.Utils.Utils.RandomObjectInCollection(monsters.Count);
-            Debug.Log(index);
 
             var position = Utils.RandomPointInBounds(FloorCollider.bounds, 1f);
+            position.z = 0;
             
             if (!Utils.IsPointWithinCollider(FloorCollider, position))
             {
                 continue;
             }
-
             if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
             {
                 continue;
             }
-            Debug.Log(monsters[index]);
             var monsterScr = monsters[index].GetComponent<IMonster>();
             var monsterDifficulty = monsterScr.Datas.Difficulty;
 
