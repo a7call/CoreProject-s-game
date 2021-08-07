@@ -14,7 +14,10 @@ public class AttackState : AIState
         AICharacter.AIMouvement.ShouldMove = false;
         yield return null;
     }
-
+    public override IEnumerator EndState()
+    {
+        yield return null;
+    }
     public override void UpdateState()
     {
         AICharacter.DoAttackingState();

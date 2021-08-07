@@ -8,10 +8,18 @@ public class FleeingState : AIState
 {
     float _fleeingSpeed;
     float _fleeingDebuffTime;
-    public FleeingState(Enemy enemy, float fleeingSpeed, float fleeingDebuffTime) : base(enemy)
+    float _minFleeDistance;
+    public FleeingState(Enemy enemy, float fleeingSpeed, float fleeingDebuffTime, float minFleeDistance) : base(enemy)
     {
         _fleeingSpeed = fleeingSpeed;
         _fleeingDebuffTime = fleeingDebuffTime;
+        _minFleeDistance = minFleeDistance;
+    }
+
+    public override IEnumerator EndState()
+    {
+        AICharacter.EndFleeingState();
+        yield return null;   
     }
     public override IEnumerator StartState()
     {
@@ -26,24 +34,32 @@ public class FleeingState : AIState
 
     //to Rework
     private IEnumerator Flee()
-    { 
+    {
         bool isValid = false;
         Vector3 position = Vector3.zero;
         var speed = AICharacter.AIMouvement.Speed;
         AICharacter.AIMouvement.Speed = _fleeingSpeed;
         while (!isValid)
         {
+            yield return null;
             position = Utils.RandomPointInBounds(AICharacter.RoomFloorCollider.bounds, 1f);
             position.z = 0;
 
-            if (!Utils.IsPointWithinCollider(AICharacter.RoomFloorCollider, position))
+            if (Vector3.Distance(position, AICharacter.transform.position) < _minFleeDistance)
             {
                 continue;
             }
+
+            if (!Utils.IsPointWithinCollider(AICharacter.RoomFloorCollider, position))
+            {   
+                continue;
+            }
+
             if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
             {
                 continue;
             }
+
             isValid = true;
         }
 
@@ -65,7 +81,6 @@ public class FleeingState : AIState
     
     IEnumerator FleeingDebuff()
     {
-        AICharacter.CanFlee = false;
         yield return new WaitForSeconds(_fleeingDebuffTime);
         AICharacter.CanFlee = true;
     }

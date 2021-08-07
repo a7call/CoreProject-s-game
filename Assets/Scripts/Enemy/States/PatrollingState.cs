@@ -12,6 +12,11 @@ public class PatrollingState : AIState
         yield return null;
     }
 
+    public override IEnumerator EndState()
+    {
+        yield return null;
+    }
+
     public override void UpdateState()
     {
         AICharacter.DoPatrollingState();

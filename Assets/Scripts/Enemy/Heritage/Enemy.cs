@@ -51,7 +51,7 @@ public abstract class Enemy : Characters
     protected override void Awake()
     {
         base.Awake();
-        AddAnimationEvent("Death", "DestroyEnemy");
+        //AddAnimationEvent("Death", "DestroyEnemy");
         SetState(new PatrollingState(this));
     }
 
@@ -67,9 +67,14 @@ public abstract class Enemy : Characters
     }
 
     #region new State 
+    public virtual void StartChasingState()
+    {
+        AIMouvement.ShouldMove = true;
+    }
     public virtual void DoChasingState() { }
     public virtual void DoAttackingState() { }
     public virtual void DoPatrollingState() { }
+    public virtual void EndFleeingState() { }
     protected bool isOutOfAttackRange(float range)
     {
         if (!isAttacking && (Vector3.Distance(transform.position, target.position) > range))
@@ -113,7 +118,7 @@ public abstract class Enemy : Characters
             return;
         }
     }
-   
+
     private void FixedUpdate()
     {
         GetLastDirection();
@@ -173,7 +178,7 @@ public abstract class Enemy : Characters
     //Methode permetant de lancer la séquence de d'attaque via l'animation
     protected virtual void PlayAttackAnim()
     {
-        if (!attackAnimationPlaying )
+        if (!attackAnimationPlaying && !isAttacking)
         {
             attackAnimationPlaying = true;
             isAttacking = true;
@@ -207,25 +212,26 @@ public abstract class Enemy : Characters
     // Coroutine qui knockBack l'ennemi
     public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
     {
-        //CHANGER POUR IMPLUSE (PLUS ADAPTE)
-        rb.AddForce(dir * knockBackForce, ForceMode2D.Force);
-        currentState = State.KnockedBack;
-        yield return new WaitForSeconds(knockBackTime);
-        if (isDying)
-        {
-            currentState = State.Death;
-            yield break;
-        }
-        else
-        {
-            currentState = State.Chasing;
-        }
-        // C'est DU SPARADRA
-        if (this != null)
-        {
-            rb.velocity = Vector2.zero;
-            AIMouvement.ShouldMove = true;
-        }
+        yield return null;
+        ////CHANGER POUR IMPLUSE (PLUS ADAPTE)
+        //rb.AddForce(dir * knockBackForce, ForceMode2D.Force);
+        //currentState = State.KnockedBack;
+        //yield return new WaitForSeconds(knockBackTime);
+        //if (isDying)
+        //{
+        //    currentState = State.Death;
+        //    yield break;
+        //}
+        //else
+        //{
+        //    currentState = State.Chasing;
+        //}
+        //// C'est DU SPARADRA
+        //if (this != null)
+        //{
+        //    rb.velocity = Vector2.zero;
+        //    AIMouvement.ShouldMove = true;
+        //}
         
     }
 

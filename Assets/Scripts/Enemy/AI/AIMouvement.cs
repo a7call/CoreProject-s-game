@@ -25,7 +25,7 @@ public class AIMouvement : MonoBehaviour
         }
     }
     
-    private bool shouldMove = true;
+    private bool shouldMove = false;
     bool canFindPath = false;
     public bool ShouldMove
     {

@@ -42,7 +42,7 @@ public class DistanceNoGun : Distance
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
     public void SetInitialAttackPosition()
     {
-        
+
         float lastMoveX = animator.GetFloat("lastMoveX");
         float lastMoveY = animator.GetFloat("lastMoveY");
         if (Mathf.Abs(lastMoveX) > Mathf.Abs(lastMoveY))
@@ -92,13 +92,11 @@ public class DistanceNoGun : Distance
 
     public override void DoChasingState()
     {
-        SwitchToFleeState(1f);
         isInAttackRange(attackRange);
     }
 
     public override void DoAttackingState()
     {
-       SwitchToFleeState(1f);
        isOutOfAttackRange(stopAttackRange);
        SetInitialAttackPosition();
        PlayAttackAnim();
@@ -110,11 +108,5 @@ public class DistanceNoGun : Distance
     }
 
     // WHEN TO FLEE ?
-    public void SwitchToFleeState(float fleeRange)
-    {
-        if (!isAttacking && (Vector3.Distance(transform.position, target.position) < fleeRange) && CanFlee)
-        {
-            SetState(new FleeingState(this, fleeingSpeed : 2.5f, fleeingDebuffTime: 2.5f));
-        }
-    }
+   
 }

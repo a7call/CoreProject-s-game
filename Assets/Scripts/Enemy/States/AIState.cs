@@ -12,6 +12,8 @@ public abstract class AIState : IState
         AICharacter = enemy;
     }
 
+    public abstract IEnumerator EndState();
+
     public abstract IEnumerator StartState();
 
     public abstract void UpdateState();
