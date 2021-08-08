@@ -51,7 +51,7 @@ public abstract class Enemy : Characters
     protected override void Awake()
     {
         base.Awake();
-        //AddAnimationEvent("Death", "DestroyEnemy");
+        AddAnimationEvent("Death", "DestroyEnemy");
         SetState(new PatrollingState(this));
     }
 
