@@ -13,84 +13,38 @@ public class Projectile : MonoBehaviour
 {
     // vitesse des projectiles
     public float projectileSpeed;
-    public bool isDisabled;
     
-    // cible des projectiles (Player)
-    public Transform target;
-    public bool isConverted;
     // direction (en fonction de la place de la cible)
     [HideInInspector]
     public Vector3 dir;
-    // distance entre le player et le projectile
-    protected float distance;
+
     protected Player player;
 
     [HideInInspector]
     public float dispersion=0;
 
-    //TacticVisionModule
-    [HideInInspector]
-    protected bool AmmoSpeedAlreadyDown = false;
-    [HideInInspector]
-    public static bool isTacticVisionModule;
-    [HideInInspector]
-    public static float SpeedDiviser;
-
-
-    GameObject[] enemies;
-    
     protected virtual void Awake()
     {
         player = FindObjectOfType<Player>();
     }
 
-    protected virtual void Start()
-    {
-        if (GetComponentInParent<Enemy>())
-        {
-            target = GetComponentInParent<Enemy>().Target;
-        }
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        transform.parent = null;
-       
-    }
     protected virtual void FixedUpdate()
     {
-        if (!isDisabled)
-        {
-            Lauch();
-        }
-
-        if (isTacticVisionModule && !AmmoSpeedAlreadyDown)
-        {
-            AmmoSpeedAlreadyDown = true;
-            projectileSpeed /= SpeedDiviser;
-        }
+        Lauch();
     }
-    //protected void ConeShoot()
-    //{
-    //    directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * dir;
-    //}
 
     // recupère la direction à prendre
-    protected virtual void GetDirection()
+    public void SetMoveDirection(Vector3 projDirection)
     {
-        dir = Quaternion.AngleAxis(dispersion, Vector3.forward)*(target.position - transform.position).normalized;
+        dir = Quaternion.AngleAxis(dispersion, Vector3.forward)*(projDirection).normalized;
     }
     
     //envoie le projectile
     protected virtual void Lauch()
     {
-
         transform.Translate(dir * projectileSpeed * Time.deltaTime);
     }
 
-    // Calcul la distance à laquelle se situe le projectile du joueur
-    protected virtual void CalculDistance()
-    {
-        distance = Vector3.Distance(target.position, transform.position);
-        
-    }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -98,17 +52,7 @@ public class Projectile : MonoBehaviour
             player.TakeDamage(1);
             Destroy(gameObject);
         }
-        if (collision.CompareTag("Enemy") &&  isConverted)
-        {
-            collision.GetComponent<Enemy>().TakeDamage(1);
-            Destroy(gameObject);
-        }
-        
         if (collision.gameObject.layer == 10) Destroy(gameObject);
-
-
-
-
     }
 }
 

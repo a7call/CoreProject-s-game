@@ -7,63 +7,63 @@ using UnityEngine;
 /// </summary>
 public class LaserDecalage : Projectile
 {
-    protected bool damageDone = false;
-    private bool ReadyToShoot = false;
-    [SerializeField] protected float ShootDelay;
-    Vector3 directionTir;
-    public float angleDecalage;
-    [SerializeField] protected LayerMask HitLayer;
-    [SerializeField] public float ActiveTime;
+    //protected bool damageDone = false;
+    //private bool ReadyToShoot = false;
+    //[SerializeField] protected float ShootDelay;
+    //Vector3 directionTir;
+    //public float angleDecalage;
+    //[SerializeField] protected LayerMask HitLayer;
+    //[SerializeField] public float ActiveTime;
 
 
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        target = GetComponentInParent<Enemy>().Target;
-        GetDirection();
-        ConeShoot();
-        StartCoroutine(OkToShoot());
+    //// Start is called before the first frame update
+    //protected override void Start()
+    //{
+    //    target = GetComponentInParent<Enemy>().Target;
+    //    SetMoveDirection();
+    //    ConeShoot();
+    //    StartCoroutine(OkToShoot());
         
-    }
+    //}
 
-    protected void ConeShoot()
-    {
-        directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
-    }
+    //protected void ConeShoot()
+    //{
+    //    directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
+    //}
 
     
 
-    protected IEnumerator destroy()
-    {
-        yield return new WaitForSeconds(ActiveTime);
-        Destroy(gameObject);
-    }
+    //protected IEnumerator destroy()
+    //{
+    //    yield return new WaitForSeconds(ActiveTime);
+    //    Destroy(gameObject);
+    //}
 
-    protected IEnumerator OkToShoot()
-    {
-        yield return new WaitForSeconds(ShootDelay);
-        ReadyToShoot = true;
-    }
+    //protected IEnumerator OkToShoot()
+    //{
+    //    yield return new WaitForSeconds(ShootDelay);
+    //    ReadyToShoot = true;
+    //}
 
-    // Update is called once per frame
-    protected override void FixedUpdate()
-    {
+    //// Update is called once per frame
+    //protected override void FixedUpdate()
+    //{
         
 
-        if (ReadyToShoot == true)
-        {
+    //    if (ReadyToShoot == true)
+    //    {
             
-            StartCoroutine(destroy());
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionTir, Mathf.Infinity, HitLayer);
-            Debug.DrawRay(transform.position, directionTir * 10, Color.red);
+    //        StartCoroutine(destroy());
+    //        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionTir, Mathf.Infinity, HitLayer);
+    //        Debug.DrawRay(transform.position, directionTir * 10, Color.red);
 
-            if (hit.collider != null)
-            {
-                hit.collider.gameObject.GetComponent<Player>().TakeDamage(1);
-            }
+    //        if (hit.collider != null)
+    //        {
+    //            hit.collider.gameObject.GetComponent<Player>().TakeDamage(1);
+    //        }
 
-        }
-    }
+    //    }
+    //}
 }
 
 

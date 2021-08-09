@@ -22,7 +22,6 @@ public class DeathObject : MonoBehaviour
 
     private void Die()
     {
-        AngleProjectile.target = playerPos;
         float decalage = angleTir / (projectiles.Length - 1);
         AngleProjectile.angleDecalage = -decalage * (projectiles.Length + 1) / 2;
 

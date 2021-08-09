@@ -86,8 +86,6 @@ public class Distance : Enemy, IMonster
             isReadytoShoot = true;
             // gestion de l'animation d'attaque
             attackAnimationPlaying = false;
-            
-
         }
     }
 
@@ -102,7 +100,6 @@ public class Distance : Enemy, IMonster
         if (attackPoint != null)
         {
             GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);
-            myProjectile.transform.parent = gameObject.transform;
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
             ScriptProj.dispersion = decalage;
 
@@ -110,25 +107,9 @@ public class Distance : Enemy, IMonster
         else
         {
             GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
-            myProjectile.transform.parent = gameObject.transform;
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
             ScriptProj.dispersion = decalage;
         }
         yield return new WaitForEndOfFrame();
-    }
-
-    public override void DoChasingState()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void DoAttackingState()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void DoPatrollingState()
-    {
-        throw new System.NotImplementedException();
     }
 }

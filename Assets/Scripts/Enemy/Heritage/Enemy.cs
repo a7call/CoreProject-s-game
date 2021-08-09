@@ -31,7 +31,7 @@ public abstract class Enemy : Characters
     {
         get;
         set;
-    } = true;
+    } = false;
 
     #region Player Variable
     public Player Player { get; private set; }
