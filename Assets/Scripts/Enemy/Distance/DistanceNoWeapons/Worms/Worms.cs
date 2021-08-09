@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class Worms : DistanceNoGun
 {
-
+    protected override void Awake()
+    {
+        base.Awake();
+        AddAnimationEvent("Attack", "CanShootCO");
+    }
     private IEnumerator SwitchToFleeState(float fleeRange)
     {
         if (!isAttacking && (Vector3.Distance(transform.position, target.position) < fleeRange) && CanFlee)

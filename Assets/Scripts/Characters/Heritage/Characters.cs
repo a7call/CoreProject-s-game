@@ -60,13 +60,20 @@ public abstract class Characters : StateMachine
         AnimationClip Clip = null;
         var animClip = animator.runtimeAnimatorController.animationClips;
         foreach (var clip in animClip)
-        {
+        {   
             if (clip.name == name)
             {
+                print(clip.name);
                 Clip = clip;
                 break;
             }
         }
+        if (Clip == null)
+        {
+            Debug.LogWarning("You are missing "+ name + "animation for " + gameObject.name);
+            return;
+        }
+          
 
         var _aEvents = new AnimationEvent();
         _aEvents.functionName = functionName;

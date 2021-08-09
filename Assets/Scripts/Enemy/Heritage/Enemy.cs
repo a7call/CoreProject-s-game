@@ -150,12 +150,12 @@ public abstract class Enemy : Characters
         {
             Vector2 trackVelocity = (rb.position - lastPos) * 50;
             lastPos = rb.position;
-            animator.SetFloat("Speed", trackVelocity.sqrMagnitude);
+            animator.SetFloat(EnemyConst.SPEED_CONST, trackVelocity.sqrMagnitude);
         }
         else
         {
             float EnemySpeed = 0;
-            animator.SetFloat("Speed", EnemySpeed);
+            animator.SetFloat(EnemyConst.SPEED_CONST, EnemySpeed);
         }
 
         if (currentState == State.KnockedBack)
@@ -171,8 +171,8 @@ public abstract class Enemy : Characters
     // Permet de récuperer la dernière direction
     protected virtual void GetLastDirection()
     {
-        animator.SetFloat("lastMoveX", AIMouvement.target.position.x - gameObject.transform.position.x);
-        animator.SetFloat("lastMoveY", AIMouvement.target.position.y - gameObject.transform.position.y);
+        animator.SetFloat(EnemyConst.DIRECTION_X_CONST, AIMouvement.target.position.x - gameObject.transform.position.x);
+        animator.SetFloat(EnemyConst.DIRECTION_Y_CONST, AIMouvement.target.position.y - gameObject.transform.position.y);
     }
 
     //Methode permetant de lancer la séquence de d'attaque via l'animation
@@ -182,7 +182,9 @@ public abstract class Enemy : Characters
         {
             attackAnimationPlaying = true;
             isAttacking = true;
-            animator.SetTrigger("isAttacking");
+            animator.SetTrigger(EnemyConst.ATTACK_TRIGGER_CONST);
+            // Attack Executed by animation event.
+            
         }
     }
     #endregion

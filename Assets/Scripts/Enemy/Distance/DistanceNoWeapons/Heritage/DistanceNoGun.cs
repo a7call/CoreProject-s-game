@@ -20,7 +20,6 @@ public class DistanceNoGun : Distance
         SetData();
         SetMaxHealth();
         findAttackPoints();
-       
     }
 
     protected override void GetReference()
