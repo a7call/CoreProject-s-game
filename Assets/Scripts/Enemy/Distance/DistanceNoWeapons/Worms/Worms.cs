@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Wanderer.Utils;
 
 
 public class Worms : DistanceNoGun
 {
+    private ParticleSystem smokeFleeingParticules;
 
     protected override void Awake()
     {
         base.Awake();
-        AddAnimationEvent("Attack", "CanShootCO");
+        Utils.AddAnimationEvent("Attack", "CanShootCO", animator);
+        SetUpPS();
+        Utils.TogglePs(smokeFleeingParticules, enabled: false);
     }
     protected override void Start()
     {
@@ -23,8 +27,9 @@ public class Worms : DistanceNoGun
         if (!isAttacking && CanFlee)
         {
             CanFlee = false;
-            yield return PrepareToFlee();   
+            yield return PrepareToFlee();
             SetState(new FleeingState(this, fleeingSpeed: 3.5f, fleeingDebuffTime: 5f, minFleeDistance: 4f));
+
         }
     }
 
@@ -32,6 +37,12 @@ public class Worms : DistanceNoGun
     {
         yield return new WaitForSeconds(0.2f);
         animator.SetBool(EnemyConst.FLEE_BOOL_CONST, true);
+        while (!Utils.isClipPlaying("Flee", this.animator))
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(Utils.GetAnimationClipDurantion("UnBorrow", animator, timeToRemove: 0.1f));
+        Utils.TogglePs(smokeFleeingParticules, enabled: true);
         BecomeInvulnerable();
     }
 
@@ -40,20 +51,26 @@ public class Worms : DistanceNoGun
         yield return new WaitForSeconds(1f);
         CanFlee = true;
     }
-    public override void EndFleeingState()
+    public override IEnumerator EndFleeingState()
     {
-        GetComponent<BoxCollider2D>().enabled = true;
+        Utils.TogglePs(smokeFleeingParticules, enabled: false);
         animator.SetBool(EnemyConst.FLEE_BOOL_CONST, false);
+        while (!Utils.isClipPlaying("UnBorrow", this.animator))
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(Utils.GetAnimationClipDurantion("UnBorrow", animator, timeToRemove: 0.2f));
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 
     private void BecomeInvulnerable()
     {
-        GetComponent<BoxCollider2D>().enabled = false;  
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 
     // Chasing
     public override void DoChasingState()
-    {        
+    {
         isInAttackRange(attackRange);
         StartCoroutine(SwitchToFleeState(1f));
     }
@@ -84,7 +101,7 @@ public class Worms : DistanceNoGun
             SpiralFire();
             yield return new WaitForSeconds(0.1f);
         }
-        while (numberOfBullet <= maxNumberOfBullet);    
+        while (numberOfBullet <= maxNumberOfBullet);
     }
 
 
@@ -96,13 +113,21 @@ public class Worms : DistanceNoGun
             float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Math.PI) / 180f));
             Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
             Vector2 bulDir = (bulMoveVector - transform.position).normalized;
-            GameObject bul = Instantiate(projetile, transform.position, Quaternion.identity);
+            GameObject bul = Instantiate(projetile, attackPoint.position, Quaternion.identity);
             bul.GetComponent<Projectile>().SetMoveDirection(bulDir);
         }
         angle += 10;
 
         if (angle >= 360f)
             angle = 0f;
+    }
+    #endregion
+
+    #region Particule System
+    private void SetUpPS()
+    {
+        smokeFleeingParticules = GetComponentInChildren<ParticleSystem>();
+        smokeFleeingParticules.Play();
     }
     #endregion
 

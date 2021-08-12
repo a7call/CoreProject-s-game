@@ -81,10 +81,12 @@ public class Distance : Enemy, IMonster
             // Wait for coroutine shoot to end
             yield return StartCoroutine(ShootCO());
             isAttacking = false;
+            animator.SetBool(EnemyConst.ATTACK_TRIGGER_CONST, false);
             // delay before next Shoot
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
             // gestion de l'animation d'attaque
+
             attackAnimationPlaying = false;
         }
     }

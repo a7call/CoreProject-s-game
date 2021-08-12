@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System;
+using Wanderer.Utils;
 /// <summary>
 /// Classe mère des ennemis 
 /// Elle contient une enum permettant d'indiquer le State de l'ennemi
@@ -51,7 +52,7 @@ public abstract class Enemy : Characters
     protected override void Awake()
     {
         base.Awake();
-        AddAnimationEvent("Death", "DestroyEnemy");
+        Utils.AddAnimationEvent("Death", "DestroyEnemy", animator);
         SetState(new PatrollingState(this));
     }
 
@@ -74,7 +75,7 @@ public abstract class Enemy : Characters
     public virtual void DoChasingState() { }
     public virtual void DoAttackingState() { }
     public virtual void DoPatrollingState() { }
-    public virtual void EndFleeingState() { }
+    public virtual IEnumerator EndFleeingState() { yield return null; }
     protected bool isOutOfAttackRange(float range)
     {
         if (!isAttacking && (Vector3.Distance(transform.position, target.position) > range))
@@ -182,7 +183,7 @@ public abstract class Enemy : Characters
         {
             attackAnimationPlaying = true;
             isAttacking = true;
-            animator.SetTrigger(EnemyConst.ATTACK_TRIGGER_CONST);
+            animator.SetBool(EnemyConst.ATTACK_TRIGGER_CONST, true);
             // Attack Executed by animation event.
             
         }

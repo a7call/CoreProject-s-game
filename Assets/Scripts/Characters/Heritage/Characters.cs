@@ -54,38 +54,6 @@ public abstract class Characters : StateMachine
     protected abstract void Die();
     #endregion
 
-    #region Animation
-    protected void AddAnimationEvent(string name, string functionName, float time = 0)
-    {
-        AnimationClip Clip = null;
-        var animClip = animator.runtimeAnimatorController.animationClips;
-        foreach (var clip in animClip)
-        {   
-            if (clip.name == name)
-            {
-                print(clip.name);
-                Clip = clip;
-                break;
-            }
-        }
-        if (Clip == null)
-        {
-            Debug.LogWarning("You are missing "+ name + "animation for " + gameObject.name);
-            return;
-        }
-          
-
-        var _aEvents = new AnimationEvent();
-        _aEvents.functionName = functionName;
-
-        if (time != 0)
-            _aEvents.time = time;
-        else
-            _aEvents.time = Clip.length;
-
-        Clip.AddEvent(_aEvents);
-    }
-    #endregion
 
     #region Sounds
     protected AudioManagerEffect audioManagerEffect;

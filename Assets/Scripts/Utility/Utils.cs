@@ -48,8 +48,85 @@ namespace Wanderer.Utils
                 UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
             );
         }
+
+        public static bool isClipPlaying(string name, Animator animator)
+        {
+            var animClip = animator.runtimeAnimatorController.animationClips;
+            foreach (var clip in animClip)
+            {
+                if (clip.name == name)
+                {
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName(name))
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        public static AnimationClip GetAnimationClip(string name, Animator animator)
+        {
+            var animClip = animator.runtimeAnimatorController.animationClips;
+            foreach (var clip in animClip)
+            {
+                if (clip.name == name)
+                {
+                    return clip;
+                }
+            }
+            return null;
+        }
+
+        public static float GetAnimationClipDurantion(string name, Animator animator, float timeToRemove = 0f)
+        {
+            var clip = Utils.GetAnimationClip(name, animator);
+            return clip.length - timeToRemove;
+        }
+
+
+
+
+        public static void AddAnimationEvent(string name, string functionName, Animator animator, float time = 0)
+        {
+            AnimationClip Clip = null;
+            var animClip = animator.runtimeAnimatorController.animationClips;
+            foreach (var clip in animClip)
+            {
+                if (clip.name == name)
+                {
+                    Clip = clip;
+                    break;
+                }
+            }
+            if (Clip == null)
+            {
+                Debug.LogWarning("You are missing " + name + "animation for " + animator.gameObject.name);
+                return;
+            }
+
+
+            var _aEvents = new AnimationEvent();
+            _aEvents.functionName = functionName;
+
+            if (time != 0)
+                _aEvents.time = time;
+            else
+                _aEvents.time = Clip.length;
+
+            Clip.AddEvent(_aEvents);
+        }
+
+        
+
+        #region Particule System
+        public static void TogglePs(ParticleSystem ps, bool enabled)
+        {
+            var psEmission = ps.emission;
+            psEmission.enabled = enabled;
+        }
+
+        #endregion
     }
 
-   
+
 }
 
