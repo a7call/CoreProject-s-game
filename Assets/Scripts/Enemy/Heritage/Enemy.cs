@@ -25,8 +25,18 @@ public abstract class Enemy : Characters
         }
     }
 
-    public Collider2D roomFloorCollider;
-    public Collider2D RoomFloorCollider { get { return roomFloorCollider; }set { roomFloorCollider = value; } }
+    private Collider2D roomFloorCollider;
+    public Collider2D RoomFloorCollider
+    {
+        get
+        {
+            return roomFloorCollider;
+        }
+        set
+        {
+            roomFloorCollider = value;
+        }
+    }
 
     public bool CanFlee
     {
@@ -52,7 +62,6 @@ public abstract class Enemy : Characters
     protected override void Awake()
     {
         base.Awake();
-        Utils.AddAnimationEvent("Death", "DestroyEnemy", animator);
         SetState(new PatrollingState(this));
     }
 
@@ -124,12 +133,6 @@ public abstract class Enemy : Characters
     {
         GetLastDirection();
         SetMouvementAnimationVariable();
-    }
-
-    private void OnDestroy()
-    {
-        StopAllCoroutines();
-        EnemyDeath();
     }
 
     private void OnDrawGizmos()
@@ -258,38 +261,11 @@ public abstract class Enemy : Characters
 
     protected override void Die()
     {
-        StartCoroutine(DeathSate());
-        isDying = true;
+        EnemyDeath();
+        StopAllCoroutines();
+        SetState(new DeathState(this));  
     }
-    private IEnumerator DeathSate()
-    {
-        yield return new WaitForEndOfFrame();
-        
-        if (GetComponent<Collider2D>().enabled)
-        {
-            foreach (Transform child in transform)
-            {
-                if (child.gameObject.GetComponent<Collider2D>())
-                {
-                    child.gameObject.GetComponent<Collider2D>().enabled = false;
-                }
-            }
-            GetComponent<Collider2D>().enabled = false;
-            
-            animator.SetTrigger("isDying");
 
-            DieSound();
-        }
-        currentState = State.Death;
-    }
-    protected virtual void DestroyEnemy()
-    {
-        if (isDying)
-        {
-            isDying = false;
-            Destroy(gameObject);
-        }
-    }
     #endregion
 
 
@@ -318,46 +294,6 @@ public abstract class Enemy : Characters
         Feared,
         Charging,
     }
-    void SwitchBasicStates(State currentState)
-    {
-        switch (currentState)
-        {
-            default:
-                break;
-            case State.Stunned:
-                // Animation
-                if (IsStuned)
-                {
-                    AIMouvement.ShouldMove = false;
-                }
-                else
-                {
-                  
-                }      
-                break;
-
-            case State.KnockedBack:
-                AIMouvement.ShouldMove = false;
-                break;
-
-            case State.Freeze:
-                // Animation
-                AIMouvement.ShouldMove = false;
-                break;
-
-            case State.Death:
-                AIMouvement.ShouldMove = false;
-                //NOTHING ELSE TO DO
-                break;
-
-            case State.Patrolling:
-                if (AIMouvement.ShouldMove)
-                {
-                    AIMouvement.ShouldMove = false;
-                }
-                break;
-        }
-    } 
     #endregion
 
 

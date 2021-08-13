@@ -2,7 +2,7 @@
 
 public class ChasingState : AIState
 {
-    public ChasingState(Enemy enemy) : base( enemy)
+    public ChasingState(Enemy enemy) : base(enemy)
     {
     }
     public override IEnumerator EndState()

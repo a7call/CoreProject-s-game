@@ -166,7 +166,7 @@ namespace Edgar.Unity.Examples
                 instansiatedMonster.Add(spawnedMonster);
                 Enemy spawnedMonsterScript = spawnedMonster.GetComponent<Enemy>();
                 spawnedMonsterScript.onEnemyDeath += ClearDeadMonsters;
-                spawnedMonsterScript.roomFloorCollider = FloorCollider;
+                spawnedMonsterScript.RoomFloorCollider = FloorCollider;
             }
             yield return null;
         }

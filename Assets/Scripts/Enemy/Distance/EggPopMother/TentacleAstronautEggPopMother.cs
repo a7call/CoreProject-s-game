@@ -10,7 +10,7 @@ public class TentacleAstronautEggPopMother : DistanceWithWeapon
     [SerializeField] private List<GameObject> enemyToPop = new List<GameObject>();
     [SerializeField] private int numberToPop = 3;
 
-    protected override void DestroyEnemy()
+    protected  void DestroyEnemy()
     {
         float angle = 0;
         if (isDying)
@@ -23,7 +23,6 @@ public class TentacleAstronautEggPopMother : DistanceWithWeapon
                 Instantiate(enemyToPop[Random.Range(0, enemyToPop.Count)], spawnPos, Quaternion.identity);
             }
         }
-        base.DestroyEnemy();
     }
 
 }
