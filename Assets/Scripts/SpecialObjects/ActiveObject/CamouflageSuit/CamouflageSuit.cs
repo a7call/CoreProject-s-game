@@ -24,7 +24,6 @@ public class CamouflageSuit : CdObjects
         foreach (Enemy enemy in enemies)
         {
            
-            enemy.isreadyToAttack = false;
             enemy.StopAllCoroutines();
             
 
@@ -32,7 +31,6 @@ public class CamouflageSuit : CdObjects
         yield return new WaitForSeconds(camouflageTime);
         foreach (Enemy enemy in enemies)
         {
-            enemy.isreadyToAttack = true;
         }
     }
 }

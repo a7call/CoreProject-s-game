@@ -1,15 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
-/// <summary>
-/// Classe héritière de Cac.cs 
-/// Elle contient les même fonctions que Cac.cs
-/// </summary>
-public class BaseCaC : Cac
+
+public class UnDeadCac : Cac
 {   
-    protected override void Update()
-    {
-        StateR.UpdateState();
-    }
+
     public override void DoChasingState()
     {
         isInAttackRange(attackRange);
@@ -18,6 +12,7 @@ public class BaseCaC : Cac
     public override void DoAttackingState()
     {
         isOutOfAttackRange(attackRange);
+        // StartAttack sequence.
     }
 
     public override void DoPatrollingState()

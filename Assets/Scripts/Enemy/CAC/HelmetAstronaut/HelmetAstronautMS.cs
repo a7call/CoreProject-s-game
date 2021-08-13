@@ -42,7 +42,7 @@ public class HelmetAstronautMS : Cac
     #endregion
     protected override IEnumerator BaseAttack()
     {
-        yield return new WaitForSeconds(attackDelay);
+        yield return new WaitForSeconds(2f);
         attackAnimationPlaying = false;
     }
 }

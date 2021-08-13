@@ -62,7 +62,6 @@ public class Distance : Enemy, IMonster
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + Utils.RandomizeParams(-1, 2));
         dispersion = DistanceData.dispersion;
         inSight = DistanceData.InSight;
-        isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
         difficulty = DistanceData.Difficulty;
 
         //Chiffre arbitraire à modifier

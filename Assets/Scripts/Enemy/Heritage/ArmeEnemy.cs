@@ -29,9 +29,6 @@ public class ArmeEnemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (enemy.currentState == Enemy.State.Stunned)
-            return;
-
         Vector3 dir = (enemy.Target.position - enemy.transform.position).normalized;
 
 

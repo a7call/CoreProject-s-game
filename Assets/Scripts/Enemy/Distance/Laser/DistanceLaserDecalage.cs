@@ -6,23 +6,23 @@ using UnityEngine;
 /// Elle contient les fonctions de la classe mère
 /// </summary>
 public class DistanceLaserDecalage : DistanceNoGun
-{
-    Vector3 directionTir;
+{ }
+//{
+//    Vector3 directionTir;
 
-    [SerializeField] int projectiles = 10;
-    [SerializeField] int angleTir = 360;
-    [SerializeField] int offset = 0;
-    float decalage = 0f;
+//    [SerializeField] int projectiles = 10;
+//    [SerializeField] int angleTir = 360;
+//    [SerializeField] int offset = 0;
+//    float decalage = 0f;
 
-    void Start()
-    {
+//    void Start()
+//    {
 
-        currentState = State.Chasing;
-        // Set data
-        SetData();
-        SetMaxHealth();
+//        // Set data
+//        SetData();
+//        SetMaxHealth();
 
-    }
+//    }
 
     // Voir Enemy.cs (héritage)
     //protected override void Shoot()
@@ -76,4 +76,4 @@ public class DistanceLaserDecalage : DistanceNoGun
 
 
 
-}
+

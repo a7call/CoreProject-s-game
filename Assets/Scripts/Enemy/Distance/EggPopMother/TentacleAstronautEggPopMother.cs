@@ -13,7 +13,7 @@ public class TentacleAstronautEggPopMother : DistanceWithWeapon
     protected  void DestroyEnemy()
     {
         float angle = 0;
-        if (isDying)
+        if (true)
         {
             Vector3 firstSpawn = transform.position + radius * (Vector3)Random.insideUnitCircle.normalized;
             for (int i=0; i < numberToPop; i++)

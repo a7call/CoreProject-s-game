@@ -32,11 +32,6 @@ public class DistanceNoGun : Distance
         base.Start();
        // MoveToRandomPoint();
     }
-
-    protected override void Update()
-    {
-        StateR.UpdateState();        
-    }
    
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
     public void SetInitialAttackPosition()

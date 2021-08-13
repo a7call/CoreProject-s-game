@@ -29,7 +29,6 @@ public class ParasiteIdol : CdObjects
         hits = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
         foreach (Collider2D enemy in hits)
         {
-            enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Feared;
         }
     }
     private void EnemyChasing()
@@ -38,7 +37,6 @@ public class ParasiteIdol : CdObjects
         {
             if (enemy == null) continue;
            // enemy.gameObject.GetComponent<Enemy>().AIMouvement.canMove = true;
-            enemy.gameObject.GetComponent<Enemy>().currentState = Enemy.State.Chasing;
             enemy.gameObject.GetComponent<Enemy>().rb.velocity = Vector3.zero;
            // enemy.gameObject.GetComponent<Enemy>().direction = Vector3.zero;
         }
