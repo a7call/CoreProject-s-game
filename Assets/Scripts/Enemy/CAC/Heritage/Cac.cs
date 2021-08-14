@@ -57,21 +57,27 @@ public class Cac : Enemy, IMonster
         get;
         private set;
     }
-
+    Vector2 attackPoint = Vector2.zero;
+    bool isReadyToAttack = true;
     protected virtual IEnumerator BaseAttack()
     {
-        var attackDir = target.position - transform.position;
-        var attackPoint = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
-        ApplyDamage(attackPoint, damage: 50);
-        isAttacking = false;
-        yield return new WaitForSeconds(2f);
-        attackAnimationPlaying = false;
+        if (isReadyToAttack)
+        {
+            isReadyToAttack = false;
+            var attackDir = target.position - transform.position;
+            attackPoint = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f));
+            PlayAttackAnim();
+            yield return new WaitForSeconds(2f);
+            isReadyToAttack = true;
+            attackAnimationPlaying = false;
+        }
     }
 
-    protected void ApplyDamage(Vector2 pos, float damage)
+    protected void ApplyDamage(float damage)
     {
-        
-        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, AttackRadius, HitLayers);
+        animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
+        isAttacking = false;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint, AttackRadius, HitLayers);
 
         foreach (Collider2D h in hits)
         {
@@ -82,6 +88,7 @@ public class Cac : Enemy, IMonster
             }
 
         }
+
     }
     #endregion
 }

@@ -85,8 +85,9 @@ namespace Wanderer.Utils
 
 
 
-        public static void AddAnimationEvent(string name, string functionName, Animator animator, float time = 0)
+        public static void AddAnimationEvent(string name, string functionName, Animator animator, float time = 0, float param = 0f)
         {
+            Debug.Log(param);
             AnimationClip Clip = null;
             var animClip = animator.runtimeAnimatorController.animationClips;
             foreach (var clip in animClip)
@@ -112,7 +113,11 @@ namespace Wanderer.Utils
             else
                 _aEvents.time = Clip.length;
 
+            if (param != 0f)
+                _aEvents.floatParameter = param;
+
             Clip.AddEvent(_aEvents);
+            
         }
 
         

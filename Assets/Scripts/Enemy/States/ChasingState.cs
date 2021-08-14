@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 public class ChasingState : AIState
 {
@@ -13,6 +14,7 @@ public class ChasingState : AIState
     {
         yield return null;
         AICharacter.StartChasingState();
+        Debug.Log(AICharacter.AIMouvement.ShouldMove);
         AICharacter.AIMouvement.target = AICharacter.AIMouvement.Player;  
     }
 
