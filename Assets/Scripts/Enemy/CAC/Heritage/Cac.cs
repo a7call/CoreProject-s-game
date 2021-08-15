@@ -34,89 +34,61 @@ public class Cac : Enemy, IMonster
     protected override void SetData()
     {
         attackRange = CacDatas.attackRange;
-        attackRadius = CacDatas.attackRadius;
-        hitLayers = CacDatas.hitLayers;
+        AttackRadius = CacDatas.attackRadius;
+        HitLayers = CacDatas.hitLayers;
 
-        AIMouvement.Speed = Random.Range(CacDatas.moveSpeed, CacDatas.moveSpeed + 1f);
+        AIMouvement.Speed = CacDatas.moveSpeed;
         difficulty = CacDatas.Difficulty;
         inSight = CacDatas.InSight;
         MaxHealth = CacDatas.maxHealth;
-        attackDelay = CacDatas.attackDelay;
-        isSupposedToMoveAttacking = CacDatas.isSupposedToMoveAttacking;
     }
     #endregion
 
 
     #region Attack Code
     // Rayon d'attaque de l'ennemi
-    private float attackRadius;
-    public float AttackRadius { 
-        get
-        {
-            return attackRadius;
-        }
+    public float AttackRadius {
+        get;
+        private set;
     }
     // Layers subissant l'attaque de l'ennemi
-    private LayerMask hitLayers;
     public LayerMask HitLayers
     {
-        get
+        get;
+        private set;
+    }
+    Vector2 attackPoint = Vector2.zero;
+    bool isReadyToAttack = true;
+    protected virtual IEnumerator BaseAttack()
+    {
+        if (isReadyToAttack)
         {
-            return hitLayers;
+            isReadyToAttack = false;
+            var attackDir = target.position - transform.position;
+            attackPoint = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f));
+            PlayAttackAnim();
+            yield return new WaitForSeconds(2f);
+            isReadyToAttack = true;
+            attackAnimationPlaying = false;
         }
     }
 
-    protected virtual IEnumerator BaseAttack()
+    protected void ApplyDamage(float damage)
     {
-        var attackDir = target.position - transform.position;
-        var attackPoint = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f)); ;
-        ApplyDamage(attackPoint);
+        animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
         isAttacking = false;
-        yield return new WaitForSeconds(attackDelay);
-        attackAnimationPlaying = false;
-    }
-
-    protected void ApplyDamage(Vector2 pos)
-    {
-        
-        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, attackRadius, hitLayers);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint, AttackRadius, HitLayers);
 
         foreach (Collider2D h in hits)
         {
 
-            if (h.CompareTag("Player"))
+            if (h.CompareTag(EnemyConst.PLAYER_TAG))
             {
-                h.GetComponent<Player>().TakeDamage(20);
+                h.GetComponent<Player>().TakeDamage(damage);
             }
 
         }
+
     }
     #endregion
-
-
-    #region Animation
-    protected override void GetLastDirection()
-    {
-        if (currentState != State.Attacking)
-        {
-            base.GetLastDirection();
-        }
-    }
-
-    public override void DoChasingState()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void DoAttackingState()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void DoPatrollingState()
-    {
-        throw new System.NotImplementedException();
-    }
-    #endregion
-
 }

@@ -29,8 +29,7 @@ public class Goblin : Enemy
     {
         base.Start();
         //spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        currentState = State.Chasing;
-       AIMouvement.ShouldMove = false;
+        AIMouvement.ShouldMove = false;
         SetData();
         SetMaxHealth();
         StartCoroutine(Starter());
@@ -47,20 +46,6 @@ public class Goblin : Enemy
     {
         base.Update();
 
-        switch (currentState)
-        {
-            case State.Chasing:
-               AIMouvement.ShouldMove = false;
-                if(counter != stack)
-                {
-                    StartCoroutine(RunningAway());
-                }
-                else if(counter == stack && isDyingCoroutine)
-                {
-                    StartCoroutine(DestroyEnemy());
-                }
-                break;
-        }
     }
 
     private IEnumerator RunningAway()

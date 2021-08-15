@@ -8,6 +8,7 @@ public abstract class EnemyScriptableObject : ScriptableObject
     public float attackRange;
     public float nextWayPoint;
     public float refreshPathTime;
+    public float restTime;
     public float InSight;
     public bool isSupposedToMoveAttacking = true;
 

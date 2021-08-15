@@ -62,7 +62,6 @@ public class Distance : Enemy, IMonster
         attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + Utils.RandomizeParams(-1, 2));
         dispersion = DistanceData.dispersion;
         inSight = DistanceData.InSight;
-        isSupposedToMoveAttacking = DistanceData.isSupposedToMoveAttacking;
         difficulty = DistanceData.Difficulty;
 
         //Chiffre arbitraire à modifier
@@ -81,13 +80,13 @@ public class Distance : Enemy, IMonster
             // Wait for coroutine shoot to end
             yield return StartCoroutine(ShootCO());
             isAttacking = false;
+            animator.SetBool(EnemyConst.ATTACK_TRIGGER_CONST, false);
             // delay before next Shoot
             yield return new WaitForSeconds(restTime);
             isReadytoShoot = true;
             // gestion de l'animation d'attaque
-            attackAnimationPlaying = false;
-            
 
+            attackAnimationPlaying = false;
         }
     }
 
@@ -102,7 +101,6 @@ public class Distance : Enemy, IMonster
         if (attackPoint != null)
         {
             GameObject myProjectile = Instantiate(projetile, attackPoint.position, Quaternion.identity);
-            myProjectile.transform.parent = gameObject.transform;
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
             ScriptProj.dispersion = decalage;
 
@@ -110,25 +108,9 @@ public class Distance : Enemy, IMonster
         else
         {
             GameObject myProjectile = Instantiate(projetile, transform.position, Quaternion.identity);
-            myProjectile.transform.parent = gameObject.transform;
             Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
             ScriptProj.dispersion = decalage;
         }
         yield return new WaitForEndOfFrame();
-    }
-
-    public override void DoChasingState()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void DoAttackingState()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void DoPatrollingState()
-    {
-        throw new System.NotImplementedException();
     }
 }

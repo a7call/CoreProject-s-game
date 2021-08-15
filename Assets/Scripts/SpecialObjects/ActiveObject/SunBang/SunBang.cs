@@ -37,9 +37,6 @@ public class SunBang : StacksObjects
             {
                 Enemy enemyScript = hit.GetComponent<Enemy>();
                 enemiesInRange.Insert(0, enemyScript);
-                enemyScript.currentState = Enemy.State.Stunned;
-                enemyScript.isreadyToAttack = false;
-
             }
         }
         yield return new WaitForSeconds(stunTime);
@@ -47,9 +44,7 @@ public class SunBang : StacksObjects
         foreach (Enemy enemy in enemiesInRange.ToArray()) 
         {
             if (enemy == null) continue;
-            enemy.currentState = Enemy.State.Chasing;
            // enemy.AIMouvement.canMove = true; 
-            enemy.isreadyToAttack = true;
             enemiesInRange.Remove(enemy);
         }
 

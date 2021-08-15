@@ -53,7 +53,6 @@ public class BlackHole : ModuleLauchPhase
                 Vector2 dir = (hitTrans.position - transform.position).normalized;
                 hitTrans.Translate(-dir * radiusSpeed * Time.deltaTime, Space.World); ;
                 hit.transform.RotateAround(transform.position, Vector3.forward, projectileSpeed * Time.deltaTime);
-                hit.GetComponent<Enemy>().currentState = Enemy.State.Stunned;
                // hit.GetComponent<Enemy>().AIMouvement.canMove = false;
                 hit.GetComponent<BoxCollider2D>().enabled = false;
                 

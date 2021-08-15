@@ -23,14 +23,6 @@ public class SnotBubble : Distance
     {
         base.Update();
         stinkManager.SetStinkTile(transform.position, 3);
-        switch (currentState)
-        {
-            case State.Chasing:
-              
-                break;
-
-        }
-
     }
     //protected IEnumerator ZoneCo()
     //{

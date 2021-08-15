@@ -18,13 +18,14 @@ public class FleeingState : AIState
 
     public override IEnumerator EndState()
     {
-        AICharacter.EndFleeingState();
+        CoroutineManager.GetInstance().StartCoroutine(AICharacter.EndFleeingState());
         yield return null;   
     }
     public override IEnumerator StartState()
     {
-        yield return Flee(); 
-        CoroutineManager.GetInstance().StartCoroutine(FleeingDebuff());
+        yield return Flee();
+        AICharacter.AIMouvement.ShouldMove = false;
+        CoroutineManager.GetInstance().StartCoroutine(FleeingDebuff()); 
         AICharacter.SetState(new ChasingState(AICharacter));
     }
 

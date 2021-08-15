@@ -18,19 +18,6 @@ public class ArmeCacEnemy : ArmeEnemy
     protected override void Update()
     {
         base.Update();
-        if (GetComponentInParent<Enemy>())
-        {
-
-            if (enemy.currentState == Enemy.State.Attacking && animator.GetBool("isAttacking") == false)
-            {
-                animator.SetBool("isAttacking", true);
-            }
-            else if (enemy.currentState != Enemy.State.Attacking && animator.GetBool("isAttacking") != false)
-            {
-                animator.SetBool("isAttacking", false);
-            }
-            
-        }
     }
 
 

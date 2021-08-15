@@ -29,9 +29,6 @@ public class ArretTemporel : CdObjects
         foreach (GameObject enemy in ennemis)
         {
             Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.currentState = Enemy.State.Freeze;
-            enemyScript.isreadyToAttack = false;
-            
         }
 
         foreach (GameObject proj in projectiles)
@@ -52,9 +49,7 @@ public class ArretTemporel : CdObjects
                 continue;
             }
             Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.currentState = Enemy.State.Chasing;
            // enemyScript.AIMouvement.canMove = true;
-            enemyScript.isreadyToAttack = true;
 
         }
 
