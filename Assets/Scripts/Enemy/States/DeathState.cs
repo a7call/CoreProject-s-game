@@ -39,13 +39,13 @@ public class DeathState : AIState
                 }
             }
             collider.enabled = false;
-
-            AICharacter.animator.SetTrigger("isDying");
         }
     }
 
     void DisableComponents()
     {
+        AICharacter.animator.SetBool(EnemyConst.DEATH_BOOL_CONST, true);
+        AICharacter.animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
         AICharacter.GetComponent<SpriteRenderer>().sortingOrder = -1;
         AICharacter.AIMouvement.enabled = false;
         AICharacter.enabled = false;
