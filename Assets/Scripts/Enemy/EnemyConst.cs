@@ -13,7 +13,7 @@ public static class EnemyConst
     public const string DIRECTION_X_CONST = "lastMoveX";
     public const string DIRECTION_Y_CONST = "lastMoveY";
     public const string FLEE_BOOL_CONST = "isFleeing";
-    public const string DEATH_TRIGGER_CONST = "isDying";
+    public const string DEATH_BOOL_CONST = "isDying";
 
 
     #endregion

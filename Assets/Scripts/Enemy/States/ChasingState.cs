@@ -14,7 +14,6 @@ public class ChasingState : AIState
     {
         yield return null;
         AICharacter.StartChasingState();
-        Debug.Log(AICharacter.AIMouvement.ShouldMove);
         AICharacter.AIMouvement.target = AICharacter.AIMouvement.Player;  
     }
 

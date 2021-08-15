@@ -87,7 +87,6 @@ namespace Wanderer.Utils
 
         public static void AddAnimationEvent(string name, string functionName, Animator animator, float time = 0, float param = 0f)
         {
-            Debug.Log(param);
             AnimationClip Clip = null;
             var animClip = animator.runtimeAnimatorController.animationClips;
             foreach (var clip in animClip)
