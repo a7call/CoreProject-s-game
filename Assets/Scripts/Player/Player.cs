@@ -10,7 +10,6 @@ public class Player : Characters
 
     public PlayerScriptableObjectScript playerData;
 
-
     #region Stats
     [Header("Projectile")]
     public CharacterStats damage;
@@ -108,7 +107,7 @@ public class Player : Characters
                 CheckInputs();
                 //GetInputAxis();
                 ClampMouvement(mouvement);
-                // Teleporte();
+                Teleporte();
 
                 break;
 
@@ -174,10 +173,6 @@ public class Player : Characters
     private Vector2 mouvement;
 
     private bool isMoving;
-    private bool isTpReloaded = true;
-    [SerializeField] private float dashRadius = 1.5f;
-    [SerializeField] private float timerTp = 3f; 
-    // private Vector3 dashTarget;
 
     void MovePlayer(Vector2 _mouvement)
     {
@@ -208,16 +203,36 @@ public class Player : Characters
         mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
     }
 
+    #endregion
+
+    #region Teleportation
+
+    private bool isTpReloaded = true;
+    private float dashRadius = 1.5f;
+    private float timerTp = 3f;
     private float alphaDelay = 0.1f;
+    
+    [SerializeField] private Transform[] objectsModifiedByTp;
+
     private IEnumerator ChangeAlpha()
     {
-        spriteRenderer.color = new Vector4(1f, 1f, 1f, 0f);
+        int currentWeapon = weaponManager.selectedDistanceWeapon;
+        objectsModifiedByTp[objectsModifiedByTp.Length-1] = weaponManager.transform.GetChild(currentWeapon);
+
+        foreach (Transform obj in objectsModifiedByTp)
+        {
+            obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, 0f);
+        }
+        
         isInvincible = true;
 
         for (int i = 1; i < 6; i++)
         {
-            spriteRenderer.color = new Vector4(1f, 1f, 1f, (0.2f * i));
             yield return new WaitForSeconds(alphaDelay);
+            foreach (Transform obj in objectsModifiedByTp)
+            {
+                obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, (0.2f * i));
+            }
         }
 
         isInvincible = false;
@@ -236,8 +251,7 @@ public class Player : Characters
         {
             StartCoroutine(ReloadingTp());
             StartCoroutine(ChangeAlpha());
-            Vector3 dashTarget = transform.position + dashRadius * new Vector3(mouvementVector.x, mouvementVector.y, 0);
-            transform.position = dashTarget;
+            transform.position = transform.position + dashRadius * new Vector3(mouvementVector.x, mouvementVector.y, 0);
         }
     }
 
