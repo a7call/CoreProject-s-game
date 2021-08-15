@@ -81,6 +81,7 @@ public class Player : Characters
     protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         healthBar = GameObject.FindGameObjectWithTag("PlayerCanvas").GetComponentInChildren<PlayerHealthBar>();
         animator = GetComponent<Animator>();
         activeObjectManager = GetComponentInChildren<ActiveObjectManager>();
@@ -107,6 +108,7 @@ public class Player : Characters
                 CheckInputs();
                 //GetInputAxis();
                 ClampMouvement(mouvement);
+                // Teleporte();
 
                 break;
 
@@ -164,11 +166,19 @@ public class Player : Characters
     [SerializeField] AudioSource AudioSourceWalk;
 
     #region Mouvement physics
+
     public Vector3 velocity = Vector3.zero;
     public float StartSmoothTime;
     public float StopSmoothTime;
-    private Vector2 mouvementVector;
+    [SerializeField]  private Vector2 mouvementVector;
     private Vector2 mouvement;
+
+    private bool isMoving;
+    private bool isTpReloaded = true;
+    [SerializeField] private float dashRadius = 1.5f;
+    [SerializeField] private float timerTp = 3f; 
+    // private Vector3 dashTarget;
+
     void MovePlayer(Vector2 _mouvement)
     {
         
@@ -192,13 +202,45 @@ public class Player : Characters
        
     }
 
-
     // Same Speed when Input (x,y)
     void ClampMouvement(Vector2 _mouvement)
     {
-
         mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
     }
+
+    private float alphaDelay = 0.1f;
+    private IEnumerator ChangeAlpha()
+    {
+        spriteRenderer.color = new Vector4(1f, 1f, 1f, 0f);
+        isInvincible = true;
+
+        for (int i = 1; i < 6; i++)
+        {
+            spriteRenderer.color = new Vector4(1f, 1f, 1f, (0.2f * i));
+            yield return new WaitForSeconds(alphaDelay);
+        }
+
+        isInvincible = false;
+    }
+
+    private IEnumerator ReloadingTp()
+    {
+        isTpReloaded = false;
+        yield return new WaitForSeconds(timerTp);
+        isTpReloaded = true;
+    }
+
+    private void Teleporte()
+    {
+        if (isTpReloaded && isMoving && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(ReloadingTp());
+            StartCoroutine(ChangeAlpha());
+            Vector3 dashTarget = transform.position + dashRadius * new Vector3(mouvementVector.x, mouvementVector.y, 0);
+            transform.position = dashTarget;
+        }
+    }
+
     #endregion
 
     #region Animation
@@ -217,7 +259,6 @@ public class Player : Characters
         Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
 
         float angle = Quaternion.FromToRotation(Vector3.left, horizon - dir).eulerAngles.z;
-
 
         if (gameObject.name == "Player2")
         {
@@ -297,13 +338,17 @@ public class Player : Characters
 
 
     #region Mouvement Inputs
+    
     // Check If Player released Inputs
     void CheckInputs()
     {
         if (mouvement == Vector2.zero)
         {
+            isMoving = false;
             rb.velocity = Vector3.SmoothDamp(rb.velocity, Vector2.zero, ref velocity, StopSmoothTime);
         }
+
+        else isMoving = true;
     }
 
     public void OnHorizontal(InputValue val)
@@ -350,7 +395,7 @@ public class Player : Characters
     }
 
     #region Damage to player
-    public SpriteRenderer graphics;
+    private SpriteRenderer spriteRenderer;
     protected bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
@@ -367,9 +412,9 @@ public class Player : Characters
     {
         //while (isInvincible)
         //{
-        //    graphics.color = new Color(1f, 1f, 1f, 0f);
+        //    spriteRenderer.color = new Color(1f, 1f, 1f, 0f);
         //    yield return new WaitForSeconds(InvincibilityFlashDelay);
-        //    graphics.color = new Color(1f, 1f, 1f, 1f);
+        //    spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         //   
         //}
         yield return new WaitForSeconds(InvincibilityFlashDelay);
