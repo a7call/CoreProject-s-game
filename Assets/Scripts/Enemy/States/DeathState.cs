@@ -46,6 +46,7 @@ public class DeathState : AIState
 
     void DisableComponents()
     {
+        AICharacter.GetComponent<SpriteRenderer>().sortingOrder = -1;
         AICharacter.AIMouvement.enabled = false;
         AICharacter.enabled = false;
     }
