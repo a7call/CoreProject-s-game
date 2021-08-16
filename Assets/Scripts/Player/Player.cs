@@ -209,7 +209,7 @@ public class Player : Characters
 
     private bool isTpReloaded = true;
     private float dashRadius = 1.5f;
-    private float timerTp = 3f;
+    [SerializeField] private float timerTp = 3f;
     private float alphaDelay = 0.1f;
     
     [SerializeField] private Transform[] objectsModifiedByTp;
