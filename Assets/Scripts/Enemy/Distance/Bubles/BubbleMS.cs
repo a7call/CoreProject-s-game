@@ -24,14 +24,6 @@ public class BubbleMS : Distance
     public GameObject deathObject;
     #endregion
 
-    #region Physics
-    public override IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
-    {
-        yield return null;
-        // pas de knockBack
-    }
-    #endregion
-
     #region Shoot
     private bool firstShoot = true;
     protected override IEnumerator CanShootCO()

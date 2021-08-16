@@ -32,16 +32,62 @@ public abstract class Characters : StateMachine
 
     public int MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, GameObject damageSource = null)
     {
         TakeDamageSound();
         CurrentHealth -= damage;
+
         if (CurrentHealth <= 0)
         {
             IsDying = true;
             Die();
         }
+        if (damageSource != null)
+        {
+            ApplyKnockBack(knockBackForceToApply, knockBackTime: 0.3f, damageSource);
+        }
     }
+
+    #region Physics 
+    bool isKnockedBack = false;
+    public float knockBackForceToApply { get; protected set; }
+    // Coroutine qui knockBack l'ennemi
+
+    void ApplyKnockBack(float knockBackForce, float knockBackTime, GameObject damageSource)
+    {
+        var dir = (damageSource.transform.position - transform.position).normalized;
+        CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForce, -dir, knockBackTime));
+    }
+    Vector3 test = Vector3.zero;
+    public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime)
+    {
+        if (isKnockedBack)
+            yield break;
+
+        isKnockedBack = true;
+        CoroutineManager.GetInstance().StartCoroutine(KnockBackDurationCo(knockBackTime));
+        while (isKnockedBack)
+        {        
+            if (!IsDying)
+            {
+                rb.AddForce(knockBackForce * dir * Time.deltaTime, ForceMode2D.Impulse);
+            }
+            else
+            {
+                //DEATH CASE (Big knockback) j'ai pas trouvé mieux
+                float knockBackDyingMultiplier = 3;
+                rb.AddForce(knockBackDyingMultiplier * knockBackForce * dir * Time.deltaTime, ForceMode2D.Impulse);
+            }
+            yield return null;
+        }
+
+    }
+    IEnumerator KnockBackDurationCo(float knockBackTime)
+    {
+        yield return new WaitForSeconds(knockBackTime);
+        isKnockedBack = false;
+    }
+    #endregion
 
     protected virtual void SetMaxHealth()
     {

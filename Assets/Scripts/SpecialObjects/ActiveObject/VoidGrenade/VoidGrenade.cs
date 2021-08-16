@@ -19,7 +19,7 @@ public class VoidGrenade : ExplosivesModule
     {
          ennemyTouche.Add(enemy);
          base.ExplosionEffects(enemy);
-         enemy.AIMouvement.Speed /= SpeedDivisor;
+         enemy.AIMouvement.MoveForce /= SpeedDivisor;
          CoroutineManager.GetInstance().StartCoroutine(SlowEnemy());
          
     }
@@ -39,7 +39,7 @@ public class VoidGrenade : ExplosivesModule
             {
                 continue;
             }
-            enemy.AIMouvement.Speed *= SpeedDivisor;
+            enemy.AIMouvement.MoveForce *= SpeedDivisor;
             
         }
         

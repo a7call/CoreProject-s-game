@@ -33,11 +33,11 @@ public class HelmetAstronautMS : Cac
     // Coroutine qui permet d'augmenter la vitesse de l'ennemi
     private IEnumerator IncreaseSpeed()
     {
-        float baseMoveSpeed = AIMouvement.Speed;
+        float baseMoveSpeed = AIMouvement.MoveForce;
         newSpeedEnemy = 2 * baseMoveSpeed;
-        AIMouvement.Speed = newSpeedEnemy;
+        AIMouvement.MoveForce = newSpeedEnemy;
         yield return new WaitForSeconds(speedDuration);
-        AIMouvement.Speed = baseMoveSpeed;
+        AIMouvement.MoveForce = baseMoveSpeed;
     }
     #endregion
     protected override IEnumerator BaseAttack()

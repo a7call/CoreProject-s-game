@@ -38,8 +38,8 @@ public class FleeingState : AIState
     {
         bool isValid = false;
         Vector3 position = Vector3.zero;
-        var speed = AICharacter.AIMouvement.Speed;
-        AICharacter.AIMouvement.Speed = _fleeingSpeed;
+        var speed = AICharacter.AIMouvement.MoveForce;
+        AICharacter.AIMouvement.MoveForce = _fleeingSpeed;
         while (!isValid)
         {
             yield return null;
@@ -76,7 +76,7 @@ public class FleeingState : AIState
         }
 
         AICharacter.AIMouvement.target = AICharacter.transform;
-        AICharacter.AIMouvement.Speed = speed;
+        AICharacter.AIMouvement.MoveForce = speed;
         GameObject.Destroy(targetPoint);
     }
     

@@ -386,19 +386,6 @@ public class Player : Characters
 
     #endregion
 
-
-
- 
-    public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime)
-    {
-        animator.SetBool("IsAttackingCac", true);
-        rb.AddForce(dir * knockBackForce);  
-        yield return new WaitForSeconds(knockBackTime);
-        animator.SetBool("IsAttackingCac", false);
-        //rb.velocity = Vector2.zero;
-    }
-
-
     void PiercedPocketActivation()
     {
         PiercedPocketModule pockets = FindObjectOfType<PiercedPocketModule>();
@@ -413,7 +400,7 @@ public class Player : Characters
     protected bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, GameObject damageSource = null)
     {
         if (!isInvincible)
         {

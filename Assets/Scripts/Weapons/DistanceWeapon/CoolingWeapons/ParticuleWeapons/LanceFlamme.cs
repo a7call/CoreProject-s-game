@@ -22,7 +22,6 @@ public class LanceFlamme : ParticuleWeapon
                 if (hit.transform.gameObject.CompareTag("Enemy"))
                 {
                     Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
-                    CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
 
                     enemyScript.TakeDamage(damage);
 

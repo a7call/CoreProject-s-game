@@ -29,17 +29,18 @@ public class DeathState : AIState
     void DisableAllColliders()
     {
         var collider = AICharacter.GetComponent<Collider2D>();
-        if (collider.enabled)
-        {
-            foreach (Transform child in AICharacter.transform)
-            {
-                if (child.gameObject.GetComponent<Collider2D>())
-                {
-                    child.gameObject.GetComponent<Collider2D>().enabled = false;
-                }
-            }
-            collider.enabled = false;
-        }
+        collider.enabled = false;
+        //if (collider.enabled)
+        //{
+        //    foreach (Transform child in AICharacter.transform)
+        //    {
+        //        if (child.gameObject.GetComponent<Collider2D>())
+        //        {
+        //            child.gameObject.GetComponent<Collider2D>().enabled = false;
+        //        }
+        //    }
+           
+        //}
     }
 
     void DisableComponents()

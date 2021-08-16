@@ -27,7 +27,6 @@ public class pocketBombs : MonoBehaviour
                 Enemy enemy = hit.gameObject.GetComponent<Enemy>();
                 print(enemy);
                 Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
-                CoroutineManager.GetInstance().StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
                 enemy.TakeDamage(explosionDamage);
                 
             }

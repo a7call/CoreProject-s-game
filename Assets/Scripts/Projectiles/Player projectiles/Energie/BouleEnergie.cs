@@ -66,7 +66,6 @@ public class BouleEnergie : PlayerProjectiles
     protected void ExplosionEffects(Enemy enemy)
     {
         Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
-        CoroutineManager.GetInstance().StartCoroutine(enemy.KnockCo(knockBackForce, Direction, knockBackTime, enemy));
         if (PlayerProjectiles.isNuclearExplosionModule)
         {
             CoroutineManager.GetInstance().StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemy));

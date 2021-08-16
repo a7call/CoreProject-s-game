@@ -22,7 +22,6 @@ public class Extincteur : ParticuleWeapon
                 if (hit.transform.gameObject.CompareTag("Enemy"))
                 {
                     Enemy enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
-                    CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackforce, dir, knockBackTime, enemyScript));
                     CoroutineManager.GetInstance().StartCoroutine(SlowCo(enemyScript));
                     enemyScript.TakeDamage(damage);
 
@@ -43,10 +42,10 @@ public class Extincteur : ParticuleWeapon
         if (!enemy.IsSlowed)
         {
             enemy.IsSlowed = true;
-            enemy.AIMouvement.Speed /= slowMultiplier;
+            enemy.AIMouvement.MoveForce /= slowMultiplier;
             yield return new WaitForSeconds(slowTimer);
             if (enemy == null) yield break;
-            enemy.AIMouvement.Speed *= slowMultiplier;
+            enemy.AIMouvement.MoveForce *= slowMultiplier;
             enemy.IsSlowed = false;
         }
        

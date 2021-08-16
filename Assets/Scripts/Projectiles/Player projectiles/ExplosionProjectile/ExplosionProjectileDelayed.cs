@@ -17,9 +17,7 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
-            CoroutineManager.GetInstance().StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
-            //Modules
+            enemy.TakeDamage(damage);            //Modules
             ModuleProcs(enemy);
         }
         

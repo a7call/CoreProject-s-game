@@ -27,7 +27,6 @@ public class EpeeGel : CacWeapons
             {
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
-                CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(knockBackForce, dir, knockBackTime, enemyScript));
 
                 CoroutineManager.GetInstance().StartCoroutine(Gel(enemyScript));
 
@@ -38,9 +37,9 @@ public class EpeeGel : CacWeapons
     public static IEnumerator Gel(Enemy enemy)
     {
         
-        enemy.AIMouvement.Speed /= SlowDiviser;
+        enemy.AIMouvement.MoveForce /= SlowDiviser;
         yield return new WaitForSeconds(Timer);
-        enemy.AIMouvement.Speed *= SlowDiviser;
+        enemy.AIMouvement.MoveForce *= SlowDiviser;
 
     }
 }

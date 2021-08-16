@@ -34,10 +34,11 @@ public class Cac : Enemy, IMonster
     protected override void SetData()
     {
         attackRange = CacDatas.attackRange;
+        knockBackForceToApply = CacDatas.knockBackForceToApply;
         AttackRadius = CacDatas.attackRadius;
         HitLayers = CacDatas.hitLayers;
 
-        AIMouvement.Speed = CacDatas.moveSpeed;
+        AIMouvement.MoveForce = CacDatas.moveForce;
         difficulty = CacDatas.Difficulty;
         inSight = CacDatas.InSight;
         MaxHealth = CacDatas.maxHealth;

@@ -51,12 +51,19 @@ public abstract class Enemy : Characters
 
     protected override void GetReference()
     {
-        rb = GetComponent<Rigidbody2D>();
+        RigidBodySetUp();
         AIMouvement = GetComponent<AIMouvement>();
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         Player = target.GetComponent<Player>();
         audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
+    }
+
+    private void RigidBodySetUp()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.drag = 100;
     }
 
     #region new States
@@ -184,55 +191,27 @@ public abstract class Enemy : Characters
             return target;
         }
     }
- 
+
     #endregion
-
-
-    #region Physics 
-    // Coroutine qui knockBack l'ennemi
-    public virtual IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
-    {
-        yield return null;
-        ////CHANGER POUR IMPLUSE (PLUS ADAPTE)
-        //rb.AddForce(dir * knockBackForce, ForceMode2D.Force);
-        //currentState = State.KnockedBack;
-        //yield return new WaitForSeconds(knockBackTime);
-        //if (isDying)
-        //{
-        //    currentState = State.Death;
-        //    yield break;
-        //}
-        //else
-        //{
-        //    currentState = State.Chasing;
-        //}
-        //// C'est DU SPARADRA
-        //if (this != null)
-        //{
-        //    rb.velocity = Vector2.zero;
-        //    AIMouvement.ShouldMove = true;
-        //}
-        
-    }
-    #endregion
-
 
     #region Health and Death
 
     // Prends les dégats
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, GameObject damageSource = null)
     {
         foreach (var ability in PassiveObjectManager.currentAbilities)
         {
             ability.ApplyEffect(this);
         }
-        base.TakeDamage(damage);
+           
+        base.TakeDamage(damage, damageSource);
 
     }
 
     protected override void Die()
     {
         EnemyDeath();
+        //CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForceToApply, -dir, knockBackTime: 0.3f));
         StopAllCoroutines();
         SetState(new DeathState(this));  
     }

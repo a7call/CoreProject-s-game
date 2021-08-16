@@ -35,7 +35,6 @@ public class NanoRobotModule : CdObjects
                 Enemy enemyScript = hit.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
                 Vector2 dir = (enemy.gameObject.transform.position - hit.gameObject.transform.position).normalized;
-                CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(200, -dir, 0.2f, enemy));
             }
                
         }
@@ -55,7 +54,6 @@ public class NanoRobotModule : CdObjects
                 Enemy enemyScript = hit.GetComponent<Enemy>();
                 if (enemyScript.CurrentHealth > 0) enemyScript.TakeDamage(damage);
                 Vector2 dir = (enemy.transform.position - hit.gameObject.transform.position).normalized;
-                CoroutineManager.GetInstance().StartCoroutine(enemyScript.KnockCo(200, -dir, 0.2f, enemyScript));
             }
         }
     }

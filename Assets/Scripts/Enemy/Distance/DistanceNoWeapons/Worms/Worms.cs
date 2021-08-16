@@ -28,7 +28,7 @@ public class Worms : DistanceNoGun
         {
             CanFlee = false;
             yield return PrepareToFlee();
-            SetState(new FleeingState(this, fleeingSpeed: 3.5f, fleeingDebuffTime: 5f, minFleeDistance: 4f));
+            SetState(new FleeingState(this, fleeingSpeed: AIMouvement.MoveForce, fleeingDebuffTime: 5f, minFleeDistance: 4f));
 
         }
     }

@@ -14,7 +14,7 @@ public class PlayerSlowProjectile : PlayerProjectiles
             if (!enemy.IsSlowed)
             {
                 enemy.IsSlowed = true;
-                enemy.AIMouvement.Speed *= slowMultiplier;
+                enemy.AIMouvement.MoveForce *= slowMultiplier;
 
 
             }

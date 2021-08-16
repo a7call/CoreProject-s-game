@@ -57,9 +57,10 @@ public class Distance : Enemy, IMonster
     {
         // ScriptableObject Datas
         MaxHealth = DistanceData.maxHealth;
+        knockBackForceToApply = DistanceData.knockBackForceToApply;
         restTime = DistanceData.restTime;
         projetile = DistanceData.projetile;
-        attackRange = Random.Range(DistanceData.attackRange, DistanceData.attackRange + Utils.RandomizeParams(-1, 2));
+        attackRange = DistanceData.attackRange;
         dispersion = DistanceData.dispersion;
         inSight = DistanceData.InSight;
         difficulty = DistanceData.Difficulty;
@@ -68,7 +69,7 @@ public class Distance : Enemy, IMonster
         var stopAttackingRangeCoef = Utils.RandomizeParams(1.2f, 1.5f);
         stopAttackRange = attackRange * stopAttackingRangeCoef;
 
-        AIMouvement.Speed = Random.Range(DistanceData.moveSpeed, DistanceData.moveSpeed + Utils.RandomizeParams(-0.1f, 0.1f));
+        AIMouvement.MoveForce = DistanceData.moveForce;
     }
 
     // Start Shoot Sequence

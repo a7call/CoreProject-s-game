@@ -39,12 +39,4 @@ public class Bubble360 : Distance
     }
 
     #endregion
-
-    #region Physics
-    public override IEnumerator KnockCo(float knockBackForce, Vector3 dir, float knockBackTime, Enemy enemy)
-    {
-        yield return null;
-        // pas de knockBack
-    }
-    #endregion
 }

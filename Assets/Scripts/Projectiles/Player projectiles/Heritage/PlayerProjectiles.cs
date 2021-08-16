@@ -94,8 +94,7 @@ public class PlayerProjectiles : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
-            CoroutineManager.GetInstance().StartCoroutine(enemy.KnockCo(knockBackForce, directionTir, knockBackTime, enemy));
+            enemy.TakeDamage(damage, player.gameObject);            
             //Modules
             ModuleProcs(enemy);
         }

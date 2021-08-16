@@ -66,15 +66,15 @@ public class AIMouvement : MonoBehaviour
     public Transform Player { get; private set; }
 
     
-    private float speed = 2;
-    public float Speed { 
+    private float moveForce = 2;
+    public float MoveForce { 
         get
         {
-            return speed;
+            return moveForce;
         }
         set
         {
-            speed = value;
+            moveForce = value;
         }
     }
 
@@ -116,8 +116,9 @@ public class AIMouvement : MonoBehaviour
     private void FixedUpdate()
     {
         if (shouldMove)
-        { 
-          rb.MovePosition(((Vector2)transform.position + directionToTarget.normalized * Time.deltaTime * speed));
+        {
+            //rb.MovePosition(((Vector2)transform.position + directionToTarget.normalized * Time.deltaTime * speed));
+            rb.AddForce(moveForce * directionToTarget.normalized * Time.deltaTime, ForceMode2D.Impulse);
         } 
     }
 
