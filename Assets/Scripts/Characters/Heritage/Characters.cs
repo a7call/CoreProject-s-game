@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
+using Wanderer.Utils;
 
 public abstract class Characters : StateMachine
 {
@@ -35,6 +36,7 @@ public abstract class Characters : StateMachine
     public virtual void TakeDamage(float damage, GameObject damageSource = null)
     {
         TakeDamageSound();
+        TakeDammageParticleSystem();
         CurrentHealth -= damage;
 
         if (CurrentHealth <= 0)
@@ -47,6 +49,21 @@ public abstract class Characters : StateMachine
             ApplyKnockBack(knockBackForceToApply, knockBackTime: 0.3f, damageSource);
         }
     }
+
+    #region Particle System
+
+    protected ParticleSystem hitParticleSystem;
+
+    protected void TakeDammageParticleSystem()
+    {
+        if(hitParticleSystem != null)
+        {
+            // Do toggle
+            // Utils.TogglePs(hitParticleSystem, true);
+        }
+    }
+
+    #endregion
 
     #region Physics 
     bool isKnockedBack = false;

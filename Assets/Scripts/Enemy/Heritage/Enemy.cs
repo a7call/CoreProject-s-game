@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System;
+using Wanderer.Utils;
 
 public abstract class Enemy : Characters
 {
@@ -57,6 +58,7 @@ public abstract class Enemy : Characters
         target = GameObject.FindGameObjectWithTag("Player").transform;
         Player = target.GetComponent<Player>();
         audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
+        hitParticleSystem = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitParticleSystem").GetComponent<ParticleSystem>();
     }
 
     private void RigidBodySetUp()

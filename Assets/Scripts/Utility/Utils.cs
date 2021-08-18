@@ -129,6 +129,22 @@ namespace Wanderer.Utils
         }
 
         #endregion
+
+        #region GameObject 
+
+        public static GameObject FindGameObjectInChildWithTag(GameObject _parent, string _tag)
+        {
+            Transform transform = _parent.transform;
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).gameObject.tag == _tag) return transform.GetChild(i).gameObject;
+            }
+
+            return null;
+        }
+
+        #endregion
     }
 
 
