@@ -60,7 +60,6 @@ public class PlayerProjectiles : MonoBehaviour
         weaponManager = playerGO.transform.GetComponentInChildren<WeaponsManagerSelected>();
         weapon = weaponManager.gameObject.transform.GetComponentInChildren<Weapons>();
         rb = GetComponent<Rigidbody2D>();
-        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
     }
 
     void SetData()
@@ -90,7 +89,6 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        ImpactSound();
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
@@ -101,20 +99,6 @@ public class PlayerProjectiles : MonoBehaviour
          Destroy(gameObject);
     }
     #endregion
-
-    #region Sound
-
-    protected AudioManagerEffect audioManagerEffect;
-    [SerializeField] protected string impactSound;
-
-    protected void ImpactSound()
-    {
-
-    if (audioManagerEffect != null)
-            audioManagerEffect.Play(impactSound);
-    }
-    #endregion
-
 
     #region Module
     public static bool isNuclearExplosionModule;

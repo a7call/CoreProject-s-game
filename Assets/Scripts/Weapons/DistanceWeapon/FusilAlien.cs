@@ -17,7 +17,6 @@ public class FusilAlien : DistanceWeapon
             damage *= damageMultiplier;
         }
 
-        InfiniteAmmo = isUnlimitedAmmoModule;
         //GetAttackDirection();
         if (OkToShoot && !IsLoading)
         {
@@ -37,26 +36,6 @@ public class FusilAlien : DistanceWeapon
             CoroutineManager.GetInstance().StartCoroutine(Shoot());
             IsWeaponLoad = false;
             
-        }
-
-
-       // DisplayAmmo();
-
-        if (isCanonRapideModule && !CadenceAlreadyUp)
-        {
-            CadenceAlreadyUp = true;
-            attackDelay /= CadenceMultiplier;
-        }
-
-        if (isPrecisionModule && !PrecisionAlreadyUp)
-        {
-            PrecisionAlreadyUp = true;
-            dispersion /= PrecisionMultiplier;
-        }
-        if (isFastReloadModule && !FastReloadAlreadyActive)
-        {
-            FastReloadAlreadyActive = true;
-            reloadDelay /= ReloadSpeedMultiplier;
         }
 
     }

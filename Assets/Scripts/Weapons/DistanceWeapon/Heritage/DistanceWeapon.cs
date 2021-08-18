@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class DistanceWeapon : Weapons, IShootableWeapon
 {
-    
-    
+       
     public WeaponScriptableObject WeaponData
     {
         get
@@ -14,40 +14,6 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         }
     }
     public DistanceWeaponScriptableObject DistanceWeaponDataCast;
-
-    #region Module Et des betises
-   //CanonRapideModule
-   [HideInInspector]
-    protected bool CadenceAlreadyUp = false;
-    [HideInInspector]
-    public static bool isCanonRapideModule;
-    [HideInInspector]
-    public static int CadenceMultiplier;
-
-    //PrecisionModule
-    [HideInInspector]
-    protected bool PrecisionAlreadyUp = false;
-    [HideInInspector]
-    public static bool isPrecisionModule;
-    [HideInInspector]
-    public static int PrecisionMultiplier;
-
-    //FastReloadModule
-    [HideInInspector]
-    protected bool FastReloadAlreadyActive = false;
-    [HideInInspector]
-    public static bool isFastReloadModule;
-    [HideInInspector]
-    public static float ReloadSpeedMultiplier;
-
-    //UnlimitedAmmoModule
-    [HideInInspector]
-    public static bool isUnlimitedAmmoModule;
-    #endregion
-
-    //Sounds
-    [SerializeField] protected string FireSound;
-    [SerializeField] protected string ReloadSound;
 
     #region Unity Mono
     protected override void Awake()
@@ -73,8 +39,6 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     protected override void Update()
     {
         base.Update();
-        InfiniteAmmo = isUnlimitedAmmoModule;
-        //DisplayAmmo();
 
         if (IsReloading)
             return;
@@ -87,31 +51,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
             
 
         StartShootingProcess();
-
-
-        #region Module et des betises
-        if (isCanonRapideModule && !CadenceAlreadyUp)
-        {
-            CadenceAlreadyUp = true;
-            attackDelay /= CadenceMultiplier;
-        }
-
-        if (isPrecisionModule && !PrecisionAlreadyUp)
-        {
-            PrecisionAlreadyUp = true;
-            dispersion /= PrecisionMultiplier;
-        }
-        if (isFastReloadModule && !FastReloadAlreadyActive)
-        {
-            FastReloadAlreadyActive = true;
-            reloadDelay /= ReloadSpeedMultiplier;
-        }
-        #endregion
     }
-
-    #region Bug de l'animation
-   
-    #endregion
 
     #endregion
 
@@ -119,8 +59,6 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     protected override void GetReferences()
     {
         base.GetReferences();
-        //AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
-        //AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
         Proj = projectile.GetComponent<PlayerProjectiles>();
     }
     private void InitializeMag()
@@ -133,28 +71,26 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         projectile = DistanceWeaponDataCast.projectile;
         enemyLayer = WeaponData.enemyLayer;
         image = WeaponData.image;
+        screenShakeMagnitude = WeaponData.screenShakeMagnitude;
+        screenShakeTime = WeaponData.screenShakeTime;
+        ShootAudioName = WeaponData.shootAudioName;
+        ReloadAudioName = WeaponData.reloadAudioName;
     }
 
     protected virtual void SetStatDatas()
-    {
-       
+    {     
         damage = player.damage.Value;
         attackDelay = player.attackSpeed.Value;
         dispersion = player.dispersion.Value;
         magSize = player.magSize.Value;
         reloadDelay = player.reloadSpeed.Value;
-        ammoStock = player.ammoStock.Value;
-        screenShakeMagnitude = WeaponData.screenShakeMagnitude;
-        screenShakeTime = WeaponData.screenShakeTime;
+        ammoStock = player.ammoStock.Value;      
     }
 
 
     #endregion
 
     #region Shoot logic
-
-    
-   
 
     protected GameObject projectile;
     protected PlayerProjectiles Proj;
@@ -172,12 +108,6 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         Proj.dispersion = decalage;
         BulletInMag--;
         Instantiate(projectile, attackPoint.position, transform.rotation);
-
-        
-
-        PlayEffectSound(FireSound);
-       
-
         yield return new WaitForSeconds(player.attackSpeed.Value);
         isAttacking = false;
     }
@@ -192,6 +122,9 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         if (IsAbleToShoot())
         {
             isAttacking = true;
+
+            AudioManagerEffect.GetInstance().Play(ShootAudioName, player.gameObject);
+
             if (animator)
             {
                 animator.SetTrigger("isAttacking");
@@ -219,63 +152,31 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     public float ammoStock;
     protected IEnumerator Reload()
     {
-        //if (BulletInMag != magSize && !IsReloading && (ammoStock != 0 | InfiniteAmmo))
-        //{
-
-        PlayEffectSound(ReloadSound);
         IsReloading = true;
+        AudioManagerEffect.GetInstance().Play(ReloadAudioName, player.gameObject);
         yield return new WaitForSeconds(reloadDelay);
-        if (ammoStock + BulletInMag >= magSize && !InfiniteAmmo)
+        if (ammoStock + BulletInMag >= magSize)
         {
             ammoStock = ammoStock + BulletInMag;
             ammoStock = ammoStock - magSize;
             BulletInMag = (int)magSize;
         }
-        else if (ammoStock + BulletInMag <= magSize && !InfiniteAmmo)
+        else if (ammoStock + BulletInMag <= magSize)
         {
             ammoStock = ammoStock + BulletInMag;
             BulletInMag = (int)ammoStock;
             ammoStock = ammoStock - BulletInMag;
         }
-        else if (isUnlimitedAmmoModule)
-        {
-            BulletInMag = (int)magSize;
-        }
-
         IsReloading = false;
     }
 
     public void toReload()
     {
-        if (BulletInMag != magSize && !IsReloading && (ammoStock != 0 | InfiniteAmmo))
+        if (BulletInMag != magSize && !IsReloading && (ammoStock != 0))
         {
             StartCoroutine(Reload());
         }
     }
 
-    #endregion
-
-    #region UI
-    protected Text AmmoText, AmmoStockText;
-    protected bool InfiniteAmmo;
-    [HideInInspector]
-   
-    protected void DisplayAmmo()
-    {
-        if (!InfiniteAmmo)
-        {
-            AmmoText.text = BulletInMag.ToString();
-            AmmoStockText.text = ammoStock.ToString();
-        }
-
-        else
-        {
-            AmmoText.text = BulletInMag.ToString();
-            AmmoStockText.text = "Infini";
-        }
-    }
-    #endregion
-
-
-    
+    #endregion  
 }

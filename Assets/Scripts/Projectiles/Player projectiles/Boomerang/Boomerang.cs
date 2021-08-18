@@ -15,11 +15,7 @@ public class Boomerang : PlayerProjectiles
     {
         base.Awake();
     }
-    private void Start()
-    {
-        DestroyIfnotBack();
-        isAlreadyFired = true;
-    }
+   
 
     
     protected override void Update()

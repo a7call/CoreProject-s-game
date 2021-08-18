@@ -3,9 +3,13 @@ using UnityEngine;
 /// <summary>
 /// Classe mère des armes 
 /// </summary>
-public class Weapons : MonoBehaviour
+[RequireComponent(typeof(AudioSource))]
+public abstract class Weapons : MonoBehaviour
 {
-    
+
+    protected AudioSource audioSource { get; private set; }
+    protected string ShootAudioName { get; set; }
+    protected string ReloadAudioName { get; set; }
 
     protected GameObject playerGO;
     protected Player player;
@@ -19,6 +23,8 @@ public class Weapons : MonoBehaviour
     // Offset de la postion de l'arme
     public float offSetX;
     public float offSetY;
+
+    [HideInInspector]
     public Vector3 attackPointPos;
 
    
@@ -72,23 +78,8 @@ public class Weapons : MonoBehaviour
         playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<Player>();
         attackPointPos = attackPoint.transform.localPosition;
-        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
+        audioSource = GetComponent<AudioSource>();
     }
-    #endregion
-
-    #region Sound
-
-    //Sounds
-    protected AudioManagerEffect audioManagerEffect;
-   
-
-    protected void PlayEffectSound(string SoundToPlay)
-    {
-        if (audioManagerEffect != null)
-            audioManagerEffect.Play(SoundToPlay);
-    }
-
-
     #endregion
 
 }

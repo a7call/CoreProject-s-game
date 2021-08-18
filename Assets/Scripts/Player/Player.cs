@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Wanderer.CharacterStats;
 using UnityEngine.InputSystem;
 
+
 public class Player : Characters
 {
 
@@ -160,9 +161,7 @@ public class Player : Characters
 
     }
 
-    //Source sound
 
-    [SerializeField] AudioSource AudioSourceWalk;
 
     #region Mouvement physics
 
@@ -261,6 +260,14 @@ public class Player : Characters
     protected Vector3 screenMousePos;
     protected Vector3 screenPlayerPos;
     Vector3 horizon = new Vector3(1, 0, 0);
+
+    //Animation event sounds
+    void PlayFootStepFX()
+    {
+        AudioManagerEffect.GetInstance().Play("FootStep", this.gameObject);
+    }
+
+    //
     void Animation()
     {
         float playerSpeed = mouvement.sqrMagnitude;

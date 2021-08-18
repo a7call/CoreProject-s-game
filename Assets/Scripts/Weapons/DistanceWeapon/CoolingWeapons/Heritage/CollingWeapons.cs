@@ -19,8 +19,6 @@ public class CollingWeapons : DistanceWeapon
     {
         this.enabled = false;
         SetData();
-        AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
-        AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
     }
 
     protected override void SetData()

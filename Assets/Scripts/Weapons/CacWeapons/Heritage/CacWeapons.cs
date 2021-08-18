@@ -107,7 +107,6 @@ public class CacWeapons : Weapons, IPlayerWeapon
         if (!PauseMenu.isGamePaused)
         {
             CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, dir);
-            PlayEffectSound(AttackSound);
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
             AttackAppliedOnEnemy(enemyHit);
             yield return new WaitForSeconds(attackDelay);

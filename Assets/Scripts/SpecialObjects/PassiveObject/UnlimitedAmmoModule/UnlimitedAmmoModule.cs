@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class UnlimitedAmmoModule : PassiveObjects
 {
-    
-    void Start()
-    {
-        DistanceWeapon.isUnlimitedAmmoModule = true;
-        
-    }
 
 
 }
