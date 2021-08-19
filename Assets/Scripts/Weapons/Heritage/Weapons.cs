@@ -3,7 +3,6 @@ using UnityEngine;
 /// <summary>
 /// Classe mère des armes 
 /// </summary>
-[RequireComponent(typeof(AudioSource))]
 public abstract class Weapons : MonoBehaviour
 {
 

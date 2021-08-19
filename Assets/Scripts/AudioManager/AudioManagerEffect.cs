@@ -22,8 +22,10 @@ public class AudioManagerEffect : Singleton<AudioManagerEffect>
         {
 			gameObjectSource.AddComponent(typeof(AudioSource));
         }
+		audioSource.outputAudioMixerGroup = s.mixerGroup;
 
-		audioSource.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		volumeScale =  s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+
 		audioSource.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
 		audioSource.PlayOneShot(s.clip, volumeScale);
