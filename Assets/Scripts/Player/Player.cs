@@ -478,13 +478,13 @@ public class Player : Characters
     {
         if (weaponManager == null)
             return;
+
         if (!isShooting)
         {
             isShooting = true;
 
             if (weaponManager.isPlayingDistance && weaponManager.distanceWeaponsList != null)
             { 
-                //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
                 weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = true;
 
             }
@@ -497,13 +497,10 @@ public class Player : Characters
         {
             if (weaponManager.isPlayingDistance)
             {
-                //weaponManager.GetComponentInChildren<DistanceWeapon>().toShoot();
                 weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = false;
-
-
             }
-            isShooting = false;
 
+            isShooting = false;
         }
 
 
@@ -514,7 +511,7 @@ public class Player : Characters
     {
         if (weaponManager.isPlayingDistance)
         {
-            weaponManager.GetComponentInChildren<DistanceWeapon>().toReload();
+            weaponManager.GetComponentInChildren<ShootableWeapon>().toReload();
         }
     }
 

@@ -1,23 +1,18 @@
-﻿using Edgar.Unity.Examples.PC2D.Example;
-using UnityEngine;
+﻿using UnityEngine;
 /// <summary>
 /// Classe mère des armes 
 /// </summary>
 public abstract class Weapons : MonoBehaviour
 {
-
-    protected AudioSource audioSource { get; private set; }
     protected string ShootAudioName { get; set; }
     protected string ReloadAudioName { get; set; }
 
-    protected GameObject playerGO;
-    protected Player player;
-    protected Animator animator;
-    public Transform attackPoint;
-    public bool isAttacking = false;
-
     protected float screenShakeMagnitude;
     protected float screenShakeTime;
+
+    protected Player player { get; private set; }
+    protected Animator animator { get; private set; }
+  
 
     // Offset de la postion de l'arme
     public float offSetX;
@@ -25,60 +20,53 @@ public abstract class Weapons : MonoBehaviour
 
     [HideInInspector]
     public Vector3 attackPointPos;
+    public Transform attackPoint;
+    public bool isAttacking = false;
 
-   
+    protected float damage;
 
-    #region Module
-    [HideInInspector]
-    public float damage;
-    [HideInInspector]
-    public static bool isTotalDestructionModule;
-    [HideInInspector]
-    public static float damageMultiplier;
-    [HideInInspector]
-    protected bool damagealReadyMult;
-    #endregion
-
-
-    #region Data variable
-    public LayerMask enemyLayer;
+    public LayerMask enemyLayer { get; protected set; }
     protected float attackDelay;
-    #endregion
+    public Sprite image { get; set; }
 
-
+    #region Unity Mono
     protected virtual void Awake()
     {
-        this.enabled = false;
+        SetData();
         GetReferences();
+        this.enabled = false;  
     }
-    protected virtual void Update()
+
+    protected virtual void Start()
     {
+        SetStatDatasAndInitialization();
     }
 
-    protected virtual void OnEnable()
-    { 
-        GetComponent<SpriteRenderer>().flipY = false;
-        GetComponent<SpriteRenderer>().flipX = false;
-        isAttacking = false;
-
-    }
-
-    public Sprite image { get;  set; }
     private void OnDisable()
     {
-        GetComponent<SpriteRenderer>().sprite = image;
-        
+        ResetWeaponState();
     }
+
+    protected virtual void ResetWeaponState()
+    {
+        isAttacking = false;
+        GetComponent<SpriteRenderer>().flipY = false;
+        GetComponent<SpriteRenderer>().flipX = false;
+        GetComponent<SpriteRenderer>().sprite = image;
+    }
+    #endregion
 
     #region References 
     protected virtual void GetReferences()
     {
         animator = gameObject.GetComponent<Animator>();
-        playerGO = GameObject.FindGameObjectWithTag("Player");
-        player = playerGO.GetComponent<Player>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         attackPointPos = attackPoint.transform.localPosition;
-        audioSource = GetComponent<AudioSource>();
     }
+
+    protected abstract void SetData();
+
+    protected abstract void SetStatDatasAndInitialization();
     #endregion
 
 }

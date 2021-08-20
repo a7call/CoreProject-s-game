@@ -1,11 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-
-public class DistanceWeapon : Weapons, IShootableWeapon
+public abstract class ShootableWeapon : Weapons, IShootableWeapon
 {
-       
     public WeaponScriptableObject WeaponData
     {
         get
@@ -15,30 +12,18 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     }
     public DistanceWeaponScriptableObject DistanceWeaponDataCast;
 
-    #region Unity Mono
-    protected override void Awake()
-    {
-        SetData();
-        base.Awake();
-    }
 
-    protected virtual void Start()
+    protected override void ResetWeaponState()
     {
-        SetStatDatas();
-        InitializeMag();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+        base.ResetWeaponState();
         IsReloading = false;
         OkToShoot = false;
     }
 
-    // Update is called once per frame
-    protected override void Update()
+    #region Unity Mono
+
+    protected void Update()
     {
-        base.Update();
 
         if (IsReloading)
             return;
@@ -48,7 +33,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
             StartCoroutine(Reload());
             return;
         }
-            
+
 
         StartShootingProcess();
     }
@@ -66,7 +51,7 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         BulletInMag = (int)magSize;
     }
 
-    protected virtual void SetData()
+    protected override void SetData()
     {
         projectile = DistanceWeaponDataCast.projectile;
         enemyLayer = WeaponData.enemyLayer;
@@ -77,14 +62,17 @@ public class DistanceWeapon : Weapons, IShootableWeapon
         ReloadAudioName = WeaponData.reloadAudioName;
     }
 
-    protected virtual void SetStatDatas()
-    {     
+    protected override void SetStatDatasAndInitialization()
+    {
         damage = player.damage.Value;
         attackDelay = player.attackSpeed.Value;
         dispersion = player.dispersion.Value;
+        ProjectileSpeed = player.projectileSpeed.Value;
         magSize = player.magSize.Value;
         reloadDelay = player.reloadSpeed.Value;
-        ammoStock = player.ammoStock.Value;      
+        ammoStock = player.ammoStock.Value;
+
+        InitializeMag();
     }
 
 
@@ -93,28 +81,29 @@ public class DistanceWeapon : Weapons, IShootableWeapon
     #region Shoot logic
 
     protected GameObject projectile;
-    protected PlayerProjectiles Proj;
-    protected float dispersion;
-
-    [HideInInspector]
+    protected PlayerProjectiles Proj { get; private set; }
+    protected float ProjectileSpeed { get; private set; }
+    protected float dispersion { get; private set; }
     public bool OkToShoot { get; set; }
 
-    float force = 100;
-    protected virtual IEnumerator Shoot()
+    protected abstract IEnumerator Shooting();
+    protected void Shoot()
     {
-        if (CameraController.instance != null) CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, (attackPoint.position - transform.position).normalized);
+        if (CameraController.instance != null)
+            CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, (attackPoint.position - transform.position).normalized);
 
-        float decalage = Random.Range(-dispersion, dispersion);      
-        Proj.dispersion = decalage;
-        BulletInMag--;
-        Instantiate(projectile, attackPoint.position, transform.rotation);
-        yield return new WaitForSeconds(player.attackSpeed.Value);
-        isAttacking = false;
+        StartCoroutine(Shooting());
+    }
+
+    protected void ProjectileSetUp(float dispersion)
+    {
+        GameObject instantiatedProjectile = Instantiate(projectile, attackPoint.position, transform.rotation);
+        instantiatedProjectile.GetComponent<PlayerProjectiles>().SetProjectileDatas(damage, dispersion, ProjectileSpeed, enemyLayer, player);
     }
 
     public bool IsAbleToShoot()
     {
-        return OkToShoot && !isAttacking  && BulletInMag > 0 && !PauseMenu.isGamePaused;
+        return OkToShoot && !isAttacking && BulletInMag > 0;
     }
 
     public void StartShootingProcess()
@@ -132,9 +121,9 @@ public class DistanceWeapon : Weapons, IShootableWeapon
             }
             else
             {
-                StartCoroutine(Shoot());
+                Shoot();
             }
-           
+
         }
     }
 
@@ -180,3 +169,4 @@ public class DistanceWeapon : Weapons, IShootableWeapon
 
     #endregion  
 }
+

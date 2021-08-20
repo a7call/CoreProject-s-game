@@ -27,14 +27,14 @@ public class ZoneProjectileBouleFeu : PlayerProjectiles
         Vector2 pos = transform.position;
         while (isActive)
         {
-            Collider2D[] enemies = Physics2D.OverlapCircleAll(pos, zoneRadius, weaponLayer);
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(pos, zoneRadius, WeaponLayer);
 
             yield return new WaitForSeconds(hitTimer);
             foreach (Collider2D enemyCol in enemies)
             {
                 if (enemyCol == null) continue;
                 Enemy enemy  = enemyCol.GetComponent<Enemy>();
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(Damage);
             }
            
         }

@@ -16,12 +16,6 @@ public class InteligentAmmoModule : PassiveObjects
         enemyLayer = enemyL;
         detectionRadius = detectionR;
     }
-    void Start()
-    {
-        PlayerProjectiles.isInteligentAmmoModule = true;
-    }
-
-   
 
     public static GameObject LockEnemy(GameObject proj)
     {

@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8399999305006020208}
   - component: {fileID: -1722993414655278476}
-  - component: {fileID: 6476964039208178378}
   - component: {fileID: 456542643550076314}
   - component: {fileID: 7865054324140275042}
   - component: {fileID: 191365392456108787}
+  - component: {fileID: 6465535377799767615}
   m_Layer: 6
   m_Name: Pompe3Proj
   m_TagString: Untagged
@@ -46,6 +46,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -86,21 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6476964039208178378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5004741095190017796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd451abdfd44341e8be866c962a1f5df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dispersion: 0
-  impactSound: 
-  angleDecalage: 15
 --- !u!61 &456542643550076314
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -167,3 +153,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6465535377799767615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004741095190017796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f406e5c07afbf4ca26e46bb6e98889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

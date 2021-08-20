@@ -7,18 +7,16 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
     [SerializeField] protected float explosionDelay;
     private Collider2D[] ennemies;
 
-     protected override void Update()
+     protected  void Update()
     {
-        base.Update();
-        ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, weaponLayer);
+        ennemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, WeaponLayer);
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);            //Modules
-            ModuleProcs(enemy);
+            enemy.TakeDamage(Damage);            //Modules
         }
         
         CoroutineManager.GetInstance().StartCoroutine(DelayedExplosion(ennemies, collision));
@@ -40,12 +38,8 @@ public class ExplosionProjectileDelayed : ExplosionProjectile
             {
                 if (enemy == null) continue;
                 Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
-                if (isNuclearExplosionModule)
-                {
-                    CoroutineManager.GetInstance().StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemyScript));
-                }
                 if (enemy == null || enemy == collision) continue;
-                enemyScript.TakeDamage(damage);
+                enemyScript.TakeDamage(Damage);
                
             }
         }

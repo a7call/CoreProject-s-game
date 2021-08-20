@@ -18,13 +18,7 @@ public class ExplosiveAmoModule : PassiveObjects
         explosiveRadius = explosiveR;
         hitLayer = hitL;
     }
-    private void Start()
-    {
-        PlayerProjectiles.isExplosiveAmo = true;
-        PlayerProjectiles.explosiveRadius = explosiveRadius;
-        PlayerProjectiles.hitLayer = hitLayer;
-        PlayerProjectiles.explosionDamage = explosionDamge;
-    }
+
 
     public static void explosionFnc(GameObject gameObject)
     {

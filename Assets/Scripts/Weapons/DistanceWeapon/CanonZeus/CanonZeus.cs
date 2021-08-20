@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanonZeus : DistanceWeapon
+public class CanonZeus : BaseShootableWeapon
 {
 
     [SerializeField] protected float radius;
@@ -27,12 +27,7 @@ public class CanonZeus : DistanceWeapon
     //    image = DistanceWeaponData.image;
     //}
 
-    protected override void Update()
-    {
-        dirTir = (attackPoint.position - GetComponentInParent<Transform>().position).normalized;
-        base.Update();
-    }
-    protected override IEnumerator Shoot()
+    protected override IEnumerator Shooting()
     {
         if (!isAttacking && BulletInMag > 0 && !IsReloading)
         {
@@ -62,8 +57,4 @@ public class CanonZeus : DistanceWeapon
         }
     }
 
-    public void OnDrawGizmos()
-    {
-
-    }
 }

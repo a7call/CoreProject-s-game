@@ -8,11 +8,6 @@ public class NanoRobotModule : CdObjects
     public static List<Enemy> enemiesTouched = new List<Enemy>();
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float damage = 0f;
-    protected override void Start()
-    {
-        base.Start();
-        PlayerProjectiles.isNanoRobotModule = true;
-    }
     protected override void Update()
     {
         base.Update();
