@@ -15,6 +15,8 @@ public static class EnemyConst
     public const string FLEE_BOOL_CONST = "isFleeing";
     public const string DEATH_BOOL_CONST = "isDying";
 
+    //Name
+    public const string SPAWN_ANIMATION_NAME = "Spawn";
 
     #endregion
 

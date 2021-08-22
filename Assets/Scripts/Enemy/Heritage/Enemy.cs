@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 
+[RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public abstract class Enemy : Characters
 {
     #region Room && dungeon related
@@ -46,7 +47,7 @@ public abstract class Enemy : Characters
     protected override void Awake()
     {
         base.Awake();
-        SetState(new PatrollingState(this));
+        SetState(new SpawningState(this));
     }
 
     protected override void GetReference()

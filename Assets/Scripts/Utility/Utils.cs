@@ -79,6 +79,14 @@ namespace Wanderer.Utils
         public static float GetAnimationClipDurantion(string name, Animator animator, float timeToRemove = 0f)
         {
             var clip = Utils.GetAnimationClip(name, animator);
+
+            if (clip == null)
+            {
+                Debug.LogWarning("l'animation : " + name + " n'existe pas pour " + animator.gameObject);
+                return 0f;
+            }
+                
+
             return clip.length - timeToRemove;
         }
 

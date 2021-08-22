@@ -15,7 +15,7 @@ public class AudioManagerMusic : Singleton<AudioManagerMusic>
 
 	private void Start()
 	{
-		Play("Music1V2");
+		Play("SpaceShipTheme");
 	}
 
     public void Play(string sound, ulong delay = 0)
