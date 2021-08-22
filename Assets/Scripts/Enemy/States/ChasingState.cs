@@ -12,9 +12,9 @@ public class ChasingState : AIState
     }
     public override IEnumerator StartState()
     {
-        yield return null;
         AICharacter.StartChasingState();
-        AICharacter.AIMouvement.target = AICharacter.AIMouvement.Player;  
+        AICharacter.AIMouvement.target = AICharacter.AIMouvement.Player;
+        yield return null;
     }
 
     public override void UpdateState()
