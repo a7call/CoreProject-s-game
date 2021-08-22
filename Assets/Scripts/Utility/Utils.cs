@@ -127,13 +127,35 @@ namespace Wanderer.Utils
             
         }
 
-        
+        public static void AddAnimationCurve(string _nameOfAnimationClip, Animator _animator, Keyframe _keyframeArray, string _relativePath, System.Type _type, string _propertyName)
+        {
+            AnimationClip Clip = GetAnimationClip(_nameOfAnimationClip, _animator);
+            AnimationCurve curve = new AnimationCurve(_keyframeArray);
+            Clip.SetCurve(_relativePath, _type, _propertyName, curve);
+        }
+
 
         #region Particule System
         public static void TogglePs(ParticleSystem ps, bool enabled)
         {
             var psEmission = ps.emission;
             psEmission.enabled = enabled;
+        }
+
+        #endregion
+
+        #region GameObject 
+
+        public static GameObject FindGameObjectInChildWithTag(GameObject _parent, string _tag)
+        {
+            Transform transform = _parent.transform;
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).gameObject.tag == _tag) return transform.GetChild(i).gameObject;
+            }
+
+            return null;
         }
 
         #endregion

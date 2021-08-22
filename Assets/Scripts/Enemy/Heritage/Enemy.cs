@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System;
+using Wanderer.Utils;
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public abstract class Enemy : Characters
@@ -57,6 +58,7 @@ public abstract class Enemy : Characters
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         Player = target.GetComponent<Player>();
+        hitParticleSystem = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitParticleSystem").GetComponent<ParticleSystem>();
     }
 
     private void RigidBodySetUp()
@@ -169,9 +171,14 @@ public abstract class Enemy : Characters
             isAttacking = true;
             animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, true);
             // Attack Executed by animation event.
-            
         }
     }
+
+    private void PlayHitAnim()
+    {
+        animator.SetTrigger(EnemyConst.HIT_TRIGGER_CONST);
+    }
+
     #endregion
 
 
@@ -203,7 +210,10 @@ public abstract class Enemy : Characters
         {
             ability.ApplyEffect(this);
         }
-           
+
+        PlayHitAnim();
+        //Utils.AddAnimationCurve(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name, animator, new Keyframe(1,1), "", typeof(Transform), "localPosition.y");
+        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         base.TakeDamage(damage, damageSource);
 
     }

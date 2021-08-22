@@ -14,6 +14,7 @@ public static class EnemyConst
     public const string DIRECTION_Y_CONST = "lastMoveY";
     public const string FLEE_BOOL_CONST = "isFleeing";
     public const string DEATH_BOOL_CONST = "isDying";
+    public const string HIT_TRIGGER_CONST = "isHit";
 
     //Name
     public const string SPAWN_ANIMATION_NAME = "Spawn";
