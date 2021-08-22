@@ -22,16 +22,16 @@ public class LaserGun : Weapons, IShootableWeapon
         base.Awake();
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         lineRenderer = GetComponentInChildren<LineRenderer>(); 
         DisableLaser();
     }
 
     // Update is called once per frame
-    protected override void Update()
+    protected void Update()
     {
-        base.Update();
         if (!OkToShoot)
         {
             DisableLaser();
@@ -48,7 +48,7 @@ public class LaserGun : Weapons, IShootableWeapon
     #endregion
 
     #region Datas
-    protected virtual void SetData()
+    protected override void SetData()
     {
         enemyLayer = WeaponData.enemyLayer;
         image = WeaponData.image;
@@ -111,5 +111,9 @@ public class LaserGun : Weapons, IShootableWeapon
         return OkToShoot && !isAttacking  && !PauseMenu.isGamePaused;
     }
     #endregion
+    protected override void SetStatDatasAndInitialization()
+    {
+        // NOTHING TO DO FOR NOW
+    }
 
 }

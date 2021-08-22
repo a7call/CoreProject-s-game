@@ -56,13 +56,8 @@ public class CacWeapons : Weapons, IPlayerWeapon
 
     }
 
-    private void Start()
+    protected  void Update()
     {
-        SetStatDatas();
-    }
-    protected override void Update()
-    {
-        base.Update();
         GetKnockBackDir();
     }
     private void OnDrawGizmosSelected()
@@ -74,13 +69,13 @@ public class CacWeapons : Weapons, IPlayerWeapon
     }
 
     #region Datas
-    private void SetData()
+    protected override void SetData()
     {
         enemyLayer = WeaponData.enemyLayer;
         image = WeaponData.image;
     }
 
-    private void SetStatDatas()
+    protected override void SetStatDatasAndInitialization()
     {
         
         damage = player.damage.Value;
@@ -107,7 +102,6 @@ public class CacWeapons : Weapons, IPlayerWeapon
         if (!PauseMenu.isGamePaused)
         {
             CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, dir);
-            PlayEffectSound(AttackSound);
             Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, enemyLayer);
             AttackAppliedOnEnemy(enemyHit);
             yield return new WaitForSeconds(attackDelay);

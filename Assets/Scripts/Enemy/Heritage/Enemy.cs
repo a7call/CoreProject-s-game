@@ -57,7 +57,6 @@ public abstract class Enemy : Characters
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         Player = target.GetComponent<Player>();
-        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
         hitParticleSystem = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitParticleSystem").GetComponent<ParticleSystem>();
     }
 
@@ -228,14 +227,4 @@ public abstract class Enemy : Characters
 
     #endregion
 
-    #region sound
-
-    [SerializeField] protected string fireSound;
-
-    protected void FireSound()
-    {
-        if (audioManagerEffect != null)
-            audioManagerEffect.Play(fireSound);
-    }
-    #endregion
 }

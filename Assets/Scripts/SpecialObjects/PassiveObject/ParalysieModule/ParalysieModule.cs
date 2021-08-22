@@ -18,10 +18,6 @@ public class ParalysieModule : PassiveObjects
         ParaTimer = ParaT;
         isParaActive = isParalysieActive;
     }
-    private void Start()
-    {
-        PlayerProjectiles.isParaModule = true;
-    }
 
     public static IEnumerator ParaCo(Enemy enemy)
     {

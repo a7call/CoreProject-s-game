@@ -13,20 +13,19 @@ public class BouleEnergie : PlayerProjectiles
 
 
 
-    protected override void Launch()
-    {
-        directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
-        rb.AddForce(directionTir * Force);
-        StartCoroutine(ExplosionDelayCo());
+    //protected override void Launch()
+    //{
+    //    var directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * transform.right;
+    //    rb.AddForce(directionTir * Force);
+    //    StartCoroutine(ExplosionDelayCo());
         
-    }
+    //}
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
-            ModuleProcs(enemy);
+            enemy.TakeDamage(Damage);
             Explosion();
         }
     }
@@ -34,10 +33,6 @@ public class BouleEnergie : PlayerProjectiles
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         return; 
-    }
-    protected override void ModuleProcs(Enemy enemy)
-    {
-        
     }
 
     protected IEnumerator ExplosionDelayCo()
@@ -49,7 +44,7 @@ public class BouleEnergie : PlayerProjectiles
     protected void Explosion()
     {
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius, weaponLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius, WeaponLayer);
         
         foreach (Collider2D hit in hits)
         {
@@ -66,10 +61,6 @@ public class BouleEnergie : PlayerProjectiles
     protected void ExplosionEffects(Enemy enemy)
     {
         Vector3 Direction = (enemy.transform.position - gameObject.transform.position).normalized;
-        if (PlayerProjectiles.isNuclearExplosionModule)
-        {
-            CoroutineManager.GetInstance().StartCoroutine(NuclearExplosionModule.NuclearDotCo(enemy));
-        }
         enemy.TakeDamage(ExploDamage);
         
 

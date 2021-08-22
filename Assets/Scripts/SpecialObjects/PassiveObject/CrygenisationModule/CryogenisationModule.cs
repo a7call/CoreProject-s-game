@@ -13,10 +13,6 @@ public class CryogenisationModule : PassiveObjects
         cryoTimer = cryoT;
         slowMutliplier = slowM;
     }
-    private void Start()
-    {
-        PlayerProjectiles.isCryoModule = true;
-    }
 
     public static IEnumerator CryoCo(Enemy enemy)
     {

@@ -1,87 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
-
+﻿using UnityEngine;
 public class PlayerProjectiles : MonoBehaviour
 {
-
-    protected GameObject playerGO;
-    protected Player player;
-    protected WeaponsManagerSelected weaponManager;
-    protected Weapons weapon;
+    protected Player Player { get; private set; }
     protected Rigidbody2D rb;
 
 
     #region Stats
-    protected float damage;
-    protected float knockBackForce;
-    protected float knockBackTime;
-    protected float projectileSpeed;
-    [HideInInspector]
-    public float dispersion;
-    protected LayerMask weaponLayer;
+    public float Damage { get; private set; }
+    public float ProjectileSpeed { get; private set; }
+    public float Dispersion { get; private set; }
+    public LayerMask WeaponLayer { get; private set; }
     #endregion
 
-    
 
 
     protected virtual void Awake()
-    {
-        
+    {        
         GetReferences();
-        SetData();
-        
+    }
+    protected void GetReferences()
+    {
+        rb = GetComponent<Rigidbody2D>();
     }
     protected virtual void Start()
     {
-        Launch();
-
+        Launch(Dispersion);
     }
 
-    protected virtual void Update()
+    #region Reférences
+    public void SetProjectileDatas(float damage, float dispersion, float projectileSpeed, LayerMask WeaponLayer, Player player)
     {
-
-        if (isInteligentAmmoModule)
-        {
-            getNewDir(this.gameObject);
-        }
-
-
+        this.Damage = damage;
+        this.Dispersion = dispersion;
+        this.Player = player;
+        this.ProjectileSpeed = projectileSpeed;
+        this.WeaponLayer = WeaponLayer;
     }
-
-
-    #region Datas && reférences
-
-    protected void GetReferences()
-    {
-        playerGO = GameObject.FindGameObjectWithTag("Player");
-        player = playerGO.GetComponent<Player>();
-        weaponManager = playerGO.transform.GetComponentInChildren<WeaponsManagerSelected>();
-        weapon = weaponManager.gameObject.transform.GetComponentInChildren<Weapons>();
-        rb = GetComponent<Rigidbody2D>();
-        audioManagerEffect = FindObjectOfType<AudioManagerEffect>();
-    }
-
-    void SetData()
-    {
-        damage = player.damage.Value;
-        knockBackTime = player.knockBackTime.Value;
-        projectileSpeed = player.projectileSpeed.Value;
-        knockBackForce = player.knockBackForce.Value;
-        weaponLayer = weapon.enemyLayer;
-    }
+   
     #endregion
 
    
-    #region Move logic
-    protected Vector3 directionTir;
-    protected virtual void Launch()
+    #region Move logic  
+    protected virtual void Launch(float dispersion)
     {
-
-        directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
-        rb.velocity = directionTir * projectileSpeed;
-        
+        var directionTir = Quaternion.AngleAxis(dispersion, Vector3.forward) * transform.right;
+        rb.velocity = directionTir.normalized * ProjectileSpeed;      
     }
     #endregion
 
@@ -90,96 +53,40 @@ public class PlayerProjectiles : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        ImpactSound();
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.TakeDamage(damage, player.gameObject);            
-            //Modules
-            ModuleProcs(enemy);
+            enemy.TakeDamage(Damage, Player.gameObject);            
         }
          Destroy(gameObject);
     }
     #endregion
 
-    #region Sound
-
-    protected AudioManagerEffect audioManagerEffect;
-    [SerializeField] protected string impactSound;
-
-    protected void ImpactSound()
-    {
-
-    if (audioManagerEffect != null)
-            audioManagerEffect.Play(impactSound);
-    }
-    #endregion
-
-
-    #region Module
-    public static bool isNuclearExplosionModule;
-    public static bool isAtomiqueExplosionModule;
-    public static float explosionDamageMultiplier;
-
-    // ExplosionModule
-    public static bool isExplosiveAmo = false;
-    public static float explosiveRadius;
-    public static LayerMask hitLayer;
-    public static int explosionDamage;
-
-    //ImolationModule
-    public static bool isImolationModule = false;
-
-    //CryoModule
-    public static bool isCryoModule = false;
-
-    //ParaModule
-    public static bool isParaModule = false;
-
-    //InteligentAmoModule
-    public static bool isInteligentAmmoModule = false;
-    //NanoRobotModule
-    public static bool isNanoRobotModule = false;
-
-    //RocketAmmoModule
-    [HideInInspector]
-    protected bool AmmoSpeedAlreadyUp = false;
-    [HideInInspector]
-    public static bool isRocketAmmoModule;
-    [HideInInspector]
-    public static float SpeedMultiplier;
-    protected virtual void ModuleProcs(Enemy enemy)
-    {
-
-
-    }
+    #region Lost Code to keep
 
     //IntelligentAmoModule
-    private float angulSpeed = 200f;
-    private GameObject lockEnemy;
-    public void getNewDir(GameObject proj)
-    {
-        if (InteligentAmmoModule.LockEnemy(proj) != null) lockEnemy = InteligentAmmoModule.LockEnemy(proj);
-        if (lockEnemy != null)
-        {
-            if (lockEnemy == null) return;
-            Vector2 direction = (lockEnemy.transform.position - proj.transform.position);
-            direction.Normalize();
-            float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
-            rb.angularVelocity = -rotationAmount * angulSpeed;
-            rb.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * projectileSpeed;
-            angulSpeed += 2;
-        }
-        else
-        {
-            Launch();
-        }
+    //private float angulSpeed = 200f;
+    //private GameObject lockEnemy;
+    //public void getNewDir(GameObject proj)
+    //{
+    //    if (InteligentAmmoModule.LockEnemy(proj) != null) lockEnemy = InteligentAmmoModule.LockEnemy(proj);
+    //    if (lockEnemy != null)
+    //    {
+    //        if (lockEnemy == null) return;
+    //        Vector2 direction = (lockEnemy.transform.position - proj.transform.position);
+    //        direction.Normalize();
+    //        float rotationAmount = Vector3.Cross(direction, (transform.up * directionTir.y + transform.right * directionTir.x)).z;
+    //        rb.angularVelocity = -rotationAmount * angulSpeed;
+    //        rb.velocity = (transform.up * directionTir.y + transform.right * directionTir.x) * projectileSpeed;
+    //        angulSpeed += 2;
+    //    }
+    //    else
+    //    {
+    //        Launch();
+    //    }
 
 
-    }
+    //}
     #endregion
-
-
-
 
 }

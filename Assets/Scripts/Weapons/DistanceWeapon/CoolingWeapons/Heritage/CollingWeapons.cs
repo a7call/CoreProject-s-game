@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CollingWeapons : DistanceWeapon
+public class CollingWeapons : BaseShootableWeapon
 {
     public CollingWeaponScriptableObject CollingWeaponScriptable;
     protected int count =0;
@@ -19,8 +19,6 @@ public class CollingWeapons : DistanceWeapon
     {
         this.enabled = false;
         SetData();
-        AmmoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
-        AmmoStockText = GameObject.FindGameObjectWithTag("AmmoStockText").GetComponent<Text>();
     }
 
     protected override void SetData()

@@ -15,11 +15,6 @@ public class NuclearExplosionModule : PassiveObjects
         nuclearDotDamage = nuclearDotD;
         nuclearDotTimer = nuclearDotT;
     }
-    private void Start()
-    {
-        PlayerProjectiles.isNuclearExplosionModule = true;
-        PlayerProjectiles.explosionDamageMultiplier = explosionDamageMultiplier;
-    }
     public static IEnumerator NuclearDotCo(Enemy enemy)
     {
         while (true)

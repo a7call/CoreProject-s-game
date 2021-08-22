@@ -11,21 +11,21 @@ using UnityEngine;
 
 public class Faux : CacWeapons
 {
-    protected override void Update()
-    {
-        base.Update();
-        if (Input.GetKeyDown(KeyCode.T) && !isCleaving)
-        {
-            AngleCalcule();
-            isCleaving = true;
-        }
-        if (isCleaving)
-        {
-            Cleave();
-            EnnemiDectectionCleave();
-        }
-       // if (!isCleaving) GetAttackDirection();
-    }
+    //protected override void Update()
+    //{
+    //    base.Update();
+    //    if (Input.GetKeyDown(KeyCode.T) && !isCleaving)
+    //    {
+    //        AngleCalcule();
+    //        isCleaving = true;
+    //    }
+    //    if (isCleaving)
+    //    {
+    //        Cleave();
+    //        EnnemiDectectionCleave();
+    //    }
+    //   // if (!isCleaving) GetAttackDirection();
+    //}
 
     [SerializeField]
     float rotationRadius = 0.5f, angularSpeed = 2f, rotationTime = 0f;

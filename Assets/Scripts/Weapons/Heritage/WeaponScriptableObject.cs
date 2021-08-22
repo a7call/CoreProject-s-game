@@ -5,6 +5,9 @@ using Wanderer.CharacterStats;
 
 public abstract class WeaponScriptableObject : Item
 {
+    public string shootAudioName;
+    public string reloadAudioName;
+
     public float damage;
     public float delayBetweenAttack;
     public LayerMask enemyLayer;

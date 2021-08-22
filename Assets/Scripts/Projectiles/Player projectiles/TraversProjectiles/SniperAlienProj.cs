@@ -13,10 +13,8 @@ public class SniperAlienProj : TraversProjectile
         {
             
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(Damage);
             CoroutineManager.GetInstance().StartCoroutine(KryptoHit(enemy));
-            //Modules
-            ModuleProcs(enemy);
 
             nbTravers++;
             if (nbTravers >= nbTraversAuthorized)

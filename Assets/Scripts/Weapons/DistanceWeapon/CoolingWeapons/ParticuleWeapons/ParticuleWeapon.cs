@@ -8,17 +8,17 @@ public class ParticuleWeapon : CollingWeapons
     protected float radius = 1f;
 
 
-    protected override void Update()
-    {
-        base.Update();
-        if (!isAttacking && !IsCooling)
-        {
-            StartCoroutine(CoolDelay());
-        }
-        ActualShoot();
+    //protected  void Update()
+    //{
+    //    base.Update();
+    //    if (!isAttacking && !IsCooling)
+    //    {
+    //        StartCoroutine(CoolDelay());
+    //    }
+    //    ActualShoot();
 
 
-    }
+    //}
 
     protected virtual void ActualShoot()
     {
@@ -49,7 +49,7 @@ public class ParticuleWeapon : CollingWeapons
 
         }
     }
-    protected override IEnumerator Shoot()
+    protected override IEnumerator Shooting()
     {
         if (!isAttacking && !IsToHot)
         {

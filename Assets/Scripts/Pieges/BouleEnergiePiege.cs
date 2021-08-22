@@ -35,7 +35,6 @@ public class BouleEnergiePiege : HeritagePiege
         ProjectilePiege scriptProj = projectile.GetComponent<ProjectilePiege>();
         scriptProj.directionTir = (attackPoint.transform.position - transform.position).normalized;
         Instantiate(projectile, attackPoint.position, transform.rotation);
-        PlayEffectSound(FireSound);
     }
 
 }

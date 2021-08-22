@@ -209,7 +209,7 @@ public class WeaponsManagerSelected : MonoBehaviour
         weapon.GetComponent<IPlayerWeapon>().WeaponData.Equip(transform.parent.GetComponent<Player>());
         if(weapon.GetComponent<CacWeapons>())
             previousCaCWeap = weapon;
-        if (weapon.GetComponent<DistanceWeapon>())
+        if (weapon.GetComponent<BaseShootableWeapon>())
             previousDistanceWeap = weapon;
     }
 
@@ -294,8 +294,8 @@ public class WeaponsManagerSelected : MonoBehaviour
             if (i == selectedDistanceWeapon)
             {
                 distanceSprite = distanceWeaponsList[i].GetComponent<Weapons>().image;
-                if(distanceWeaponsList[i].GetComponent<DistanceWeapon>())
-                ammoText = distanceWeaponsList[i].GetComponent<DistanceWeapon>().BulletInMag.ToString();
+                if(distanceWeaponsList[i].GetComponent<BaseShootableWeapon>())
+                ammoText = distanceWeaponsList[i].GetComponent<BaseShootableWeapon>().BulletInMag.ToString();
             }
         }
     }
@@ -305,7 +305,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     #region Weapon rotation
     protected Weapons _weapons;
     protected CacWeapons cacWeapons;
-    protected DistanceWeapon distanceWeapons;
+    protected BaseShootableWeapon distanceWeapons;
     protected SpriteRenderer spriteRenderer;
 
     Vector3 PositionArme = Vector3.zero;
@@ -414,7 +414,7 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     private void SetRightDistanceAttackPointPos()
     {
-        if(_weapons is DistanceWeapon)
+        if(_weapons is BaseShootableWeapon)
         {
             if (!spriteRenderer.flipY)
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);

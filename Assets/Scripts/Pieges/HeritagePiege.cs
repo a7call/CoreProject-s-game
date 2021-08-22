@@ -27,15 +27,5 @@ public class HeritagePiege : MonoBehaviour
 
     #region Sound
 
-    //Sounds
-    protected AudioManagerEffect audioManagerEffect;
-
-
-    protected void PlayEffectSound(string SoundToPlay)
-    {
-        if (audioManagerEffect != null)
-            audioManagerEffect.Play(SoundToPlay);
-    }
-
     #endregion
 }
