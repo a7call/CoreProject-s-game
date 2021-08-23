@@ -4,19 +4,17 @@ using UnityEngine;
 public class Pompe : ShootableWeapon
 {
 
-    private int numberOfProj = 3;
-    private int angleTir = 10;
+    private int numberOfProj = 5;
+
 
     protected override IEnumerator Shooting()
     {
-        float decalage = angleTir / (numberOfProj - 1);
-        var startDecalageAngle= -decalage * (numberOfProj + 1) / 2;
-        
+        BulletInMag--;
         for (int i = 0; i < numberOfProj; i++)
         {
-            startDecalageAngle += decalage;
-            ProjectileSetUp(startDecalageAngle);
-            BulletInMag--;
+            float Dispersion = Random.Range(-dispersion, dispersion);
+            float projectileSpeed = Random.Range(ProjectileSpeed - 2, ProjectileSpeed);
+            ProjectileSetUp(Dispersion, damage, projectileSpeed, enemyLayer);           
         }
         yield return new WaitForSeconds(attackDelay);
         isAttacking = false;

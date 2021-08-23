@@ -7,7 +7,7 @@ public class BaseShootableWeapon : ShootableWeapon
     {
         BulletInMag--;
         float Dispersion = Random.Range(-dispersion, dispersion);
-        ProjectileSetUp(Dispersion);
+        ProjectileSetUp(Dispersion, damage, ProjectileSpeed, enemyLayer);
         yield return new WaitForSeconds(player.attackSpeed.Value);
         isAttacking = false;
     }

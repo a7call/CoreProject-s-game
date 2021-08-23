@@ -95,10 +95,10 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
         StartCoroutine(Shooting());
     }
 
-    protected void ProjectileSetUp(float dispersion)
+    protected void ProjectileSetUp(float dispersion, float damage, float projectileSpeed, LayerMask enemyLayer)
     {
         GameObject instantiatedProjectile = Instantiate(projectile, attackPoint.position, transform.rotation);
-        instantiatedProjectile.GetComponent<PlayerProjectiles>().SetProjectileDatas(damage, dispersion, ProjectileSpeed, enemyLayer, player);
+        instantiatedProjectile.GetComponent<PlayerProjectiles>().SetProjectileDatas(damage, dispersion, projectileSpeed, enemyLayer, player);
     }
 
     public bool IsAbleToShoot()

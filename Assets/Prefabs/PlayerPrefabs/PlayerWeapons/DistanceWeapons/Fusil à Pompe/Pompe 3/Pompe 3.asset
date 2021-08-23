@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootAudioName: ShotGun
   reloadAudioName: ShotGunReload
-  damage: 2
-  delayBetweenAttack: 0.45
+  damage: 1
+  delayBetweenAttack: 0.3
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -24,9 +24,9 @@ MonoBehaviour:
   knockBackTime: 0.3
   screenShakeMagnitude: 0.15
   screenShakeTime: 0.025
-  projectile: {fileID: 5004741095190017796, guid: 0388bf0e6668b409f821c669eff8be1d, type: 3}
-  dispersion: 0
-  magSize: 30
-  reloadDelay: 2
-  ammoStock: 150
+  projectile: {fileID: 1232681943583305228, guid: 5bf7bfe884f08774fb880291ba0e55e3, type: 3}
+  dispersion: 10
+  magSize: 2
+  reloadDelay: 1
+  ammoStock: 80
   projectileSpeed: 16

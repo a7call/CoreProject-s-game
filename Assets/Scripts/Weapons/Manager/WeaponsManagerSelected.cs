@@ -27,6 +27,8 @@ public class WeaponsManagerSelected : MonoBehaviour
     private void Start()
     {
         SelectWeapon();
+        if(transform.GetChild(0) != null)
+            UseWeapon(transform.GetChild(0).gameObject);
     }
 
     private void Update()
@@ -42,49 +44,43 @@ public class WeaponsManagerSelected : MonoBehaviour
         
     }
 
+    void UseWeapon(GameObject weaponObj)
+    {
+        weaponObj.transform.parent = gameObject.transform;
+        weaponObj.GetComponent<Weapons>().enabled = true;
+        Weapons _weapons = gameObject.GetComponent<Weapons>();
+        weaponObj.transform.localPosition = PositionArme;
+
+        weaponObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        weaponObj.transform.gameObject.SetActive(false);
+        weaponObj.GetComponent<Collider2D>().enabled = false;
+
+        if (transform.childCount == 1)
+        {
+            EquipeWeapon(transform.GetChild(0).gameObject);
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                UnEquipWeapon(transform.GetChild(i).gameObject);
+            }
+            EquipeWeapon(transform.GetChild(transform.childCount - 1).gameObject);
+
+        }
+
+        isPlayingDistance = true;
+        isPlayingCac = false;
+        selectedDistanceWeapon = transform.childCount - 1;
+        distanceWeaponsList.Add(weaponObj);
+
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("CacWeapon") || collision.CompareTag("DistanceWeapon"))
         {
-            collision.transform.parent = gameObject.transform;
-            collision.GetComponent<Weapons>().enabled = true;
-            Weapons _weapons = collision.GetComponent<Weapons>();
-            collision.transform.localPosition = PositionArme;
-
-            collision.transform.rotation = Quaternion.Euler(0, 0,0);
-            collision.transform.gameObject.SetActive(false);
-            collision.GetComponent<Collider2D>().enabled = false;
-            
-        
-
-            if (transform.childCount == 1)
-            {
-                EquipeWeapon(transform.GetChild(0).gameObject);
-            }
-            else
-            {
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    UnEquipWeapon(transform.GetChild(i).gameObject);
-                }
-                EquipeWeapon(transform.GetChild(transform.childCount - 1).gameObject);
-
-            }
-
-            if (collision.CompareTag("CacWeapon"))
-            {
-                isPlayingCac = true;
-                isPlayingDistance = false;
-                selectedCacWeapon = transform.childCount - 1;
-                cacWeaponsList.Add(collision.gameObject);
-            }
-            else
-            {
-                isPlayingDistance = true;
-                isPlayingCac = false;
-                selectedDistanceWeapon = transform.childCount - 1;
-                distanceWeaponsList.Add(collision.gameObject);
-            } 
+            UseWeapon(collision.gameObject);
         }
     }
 
@@ -94,29 +90,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     GameObject previousCaCWeap;
     private void SelectWeapon()
     {
-      
-        int i = 0;
         int j = 0;
-        if (isPlayingCac == true)
-        {
-            foreach (GameObject weapon in cacWeaponsList)
-            {
-                if (i == selectedCacWeapon)
-                {
-                    EquipeWeapon(weapon);
-                }
-                else
-                {
-                    UnEquipWeapon(weapon);
-                }
-                i++;
-            }
-            foreach(GameObject weapon in distanceWeaponsList)
-            {
-                UnEquipWeapon(weapon);
-            }
-        }
-
         if (isPlayingDistance == true)
         {
             foreach (GameObject weapon in distanceWeaponsList)
