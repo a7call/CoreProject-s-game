@@ -14,7 +14,7 @@ public class Pompe : ShootableWeapon
         {
             float Dispersion = Random.Range(-dispersion, dispersion);
             float projectileSpeed = Random.Range(ProjectileSpeed - 2, ProjectileSpeed);
-            ProjectileSetUp(Dispersion, damage, projectileSpeed, enemyLayer);           
+            ProjectileSetUp(Dispersion, damage, projectileSpeed, enemyLayer,0.5f);           
         }
         yield return new WaitForSeconds(attackDelay);
         isAttacking = false;

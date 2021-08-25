@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 public class PlayerProjectiles : MonoBehaviour
 {
     protected Player Player { get; private set; }
@@ -28,13 +29,20 @@ public class PlayerProjectiles : MonoBehaviour
     }
 
     #region Reférences
-    public void SetProjectileDatas(float damage, float dispersion, float projectileSpeed, LayerMask WeaponLayer, Player player)
+    public void SetProjectileDatas(float damage, float dispersion, float projectileSpeed, LayerMask WeaponLayer, Player player, float timeAlive)
     {
         this.Damage = damage;
         this.Dispersion = dispersion;
         this.Player = player;
         this.ProjectileSpeed = projectileSpeed;
         this.WeaponLayer = WeaponLayer;
+        StartCoroutine(DetroyProjectileCo(timeAlive));
+    }
+
+    IEnumerator DetroyProjectileCo(float timeAlive)
+    {
+        yield return new WaitForSeconds(timeAlive);
+        Destroy(gameObject);
     }
    
     #endregion
