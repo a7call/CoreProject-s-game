@@ -85,6 +85,7 @@ namespace Edgar.Unity.Examples
 
                 case RoomState.CurrentlyUsed:
                     //Init Combat phase
+                    AudioManagerMusic.GetInstance().ChangeMusic(AudioConst.SPACE_SHIP_COMBAT_MUSIC_NAME, AudioConst.TRANSITION_DURATION);
                     StartCoroutine(RoomSpawn());
                     CloseRoom();
                     break;
@@ -182,7 +183,11 @@ namespace Edgar.Unity.Examples
             }
 
             if (instansiatedMonster.Count <= 0 &&  room.roomState != RoomState.Cleared)
+            {
+                AudioManagerMusic.GetInstance().ChangeMusic(AudioConst.SPACE_SHIP_THEME_MUSIC_NAME, AudioConst.TRANSITION_DURATION);
                 room.SetRoomState(RoomState.Cleared);
+            }
+                
         }
         #endregion
 
