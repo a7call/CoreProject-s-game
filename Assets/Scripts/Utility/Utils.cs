@@ -127,13 +127,6 @@ namespace Wanderer.Utils
             
         }
 
-        public static void AddAnimationCurve(string _nameOfAnimationClip, Animator _animator, Keyframe _keyframeArray, string _relativePath, System.Type _type, string _propertyName)
-        {
-            AnimationClip Clip = GetAnimationClip(_nameOfAnimationClip, _animator);
-            AnimationCurve curve = new AnimationCurve(_keyframeArray);
-            Clip.SetCurve(_relativePath, _type, _propertyName, curve);
-        }
-
 
         #region Particule System
         public static void TogglePs(ParticleSystem ps, bool enabled)

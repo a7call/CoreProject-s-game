@@ -212,8 +212,6 @@ public abstract class Enemy : Characters
         }
 
         PlayHitAnim();
-        //Utils.AddAnimationCurve(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name, animator, new Keyframe(1,1), "", typeof(Transform), "localPosition.y");
-        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         base.TakeDamage(damage, damageSource);
 
     }
