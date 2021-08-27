@@ -8,12 +8,12 @@ public class RafaleBalayage : RafaleDistance
     protected int i = 0; //compteur pour le while
     protected float decalage;
 
-    protected override IEnumerator ShootCO()
-    {
+    //protected override IEnumerator ShootCO()
+    //{
 
-        yield return StartCoroutine(intervalleTir());
-        
-    }
+    //    yield return StartCoroutine(intervalleTir());
+
+    //}
 
     protected override IEnumerator intervalleTir()
     {

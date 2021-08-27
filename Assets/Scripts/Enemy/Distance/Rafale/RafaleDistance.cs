@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class RafaleDistance : DistanceWithWeapon
+public class RafaleDistance : UnDeadMecaDistance
 {
     //[SerializeField] protected RafaleDistanceData RafaleDistanceData;
 
@@ -29,19 +29,13 @@ public class RafaleDistance : DistanceWithWeapon
     }
 
     // Voir Enemy.cs (héritage)
-    protected override IEnumerator ShootCO()
-    {
-
-        yield return StartCoroutine(intervalleTir());
-        isAttacking = false;
-    }
-
+  
     protected virtual  IEnumerator intervalleTir()
     { 
         while (n < nbTir )
         {
             isAttacking = true;
-            yield return StartCoroutine(base.ShootCO());
+            yield return StartCoroutine(base.InstantiateProjectileCO());
             yield return new WaitForSeconds(timeIntervale);
             n++;
         }

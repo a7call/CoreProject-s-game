@@ -49,9 +49,5 @@ public class ArmeEnemy : MonoBehaviour
          rotationVector.z = Mathf.Atan(dir.y / dir.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(rotationVector);
-
-        
-
-
     }
 }

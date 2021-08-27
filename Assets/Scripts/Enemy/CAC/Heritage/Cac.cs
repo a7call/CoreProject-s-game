@@ -67,7 +67,7 @@ public class Cac : Enemy, IMonster
             isReadyToAttack = false;
             var attackDir = target.position - transform.position;
             attackPoint = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f));
-            PlayAttackAnim();
+            PlayAttackAnim(animator);
             yield return new WaitForSeconds(2f);
             isReadyToAttack = true;
             attackAnimationPlaying = false;

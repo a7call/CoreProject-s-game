@@ -6,7 +6,12 @@ using UnityEngine;
 /// Elle contient les fonctions de la classe mère
 /// </summary>
 public class DistanceLaserDecalage : DistanceNoGun
-{ }
+{
+    public override IEnumerator InstantiateProjectileCO()
+    {
+        throw new System.NotImplementedException();
+    }
+}
 //{
 //    Vector3 directionTir;
 

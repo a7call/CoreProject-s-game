@@ -286,8 +286,7 @@ public class WeaponsManagerSelected : MonoBehaviour
     Vector3 PosAttackPoint = Vector3.zero;
 
     protected void MoveDistanceWeapon()
-    {
-        
+    {        
 
         if (_weapons != null)
         {

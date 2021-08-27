@@ -85,14 +85,14 @@ public class Worms : DistanceNoGun
         StartCoroutine(SwitchToFleeState(1f));
         isOutOfAttackRange(stopAttackRange);
         SetInitialAttackPosition();
-        PlayAttackAnim();
+        PlayAttackAnim(animator);
     }
     #endregion
 
     #region Attack
     private int maxNumberOfBullet = 30;
     float angle = 0f;
-    protected override IEnumerator ShootCO()
+    public override IEnumerator InstantiateProjectileCO()
     {
         int numberOfBullet = 0;
         do

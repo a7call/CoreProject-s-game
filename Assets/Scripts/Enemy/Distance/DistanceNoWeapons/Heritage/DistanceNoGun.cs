@@ -8,7 +8,7 @@ using UnityEngine;
 /// Cette variation (variation de base) ce comporte comme un distance de base mis à part la gestion des visuel (anim d'attaque + prpojectile différent)
 /// L'ancien code ce trouve en bas de page
 /// </summary>
-public class DistanceNoGun : Distance
+public abstract class DistanceNoGun : Distance
 {
     private Transform attackPointFrontGO;
     private Transform attackPointBackGO;
@@ -26,7 +26,8 @@ public class DistanceNoGun : Distance
     {
         base.GetReference();
     }
-
+    // Start Shoot Sequence
+   
     protected override void Start()
     {
         base.Start();
@@ -93,14 +94,31 @@ public class DistanceNoGun : Distance
     {
        isOutOfAttackRange(stopAttackRange);
        SetInitialAttackPosition();
-       PlayAttackAnim();
+       PlayAttackAnim(animator);
     }
 
     public override void DoPatrollingState()
     {
         isInChasingRange(inSight);
     }
+    public override IEnumerator CanShootCO()
+    {
+        if (isReadytoShoot)
+        {
+            isReadytoShoot = false;
+            // Wait for coroutine shoot to end
+            yield return StartCoroutine(InstantiateProjectileCO());
+            isAttacking = false;
+            animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
+            // delay before next Shoot
+            yield return new WaitForSeconds(restTime);
+            isReadytoShoot = true;
+            // gestion de l'animation d'attaque
 
+            attackAnimationPlaying = false;
+        }
+    }
+    
     // WHEN TO FLEE ?
-   
+
 }

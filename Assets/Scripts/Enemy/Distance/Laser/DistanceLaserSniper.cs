@@ -9,6 +9,11 @@ public class DistanceLaserSniper : DistanceNoGun
 {
     float timeLocking = 3;
     private bool isLockingEnemy;
+
+    public override IEnumerator InstantiateProjectileCO()
+    {
+        throw new System.NotImplementedException();
+    }
     //protected override void Shoot()
     //{
     //    if (isLockingEnemy)
@@ -57,5 +62,5 @@ public class DistanceLaserSniper : DistanceNoGun
     //    }
     //}
 
-  
+
 }

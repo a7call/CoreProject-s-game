@@ -6,7 +6,7 @@ using UnityEngine;
 /// Classe héritière de Distance.cs
 /// Elle contient les fonctions de la classe mère
 /// </summary>
-public class PompeDistanceEnemy : DistanceWithWeapon
+public class PompeDistanceEnemy : UnDeadMecaDistance
 {
     [SerializeField] GameObject[] projectiles = null;
     [SerializeField] int angleTir = 0;
@@ -22,16 +22,16 @@ public class PompeDistanceEnemy : DistanceWithWeapon
     }
 
     // Voir Enemy.cs (héritage)
-    protected override IEnumerator ShootCO()
-    {
+    //protected override IEnumerator ShootCO()
+    //{
         
-        for (int i = 0; i < NbRafale; i++)
-        {
+    //    for (int i = 0; i < NbRafale; i++)
+    //    {
 
-            StartCoroutine(ShootPump());
-            yield return new WaitForSecondsRealtime(TimeIntervaleTir);
-        }
-    }
+    //        StartCoroutine(ShootPump());
+    //        yield return new WaitForSecondsRealtime(TimeIntervaleTir);
+    //    }
+    //}
 
     private void GetProjectile()
     {

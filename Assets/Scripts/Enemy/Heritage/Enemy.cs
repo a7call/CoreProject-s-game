@@ -58,7 +58,11 @@ public abstract class Enemy : Characters
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         Player = target.GetComponent<Player>();
-        hitParticleSystem = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitParticleSystem").GetComponent<ParticleSystem>();
+        var hitParticleSystemObj = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitParticleSystem");
+        if (hitParticleSystem != null)
+        {
+            hitParticleSystem = hitParticleSystemObj.GetComponent<ParticleSystem>();
+        }
     }
 
     private void RigidBodySetUp()
@@ -163,7 +167,7 @@ public abstract class Enemy : Characters
     protected bool attackAnimationPlaying = false;
 
     //Methode permetant de lancer la séquence de d'attaque via l'animation
-    protected virtual void PlayAttackAnim()
+    protected virtual void PlayAttackAnim(Animator animator)
     {
         if (!attackAnimationPlaying && !isAttacking)
         {
