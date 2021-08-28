@@ -14,17 +14,17 @@ public class EnemyWeapon : MonoBehaviour
     public Animator animator;
     void Awake()
     {
-        animator = GetComponent<Animator>();
-        weaponManager = GetComponentInParent<EnemyWeaponManager>();
         attackPoint = gameObject.transform.GetChild(0);
+        animator = GetComponent<Animator>();
+        weaponManager = GetComponentInParent<EnemyWeaponManager>();       
     }
     private void Update()
     {
        
     }
-    public void CanShootCO()
+    public void StartShootingProcessCo()
     {
-        StartCoroutine(weaponManager.Monster.CanShootCO());
+        StartCoroutine(weaponManager.Monster.StartShootingProcessCo());
     }
 
 }

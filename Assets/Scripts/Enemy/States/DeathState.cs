@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Wanderer.Utils;
 
 
 public class DeathState : AIState
@@ -18,6 +19,7 @@ public class DeathState : AIState
         AICharacter.AIMouvement.ShouldSearch = false;
         DisableAllColliders();
         DisableComponents();
+        DestroyChildren(AICharacter.transform);
         yield return null;
     }
 
@@ -51,4 +53,17 @@ public class DeathState : AIState
         AICharacter.AIMouvement.enabled = false;
         AICharacter.enabled = false;
     }
+
+    void DestroyChildren(Transform transform)
+    {
+        foreach (Transform t in transform)
+        {
+            if (t.GetComponent<Collider2D>())
+                continue;
+
+            GameObject.Destroy(t.gameObject);
+        }
+    }
+
+
 }

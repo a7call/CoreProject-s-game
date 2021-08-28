@@ -1,13 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// Classe héritière de Distance.cs
-/// Classe mère des monstres lasers
-/// Le monstre a été modifié du à des problème vis à vis du gameplay de la première version.
-/// Cette variation (variation de base) ce comporte comme un distance de base mis à part la gestion des visuel (anim d'attaque + prpojectile différent)
-/// L'ancien code ce trouve en bas de page
-/// </summary>
+
 public abstract class DistanceNoGun : Distance
 {
     private Transform attackPointFrontGO;
@@ -28,18 +22,13 @@ public abstract class DistanceNoGun : Distance
     }
     // Start Shoot Sequence
    
-    protected override void Start()
-    {
-        base.Start();
-       // MoveToRandomPoint();
-    }
    
     // Récupere en temps réel la position de l'attaque point en fonction de l'animation joué 
     public void SetInitialAttackPosition()
     {
 
-        float lastMoveX = animator.GetFloat("lastMoveX");
-        float lastMoveY = animator.GetFloat("lastMoveY");
+        float lastMoveX = animator.GetFloat(EnemyConst.DIRECTION_X_CONST);
+        float lastMoveY = animator.GetFloat(EnemyConst.DIRECTION_Y_CONST);
         if (Mathf.Abs(lastMoveX) > Mathf.Abs(lastMoveY))
         {
             if (lastMoveX > 0)
@@ -101,7 +90,7 @@ public abstract class DistanceNoGun : Distance
     {
         isInChasingRange(inSight);
     }
-    public override IEnumerator CanShootCO()
+    public override IEnumerator StartShootingProcessCo()
     {
         if (isReadytoShoot)
         {

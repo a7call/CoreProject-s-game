@@ -11,7 +11,7 @@ public class Worms : DistanceNoGun
     protected override void Awake()
     {
         base.Awake();
-        Utils.AddAnimationEvent("Attack", "CanShootCO", animator);
+        Utils.AddAnimationEvent(EnemyConst.ATTACK_ANIMATION_NAME, EnemyConst.SHOOT_COROUTINE_EVENT_FUNCTION_NAME, animator);
         SetUpPS();
         Utils.TogglePs(smokeFleeingParticules, enabled: false);
     }
@@ -22,7 +22,7 @@ public class Worms : DistanceNoGun
     }
     #region States
     // Flee State
-    private IEnumerator SwitchToFleeState(float fleeRange)
+    private IEnumerator SwitchToFleeState()
     {
         if (!isAttacking && CanFlee)
         {
@@ -72,7 +72,7 @@ public class Worms : DistanceNoGun
     public override void DoChasingState()
     {
         isInAttackRange(attackRange);
-        StartCoroutine(SwitchToFleeState(1f));
+        StartCoroutine(SwitchToFleeState());
     }
     public override void StartChasingState()
     {
@@ -82,7 +82,7 @@ public class Worms : DistanceNoGun
     // Attacking
     public override void DoAttackingState()
     {
-        StartCoroutine(SwitchToFleeState(1f));
+        StartCoroutine(SwitchToFleeState());
         isOutOfAttackRange(stopAttackRange);
         SetInitialAttackPosition();
         PlayAttackAnim(animator);

@@ -46,6 +46,6 @@ public abstract class Distance : Enemy, IMonster
         AIMouvement.MoveForce = DistanceData.moveForce;
     }
 
-    public abstract IEnumerator CanShootCO();
+    public abstract IEnumerator StartShootingProcessCo();
     public abstract IEnumerator InstantiateProjectileCO();
 }

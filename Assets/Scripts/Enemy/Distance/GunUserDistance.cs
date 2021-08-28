@@ -18,9 +18,9 @@ public abstract class GunUserDistance : Distance
         WeaponManager = GetComponentInChildren<EnemyWeaponManager>();
         WeaponAnimator = WeaponManager.Weapon.animator;
         attackPoint = WeaponManager.Weapon.attackPoint;
-        Utils.AddAnimationEvent("Attack", "CanShootCO", WeaponAnimator);
+        //Utils.AddAnimationEvent(EnemyConst.ATTACK_ANIMATION_NAME, EnemyConst.SHOOT_COROUTINE_EVENT_FUNCTION_NAME, WeaponAnimator);
     }
-    public override IEnumerator CanShootCO()
+    public override IEnumerator StartShootingProcessCo()
     {
         if (isReadytoShoot)
         {

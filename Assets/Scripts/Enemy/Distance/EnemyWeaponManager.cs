@@ -19,11 +19,16 @@ public class EnemyWeaponManager : MonoBehaviour
         Weapon = GetComponentInChildren<EnemyWeapon>();
         WeaponSR = GetComponentInChildren<SpriteRenderer>();
         Monster = GetComponentInParent<UnDeadMecaDistance>();
+        
+    }
+
+    private void Start()
+    {
         SetWeaponXPosition(Weapon);
         PosAttackPoint = Weapon.attackPoint.localPosition;
     }
 
-  
+
     void Update()
     {
         MoveWeapon();

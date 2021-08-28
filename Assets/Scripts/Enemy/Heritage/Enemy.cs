@@ -50,6 +50,16 @@ public abstract class Enemy : Characters
         base.Awake();
         SetState(new SpawningState(this));
     }
+    protected override void Start()
+    {
+        base.Start();
+        StartCoroutine(AllowFleeing());
+    }
+    private IEnumerator AllowFleeing()
+    {
+        yield return new WaitForSeconds(1f);
+        CanFlee = true;
+    }
 
     protected override void GetReference()
     {

@@ -8,12 +8,14 @@ public class FleeingState : AIState
 {
     float _fleeingSpeed;
     float _fleeingDebuffTime;
+    float _maxFleeDistance;
     float _minFleeDistance;
-    public FleeingState(Enemy enemy, float fleeingSpeed, float fleeingDebuffTime, float minFleeDistance) : base(enemy)
+    public FleeingState(Enemy enemy, float fleeingSpeed, float fleeingDebuffTime, float minFleeDistance, float maxFleeDistance = 20) : base(enemy)
     {
         _fleeingSpeed = fleeingSpeed;
         _fleeingDebuffTime = fleeingDebuffTime;
         _minFleeDistance = minFleeDistance;
+        _maxFleeDistance = maxFleeDistance;
     }
 
     public override IEnumerator EndState()
@@ -47,6 +49,11 @@ public class FleeingState : AIState
             position.z = 0;
 
             if (Vector3.Distance(position, AICharacter.transform.position) < _minFleeDistance)
+            {
+                continue;
+            }
+
+            if (Vector3.Distance(position, AICharacter.transform.position) > _maxFleeDistance)
             {
                 continue;
             }

@@ -16,8 +16,12 @@ public static class EnemyConst
     public const string DEATH_BOOL_CONST = "isDying";
     public const string HIT_TRIGGER_CONST = "isHit";
 
-    //Name
+    // NAME
     public const string SPAWN_ANIMATION_NAME = "Spawn";
+    public const string ATTACK_ANIMATION_NAME = "Attack";
+
+    // EVENT FUNCTIONS
+    public const string SHOOT_COROUTINE_EVENT_FUNCTION_NAME = "StartShootingProcessCo";
 
     #endregion
 

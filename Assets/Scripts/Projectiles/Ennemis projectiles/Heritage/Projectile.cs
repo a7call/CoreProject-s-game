@@ -49,7 +49,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         { 
-            player.TakeDamage(1);
+            player.TakeDamage(10);
             Destroy(gameObject);
         }
         if (collision.gameObject.layer == 10) Destroy(gameObject);

@@ -11,8 +11,11 @@ public class UnDeadMecaDistance : GunUserDistance
 
     public override void DoAttackingState()
     {
+        
         isOutOfAttackRange(attackRange);
-        PlayAttackAnim(WeaponAnimator);       
+        PlayAttackAnim(WeaponAnimator);
+        StartCoroutine(SwitchToFleeState());
+
     }
 
     public override void DoPatrollingState()
@@ -20,4 +23,13 @@ public class UnDeadMecaDistance : GunUserDistance
         isInChasingRange(inSight);
     }
 
+    private IEnumerator SwitchToFleeState()
+    {
+        if (!isAttacking && CanFlee)
+        {
+            CanFlee = false;
+            SetState(new FleeingState(this, fleeingSpeed: AIMouvement.MoveForce *1.3f, fleeingDebuffTime: 2f, minFleeDistance: 2f, maxFleeDistance : 4f));
+            yield return null;
+        }
+    }
 }
