@@ -15,11 +15,6 @@ public class Worms : DistanceNoGun
         SetUpPS();
         Utils.TogglePs(smokeFleeingParticules, enabled: false);
     }
-    protected override void Start()
-    {
-        base.Start();
-        StartCoroutine(AllowFleeing());
-    }
     #region States
     // Flee State
     private IEnumerator SwitchToFleeState()
@@ -46,11 +41,7 @@ public class Worms : DistanceNoGun
         BecomeInvulnerable();
     }
 
-    private IEnumerator AllowFleeing()
-    {
-        yield return new WaitForSeconds(1f);
-        CanFlee = true;
-    }
+
     public override IEnumerator EndFleeingState()
     {
         Utils.TogglePs(smokeFleeingParticules, enabled: false);
