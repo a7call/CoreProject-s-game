@@ -17,10 +17,10 @@ public class PerturbateurIEM : StacksObjects
 
     protected void ActiveTimeIEM()
     {
-        Projectile[] enemyProjectile = FindObjectsOfType<Projectile>();
+        AIProjectile[] enemyProjectile = FindObjectsOfType<AIProjectile>();
         if (enemyProjectile.Length > 0)
         {
-            foreach(Projectile projectile in enemyProjectile)
+            foreach(AIProjectile projectile in enemyProjectile)
             {
                 Destroy(projectile.gameObject);
             }

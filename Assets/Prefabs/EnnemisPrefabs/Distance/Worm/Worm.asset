@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Worm
   m_EditorClassIdentifier: 
   maxHealth: 5
+  damage: 10
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 256
   moveForce: 350
   attackRange: 5
   knockBackForceToApply: 0
@@ -22,6 +26,7 @@ MonoBehaviour:
   InSight: 10
   isSupposedToMoveAttacking: 0
   projetile: {fileID: 6067136226036871257, guid: e949e82707f47492f84253892b12296b, type: 3}
+  projectileSpeed: 200
   timeIntervale: 0
   nbTir: 0
   dispersion: 0

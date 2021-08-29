@@ -32,7 +32,7 @@ public abstract class GunUserDistance : Distance
 
             WeaponAnimator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
             // delay before next Shoot
-            yield return new WaitForSeconds(restTime);
+            yield return new WaitForSeconds(RestTime);
             isReadytoShoot = true;
             // gestion de l'animation d'attaque
             attackAnimationPlaying = false;
@@ -40,11 +40,9 @@ public abstract class GunUserDistance : Distance
     }
     public override IEnumerator InstantiateProjectileCO()
     {
-        float decalage = Random.Range(-dispersion, dispersion);
-        GameObject myProjectile = Instantiate(projetile, WeaponManager.Weapon.attackPoint.position, Quaternion.identity);
-        Projectile ScriptProj = myProjectile.GetComponent<Projectile>();
-        ScriptProj.dispersion = decalage;
-        myProjectile.GetComponent<Projectile>().SetMoveDirection(WeaponManager.aimDirection);
+        float decalage = Random.Range(-Dispersion, Dispersion);
+        GameObject myProjectile = Instantiate(Projetile, WeaponManager.Weapon.attackPoint.position, Quaternion.identity);
+        myProjectile.GetComponent<Projectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, WeaponManager.aimDirection);
         yield return new WaitForEndOfFrame();
     }
 }

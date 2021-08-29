@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: UnDeadMeca
   m_EditorClassIdentifier: 
   maxHealth: 10
+  damage: 10
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 256
   moveForce: 120
   attackRange: 5.5
   knockBackForceToApply: 250
-  nextWayPoint: 1
-  refreshPathTime: 0.5
   restTime: 2
   InSight: 10
-  isSupposedToMoveAttacking: 0
   projetile: {fileID: 6067136226036871257, guid: e949e82707f47492f84253892b12296b, type: 3}
-  timeIntervale: 0
-  nbTir: 0
+  projectileSpeed: 200
   dispersion: 2
   difficulty: 1

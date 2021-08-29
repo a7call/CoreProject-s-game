@@ -1,85 +1,85 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class DistorsionTemporelleEnemy : CdObjects
-{
-    private int roomRange = 50;
-    [SerializeField] private LayerMask hitLayer;
+//public class DistorsionTemporelleEnemy : CdObjects
+//{
+//    private int roomRange = 50;
+//    [SerializeField] private LayerMask hitLayer;
 
-    [SerializeField] private float timeDistorsionTemporelle = 10f;
+//    [SerializeField] private float timeDistorsionTemporelle = 10f;
 
-    private List<GameObject> projectilsEnemy = new List<GameObject>();
+//    private List<GameObject> projectilsEnemy = new List<GameObject>();
 
-    private GameObject[] enemies;
+//    private GameObject[] enemies;
 
-    protected override void Start()
-    {
-        base.Start();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-    }
+//    protected override void Start()
+//    {
+//        base.Start();
+//        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+//    }
 
-    protected override void Update()
-    {
+//    protected override void Update()
+//    {
         
-        if (UseModule)
-        {
-            UseModule = false;
-            StartCoroutine(DistorsionTemporelleMoveSpeed());
-            DistorsionTemporelleProjectile();
+//        if (UseModule)
+//        {
+//            UseModule = false;
+//            StartCoroutine(DistorsionTemporelleMoveSpeed());
+//            DistorsionTemporelleProjectile();
 
-        }
-    }
+//        }
+//    }
 
-    private void DistorsionTemporelleProjectile()
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, roomRange, hitLayer);
-        foreach (Collider2D hit in hits)
-        {
-            if (hit.CompareTag("EnemyProjectil"))
-            {
+//    private void DistorsionTemporelleProjectile()
+//    {
+//        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, roomRange, hitLayer);
+//        foreach (Collider2D hit in hits)
+//        {
+//            if (hit.CompareTag("EnemyProjectil"))
+//            {
 
-                if (!projectilsEnemy.Contains(hit.gameObject))
-                {
-                    projectilsEnemy.Add(hit.gameObject);
-                    hit.GetComponent<Projectile>().projectileSpeed /= 2;
-                }
-            }
-        }
-    }
+//                if (!projectilsEnemy.Contains(hit.gameObject))
+//                {
+//                    projectilsEnemy.Add(hit.gameObject);
+//                    hit.GetComponent<AIProjectile>().projectileSpeed /= 2;
+//                }
+//            }
+//        }
+//    }
 
-    private IEnumerator DistorsionTemporelleMoveSpeed() { 
+//    private IEnumerator DistorsionTemporelleMoveSpeed() { 
 
-        foreach (GameObject enemy in enemies)
-        {
-            if(enemy == null)
-            {
-                continue;
-            }
-            enemy.gameObject.GetComponent<Enemy>().AIMouvement.MoveForce /= 2;
-        }
+//        foreach (GameObject enemy in enemies)
+//        {
+//            if(enemy == null)
+//            {
+//                continue;
+//            }
+//            enemy.gameObject.GetComponent<Enemy>().AIMouvement.MoveForce /= 2;
+//        }
 
-        yield return new WaitForSeconds(timeDistorsionTemporelle);
+//        yield return new WaitForSeconds(timeDistorsionTemporelle);
 
-        foreach (GameObject enemy in enemies)
-        {
-            if (enemy == null)
-            {
-                continue;
-            }
-            enemy.gameObject.GetComponent<Enemy>().AIMouvement.MoveForce *= 2;
-        }
+//        foreach (GameObject enemy in enemies)
+//        {
+//            if (enemy == null)
+//            {
+//                continue;
+//            }
+//            enemy.gameObject.GetComponent<Enemy>().AIMouvement.MoveForce *= 2;
+//        }
 
-        foreach (GameObject projectil in projectilsEnemy)
-        {
-            if(projectil == null)
-            {
-                continue;
-            }
-            projectil.GetComponent<Projectile>().projectileSpeed *= 2;
-        }
+//        foreach (GameObject projectil in projectilsEnemy)
+//        {
+//            if(projectil == null)
+//            {
+//                continue;
+//            }
+//            projectil.GetComponent<AIProjectile>().projectileSpeed *= 2;
+//        }
 
 
-    }
+//    }
 
-}
+//}

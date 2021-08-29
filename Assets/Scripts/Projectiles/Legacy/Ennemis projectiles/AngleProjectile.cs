@@ -1,0 +1,30 @@
+﻿
+using UnityEngine;
+/// <summary>
+/// Classe héritière de Projectile.cs
+/// Contient les fonctions de la classe mères
+/// </summary>
+
+
+public class AngleProjectile : AIProjectile
+{
+    //public float angleDecalage;
+    //Vector3 directionTir;
+
+    //protected void Start()
+    //{
+    //    ConeShoot();
+    //}
+
+
+    //protected override void Launch()
+    //{
+    //    transform.Translate(directionTir * base.projectileSpeed * Time.deltaTime);
+    //}
+
+    //protected void ConeShoot()
+    //{
+    //    directionTir = Quaternion.AngleAxis(angleDecalage, Vector3.forward) * dir;
+    //}
+
+}

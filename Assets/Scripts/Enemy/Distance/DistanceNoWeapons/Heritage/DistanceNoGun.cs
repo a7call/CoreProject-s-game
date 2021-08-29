@@ -81,7 +81,7 @@ public abstract class DistanceNoGun : Distance
 
     public override void DoAttackingState()
     {
-       isOutOfAttackRange(stopAttackRange);
+       isOutOfAttackRange(StopAttackRange);
        SetInitialAttackPosition();
        PlayAttackAnim(animator);
     }
@@ -100,7 +100,7 @@ public abstract class DistanceNoGun : Distance
             isAttacking = false;
             animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
             // delay before next Shoot
-            yield return new WaitForSeconds(restTime);
+            yield return new WaitForSeconds(RestTime);
             isReadytoShoot = true;
             // gestion de l'animation d'attaque
 

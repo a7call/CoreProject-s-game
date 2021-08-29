@@ -118,7 +118,7 @@ public class AIMouvement : MonoBehaviour
         if (shouldMove)
         {
             //rb.MovePosition(((Vector2)transform.position + directionToTarget.normalized * Time.deltaTime * speed));
-            rb.AddForce(moveForce * directionToTarget.normalized * Time.deltaTime, ForceMode2D.Impulse);
+            rb.AddForce(moveForce * directionToTarget.normalized * Time.fixedDeltaTime, ForceMode2D.Impulse);
         } 
     }
 
