@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 
 namespace Wanderer.Utils
 {
@@ -151,7 +151,22 @@ namespace Wanderer.Utils
             return null;
         }
 
-       
+        public static List<GameObject> FindGameObjectsInChildWithTag(GameObject _parent, string _tag)
+        {
+            Transform transform = _parent.transform;
+            List<GameObject> gameObjectsList = new List<GameObject>();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).gameObject.tag == _tag)
+                {
+                    gameObjectsList.Add(transform.GetChild(i).gameObject);
+                }
+            }
+
+            return gameObjectsList;
+        }
+
 
         #endregion
     }
