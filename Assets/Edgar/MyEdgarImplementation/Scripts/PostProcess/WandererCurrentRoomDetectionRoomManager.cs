@@ -57,6 +57,7 @@ namespace Edgar.Unity.Examples
 
         public void Start()
         {
+
             GetDoorHandlerInCorridors();
             GetConnectedRoom();
         }
@@ -160,8 +161,8 @@ namespace Edgar.Unity.Examples
         {
 
             foreach (var monsterObj in room.ActiveMonsters)
-            {
                
+            {              
                 var spawnedMonster = room.spawner.Spawn(monsterObj.Item1, (Vector2)monsterObj.Item2, this.gameObject.transform);
                 spawnedMonster.transform.position = new Vector3(spawnedMonster.transform.position.x, spawnedMonster.transform.position.y, 0);
                 instansiatedMonster.Add(spawnedMonster);

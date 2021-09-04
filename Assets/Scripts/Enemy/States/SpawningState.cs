@@ -17,6 +17,7 @@ public class SpawningState : AIState
 
     public override IEnumerator StartState()
     {
+        Debug.Log(AICharacter);
         AICharacter.AIMouvement.ShouldMove = false;
         yield return ActivateMonster();
         AICharacter.SetState(new PatrollingState(this.AICharacter));

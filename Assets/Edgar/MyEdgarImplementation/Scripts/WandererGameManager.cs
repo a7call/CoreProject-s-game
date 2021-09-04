@@ -40,7 +40,9 @@ namespace Assets.Scripts.Game
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         { 
             if(scene.name != "MainMenu")
+            {
                 LoadNextLevel();
+            }
         }
         public void Update()
         {

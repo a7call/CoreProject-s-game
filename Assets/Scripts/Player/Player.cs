@@ -63,13 +63,17 @@ public class Player : Characters
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(gameObject);
         if(RH != null && LH != null)
         {
             RH.SetActive(false);
             LH.SetActive(false);
-        }
         
+        }       
+    }
+    protected override void Start()
+    {
+        base.Start();
+        healthBar = GameObject.FindGameObjectWithTag("PlayerCanvas").GetComponentInChildren<PlayerHealthBar>();
     }
 
     #region Datas & reference
@@ -82,7 +86,6 @@ public class Player : Characters
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        healthBar = GameObject.FindGameObjectWithTag("PlayerCanvas").GetComponentInChildren<PlayerHealthBar>();
         animator = GetComponent<Animator>();
         activeObjectManager = GetComponentInChildren<ActiveObjectManager>();
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
@@ -557,10 +560,6 @@ public class Player : Characters
         }
     }
 
-    public void OnPause()
-    {
-        PauseMenu.pause = true;
-    }
 
     public PlayerInput GetPlayerInput()
     {

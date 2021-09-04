@@ -30,18 +30,21 @@ namespace Edgar.Unity.Examples
             #endregion
 
             Tilemap tilemapMiniMap = MinimapInit(level);
-            int i = 0;
             foreach (var roomInstance in level.GetRoomInstances())
             {
+
                 
                 // Set the Random instance of the GameManager to be the same instance as we use in the generator
                 if (WandererGameManager.Instance != null)
                     WandererGameManager.Instance.Random = Random;
-               
+
+
                 var roomManager = AssignRoomComponents(roomInstance);
                 roomManager.RoomInstance = roomInstance;
-                
                 var room = (WandererRoom)roomInstance.Room;
+
+                room.ResetRoom();
+
                 if (room.Type == RoomType.Corridor && room.Type == RoomType.Spawn)
                 {
                     room.SetRoomState(RoomState.Cleared);
