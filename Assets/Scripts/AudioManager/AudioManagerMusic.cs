@@ -59,9 +59,11 @@ public class AudioManagerMusic : Singleton<AudioManagerMusic>
 
 	public void ChangeMusic(string nextMusic, float duration)
     {
-		if(CurrentlyPlayingSound != null)
+		if (CurrentlyPlayingSound != null)
+        {
 			StartCoroutine(MusicFade(CurrentlyPlayingSound.mixerGroup.audioMixer, CurrentlyPlayingSound.mixerGroup.name + "Volume", duration, 0));
-
+		}
+			
 		Play(nextMusic);
 		StartCoroutine(MusicFade(CurrentlyPlayingSound.mixerGroup.audioMixer, CurrentlyPlayingSound.mixerGroup.name + "Volume", duration, 1));
 	}
@@ -83,8 +85,7 @@ public class AudioManagerMusic : Singleton<AudioManagerMusic>
 		}
 		yield break;
 	}
-
-	public void StopPlaying(string sound)
+    public void StopPlaying(string sound)
 	{
 		Sound s = Array.Find(sounds, item => item.name == sound);
 		if (s == null)

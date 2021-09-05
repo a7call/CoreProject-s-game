@@ -10,6 +10,7 @@ using Assets.Scripts.Game;
 namespace Edgar.Unity.Examples
 
 {
+    [RequireComponent(typeof(AudioSource))]
     public class WandererCurrentRoomDetectionRoomManager : MonoBehaviour
     {
         /// <summary>
@@ -52,8 +53,6 @@ namespace Edgar.Unity.Examples
         {
             room.onSwitchRoomState -= OnRoomStateSwitch;
         }
-
-
 
         public void Start()
         {
@@ -184,10 +183,21 @@ namespace Edgar.Unity.Examples
 
             if (instansiatedMonster.Count <= 0 &&  room.roomState != RoomState.Cleared)
             {
-                AudioManagerMusic.GetInstance().ChangeMusic(AudioConst.SPACE_SHIP_THEME_MUSIC_NAME, AudioConst.TRANSITION_DURATION);
-                room.SetRoomState(RoomState.Cleared);
+                TransitToClearedRoomState();
             }
                 
+        }
+
+        public void TransitToClearedRoomState()
+        {
+            var timeManager = new TimeManager(slowDownFactor: 0.5f, slowDownLenght: AudioConst.TRANSITION_DURATION);
+            timeManager.DoSlowMotion();
+
+            AudioManagerMusic.GetInstance().ChangeMusic(AudioConst.SPACE_SHIP_THEME_MUSIC_NAME, AudioConst.TRANSITION_DURATION);
+
+            AudioManagerEffect.GetInstance().Play(AudioConst.TRANSITION_EFFECT, this.gameObject, 0.7f);
+
+            room.SetRoomState(RoomState.Cleared);
         }
         #endregion
 
