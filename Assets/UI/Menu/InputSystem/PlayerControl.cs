@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Menu/PlayerControl.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/UI/Menu/InputSystem/PlayerControl.inputactions'
 
 using System;
 using System.Collections;
@@ -87,14 +87,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""6673a60c-eae3-4dbb-9a2f-e4b3ce1325f6"",
                     ""expectedControlType"": ""Digital"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""9b7ef56f-c1eb-4e50-8e8d-47cd96d96e20"",
-                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -242,17 +234,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""OpenShop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0fe6ea0f-022c-456e-b420-b0144e8d2b37"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -293,7 +274,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_SwitchAttackMode = m_Player.FindAction("SwitchAttackMode", throwIfNotFound: true);
         m_Player_OpenCoffre = m_Player.FindAction("OpenCoffre", throwIfNotFound: true);
         m_Player_OpenShop = m_Player.FindAction("OpenShop", throwIfNotFound: true);
-        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -354,7 +334,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_SwitchAttackMode;
     private readonly InputAction m_Player_OpenCoffre;
     private readonly InputAction m_Player_OpenShop;
-    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -368,7 +347,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @SwitchAttackMode => m_Wrapper.m_Player_SwitchAttackMode;
         public InputAction @OpenCoffre => m_Wrapper.m_Player_OpenCoffre;
         public InputAction @OpenShop => m_Wrapper.m_Player_OpenShop;
-        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -405,9 +383,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @OpenShop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
                 @OpenShop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
                 @OpenShop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
-                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
-                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
-                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -439,9 +414,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @OpenShop.started += instance.OnOpenShop;
                 @OpenShop.performed += instance.OnOpenShop;
                 @OpenShop.canceled += instance.OnOpenShop;
-                @Pause.started += instance.OnPause;
-                @Pause.performed += instance.OnPause;
-                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -491,7 +463,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnSwitchAttackMode(InputAction.CallbackContext context);
         void OnOpenCoffre(InputAction.CallbackContext context);
         void OnOpenShop(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -2,6 +2,7 @@ using UnityEngine.Audio;
 using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManagerMusic : Singleton<AudioManagerMusic>
@@ -13,12 +14,25 @@ public class AudioManagerMusic : Singleton<AudioManagerMusic>
 
 	public Sound CurrentlyPlayingSound { get; set; }
 
-	private void Start()
-	{
-		Play(AudioConst.SPACE_SHIP_THEME_MUSIC_NAME);
+    private void OnEnable()
+    {
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+    private void OnDisable()
+    {
+		SceneManager.sceneLoaded -= OnSceneLoaded;
 	}
 
-    public void Play(string sound, ulong delay = 0)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		ResetAndStartMusicState();
+	}
+	private void ResetAndStartMusicState()
+    {
+		ChangeMusic(AudioConst.SPACE_SHIP_THEME_MUSIC_NAME, 0.5f);
+	}
+
+	public void Play(string sound, ulong delay = 0)
 	{
 		Sound s = Array.Find(sounds, item => item.name == sound);
 		if (s == null)
@@ -45,7 +59,11 @@ public class AudioManagerMusic : Singleton<AudioManagerMusic>
 
 	public void ChangeMusic(string nextMusic, float duration)
     {
-		StartCoroutine(MusicFade(CurrentlyPlayingSound.mixerGroup.audioMixer, CurrentlyPlayingSound.mixerGroup.name + "Volume", duration, 0));
+		if (CurrentlyPlayingSound != null)
+        {
+			StartCoroutine(MusicFade(CurrentlyPlayingSound.mixerGroup.audioMixer, CurrentlyPlayingSound.mixerGroup.name + "Volume", duration, 0));
+		}
+			
 		Play(nextMusic);
 		StartCoroutine(MusicFade(CurrentlyPlayingSound.mixerGroup.audioMixer, CurrentlyPlayingSound.mixerGroup.name + "Volume", duration, 1));
 	}
@@ -67,8 +85,7 @@ public class AudioManagerMusic : Singleton<AudioManagerMusic>
 		}
 		yield break;
 	}
-
-	public void StopPlaying(string sound)
+    public void StopPlaying(string sound)
 	{
 		Sound s = Array.Find(sounds, item => item.name == sound);
 		if (s == null)

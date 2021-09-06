@@ -6,22 +6,18 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.UI
 {
-    [RequireComponent(typeof(Button))]
-    public class SceneSwitcher : MonoBehaviour
+
+    public class SceneSwitcher : ButtonListner
     {
         public string desiredScene;
-        Button menuButton;
         SceneManagementWanderer sceneManager;
-        
 
-        private void Start()
+
+        private  void Start()
         {
-            menuButton = GetComponent<Button>();
-            menuButton.onClick.AddListener(OnButtonClicked);
             sceneManager = SceneManagementWanderer.GetInstance();
         }
-
-        void OnButtonClicked()
+        protected override void OnButtonClicked()
         {
             sceneManager.SwitchScene(desiredScene);
         }

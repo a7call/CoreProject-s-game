@@ -121,6 +121,7 @@ public class WandererRoom : RoomBase
 
         var currentDifficulty = 0;
         spawner = new Spawner(monsters);
+        Debug.Log(activeMonsters.Count);
 
         while (currentDifficulty < MaxDifficulty)
         {
@@ -154,7 +155,11 @@ public class WandererRoom : RoomBase
 
     #endregion
 
-  
+
+    public void ResetRoom()
+    {
+        activeMonsters.Clear();     
+    }
 
     public override List<GameObject> GetRoomTemplates()
     {

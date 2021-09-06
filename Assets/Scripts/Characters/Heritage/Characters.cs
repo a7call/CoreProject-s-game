@@ -30,7 +30,7 @@ public abstract class Characters : StateMachine
     }
     protected virtual void Start()
     {
-
+      
     }
 
     #region Health System
@@ -72,7 +72,10 @@ public abstract class Characters : StateMachine
         isKnockedBack = true;
         CoroutineManager.GetInstance().StartCoroutine(KnockBackDurationCo(knockBackTime));
         while (isKnockedBack)
-        {        
+        {
+            if (rb == null)
+                yield break;
+
             if (!IsDying)
             {
                 rb.AddForce(knockBackForce * dir * Time.deltaTime, ForceMode2D.Impulse);

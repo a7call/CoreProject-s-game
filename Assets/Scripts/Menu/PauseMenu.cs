@@ -7,66 +7,43 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool isGamePaused = false;
     private Player playerMvt;
-    public GameObject settingsWindow;
-    public GameObject pauseMenuUI;
+    public static GameObject pauseMenuUI;
 
-    public static bool pause = false;
-
+    private void Start()
+    {
+        pauseMenuUI = transform.Find("PauseMenu").gameObject;
+    }
     protected void Update()
     {
-        if (pause)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pause = false;
-            if (isGamePaused)
+            if (!isGamePaused)
             {
-                Resume();
-                
-            }
-            else
-            {
-                Paused();
+                PauseGame();
             }
         }
     }
 
-
-    protected void Paused()
+    protected void PauseGame()
     {
-        playerMvt = FindObjectOfType<Player>();
-        playerMvt.rb.velocity = Vector2.zero;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0;
         isGamePaused = true;
     }
-
-    public void Resume()
+    public static void Resume()
     {
         pauseMenuUI.SetActive(false);
-        settingsWindow.SetActive(false);
         Time.timeScale = 1;
-        isGamePaused = false;
+        PauseMenu.isGamePaused = false;
     }
-
     public void Quit()
     {
-        SceneManager.LoadScene("MainMenu");
-        Resume();
+
     }
 
-    public void SettingsButton()
+    public void Restart()
     {
-        settingsWindow.SetActive(true);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    public void CloseSettingsWindow()
-    {
-        settingsWindow.SetActive(false);
-    }
-
-    public void BestiaireButton()
-    {
-        settingsWindow.SetActive(false);
-        //Bestiaire.setActive(true);
-    }
-
-    
+   
 }
