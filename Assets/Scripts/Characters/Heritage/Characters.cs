@@ -39,7 +39,6 @@ public abstract class Characters : StateMachine
     public float CurrentHealth { get; set; }
     public virtual void TakeDamage(float damage, GameObject damageSource = null)
     {
-        TakeDammageParticleSystem();
         CurrentHealth -= damage;
 
         if (CurrentHealth <= 0)
@@ -52,21 +51,7 @@ public abstract class Characters : StateMachine
             ApplyKnockBack(knockBackForceToApply, knockBackTime: 0.3f, damageSource);
         }
     }
-
-    #region Particle System
-
-    protected ParticleSystem hitParticleSystem;
-
-    protected void TakeDammageParticleSystem()
-    {
-        if(hitParticleSystem != null)
-        {
-            // Do toggle
-            // Utils.TogglePs(hitParticleSystem, true);
-        }
-    }
-
-    #endregion
+ 
 
     #region Physics 
     bool isKnockedBack = false;
