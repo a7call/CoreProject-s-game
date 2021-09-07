@@ -15,35 +15,34 @@ public class Coffre : MonoBehaviour
 
 
 
-    protected virtual void OnTriggerStay2D(Collider2D collision)
-    {
-        Inventory inventory = FindObjectOfType<Inventory>();
+    //protected virtual void OnTriggerStay2D(Collider2D collision)
+    //{
 
 
-        if (collision.CompareTag("Player") && !isOpen && OkToOpen)
-        {
-            if (inventory.numberOfKeys >= 1 && !isKeyPassePartoutModule)
-            {
-                isOpen = true;
+    //    if (collision.CompareTag("Player") && !isOpen && OkToOpen)
+    //    {
+    //        if (inventory.numberOfKeys >= 1 && !isKeyPassePartoutModule)
+    //        {
+    //            isOpen = true;
 
-                inventory.numberOfKeys--;
-                PopRandomObject();
-            }
+    //            inventory.numberOfKeys--;
+    //            PopRandomObject();
+    //        }
 
-            else if (isKeyPassePartoutModule)
-            {
-                isOpen = true;
+    //        else if (isKeyPassePartoutModule)
+    //        {
+    //            isOpen = true;
 
-                PopRandomObject();
-            }
-            else
-            {
-                return;
-            }
+    //            PopRandomObject();
+    //        }
+    //        else
+    //        {
+    //            return;
+    //        }
 
-        }
+    //    }
 
-    }
+    //}
 
     public virtual void PopRandomObject()
     {

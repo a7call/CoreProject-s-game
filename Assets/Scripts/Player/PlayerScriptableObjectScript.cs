@@ -11,13 +11,10 @@ public class PlayerScriptableObjectScript: ScriptableObject
     //Data container for Player;
 
     public int maxHealth;
-    public int maxStacks;
-    public float mooveSpeed;
+    public float moveForce;
+    public float maxAcceleration;
     public float dashForce;
     public int damage;
-    public float stacksReloadTime;
-    public float DashTime;
-    private int maxArmor = 2;
 
     public Image image1;
     //[HideInInspector]
