@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Wanderer.CharacterStats;
 using UnityEngine.InputSystem;
-
+using Wanderer.Utils;
 
 public class Player : Characters
 {
@@ -42,20 +42,11 @@ public class Player : Characters
 
     [Header("Player")]
     public CharacterStats mHealth;
-    public CharacterStats moveSpeed;
+    public CharacterStats moveForce;
+    public CharacterStats dashForce;
     #endregion
 
     #region Enum
-    public EtatJoueur currentEtat;
-    public enum EtatJoueur
-    {
-        normal,
-        fear,
-        shopping,
-        Grapping,
-        Dashing,
-        AFK,
-    }
     #endregion
     public GameObject RH;
     public GameObject LH;
@@ -63,12 +54,12 @@ public class Player : Characters
     protected override void Awake()
     {
         base.Awake();
-        if(RH != null && LH != null)
+        if (RH != null && LH != null)
         {
             RH.SetActive(false);
             LH.SetActive(false);
-        
-        }       
+
+        }
     }
     protected override void Start()
     {
@@ -80,16 +71,16 @@ public class Player : Characters
     protected override void SetData()
     {
         MaxHealth = playerData.maxHealth;
-        mooveSpeed = playerData.mooveSpeed;
+        MoveForce = playerData.moveForce;
+        DashForce = playerData.dashForce;
+        MaxAcceleration = playerData.maxAcceleration;
     }
     protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        activeObjectManager = GetComponentInChildren<ActiveObjectManager>();
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
-        inventory = GetComponentInChildren<Inventory>();
     }
     #endregion
 
@@ -98,171 +89,105 @@ public class Player : Characters
         Animation();
         AjustHhealth();
         healthBar.UpdateHealthUI(CurrentHealth, MaxHealth);
-
-        if (IsStuned)
-            return;
-
-        switch (currentEtat)
-        {
-            default:
-                break;
-
-            case EtatJoueur.normal:
-                CheckInputs();
-                //GetInputAxis();
-                ClampMouvement(mouvement);
-                Teleporte();
-
-                break;
-
-            case EtatJoueur.fear:
-                break;
-
-            case EtatJoueur.shopping:
-                //Definir tout ce qu'on veut faire dedans
-                break;
-
-            case EtatJoueur.Grapping:
-                break;
-        }
-
+        ClampMouvement(mouvement);
+        
     }
 
     #region MOUVEMENT
-    public float mooveSpeed;
     private void FixedUpdate()
     {
-        switch (currentEtat)
-        {
-            default:
-
-                break;
-
-            case EtatJoueur.normal:
-                MovePlayer(mouvementVector * mooveSpeed * Time.fixedDeltaTime);
-                break;
-
-            case EtatJoueur.fear:
-                break;
-
-            case EtatJoueur.shopping:
-                rb.velocity = Vector2.zero;
-                break;
-
-            case EtatJoueur.Grapping:
-                break;
-
-            case EtatJoueur.AFK:
-                isShooting = true;
-                rb.velocity = Vector2.zero;
-                break;
-
-            case EtatJoueur.Dashing:
-                PiercedPocketActivation();
-                break;
-        }
-
+        MovePlayer(mouvementVector);
     }
+    #endregion
+
+
 
 
 
     #region Mouvement physics
 
-    public Vector3 velocity = Vector3.zero;
-    public float StartSmoothTime;
-    public float StopSmoothTime;
-    [SerializeField]  private Vector2 mouvementVector;
-    private Vector2 mouvement;
-
-    private bool isMoving;
+    private Vector2 mouvementVector = Vector2.zero;
+    private Vector2 mouvement = Vector2.zero;
+    private float MoveForce = 0f;
+    private float DashForce = 0f;
+    bool isDashing = false;
+    private float MaxAcceleration = 0;
 
     void MovePlayer(Vector2 _mouvement)
     {
-        
-        Vector3 targetVelocity = _mouvement;
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, StartSmoothTime);
-        // rb.velocity = _mouvement.normalized * velocity ;
-        //rb.MovePosition(((Vector2)transform.position + _mouvement.normalized * Time.deltaTime * mooveSpeed));
+        if (rb.velocity.magnitude > MaxAcceleration && !isDashing)
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, MaxAcceleration);
 
-        //if (rb.velocity.magnitude > 0.1)
-        //{
-        //    if (!AudioSourceWalk.isPlaying)
-        //    {
-        //        AudioSourceWalk.Play();
-        //    }
-           
-        //}
-        //else
-        //{
-        //    AudioSourceWalk.Stop();
-        //}
-       
+        Vector2 MovementVector = _mouvement * MoveForce * Time.fixedDeltaTime;
+
+        rb.AddForce(MovementVector, ForceMode2D.Impulse);
     }
 
     // Same Speed when Input (x,y)
     void ClampMouvement(Vector2 _mouvement)
     {
-        mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
+       mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
+      
+    }
+
+    private IEnumerator DashCo()
+    {
+        isDashing = true;
+        rb.AddForce(mouvementVector * DashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        while (rb.velocity.magnitude > MaxAcceleration)
+        {
+            yield return null;
+        }
+        isDashing = false;
     }
 
     #endregion
 
     #region Teleportation
 
-    private bool isTpReloaded = true;
-    private float dashRadius = 1.5f;
-    [SerializeField] private float timerTp = 3f;
-    private float alphaDelay = 0.1f;
-    
-    [SerializeField] private Transform[] objectsModifiedByTp;
+    //private bool isTpReloaded = true;
+    //private float dashRadius = 1.5f;
+    //[SerializeField] private float timerTp = 3f;
+    //private float alphaDelay = 0.1f;
 
-    private IEnumerator ChangeAlpha()
-    {
-        int currentWeapon = weaponManager.selectedDistanceWeapon;
-        objectsModifiedByTp[objectsModifiedByTp.Length-1] = weaponManager.transform.GetChild(currentWeapon);
+    //[SerializeField] private Transform[] objectsModifiedByTp;
 
-        foreach (Transform obj in objectsModifiedByTp)
-        {
-            obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, 0f);
-        }
-        
-        isInvincible = true;
+    //private IEnumerator ChangeAlpha()
+    //{
+    //    int currentWeapon = weaponManager.selectedDistanceWeapon;
+    //    objectsModifiedByTp[objectsModifiedByTp.Length - 1] = weaponManager.transform.GetChild(currentWeapon);
 
-        for (int i = 1; i < 6; i++)
-        {
-            yield return new WaitForSeconds(alphaDelay);
-            foreach (Transform obj in objectsModifiedByTp)
-            {
-                obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, (0.2f * i));
-            }
-        }
+    //    foreach (Transform obj in objectsModifiedByTp)
+    //    {
+    //        obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, 0f);
+    //    }
 
-        isInvincible = false;
-    }
+    //    isInvincible = true;
 
-    private IEnumerator ReloadingTp()
-    {
-        isTpReloaded = false;
-        yield return new WaitForSeconds(timerTp);
-        isTpReloaded = true;
-    }
+    //    for (int i = 1; i < 6; i++)
+    //    {
+    //        yield return new WaitForSeconds(alphaDelay);
+    //        foreach (Transform obj in objectsModifiedByTp)
+    //        {
+    //            obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, (0.2f * i));
+    //        }
+    //    }
 
-    private void Teleporte()
-    {
-        if (isTpReloaded && isMoving && Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(ReloadingTp());
-            StartCoroutine(ChangeAlpha());
-            transform.position = transform.position + dashRadius * new Vector3(mouvementVector.x, mouvementVector.y, 0);
-        }
-    }
+    //    isInvincible = false;
+    //}
+
+    //private IEnumerator ReloadingTp()
+    //{
+    //    isTpReloaded = false;
+    //    yield return new WaitForSeconds(timerTp);
+    //    isTpReloaded = true;
+    //}
 
     #endregion
 
     #region Animation
-    protected Vector3 screenMousePos;
-    protected Vector3 screenPlayerPos;
-    Vector3 horizon = new Vector3(1, 0, 0);
+
+    Vector3 playerMouseDir = Vector3.zero;
 
     //Animation event sounds
     void PlayFootStepFX()
@@ -276,13 +201,13 @@ public class Player : Characters
         float playerSpeed = mouvement.sqrMagnitude;
         animator.SetFloat("Speed", playerSpeed);
         // position de la souris sur l'écran 
-        screenMousePos = Input.mousePosition;
+        var screenMousePos = Input.mousePosition;
         // position du player en pixel sur l'écran 
-        screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+        var  screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
-        Vector3 dir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
+        playerMouseDir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
 
-        float angle = Quaternion.FromToRotation(Vector3.left, horizon - dir).eulerAngles.z;
+        float angle = Quaternion.FromToRotation(Vector3.left, Vector3.right - playerMouseDir).eulerAngles.z;
 
         if (gameObject.name == "Player2")
         {
@@ -362,19 +287,6 @@ public class Player : Characters
 
 
     #region Mouvement Inputs
-    
-    // Check If Player released Inputs
-    void CheckInputs()
-    {
-        if (mouvement == Vector2.zero)
-        {
-            isMoving = false;
-            rb.velocity = Vector3.SmoothDamp(rb.velocity, Vector2.zero, ref velocity, StopSmoothTime);
-        }
-
-        else isMoving = true;
-    }
-
     public void OnHorizontal(InputValue val)
     {
         mouvement.x = val.Get<float>();
@@ -385,25 +297,15 @@ public class Player : Characters
         mouvement.y = val.Get<float>();
     }
 
+
     public void OnDash()
     {
-        //StartCoroutine(Dash());
-
-        //PlayerControl variable;
-        //variable.Player.Reload.actionMap.AddBinding("<Keyboard/a");
+        StartCoroutine(DashCo());
     }
-    #endregion
+
 
     #endregion
 
-    void PiercedPocketActivation()
-    {
-        PiercedPocketModule pockets = FindObjectOfType<PiercedPocketModule>();
-        if (pockets)
-        {
-            if (pockets.bombsReady) StartCoroutine(pockets.SpawnBombs());
-        }
-    }
 
     #region Damage to player
     private SpriteRenderer spriteRenderer;
@@ -414,9 +316,9 @@ public class Player : Characters
     {
         if (!isInvincible)
         {
-                base.TakeDamage(damage);
-                StartCoroutine(InvincibilityDelay());
-                StartCoroutine(InvincibilityFlash());
+            base.TakeDamage(damage);
+            StartCoroutine(InvincibilityDelay());
+            StartCoroutine(InvincibilityFlash());
         }
     }
     public IEnumerator InvincibilityFlash()
@@ -467,13 +369,10 @@ public class Player : Characters
     private PlayerHealthBar healthBar;
     #endregion
 
-    #region Inputs attatck, coffre et interaction 
 
     #region Inputs
 
     WeaponsManagerSelected weaponManager;
-    ActiveObjectManager activeObjectManager;
-    Inventory inventory;
     protected bool isShooting = false;
 
     public PlayerInput playerInput;
@@ -487,7 +386,7 @@ public class Player : Characters
             isShooting = true;
 
             if (weaponManager.isPlayingDistance && weaponManager.distanceWeaponsList != null)
-            { 
+            {
                 weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = true;
 
             }
@@ -518,15 +417,6 @@ public class Player : Characters
         }
     }
 
-
-    public void OnUseObject()
-    {
-        if (activeObjectManager.GetComponentInChildren<ActiveObjects>())
-        {
-            activeObjectManager.GetComponentInChildren<ActiveObjects>().ToUseModule();
-        }
-    }
-
     public void OnSwitchAttackMode()
     {
         weaponManager.SwitchAttackMode();
@@ -546,18 +436,7 @@ public class Player : Characters
 
     public void OnOpenShop()
     {
-        ShopManager shopManager = FindObjectOfType<ShopManager>();
-
-        if (OpenShop)
-        {
-            OpenShop = false;
-            shopManager.OpenShop = false;
-        }
-        else
-        {
-            OpenShop = true;
-            shopManager.OpenShop = true;
-        }
+      
     }
 
 
@@ -592,10 +471,4 @@ public class Player : Characters
         }
     }
     #endregion
-    #endregion
-
-
-
-
-
 }
