@@ -203,10 +203,10 @@ public abstract class Enemy : Characters
     // Prends les dégats
     public override void TakeDamage(float damage, GameObject damageSource = null)
     {
-        foreach (var ability in PassiveObjectManager.currentAbilities)
-        {
-            ability.ApplyEffect(this);
-        }
+        //foreach (var ability in PassiveObjectManager.currentAbilities)
+        //{
+        //    ability.ApplyEffect(this);
+        //}
 
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
