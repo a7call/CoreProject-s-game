@@ -8,7 +8,7 @@ public class Key : Rewards
     {
         if (collision.CompareTag("Player"))
         {
-            inventory.numberOfKeys++;
+            //inventory.numberOfKeys++;
         }
         base.OnTriggerEnter2D(collision);
     }
