@@ -73,7 +73,7 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 2100000, guid: ac1af2b111056e641b124ecf78a6b68e, type: 2}
-    - time: 0.06666667
+    - time: 0.016666668
       value: {fileID: 2100000, guid: 1ab7acbd946a9a44cbf6320a9eea0b64, type: 2}
     attribute: m_Materials.Array.data[0]
     path: 
@@ -256,4 +256,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: UpdateWeaponMaterial
+    data: 
+    objectReferenceParameter: {fileID: 2100000, guid: ac1af2b111056e641b124ecf78a6b68e, type: 2}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.016666668
+    functionName: UpdateWeaponMaterial
+    data: 
+    objectReferenceParameter: {fileID: 2100000, guid: 25029f16dc6799e41aac8c6921540714, type: 2}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

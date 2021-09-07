@@ -6,7 +6,7 @@ public class EnemyWeaponManager : MonoBehaviour
 {
     public Distance Monster { get; private set; }
     public EnemyWeapon Weapon { get; private set; }
-    SpriteRenderer WeaponSR { get; set; }
+    public SpriteRenderer WeaponSR { get; set; }
 
     Vector3 PositionArme = Vector3.zero;
 
