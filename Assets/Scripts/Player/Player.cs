@@ -110,7 +110,7 @@ public class Player : Characters
     private Vector2 mouvement = Vector2.zero;
     private float MoveForce = 0f;
     private float DashForce = 0f;
-    bool isDashing = false;
+    private bool isDashing = false;
     private float MaxAcceleration = 0;
 
     void MovePlayer(Vector2 _mouvement)
@@ -129,12 +129,15 @@ public class Player : Characters
        mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
       
     }
-
     private IEnumerator DashCo()
     {
+        if (mouvementVector == Vector2.zero)
+            yield break;
+
         isDashing = true;
         rb.AddForce(mouvementVector * DashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        while (rb.velocity.magnitude > MaxAcceleration)
+        StartCoroutine(GetComponentInChildren<DashEffects>().DashEffect(delayBetweenGhosts : 0.05f, mouvementVector));
+        while (rb.velocity.magnitude >= MaxAcceleration + 5f)
         {
             yield return null;
         }

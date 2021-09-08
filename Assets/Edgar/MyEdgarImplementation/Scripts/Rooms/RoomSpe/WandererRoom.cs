@@ -121,7 +121,6 @@ public class WandererRoom : RoomBase
 
         var currentDifficulty = 0;
         spawner = new Spawner(monsters);
-        Debug.Log(activeMonsters.Count);
 
         while (currentDifficulty < MaxDifficulty)
         {

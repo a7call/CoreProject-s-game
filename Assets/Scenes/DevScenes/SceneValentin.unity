@@ -502,6 +502,10 @@ PrefabInstance:
       value: Player2
       objectReference: {fileID: 0}
     - target: {fileID: 5794951489212855759, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
+      propertyPath: smoke
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794951489212855759, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
       propertyPath: DashForce
       value: 1250
       objectReference: {fileID: 0}
@@ -512,6 +516,14 @@ PrefabInstance:
     - target: {fileID: 5794951489212855759, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
       propertyPath: mooveSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794951490324946848, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.009
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794951490324946848, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.497
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
@@ -576,6 +588,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49d4d100f9d9fe24b994791f5695f6b2, type: 3}
+--- !u!4 &296596875 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5794951489212855749, guid: 44ed4c23bc763494fb0223742d187634, type: 3}
+  m_PrefabInstance: {fileID: 264881863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &297905416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1882,6 +1899,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f47f5458e9ce4bcd81a9691690a61a9, type: 3}
+--- !u!1 &1342485603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1342485604}
+  - component: {fileID: 1342485605}
+  m_Layer: 8
+  m_Name: Ghosts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1342485604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342485603}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 296596875}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1342485605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342485603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7e3867b1ded424a9f5028615793da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ghost: {fileID: 496621697927609656, guid: 126f987ca2ba1d74cbe5566a61c50e4b, type: 3}
+  maxNumberOfGhost: 4
 --- !u!4 &1377138926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 250186849366088970, guid: 755a3bf6a529d4cbdbfe26deb53ed1c1, type: 3}
