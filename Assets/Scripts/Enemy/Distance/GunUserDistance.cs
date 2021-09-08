@@ -59,7 +59,7 @@ public abstract class GunUserDistance : Distance
 
     private void UpdateWeaponMaterial(Material _material)
     {
-        WeaponManager.WeaponSR.material = _material;
+        //WeaponManager.WeaponSR.material = _material;
     }
 
     #endregion
