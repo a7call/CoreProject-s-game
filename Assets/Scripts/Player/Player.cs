@@ -44,6 +44,7 @@ public class Player : Characters
     public CharacterStats mHealth;
     public CharacterStats moveForce;
     public CharacterStats dashForce;
+    public CharacterStats DashStacks;
     #endregion
 
     #region Enum
@@ -73,6 +74,8 @@ public class Player : Characters
         MaxHealth = playerData.maxHealth;
         MoveForce = playerData.moveForce;
         DashForce = playerData.dashForce;
+        MaxDashNumber = playerData.maxDashNumber;
+        DashReloadTime = playerData.dashReloadTime;
         MaxAcceleration = playerData.maxAcceleration;
     }
     protected override void GetReference()
@@ -81,6 +84,7 @@ public class Player : Characters
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
+        ProjectileCollider = GetComponent<Collider2D>();
     }
     #endregion
 
@@ -89,14 +93,14 @@ public class Player : Characters
         Animation();
         AjustHhealth();
         healthBar.UpdateHealthUI(CurrentHealth, MaxHealth);
-        ClampMouvement(mouvement);
+        ClampMouvement(mouvementVector);
         
     }
 
     #region MOUVEMENT
     private void FixedUpdate()
     {
-        MovePlayer(mouvementVector);
+        MovePlayer(mouvement);
     }
     #endregion
 
@@ -106,12 +110,13 @@ public class Player : Characters
 
     #region Mouvement physics
 
-    private Vector2 mouvementVector = Vector2.zero;
     private Vector2 mouvement = Vector2.zero;
-    private float MoveForce = 0f;
-    private float DashForce = 0f;
+    private Vector2 mouvementVector = Vector2.zero;
+    private float MoveForce { get; set; }
+
     private bool isDashing = false;
-    private float MaxAcceleration = 0;
+    private float MaxAcceleration { get; set; }
+
 
     void MovePlayer(Vector2 _mouvement)
     {
@@ -126,23 +131,89 @@ public class Player : Characters
     // Same Speed when Input (x,y)
     void ClampMouvement(Vector2 _mouvement)
     {
-       mouvementVector = Vector2.ClampMagnitude(_mouvement, 1);
+       mouvement = Vector2.ClampMagnitude(_mouvement, 1);
       
     }
+    private float DashForce { get; set; }
+    private int MaxDashNumber { get; set; }
+    private int CurrentNumberOfDash { get; set; }
+    private float DashReloadTime { get; set; }
+
+    Coroutine DashReloadCo;
+
+    Coroutine EnableColliderCo;
+
     private IEnumerator DashCo()
     {
-        if (mouvementVector == Vector2.zero)
+
+        if (mouvement == Vector2.zero || CurrentNumberOfDash >= MaxDashNumber)
             yield break;
 
-        isDashing = true;
-        rb.AddForce(mouvementVector * DashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        StartCoroutine(GetComponentInChildren<DashEffects>().DashEffect(delayBetweenGhosts : 0.05f, mouvementVector));
+        SelectDashReloadType();
+
+        isDashing = true;        
+        CurrentNumberOfDash++;
+
+        ProjectileCollider.enabled = false;
+
+        rb.AddForce(mouvement * DashForce * Time.deltaTime, ForceMode2D.Impulse);
+        StartCoroutine(GetComponentInChildren<DashEffects>().DashEffect(delayBetweenGhosts : 0.05f, mouvement));
+
         while (rb.velocity.magnitude >= MaxAcceleration + 5f)
         {
             yield return null;
         }
+
+        EnableCollider();
+
         isDashing = false;
     }
+
+   
+
+    private IEnumerator DashReload(bool isFirstDash)
+    {
+
+        if(isFirstDash)
+            yield return new WaitForSeconds(DashReloadTime);
+        else
+            yield return new WaitForSeconds(DashReloadTime * 2);
+
+        CurrentNumberOfDash = 0;
+
+    }
+
+    void EnableCollider()
+    {
+        if (EnableColliderCo != null)
+        {
+            StopCoroutine(EnableColliderCo);
+        }
+       
+        EnableColliderCo = StartCoroutine(EnableProjectileColliderToleranceCo());
+    }
+
+    private IEnumerator EnableProjectileColliderToleranceCo()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ProjectileCollider.enabled = true;
+        EnableColliderCo = null;
+
+    }
+
+    void SelectDashReloadType()
+    {
+        if (CurrentNumberOfDash == 0)
+        {
+            DashReloadCo = StartCoroutine(DashReload(isFirstDash: true));
+        }
+        else
+        {
+            StopCoroutine(DashReloadCo);
+            DashReloadCo = StartCoroutine(DashReload(isFirstDash: false));
+        }
+    }
+   
 
     #endregion
 
@@ -201,7 +272,7 @@ public class Player : Characters
     //
     void Animation()
     {
-        float playerSpeed = mouvement.sqrMagnitude;
+        float playerSpeed = mouvementVector.sqrMagnitude;
         animator.SetFloat("Speed", playerSpeed);
         // position de la souris sur l'écran 
         var screenMousePos = Input.mousePosition;
@@ -292,19 +363,19 @@ public class Player : Characters
     #region Mouvement Inputs
     public void OnHorizontal(InputValue val)
     {
-        mouvement.x = val.Get<float>();
+        mouvementVector.x = val.Get<float>();
     }
 
     public void OnVertical(InputValue val)
     {
-        mouvement.y = val.Get<float>();
+        mouvementVector.y = val.Get<float>();
     }
-
 
     public void OnDash()
     {
         StartCoroutine(DashCo());
     }
+
 
 
     #endregion

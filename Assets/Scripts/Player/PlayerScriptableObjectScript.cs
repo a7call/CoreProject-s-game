@@ -14,6 +14,8 @@ public class PlayerScriptableObjectScript: ScriptableObject
     public float moveForce;
     public float maxAcceleration;
     public float dashForce;
+    public int maxDashNumber;
+    public float dashReloadTime;
     public int damage;
 
     public Image image1;
