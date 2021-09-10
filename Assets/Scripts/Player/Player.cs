@@ -84,6 +84,7 @@ public class Player : Characters
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
+        ProjectileCollider = GetComponent<Collider2D>();
     }
     #endregion
 
@@ -140,24 +141,35 @@ public class Player : Characters
 
     Coroutine DashReloadCo;
 
+    Coroutine EnableColliderCo;
+
     private IEnumerator DashCo()
     {
 
         if (mouvement == Vector2.zero || CurrentNumberOfDash >= MaxDashNumber)
             yield break;
 
-
         SelectDashReloadType();
-        isDashing = true;
+
+        isDashing = true;        
         CurrentNumberOfDash++;
-        rb.AddForce(mouvement * DashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+
+        ProjectileCollider.enabled = false;
+
+        rb.AddForce(mouvement * DashForce * Time.deltaTime, ForceMode2D.Impulse);
         StartCoroutine(GetComponentInChildren<DashEffects>().DashEffect(delayBetweenGhosts : 0.05f, mouvement));
+
         while (rb.velocity.magnitude >= MaxAcceleration + 5f)
         {
             yield return null;
         }
+
+        EnableCollider();
+
         isDashing = false;
     }
+
+   
 
     private IEnumerator DashReload(bool isFirstDash)
     {
@@ -168,6 +180,24 @@ public class Player : Characters
             yield return new WaitForSeconds(DashReloadTime * 2);
 
         CurrentNumberOfDash = 0;
+
+    }
+
+    void EnableCollider()
+    {
+        if (EnableColliderCo != null)
+        {
+            StopCoroutine(EnableColliderCo);
+        }
+       
+        EnableColliderCo = StartCoroutine(EnableProjectileColliderToleranceCo());
+    }
+
+    private IEnumerator EnableProjectileColliderToleranceCo()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ProjectileCollider.enabled = true;
+        EnableColliderCo = null;
 
     }
 

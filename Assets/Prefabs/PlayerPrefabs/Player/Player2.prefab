@@ -350,7 +350,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: f6b656e90c104ef4988102c977b3f47b, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &5794951489212855745
 BoxCollider2D:
@@ -469,9 +469,10 @@ MonoBehaviour:
     BaseValue: 0
   dashForce:
     BaseValue: 0
+  DashStacks:
+    BaseValue: 0
   RH: {fileID: 925381431}
   LH: {fileID: 2050228671}
-  isDashing: 0
   InvincibilityFlashDelay: 0.2
   InvincibleDelay: 2
   playerInput: {fileID: 0}
@@ -843,7 +844,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.308034, y: -0.19118956}
+  m_Offset: {x: -1.2644126, y: -0.14538717}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -854,7 +855,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6003475, y: 0.22596592}
+  m_Size: {x: 0.6875901, y: 0.23905236}
   m_EdgeRadius: 0
 --- !u!1 &5794951490206935893
 GameObject:

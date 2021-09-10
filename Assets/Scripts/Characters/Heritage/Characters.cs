@@ -20,9 +20,11 @@ public abstract class Characters : StateMachine
 
     [HideInInspector]
     public Rigidbody2D rb;
+    protected Collider2D ProjectileCollider { get; set; } 
 
     protected virtual void Awake()
     {
+        
         audioSource = GetComponent<AudioSource>();
         GetReference();
         SetData();
