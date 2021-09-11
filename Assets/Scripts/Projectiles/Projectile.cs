@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     }
     protected void Start()
     {
-        Launch(Dispersion);
+       // Launch(Dispersion);
     }
 
     #endregion
@@ -38,6 +38,7 @@ public class Projectile : MonoBehaviour
         this.HitLayer = hitLayer;
         this.Direction = direction;
         StartCoroutine(DetroyProjectileCo(timeAlive));
+        Launch(Dispersion);
     }
     protected void Launch(float dispersion)
     {
@@ -50,12 +51,12 @@ public class Projectile : MonoBehaviour
         {
             collision.GetComponent<Characters>().TakeDamage(Damage, Source);
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
     protected IEnumerator DetroyProjectileCo(float timeAlive)
     {
         yield return new WaitForSeconds(timeAlive);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
 }

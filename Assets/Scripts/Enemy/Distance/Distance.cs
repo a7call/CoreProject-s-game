@@ -52,6 +52,7 @@ public abstract class Distance : Enemy, IMonster
         StopAttackRange = attackRange * stopAttackingRangeCoef;
 
         AIMouvement.MoveForce = DistanceData.moveForce;
+        PoolManager.GetInstance().CreatePool(Projetile, 50);
     }
 
     public abstract IEnumerator StartShootingProcessCo();

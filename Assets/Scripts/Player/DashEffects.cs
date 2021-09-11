@@ -9,10 +9,13 @@ public class DashEffects : MonoBehaviour
     [SerializeField] private int maxNumberOfGhost;
 
     private SpriteRenderer playerSr;
-   
-    void Start()
+
+    private void Awake()
     {
         PoolManager.GetInstance().CreatePool(ghost, 10);
+    }
+    void Start()
+    {
         playerSr = GetComponentInParent<SpriteRenderer>();
     }
 
