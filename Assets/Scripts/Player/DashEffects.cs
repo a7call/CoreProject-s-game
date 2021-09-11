@@ -12,6 +12,7 @@ public class DashEffects : MonoBehaviour
    
     void Start()
     {
+        PoolManager.GetInstance().CreatePool(ghost, 10);
         playerSr = GetComponentInParent<SpriteRenderer>();
     }
 
@@ -30,10 +31,9 @@ public class DashEffects : MonoBehaviour
         while (currentGhostNumber <= maxNumberOfGhost )
         {
             currentGhostNumber++;
-            GameObject currentGhost = Instantiate(ghost, playerSr.transform.position, transform.rotation);
+            GameObject currentGhost = PoolManager.GetInstance().ReuseObject(ghost, playerSr.transform.position, transform.rotation);
             var ghostSr = currentGhost.GetComponent<SpriteRenderer>();
             SetUpGhostSpriteRenderer(mouvementVector, ghostSr);
-            Destroy(currentGhost, 0.5f);
             yield return new WaitForSeconds(delayBetweenGhosts);
         }
     }
