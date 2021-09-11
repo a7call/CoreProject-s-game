@@ -145,9 +145,11 @@ public class Player : Characters
 
     private IEnumerator DashCo()
     {
+        Vector2 dashDirection = mouvement.normalized;
 
-        if (mouvement == Vector2.zero || CurrentNumberOfDash >= MaxDashNumber)
+        if (dashDirection == Vector2.zero || CurrentNumberOfDash >= MaxDashNumber)
             yield break;
+
 
         SelectDashReloadType();
 
@@ -156,7 +158,7 @@ public class Player : Characters
 
         ProjectileCollider.enabled = false;
 
-        rb.AddForce(mouvement * DashForce * Time.deltaTime, ForceMode2D.Impulse);
+        rb.AddForce(dashDirection * DashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
         StartCoroutine(GetComponentInChildren<DashEffects>().DashEffect(delayBetweenGhosts : 0.05f, mouvement));
 
         while (rb.velocity.magnitude >= MaxAcceleration + 5f)
