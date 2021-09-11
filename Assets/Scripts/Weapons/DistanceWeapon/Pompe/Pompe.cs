@@ -6,7 +6,11 @@ public class Pompe : ShootableWeapon
 
     private int numberOfProj = 8;
 
-
+    protected override void GetReferences()
+    {
+        base.GetReferences();
+        PoolManager.GetInstance().CreatePool(projectile, 20);
+    }
     protected override IEnumerator Shooting()
     {
         BulletInMag--;

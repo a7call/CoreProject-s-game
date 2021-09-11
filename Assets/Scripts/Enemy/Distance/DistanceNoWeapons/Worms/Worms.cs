@@ -104,7 +104,7 @@ public class Worms : DistanceNoGun
             float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Math.PI) / 180f));
             Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
             Vector2 bulDir = (bulMoveVector - transform.position).normalized;
-            GameObject bul = Instantiate(Projetile, attackPoint.position, Quaternion.identity);
+            GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPoint.position, Quaternion.identity);
             bul.GetComponent<Projectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, bulDir);
         }
         angle += 10;

@@ -48,7 +48,7 @@ public abstract class GunUserDistance : Distance
     public override IEnumerator InstantiateProjectileCO()
     {
         float decalage = Random.Range(-Dispersion, Dispersion);
-        GameObject myProjectile = Instantiate(Projetile, WeaponManager.Weapon.attackPoint.position, Quaternion.identity);
+        GameObject myProjectile = PoolManager.GetInstance().ReuseObject(Projetile, WeaponManager.Weapon.attackPoint.position, Quaternion.identity);
         myProjectile.GetComponent<Projectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, WeaponManager.aimDirection);
         yield return new WaitForEndOfFrame();
     }

@@ -3,46 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Pool
-{
-	int poolKey;
-	Queue<ObjectInstance> objectInstances;
 
-	public Pool(int _poolKey, Queue<ObjectInstance> _objectInstances)
-    {
-		poolKey = _poolKey;
-		objectInstances = _objectInstances;
-    }
-}
 public class PoolManager : Singleton<PoolManager>
 {
     Dictionary<int, Queue<ObjectInstance>> poolDictionary = new Dictionary<int, Queue<ObjectInstance>>();
-	public Pool CreatePool(GameObject prefab, int poolSize)
-	{
-		int poolKey = prefab.GetInstanceID();
-		Queue<ObjectInstance> objectInstances = new Queue<ObjectInstance>();
+    public void CreatePool(GameObject prefab, int poolSize)
+    {
+        int poolKey = prefab.GetInstanceID();
+        Queue<ObjectInstance> objectInstances = new Queue<ObjectInstance>();
 
-		if (!poolDictionary.ContainsKey(poolKey))
-		{
-			poolDictionary.Add(poolKey, objectInstances);
+        if (!poolDictionary.ContainsKey(poolKey))
+        {
+            poolDictionary.Add(poolKey, objectInstances);
 
-			GameObject poolHolder = new GameObject(prefab.name + " pool");
-			poolHolder.transform.parent = transform;
+            GameObject poolHolder = new GameObject(prefab.name + " pool");
+            poolHolder.transform.parent = transform;
 
-			for (int i = 0; i < poolSize; i++)
-			{
-				ObjectInstance newObject = new ObjectInstance(Instantiate(prefab) as GameObject);
-				poolDictionary[poolKey].Enqueue(newObject);
-				newObject.SetParent(poolHolder.transform);
-			}
-		}
+            for (int i = 0; i < poolSize; i++)
+            {
+                ObjectInstance newObject = new ObjectInstance(Instantiate(prefab));
+                poolDictionary[poolKey].Enqueue(newObject);
+                newObject.SetParent(poolHolder.transform);
+            }
+        }
+    }
 
-		Pool pool = new Pool(poolKey, objectInstances);
-
-		return pool;
-	}
-
-	public GameObject ReuseObject(GameObject prefab, Vector3 position, Quaternion rotation)
+    public GameObject ReuseObject(GameObject prefab, Vector3 position, Quaternion rotation)
 	{
 		int poolKey = prefab.GetInstanceID();
 
@@ -56,47 +42,48 @@ public class PoolManager : Singleton<PoolManager>
 		}
 		return null;
 	}
-}
-
-public class ObjectInstance
-{
-
-	public GameObject gameObject;
-	Transform transform;
-
-	bool hasPoolObjectComponent;
-	IPoolObject IPoolObject;
-
-	public ObjectInstance(GameObject objectInstance)
+	public class ObjectInstance
 	{
-		gameObject = objectInstance;
-		transform = gameObject.transform;
-		gameObject.SetActive(false);
 
-		if (gameObject.GetComponent<IPoolObject>() != null)
+		public GameObject gameObject;
+		Transform transform;
+
+		bool hasPoolObjectComponent;
+		IPoolObject IPoolObject;
+
+		public ObjectInstance(GameObject objectInstance)
 		{
-			hasPoolObjectComponent = true;
-			IPoolObject = gameObject.GetComponent<IPoolObject>();
-		}
-	}
-
-	public void Reuse(Vector3 position, Quaternion rotation)
-	{
-		if (gameObject.activeSelf)
+			gameObject = objectInstance;
+			transform = gameObject.transform;
 			gameObject.SetActive(false);
 
-		gameObject.SetActive(true);
-		transform.position = position;
-		transform.rotation = rotation;
+			if (gameObject.GetComponent<IPoolObject>() != null)
+			{
+				hasPoolObjectComponent = true;
+				IPoolObject = gameObject.GetComponent<IPoolObject>();
+			}
+		}
 
-		if (hasPoolObjectComponent)
+		public void Reuse(Vector3 position, Quaternion rotation)
 		{
-			IPoolObject.OnObjectReuse();
+			if (gameObject.activeSelf)
+				gameObject.SetActive(false);
+
+			gameObject.SetActive(true);
+			transform.position = position;
+			transform.rotation = rotation;
+
+			if (hasPoolObjectComponent)
+			{
+				IPoolObject.OnObjectReuse();
+			}
+		}
+
+		public void SetParent(Transform parent)
+		{
+			transform.parent = parent;
 		}
 	}
-
-	public void SetParent(Transform parent)
-	{
-		transform.parent = parent;
-	}
 }
+
+
