@@ -131,8 +131,7 @@ public class Player : Characters
     // Same Speed when Input (x,y)
     void ClampMouvement(Vector2 _mouvement)
     {
-       mouvement = Vector2.ClampMagnitude(_mouvement, 1);
-      
+       mouvement = Vector2.ClampMagnitude(_mouvement, 1);     
     }
     private float DashForce { get; set; }
     private int MaxDashNumber { get; set; }
@@ -172,7 +171,6 @@ public class Player : Characters
     }
 
    
-
     private IEnumerator DashReload(bool isFirstDash)
     {
 
@@ -200,7 +198,6 @@ public class Player : Characters
         yield return new WaitForSeconds(0.1f);
         ProjectileCollider.enabled = true;
         EnableColliderCo = null;
-
     }
 
     void SelectDashReloadType()
@@ -378,8 +375,6 @@ public class Player : Characters
         StartCoroutine(DashCo());
     }
 
-
-
     #endregion
 
 
@@ -480,9 +475,6 @@ public class Player : Characters
 
             isShooting = false;
         }
-
-
-
     }
 
     public void OnReload()
