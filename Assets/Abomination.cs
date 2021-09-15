@@ -16,12 +16,13 @@ public class Abomination : DistanceNoGun
     public override IEnumerator InstantiateProjectileCO()
     {
         var dir = (Target.transform.position - transform.position).normalized;
-        ArrowShot(dir);
-        StartCoroutine(CircularShot(dir));
+        var currentAttackPoint = attackPoint.position;
+        ArrowShot(dir, currentAttackPoint);
+        StartCoroutine(CircularShot(dir, currentAttackPoint));
         yield return null;
     }
 
-    public void ArrowShot(Vector3 dir)
+    public void ArrowShot(Vector3 dir, Vector3 attackPointPos)
     {
 
         float maxAngle = 90;
@@ -34,13 +35,13 @@ public class Abomination : DistanceNoGun
             float angle = Mathf.Atan2(directionTir.y, directionTir.x) * Mathf.Rad2Deg;
             if(attackPoint.position != null)
             {
-                GameObject bul = PoolManager.GetInstance().ReuseObject(Arrow, attackPoint.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                GameObject bul = PoolManager.GetInstance().ReuseObject(Arrow, attackPointPos, Quaternion.AngleAxis(angle, Vector3.forward));
                 bul.GetComponent<ProjectileContainer>().SetProjectileContainerDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, dir);
             }     
         }
     }
 
-    public IEnumerator CircularShot(Vector3 dir)
+    public IEnumerator CircularShot(Vector3 dir, Vector3 attackPointPos)
     {
         
         for (int i = 0; i < numberOfCircles; i++)
@@ -50,7 +51,7 @@ public class Abomination : DistanceNoGun
             {
                 float Dispersion = maxAngle;
                 maxAngle = maxAngle - 180 / numberOfProj;
-                GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPoint.position, Quaternion.identity);
+                GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPointPos, Quaternion.identity);
                 bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, dir);
             }
             yield return new WaitForSeconds(0.1f);

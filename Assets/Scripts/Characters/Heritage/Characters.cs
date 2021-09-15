@@ -16,6 +16,12 @@ public abstract class Characters : StateMachine
 
     public bool IsDying { get; set; }
 
+    protected Material BaseMaterial { get; private set; }
+
+    [SerializeField]
+    protected Material hitMaterial;
+
+    protected SpriteRenderer sr;
     protected AudioSource audioSource { get; private set; }
 
     [HideInInspector]
@@ -26,6 +32,9 @@ public abstract class Characters : StateMachine
     {
         
         audioSource = GetComponent<AudioSource>();
+        sr = GetComponent<SpriteRenderer>();
+        BaseMaterial = sr.material;
+        
         GetReference();
         SetData();
         SetMaxHealth();

@@ -6,11 +6,12 @@ using Wanderer.Utils;
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public abstract class Enemy : Characters
 {
+
     #region Room && dungeon related
 
     public int Difficulty { get; set; }
     public Collider2D RoomFloorCollider { get; set; }
-    
+
     #endregion
 
     #region Player Variable
@@ -25,7 +26,7 @@ public abstract class Enemy : Characters
         if (onEnemyDeath != null)
         {
             onEnemyDeath(this.gameObject);
-        }      
+        }
     }
 
     protected override void Awake()
@@ -133,7 +134,7 @@ public abstract class Enemy : Characters
     Vector2 lastPos = new Vector2();
     protected virtual void SetMouvementAnimation()
     {
-     
+
         if (AIMouvement.ShouldMove)
         {
             Vector2 trackVelocity = (rb.position - lastPos) * 50;
@@ -151,7 +152,7 @@ public abstract class Enemy : Characters
         animator.SetFloat(EnemyConst.DIRECTION_Y_CONST, AIMouvement.target.position.y - gameObject.transform.position.y);
     }
 
-   
+
     //Bool to Check If ready to start an another attack sequence
     protected bool attackAnimationPlaying = false;
 
@@ -172,7 +173,7 @@ public abstract class Enemy : Characters
 
     private void PlayHitAnim()
     {
-        animator.SetTrigger(EnemyConst.HIT_TRIGGER_CONST);
+        //animator.SetTrigger(EnemyConst.HIT_TRIGGER_CONST);
         hitAnimator.SetTrigger(EnemyConst.HIT_TRIGGER_CONST);
     }
 
@@ -200,6 +201,7 @@ public abstract class Enemy : Characters
 
     #region Health and Death
 
+    bool isTakingDamage = false;
     // Prends les dégats
     public override void TakeDamage(float damage, GameObject damageSource = null)
     {
@@ -207,9 +209,33 @@ public abstract class Enemy : Characters
         //{
         //    ability.ApplyEffect(this);
         //}
-
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
+        StartCoroutine(PlayTakeDamageAnimation());
+
+    }
+
+    IEnumerator PlayTakeDamageAnimation()
+    {
+      
+        if (IsDying)
+        {
+            sr.material = BaseMaterial;
+            yield break;
+        }
+        if (isTakingDamage)
+            yield break;
+
+        isTakingDamage = true;
+        sr.material = hitMaterial;
+        yield return new WaitForSeconds(0.05f);
+        sr.material = BaseMaterial;
+        transform.localScale = new Vector3(0.9f, 1.1f, 1);
+        yield return new WaitForSeconds(0.08f);
+        transform.localScale = new Vector3(1.1f, 0.9f, 1);
+        yield return new WaitForSeconds(0.04f);
+        transform.localScale = new Vector3(1, 1, 1);
+        isTakingDamage = false;
 
     }
 
@@ -218,7 +244,7 @@ public abstract class Enemy : Characters
         EnemyDeath();
         //CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForceToApply, -dir, knockBackTime: 0.3f));
         StopAllCoroutines();
-        SetState(new DeathState(this));  
+        SetState(new DeathState(this));
     }
 
     #endregion
