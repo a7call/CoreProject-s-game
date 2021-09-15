@@ -98,7 +98,7 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
     protected void ProjectileSetUp(float dispersion, float damage, float projectileSpeed, LayerMask enemyLayer, float timeAlive = 10f)
     {
         GameObject instantiatedProjectile = PoolManager.GetInstance().ReuseObject(projectile, attackPoint.position, transform.rotation);
-        instantiatedProjectile.GetComponent<Projectile>().SetProjectileDatas(damage, dispersion, projectileSpeed, enemyLayer, player.gameObject, timeAlive, transform.right);
+        instantiatedProjectile.GetComponent<SingleProjectile>().SetProjectileDatas(damage, dispersion, projectileSpeed, enemyLayer, player.gameObject, timeAlive, transform.right);
     }
 
     public bool IsAbleToShoot()

@@ -70,6 +70,12 @@ public class PoolManager : Singleton<PoolManager>
 				gameObject.SetActive(false);
 
 			gameObject.SetActive(true);
+			foreach(Transform trans in gameObject.transform)
+            {
+				if (!trans.gameObject.activeSelf)
+					trans.gameObject.SetActive(true);
+
+            }
 			transform.position = position;
 			transform.rotation = rotation;
 

@@ -40,18 +40,6 @@ public abstract class DistanceNoGun : Distance
                 attackPoint = attackPointLeftGO;
             }
         }
-        else
-        {
-            if (lastMoveY > 0)
-            {
-                attackPoint = attackPointBackGO;
-            }
-            else
-            {
-                attackPoint = attackPointFrontGO;
-            }
-        }
-        
     }
    //Recherche les position potentiel des attaques points 
     private void findAttackPoints()

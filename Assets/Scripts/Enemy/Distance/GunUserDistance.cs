@@ -49,7 +49,7 @@ public abstract class GunUserDistance : Distance
     {
         float decalage = Random.Range(-Dispersion, Dispersion);
         GameObject myProjectile = PoolManager.GetInstance().ReuseObject(Projetile, WeaponManager.Weapon.attackPoint.position, Quaternion.identity);
-        myProjectile.GetComponent<Projectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, WeaponManager.aimDirection);
+        myProjectile.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, WeaponManager.aimDirection);
         yield return new WaitForEndOfFrame();
     }
 
