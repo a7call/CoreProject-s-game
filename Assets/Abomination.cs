@@ -32,8 +32,11 @@ public class Abomination : DistanceNoGun
             maxAngle = maxAngle -  rangeOfAngles / numberOfArrow;
             var directionTir = Quaternion.AngleAxis(Dispersion, Vector3.forward) * dir;
             float angle = Mathf.Atan2(directionTir.y, directionTir.x) * Mathf.Rad2Deg;
-            GameObject bul = PoolManager.GetInstance().ReuseObject(Arrow, attackPoint.position, Quaternion.AngleAxis(angle, Vector3.forward));
-            bul.GetComponent<ProjectileContainer>().SetProjectileContainerDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, dir);
+            if(attackPoint.position != null)
+            {
+                GameObject bul = PoolManager.GetInstance().ReuseObject(Arrow, attackPoint.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                bul.GetComponent<ProjectileContainer>().SetProjectileContainerDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, dir);
+            }     
         }
     }
 

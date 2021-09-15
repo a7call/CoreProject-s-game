@@ -29,17 +29,16 @@ public abstract class DistanceNoGun : Distance
 
         float lastMoveX = animator.GetFloat(EnemyConst.DIRECTION_X_CONST);
         float lastMoveY = animator.GetFloat(EnemyConst.DIRECTION_Y_CONST);
-        if (Mathf.Abs(lastMoveX) > Mathf.Abs(lastMoveY))
+
+        if (lastMoveX > 0)
         {
-            if (lastMoveX > 0)
-            {
-                attackPoint = attackPointRightGO;
-            }
-            else
-            {
-                attackPoint = attackPointLeftGO;
-            }
+            attackPoint = attackPointRightGO;
         }
+        else
+        {
+            attackPoint = attackPointLeftGO;
+        }
+
     }
    //Recherche les position potentiel des attaques points 
     private void findAttackPoints()
