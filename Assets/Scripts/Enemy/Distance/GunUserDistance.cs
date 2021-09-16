@@ -29,20 +29,12 @@ public abstract class GunUserDistance : Distance
     #region Shoot 
     public override IEnumerator StartShootingProcessCo()
     {
-        if (isReadytoShoot)
+        if (isReadyToAttack)
         {
-            isReadytoShoot = false;
+            isReadyToAttack = false;
             // Wait for coroutine shoot to end
             yield return StartCoroutine(InstantiateProjectileCO());
-
-            isAttacking = false;
-
-            WeaponAnimator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
-            // delay before next Shoot
-            yield return new WaitForSeconds(RestTime);
-            isReadytoShoot = true;
-            // gestion de l'animation d'attaque
-            attackAnimationPlaying = false;
+            yield return StartCoroutine(RestCo(WeaponAnimator));
         }
     }
     public override IEnumerator InstantiateProjectileCO()

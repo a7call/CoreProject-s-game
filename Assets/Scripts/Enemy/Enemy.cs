@@ -4,7 +4,7 @@ using System;
 using Wanderer.Utils;
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
-public abstract class Enemy : Characters
+public abstract class Enemy : Characters, IMonster
 {
 
     #region Room && dungeon related
@@ -19,6 +19,9 @@ public abstract class Enemy : Characters
     #endregion
 
     #region Unity Mono
+
+
+    public abstract IMonsterData GetMonsterData();
 
     public event Action<GameObject> onEnemyDeath;
     public void EnemyDeath()
@@ -79,7 +82,8 @@ public abstract class Enemy : Characters
 
     // Distance ou l'ennemi repère le joueur
     protected float inSight = 10f;
-    protected bool isAttacking;
+    public bool isAttacking;
+    public bool isReadyToAttack = true;
     protected float attackRange;
     protected bool isOutOfAttackRange(float range)
     {
@@ -108,6 +112,17 @@ public abstract class Enemy : Characters
         }
 
         return false;
+    }
+
+    public IEnumerator RestCo(Animator animator)
+    {
+        isAttacking = false;
+        animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
+        // delay before next Shoot
+        yield return new WaitForSeconds(GetMonsterData().RestTime);
+        isReadyToAttack = true;
+        // gestion de l'animation d'attaque
+        attackAnimationPlaying = false;
     }
     #endregion
 
@@ -154,7 +169,7 @@ public abstract class Enemy : Characters
 
 
     //Bool to Check If ready to start an another attack sequence
-    protected bool attackAnimationPlaying = false;
+    public bool attackAnimationPlaying = false;
 
     //Methode permetant de lancer la séquence d'attaque via l'animation
     protected virtual void PlayAttackAnim(Animator animator)

@@ -14,7 +14,7 @@ using UnityEngine;
 
 
 
-public class Cac : Enemy, IMonster
+public class Cac : Enemy
 {
     protected override void Awake()
     {
@@ -23,12 +23,11 @@ public class Cac : Enemy, IMonster
     }
 
     #region Datas
-    public IMonsterData Datas {
-        get
-        {
-            return CacDatas;
-        }
+    public override IMonsterData GetMonsterData()
+    {
+        return CacDatas;
     }
+
     [SerializeField] public CacScriptableObject CacDatas;
 
     protected override void SetData()
@@ -59,7 +58,6 @@ public class Cac : Enemy, IMonster
         private set;
     }
     Vector2 attackPoint = Vector2.zero;
-    bool isReadyToAttack = true;
     protected virtual IEnumerator BaseAttack()
     {
         if (isReadyToAttack)
@@ -68,16 +66,14 @@ public class Cac : Enemy, IMonster
             var attackDir = target.position - transform.position;
             attackPoint = new Vector3(transform.position.x + Mathf.Clamp(attackDir.x, -1f, 1f), transform.position.y + Mathf.Clamp(attackDir.y, -1f, 1f));
             PlayAttackAnim(animator);
-            yield return new WaitForSeconds(2f);
-            isReadyToAttack = true;
-            attackAnimationPlaying = false;
+            yield return null;
         }
     }
 
     protected void ApplyDamage(float damage)
     {
-        animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
-        isAttacking = false;
+        StartCoroutine(RestCo(animator));
+
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint, AttackRadius, HitLayers);
 
         foreach (Collider2D h in hits)

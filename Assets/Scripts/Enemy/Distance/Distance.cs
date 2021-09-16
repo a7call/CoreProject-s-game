@@ -2,14 +2,11 @@
 using UnityEngine;
 using Wanderer.Utils;
 
-public abstract class Distance : Enemy, IMonster
+public abstract class Distance : Enemy
 {
-    public IMonsterData Datas
+    public override IMonsterData GetMonsterData()
     {
-        get
-        {
-            return DistanceData;
-        }
+        return DistanceData;
     }
     // Scriptable Object
     [SerializeField] protected DistanceScriptableObject DistanceData;
@@ -19,9 +16,6 @@ public abstract class Distance : Enemy, IMonster
     protected Transform attackPoint;
     // stopAttackRange : range ou l'ennemi passe en mode chaising  != attackRange  : range ou l'ennemi passe en mode attaque. 
     protected float StopAttackRange { get; private set; }
-    // Check si prêt à tirer
-    [SerializeField]
-    protected bool isReadytoShoot = true;
     // Repos après tire
     protected float RestTime { get; private set; }
     // Projectile to instantiate
@@ -37,7 +31,7 @@ public abstract class Distance : Enemy, IMonster
         // ScriptableObject Datas
         this.MaxHealth = DistanceData.maxHealth;
         this.knockBackForceToApply = DistanceData.knockBackForceToApply;
-        this.RestTime = DistanceData.restTime;
+        this.RestTime = DistanceData.RestTime;
         this.Projetile = DistanceData.projetile;
         this.attackRange = DistanceData.attackRange;
         this.Dispersion = DistanceData.dispersion;

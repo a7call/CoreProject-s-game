@@ -8,18 +8,10 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "new Distance", menuName = "DistanceEnemy")]
-public class DistanceScriptableObject : EnemyScriptableObject, IMonsterData
+public class DistanceScriptableObject : EnemyScriptableObject
 {
     public GameObject projetile;
     public float projectileSpeed;
     public float dispersion;
-    [SerializeField] private int difficulty;
-    public int Difficulty
-    {
-        get
-        {
-            return difficulty;
-        }
-    }
 
 }
