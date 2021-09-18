@@ -14,7 +14,7 @@ using UnityEngine;
 
 
 
-public class Cac : Enemy
+public abstract class Cac : Enemy
 {
     protected override void Awake()
     {

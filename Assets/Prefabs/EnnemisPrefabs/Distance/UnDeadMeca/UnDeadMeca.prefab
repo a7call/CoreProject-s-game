@@ -421,11 +421,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06b80ba7ca6f494cbcff277e8583252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: UnDeadMeca
   animator: {fileID: 0}
-  rb: {fileID: 0}
   hitMaterial: {fileID: 2100000, guid: ac1af2b111056e641b124ecf78a6b68e, type: 2}
+  rb: {fileID: 0}
+  isAttacking: 0
+  isReadyToAttack: 1
+  attackAnimationPlaying: 0
   DistanceData: {fileID: 11400000, guid: 60dcea9e92d954565a87716c1c152f8f, type: 2}
-  isReadytoShoot: 1
 --- !u!1 &7423965157188437572
 GameObject:
   m_ObjectHideFlags: 0

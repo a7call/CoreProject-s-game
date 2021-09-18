@@ -5287,11 +5287,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3efee14afba45f4f91582038597900a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Worm
   animator: {fileID: 0}
-  rb: {fileID: 0}
   hitMaterial: {fileID: 2100000, guid: ac1af2b111056e641b124ecf78a6b68e, type: 2}
+  rb: {fileID: 0}
+  isAttacking: 0
+  isReadyToAttack: 1
+  attackAnimationPlaying: 0
   DistanceData: {fileID: 11400000, guid: d9808bee00023c74eb5d02b80454e98f, type: 2}
-  isReadytoShoot: 1
 --- !u!82 &7533145378157334019
 AudioSource:
   m_ObjectHideFlags: 0

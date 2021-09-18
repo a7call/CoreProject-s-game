@@ -8,4 +8,10 @@ public static class AudioConst
     public const string SPACE_SHIP_COMBAT_MUSIC_NAME = "SpaceShipCombat";
 
     public const string TRANSITION_EFFECT = "TransitionEffect";
+
+
+    #region Player
+    public const string PLAYER_DASH_EFFECT = "PlayerDash";
+    #endregion
+
 }

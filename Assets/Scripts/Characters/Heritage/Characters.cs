@@ -7,6 +7,7 @@ using Wanderer.Utils;
 [RequireComponent(typeof(AudioSource))]
 public abstract class Characters : StateMachine
 {
+    public string Name;
     [HideInInspector]
     public Animator animator;
     public bool IsPoisoned { get; set; }
@@ -34,16 +35,18 @@ public abstract class Characters : StateMachine
         audioSource = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
         BaseMaterial = sr.material;
-        
         GetReference();
         SetData();
         SetMaxHealth();
     }
     protected virtual void Start()
     {
-      
+        this.gameObject.name = Name;
     }
-
+    void PlayDeathEffect()
+    {
+        AudioManagerEffect.GetInstance().Play(gameObject.name+ "Death", this.gameObject);
+    }
     #region Health System
 
     public int MaxHealth { get; set; }
@@ -55,6 +58,7 @@ public abstract class Characters : StateMachine
         if (CurrentHealth <= 0)
         {
             IsDying = true;
+            PlayDeathEffect();
             Die();
         }
         if (damageSource != null)

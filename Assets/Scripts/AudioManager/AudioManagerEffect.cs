@@ -17,17 +17,17 @@ public class AudioManagerEffect : Singleton<AudioManagerEffect>
 			Debug.LogWarning("Sound: " + name + " not found!");
 			return;
 		}
-		AudioSource audioSource = gameObjectSource.GetComponent<AudioSource>();
-		if(audioSource == null)
-        {
-			gameObjectSource.AddComponent(typeof(AudioSource));
-        }
-		audioSource.outputAudioMixerGroup = s.mixerGroup;
 
-		volumeScale =  s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		if (s.source == null)
+		{
+			s.source = gameObjectSource.AddComponent(typeof(AudioSource)) as AudioSource;
+			s.source.clip = s.clip;
+			s.source.loop = s.loop;
+			s.source.volume = s.volume;
+			s.source.outputAudioMixerGroup = s.mixerGroup;
+			s.source.pitch = s.pitch;
+		}
 
-		audioSource.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
-
-		audioSource.PlayOneShot(s.clip, volumeScale);
+		s.source.PlayOneShot(s.clip, volumeScale);
 	}
 }

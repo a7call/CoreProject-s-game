@@ -18,7 +18,7 @@ public class EnemyWeaponManager : MonoBehaviour
     {
         Weapon = GetComponentInChildren<EnemyWeapon>();
         WeaponSR = GetComponentInChildren<SpriteRenderer>();
-        Monster = GetComponentInParent<UnDeadMecaDistance>();
+        Monster = GetComponentInParent<UnDeadMeca>();
         
     }
 
