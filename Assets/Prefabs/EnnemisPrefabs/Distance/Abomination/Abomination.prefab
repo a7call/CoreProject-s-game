@@ -402,12 +402,15 @@ MonoBehaviour:
   animator: {fileID: 0}
   hitMaterial: {fileID: 2100000, guid: ac1af2b111056e641b124ecf78a6b68e, type: 2}
   rb: {fileID: 0}
+  isAttacking: 0
+  isReadyToAttack: 1
+  attackAnimationPlaying: 0
   DistanceData: {fileID: 11400000, guid: 5fb71d5f346f25a449a64a1493201c27, type: 2}
-  isReadytoShoot: 1
-  numberOfProj: 40
-  numberOfArrow: 4
-  Arrow: {fileID: 5212272478947859067, guid: fd1e5190f6e4b4f4093486b133374ecb, type: 3}
+  numberOfProj: 20
   numberOfCircles: 2
+  numberOfArrow: 2
+  Arrow: {fileID: 5212272478947859067, guid: fd1e5190f6e4b4f4093486b133374ecb, type: 3}
+  Smoke: {fileID: 3119732962093948494, guid: 96c8cc5c6c7edfc4aa592a98b93de37f, type: 3}
 --- !u!1 &4451537652473585603
 GameObject:
   m_ObjectHideFlags: 0
