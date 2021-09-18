@@ -120,6 +120,7 @@ public class Worms : DistanceNoGun
         smokeFleeingParticules = GetComponentInChildren<ParticleSystem>();
         smokeFleeingParticules.Play();
     }
+
     #endregion
 
 }

@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IMonsterData 
 {
-    int Difficulty { get;}
+    int Difficulty { get; set; } 
+    float RestTime { get; set; }
 }

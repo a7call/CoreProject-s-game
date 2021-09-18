@@ -149,7 +149,7 @@ public class Player : Characters
         if (dashDirection == Vector2.zero || CurrentNumberOfDash >= MaxDashNumber)
             yield break;
 
-
+        AudioManagerEffect.GetInstance().Play(AudioConst.PLAYER_DASH_EFFECT, this.gameObject, 0.2f);
         SelectDashReloadType();
 
         isDashing = true;        

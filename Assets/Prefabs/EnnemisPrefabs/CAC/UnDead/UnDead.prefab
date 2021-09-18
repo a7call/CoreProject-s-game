@@ -5021,8 +5021,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914328e5cd73d7b41bfcb41e388228e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: UnDead
   animator: {fileID: 2574333616261989633}
+  hitMaterial: {fileID: 2100000, guid: ac1af2b111056e641b124ecf78a6b68e, type: 2}
   rb: {fileID: 0}
+  isAttacking: 0
+  isReadyToAttack: 1
+  attackAnimationPlaying: 0
   CacDatas: {fileID: 11400000, guid: cd84540ed4e859241922c0f613d86881, type: 2}
 --- !u!61 &9076893480766678106
 BoxCollider2D:

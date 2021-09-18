@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IMonster 
 {
-    public IMonsterData Datas { get;}
+    public IMonsterData GetMonsterData();
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Wanderer.Utils;
-public class UnDeadMecaDistance : GunUserDistance
+public class UnDeadMeca : GunUserDistance
 {
     public override void DoChasingState()
     {
@@ -32,4 +32,5 @@ public class UnDeadMecaDistance : GunUserDistance
             yield return null;
         }
     }
+
 }

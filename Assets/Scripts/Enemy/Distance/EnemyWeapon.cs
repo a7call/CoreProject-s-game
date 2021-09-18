@@ -25,6 +25,7 @@ public class EnemyWeapon : MonoBehaviour
     public void StartShootingProcessCo()
     {
         StartCoroutine(weaponManager.Monster.StartShootingProcessCo());
+        StartCoroutine(weaponManager.Monster.RestCo(animator));
     }
 
 }

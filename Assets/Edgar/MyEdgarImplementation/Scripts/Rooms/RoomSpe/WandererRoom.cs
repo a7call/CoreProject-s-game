@@ -140,7 +140,7 @@ public class WandererRoom : RoomBase
                 continue;
             }
             var monsterScr = monsters[index].GetComponent<IMonster>();
-            var monsterDifficulty = monsterScr.Datas.Difficulty;
+            var monsterDifficulty = monsterScr.GetMonsterData().Difficulty;
 
             if (currentDifficulty + monsterDifficulty > MaxDifficulty)
                 continue;
