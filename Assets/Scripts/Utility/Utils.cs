@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 namespace Wanderer.Utils
 {
@@ -169,6 +170,24 @@ namespace Wanderer.Utils
 
 
         #endregion
+
+        public static List<Vector3> GetAllTilesPosition(Tilemap tilemap)
+        {            
+            var tileLocations = new List<Vector3>();
+
+            foreach (var pos in tilemap.cellBounds.allPositionsWithin)
+            {
+                Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
+
+                Vector3 place = tilemap.CellToWorld(localPlace);
+                if (tilemap.HasTile(localPlace))
+                {
+                    //Vector3 posr = new Vector3(Mathf.Round(place.x * 10) * 0.1f, Mathf.Round(place.y * 10) * 0.1f, place.z);
+                    tileLocations.Add(place);
+                }
+            }
+            return tileLocations;
+        }
     }
 
 
