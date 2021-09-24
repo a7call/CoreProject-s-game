@@ -16,7 +16,6 @@ public class Pompe : ShootableWeapon
     }
     protected override IEnumerator Shooting()
     {
-        print("tess");
         BulletInMag--;
         for (int i = 0; i < numberOfProj; i++)
         {
