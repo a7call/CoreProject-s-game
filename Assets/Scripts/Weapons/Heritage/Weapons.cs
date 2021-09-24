@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-/// <summary>
-/// Classe mère des armes 
-/// </summary>
 public abstract class Weapons : MonoBehaviour
 {
     protected string ShootAudioName { get; set; }
@@ -69,6 +66,5 @@ public abstract class Weapons : MonoBehaviour
 
     protected abstract void SetStatDatasAndInitialization();
     #endregion
-
 }
 

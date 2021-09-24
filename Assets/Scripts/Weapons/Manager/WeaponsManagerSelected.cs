@@ -189,7 +189,6 @@ public class WeaponsManagerSelected : MonoBehaviour
           
             Vector3 mousePosition = Utils.GetMouseWorldPosition();
             Vector3 playerDirection = (mousePosition - transform.position);
-            
 
             Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
 
@@ -255,8 +254,7 @@ public class WeaponsManagerSelected : MonoBehaviour
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
             else
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
-        }
-       
+        }      
     }
 
     private void SetWeaponXPosition( Weapons weapons)

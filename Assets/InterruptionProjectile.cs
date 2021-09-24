@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InterruptionProjectile : SingleProjectile
 {
-    [SerializeField] private GameObject explosionEffect;
+    public GameObject explosionEffect;
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
@@ -15,5 +15,10 @@ public class InterruptionProjectile : SingleProjectile
             monster.SetState(new InterruptedState(monster));
         }
         base.OnTriggerEnter2D(collision);
+    }
+
+    private void OnDisable()
+    {
+       PoolManager.GetInstance().ReuseObject(explosionEffect, transform.position, transform.rotation);
     }
 }

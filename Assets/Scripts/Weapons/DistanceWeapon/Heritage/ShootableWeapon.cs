@@ -85,11 +85,9 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
     protected float dispersion { get; private set; }
     public bool OkToShoot { get; set; }
     public bool isSpecialReady { get; set; } = true;
-
+    protected int ShotValue { get; private set; }
     protected abstract IEnumerator Shooting();
     protected abstract IEnumerator SpecialShooting();
-    protected abstract IEnumerator SpecialShootingReload(float realoadingTime);
-
     protected void Shoot()
     {
         if (CameraController.instance != null)
@@ -107,19 +105,18 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
         instantiatedProjectile.GetComponent<SingleProjectile>().SetProjectileDatas(damage, dispersion, projectileSpeed, enemyLayer, player.gameObject, timeAlive, transform.right);
     }
 
-    public bool IsAbleToShoot()
+    public bool IsAbleToShoot(int shotValue)
     {
-        return !isAttacking && BulletInMag > 0;
+        return (!isAttacking && BulletInMag > 0) || (shotValue == 1 && !isAttacking);
     }
-
-    protected int ShotValue { get; private set; }
+  
     public void StartShootingProcess(int shotValue)
     {
 
         if (!isSpecialReady && shotValue == 1)
             return;
 
-        if (IsAbleToShoot())
+        if (IsAbleToShoot(shotValue))
         {
             isAttacking = true;
             ShotValue = shotValue;

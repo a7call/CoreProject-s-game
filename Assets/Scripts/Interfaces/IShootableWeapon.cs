@@ -5,7 +5,6 @@ using UnityEngine;
 public interface IShootableWeapon : IPlayerWeapon
 {
     void StartShootingProcess(int shotValue);
-    bool IsAbleToShoot();
-
+    bool IsAbleToShoot(int shotValue);
     void toReload();   
 }

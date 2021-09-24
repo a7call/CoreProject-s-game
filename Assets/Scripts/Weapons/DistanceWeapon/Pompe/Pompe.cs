@@ -11,7 +11,8 @@ public class Pompe : ShootableWeapon
     {
         base.GetReferences();
         PoolManager.GetInstance().CreatePool(projectile, 20);
-        PoolManager.GetInstance().CreatePool(interruptionProjectile,5);
+        PoolManager.GetInstance().CreatePool(interruptionProjectile, 5);
+        PoolManager.GetInstance().CreatePool(interruptionProjectile.GetComponent<InterruptionProjectile>().explosionEffect, 1);
     }
     protected override IEnumerator Shooting()
     {
@@ -31,18 +32,9 @@ public class Pompe : ShootableWeapon
     protected override IEnumerator SpecialShooting()
     {
         isAttacking = false;
-        if (!isSpecialReady) 
-            yield break;
-
         isSpecialReady = false;
-        ProjectileSetUp(interruptionProjectile, 0, 0, ProjectileSpeed, enemyLayer);
+        ProjectileSetUp(interruptionProjectile, 0, 0, ProjectileSpeed, enemyLayer, 0.4f);       
         yield return new WaitForSeconds(SpecialAttackDelay);
-        isSpecialReady = true;
-        
-    }
-
-    protected override IEnumerator SpecialShootingReload(float realoadingTime)
-    {
-        throw new System.NotImplementedException();
+        isSpecialReady = true;       
     }
 }

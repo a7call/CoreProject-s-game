@@ -23,9 +23,4 @@ public class BaseShootableWeapon : ShootableWeapon
         Debug.LogWarning("Not implemented");
         yield return null;
     }
-
-    protected override IEnumerator SpecialShootingReload(float realoadingTime)
-    {
-        yield return null;
-    }
 }
