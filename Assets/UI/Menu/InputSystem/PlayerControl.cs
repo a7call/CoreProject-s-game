@@ -30,7 +30,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""name"": ""Shoot"",
                     ""type"": ""Value"",
                     ""id"": ""d9f6a315-5fe0-46c8-8c1d-77f1f947feca"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -89,6 +89,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Digital"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SpecialShoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""c57510d8-b6a4-4f26-b7bb-33e71d0706f8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -100,17 +108,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""73b489ce-7f50-45d8-8f02-4171523c2bca"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -234,6 +231,17 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""OpenShop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e5065df-28de-4b25-8221-93fc05440aa4"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""SpecialShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -274,6 +282,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_SwitchAttackMode = m_Player.FindAction("SwitchAttackMode", throwIfNotFound: true);
         m_Player_OpenCoffre = m_Player.FindAction("OpenCoffre", throwIfNotFound: true);
         m_Player_OpenShop = m_Player.FindAction("OpenShop", throwIfNotFound: true);
+        m_Player_SpecialShoot = m_Player.FindAction("SpecialShoot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -334,6 +343,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_SwitchAttackMode;
     private readonly InputAction m_Player_OpenCoffre;
     private readonly InputAction m_Player_OpenShop;
+    private readonly InputAction m_Player_SpecialShoot;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -347,6 +357,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @SwitchAttackMode => m_Wrapper.m_Player_SwitchAttackMode;
         public InputAction @OpenCoffre => m_Wrapper.m_Player_OpenCoffre;
         public InputAction @OpenShop => m_Wrapper.m_Player_OpenShop;
+        public InputAction @SpecialShoot => m_Wrapper.m_Player_SpecialShoot;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -383,6 +394,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @OpenShop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
                 @OpenShop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
                 @OpenShop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenShop;
+                @SpecialShoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
+                @SpecialShoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
+                @SpecialShoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -414,6 +428,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @OpenShop.started += instance.OnOpenShop;
                 @OpenShop.performed += instance.OnOpenShop;
                 @OpenShop.canceled += instance.OnOpenShop;
+                @SpecialShoot.started += instance.OnSpecialShoot;
+                @SpecialShoot.performed += instance.OnSpecialShoot;
+                @SpecialShoot.canceled += instance.OnSpecialShoot;
             }
         }
     }
@@ -463,6 +480,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnSwitchAttackMode(InputAction.CallbackContext context);
         void OnOpenCoffre(InputAction.CallbackContext context);
         void OnOpenShop(InputAction.CallbackContext context);
+        void OnSpecialShoot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

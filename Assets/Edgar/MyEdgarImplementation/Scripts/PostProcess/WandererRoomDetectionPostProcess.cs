@@ -35,9 +35,7 @@ namespace Edgar.Unity.Examples
 
             Tilemap tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
-            {
-
-                
+            {  
                 // Set the Random instance of the GameManager to be the same instance as we use in the generator
                 if (WandererGameManager.Instance != null)
                     WandererGameManager.Instance.Random = Random;
@@ -57,15 +55,10 @@ namespace Edgar.Unity.Examples
                 {
                     room.monsters = monsters;
                     room.SetRoomState(RoomState.UnCleared); 
-                }
-                
-            }
-           
+                }                
+            }           
             FindObjectOfType<NodeGrid>().CreateGrid();
             MovePlayerToSpawn(level);
-
-          
-
         }
 
         

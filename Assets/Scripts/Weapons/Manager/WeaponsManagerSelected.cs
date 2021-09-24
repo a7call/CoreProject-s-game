@@ -16,11 +16,7 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     public List<GameObject> cacWeaponsList = new List<GameObject>();
     public List<GameObject> distanceWeaponsList = new List<GameObject>();
-
-    [HideInInspector]
-    public bool isPlayingCac=false;
-    [HideInInspector]
-    public bool isPlayingDistance=false;
+    
     public bool isRH;
 
 
@@ -33,15 +29,9 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayingDistance)
-            MoveDistanceWeapon();
-        else
-            MoveCacWeapon();
-
-
+        MoveDistanceWeapon();
         ChangeWeapons();
-        UpdateUIWeapon();
-        
+        UpdateUIWeapon();       
     }
 
     void UseWeapon(GameObject weaponObj)
@@ -69,8 +59,6 @@ public class WeaponsManagerSelected : MonoBehaviour
 
         }
 
-        isPlayingDistance = true;
-        isPlayingCac = false;
         selectedDistanceWeapon = transform.childCount - 1;
         distanceWeaponsList.Add(weaponObj);
 
@@ -91,98 +79,62 @@ public class WeaponsManagerSelected : MonoBehaviour
     private void SelectWeapon()
     {
         int j = 0;
-        if (isPlayingDistance == true)
+        foreach (GameObject weapon in distanceWeaponsList)
         {
-            foreach (GameObject weapon in distanceWeaponsList)
-            {  
-                if (j == selectedDistanceWeapon)
-                {
-                    EquipeWeapon(weapon);
-                }
-                else
-                {
-                    UnEquipWeapon(weapon);
-                }
-                j++;
+            if (j == selectedDistanceWeapon)
+            {
+                EquipeWeapon(weapon);
             }
-            foreach (GameObject weapon in cacWeaponsList)
+            else
             {
                 UnEquipWeapon(weapon);
             }
+            j++;
         }
+        foreach (GameObject weapon in cacWeaponsList)
+        {
+            UnEquipWeapon(weapon);
+        }
+
     }
     private void ChangeWeapons()
     {
-        if (isPlayingCac == true)
+
+        int previousSelectedWeapon = selectedDistanceWeapon;
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            int previousSelectedWeapon = selectedCacWeapon;
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            if (selectedDistanceWeapon >= distanceWeaponsList.Count - 1)
             {
-                if (selectedCacWeapon >= cacWeaponsList.Count - 1)
-                {
-                    selectedCacWeapon = 0;
-                }
-                else
-                {
-                    selectedCacWeapon++;
-                }
+                selectedDistanceWeapon = 0;
             }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            else
             {
-                if (selectedCacWeapon <= 0)
-                {
-                    selectedCacWeapon = cacWeaponsList.Count - 1;
-                }
-                else
-                {
-                    selectedCacWeapon--;
-                }
-            }
-            if (previousSelectedWeapon != selectedCacWeapon)
-            {
-                SelectWeapon();
+                selectedDistanceWeapon++;
             }
         }
-        else if (isPlayingDistance == true)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            int previousSelectedWeapon = selectedDistanceWeapon;
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            if (selectedDistanceWeapon <= 0)
             {
-                if (selectedDistanceWeapon >= distanceWeaponsList.Count - 1)
-                {
-                    selectedDistanceWeapon = 0;
-                }
-                else
-                {
-                    selectedDistanceWeapon++;
-                }
+                selectedDistanceWeapon = distanceWeaponsList.Count - 1;
             }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            else
             {
-                if (selectedDistanceWeapon <= 0)
-                {
-                    selectedDistanceWeapon = distanceWeaponsList.Count - 1;
-                }
-                else
-                {
-                    selectedDistanceWeapon--;
-                }
+                selectedDistanceWeapon--;
             }
-            if (previousSelectedWeapon != selectedDistanceWeapon)
-            {
-                SelectWeapon();
-            }
+        }
+        if (previousSelectedWeapon != selectedDistanceWeapon)
+        {
+            SelectWeapon();
         }
     }
 
     private void EquipeWeapon(GameObject weapon)
     {
-       
         weapon.gameObject.SetActive(true);
         GetReferencesAndSetUP(weapon);
+        transform.parent.GetComponent<Player>().weapon = weapon.GetComponent<IShootableWeapon>();
         weapon.GetComponent<IPlayerWeapon>().WeaponData.Equip(transform.parent.GetComponent<Player>());
-        if(weapon.GetComponent<CacWeapons>())
-            previousCaCWeap = weapon;
         if (weapon.GetComponent<BaseShootableWeapon>())
             previousDistanceWeap = weapon;
     }
@@ -191,61 +143,6 @@ public class WeaponsManagerSelected : MonoBehaviour
     {
         weapon.gameObject.SetActive(false);
         weapon.GetComponent<IPlayerWeapon>().WeaponData.Unequip(transform.parent.GetComponent<Player>());
-    }
-    #endregion
-
-
-    #region Switch CAC to Distance mode
-  
-
-    public void SwitchAttackMode()
-    {
-        if (isPlayingCac)
-        {
-            if (previousDistanceWeap != null)
-            {
-                UnEquipWeapon(previousCaCWeap);
-                isPlayingDistance = true;
-                isPlayingCac = false;
-                previousDistanceWeap.SetActive(true);
-
-                EquipeWeapon(previousDistanceWeap);
-                foreach (GameObject weapon in cacWeaponsList)
-                {
-                    weapon.SetActive(false);
-                    
-                }
-            }
-            else
-            {
-                return;
-            }
-               
-        }
-        else
-        {
-          
-            if(previousCaCWeap != null)
-            {
-                UnEquipWeapon(previousDistanceWeap);
-                isPlayingCac = true;
-                isPlayingDistance = false;
-                previousCaCWeap.SetActive(true);
-                EquipeWeapon(previousCaCWeap);
-                foreach (GameObject weapon in distanceWeaponsList)
-                {
-                    weapon.SetActive(false);
-                    UnEquipWeapon(previousDistanceWeap);
-                }
-            }
-            else
-            {
-                return;
-            }
-           
-        }
-      
-
     }
     #endregion
 
@@ -287,15 +184,11 @@ public class WeaponsManagerSelected : MonoBehaviour
 
     protected void MoveDistanceWeapon()
     {        
-
         if (_weapons != null)
         {
-            if (isPlayingCac && _weapons.isAttacking)
-                return;
-
+          
             Vector3 mousePosition = Utils.GetMouseWorldPosition();
             Vector3 playerDirection = (mousePosition - transform.position);
-            
 
             Vector3 aimDirection = (mousePosition - _weapons.transform.position).normalized;
 
@@ -333,38 +226,6 @@ public class WeaponsManagerSelected : MonoBehaviour
         }
     }
 
-    protected void MoveCacWeapon()
-    {
-        if (_weapons != null)
-        {
-            
-            if (_weapons.isAttacking)
-                return;
-
-            Vector3 mousePosition = Utils.GetMouseWorldPosition();
-            Vector3 playerDirection = (mousePosition - transform.position);
-            if (playerDirection.magnitude < 1f)
-                return;
-            Vector3 aimDirection = (mousePosition - transform.position).normalized;
-            var cacWeapons = (CacWeapons)_weapons;
-            _weapons.attackPoint.position = transform.position + aimDirection * cacWeapons.attackRange;
-
-            float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-            
-            _weapons.transform.eulerAngles = new Vector3(0, 0, angle);
-
-            if (aimDirection.y > 0.6)
-            {
-                SetWeaponYPositionAndLayer(ref _weapons, -1);
-            }
-            else if (aimDirection.y < 0.5)
-            {
-                SetWeaponYPositionAndLayer(ref _weapons, 1);
-            }
-        }
-    }
-
-
     private void GetReferencesAndSetUP(GameObject weapon)
     {
         _weapons = weapon.GetComponent<Weapons>();
@@ -393,8 +254,7 @@ public class WeaponsManagerSelected : MonoBehaviour
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, PosAttackPoint.y);
             else
                 _weapons.attackPoint.localPosition = new Vector3(PosAttackPoint.x, -PosAttackPoint.y);
-        }
-       
+        }      
     }
 
     private void SetWeaponXPosition( Weapons weapons)

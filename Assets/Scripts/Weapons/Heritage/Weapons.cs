@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-/// <summary>
-/// Classe mère des armes 
-/// </summary>
 public abstract class Weapons : MonoBehaviour
 {
     protected string ShootAudioName { get; set; }
@@ -27,6 +24,7 @@ public abstract class Weapons : MonoBehaviour
 
     public LayerMask enemyLayer { get; protected set; }
     protected float attackDelay;
+    protected float SpecialAttackDelay { get; set; }
     public Sprite image { get; set; }
 
     #region Unity Mono
@@ -68,6 +66,5 @@ public abstract class Weapons : MonoBehaviour
 
     protected abstract void SetStatDatasAndInitialization();
     #endregion
-
 }
 

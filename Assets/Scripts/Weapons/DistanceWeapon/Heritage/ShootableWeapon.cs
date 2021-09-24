@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class ShootableWeapon : Weapons, IShootableWeapon
@@ -33,9 +34,6 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
             StartCoroutine(Reload());
             return;
         }
-
-
-        StartShootingProcess();
     }
 
     #endregion
@@ -60,6 +58,7 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
         screenShakeTime = WeaponData.screenShakeTime;
         ShootAudioName = WeaponData.shootAudioName;
         ReloadAudioName = WeaponData.reloadAudioName;
+        SpecialAttackDelay = WeaponData.specialAttackDelay;
     }
 
     protected override void SetStatDatasAndInitialization()
@@ -85,48 +84,47 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
     protected float ProjectileSpeed { get; private set; }
     protected float dispersion { get; private set; }
     public bool OkToShoot { get; set; }
-
+    public bool isSpecialReady { get; set; } = true;
+    protected int ShotValue { get; private set; }
     protected abstract IEnumerator Shooting();
+    protected abstract IEnumerator SpecialShooting();
     protected void Shoot()
     {
         if (CameraController.instance != null)
             CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, (attackPoint.position - transform.position).normalized);
 
-        StartCoroutine(Shooting());
+        if (ShotValue == 0)
+            StartCoroutine(Shooting());
+        else
+            StartCoroutine(SpecialShooting());
     }
 
-    protected void ProjectileSetUp(float dispersion, float damage, float projectileSpeed, LayerMask enemyLayer, float timeAlive = 10f)
+    protected void ProjectileSetUp(GameObject projectile, float dispersion, float damage, float projectileSpeed, LayerMask enemyLayer, float timeAlive = 10f)
     {
         GameObject instantiatedProjectile = PoolManager.GetInstance().ReuseObject(projectile, attackPoint.position, transform.rotation);
         instantiatedProjectile.GetComponent<SingleProjectile>().SetProjectileDatas(damage, dispersion, projectileSpeed, enemyLayer, player.gameObject, timeAlive, transform.right);
     }
 
-    public bool IsAbleToShoot()
+    public bool IsAbleToShoot(int shotValue)
     {
-        return OkToShoot && !isAttacking && BulletInMag > 0;
+        return (!isAttacking && BulletInMag > 0) || (shotValue == 1 && !isAttacking);
     }
-
-    public void StartShootingProcess()
+  
+    public void StartShootingProcess(int shotValue)
     {
-        if (IsAbleToShoot())
+
+        if (!isSpecialReady && shotValue == 1)
+            return;
+
+        if (IsAbleToShoot(shotValue))
         {
             isAttacking = true;
+            ShotValue = shotValue;
 
             AudioManagerEffect.GetInstance().Play(ShootAudioName, player.gameObject);
-
-            if (animator)
-            {
-                animator.SetTrigger("isAttacking");
-
-            }
-            else
-            {
-                Shoot();
-            }
-
+            animator.SetTrigger("isAttacking");
         }
     }
-
 
     #endregion
 

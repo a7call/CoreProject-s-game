@@ -19,6 +19,7 @@ public static class EnemyConst
     // NAME
     public const string SPAWN_ANIMATION_NAME = "Spawn";
     public const string ATTACK_ANIMATION_NAME = "Attack";
+    public const string INTERRUPTION_ANIMATION_NAME = "Interrupted";
 
     // EVENT FUNCTIONS
     public const string SHOOT_COROUTINE_EVENT_FUNCTION_NAME = "StartShootingProcessCo";

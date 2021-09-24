@@ -1,119 +1,119 @@
-using UnityEngine;
+//using UnityEngine;
 
-public class LaserGun : Weapons, IShootableWeapon
-{
+//public class LaserGun : Weapons, IShootableWeapon
+//{
 
-    #region ScriptableObject
-    public WeaponScriptableObject WeaponData
-    {
-        get
-        {
-            return LaserDatas;
-        }
-    }
+//    #region ScriptableObject
+//    public WeaponScriptableObject WeaponData
+//    {
+//        get
+//        {
+//            return LaserDatas;
+//        }
+//    }
 
-    public CollingWeaponScriptableObject LaserDatas;
-    #endregion
+//    public CollingWeaponScriptableObject LaserDatas;
+//    #endregion
 
-    #region Unity Mono
-    protected override void Awake()
-    {
-        SetData();
-        base.Awake();
-    }
+//    #region Unity Mono
+//    protected override void Awake()
+//    {
+//        SetData();
+//        base.Awake();
+//    }
 
-    protected override void Start()
-    {
-        base.Start();
-        lineRenderer = GetComponentInChildren<LineRenderer>(); 
-        DisableLaser();
-    }
+//    protected override void Start()
+//    {
+//        base.Start();
+//        lineRenderer = GetComponentInChildren<LineRenderer>();
+//        DisableLaser();
+//    }
 
-    // Update is called once per frame
-    protected void Update()
-    {
-        if (!OkToShoot)
-        {
-            DisableLaser();
-            return;
-        }
+//    // Update is called once per frame
+//    protected void Update()
+//    {
+//        if (!OkToShoot)
+//        {
+//            DisableLaser();
+//            return;
+//        }
 
-        if (canDisplay)
-        {
-            UpdateLaser();
-        }
+//        if (canDisplay)
+//        {
+//            UpdateLaser();
+//        }
 
-        StartShootingProcess();
-    }
-    #endregion
+//        StartShootingProcess();
+//    }
+//    #endregion
 
-    #region Datas
-    protected override void SetData()
-    {
-        enemyLayer = WeaponData.enemyLayer;
-        image = WeaponData.image;
-    }
-    #endregion 
+//    #region Datas
+//    protected override void SetData()
+//    {
+//        enemyLayer = WeaponData.enemyLayer;
+//        image = WeaponData.image;
+//    }
+//    #endregion 
 
-    #region Shoot Logic
-    private LineRenderer lineRenderer;
+//    #region Shoot Logic
+//    private LineRenderer lineRenderer;
 
-    public bool OkToShoot { get; set; }
-    void UpdateLaser()
-    {
-        lineRenderer.enabled = true;
-        lineRenderer.SetPosition(0, attackPoint.position);
-        lineRenderer.SetPosition(1, transform.right * 20  + transform.position);
+//    public bool OkToShoot { get; set; }
+//    void UpdateLaser()
+//    {
+//        lineRenderer.enabled = true;
+//        lineRenderer.SetPosition(0, attackPoint.position);
+//        lineRenderer.SetPosition(1, transform.right * 20 + transform.position);
 
-        Vector2 direction = transform.right*100;
-        Debug.DrawRay((Vector2)transform.position, direction,Color.red);
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction, Mathf.Infinity, enemyLayer);
+//        Vector2 direction = transform.right * 100;
+//        Debug.DrawRay((Vector2)transform.position, direction, Color.red);
+//        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction, Mathf.Infinity, enemyLayer);
 
-        if (hit)
-        {
-            if (hit.collider.gameObject.CompareTag("Enemy"))
-            {
-                hit.collider.GetComponent<Enemy>().TakeDamage(player.damage.Value);
-            }
-            lineRenderer.SetPosition(1, hit.point);
-        }
-           
+//        if (hit)
+//        {
+//            if (hit.collider.gameObject.CompareTag("Enemy"))
+//            {
+//                hit.collider.GetComponent<Enemy>().TakeDamage(player.damage.Value);
+//            }
+//            lineRenderer.SetPosition(1, hit.point);
+//        }
 
-    }
 
-    void DisableLaser()
-    {
-        lineRenderer.SetPosition(1, Vector2.zero);
-        lineRenderer.enabled = false;
-        isAttacking = false;
-        canDisplay = false;
-    }
+//    }
 
-    public void StartShootingProcess()
-    {
-        if (IsAbleToShoot())
-        {
-            isAttacking = true;
-            if (animator)
-            {
-                animator.SetTrigger("isAttacking");
-            }
-        }
-        
-    }
-    bool canDisplay = false;
-    void DisplayLaser()
-    {
-        canDisplay = true;
-    }
-    public bool IsAbleToShoot()
-    {
-        return OkToShoot && !isAttacking  && !PauseMenu.isGamePaused;
-    }
-    #endregion
-    protected override void SetStatDatasAndInitialization()
-    {
-        // NOTHING TO DO FOR NOW
-    }
+//    void DisableLaser()
+//    {
+//        lineRenderer.SetPosition(1, Vector2.zero);
+//        lineRenderer.enabled = false;
+//        isAttacking = false;
+//        canDisplay = false;
+//    }
 
-}
+//    public void StartShootingProcess()
+//    {
+//        if (IsAbleToShoot())
+//        {
+//            isAttacking = true;
+//            if (animator)
+//            {
+//                animator.SetTrigger("isAttacking");
+//            }
+//        }
+
+//    }
+//    bool canDisplay = false;
+//    void DisplayLaser()
+//    {
+//        canDisplay = true;
+//    }
+//    public bool IsAbleToShoot()
+//    {
+//        return OkToShoot && !isAttacking && !PauseMenu.isGamePaused;
+//    }
+//    #endregion
+//    protected override void SetStatDatasAndInitialization()
+//    {
+//        // NOTHING TO DO FOR NOW
+//    }
+
+//}

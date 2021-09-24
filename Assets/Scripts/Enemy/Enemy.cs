@@ -116,13 +116,16 @@ public abstract class Enemy : Characters, IMonster
 
     public IEnumerator RestCo(Animator animator)
     {
-        isAttacking = false;
-        animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
-        // delay before next Shoot
-        yield return new WaitForSeconds(GetMonsterData().RestTime);
-        isReadyToAttack = true;
-        // gestion de l'animation d'attaque
-        attackAnimationPlaying = false;
+        if (isAttacking)
+        {
+            isAttacking = false;
+            animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
+            // delay before next Shoot
+            yield return new WaitForSeconds(GetMonsterData().RestTime);
+            isReadyToAttack = true;
+            // gestion de l'animation d'attaque
+            attackAnimationPlaying = false;
+        }   
     }
     #endregion
 
