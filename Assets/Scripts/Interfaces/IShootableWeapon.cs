@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IShootableWeapon : IPlayerWeapon
+public interface IShootableWeapon : IPlayerWeapon
 {
-    bool OkToShoot { get; set; }
-    void StartShootingProcess();
+    void StartShootingProcess(int shotValue);
     bool IsAbleToShoot();
-   
+
+    void toReload();   
 }

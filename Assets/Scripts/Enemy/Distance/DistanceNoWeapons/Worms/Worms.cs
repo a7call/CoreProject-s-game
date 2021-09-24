@@ -98,19 +98,19 @@ public class Worms : DistanceNoGun
 
     private void SpiralFire()
     {
-        for (int i = 0; i <= 1; i++)
-        {
-            float bulDirX = transform.position.x + Mathf.Sin((float)(((angle + 180f * i) * Math.PI) / 180f));
-            float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Math.PI) / 180f));
-            Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
-            Vector2 bulDir = (bulMoveVector - transform.position).normalized;
-            GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPoint.position, Quaternion.identity);
-            bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, bulDir);
-        }
-        angle += 10;
+        //for (int i = 0; i <= 1; i++)
+        //{
+        //    float bulDirX = transform.position.x + Mathf.Sin((float)(((angle + 180f * i) * Math.PI) / 180f));
+        //    float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Math.PI) / 180f));
+        //    Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
+        //    Vector2 bulDir = (bulMoveVector - transform.position).normalized;
+        //    GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPoint.position, Quaternion.identity);
+        //    bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, bulDir);
+        //}
+        //angle += 10;
 
-        if (angle >= 360f)
-            angle = 0f;
+        //if (angle >= 360f)
+        //    angle = 0f;
     }
     #endregion
 

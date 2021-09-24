@@ -27,6 +27,7 @@ public abstract class Weapons : MonoBehaviour
 
     public LayerMask enemyLayer { get; protected set; }
     protected float attackDelay;
+    protected float SpecialAttackDelay { get; set; }
     public Sprite image { get; set; }
 
     #region Unity Mono

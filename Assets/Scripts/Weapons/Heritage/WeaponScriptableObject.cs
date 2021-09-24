@@ -16,7 +16,7 @@ public abstract class WeaponScriptableObject : Item
     public float knockBackTime;
     public float screenShakeMagnitude;
     public float screenShakeTime;
-
+    public float specialAttackDelay;
 
     public override void Equip(Player p)
     {
