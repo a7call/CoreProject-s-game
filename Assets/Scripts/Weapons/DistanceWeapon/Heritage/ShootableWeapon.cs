@@ -84,7 +84,6 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
     protected float ProjectileSpeed { get; private set; }
     protected float dispersion { get; private set; }
     public bool OkToShoot { get; set; }
-    public bool isSpecialReady { get; set; } = true;
     protected int ShotValue { get; private set; }
     protected abstract IEnumerator Shooting();
     protected abstract IEnumerator SpecialShooting();
