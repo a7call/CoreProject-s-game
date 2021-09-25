@@ -25,6 +25,7 @@ public abstract class Weapons : MonoBehaviour
     public LayerMask enemyLayer { get; protected set; }
     protected float attackDelay;
     protected float SpecialAttackDelay { get; set; }
+    public bool isSpecialReady { get; set; } = true;
     public Sprite image { get; set; }
 
     #region Unity Mono
@@ -48,6 +49,7 @@ public abstract class Weapons : MonoBehaviour
     protected virtual void ResetWeaponState()
     {
         isAttacking = false;
+        isSpecialReady = true;
         GetComponent<SpriteRenderer>().flipY = false;
         GetComponent<SpriteRenderer>().flipX = false;
         GetComponent<SpriteRenderer>().sprite = image;

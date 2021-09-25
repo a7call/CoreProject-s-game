@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Wanderer.Utils;
+
 
 public class Abomination : DistanceNoGun
 {
@@ -22,7 +22,7 @@ public class Abomination : DistanceNoGun
         var dir = (Target.transform.position - transform.position).normalized;
         var currentAttackPoint = attackPoint.position;
         ArrowShot(currentAttackPoint);
-        StartCoroutine(CircularShot(dir, currentAttackPoint));
+        StartCoroutine(CircularShot(currentAttackPoint));
         yield return null;
     }
 
@@ -60,7 +60,7 @@ public class Abomination : DistanceNoGun
         }
     }
 
-    public IEnumerator CircularShot(Vector3 dir, Vector3 attackPointPos)
+    public IEnumerator CircularShot(Vector3 attackPointPos)
     {
         
         for (int i = 0; i < numberOfCircles; i++)
@@ -69,9 +69,10 @@ public class Abomination : DistanceNoGun
             var initAngle = 0;
             for (int j = - numberOfProj; j <= numberOfProj; j++)
             {
+                var initialDirection = (attackPointPos - transform.position).normalized;
                 float Dispersion = initAngle - j * rangeOfAngles / numberOfProj;
                 GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPointPos, Quaternion.identity);
-                bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, dir);
+                bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, initialDirection);
             }
             yield return new WaitForSeconds(0.1f);
         }
