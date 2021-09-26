@@ -83,46 +83,33 @@ public class Worms : DistanceNoGun
     float angle = 0f;
     public override IEnumerator InstantiateProjectileCO()
     {
-        //int numberOfBullet = 0;
-        //do
-        //{
-        //    numberOfBullet++;
-        //    SpiralFire();
-        //    yield return new WaitForSeconds(0.1f);
-        //}
-        //while (numberOfBullet <= maxNumberOfBullet);
-        VomitShot();
-        yield return null;
-    }
-
-
-    private void VomitShot()
-    {
-        for (int i = 0; i <= 4z0; i++)
+        int numberOfBullet = 0;
+        do
         {
-            float dispersion = Random.Range(-Dispersion, Dispersion);
-            float projectileSpeed = Random.Range(ProjectileSpeed/2, ProjectileSpeed);
-            var bulDir = Target.position - attackPoint.position;
-            GameObject bul = PoolManager.GetInstance().ReuseObject(Projectile, attackPoint.position, Quaternion.identity);           
-            bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, dispersion, projectileSpeed, HitLayer, this.gameObject, 10, bulDir);
+            numberOfBullet++;
+            SpiralFire();
+            yield return new WaitForSeconds(0.1f);
         }
+        while (numberOfBullet <= maxNumberOfBullet);
     }
+
+
 
     private void SpiralFire()
     {
-        //for (int i = 0; i <= 1; i++)
-        //{
-        //    float bulDirX = transform.position.x + Mathf.Sin((float)(((angle + 180f * i) * Math.PI) / 180f));
-        //    float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Math.PI) / 180f));
-        //    Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
-        //    Vector2 bulDir = (bulMoveVector - transform.position).normalized;
-        //    GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPoint.position, Quaternion.identity);
-        //    bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, bulDir);
-        //}
-        //angle += 10;
+        for (int i = 0; i <= 1; i++)
+        {
+            float bulDirX = transform.position.x + Mathf.Sin((float)(((angle + 180f * i) * Mathf.PI) / 180f));
+            float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Mathf.PI) / 180f));
+            Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
+            Vector2 bulDir = (bulMoveVector - transform.position).normalized;
+            GameObject bul = PoolManager.GetInstance().ReuseObject(Projectile, attackPoint.position, Quaternion.identity);
+            bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjectileSpeed, HitLayer, this.gameObject, 10, bulDir);
+        }
+        angle += 10;
 
-        //if (angle >= 360f)
-        //    angle = 0f;
+        if (angle >= 360f)
+            angle = 0f;
     }
     #endregion
 
