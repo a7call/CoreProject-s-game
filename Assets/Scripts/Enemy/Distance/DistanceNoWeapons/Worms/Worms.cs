@@ -98,7 +98,7 @@ public class Worms : DistanceNoGun
 
     private void VomitShot()
     {
-        for (int i = 0; i <= 20; i++)
+        for (int i = 0; i <= 4z0; i++)
         {
             float dispersion = Random.Range(-Dispersion, Dispersion);
             float projectileSpeed = Random.Range(ProjectileSpeed/2, ProjectileSpeed);
