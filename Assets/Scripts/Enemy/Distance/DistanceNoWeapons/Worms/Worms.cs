@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Wanderer.Utils;
 
@@ -11,7 +10,6 @@ public class Worms : DistanceNoGun
     protected override void Awake()
     {
         base.Awake();
-        Utils.AddAnimationEvent(EnemyConst.ATTACK_ANIMATION_NAME, EnemyConst.SHOOT_COROUTINE_EVENT_FUNCTION_NAME, animator);
         SetUpPS();
         Utils.TogglePs(smokeFleeingParticules, enabled: false);
     }
@@ -85,16 +83,30 @@ public class Worms : DistanceNoGun
     float angle = 0f;
     public override IEnumerator InstantiateProjectileCO()
     {
-        int numberOfBullet = 0;
-        do
-        {
-            numberOfBullet++;
-            SpiralFire();
-            yield return new WaitForSeconds(0.1f);
-        }
-        while (numberOfBullet <= maxNumberOfBullet);
+        //int numberOfBullet = 0;
+        //do
+        //{
+        //    numberOfBullet++;
+        //    SpiralFire();
+        //    yield return new WaitForSeconds(0.1f);
+        //}
+        //while (numberOfBullet <= maxNumberOfBullet);
+        VomitShot();
+        yield return null;
     }
 
+
+    private void VomitShot()
+    {
+        for (int i = 0; i <= 20; i++)
+        {
+            float dispersion = Random.Range(-Dispersion, Dispersion);
+            float projectileSpeed = Random.Range(ProjectileSpeed/2, ProjectileSpeed);
+            var bulDir = Target.position - attackPoint.position;
+            GameObject bul = PoolManager.GetInstance().ReuseObject(Projectile, attackPoint.position, Quaternion.identity);           
+            bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, dispersion, projectileSpeed, HitLayer, this.gameObject, 10, bulDir);
+        }
+    }
 
     private void SpiralFire()
     {
