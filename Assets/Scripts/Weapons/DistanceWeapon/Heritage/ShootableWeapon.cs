@@ -84,18 +84,29 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
     protected float ProjectileSpeed { get; private set; }
     protected float dispersion { get; private set; }
     public bool OkToShoot { get; set; }
-    protected int ShotValue { get; private set; }
+    int shotValue;
+    protected int ShotValue { get; set; }
     protected abstract IEnumerator Shooting();
     protected abstract IEnumerator SpecialShooting();
-    protected void Shoot()
+    protected void Shoot(int shotValue)
     {
         if (CameraController.instance != null)
             CameraController.instance.StartShakeD(screenShakeTime, screenShakeMagnitude, (attackPoint.position - transform.position).normalized);
 
-        if (ShotValue == 0)
+        ShootSequence(shotValue);
+    }
+
+    protected void ShootSequence(int shotValue)
+    {
+        AudioManagerEffect.GetInstance().Play(ShootAudioName, player.gameObject);
+        if (shotValue == 0)
+        {
+            isAttacking = true;
             StartCoroutine(Shooting());
+        }
         else
             StartCoroutine(SpecialShooting());
+
     }
 
     protected void ProjectileSetUp(GameObject projectile, float dispersion, float damage, float projectileSpeed, LayerMask enemyLayer, float timeAlive = 10f)
@@ -106,21 +117,14 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
 
     public bool IsAbleToShoot(int shotValue)
     {
-        return (!isAttacking && BulletInMag > 0) || (shotValue == 1 && !isAttacking);
+        return (shotValue == 0 && !isAttacking && BulletInMag > 0) || (shotValue == 1 && isSpecialReady);
     }
-  
+
     public void StartShootingProcess(int shotValue)
     {
-
-        if (!isSpecialReady && shotValue == 1)
-            return;
-
         if (IsAbleToShoot(shotValue))
-        {
-            isAttacking = true;
-            ShotValue = shotValue;
-
-            AudioManagerEffect.GetInstance().Play(ShootAudioName, player.gameObject);
+        {      
+            Shoot(shotValue);
             animator.SetTrigger("isAttacking");
         }
     }

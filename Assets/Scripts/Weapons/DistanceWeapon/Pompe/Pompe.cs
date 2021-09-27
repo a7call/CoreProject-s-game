@@ -30,7 +30,7 @@ public class Pompe : ShootableWeapon
 
     protected override IEnumerator SpecialShooting()
     {
-        isAttacking = false;
+
         isSpecialReady = false;
         ProjectileSetUp(interruptionProjectile, 0, 0, ProjectileSpeed, enemyLayer, 0.4f);       
         yield return new WaitForSeconds(SpecialAttackDelay);
