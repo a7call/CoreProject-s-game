@@ -90,7 +90,7 @@ public class Worms : DistanceNoGun
             SpiralFire();
             yield return new WaitForSeconds(0.1f);
         }
-        while (numberOfBullet <= maxNumberOfBullet);
+        while (numberOfBullet <= maxNumberOfBullet && isAttacking);
     }
 
 
