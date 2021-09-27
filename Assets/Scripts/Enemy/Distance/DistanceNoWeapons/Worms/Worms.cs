@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Wanderer.Utils;
 
@@ -11,7 +10,6 @@ public class Worms : DistanceNoGun
     protected override void Awake()
     {
         base.Awake();
-        Utils.AddAnimationEvent(EnemyConst.ATTACK_ANIMATION_NAME, EnemyConst.SHOOT_COROUTINE_EVENT_FUNCTION_NAME, animator);
         SetUpPS();
         Utils.TogglePs(smokeFleeingParticules, enabled: false);
     }
@@ -92,25 +90,26 @@ public class Worms : DistanceNoGun
             SpiralFire();
             yield return new WaitForSeconds(0.1f);
         }
-        while (numberOfBullet <= maxNumberOfBullet);
+        while (numberOfBullet <= maxNumberOfBullet && isAttacking);
     }
+
 
 
     private void SpiralFire()
     {
-        //for (int i = 0; i <= 1; i++)
-        //{
-        //    float bulDirX = transform.position.x + Mathf.Sin((float)(((angle + 180f * i) * Math.PI) / 180f));
-        //    float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Math.PI) / 180f));
-        //    Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
-        //    Vector2 bulDir = (bulMoveVector - transform.position).normalized;
-        //    GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPoint.position, Quaternion.identity);
-        //    bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, bulDir);
-        //}
-        //angle += 10;
+        for (int i = 0; i <= 1; i++)
+        {
+            float bulDirX = transform.position.x + Mathf.Sin((float)(((angle + 180f * i) * Mathf.PI) / 180f));
+            float bulDirY = transform.position.y + Mathf.Cos((float)(((angle + 180f * i) * Mathf.PI) / 180f));
+            Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
+            Vector2 bulDir = (bulMoveVector - transform.position).normalized;
+            GameObject bul = PoolManager.GetInstance().ReuseObject(Projectile, attackPoint.position, Quaternion.identity);
+            bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjectileSpeed, HitLayer, this.gameObject, 10, bulDir);
+        }
+        angle += 10;
 
-        //if (angle >= 360f)
-        //    angle = 0f;
+        if (angle >= 360f)
+            angle = 0f;
     }
     #endregion
 
