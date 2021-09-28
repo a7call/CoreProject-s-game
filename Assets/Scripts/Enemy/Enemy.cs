@@ -41,6 +41,7 @@ public abstract class Enemy : Characters, IMonster
     {
         base.Start();
         StartCoroutine(AllowFleeing());
+        StartCoroutine(Executable());
     }
     private IEnumerator AllowFleeing()
     {
@@ -57,7 +58,25 @@ public abstract class Enemy : Characters, IMonster
         Player = target.GetComponent<Player>();
         hitAnimator = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitAnimations").GetComponent<Animator>();
     }
-
+    public Material ExecMat;
+    [ColorUsage(true, true)]
+    public Color myColor;
+    IEnumerator Executable()
+    {
+       
+        GetComponent<SpriteRenderer>().material = ExecMat;
+        Color color1 = ExecMat.GetColor("_OutlineColor");
+        print(color1);
+        //Color color2 =new Color(255, 90, 90);
+        while (true)
+        {
+            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", color1);
+            yield return new WaitForSeconds(0.2f);
+            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", myColor);
+            yield return new WaitForSeconds(0.2f);
+        }
+       
+    }
     private void RigidBodySetUp()
     {
         rb = GetComponent<Rigidbody2D>();
