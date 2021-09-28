@@ -19,9 +19,6 @@ public abstract class Characters : StateMachine
 
     protected Material BaseMaterial { get; private set; }
 
-    [SerializeField]
-    protected Material hitMaterial;
-
     protected SpriteRenderer sr;
     protected AudioSource audioSource { get; private set; }
 

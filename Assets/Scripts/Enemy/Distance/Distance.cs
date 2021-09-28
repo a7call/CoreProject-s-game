@@ -9,6 +9,7 @@ public abstract class Distance : Enemy
         return DistanceData;
     }
     // Scriptable Object
+    [Header("Data")]
     [SerializeField] protected DistanceScriptableObject DistanceData;
     [HideInInspector]
     protected float Dispersion { get; private set; }

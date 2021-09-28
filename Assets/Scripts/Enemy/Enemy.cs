@@ -2,10 +2,17 @@
 using UnityEngine;
 using System;
 using Wanderer.Utils;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D), typeof(AudioSource))]
 public abstract class Enemy : Characters, IMonster
 {
+    [Header("Materials")]
+    [SerializeField]
+    protected Material executionMaterial;
+    [SerializeField]
+    protected Material hitMaterial;
+    
 
     #region Room && dungeon related
 
@@ -41,7 +48,6 @@ public abstract class Enemy : Characters, IMonster
     {
         base.Start();
         StartCoroutine(AllowFleeing());
-        StartCoroutine(Executable());
     }
     private IEnumerator AllowFleeing()
     {
@@ -58,21 +64,22 @@ public abstract class Enemy : Characters, IMonster
         Player = target.GetComponent<Player>();
         hitAnimator = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitAnimations").GetComponent<Animator>();
     }
-    public Material ExecMat;
-    [ColorUsage(true, true)]
-    public Color myColor;
+
     IEnumerator Executable()
     {
-       
-        GetComponent<SpriteRenderer>().material = ExecMat;
-        Color color1 = ExecMat.GetColor("_OutlineColor");
-        print(color1);
-        //Color color2 =new Color(255, 90, 90);
+        if (executionMaterial == null)
+            yield break;
+
+        sr.material = new Material(executionMaterial);
+
+        var color1 = executionMaterial.GetColor("_OutlineColor");
+        var color2 = executionMaterial.GetColor("_OutlineColor2");
+
         while (true)
         {
-            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", color1);
+            sr.material.SetColor("_OutlineColor", color1);
             yield return new WaitForSeconds(0.2f);
-            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", myColor);
+            sr.material.SetColor("_OutlineColor", color2);
             yield return new WaitForSeconds(0.2f);
         }
        
@@ -101,8 +108,12 @@ public abstract class Enemy : Characters, IMonster
 
     // Distance ou l'ennemi repère le joueur
     protected float inSight = 10f;
+
+    [HideInInspector]
     public bool isAttacking;
+    [HideInInspector]
     public bool isReadyToAttack = true;
+
     protected float attackRange;
     protected bool isOutOfAttackRange(float range)
     {
@@ -191,6 +202,7 @@ public abstract class Enemy : Characters, IMonster
 
 
     //Bool to Check If ready to start an another attack sequence
+    [HideInInspector]
     public bool attackAnimationPlaying = false;
 
     //Methode permetant de lancer la séquence d'attaque via l'animation
@@ -248,6 +260,10 @@ public abstract class Enemy : Characters, IMonster
         //}
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
+
+        if (CurrentHealth <= 0.2 * MaxHealth)
+            StartCoroutine(Executable());
+
         StartCoroutine(PlayTakeDamageAnimation());
 
     }
@@ -262,11 +278,11 @@ public abstract class Enemy : Characters, IMonster
         }
         if (isTakingDamage)
             yield break;
-
+        var currentMat = sr.material;
         isTakingDamage = true;
         sr.material = hitMaterial;
         yield return new WaitForSeconds(0.05f);
-        sr.material = BaseMaterial;
+        sr.material = currentMat;
         transform.localScale = new Vector3(0.9f, 1.1f, 1);
         yield return new WaitForSeconds(0.08f);
         transform.localScale = new Vector3(1.1f, 0.9f, 1);

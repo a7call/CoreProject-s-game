@@ -15,6 +15,7 @@ Shader "Sprites/Outline"
 
         [MaterialToggle] _IsOutlineEnabled("Enable Outline", float) = 0
         [HDR] _OutlineColor("Outline Color", Color) = (1,1,1,1)
+        [HDR] _OutlineColor2("Outline Color 2", Color) = (1,1,1,1)
         _OutlineSize("Outline Size", Range(1, 10)) = 1
         _AlphaThreshold("Alpha Threshold", Range(0, 1)) = 0.01
     }
@@ -70,6 +71,7 @@ Shader "Sprites/Outline"
             UNITY_INSTANCING_BUFFER_END(PerDrawSpriteOutline)
             #define _IsOutlineEnabled UNITY_ACCESS_INSTANCED_PROP(PerDrawSpriteOutline, _IsOutlineEnabledArray)
             #define _OutlineColor UNITY_ACCESS_INSTANCED_PROP(PerDrawSpriteOutline, _OutlineColorArray)
+            #define _OutlineColor2 UNITY_ACCESS_INSTANCED_PROP(PerDrawSpriteOutline, _OutlineColorArray)
             #define _OutlineSize UNITY_ACCESS_INSTANCED_PROP(PerDrawSpriteOutline, _OutlineSizeArray)
             #define _AlphaThreshold UNITY_ACCESS_INSTANCED_PROP(PerDrawSpriteOutline, _AlphaThresholdArray)
 
@@ -86,6 +88,7 @@ Shader "Sprites/Outline"
             CBUFFER_START(UnityPerDrawSpriteOutline)
             #ifndef UNITY_INSTANCING_ENABLED
             fixed4 _OutlineColor;
+            fixed4 _OutlineColor2;
             float _IsOutlineEnabled, _OutlineSize, _AlphaThreshold;
             #endif
             CBUFFER_END
