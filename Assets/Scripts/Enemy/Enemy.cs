@@ -9,7 +9,7 @@ public abstract class Enemy : Characters, IMonster
 {
     [Header("Materials")]
     [SerializeField]
-    protected Material executionMaterial;
+    public Material executionMaterial;
     [SerializeField]
     protected Material hitMaterial;
     
@@ -65,25 +65,7 @@ public abstract class Enemy : Characters, IMonster
         hitAnimator = Utils.FindGameObjectInChildWithTag(this.gameObject, "HitAnimations").GetComponent<Animator>();
     }
 
-    IEnumerator Executable()
-    {
-        if (executionMaterial == null)
-            yield break;
-
-        sr.material = new Material(executionMaterial);
-
-        var color1 = executionMaterial.GetColor("_OutlineColor");
-        var color2 = executionMaterial.GetColor("_OutlineColor2");
-
-        while (true)
-        {
-            sr.material.SetColor("_OutlineColor", color1);
-            yield return new WaitForSeconds(0.2f);
-            sr.material.SetColor("_OutlineColor", color2);
-            yield return new WaitForSeconds(0.2f);
-        }
-       
-    }
+   
     private void RigidBodySetUp()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -254,31 +236,43 @@ public abstract class Enemy : Characters, IMonster
     // Prends les dégats
     public override void TakeDamage(float damage, GameObject damageSource = null)
     {
-        //foreach (var ability in PassiveObjectManager.currentAbilities)
-        //{
-        //    ability.ApplyEffect(this);
-        //}
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
+    }
+    IEnumerator SwitchToExecutionableState()
+    {
+       
+        if (executionMaterial == null)
+            yield break;
 
-        if (CurrentHealth <= 0.2 * MaxHealth)
-            StartCoroutine(Executable());
+        sr.material = new Material(executionMaterial);
 
-        StartCoroutine(PlayTakeDamageAnimation());
+        var color1 = executionMaterial.GetColor("_OutlineColor");
+        var color2 = executionMaterial.GetColor("_OutlineColor2");
+
+        while (true)
+        {
+            sr.material.SetColor("_OutlineColor", color1);
+            yield return new WaitForSeconds(0.2f);
+            sr.material.SetColor("_OutlineColor", color2);
+            yield return new WaitForSeconds(0.2f);
+        }
 
     }
 
-    IEnumerator PlayTakeDamageAnimation()
+    protected override IEnumerator PlayTakeDamageAnimation()
     {
-      
+
         if (IsDying)
         {
             sr.material = BaseMaterial;
             yield break;
         }
+        var currentMat = sr.material;
+
         if (isTakingDamage)
             yield break;
-        var currentMat = sr.material;
+
         isTakingDamage = true;
         sr.material = hitMaterial;
         yield return new WaitForSeconds(0.05f);
@@ -294,10 +288,11 @@ public abstract class Enemy : Characters, IMonster
 
     protected override void Die()
     {
-        EnemyDeath();
+        //EnemyDeath();
         //CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForceToApply, -dir, knockBackTime: 0.3f));
-        StopAllCoroutines();
-        SetState(new DeathState(this));
+        //StopAllCoroutines();
+        StartCoroutine(SwitchToExecutionableState());
+        SetState(new ExecutableState(this));
     }
 
     #endregion

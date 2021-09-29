@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExecutableState : AIState
 {
-
+    Coroutine ExecutionCo;
     public ExecutableState(Enemy enemy) : base(enemy)
     {
         AICharacter = enemy;
@@ -12,16 +12,27 @@ public class ExecutableState : AIState
 
     public override IEnumerator EndState()
     {
-        throw new System.NotImplementedException();
+        yield return null;
     }
 
     public override IEnumerator StartState()
     {
+        
         yield return null;
+        CoroutineManager.GetInstance().StartCoroutine(Executionable());
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+       
     }
+
+   
+
+    IEnumerator Executionable()
+    {
+        yield return new WaitForSeconds(4f);
+        AICharacter.SetState(new DeathState(AICharacter));
+    }
+
 }

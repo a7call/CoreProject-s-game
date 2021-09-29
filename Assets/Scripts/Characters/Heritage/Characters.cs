@@ -16,10 +16,12 @@ public abstract class Characters : StateMachine
     public bool IsStuned { get; set; }
 
     public bool IsDying { get; set; }
+    public bool IsExecutable { get; set; }
 
     protected Material BaseMaterial { get; private set; }
-
-    protected SpriteRenderer sr;
+    
+    [HideInInspector]
+    public SpriteRenderer sr;
     protected AudioSource audioSource { get; private set; }
 
     [HideInInspector]
@@ -54,7 +56,8 @@ public abstract class Characters : StateMachine
 
         if (CurrentHealth <= 0)
         {
-            IsDying = true;
+            IsExecutable = true;
+            //IsDying = true;
             PlayDeathEffect();
             Die();
         }
@@ -62,6 +65,7 @@ public abstract class Characters : StateMachine
         {
             ApplyKnockBack(knockBackForceToApply, knockBackTime: 0.3f, damageSource);
         }
+        StartCoroutine(PlayTakeDamageAnimation());
     }
  
 
@@ -118,6 +122,8 @@ public abstract class Characters : StateMachine
 
     protected abstract void GetReference();
     protected abstract void Die();
+
+    protected abstract IEnumerator PlayTakeDamageAnimation();
     #endregion
 
 }

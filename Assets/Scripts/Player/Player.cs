@@ -472,5 +472,10 @@ public class Player : Characters
             collision.GetComponent<Coffre>().OkToOpen = false;
         }
     }
+
+    protected override IEnumerator PlayTakeDamageAnimation()
+    {
+        yield break;
+    }
     #endregion
 }
