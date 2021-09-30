@@ -239,14 +239,17 @@ public abstract class Enemy : Characters, IMonster
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
     }
+
+    Material ExcutableMaterialInstance { get; set; }
     IEnumerator SwitchToExecutionableState()
     {
        
         if (executionMaterial == null)
             yield break;
 
-        sr.material = new Material(executionMaterial);
-
+        ExcutableMaterialInstance = new Material(executionMaterial);
+        sr.material = ExcutableMaterialInstance;
+       
         var color1 = executionMaterial.GetColor("_OutlineColor");
         var color2 = executionMaterial.GetColor("_OutlineColor2");
 
@@ -262,21 +265,23 @@ public abstract class Enemy : Characters, IMonster
 
     protected override IEnumerator PlayTakeDamageAnimation()
     {
-
-        if (IsDying)
-        {
-            sr.material = BaseMaterial;
-            yield break;
-        }
-        var currentMat = sr.material;
-
+      
         if (isTakingDamage)
             yield break;
+
+        Material currentMat = sr.material; ;
 
         isTakingDamage = true;
         sr.material = hitMaterial;
         yield return new WaitForSeconds(0.05f);
-        sr.material = currentMat;
+
+        if (IsExecutable)
+            sr.material = ExcutableMaterialInstance;
+        else if (IsDying)
+            sr.material = BaseMaterial;
+        else
+            sr.material = currentMat;
+
         transform.localScale = new Vector3(0.9f, 1.1f, 1);
         yield return new WaitForSeconds(0.08f);
         transform.localScale = new Vector3(1.1f, 0.9f, 1);
@@ -286,13 +291,18 @@ public abstract class Enemy : Characters, IMonster
 
     }
 
-    protected override void Die()
+    protected override void StartExecutableState()
     {
         //EnemyDeath();
         //CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForceToApply, -dir, knockBackTime: 0.3f));
         //StopAllCoroutines();
         StartCoroutine(SwitchToExecutionableState());
         SetState(new ExecutableState(this));
+    }
+
+    protected override void Die()
+    {
+        return;
     }
 
     #endregion

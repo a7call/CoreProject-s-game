@@ -389,7 +389,7 @@ public class Player : Characters
             CurrentHealth = 0;
         }
     }
-    protected override void Die()
+    protected override void StartExecutableState()
     {
         // TO IMPLEMENT
     }
@@ -477,5 +477,10 @@ public class Player : Characters
     {
         yield break;
     }
+
     #endregion
+    protected override void Die()
+    {
+        return;
+    }
 }

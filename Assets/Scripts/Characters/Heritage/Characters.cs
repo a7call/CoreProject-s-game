@@ -18,7 +18,7 @@ public abstract class Characters : StateMachine
     public bool IsDying { get; set; }
     public bool IsExecutable { get; set; }
 
-    protected Material BaseMaterial { get; private set; }
+    public Material BaseMaterial { get; private set; }
     
     [HideInInspector]
     public SpriteRenderer sr;
@@ -42,7 +42,7 @@ public abstract class Characters : StateMachine
     {
         this.gameObject.name = Name;
     }
-    void PlayDeathEffect()
+    public void PlayDeathEffect()
     {
         AudioManagerEffect.GetInstance().Play(gameObject.name+ "Death", this.gameObject);
     }
@@ -54,12 +54,10 @@ public abstract class Characters : StateMachine
     {
         CurrentHealth -= damage;
 
-        if (CurrentHealth <= 0)
+        if (CurrentHealth <= 0 && !IsExecutable)
         {
             IsExecutable = true;
-            //IsDying = true;
-            PlayDeathEffect();
-            Die();
+            StartExecutableState();
         }
         if (damageSource != null)
         {
@@ -121,6 +119,7 @@ public abstract class Characters : StateMachine
     protected abstract void SetData();
 
     protected abstract void GetReference();
+    protected abstract void StartExecutableState();
     protected abstract void Die();
 
     protected abstract IEnumerator PlayTakeDamageAnimation();
