@@ -50,6 +50,11 @@ namespace Wanderer.Utils
             );
         }
 
+        public static Vector3 GetRelativePositionOfAnObject(Transform from, Transform to, float distanceTo,float distanceFrom)
+        {
+            return (to.position - from.position).normalized * (distanceFrom - distanceTo);
+        }
+
         public static bool isClipPlaying(string name, Animator animator)
         {
             var animClip = animator.runtimeAnimatorController.animationClips;

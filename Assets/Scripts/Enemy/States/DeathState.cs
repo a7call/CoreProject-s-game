@@ -16,6 +16,7 @@ public class DeathState : AIState
     public override IEnumerator StartState()
     {
         AICharacter.PlayDeathEffect();
+        AICharacter.EnemyDeath(AICharacter.gameObject);
         AICharacter.AIMouvement.ShouldMove = false;
         AICharacter.AIMouvement.ShouldSearch = false;
         DisableAllColliders();

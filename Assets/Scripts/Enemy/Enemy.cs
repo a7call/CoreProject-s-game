@@ -31,7 +31,7 @@ public abstract class Enemy : Characters, IMonster
     public abstract IMonsterData GetMonsterData();
 
     public event Action<GameObject> onEnemyDeath;
-    public void EnemyDeath()
+    public void EnemyDeath(GameObject gameObject)
     {
         if (onEnemyDeath != null)
         {
@@ -293,7 +293,7 @@ public abstract class Enemy : Characters, IMonster
 
     protected override void StartExecutableState()
     {
-        //EnemyDeath();
+        
         //CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForceToApply, -dir, knockBackTime: 0.3f));
         //StopAllCoroutines();
         StartCoroutine(SwitchToExecutionableState());

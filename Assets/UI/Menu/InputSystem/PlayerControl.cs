@@ -97,6 +97,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Execute"",
+                    ""type"": ""Button"",
+                    ""id"": ""0955ff1b-b44c-4cf0-8d21-b09972526036"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -242,6 +250,17 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""SpecialShoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c9d99e4-e28b-4876-8fa8-ae45f243e158"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -283,6 +302,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_OpenCoffre = m_Player.FindAction("OpenCoffre", throwIfNotFound: true);
         m_Player_OpenShop = m_Player.FindAction("OpenShop", throwIfNotFound: true);
         m_Player_SpecialShoot = m_Player.FindAction("SpecialShoot", throwIfNotFound: true);
+        m_Player_Execute = m_Player.FindAction("Execute", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -344,6 +364,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_OpenCoffre;
     private readonly InputAction m_Player_OpenShop;
     private readonly InputAction m_Player_SpecialShoot;
+    private readonly InputAction m_Player_Execute;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -358,6 +379,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @OpenCoffre => m_Wrapper.m_Player_OpenCoffre;
         public InputAction @OpenShop => m_Wrapper.m_Player_OpenShop;
         public InputAction @SpecialShoot => m_Wrapper.m_Player_SpecialShoot;
+        public InputAction @Execute => m_Wrapper.m_Player_Execute;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -397,6 +419,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @SpecialShoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
                 @SpecialShoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
                 @SpecialShoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
+                @Execute.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExecute;
+                @Execute.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExecute;
+                @Execute.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExecute;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -431,6 +456,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @SpecialShoot.started += instance.OnSpecialShoot;
                 @SpecialShoot.performed += instance.OnSpecialShoot;
                 @SpecialShoot.canceled += instance.OnSpecialShoot;
+                @Execute.started += instance.OnExecute;
+                @Execute.performed += instance.OnExecute;
+                @Execute.canceled += instance.OnExecute;
             }
         }
     }
@@ -481,6 +509,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnOpenCoffre(InputAction.CallbackContext context);
         void OnOpenShop(InputAction.CallbackContext context);
         void OnSpecialShoot(InputAction.CallbackContext context);
+        void OnExecute(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
