@@ -9,10 +9,10 @@ public class RecoveryState : AIState
     }
     public override IEnumerator EndState()
     {
-        AICharacter.AIMouvement.ShouldMove = true;
+        yield return null;
+        AICharacter.CanFlee = true;
         AICharacter.sr.material = AICharacter.BaseMaterial;
         AICharacter.CurrentHealth = AICharacter.MaxHealth / 2;
-        yield break;
     }
 
     public override IEnumerator StartState()

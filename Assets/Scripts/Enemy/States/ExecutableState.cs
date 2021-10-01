@@ -18,22 +18,16 @@ public class ExecutableState : AIState
 
     public override IEnumerator StartState()
     {
-        AICharacter.AIMouvement.ShouldMove = false;
         yield return null;
+        CoroutineManager.GetInstance().StartCoroutine(AICharacter.SwitchToExecutionableState());
+        CoroutineManager.GetInstance().StartCoroutine(AICharacter.RestCo(AICharacter.animator));
+        AICharacter.AIMouvement.ShouldMove = false;
         ExecutionDelayCo = CoroutineManager.GetInstance().StartCoroutine(ExecutionableCo());        
-        AICharacter.CurrentHealth = 0;
-       
+        AICharacter.CurrentHealth = 0;      
     }
 
     public override void UpdateState()
     {
-        if (AICharacter.CurrentHealth <= -10)
-        {
-            CoroutineManager.GetInstance().StopCoroutine(ExecutionDelayCo);
-            AICharacter.IsExecutable = false;
-            AICharacter.IsDying = true;
-            AICharacter.SetState(new DeathState(AICharacter));
-        }
     }
 
    

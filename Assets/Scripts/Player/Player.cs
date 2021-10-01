@@ -352,7 +352,7 @@ public class Player : Characters
         {
             transform.position += Utils.GetRelativePositionOfAnObject(transform, monsterToExecute.transform, 0.5f, maxExecutionDistance);
             PoolManager.GetInstance().ReuseObject(executeEffect, monsterToExecute.transform.position, Quaternion.identity);
-            monsterToExecute.TakeDamage(1000f, this.gameObject);
+            monsterToExecute.TakeDamage(100, this.gameObject);
         }
 
     }
@@ -366,7 +366,7 @@ public class Player : Characters
         {
             Enemy monsterScript = monster.transform.GetComponent<Enemy>();
 
-            if (monsterScript.IsExecutable)
+            if (monsterScript.IsExecutable && !monsterScript.IsDying)
                 canBeExecuted.Add(monsterScript);
         }
        

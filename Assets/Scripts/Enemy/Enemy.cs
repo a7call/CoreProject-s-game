@@ -87,11 +87,12 @@ public abstract class Enemy : Characters, IMonster
     public virtual void DoAttackingState() { }
     public virtual void DoPatrollingState() { }
     public virtual IEnumerator EndFleeingState() { yield return null; }
+    public virtual IEnumerator StartFleeingState() { yield break; }
 
     // Distance ou l'ennemi repère le joueur
     protected float inSight = 10f;
 
-    [HideInInspector]
+ 
     public bool isAttacking;
     [HideInInspector]
     public bool isReadyToAttack = true;
@@ -184,7 +185,6 @@ public abstract class Enemy : Characters, IMonster
 
 
     //Bool to Check If ready to start an another attack sequence
-    [HideInInspector]
     public bool attackAnimationPlaying = false;
 
     //Methode permetant de lancer la séquence d'attaque via l'animation
@@ -238,10 +238,16 @@ public abstract class Enemy : Characters, IMonster
     {
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
+        if (CurrentHealth <= -10 && !IsDying)
+        {  
+            IsExecutable = false;
+            IsDying = true;
+            SetState(new DeathState(this));
+        }
     }
 
     Material ExcutableMaterialInstance { get; set; }
-    IEnumerator SwitchToExecutionableState()
+    public IEnumerator SwitchToExecutionableState()
     {
        
         if (executionMaterial == null)
@@ -292,11 +298,8 @@ public abstract class Enemy : Characters, IMonster
     }
 
     protected override void StartExecutableState()
-    {
-        
+    {        
         //CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForceToApply, -dir, knockBackTime: 0.3f));
-        //StopAllCoroutines();
-        StartCoroutine(SwitchToExecutionableState());
         SetState(new ExecutableState(this));
     }
 

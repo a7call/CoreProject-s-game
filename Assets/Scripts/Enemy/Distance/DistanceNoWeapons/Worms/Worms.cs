@@ -10,39 +10,39 @@ public class Worms : DistanceNoGun
     protected override void Awake()
     {
         base.Awake();
-       // SetUpPS();
-        //Utils.TogglePs(smokeFleeingParticules, enabled: false);
+        SetUpPS();
     }
     #region States
     // Flee State
     private IEnumerator SwitchToFleeState()
     {
-        if (!isAttacking && CanFlee)
+        if (!isAttacking && CanFlee && !IsExecutable)
         {
             CanFlee = false;
-            yield return PrepareToFlee();
             SetState(new FleeingState(this, fleeingSpeed: AIMouvement.MoveForce, fleeingDebuffTime: 5f, minFleeDistance: 4f));
-
+            yield break;
         }
     }
-
-    private IEnumerator PrepareToFlee()
+    public override IEnumerator StartFleeingState()
     {
         yield return new WaitForSeconds(0.2f);
+
         animator.SetBool(EnemyConst.FLEE_BOOL_CONST, true);
         while (!Utils.isClipPlaying("Flee", this.animator))
         {
             yield return null;
         }
-        yield return new WaitForSeconds(Utils.GetAnimationClipDurantion("UnBorrow", animator, timeToRemove: 0.1f));
-        Utils.TogglePs(smokeFleeingParticules, enabled: true);
         BecomeInvulnerable();
+        yield return new WaitForSeconds(Utils.GetAnimationClipDurantion("UnBorrow", animator, timeToRemove: 0.1f));
+        if (smokeFleeingParticules != null)
+            smokeFleeingParticules.Play();
     }
 
 
     public override IEnumerator EndFleeingState()
     {
-        Utils.TogglePs(smokeFleeingParticules, enabled: false);
+        smokeFleeingParticules.Stop();
+        //Utils.TogglePs(smokeFleeingParticules, enabled: false);
         animator.SetBool(EnemyConst.FLEE_BOOL_CONST, false);
         while (!Utils.isClipPlaying("UnBorrow", this.animator))
         {
@@ -122,7 +122,6 @@ public class Worms : DistanceNoGun
     private void SetUpPS()
     {
         smokeFleeingParticules = GetComponentInChildren<ParticleSystem>();
-        smokeFleeingParticules.Play();
     }
 
     #endregion
