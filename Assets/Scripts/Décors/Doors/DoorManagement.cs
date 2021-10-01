@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class DoorManagement : MonoBehaviour
 {
     private List<DoorObj> doors = new List<DoorObj>();
-    void Start()
+    void Awake()
     {
         GetActualDoors();
     }
@@ -15,7 +15,7 @@ public class DoorManagement : MonoBehaviour
     {
         foreach (Transform trans in gameObject.transform)
         {
-            doors.Add(trans.GetComponent<DoorObj>());  
+            doors.Add(trans.GetComponent<DoorObj>());
         }
     }
 

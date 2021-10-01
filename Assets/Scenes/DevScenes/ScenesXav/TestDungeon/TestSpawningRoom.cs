@@ -10,12 +10,18 @@ public class TestSpawningRoom : MonoBehaviour
 
     #region Variables 
 
+    [Header("Waves Attributes")]
     [SerializeField] private GameObject firstWave;
     [SerializeField] private GameObject secondWave;
     [SerializeField] private float[] spawnTimer;
-
     private List<List<GameObject>> spawnListByWave = new List<List<GameObject>>(); // Liste qui récupère tous les spawns d'ennemis
     private List<Enemy> enemiesFirstWave = new List<Enemy>();
+    private List<Enemy> enemiesSecondWave = new List<Enemy>();
+
+
+    [Header("Doors")]
+    [SerializeField] private GameObject doors;
+    private DoorManagement doorManagement;
    
     #endregion
 
@@ -25,37 +31,33 @@ public class TestSpawningRoom : MonoBehaviour
     {
         spawnListByWave.Add(Utils.FindGameObjectsInChildWithTag(firstWave, "Spawner"));
         spawnListByWave.Add(Utils.FindGameObjectsInChildWithTag(secondWave, "Spawner"));
+        doorManagement = doors.GetComponent<DoorManagement>();
     }
 
     private void Start()
     {
-        FindEnemiesInWave(0);
+        FindEnemiesInWave(enemiesFirstWave, 0);
+        FindEnemiesInWave(enemiesSecondWave, 1);
     }
 
     private void Update()
     {
-        if (canLaunchSecondWave())
+        if (areEnemiesDied(enemiesFirstWave))
         {
-            secondWave.SetActive(true);
+            StartCoroutine(ActiveFight(secondWave, 1));
+        }
 
-            for (int i = 0; i < spawnListByWave[1].Count; i++)
-            {
-                StartCoroutine(SetActiveSpawn(spawnTimer[i], spawnListByWave[1][i]));
-            }
-        } 
+        if (areEnemiesDied(enemiesSecondWave)) doorManagement.OpenDoors();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            firstWave.SetActive(true);
+        if (collision.CompareTag("Player")) StartCoroutine(ActiveFight(firstWave, 0, 1.5f));
+    }
 
-            for (int i = 0; i < spawnListByWave[0].Count; i++)
-            {
-                StartCoroutine(SetActiveSpawn(spawnTimer[i], spawnListByWave[0][i]));
-            }
-        }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && !areEnemiesDied(enemiesFirstWave)) doorManagement.CloseDoors();
     }
 
     #endregion
@@ -66,7 +68,7 @@ public class TestSpawningRoom : MonoBehaviour
         _GO.SetActive(true);
     }
 
-    private void FindEnemiesInWave(int _indexWave)
+    private void FindEnemiesInWave(List<Enemy> _enemyWave, int _indexWave)
     {
         for (int i = 0; i < spawnListByWave[_indexWave].Count; i++)
         {
@@ -76,19 +78,28 @@ public class TestSpawningRoom : MonoBehaviour
 
             for (int j = 0; j < enemiesArray.Length; j++)
             {
-                enemiesFirstWave.Add(enemiesArray[j]);
+                _enemyWave.Add(enemiesArray[j]);
             }
         }
     }
 
-    private bool canLaunchSecondWave()
+    private IEnumerator ActiveFight(GameObject _wave, int _index, float _coroutineTimer = 0)
     {
-        foreach (var enemy in enemiesFirstWave)
+        yield return new WaitForSeconds(_coroutineTimer);
+        
+        _wave.SetActive(true);
+
+        for (int i = 0; i < spawnListByWave[_index].Count; i++)
         {
-            if (enemy.enabled)
-            {
-                return false;
-            }
+            StartCoroutine(SetActiveSpawn(spawnTimer[i], spawnListByWave[_index][i]));
+        }
+    }
+
+    private bool areEnemiesDied(List<Enemy> _enemyWave)
+    {
+        foreach (var enemy in _enemyWave)
+        {
+            if (enemy.enabled) return false;
         }
         return true;
     }
