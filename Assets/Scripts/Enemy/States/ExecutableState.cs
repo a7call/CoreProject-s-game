@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ExecutableState : AIState
 {
-    private Coroutine ExecutionDelayCo;
     private float ExecutionDelay { get; set; } = 5f;
     public ExecutableState(Enemy enemy) : base(enemy)
     {
@@ -22,7 +21,7 @@ public class ExecutableState : AIState
         CoroutineManager.GetInstance().StartCoroutine(AICharacter.SwitchToExecutionableState());
         CoroutineManager.GetInstance().StartCoroutine(AICharacter.RestCo(AICharacter.animator));
         AICharacter.AIMouvement.ShouldMove = false;
-        ExecutionDelayCo = CoroutineManager.GetInstance().StartCoroutine(ExecutionableCo());        
+        CoroutineManager.GetInstance().StartCoroutine(ExecutionableCo());        
         AICharacter.CurrentHealth = 0;      
     }
 
