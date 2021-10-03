@@ -66,6 +66,7 @@ public class Player : Characters
     protected override void Start()
     {
         base.Start();
+        PoolManager.GetInstance().CreatePool(executeEffect, 3);
         healthBar = GameObject.FindGameObjectWithTag("PlayerCanvas").GetComponentInChildren<PlayerHealthBar>();
     }
 
@@ -338,6 +339,55 @@ public class Player : Characters
 
     #endregion
 
+    #region Execution
+    public LayerMask enemyLayer;
+    public GameObject executeEffect;
+    public void OnExecute()
+    {
+        float maxExecutionDistance = 3f;
+
+        var monsterToExecute = GetMonsterToExecute(ref maxExecutionDistance);
+        
+        if (monsterToExecute != null)
+        {
+            transform.position += Utils.GetRelativePositionOfAnObject(transform, monsterToExecute.transform, 0.5f, maxExecutionDistance);
+            PoolManager.GetInstance().ReuseObject(executeEffect, monsterToExecute.transform.position, Quaternion.identity);
+            monsterToExecute.TakeDamage(100, this.gameObject);
+        }
+
+    }
+
+    private Enemy GetMonsterToExecute(ref float maxExecutionDistance)
+    {
+        List<Enemy> canBeExecuted = new List<Enemy>();
+        var Monsters = Physics2D.CircleCastAll(transform.position, maxExecutionDistance, Vector2.zero, Mathf.Infinity, enemyLayer);
+
+        foreach (var monster in Monsters)
+        {
+            Enemy monsterScript = monster.transform.GetComponent<Enemy>();
+
+            if (monsterScript.IsExecutable && !monsterScript.IsDying)
+                canBeExecuted.Add(monsterScript);
+        }
+       
+        Enemy monsterToExecute = null;
+
+        foreach (var monster in canBeExecuted)
+        {
+            var distancePlayerMonster = Vector3.Distance(transform.position, monster.transform.position);
+
+            if (maxExecutionDistance > distancePlayerMonster)
+            {
+                monsterToExecute = monster;
+                maxExecutionDistance = distancePlayerMonster;
+            }
+        }
+        if (monsterToExecute != null)
+            return monsterToExecute;
+        else
+            return null;
+    }
+    #endregion
 
     #region Damage to player
     private SpriteRenderer spriteRenderer;
@@ -389,7 +439,7 @@ public class Player : Characters
             CurrentHealth = 0;
         }
     }
-    protected override void Die()
+    protected override void StartExecutableState()
     {
         // TO IMPLEMENT
     }
@@ -411,14 +461,14 @@ public class Player : Characters
     bool isholding = false;
     public void Shoot()
     {
-        weapon.StartShootingProcess(shotValue : 0);
+        weapon.StartShootingProcess(shotValue: 0);
     }
 
     public void OnSpecialShoot()
     {
         weapon.StartShootingProcess(shotValue: 1);
     }
-    
+
     public void OnReload()
     {
         weapon.toReload();
@@ -472,5 +522,15 @@ public class Player : Characters
             collision.GetComponent<Coffre>().OkToOpen = false;
         }
     }
+
+    protected override IEnumerator PlayTakeDamageAnimation()
+    {
+        yield break;
+    }
+
     #endregion
+    protected override void Die()
+    {
+        return;
+    }
 }

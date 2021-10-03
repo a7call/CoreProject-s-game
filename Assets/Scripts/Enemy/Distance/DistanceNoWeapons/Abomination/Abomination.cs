@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Abomination : DistanceNoGun
 {
+    [Header("Shot Variable")]
     public int numberOfProj;
     public int numberOfCircles;
     public int numberOfArrow;
-
     public GameObject Arrow;
     public GameObject Smoke;
     protected override void Start()
