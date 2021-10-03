@@ -15,9 +15,10 @@ public class DeathState : AIState
 
     public override IEnumerator StartState()
     {
+        AICharacter.IsExecutable = false;
         yield return null;
         AICharacter.PlayDeathEffect();
-        AICharacter.sr.material = AICharacter.BaseMaterial;
+       // AICharacter.sr.material = AICharacter.BaseMaterial;
         AICharacter.EnemyDeath(AICharacter.gameObject);
         AICharacter.AIMouvement.ShouldMove = false;
         AICharacter.AIMouvement.ShouldSearch = false;

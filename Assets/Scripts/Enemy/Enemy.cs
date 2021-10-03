@@ -233,17 +233,25 @@ public abstract class Enemy : Characters, IMonster
     #region Health and Death
 
     bool isTakingDamage = false;
+    Coroutine DamageCo;
     // Prends les dégats
     public override void TakeDamage(float damage, GameObject damageSource = null)
     {
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
+        
         if (CurrentHealth <= -10 && !IsDying)
         {  
             IsExecutable = false;
             IsDying = true;
             SetState(new DeathState(this));
         }
+
+        StartCoroutine(PlayTakeDamageAnimation());
+
+
+
+
     }
 
     Material ExcutableMaterialInstance { get; set; }
@@ -271,20 +279,20 @@ public abstract class Enemy : Characters, IMonster
 
     protected override IEnumerator PlayTakeDamageAnimation()
     {
-      
+            
         if (isTakingDamage)
             yield break;
 
-        Material currentMat = sr.material; ;
+        Material currentMat = sr.material; 
 
         isTakingDamage = true;
         sr.material = hitMaterial;
         yield return new WaitForSeconds(0.05f);
 
-        if (IsExecutable)
-            sr.material = ExcutableMaterialInstance;
-        else if (IsDying)
+        if (IsDying)
             sr.material = BaseMaterial;
+        else if (IsExecutable)
+            sr.material = ExcutableMaterialInstance;
         else
             sr.material = currentMat;
 
@@ -299,7 +307,6 @@ public abstract class Enemy : Characters, IMonster
 
     protected override void StartExecutableState()
     {        
-        //CoroutineManager.GetInstance().StartCoroutine(KnockCo(knockBackForceToApply, -dir, knockBackTime: 0.3f));
         SetState(new ExecutableState(this));
     }
 

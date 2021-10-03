@@ -54,7 +54,7 @@ public abstract class Characters : StateMachine
     {
         CurrentHealth -= damage;
 
-        if (CurrentHealth <= 0 && !IsExecutable)
+        if (CurrentHealth <= 0 && !IsExecutable && !IsDying)
         {
             IsExecutable = true;
             StartExecutableState();
@@ -63,7 +63,6 @@ public abstract class Characters : StateMachine
         {
             ApplyKnockBack(knockBackForceToApply, knockBackTime: 0.3f, damageSource);
         }
-        StartCoroutine(PlayTakeDamageAnimation());
     }
  
 
