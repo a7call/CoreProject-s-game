@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Assets.Scripts.Game;
 
+
 namespace Edgar.Unity.Examples
 {
     
@@ -17,6 +18,9 @@ namespace Edgar.Unity.Examples
         {
 
             var tilemaps = level.RootGameObject.transform.Find("Tilemaps");
+
+            SetFogOFWar(tilemaps);
+           // tilemaps.transform.position = Vector3.zero;
             var Rooms = level.RootGameObject.transform.Find("Rooms");
             Rooms.transform.position = new Vector3(Rooms.transform.position.x, Rooms.transform.position.y, 0);
 
@@ -31,9 +35,7 @@ namespace Edgar.Unity.Examples
 
             Tilemap tilemapMiniMap = MinimapInit(level);
             foreach (var roomInstance in level.GetRoomInstances())
-            {
-
-                
+            {  
                 // Set the Random instance of the GameManager to be the same instance as we use in the generator
                 if (WandererGameManager.Instance != null)
                     WandererGameManager.Instance.Random = Random;
@@ -53,14 +55,12 @@ namespace Edgar.Unity.Examples
                 {
                     room.monsters = monsters;
                     room.SetRoomState(RoomState.UnCleared); 
-                }
-                
-            }
-           
+                }                
+            }           
             FindObjectOfType<NodeGrid>().CreateGrid();
             MovePlayerToSpawn(level);
-
         }
+
         
         protected WandererCurrentRoomDetectionRoomManager AssignRoomComponents(RoomInstance roomInstance)
         {
@@ -134,5 +134,20 @@ namespace Edgar.Unity.Examples
             return tilemap;
         }
         #endregion
+
+        void SetFogOFWar(Transform tilemaps)
+        {
+            GameObject fog = GameObject.FindGameObjectWithTag("FOG");
+            if (fog != null)
+            {
+                Tilemap floorTileMap = tilemaps.Find("Floor").GetComponent<Tilemap>();
+                Tilemap WallTileMap = tilemaps.Find("BackGroundWall").GetComponent<Tilemap>();
+                List<Tilemap> levelTilemaps = new List<Tilemap>();
+                levelTilemaps.Add(WallTileMap);
+                levelTilemaps.Add(floorTileMap);
+                fog.GetComponentInChildren<FogVal>().GetAllLevlesTiles(levelTilemaps);
+            }
+        }
+
     }
 }

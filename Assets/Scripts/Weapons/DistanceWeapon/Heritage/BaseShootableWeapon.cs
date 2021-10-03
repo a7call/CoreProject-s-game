@@ -12,9 +12,15 @@ public class BaseShootableWeapon : ShootableWeapon
     {
         BulletInMag--;
         float Dispersion = Random.Range(-dispersion, dispersion);
-        ProjectileSetUp(Dispersion, damage, ProjectileSpeed, enemyLayer);
+        ProjectileSetUp(projectile, Dispersion, damage, ProjectileSpeed, enemyLayer);
         yield return new WaitForSeconds(player.attackSpeed.Value);
         isAttacking = false;
     }
 
+    protected override IEnumerator SpecialShooting()
+    {
+        StartCoroutine(Shooting());
+        Debug.LogWarning("Not implemented");
+        yield return null;
+    }
 }

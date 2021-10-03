@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 namespace Wanderer.Utils
 {
@@ -47,6 +48,11 @@ namespace Wanderer.Utils
                 UnityEngine.Random.Range(bounds.min.y + margin, bounds.max.y - margin),
                 UnityEngine.Random.Range(bounds.min.z + margin, bounds.max.z - margin)
             );
+        }
+
+        public static Vector3 GetRelativePositionOfAnObject(Transform from, Transform to, float distanceTo,float distanceFrom)
+        {
+            return (to.position - from.position).normalized * (distanceFrom - distanceTo);
         }
 
         public static bool isClipPlaying(string name, Animator animator)
@@ -169,6 +175,38 @@ namespace Wanderer.Utils
 
 
         #endregion
+
+        public static List<Vector3> GetAllTilesPosition(Tilemap tilemap)
+        {            
+            var tileLocations = new List<Vector3>();
+
+            foreach (var pos in tilemap.cellBounds.allPositionsWithin)
+            {
+                Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
+
+                Vector3 place = tilemap.CellToWorld(localPlace);
+                if (tilemap.HasTile(localPlace))
+                {
+                    //Vector3 posr = new Vector3(Mathf.Round(place.x * 10) * 0.1f, Mathf.Round(place.y * 10) * 0.1f, place.z);
+                    tileLocations.Add(place);
+                }
+            }
+            return tileLocations;
+        }
+
+        public static Material AddMaterialToArray(SpriteRenderer sr ,Material material)
+        {
+            List<Material> materials = new List<Material>();
+            foreach (var mat in sr.materials)
+                materials.Add(mat);
+
+            materials.Add(material);
+
+            var index = materials.IndexOf(material);
+            sr.materials = materials.ToArray();
+
+            return sr.materials[index];
+        }
     }
 
 

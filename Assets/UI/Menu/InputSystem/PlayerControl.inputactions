@@ -17,7 +17,7 @@
                     "name": "Shoot",
                     "type": "Value",
                     "id": "d9f6a315-5fe0-46c8-8c1d-77f1f947feca",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
                 },
@@ -76,6 +76,22 @@
                     "expectedControlType": "Digital",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "SpecialShoot",
+                    "type": "Button",
+                    "id": "c57510d8-b6a4-4f26-b7bb-33e71d0706f8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Execute",
+                    "type": "Button",
+                    "id": "0955ff1b-b44c-4cf0-8d21-b09972526036",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -87,17 +103,6 @@
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "73b489ce-7f50-45d8-8f02-4171523c2bca",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -219,6 +224,28 @@
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "OpenShop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e5065df-28de-4b25-8221-93fc05440aa4",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "SpecialShoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0c9d99e4-e28b-4876-8fa8-ae45f243e158",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Execute",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

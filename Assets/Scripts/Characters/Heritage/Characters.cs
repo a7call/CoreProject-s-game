@@ -16,13 +16,12 @@ public abstract class Characters : StateMachine
     public bool IsStuned { get; set; }
 
     public bool IsDying { get; set; }
+    public bool IsExecutable { get; set; }
 
-    protected Material BaseMaterial { get; private set; }
-
-    [SerializeField]
-    protected Material hitMaterial;
-
-    protected SpriteRenderer sr;
+    public Material BaseMaterial { get; private set; }
+    
+    [HideInInspector]
+    public SpriteRenderer sr;
     protected AudioSource audioSource { get; private set; }
 
     [HideInInspector]
@@ -43,7 +42,7 @@ public abstract class Characters : StateMachine
     {
         this.gameObject.name = Name;
     }
-    void PlayDeathEffect()
+    public void PlayDeathEffect()
     {
         AudioManagerEffect.GetInstance().Play(gameObject.name+ "Death", this.gameObject);
     }
@@ -55,16 +54,16 @@ public abstract class Characters : StateMachine
     {
         CurrentHealth -= damage;
 
-        if (CurrentHealth <= 0)
+        if (CurrentHealth <= 0 && !IsExecutable)
         {
-            IsDying = true;
-            PlayDeathEffect();
-            Die();
+            IsExecutable = true;
+            StartExecutableState();
         }
         if (damageSource != null)
         {
             ApplyKnockBack(knockBackForceToApply, knockBackTime: 0.3f, damageSource);
         }
+        StartCoroutine(PlayTakeDamageAnimation());
     }
  
 
@@ -120,7 +119,10 @@ public abstract class Characters : StateMachine
     protected abstract void SetData();
 
     protected abstract void GetReference();
+    protected abstract void StartExecutableState();
     protected abstract void Die();
+
+    protected abstract IEnumerator PlayTakeDamageAnimation();
     #endregion
 
 }

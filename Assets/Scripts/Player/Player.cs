@@ -52,6 +52,7 @@ public class Player : Characters
     public GameObject RH;
     public GameObject LH;
 
+    public IShootableWeapon weapon;
     protected override void Awake()
     {
         base.Awake();
@@ -65,6 +66,7 @@ public class Player : Characters
     protected override void Start()
     {
         base.Start();
+        PoolManager.GetInstance().CreatePool(executeEffect, 3);
         healthBar = GameObject.FindGameObjectWithTag("PlayerCanvas").GetComponentInChildren<PlayerHealthBar>();
     }
 
@@ -94,7 +96,9 @@ public class Player : Characters
         AjustHhealth();
         healthBar.UpdateHealthUI(CurrentHealth, MaxHealth);
         ClampMouvement(mouvementVector);
-        
+        if (Input.GetKey(KeyCode.Mouse0))
+            Shoot();
+
     }
 
     #region MOUVEMENT
@@ -131,7 +135,7 @@ public class Player : Characters
     // Same Speed when Input (x,y)
     void ClampMouvement(Vector2 _mouvement)
     {
-       mouvement = Vector2.ClampMagnitude(_mouvement, 1);     
+        mouvement = Vector2.ClampMagnitude(_mouvement, 1);
     }
     private float DashForce { get; set; }
     private int MaxDashNumber { get; set; }
@@ -152,13 +156,13 @@ public class Player : Characters
         AudioManagerEffect.GetInstance().Play(AudioConst.PLAYER_DASH_EFFECT, this.gameObject, 0.2f);
         SelectDashReloadType();
 
-        isDashing = true;        
+        isDashing = true;
         CurrentNumberOfDash++;
 
         ProjectileCollider.enabled = false;
 
         rb.AddForce(dashDirection * DashForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        StartCoroutine(GetComponentInChildren<DashEffects>().DashEffect(delayBetweenGhosts : 0.05f, mouvement));
+        StartCoroutine(GetComponentInChildren<DashEffects>().DashEffect(delayBetweenGhosts: 0.05f, mouvement));
 
         while (rb.velocity.magnitude >= MaxAcceleration + 5f)
         {
@@ -170,11 +174,11 @@ public class Player : Characters
         isDashing = false;
     }
 
-   
+
     private IEnumerator DashReload(bool isFirstDash)
     {
 
-        if(isFirstDash)
+        if (isFirstDash)
             yield return new WaitForSeconds(DashReloadTime);
         else
             yield return new WaitForSeconds(DashReloadTime * 2);
@@ -189,7 +193,7 @@ public class Player : Characters
         {
             StopCoroutine(EnableColliderCo);
         }
-       
+
         EnableColliderCo = StartCoroutine(EnableProjectileColliderToleranceCo());
     }
 
@@ -212,49 +216,7 @@ public class Player : Characters
             DashReloadCo = StartCoroutine(DashReload(isFirstDash: false));
         }
     }
-   
 
-    #endregion
-
-    #region Teleportation
-
-    //private bool isTpReloaded = true;
-    //private float dashRadius = 1.5f;
-    //[SerializeField] private float timerTp = 3f;
-    //private float alphaDelay = 0.1f;
-
-    //[SerializeField] private Transform[] objectsModifiedByTp;
-
-    //private IEnumerator ChangeAlpha()
-    //{
-    //    int currentWeapon = weaponManager.selectedDistanceWeapon;
-    //    objectsModifiedByTp[objectsModifiedByTp.Length - 1] = weaponManager.transform.GetChild(currentWeapon);
-
-    //    foreach (Transform obj in objectsModifiedByTp)
-    //    {
-    //        obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, 0f);
-    //    }
-
-    //    isInvincible = true;
-
-    //    for (int i = 1; i < 6; i++)
-    //    {
-    //        yield return new WaitForSeconds(alphaDelay);
-    //        foreach (Transform obj in objectsModifiedByTp)
-    //        {
-    //            obj.GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, (0.2f * i));
-    //        }
-    //    }
-
-    //    isInvincible = false;
-    //}
-
-    //private IEnumerator ReloadingTp()
-    //{
-    //    isTpReloaded = false;
-    //    yield return new WaitForSeconds(timerTp);
-    //    isTpReloaded = true;
-    //}
 
     #endregion
 
@@ -276,7 +238,7 @@ public class Player : Characters
         // position de la souris sur l'écran 
         var screenMousePos = Input.mousePosition;
         // position du player en pixel sur l'écran 
-        var  screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+        var screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
         // position du point d'attaque 
         playerMouseDir = new Vector3((screenMousePos - screenPlayerPos).x, (screenMousePos - screenPlayerPos).y);
 
@@ -377,6 +339,55 @@ public class Player : Characters
 
     #endregion
 
+    #region Execution
+    public LayerMask enemyLayer;
+    public GameObject executeEffect;
+    public void OnExecute()
+    {
+        float maxExecutionDistance = 3f;
+
+        var monsterToExecute = GetMonsterToExecute(ref maxExecutionDistance);
+        
+        if (monsterToExecute != null)
+        {
+            transform.position += Utils.GetRelativePositionOfAnObject(transform, monsterToExecute.transform, 0.5f, maxExecutionDistance);
+            PoolManager.GetInstance().ReuseObject(executeEffect, monsterToExecute.transform.position, Quaternion.identity);
+            monsterToExecute.TakeDamage(100, this.gameObject);
+        }
+
+    }
+
+    private Enemy GetMonsterToExecute(ref float maxExecutionDistance)
+    {
+        List<Enemy> canBeExecuted = new List<Enemy>();
+        var Monsters = Physics2D.CircleCastAll(transform.position, maxExecutionDistance, Vector2.zero, Mathf.Infinity, enemyLayer);
+
+        foreach (var monster in Monsters)
+        {
+            Enemy monsterScript = monster.transform.GetComponent<Enemy>();
+
+            if (monsterScript.IsExecutable && !monsterScript.IsDying)
+                canBeExecuted.Add(monsterScript);
+        }
+       
+        Enemy monsterToExecute = null;
+
+        foreach (var monster in canBeExecuted)
+        {
+            var distancePlayerMonster = Vector3.Distance(transform.position, monster.transform.position);
+
+            if (maxExecutionDistance > distancePlayerMonster)
+            {
+                monsterToExecute = monster;
+                maxExecutionDistance = distancePlayerMonster;
+            }
+        }
+        if (monsterToExecute != null)
+            return monsterToExecute;
+        else
+            return null;
+    }
+    #endregion
 
     #region Damage to player
     private SpriteRenderer spriteRenderer;
@@ -428,7 +439,7 @@ public class Player : Characters
             CurrentHealth = 0;
         }
     }
-    protected override void Die()
+    protected override void StartExecutableState()
     {
         // TO IMPLEMENT
     }
@@ -447,47 +458,20 @@ public class Player : Characters
     protected bool isShooting = false;
 
     public PlayerInput playerInput;
-    public void OnShoot()
+    bool isholding = false;
+    public void Shoot()
     {
-        if (weaponManager == null)
-            return;
+        weapon.StartShootingProcess(shotValue: 0);
+    }
 
-        if (!isShooting)
-        {
-            isShooting = true;
-
-            if (weaponManager.isPlayingDistance && weaponManager.distanceWeaponsList != null)
-            {
-                weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = true;
-
-            }
-            else if (weaponManager.isPlayingCac)
-            {
-                weaponManager.GetComponentInChildren<CacWeapons>().ToAttack();
-            }
-        }
-        else
-        {
-            if (weaponManager.isPlayingDistance)
-            {
-                weaponManager.GetComponentInChildren<IShootableWeapon>().OkToShoot = false;
-            }
-
-            isShooting = false;
-        }
+    public void OnSpecialShoot()
+    {
+        weapon.StartShootingProcess(shotValue: 1);
     }
 
     public void OnReload()
     {
-        if (weaponManager.isPlayingDistance)
-        {
-            weaponManager.GetComponentInChildren<ShootableWeapon>().toReload();
-        }
-    }
-
-    public void OnSwitchAttackMode()
-    {
-        weaponManager.SwitchAttackMode();
+        weapon.toReload();
     }
 
     public void OnOpenCoffre()
@@ -504,7 +488,7 @@ public class Player : Characters
 
     public void OnOpenShop()
     {
-      
+
     }
 
 
@@ -538,5 +522,15 @@ public class Player : Characters
             collision.GetComponent<Coffre>().OkToOpen = false;
         }
     }
+
+    protected override IEnumerator PlayTakeDamageAnimation()
+    {
+        yield break;
+    }
+
     #endregion
+    protected override void Die()
+    {
+        return;
+    }
 }

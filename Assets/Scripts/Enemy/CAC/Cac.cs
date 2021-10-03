@@ -28,6 +28,7 @@ public abstract class Cac : Enemy
         return CacDatas;
     }
 
+    [Header("Data")]
     [SerializeField] public CacScriptableObject CacDatas;
 
     protected override void SetData()
