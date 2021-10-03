@@ -402,9 +402,45 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 53605593-b961-46ab-90b1-7c9c36b43d14
+    m_ActionName: Player/Dash[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9f6a315-5fe0-46c8-8c1d-77f1f947feca
+    m_ActionName: Player/Shoot
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 70883828-c678-4895-888b-bf4530834f47
+    m_ActionName: Player/Reload[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3eeaaf0e-b054-4e74-ac20-76ed4be55569
+    m_ActionName: Player/Horizontal[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6daee4f1-f046-4a59-bdd5-68895bd2336e
+    m_ActionName: Player/Vertical[/Keyboard/s,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 472c6375-56fa-4010-aad0-42ceeaf20a3c
+    m_ActionName: Player/UseObject[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a9ed9a00-a03d-459d-ad15-4d21b5494e2d
+    m_ActionName: Player/SwitchAttackMode[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 32abab0f-79dd-4354-bff0-eea9459f1644
+    m_ActionName: Player/OpenCoffre[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6673a60c-eae3-4dbb-9a2f-e4b3ce1325f6
+    m_ActionName: Player/OpenShop[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard & Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -422,7 +458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Player2
   animator: {fileID: 0}
-  hitMaterial: {fileID: 0}
+  sr: {fileID: 0}
   rb: {fileID: 0}
   playerData: {fileID: 11400000, guid: c0bc1d2aa03d1ee40b094d2821ee7db8, type: 2}
   damage:
@@ -475,6 +511,10 @@ MonoBehaviour:
     BaseValue: 0
   RH: {fileID: 925381431}
   LH: {fileID: 2050228671}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  executeEffect: {fileID: 7781789927081006634, guid: f99a5f4db5fd6b145ad78804de998bf6, type: 3}
   InvincibilityFlashDelay: 0.2
   InvincibleDelay: 2
   playerInput: {fileID: 0}
@@ -796,8 +836,6 @@ MonoBehaviour:
   selectedDistanceWeapon: -1
   cacWeaponsList: []
   distanceWeaponsList: []
-  isPlayingCac: 0
-  isPlayingDistance: 0
   isRH: 0
   cacSprite: {fileID: 0}
   distanceSprite: {fileID: 0}
@@ -1012,6 +1050,10 @@ PrefabInstance:
     - target: {fileID: 441180908215731278, guid: 6cc83a199a94044c89281efe983887cb, type: 3}
       propertyPath: m_Name
       value: Pompe 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051430145788030816, guid: 6cc83a199a94044c89281efe983887cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.637
       objectReference: {fileID: 0}
     - target: {fileID: 9003246489028487026, guid: 6cc83a199a94044c89281efe983887cb, type: 3}
       propertyPath: m_RootOrder

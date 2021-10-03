@@ -50,6 +50,11 @@ namespace Wanderer.Utils
             );
         }
 
+        public static Vector3 GetRelativePositionOfAnObject(Transform from, Transform to, float distanceTo,float distanceFrom)
+        {
+            return (to.position - from.position).normalized * (distanceFrom - distanceTo);
+        }
+
         public static bool isClipPlaying(string name, Animator animator)
         {
             var animClip = animator.runtimeAnimatorController.animationClips;
@@ -187,6 +192,20 @@ namespace Wanderer.Utils
                 }
             }
             return tileLocations;
+        }
+
+        public static Material AddMaterialToArray(SpriteRenderer sr ,Material material)
+        {
+            List<Material> materials = new List<Material>();
+            foreach (var mat in sr.materials)
+                materials.Add(mat);
+
+            materials.Add(material);
+
+            var index = materials.IndexOf(material);
+            sr.materials = materials.ToArray();
+
+            return sr.materials[index];
         }
     }
 

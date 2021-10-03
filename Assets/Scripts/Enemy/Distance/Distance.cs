@@ -9,6 +9,7 @@ public abstract class Distance : Enemy
         return DistanceData;
     }
     // Scriptable Object
+    [Header("Data")]
     [SerializeField] protected DistanceScriptableObject DistanceData;
     [HideInInspector]
     protected float Dispersion { get; private set; }
@@ -19,8 +20,8 @@ public abstract class Distance : Enemy
     // Repos après tire
     protected float RestTime { get; private set; }
     // Projectile to instantiate
-    protected GameObject Projetile { get; private set; } 
-    protected float ProjetileSpeed { get; private set; } 
+    protected GameObject Projectile { get; private set; } 
+    protected float ProjectileSpeed { get; private set; } 
 
     protected float Damage { get; private set; }
 
@@ -32,13 +33,13 @@ public abstract class Distance : Enemy
         this.MaxHealth = DistanceData.maxHealth;
         this.knockBackForceToApply = DistanceData.knockBackForceToApply;
         this.RestTime = DistanceData.RestTime;
-        this.Projetile = DistanceData.projetile;
+        this.Projectile = DistanceData.projetile;
         this.attackRange = DistanceData.attackRange;
         this.Dispersion = DistanceData.dispersion;
         this.inSight = DistanceData.InSight;
         this.Damage = DistanceData.damage;
         this.HitLayer = DistanceData.hitLayer;
-        this.ProjetileSpeed = DistanceData.projectileSpeed;
+        this.ProjectileSpeed = DistanceData.projectileSpeed;
         this.Difficulty = DistanceData.Difficulty;
 
         //Chiffre arbitraire à modifier
@@ -46,7 +47,7 @@ public abstract class Distance : Enemy
         StopAttackRange = attackRange * stopAttackingRangeCoef;
 
         AIMouvement.MoveForce = DistanceData.moveForce;
-        PoolManager.GetInstance().CreatePool(Projetile, 100);
+        PoolManager.GetInstance().CreatePool(Projectile, 100);
     }
 
     public abstract IEnumerator StartShootingProcessCo();

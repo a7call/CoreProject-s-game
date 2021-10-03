@@ -15,12 +15,15 @@ public class DeathState : AIState
 
     public override IEnumerator StartState()
     {
+        yield return null;
+        AICharacter.PlayDeathEffect();
+        AICharacter.sr.material = AICharacter.BaseMaterial;
+        AICharacter.EnemyDeath(AICharacter.gameObject);
         AICharacter.AIMouvement.ShouldMove = false;
         AICharacter.AIMouvement.ShouldSearch = false;
         DisableAllColliders();
         DisableComponents();
-        DestroyChildren(AICharacter.transform);
-        yield return null;
+        DestroyChildren(AICharacter.transform);      
     }
 
     public override void UpdateState()
@@ -47,6 +50,7 @@ public class DeathState : AIState
 
     void DisableComponents()
     {
+
         AICharacter.animator.SetBool(EnemyConst.DEATH_BOOL_CONST, true);
         AICharacter.animator.SetBool(EnemyConst.ATTACK_BOOL_CONST, false);
         AICharacter.GetComponent<SpriteRenderer>().sortingOrder = -1;

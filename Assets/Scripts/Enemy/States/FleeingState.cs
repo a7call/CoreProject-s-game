@@ -25,6 +25,7 @@ public class FleeingState : AIState
     }
     public override IEnumerator StartState()
     {
+        yield return AICharacter.StartFleeingState();
         yield return Flee();
         AICharacter.AIMouvement.ShouldMove = false;
         CoroutineManager.GetInstance().StartCoroutine(FleeingDebuff()); 

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Abomination : DistanceNoGun
 {
+    [Header("Shot Variable")]
     public int numberOfProj;
     public int numberOfCircles;
     public int numberOfArrow;
-
     public GameObject Arrow;
     public GameObject Smoke;
     protected override void Start()
@@ -42,7 +42,7 @@ public class Abomination : DistanceNoGun
             {
                 StartCoroutine(SmokeEffect(arrowDirection, attackPointPos));
                 GameObject bul = PoolManager.GetInstance().ReuseObject(Arrow, attackPointPos, Quaternion.AngleAxis(angle, Vector3.forward));
-                bul.GetComponent<ProjectileContainer>().SetProjectileContainerDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, initialDirection);
+                bul.GetComponent<ProjectileContainer>().SetProjectileContainerDatas(Damage, Dispersion, ProjectileSpeed, HitLayer, this.gameObject, 10, initialDirection);
             }     
         }
     }
@@ -71,8 +71,8 @@ public class Abomination : DistanceNoGun
             {
                 var initialDirection = (attackPointPos - transform.position).normalized;
                 float Dispersion = initAngle - j * rangeOfAngles / numberOfProj;
-                GameObject bul = PoolManager.GetInstance().ReuseObject(Projetile, attackPointPos, Quaternion.identity);
-                bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjetileSpeed, HitLayer, this.gameObject, 10, initialDirection);
+                GameObject bul = PoolManager.GetInstance().ReuseObject(Projectile, attackPointPos, Quaternion.identity);
+                bul.GetComponent<SingleProjectile>().SetProjectileDatas(Damage, Dispersion, ProjectileSpeed, HitLayer, this.gameObject, 10, initialDirection);
             }
             yield return new WaitForSeconds(0.1f);
         }
