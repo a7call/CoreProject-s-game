@@ -17,6 +17,7 @@ public class TestSpawningRoom : MonoBehaviour
     private List<List<GameObject>> spawnListByWave = new List<List<GameObject>>(); // Liste qui récupère tous les spawns d'ennemis
     private List<Enemy> enemiesFirstWave = new List<Enemy>();
     private List<Enemy> enemiesSecondWave = new List<Enemy>();
+    private float timeBeforeActiveFight = 1f;
 
 
     [Header("Doors")]
@@ -44,7 +45,7 @@ public class TestSpawningRoom : MonoBehaviour
     {
         if (areEnemiesDied(enemiesFirstWave))
         {
-            StartCoroutine(ActiveFight(secondWave, 1));
+            StartCoroutine(ActiveFight(secondWave, 1, timeBeforeActiveFight));
         }
 
         if (areEnemiesDied(enemiesSecondWave)) doorManagement.OpenDoors();
@@ -52,7 +53,7 @@ public class TestSpawningRoom : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) StartCoroutine(ActiveFight(firstWave, 0, 1.5f));
+        if (collision.CompareTag("Player")) StartCoroutine(ActiveFight(firstWave, 0, timeBeforeActiveFight));
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -65,6 +66,7 @@ public class TestSpawningRoom : MonoBehaviour
     private IEnumerator SetActiveSpawn(float _timer, GameObject _GO)
     {
         yield return new WaitForSeconds(_timer);
+        Debug.Log(_GO.name);
         _GO.SetActive(true);
     }
 
