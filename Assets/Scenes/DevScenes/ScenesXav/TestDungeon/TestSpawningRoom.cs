@@ -66,7 +66,6 @@ public class TestSpawningRoom : MonoBehaviour
     private IEnumerator SetActiveSpawn(float _timer, GameObject _GO)
     {
         yield return new WaitForSeconds(_timer);
-        Debug.Log(_GO.name);
         _GO.SetActive(true);
     }
 
