@@ -4,6 +4,12 @@ using System.Linq;
 using Wanderer.Utils;
 using System.Collections.Generic;
 
+[System.Serializable]
+public class SpawnTimerArray
+{
+    [field: SerializeField]
+    public float[] Spawns { get; set; }
+}
 
 public class TestSpawningRoom : MonoBehaviour
 {
@@ -13,12 +19,11 @@ public class TestSpawningRoom : MonoBehaviour
     [Header("Waves Attributes")]
     [SerializeField] private GameObject firstWave;
     [SerializeField] private GameObject secondWave;
-    [SerializeField] private float[] spawnTimer;
+    [SerializeField] private SpawnTimerArray[] spawnTimers = new SpawnTimerArray[2];
     private List<List<GameObject>> spawnListByWave = new List<List<GameObject>>(); // Liste qui récupère tous les spawns d'ennemis
     private List<Enemy> enemiesFirstWave = new List<Enemy>();
     private List<Enemy> enemiesSecondWave = new List<Enemy>();
     private float timeBeforeActiveFight = 1f;
-
 
     [Header("Doors")]
     [SerializeField] private GameObject doors;
@@ -48,11 +53,7 @@ public class TestSpawningRoom : MonoBehaviour
 
     private void Update()
     {
-        if (areEnemiesDied(enemiesFirstWave))
-        {
-            StartCoroutine(ActiveFight(secondWave, 1, timeBeforeActiveFight));
-        }
-
+        if (areEnemiesDied(enemiesFirstWave)) StartCoroutine(ActiveFight(secondWave, 1, timeBeforeActiveFight));   
         if (areEnemiesDied(enemiesSecondWave)) doorManagement.OpenDoors();
     }
 
@@ -97,7 +98,7 @@ public class TestSpawningRoom : MonoBehaviour
 
         for (int i = 0; i < spawnListByWave[_index].Count; i++)
         {
-            StartCoroutine(SetActiveSpawn(spawnTimer[i], spawnListByWave[_index][i]));
+            StartCoroutine(SetActiveSpawn(spawnTimers[_index].Spawns[i], spawnListByWave[_index][i]));
         }
     }
 
