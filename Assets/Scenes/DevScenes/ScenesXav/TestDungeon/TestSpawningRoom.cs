@@ -3,26 +3,42 @@ using System.Collections;
 using System.Linq;
 using Wanderer.Utils;
 using System.Collections.Generic;
+using UnityEditor;
+
+
+[System.Serializable]
+public class SpawnTimerArray
+{
+    [field: SerializeField]
+    public float[] Spawns { get; set; }
+
+}
+
+public enum enumWaves { Wave1, Wave2};
 
 
 public class TestSpawningRoom : MonoBehaviour
 {
-
     #region Variables 
-
-    [Header("Waves Attributes")]
+    
+    [Header("Waves")]
+    // Waves
     [SerializeField] private GameObject firstWave;
     [SerializeField] private GameObject secondWave;
-    [SerializeField] private float[] spawnTimer;
-    private List<List<GameObject>> spawnListByWave = new List<List<GameObject>>(); // Liste qui récupère tous les spawns d'ennemis
     private List<Enemy> enemiesFirstWave = new List<Enemy>();
     private List<Enemy> enemiesSecondWave = new List<Enemy>();
+    
+    // Spawners
+    [NamedArrayAttribute(typeof(enumWaves))]
+    [SerializeField] private SpawnTimerArray[] spawnTimers = new SpawnTimerArray[2];
+    private List<List<GameObject>> spawnListByWave = new List<List<GameObject>>(); // Liste qui récupère tous les spawns d'ennemis
     private float timeBeforeActiveFight = 1f;
 
 
     [Header("Doors")]
     [SerializeField] private GameObject doors;
     private DoorManagement doorManagement;
+    private BoxCollider2D roomBoxCollider2D;
    
     #endregion
 
@@ -33,21 +49,20 @@ public class TestSpawningRoom : MonoBehaviour
         spawnListByWave.Add(Utils.FindGameObjectsInChildWithTag(firstWave, "Spawner"));
         spawnListByWave.Add(Utils.FindGameObjectsInChildWithTag(secondWave, "Spawner"));
         doorManagement = doors.GetComponent<DoorManagement>();
+        roomBoxCollider2D = gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
         FindEnemiesInWave(enemiesFirstWave, 0);
         FindEnemiesInWave(enemiesSecondWave, 1);
+        SetEnemiesFleeCollider(enemiesFirstWave);
+        SetEnemiesFleeCollider(enemiesSecondWave);
     }
 
     private void Update()
     {
-        if (areEnemiesDied(enemiesFirstWave))
-        {
-            StartCoroutine(ActiveFight(secondWave, 1, timeBeforeActiveFight));
-        }
-
+        if (areEnemiesDied(enemiesFirstWave)) StartCoroutine(ActiveFight(secondWave, 1, timeBeforeActiveFight));   
         if (areEnemiesDied(enemiesSecondWave)) doorManagement.OpenDoors();
     }
 
@@ -92,7 +107,7 @@ public class TestSpawningRoom : MonoBehaviour
 
         for (int i = 0; i < spawnListByWave[_index].Count; i++)
         {
-            StartCoroutine(SetActiveSpawn(spawnTimer[i], spawnListByWave[_index][i]));
+            StartCoroutine(SetActiveSpawn(spawnTimers[_index].Spawns[i], spawnListByWave[_index][i]));
         }
     }
 
@@ -103,6 +118,14 @@ public class TestSpawningRoom : MonoBehaviour
             if (enemy.enabled) return false;
         }
         return true;
+    }
+
+    private void SetEnemiesFleeCollider(List<Enemy> _enemyWave)
+    {
+        foreach (Enemy enemy in _enemyWave)
+        {
+            enemy.RoomFloorCollider = roomBoxCollider2D;
+        }
     }
 
 }
