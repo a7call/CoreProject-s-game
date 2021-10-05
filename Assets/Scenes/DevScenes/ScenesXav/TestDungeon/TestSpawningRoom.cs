@@ -23,6 +23,8 @@ public class TestSpawningRoom : MonoBehaviour
     [Header("Doors")]
     [SerializeField] private GameObject doors;
     private DoorManagement doorManagement;
+
+    private BoxCollider2D roomBoxCollider2D;
    
     #endregion
 
@@ -33,12 +35,15 @@ public class TestSpawningRoom : MonoBehaviour
         spawnListByWave.Add(Utils.FindGameObjectsInChildWithTag(firstWave, "Spawner"));
         spawnListByWave.Add(Utils.FindGameObjectsInChildWithTag(secondWave, "Spawner"));
         doorManagement = doors.GetComponent<DoorManagement>();
+        roomBoxCollider2D = gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
         FindEnemiesInWave(enemiesFirstWave, 0);
         FindEnemiesInWave(enemiesSecondWave, 1);
+        SetEnemiesFleeCollider(enemiesFirstWave);
+        SetEnemiesFleeCollider(enemiesSecondWave);
     }
 
     private void Update()
@@ -103,6 +108,14 @@ public class TestSpawningRoom : MonoBehaviour
             if (enemy.enabled) return false;
         }
         return true;
+    }
+
+    private void SetEnemiesFleeCollider(List<Enemy> _enemyWave)
+    {
+        foreach (Enemy enemy in _enemyWave)
+        {
+            enemy.RoomFloorCollider = roomBoxCollider2D;
+        }
     }
 
 }
