@@ -17,6 +17,7 @@ public abstract class Enemy : Characters, IMonster
     #region Room && dungeon related
 
     public int Difficulty { get; set; }
+
     public Collider2D RoomFloorCollider { get; set; }
 
     #endregion
