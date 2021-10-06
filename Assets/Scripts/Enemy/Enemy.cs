@@ -248,7 +248,7 @@ public abstract class Enemy : Characters, IMonster
             SetState(new DeathState(this));
         }
 
-        StartCoroutine(PlayTakeDamageAnimation());
+        DamageCo = StartCoroutine(PlayTakeDamageAnimation());
 
 
 
@@ -280,7 +280,14 @@ public abstract class Enemy : Characters, IMonster
 
     protected override IEnumerator PlayTakeDamageAnimation()
     {
-            
+
+        if (IsDying)
+        {    
+            if (DamageCo != null)
+                StopCoroutine(DamageCo);
+            sr.material = BaseMaterial;
+        }
+
         if (isTakingDamage)
             yield break;
 
