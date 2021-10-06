@@ -64,8 +64,8 @@ public class FleeingState : AIState
                 continue;
             }
 
-            if (Physics2D.OverlapCircleAll(position, 0.5f).Any(x => !x.isTrigger))
-            {
+            if (Physics2D.OverlapCircleAll(position, 0.5f, LayerMask.GetMask("Wall")).Length != 0)
+            {     
                 continue;
             }
 

@@ -60,8 +60,11 @@ public class Worms : DistanceNoGun
     // Chasing
     public override void DoChasingState()
     {
-        isInAttackRange(attackRange);
-        StartCoroutine(SwitchToFleeState());
+        if(CanFlee)
+            StartCoroutine(SwitchToFleeState());
+        else
+            isInAttackRange(attackRange);
+        
     }
     public override void StartChasingState()
     {
@@ -71,10 +74,15 @@ public class Worms : DistanceNoGun
     // Attacking
     public override void DoAttackingState()
     {
-        StartCoroutine(SwitchToFleeState());
-        isOutOfAttackRange(StopAttackRange);
-        SetInitialAttackPosition();
-        PlayAttackAnim(animator);
+        if (CanFlee)
+            StartCoroutine(SwitchToFleeState());
+        else
+        {
+            isOutOfAttackRange(StopAttackRange);
+            SetInitialAttackPosition();
+            PlayAttackAnim(animator);
+        }
+       
     }
     #endregion
 

@@ -29,7 +29,7 @@ public abstract class ShootableWeapon : Weapons, IShootableWeapon
         if (IsReloading)
             return;
 
-        if (BulletInMag <= 0)
+        if (BulletInMag <= 0 && ammoStock!=0)
         {
             StartCoroutine(Reload());
             return;
