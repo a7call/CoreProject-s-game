@@ -15,10 +15,9 @@ public class DeathState : AIState
 
     public override IEnumerator StartState()
     {
+        yield return SleepyPause();
         AICharacter.IsExecutable = false;
-        yield return null;
         AICharacter.PlayDeathEffect();
-       // AICharacter.sr.material = AICharacter.BaseMaterial;
         AICharacter.EnemyDeath(AICharacter.gameObject);
         AICharacter.AIMouvement.ShouldMove = false;
         AICharacter.AIMouvement.ShouldSearch = false;
@@ -30,6 +29,13 @@ public class DeathState : AIState
     public override void UpdateState()
     {
 
+    }
+
+    private IEnumerator SleepyPause()
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(0.02f);
+        Time.timeScale = 1;
     }
 
     void DisableAllColliders()
