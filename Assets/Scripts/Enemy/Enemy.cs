@@ -43,17 +43,34 @@ public abstract class Enemy : Characters, IMonster
     protected override void Awake()
     {
         base.Awake();
-        SetState(new SpawningState(this));
+        MonsterVariableSetUP();
     }
     protected override void Start()
     {
         base.Start();
         StartCoroutine(AllowFleeing());
+        StartCoroutine(AllowAttacking());
     }
     private IEnumerator AllowFleeing()
     {
         yield return new WaitForSeconds(1f);
         CanFlee = true;
+    }
+
+    private IEnumerator AllowAttacking()
+    {
+        float time = UnityEngine.Random.Range(0f, 2f);
+        print(time);
+        yield return new WaitForSeconds(time);
+        isReadyToAttack = true;
+        attackAnimationPlaying = false;
+    }
+
+    void MonsterVariableSetUP()
+    {
+        isReadyToAttack = false;
+        attackAnimationPlaying = true;
+        SetState(new SpawningState(this));
     }
 
     protected override void GetReference()
@@ -96,7 +113,7 @@ public abstract class Enemy : Characters, IMonster
  
     public bool isAttacking;
     [HideInInspector]
-    public bool isReadyToAttack = true;
+    public bool isReadyToAttack = false;
 
     protected float attackRange;
     protected bool isOutOfAttackRange(float range)
@@ -186,7 +203,7 @@ public abstract class Enemy : Characters, IMonster
 
 
     //Bool to Check If ready to start an another attack sequence
-    public bool attackAnimationPlaying = false;
+    public bool attackAnimationPlaying = true;
 
     //Methode permetant de lancer la séquence d'attaque via l'animation
     protected virtual void PlayAttackAnim(Animator animator)
@@ -240,7 +257,13 @@ public abstract class Enemy : Characters, IMonster
     {
         PlayHitAnim();
         base.TakeDamage(damage, damageSource);
-        
+
+        if (CurrentHealth <= 0 && !IsExecutable && !IsDying)
+        {
+            IsExecutable = true;
+            StartExecutableState();
+        }
+
         if (CurrentHealth <= -10 && !IsDying)
         {  
             IsExecutable = false;
@@ -249,10 +272,6 @@ public abstract class Enemy : Characters, IMonster
         }
 
         DamageCo = StartCoroutine(PlayTakeDamageAnimation());
-
-
-
-
     }
 
     Material ExcutableMaterialInstance { get; set; }
@@ -313,7 +332,7 @@ public abstract class Enemy : Characters, IMonster
 
     }
 
-    protected override void StartExecutableState()
+    protected  void StartExecutableState()
     {        
         SetState(new ExecutableState(this));
     }

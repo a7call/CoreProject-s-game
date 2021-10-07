@@ -8,7 +8,6 @@ using Wanderer.Utils;
 
 public class Player : Characters
 {
-
     public PlayerScriptableObjectScript playerData;
 
     #region Stats
@@ -47,8 +46,6 @@ public class Player : Characters
     public CharacterStats DashStacks;
     #endregion
 
-    #region Enum
-    #endregion
     public GameObject RH;
     public GameObject LH;
 
@@ -83,7 +80,6 @@ public class Player : Characters
     protected override void GetReference()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         weaponManager = GetComponentInChildren<WeaponsManagerSelected>();
         ProjectileCollider = GetComponent<Collider2D>();
@@ -93,24 +89,17 @@ public class Player : Characters
     protected void Update()
     {
         Animation();
-        AjustHhealth();
         healthBar.UpdateHealthUI(CurrentHealth, MaxHealth);
         ClampMouvement(mouvementVector);
+
         if (Input.GetKey(KeyCode.Mouse0))
             Shoot();
 
     }
-
-    #region MOUVEMENT
     private void FixedUpdate()
     {
         MovePlayer(mouvement);
     }
-    #endregion
-
-
-
-
 
     #region Mouvement physics
 
@@ -320,7 +309,6 @@ public class Player : Characters
     }
     #endregion
 
-
     #region Mouvement Inputs
     public void OnHorizontal(InputValue val)
     {
@@ -390,29 +378,41 @@ public class Player : Characters
     #endregion
 
     #region Damage to player
-    private SpriteRenderer spriteRenderer;
     protected bool isInvincible;
     public float InvincibilityFlashDelay;
     public float InvincibleDelay;
+
     public override void TakeDamage(float damage, GameObject damageSource = null)
     {
         if (!isInvincible)
         {
             base.TakeDamage(damage);
-            StartCoroutine(InvincibilityDelay());
-            StartCoroutine(InvincibilityFlash());
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+            CameraController.instance.StartShakeG(0.1f, 0.1f);
+            StartCoroutine(PlayTakeDamageAnimation());
+        }
+        if(CurrentHealth <= 0 && !IsDying)
+        {
+            IsDying = true;
+            Die();
         }
     }
-    public IEnumerator InvincibilityFlash()
+
+    protected override IEnumerator PlayTakeDamageAnimation()
     {
-        //while (isInvincible)
-        //{
-        //    spriteRenderer.color = new Color(1f, 1f, 1f, 0f);
-        //    yield return new WaitForSeconds(InvincibilityFlashDelay);
-        //    spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
-        //   
-        //}
-        yield return new WaitForSeconds(InvincibilityFlashDelay);
+        StartCoroutine(InvincibilityDelay());
+        StartCoroutine(InvincibilityFlash());
+        yield return null;
+    }
+    public IEnumerator InvincibilityFlash()
+    {        
+        while (isInvincible)
+        {
+            sr.color = new Color(sr.color.r, sr.color.b, sr.color.g, 0f);
+            yield return new WaitForSeconds(InvincibilityFlashDelay);
+            sr.color = new Color(sr.color.r, sr.color.b, sr.color.g, 1f);
+            yield return new WaitForSeconds(InvincibilityFlashDelay);
+        }
     }
 
     public IEnumerator InvincibilityDelay()
@@ -422,35 +422,11 @@ public class Player : Characters
         isInvincible = false;
     }
 
-
     #endregion
-
-
-    #region Health and armor
-    private void AjustHhealth()
-    {
-        if (CurrentHealth >= MaxHealth)
-        {
-            CurrentHealth = MaxHealth;
-        }
-        // RETIRER LE HEALTH IF LORSQUE L'ON AURA FAIT LA MORT DU JOUEUR
-        else if (CurrentHealth <= 0)
-        {
-            CurrentHealth = 0;
-        }
-    }
-    protected override void StartExecutableState()
-    {
-        // TO IMPLEMENT
-    }
-
-    #endregion
-
 
     #region UI
     private PlayerHealthBar healthBar;
     #endregion
-
 
     #region Inputs
 
@@ -474,24 +450,6 @@ public class Player : Characters
         weapon.toReload();
     }
 
-    public void OnOpenCoffre()
-    {
-        if (OpenCoffre)
-        {
-            OpenCoffre = false;
-        }
-        else
-        {
-            OpenCoffre = true;
-        }
-    }
-
-    public void OnOpenShop()
-    {
-
-    }
-
-
     public PlayerInput GetPlayerInput()
     {
         return playerInput;
@@ -499,38 +457,11 @@ public class Player : Characters
 
     #endregion
 
-    #region Coffre
-    protected bool OpenCoffre = false;
-    protected bool OpenShop = false;
 
-    protected virtual void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Coffre"))
-        {
-            if (OpenCoffre)
-            {
-                collision.GetComponent<Coffre>().OkToOpen = true;
-            }
-            else return;
-        }
-    }
+    
 
-    protected virtual void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Coffre"))
-        {
-            collision.GetComponent<Coffre>().OkToOpen = false;
-        }
-    }
-
-    protected override IEnumerator PlayTakeDamageAnimation()
-    {
-        yield break;
-    }
-
-    #endregion
     protected override void Die()
     {
-        return;
+        Debug.LogWarning("YOU ARE DEAD");
     }
 }

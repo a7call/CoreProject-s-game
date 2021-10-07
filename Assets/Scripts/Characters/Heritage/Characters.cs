@@ -53,12 +53,7 @@ public abstract class Characters : StateMachine
     public virtual void TakeDamage(float damage, GameObject damageSource = null)
     {
         CurrentHealth -= damage;
-
-        if (CurrentHealth <= 0 && !IsExecutable && !IsDying)
-        {
-            IsExecutable = true;
-            StartExecutableState();
-        }
+        
         if (damageSource != null)
         {
             ApplyKnockBack(knockBackForceToApply, knockBackTime: 0.3f, damageSource);
@@ -118,7 +113,6 @@ public abstract class Characters : StateMachine
     protected abstract void SetData();
 
     protected abstract void GetReference();
-    protected abstract void StartExecutableState();
     protected abstract void Die();
 
     protected abstract IEnumerator PlayTakeDamageAnimation();
