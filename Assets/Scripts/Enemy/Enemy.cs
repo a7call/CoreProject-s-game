@@ -312,6 +312,9 @@ public abstract class Enemy : Characters, IMonster
 
         Material currentMat = sr.material; 
 
+        if(!IsDying)
+            AudioManagerEffect.GetInstance().Play(AudioConst.MONSTER_HIT_EFFECT, this.gameObject);
+
         isTakingDamage = true;
         sr.material = hitMaterial;
         yield return new WaitForSeconds(0.05f);

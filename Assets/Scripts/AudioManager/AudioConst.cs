@@ -9,6 +9,7 @@ public static class AudioConst
 
     public const string TRANSITION_EFFECT = "TransitionEffect";
 
+    public const string MONSTER_HIT_EFFECT = "MonsterHit";
 
     #region Player
     public const string PLAYER_DASH_EFFECT = "PlayerDash";

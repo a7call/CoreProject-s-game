@@ -56,9 +56,9 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: P90
     clip: {fileID: 8300000, guid: 4027000d30ea346f4b93bf3216b55d21, type: 3}
-    volume: 0.3
+    volume: 0.15
     volumeVariance: 0
-    pitch: 1
+    pitch: 0.65
     pitchVariance: 0.3
     loop: 0
     mixerGroup: {fileID: 6993978175035297508, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
@@ -100,7 +100,7 @@ MonoBehaviour:
     mixerGroup: {fileID: 6993978175035297508, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
     source: {fileID: 0}
   - name: PlayerDash
-    clip: {fileID: 8300000, guid: 4e434e2555c78d34e9faabcc0328a68a, type: 3}
+    clip: {fileID: 8300000, guid: d58c92fdab60e4ac8873991e671cab84, type: 3}
     volume: 0.2
     volumeVariance: 0
     pitch: 1
@@ -109,16 +109,25 @@ MonoBehaviour:
     mixerGroup: {fileID: 6993978175035297508, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
     source: {fileID: 0}
   - name: UnDeadDeath
-    clip: {fileID: 8300000, guid: 7b21fa9e8b37c0a44bf19df34240f06e, type: 3}
-    volume: 0.05
-    volumeVariance: 0
+    clip: {fileID: 8300000, guid: 54b5f72d211e34c60890ec34e324002d, type: 3}
+    volume: 0.024
+    volumeVariance: 0.361
     pitch: 1
-    pitchVariance: 0
+    pitchVariance: 0.361
     loop: 0
     mixerGroup: {fileID: 6993978175035297508, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
     source: {fileID: 0}
   - name: AbominationDeath
-    clip: {fileID: 8300000, guid: 386c7eef9594e9443b7cd0b300606736, type: 3}
+    clip: {fileID: 8300000, guid: 9269dc37f04a34164b3938e7f7722799, type: 3}
+    volume: 0.05
+    volumeVariance: 0.468
+    pitch: 1
+    pitchVariance: 0.483
+    loop: 0
+    mixerGroup: {fileID: 6993978175035297508, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
+    source: {fileID: 0}
+  - name: UnDeadMecaDeath
+    clip: {fileID: 8300000, guid: 54b5f72d211e34c60890ec34e324002d, type: 3}
     volume: 0.05
     volumeVariance: 0
     pitch: 1
@@ -126,8 +135,8 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 6993978175035297508, guid: 8377e8aa5cbea4fbeb21ac8595064799, type: 2}
     source: {fileID: 0}
-  - name: UnDeadMecaDeath
-    clip: {fileID: 8300000, guid: 84795b3bc57aed949824ed78285413fb, type: 3}
+  - name: MonsterHit
+    clip: {fileID: 8300000, guid: 9268133cd6ce449fbaead08fc12619f5, type: 3}
     volume: 0.05
     volumeVariance: 0
     pitch: 1
