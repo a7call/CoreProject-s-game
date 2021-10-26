@@ -117505,6 +117505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 423881044}
   - component: {fileID: 423881045}
+  - component: {fileID: 423881046}
   m_Layer: 0
   m_Name: DungeonGenerator
   m_TagString: Untagged
@@ -117549,9 +117550,23 @@ MonoBehaviour:
   - {fileID: 2581445982443901002, guid: 226414a31edd33a4a8a8a4f210b1bfa2, type: 3}
   - {fileID: 2581445982443901002, guid: edea726bc18caab4b9646a541614c230, type: 3}
   - {fileID: 2581445982443901002, guid: a957289e4810d4644b671af787f2c554, type: 3}
+  - {fileID: 2581445982443901002, guid: 9ad96c6fe21b37e49b55802eae12bc84, type: 3}
   BossRooms: []
   EventRooms: []
+  SpawnRooms: []
   shouldDebugDrawBsp: 1
+--- !u!114 &423881046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423881043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7862069f10d1642b35120764e6ff26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!213 &477990765
 Sprite:
   m_ObjectHideFlags: 0

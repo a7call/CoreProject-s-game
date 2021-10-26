@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     [HideInInspector]
     public Transform pointToSpawn;
 
-    public bool isAssigned = false;
+    public bool isAssigned { get; set; }
 
 
     private void OnTriggerEnter2D(Collider2D collision)

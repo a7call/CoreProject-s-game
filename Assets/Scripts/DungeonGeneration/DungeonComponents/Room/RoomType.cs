@@ -7,4 +7,5 @@ public enum RoomType
     Room,
     Boss,
     Event,
+    Spawn,
 }

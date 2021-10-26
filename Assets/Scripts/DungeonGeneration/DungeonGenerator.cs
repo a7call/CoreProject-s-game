@@ -106,6 +106,8 @@ public class DungeonGenerator : MonoBehaviour
         public Door door;
     }
 
+    private DungeonGenerationPostProcess postProcess;
+
     [Header("LevelGraph")]
     public LevelGraph levelGraph;
 
@@ -120,6 +122,7 @@ public class DungeonGenerator : MonoBehaviour
     public GameObject[] Rooms;
     public GameObject[] BossRooms;
     public GameObject[] EventRooms;
+    public GameObject[] SpawnRooms;
 
     [Header("Gizmos")]
     public bool shouldDebugDrawBsp;
@@ -139,6 +142,7 @@ public class DungeonGenerator : MonoBehaviour
     private void Awake()
     {
         maxNumberOfRooms = levelGraph.Rooms.Count;
+        postProcess = GetComponent<DungeonGenerationPostProcess>();
     }
 
     public void GenerateDungeon()
@@ -149,6 +153,9 @@ public class DungeonGenerator : MonoBehaviour
         AssignRoom();
         SpawnRoom();
         BuildConnections();
+
+        //PostProcess
+        postProcess.PostProcessPipeline(activeNodes);
     }
 
     private void SetMinContainerSize()
@@ -189,13 +196,17 @@ public class DungeonGenerator : MonoBehaviour
     {
         BspTree.GenerateRoomsInsideContainersNode(activeNodes, tree, ref numberOfRooms, maxNumberOfRooms);
     }
-
+    List<RoomBase> GetLevelGraphSortedByPosition()
+    {
+        return levelGraph.Rooms.OrderByDescending(o => o.Position.y).ThenByDescending(o => o.Position.x).ToList();
+    }
     private void AssignRoom()
     {
-        for (int i = 0; i <= levelGraph.Rooms.Count - 1; i++)
+        var sortedLevelGraph = GetLevelGraphSortedByPosition();
+        for (int i = 0; i <= sortedLevelGraph.Count - 1; i++)
         {
-            activeNodes[i].room = (Room)levelGraph.Rooms[i];
-            activeNodes[i].room.ConnectedRooms = levelGraph.Rooms[i].ConnectedRooms;
+            activeNodes[i].room = (Room)sortedLevelGraph[i];
+            activeNodes[i].room.ConnectedRooms = sortedLevelGraph[i].ConnectedRooms;
             activeNodes[i].room.RealPosition = activeNodes[i].container.center;
         }
     }
@@ -306,6 +317,9 @@ public class DungeonGenerator : MonoBehaviour
 
             case RoomType.Event:
                 return EventRooms[UnityEngine.Random.Range(0, EventRooms.Length)];
+
+            case RoomType.Spawn:
+                return SpawnRooms[UnityEngine.Random.Range(0, SpawnRooms.Length)];
         }
     }
 

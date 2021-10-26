@@ -38,6 +38,10 @@ public class Room : RoomBase
             case RoomType.Event:
                 backgroundColor = new Color(102 / 256f, 0 / 256f, 204 / 256f);
                 break;
+
+            case RoomType.Spawn:
+                backgroundColor = new Color(50 / 256f, 0 / 256f, 128 / 256f);
+                break;
         }
 
         style.BackgroundColor = backgroundColor;
