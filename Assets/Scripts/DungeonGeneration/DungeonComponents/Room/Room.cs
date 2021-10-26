@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum RoomState
+{
+    Cleared,
+    UnCleared,
+    Active
+}
 public class Room : RoomBase
 {
     public RoomType Type;
+
+    public RoomState currentState;
 
     /// <summary>
     ///     Room templates assigned to the room.
@@ -53,5 +61,13 @@ public class Room : RoomBase
         }
 
         return style;
+    }
+
+    public event Action onSwitchRoomState;
+    public void SetRoomState(RoomState state)
+    {
+        currentState = state;
+        if (onSwitchRoomState != null)
+            onSwitchRoomState();
     }
 }

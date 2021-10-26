@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class DoorManagement : MonoBehaviour
 {
-    private List<DoorObj> doors = new List<DoorObj>();
+    private List<Door> doors = new List<Door>();
     void Awake()
     {
         GetActualDoors();
@@ -15,7 +15,7 @@ public class DoorManagement : MonoBehaviour
     {
         foreach (Transform trans in gameObject.transform)
         {
-            doors.Add(trans.GetComponent<DoorObj>());
+            doors.Add(trans.GetComponent<Door>());
         }
     }
 
@@ -25,7 +25,7 @@ public class DoorManagement : MonoBehaviour
         {
             ManageLayers(door, true);
             door.AnimateDoors("isClosing");
-            door.ManageCollider(true);
+            door.ManageCollider(false);
         }
     }
 
@@ -35,22 +35,22 @@ public class DoorManagement : MonoBehaviour
         {
             ManageLayers(door, false);
             door.AnimateDoors("isOpening");
-            door.ManageCollider(false);
+            door.ManageCollider(true);
         }
     }
 
-    void ManageLayers(DoorObj doorsScript, bool isClosing)
+    void ManageLayers(Door doorsScript, bool isClosing)
     {
-        if (doorsScript.isForeGroundDoor && isClosing)
-        {
-            doorsScript.sr.sortingLayerName = "ForeGround";
-            doorsScript.sr.sortingOrder = 0;
-        }
-        else
-        {
-            doorsScript.sr.sortingLayerName = "BackGround";
-            doorsScript.sr.sortingOrder = 100;
-        }
+        //if (doorsScript.isForeGroundDoor && isClosing)
+        //{
+        //    doorsScript.sr.sortingLayerName = "ForeGround";
+        //    doorsScript.sr.sortingOrder = 0;
+        //}
+        //else
+        //{
+        //    doorsScript.sr.sortingLayerName = "BackGround";
+        //    doorsScript.sr.sortingOrder = 100;
+        //}
     }
 
     
