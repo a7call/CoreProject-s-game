@@ -19,6 +19,11 @@ public class RoomManager : MonoBehaviour
         Room.onSwitchRoomState -= OnSwitchRoomState;
     }
 
+    internal void OnRoomEnter(GameObject gameObject)
+    {
+        throw new NotImplementedException();
+    }
+
     private void OnSwitchRoomState()
     {
         switch (Room.currentState)
@@ -30,5 +35,10 @@ public class RoomManager : MonoBehaviour
             case RoomState.Active:
                 break;
         }
+    }
+
+    internal void OnRoomExit(GameObject gameObject)
+    {
+        throw new NotImplementedException();
     }
 }

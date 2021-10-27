@@ -1327,6 +1327,7 @@ Transform:
   - {fileID: 4257161297612610808}
   - {fileID: 4879958579236247064}
   - {fileID: 6332360383507961162}
+  - {fileID: 5569492262317743313}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1373,6 +1374,71 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16.592077, y: 7.1669292}
   m_EdgeRadius: 0
+--- !u!1 &3354770798598468593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5569492262317743313}
+  - component: {fileID: 8634280402649817562}
+  - component: {fileID: 4398718514230978756}
+  m_Layer: 0
+  m_Name: TimelineManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5569492262317743313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354770798598468593}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.6095757, y: 3.5435221, z: -10.845268}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6734529095840588684}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &8634280402649817562
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354770798598468593}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 604aa9b9468b80f4eb7c03ee6b052f3e, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 6687896023635238196, guid: 604aa9b9468b80f4eb7c03ee6b052f3e, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8901307503306394293, guid: 604aa9b9468b80f4eb7c03ee6b052f3e, type: 2}
+    value: {fileID: 1779591007}
+  m_ExposedReferences:
+    m_References: []
+--- !u!114 &4398718514230978756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354770798598468593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee91fc753a9d844db1d177bdf0e30ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4227517995457004634
 GameObject:
   m_ObjectHideFlags: 0

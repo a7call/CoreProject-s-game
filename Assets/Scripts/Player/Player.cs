@@ -222,7 +222,8 @@ public class Player : Characters
     //
     void Animation()
     {
-        float playerSpeed = mouvementVector.sqrMagnitude;
+        float playerSpeed = rb.velocity.sqrMagnitude;
+
         animator.SetFloat("Speed", playerSpeed);
         // position de la souris sur l'écran 
         var screenMousePos = Input.mousePosition;
