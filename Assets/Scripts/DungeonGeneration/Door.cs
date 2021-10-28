@@ -36,8 +36,8 @@ public class Door : MonoBehaviour
     {
         DungeonManager.GetInstance().DoRoomTransition();
         yield return new WaitForSeconds(0.5f);
-        //timeLineManager.playableDirector.Stop();
-        //player.transform.position = pointToSpawn.position;
+        timeLineManager.playableDirector.Stop();
+        player.transform.position = pointToSpawn.position;
     }
 
     public void ManageCollider(bool isTrigger)
