@@ -16,12 +16,15 @@ public class Door : MonoBehaviour
 
     private TimeLineManager timeLineManager;
 
+    private SpriteRenderer sr;
+
     public bool isAssigned { get; set; }
 
     private void Awake()
     {
         doorCollider = GetComponent<Collider2D>();
         timeLineManager = GetComponentInChildren<TimeLineManager>();
+        sr = GetComponent<SpriteRenderer>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -34,10 +37,11 @@ public class Door : MonoBehaviour
 
     IEnumerator Transition(GameObject player)
     {
-        DungeonManager.GetInstance().DoRoomTransition();
-        yield return new WaitForSeconds(0.5f);
-        timeLineManager.playableDirector.Stop();
+        DungeonManager.GetInstance().StartRoomTransition();
+        yield return new WaitForSeconds(1f);
         player.transform.position = pointToSpawn.position;
+        yield return new WaitForSeconds(0.3f);
+        DungeonManager.GetInstance().EndRoomTransition();
     }
 
     public void ManageCollider(bool isTrigger)
@@ -53,5 +57,13 @@ public class Door : MonoBehaviour
         {
             doorAnimator.SetTrigger(trigger);
         }
+    }
+
+    public void ManageLayers(bool isClosing)
+    {
+        if (isForeGroundDoor && isClosing)
+            sr.sortingOrder = 10;
+        else if (isForeGroundDoor && !isClosing)
+            sr.sortingOrder = -1;
     }
 }

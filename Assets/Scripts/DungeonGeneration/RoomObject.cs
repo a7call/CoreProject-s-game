@@ -17,6 +17,8 @@ public class RoomObject : MonoBehaviour
 
     public List<Door> doors = new List<Door>();
 
+    public List<TimeLineManager> ExitTimeLines = new List<TimeLineManager>();
+
     public RoomConnectionType roomConnectionType;
 
 }

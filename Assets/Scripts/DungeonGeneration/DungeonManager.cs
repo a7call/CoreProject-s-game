@@ -22,17 +22,18 @@ public class DungeonManager : Singleton<DungeonManager>
 
     private IEnumerator TransitionCo()
     {
+        yield return new WaitForSeconds(0.1f);
         StartRoomTransition();
         yield return new WaitForSeconds(1f);
         EndRoomTransition();
     }
 
-    private void StartRoomTransition()
+    public void StartRoomTransition()
     {
         animator.SetTrigger("StartTransition");
     }
 
-    private void EndRoomTransition()
+    public void EndRoomTransition()
     {
         animator.SetTrigger("EndTransition");
     }

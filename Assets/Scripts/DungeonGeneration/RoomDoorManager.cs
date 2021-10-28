@@ -22,36 +22,24 @@ public class RoomDoorManager : MonoBehaviour
     public void CloseDoors()
     {
         foreach (var door in doors)
-        {
-            ManageLayers(door, true);
+        {            
             door.AnimateDoors("isClosing");
             door.ManageCollider(false);
+            door.ManageLayers(true);
         }
     }
 
     public void OpenDoors()
     {
         foreach (var door in doors)
-        {
-            ManageLayers(door, false);
+        {           
             door.AnimateDoors("isOpening");
             door.ManageCollider(true);
+            door.ManageLayers(false);
         }
     }
 
-    void ManageLayers(Door doorsScript, bool isClosing)
-    {
-        //if (doorsScript.isForeGroundDoor && isClosing)
-        //{
-        //    doorsScript.sr.sortingLayerName = "ForeGround";
-        //    doorsScript.sr.sortingOrder = 0;
-        //}
-        //else
-        //{
-        //    doorsScript.sr.sortingLayerName = "BackGround";
-        //    doorsScript.sr.sortingOrder = 100;
-        //}
-    }
+   
 
     
 }

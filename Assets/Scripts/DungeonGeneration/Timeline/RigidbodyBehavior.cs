@@ -16,15 +16,14 @@ public class RigidbodyBehavior : PlayableBehaviour
 
         if (pointsToMoveTo.Count == 0)
         {
-            // TP Player
+            rb.velocity = Vector2.zero;
             return;
         }
             
-
         rb.velocity = (pointsToMoveTo.Peek().position - rb.transform.position).normalized * speed;
 
-        if (Vector2.Distance(rb.transform.position, pointsToMoveTo.Peek().position) < 0.5f)
+        if (Vector2.Distance(rb.transform.position, pointsToMoveTo.Peek().position) < 0.1f)
             pointsToMoveTo.Dequeue();
 
-    }
+    }   
 }

@@ -35,6 +35,7 @@ public class DungeonGenerationPostProcess : MonoBehaviour
     {
         var roomManager = node.room.roomObject.gameObject.AddComponent(typeof(RoomManager)) as RoomManager;
         roomManager.Room = node.room;
+        node.room.roomObject.gameObject.AddComponent(typeof(RoomDectectionTriggerHandler));
     }
 
 

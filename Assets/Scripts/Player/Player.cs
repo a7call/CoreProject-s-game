@@ -6,8 +6,14 @@ using Wanderer.CharacterStats;
 using UnityEngine.InputSystem;
 using Wanderer.Utils;
 
+public enum PlayerState
+{
+    Normal,
+    NotInControl,
+}
 public class Player : Characters
 {
+  
     public PlayerScriptableObjectScript playerData;
 
     #region Stats
@@ -49,6 +55,8 @@ public class Player : Characters
     public GameObject RH;
     public GameObject LH;
 
+    public PlayerState currentState { get; set; }
+
     public IShootableWeapon weapon;
     protected override void Awake()
     {
@@ -88,13 +96,23 @@ public class Player : Characters
 
     protected void Update()
     {
-        Animation();
-        healthBar.UpdateHealthUI(CurrentHealth, MaxHealth);
-        ClampMouvement(mouvementVector);
+        switch (currentState)
+        {
+            case PlayerState.Normal:
+                Animation();
+                healthBar.UpdateHealthUI(CurrentHealth, MaxHealth);
+                ClampMouvement(mouvementVector);
 
-        if (Input.GetKey(KeyCode.Mouse0))
-            Shoot();
+                if (Input.GetKey(KeyCode.Mouse0))
+                    Shoot();
+                break;
 
+            case PlayerState.NotInControl:
+                mouvement = Vector2.zero;
+                Animation();
+                break;
+
+        }
     }
     private void FixedUpdate()
     {
