@@ -19,11 +19,4 @@ public class RoomObject : MonoBehaviour
 
     public RoomConnectionType roomConnectionType;
 
-    public List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
-
-    private void Awake()
-    {
-       // spawnPoint = transform.Find("SpawnPoint");
-    }
-
 }

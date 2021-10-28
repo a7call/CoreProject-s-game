@@ -11,17 +11,17 @@ public class RoomManager : MonoBehaviour
 
     public void OnEnable()
     {
-        Room.onSwitchRoomState += OnSwitchRoomState;
+        //Room.onSwitchRoomState += OnSwitchRoomState;
     }
 
     public void OnDisable()
     {
-        Room.onSwitchRoomState -= OnSwitchRoomState;
+       // Room.onSwitchRoomState -= OnSwitchRoomState;
     }
 
-    internal void OnRoomEnter(GameObject gameObject)
+    public void OnRoomEnter(GameObject gameObject)
     {
-        throw new NotImplementedException();
+        DungeonManager.GetInstance().currentRoom = Room.roomObject;
     }
 
     private void OnSwitchRoomState()
@@ -37,7 +37,7 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    internal void OnRoomExit(GameObject gameObject)
+    public void OnRoomExit(GameObject gameObject)
     {
         throw new NotImplementedException();
     }

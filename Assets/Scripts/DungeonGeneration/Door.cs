@@ -14,11 +14,14 @@ public class Door : MonoBehaviour
     [HideInInspector]
     public Transform pointToSpawn;
 
+    private TimeLineManager timeLineManager;
+
     public bool isAssigned { get; set; }
 
     private void Awake()
     {
         doorCollider = GetComponent<Collider2D>();
+        timeLineManager = GetComponentInChildren<TimeLineManager>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,7 +36,8 @@ public class Door : MonoBehaviour
     {
         DungeonManager.GetInstance().DoRoomTransition();
         yield return new WaitForSeconds(0.5f);
-        player.transform.position = pointToSpawn.position;
+        //timeLineManager.playableDirector.Stop();
+        //player.transform.position = pointToSpawn.position;
     }
 
     public void ManageCollider(bool isTrigger)

@@ -7,9 +7,13 @@ public class DungeonManager : Singleton<DungeonManager>
 {
     Animator animator;
 
+    public RoomObject currentRoom { get; set; }
+    Player player;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
     public void DoRoomTransition()
     {
@@ -19,7 +23,7 @@ public class DungeonManager : Singleton<DungeonManager>
     private IEnumerator TransitionCo()
     {
         StartRoomTransition();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         EndRoomTransition();
     }
 
